@@ -45,7 +45,7 @@
     "silverTime":120,
     "startScreenText":"How many cars will you destroy today?"
   },
-  "name":"Windy Canyon Road with Fast Finish",
+  "name":"Winding Canyon Road with Fast Finish",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
