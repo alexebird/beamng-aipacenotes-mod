@@ -6,17 +6,19 @@ BEAM_USER_HOME="/mnt/c/Users/bird/AppData/Local/BeamNG.drive/"
 BEAM_VERSION="0.28" 
 
 BEAM_HOME="${BEAM_USER_HOME}/${BEAM_VERSION}"
+MOD_HOME="${BEAM_HOME}/mods/unpacked/beamng-aipacenotes-mod"
 
-#MISSION_ID="east_coast_usa/rallyStage/001-East"
-MISSION_ID="utah/rallyStage/bird-moab-tarmac-2"
-#MISSION_ID="gravel_rally/rallyStage/bird-finland-rs"
+# MISSION_ID="east_coast_usa/rallyStage/001-East"
+# MISSION_ID="utah/rallyStage/bird-moab-tarmac-2"
+# MISSION_ID="gravel_rally/rallyStage/bird-finland-rs"
+MISSION_ID="utah/timeTrial/bird-moab-tarmac-2"
 
 echo "creating pacenotes for: ${MISSION_ID}"
 
 VOICE="british_female"
 SPEAKING_RATE="1.0"
 I18N="en-uk"
-PACENOTES_AUDIO_OUTDIR="${BEAM_HOME}/art/sound/aipacenotes/${MISSION_ID}/audio_files/${I18N}"
+PACENOTES_AUDIO_OUTDIR="${MOD_HOME}/art/sound/aipacenotes/${MISSION_ID}/audio_files/${I18N}"
 
 mkdir -p "${PACENOTES_AUDIO_OUTDIR}"
 
