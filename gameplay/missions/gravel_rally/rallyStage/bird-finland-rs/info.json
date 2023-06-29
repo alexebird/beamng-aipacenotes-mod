@@ -1,0 +1,91 @@
+{
+  "additionalAttributes":{
+    "difficulty":"high",
+    "vehicle":"choice"
+  },
+  "author":"Alex Bird",
+  "careerSetup":{
+    "defaultStarKeys":[
+      "goldTime"
+    ],
+    "showInFreeroam":true,
+    "starOutroTexts":{
+      "silverTime":"This used to be impressive.",
+      "bronzeTime":"Goo Ga Ga",
+      "goldTime":"Nice job!",
+      "noStarUnlocked":"Better luck next time."
+    },
+    "starRewards":{
+      "silverTime":{}
+    },
+    "starsActive":{
+      "bronzeTime":false,
+      "goldTime":true,
+      "silverTime":false
+    }
+  },
+  "customAdditionalAttributes":{},
+  "date":1684795828,
+  "description":"A nice dirt rally stage using missionType of RallyStage.",
+  "devMission":false,
+  "grouping":{
+    "id":"bird-stages",
+    "label":"Custom Rally Stages"
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowRollingStart":false,
+    "bronzeTime":165,
+    "closed":false,
+    "defaultLaps":1,
+    "endScreenText":"",
+    "goldTime":155.2599945,
+    "mapPreviewMode":"navgraph",
+    "reversible":false,
+    "silverTime":162.5,
+    "startScreenText":""
+  },
+  "name":"Finland Rally Stage",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":false
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "enabled":true,
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"rally car - off road",
+      "playerConfigPath":"vehicles/vivace/rally car - off road.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"Jaune Imperial",
+      "usePresetVehicle":true
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"gravel_rally",
+    "pos":[
+      -838.5285034,
+      706.9705811,
+      36.18579483
+    ],
+    "radius":4.016697107,
+    "rot":[
+      0.0164538671,
+      -0.0614029724,
+      0.9979766942,
+      -0.001209590333
+    ],
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}

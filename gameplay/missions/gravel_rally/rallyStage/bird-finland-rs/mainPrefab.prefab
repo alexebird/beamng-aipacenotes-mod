@@ -1,0 +1,44 @@
+//--- OBJECT WRITE BEGIN ---
+$ThisPrefab = new SimGroup() {
+   canSave = "1";
+   canSaveDynamicFields = "1";
+      groupPosition = "0 0 0";
+
+   new SpawnSphere(full_loop_standingReverse_spawn) {
+      spawnClass = "Player";
+      autoSpawn = "0";
+      spawnTransform = "0";
+      radius = "1";
+      dataBlock = "SpawnSphereMarker";
+      position = "-836.729919 671.929749 34.2844505";
+      scale = "1 1 1";
+      rotationMatrix = "-0.995393991 -0.0958701372 0 0.0958701372 -0.995393991 0 0 0 1";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "25137505-2b67-43ed-82a4-199992243102";
+         sphereWeight0 = "1";
+   };
+   new SpawnSphere(full_loop_standing_spawn) {
+      spawnClass = "Player";
+      autoSpawn = "0";
+      spawnTransform = "0";
+      radius = "1";
+      dataBlock = "SpawnSphereMarker";
+      position = "-838.68811 705.400757 36.9443436";
+      scale = "1 1 1";
+      rotationMatrix = "0.999511182 0.0312636159 -2.15885939e-05 -0.0312636234 0.999510944 -0.000690196466 0 0.000690534071 0.999999762";
+      mode = "Ignore";
+      canSave = "1";
+      canSaveDynamicFields = "1";
+      persistentId = "eb0751a4-5aa4-4882-b094-53523944d020";
+         sphereWeight0 = "1";
+   };
+};
+//--- OBJECT WRITE END ---
+
+
+
+
+
+
