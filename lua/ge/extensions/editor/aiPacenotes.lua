@@ -73,6 +73,9 @@ local function menu()
       if imgui.MenuItem1("Save") then
         savePacenotes(currentPath, previousFilepath .. previousFilename)
       end
+      if imgui.MenuItem1("Clear") then
+        print("clear pacenotes")
+      end
       imgui.EndMenu()
     end
     imgui.EndMenuBar()

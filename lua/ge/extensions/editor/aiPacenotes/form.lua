@@ -5,16 +5,17 @@
 local im  = ui_imgui
 local C = {}
 
-function C:init(aiPacenotes)
-  self.aiPacenotes = aiPacenotes
+function C:init(aiPacenotesTool)
+  self.aiPacenotesTool = aiPacenotesTool
   self.index = nil
 end
 
 -- here, self.pacenotes is the same as currentPath in the parent window.
+-- it's a gameplay/pacenotes/path.lua class instance.
 function C:setPacenotes(pacenotes)
   self.pacenotes = pacenotes
 
-  print(dumps(self.pacenotes))
+  -- print(dumps(self.pacenotes))
 
   if self.pacenotes and not self.index then
     for i, version in ipairs(self.pacenotes.versions) do
@@ -24,6 +25,16 @@ function C:setPacenotes(pacenotes)
     end
   end
 end
+
+function C:createEmptyVersion()
+  local newEntry = self.pacenotes:createNew()
+  -- print(dumps(rv))
+  self.index = newEntry.id
+end
+
+-- function C:selectVersion()
+-- 
+-- end
 
 -- function C:setCurrentVersion(newVersion)
 --   self.pacenotes.current_version = newVersion
@@ -111,29 +122,23 @@ function C:draw()
 --     im.tooltip(self._descTranslated)
 --   end
 
-  -- im.NextColumn()
-  -- im.Columns(1)
 
-
-  local avail = im.GetContentRegionAvail()
   im.BeginChild1("versions", im.ImVec2(225 * im.uiscale[0], 0), im.WindowFlags_ChildWindow)
-
-  -- for idx, versionName in ipairs(self:getAllVersions()) do
   for i, version in ipairs(self.pacenotes.versions) do
     local versionName = version.name
+    local versionId = version.id
     local installed = (version.installed) and " (installed)" or ""
-    if im.Selectable1(versionName .. installed, i == self.index) then
-      -- self:setCurrentVersion(versionName)
-      self.index = i
-      print(self.index)
-      -- self.selectedVersion = versionName
+    if im.Selectable1(versionName .. installed, versionId == self.index) then
+      -- print('old self.index=' .. self.index)
+      self.index = versionId
+      -- print(dumps(self.pacenotes.versions))
+      -- print('new self.index=' .. self.index)
+      -- print('-------------------------------------------')
     end
   end
-
   im.Separator()
-
   if im.Selectable1('Create', false) then
-    print("create")
+    self:createEmptyVersion()
   end
   im.EndChild()
 
@@ -141,7 +146,18 @@ function C:draw()
   im.BeginChild1("currentSegment", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
     if self.index then
       local versionData = self.pacenotes.versions[self.index]
-      im.Text("Pacenotes version name: " .. versionData.name)
+
+      if im.Button("Delete") then
+        print("delete pacenote version")
+      end
+      im.SameLine()
+      if im.Button("Push to Race File") then
+        print("push to race file")
+      end
+      im.SameLine()
+      if im.Button("Pull from Race File") then
+        print("pull from race file")
+      end
 
       im.BeginChild1("currentVersionInner", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
       im.Columns(2)

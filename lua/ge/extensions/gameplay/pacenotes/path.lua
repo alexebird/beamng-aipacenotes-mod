@@ -4,31 +4,33 @@
 
 local C = {}
 
--- function C:getNextUniqueIdentifier()
---   self._uid = self._uid + 1
---   return self._uid
--- end
-
 function C:init(name)
---   self._uid = 0
---   self.current_version = ""
---   self.date = os.time()
+  self._uid = 0
   self.versions = {}
 end
 
----- Debug and Serialization
+function C:getNextUniqueIdentifier()
+  self._uid = self._uid + 1
+  return self._uid
+end
 
--- function C:drawDebug()
---   self.pathnodes:drawDebug()
---   self.segments:drawDebug()
---   self.startPositions:drawDebug()
---   self.pacenotes:drawDebug()
--- end
+function C:createNew()
+  local newId = self:getNextUniqueIdentifier()
+  local newEntry = {
+    id = newId,
+    installed = false,
+    name = 'New version #' .. newId,
+    voice = 'british_female',
+    authors = '',
+    description = '',
+    pacenotes = {},
+  }
+  table.insert(self.versions, newEntry)
+  return newEntry
+end
 
 function C:onSerialize()
   local ret = {
-    -- current_version = self.current_version,
-    -- date = os.time() ,
     versions = self.versions,
   }
 
@@ -37,16 +39,23 @@ end
 
 function C:onDeserialized(data)
   if not data then return end
---   self.current_version = data.current_version or ""
---   self.date = data.date or nil
   self.versions = data.versions or {}
+
+  local highestId = 0
+  for i, ver in ipairs(self.versions) do
+    if ver.id > highestId then
+      highestId = ver.id
+    end
+  end
+
+  self._uid = highestId
 end
 
-function C:copy()
-  local cpy = require('/lua/ge/extensions/gameplay/race/path')('Copy of ' .. self.name)
-  cpy.onDeserialized(self.onSerialize())
-  return cpy
-end
+-- function C:copy()
+--   local cpy = require('/lua/ge/extensions/gameplay/pacenotes/path')('Copy of ' .. self.name)
+--   cpy.onDeserialized(self.onSerialize())
+--   return cpy
+-- end
 
 return function(...)
   local o = {}
