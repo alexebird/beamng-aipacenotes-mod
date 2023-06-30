@@ -11,8 +11,8 @@ local C = {}
 
 function C:init(name)
 --   self._uid = 0
-  self.current_version = ""
-  self.date = os.time()
+--   self.current_version = ""
+--   self.date = os.time()
   self.versions = {}
 end
 
@@ -27,8 +27,8 @@ end
 
 function C:onSerialize()
   local ret = {
-    current_version = self.current_version,
-    date = os.time() ,
+    -- current_version = self.current_version,
+    -- date = os.time() ,
     versions = self.versions,
   }
 
@@ -37,8 +37,8 @@ end
 
 function C:onDeserialized(data)
   if not data then return end
-  self.current_version = data.current_version or ""
-  self.date = data.date or nil
+--   self.current_version = data.current_version or ""
+--   self.date = data.date or nil
   self.versions = data.versions or {}
 end
 

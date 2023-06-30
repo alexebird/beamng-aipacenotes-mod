@@ -70,19 +70,8 @@ local function menu()
       if imgui.MenuItem1("Load...") then
         editor_fileDialog.openFile(function(data) loadPacenotes(data.filepath) end, {{"Pacenotes files",".pacenotes.json"}}, false, previousFilepath)
       end
-      -- local canSave = currentPath and previousFilepath
       if imgui.MenuItem1("Save") then
         savePacenotes(currentPath, previousFilepath .. previousFilename)
-      end
-      if imgui.MenuItem1("Save as...") then
-        -- extensions.editor_fileDialog.saveFile(function(data) saveRace(currentPath, data.filepath) end,
-                                      -- {{"Race files",".race.json"}}, false, previousFilepath)
-      end
-      if imgui.MenuItem1("Clear") then
-        -- local path = require('/lua/ge/extensions/gameplay/race/path')("New Race")
-        -- editor.history:commitAction("Set path to new path.",
-          -- {path = path, fp = "/gameplay/races/", fn = "new.path.json"},
-          -- setRaceUndo, setRaceRedo)
       end
       imgui.EndMenu()
     end
@@ -145,9 +134,6 @@ local function onWindowMenuItem()
 end
 
 local function onEditorInitialized()
-  -- icons = tableKeys(editor.icons)
-  -- table.sort(icons)
-  -- style = imgui.GetStyle()
   editor.registerWindow(toolWindowName, imgui.ImVec2(600, 600))
   editor.addWindowMenuItem("AI Pacenotes", onWindowMenuItem, {groupMenuName = 'Experimental'})
 end

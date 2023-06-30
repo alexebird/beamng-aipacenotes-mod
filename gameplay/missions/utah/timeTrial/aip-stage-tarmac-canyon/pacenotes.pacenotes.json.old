@@ -1,11 +1,10 @@
 {
-    "versions": [
-        {
-            "installed": true,
+    "current_version":"english",
+    "date": 1234,
+    "versions": {
+        "english": {
             "name": "British English Male",
-            "voice": "british_male",
             "authors": "bird",
-            "description": "These were the first pacenotes I made.",
             "pacenotes": [
                 {
                     "name": "Pacenote 36",
@@ -1460,5 +1459,5 @@
                 }
             ]
         }
-    ]
+    }
 }
