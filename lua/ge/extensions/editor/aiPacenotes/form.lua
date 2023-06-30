@@ -24,8 +24,6 @@ function C:setPacenotes(pacenotes)
   self.pacenotes = pacenotes
   self.currentVersionText = im.ArrayChar(1024, self.pacenotes.current_version)
 
-
-
 --   self.descText = im.ArrayChar(2048, self.mission.description)
 --   self._titleTranslated = nil
 --   self._descTranslated = nil
@@ -44,12 +42,12 @@ function C:draw()
   local editEnded = im.BoolPtr(false)
   im.PushItemWidth(im.GetContentRegionAvailWidth() - 35)
   editor.uiInputText("##currentVersion", self.currentVersionText, 1024, nil, nil, nil, editEnded)
---   im.PopItemWidth()
---   if editEnded[0] then
---     self.pacenotes.current_version = ffi.string(self.currentVersionText)
---     self.pacenotes._dirty = true
---   end
---   im.SameLine()
+  im.PopItemWidth()
+  if editEnded[0] then
+    self.pacenotes.current_version = ffi.string(self.currentVersionText)
+    self.pacenotes._dirty = true
+  end
+  im.SameLine()
 
 --   if not self._titleTranslated then
 --     self._titleTranslated = translateLanguage(self.mission.name, noTranslation, true)

@@ -59,7 +59,7 @@ local function savePacenotes(pacenotes, savePath)
   previousFilename = filename
   pacenotes._dir = dir
   local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  race._fnWithoutExt = fn2
+  pacenotes._fnWithoutExt = fn2
 end
 
 local function menu()
