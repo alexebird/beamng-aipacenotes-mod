@@ -23,7 +23,7 @@ function C:createNew()
     voice = 'british_female',
     authors = '',
     description = '',
-    pacenotes = {},
+    pacenotes = {}, -- this is NOT a /lua/ge/extensions/gameplay/util/sortedList instance like in gameplay/race/path.lua.
   }
   table.insert(self.versions, newEntry)
   return newEntry

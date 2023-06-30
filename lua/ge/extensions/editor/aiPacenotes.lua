@@ -45,6 +45,7 @@ local function loadPacenotes(filename)
   p._fnWithoutExt = fn2
 
   currentPath = p
+  M.currentPath = currentPath
 
   form:setPacenotes(currentPath)
 
@@ -145,6 +146,7 @@ local function onExtensionLoaded()
 end
 
 M.loadPacenotes = loadPacenotes
+M.savePacenotes = savePacenotes
 
 M.onEditorInitialized = onEditorInitialized
 M.onEditorActivated = onEditorActivated
@@ -152,5 +154,6 @@ M.onEditorGui = onEditorGui
 M.onExtensionLoaded = onExtensionLoaded
 
 M.form = form
+M.getCurrentPath = function() return currentPath end
 
 return M
