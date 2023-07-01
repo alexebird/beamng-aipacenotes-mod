@@ -50,14 +50,16 @@ function C:setInstalledVersion(ver)
   ver.installed = true
 end
 
+function C:openRaceFile()
+  local raceFname = self:getRaceFilename()
+  self.reloadRaceFile(raceFname)
+end
+
 function C:pushToRaceFile()
   local raceFname = self:getRaceFilename()
-  -- print('racefname: ' .. raceFname)
   local race = self.loadRace(raceFname)
   local selectedPacenotesVersion = self:getSelectedVersion()
 
-  -- race.pacenotes = selectedPacenotesVersion.pacenotes
-  -- race.pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')("pacenotes", race, require('/lua/ge/extensions/gameplay/race/pacenote'))
   race.pacenotes:onDeserialized(selectedPacenotesVersion.pacenotes, {})
 
   self:setInstalledVersion(selectedPacenotesVersion)
@@ -76,11 +78,14 @@ function C:pullFromRaceFile()
   local selectedPacenotesVersion = self:getSelectedVersion()
   -- printPacenotesVersion(selectedPacenotesVersion)
   selectedPacenotesVersion.pacenotes = pacenotesFromRace
+  local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
+  self.aiPacenotesTool.savePacenotes(self.pacenotes, pacenotesFname)
+  log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
   log('I', logTag, "updated pacenotes with name '" .. selectedPacenotesVersion.name .. "' from race file " .. raceFname)
   self.printPacenotesVersion(selectedPacenotesVersion)
 end
 
-function C:printPacenotesVersion(ver)
+function C.printPacenotesVersion(ver)
   log('D', logTag,
     'pacenoteVersion ' ..
       'name="' .. ver.name .. '" ' ..
@@ -110,7 +115,6 @@ function C.saveRace(race, savePath)
 end
 
 function C.loadRace(filename)
-  -- print(filename)
   if not filename then
     return
   end
@@ -121,9 +125,7 @@ function C.loadRace(filename)
   end
   local dir, filename, ext = path.split(filename)
   local race = require('/lua/ge/extensions/gameplay/race/path')("New Race")
-  -- print('race at right after init: '.. dumps(race))
   race:onDeserialized(json)
-  -- print('race at end of loadrace: '.. dumps(race))
   return race
 end
 
@@ -228,6 +230,10 @@ function C:draw()
   im.BeginChild1("currentSegment", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
     if self.index then
       local versionData = self.pacenotes.versions[self.index]
+      im.SameLine()
+      if im.Button("Open Race File") then
+        self:openRaceFile()
+      end
       im.SameLine()
       if im.Button("Push to Race File") then
         self:pushToRaceFile()
