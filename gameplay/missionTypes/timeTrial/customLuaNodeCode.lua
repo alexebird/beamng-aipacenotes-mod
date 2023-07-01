@@ -1,3 +1,5 @@
+logTag = 'aiPacenotes_custom_lua_node'
+
 function normalize_text(input)
   -- Convert the input to lower case
   input = input:lower()
@@ -20,25 +22,35 @@ function printTable(t)
   end
 end
 
+function readMissionSpecificSettings(missionId)
+  local settingsFname = 'gameplay/missions/' .. missionId .. '/pacenotes/settings.json'
+  local json = jsonReadFile(settingsFname)
+  if not json then
+    log('E', logTag, 'unable to read settings file at: ' .. tostring(settingsFname))
+    return
+  end
+  return json
+end
+
 function entrypoint()
   local pacenote = self.pinIn.pacenote.value
   local levelName = self.pinIn.levelName.value
   local pathData = self.pinIn.pathData.value
   local missionId = gameplay_missions_missionManager.getForegroundMissionId()
 
+  local settings = readMissionSpecificSettings(missionId)
   local pacenoteHash = normalize_text(pacenote)
-  local volume = 8
+  local volume = settings.volume or 8
+  local pacenotesVersion = settings.currentVersion
 
   --printTable(self)
-  print("missionId: " .. missionId)
-  print("pacenote: " .. pacenote .. ", hash=" .. pacenoteHash)
+  -- print("missionId: " .. missionId)
+  -- print("pacenote: " .. pacenote .. ", hash=" .. pacenoteHash)
   local pacenoteFilePath = 'gameplay/missions/' .. missionId .. '/pacenotes/current/pacenote_' .. pacenoteHash .. '.ogg'
-  print("audio file path: " .. pacenoteFilePath)
   -- print("user language: Lua.userLanguage=" .. Lua.userLanguage .. " Lua:getSelectedLanguage()=" .. Lua:getSelectedLanguage())
-  print("user language=" .. core_settings_settings.getValue('userLanguage'))
+  -- print("user language=" .. core_settings_settings.getValue('userLanguage'))
 
   if file_exists(pacenoteFilePath) then
-    -- print("pacenote file exists")
     Engine.Audio.playOnce('AudioGui', pacenoteFilePath, { volume=volume })
   else
     print("pacenote audio file does not exist")
