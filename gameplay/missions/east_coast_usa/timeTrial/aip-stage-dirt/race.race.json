@@ -6,7 +6,7 @@
     "branching":false,
     "closed":false
   },
-  "date":1686726528,
+  "date":1688188549,
   "defaultLaps":1,
   "defaultStartPosition":2,
   "description":"Description",
@@ -41,7 +41,7 @@
         0.04683042087
       ],
       "note":"over jump? 50.",
-      "oldId":32,
+      "oldId":31,
       "pos":[
         -425.6185913,
         -121.1988525,
@@ -58,7 +58,7 @@
         0.01044542913
       ],
       "note":"over jump? 50.",
-      "oldId":33,
+      "oldId":32,
       "pos":[
         -384.339447,
         -252.9512177,
@@ -75,7 +75,7 @@
         0.04053382169
       ],
       "note":"5 left tightens to 4 right minus?",
-      "oldId":34,
+      "oldId":33,
       "pos":[
         -383.4126892,
         -367.4645996,
@@ -92,7 +92,7 @@
         0.07991212882
       ],
       "note":"3 left over crest?",
-      "oldId":35,
+      "oldId":34,
       "pos":[
         -376.0572205,
         -510.2889404,
@@ -109,7 +109,7 @@
         -0.06122563664
       ],
       "note":"into 5 right? 200.",
-      "oldId":36,
+      "oldId":35,
       "pos":[
         -330.1770325,
         -649.8569946,
@@ -126,7 +126,7 @@
         -0.06834454306
       ],
       "note":"3 left minus? caution?",
-      "oldId":37,
+      "oldId":36,
       "pos":[
         -115.2653427,
         -644.4486084,
@@ -143,7 +143,7 @@
         0.01032524969
       ],
       "note":"2 right left?",
-      "oldId":38,
+      "oldId":37,
       "pos":[
         148.4268188,
         -659.5028076,
@@ -160,7 +160,7 @@
         0.06180735217
       ],
       "note":"into 3 left, into 3 right?",
-      "oldId":39,
+      "oldId":38,
       "pos":[
         175.3266144,
         -708.6622925,
@@ -177,7 +177,7 @@
         0.1239570657
       ],
       "note":"into hairpin left down hill?",
-      "oldId":40,
+      "oldId":39,
       "pos":[
         249.716156,
         -753.6395264,
@@ -194,7 +194,7 @@
         1.81059686e-06
       ],
       "note":"and acute right, onto tarmac? 100.",
-      "oldId":41,
+      "oldId":40,
       "pos":[
         324.6297607,
         -763.6242676,
@@ -211,7 +211,7 @@
         1.687653705e-06
       ],
       "note":"square left?",
-      "oldId":42,
+      "oldId":41,
       "pos":[
         278.6947632,
         -713.8535156,
@@ -228,7 +228,7 @@
         0.008721785558
       ],
       "note":"into 6 right over crest? into 5 left?",
-      "oldId":43,
+      "oldId":42,
       "pos":[
         382.8868713,
         -653.5610962,
@@ -245,7 +245,7 @@
         0.02104531155
       ],
       "note":"5 right, onto dirt?",
-      "oldId":44,
+      "oldId":43,
       "pos":[
         415.3835144,
         -609.3936768,
@@ -262,7 +262,7 @@
         -0.009176758842
       ],
       "note":"and 5 left minus?",
-      "oldId":45,
+      "oldId":44,
       "pos":[
         326.6433716,
         -451.7750244,
@@ -279,7 +279,7 @@
         0.01809703009
       ],
       "note":"into 6 left over crest? into 3 right, tightens to square left?",
-      "oldId":46,
+      "oldId":45,
       "pos":[
         177.4842987,
         -267.7206726,
@@ -296,7 +296,7 @@
         0.08945230332
       ],
       "note":"into 2 right dont cut? 20.",
-      "oldId":48,
+      "oldId":46,
       "pos":[
         61.64000702,
         -693.2296753,
@@ -313,7 +313,7 @@
         0.02605637864
       ],
       "note":"into 3 right?",
-      "oldId":49,
+      "oldId":47,
       "pos":[
         8.260551453,
         -679.2769775,
@@ -330,7 +330,7 @@
         -0.05491323749
       ],
       "note":"5 left, over big dip?",
-      "oldId":50,
+      "oldId":48,
       "pos":[
         -50.79111099,
         87.34030151,
@@ -346,8 +346,8 @@
         0.9649614473,
         -0.0749832998
       ],
-      "note":"into 3 left long?",
-      "oldId":51,
+      "note":"into 3 right long?",
+      "oldId":49,
       "pos":[
         -96.45516968,
         182.8469238,
@@ -364,7 +364,7 @@
         -0.01486327051
       ],
       "note":"over jump? into 5 right? 100.",
-      "oldId":52,
+      "oldId":50,
       "pos":[
         -202.88237,
         392.0866089,
@@ -381,7 +381,7 @@
         -0.04318441218
       ],
       "note":"5 left, over crest? 100.",
-      "oldId":53,
+      "oldId":51,
       "pos":[
         -23.44375229,
         504.1866455,
@@ -398,7 +398,7 @@
         0.1149983698
       ],
       "note":"3 left down hill, bumpy? into 2 right up hill?",
-      "oldId":54,
+      "oldId":52,
       "pos":[
         137.355423,
         551.605835,
@@ -415,7 +415,7 @@
         -0.034134035
       ],
       "note":"and 4 left minus? into 5 right?",
-      "oldId":55,
+      "oldId":53,
       "pos":[
         438.7669678,
         688.3868408,
@@ -432,7 +432,7 @@
         0.04993469013
       ],
       "note":"into 6 left minus long? over finish.",
-      "oldId":56,
+      "oldId":54,
       "pos":[
         512.5507813,
         442.093811,
@@ -449,7 +449,7 @@
         -0.02903389701
       ],
       "note":"into 4 right caution blind crest?",
-      "oldId":57,
+      "oldId":55,
       "pos":[
         273.1669922,
         -367.1067505,
@@ -466,7 +466,7 @@
         0.01632637105
       ],
       "note":"over big jump?",
-      "oldId":58,
+      "oldId":56,
       "pos":[
         435.7670593,
         584.1452637,
