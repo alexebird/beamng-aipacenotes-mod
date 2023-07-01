@@ -28,12 +28,11 @@ function entrypoint()
 
   local pacenoteHash = normalize_text(pacenote)
   local volume = 8
-  local i18n = 'en-uk'
 
   --printTable(self)
   print("missionId: " .. missionId)
   print("pacenote: " .. pacenote .. ", hash=" .. pacenoteHash)
-  local pacenoteFilePath = 'art/sound/aipacenotes/' .. missionId .. '/audio_files/' .. i18n .. '/pacenote_' .. pacenoteHash .. '.ogg'
+  local pacenoteFilePath = 'gameplay/missions/' .. missionId .. '/pacenotes/current/pacenote_' .. pacenoteHash .. '.ogg'
   print("audio file path: " .. pacenoteFilePath)
   -- print("user language: Lua.userLanguage=" .. Lua.userLanguage .. " Lua:getSelectedLanguage()=" .. Lua:getSelectedLanguage())
   print("user language=" .. core_settings_settings.getValue('userLanguage'))

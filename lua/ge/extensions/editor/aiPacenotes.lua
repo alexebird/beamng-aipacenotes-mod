@@ -13,6 +13,8 @@ currentPath._fnWithoutExt = 'NewPacenotes'
 currentPath._dir = previousFilepath
 -- local _dirty = false
 local form = nil
+local voices = nil
+local voiceNamesSorted = nil
 
 -- local imUtils = require('ui/imguiUtils')
 -- local icons
@@ -24,6 +26,28 @@ local form = nil
 local function loadForm()
   form = require('/lua/ge/extensions/editor/aiPacenotes/form')(M)
   form:setPacenotes(currentPath)
+end
+
+local function loadVoices()
+  local voiceFname = "/settings/aipacenotes/voices.json"
+  voices = readJsonFile(voiceFname)
+  if not voices then
+    log('E', logTag, 'unable to find voices file: ' .. tostring(filename))
+    return
+  end
+
+  voiceNamesSorted = {}
+
+  for voiceName, _ in pairs(voices) do
+    table.insert(voiceNamesSorted, voiceName)
+  end
+
+  table.sort(voiceNamesSorted)
+
+  print(dumps(voiceNamesSorted))
+
+  M.voices = voices
+  M.voiceNamesSorted = voiceNamesSorted
 end
 
 local function loadPacenotes(filename)
@@ -86,6 +110,11 @@ end
 local function onEditorGui()
   if editor.beginWindow(toolWindowName, "AI Pacenotes", imgui.WindowFlags_MenuBar) then
     menu()
+
+    -- must load before loading the form. kinda brittle.
+    if not voices then
+      loadVoices()
+    end
 
     if not form then
       loadForm()
@@ -154,6 +183,8 @@ M.onEditorGui = onEditorGui
 M.onExtensionLoaded = onExtensionLoaded
 
 M.form = form
+M.voices = voices
+M.voiceNamesSorted = voiceNamesSorted
 M.getCurrentPath = function() return currentPath end
 
 return M

@@ -52,7 +52,8 @@ end
 
 function C:pushToRaceFile()
   local raceFname = self:getRaceFilename()
-  local race = loadRace(raceFname)
+  -- print('racefname: ' .. raceFname)
+  local race = self.loadRace(raceFname)
   local selectedPacenotesVersion = self:getSelectedVersion()
 
   -- race.pacenotes = selectedPacenotesVersion.pacenotes
@@ -63,23 +64,23 @@ function C:pushToRaceFile()
   local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
   self.aiPacenotesTool.savePacenotes(self.pacenotes, pacenotesFname)
   log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
-  saveRace(race, raceFname)
-  reloadRaceFile(raceFname)
+  self.saveRace(race, raceFname)
+  self.reloadRaceFile(raceFname)
   log('I', logTag, "updated pacenotes in race file " .. raceFname .. " with version named '" .. selectedPacenotesVersion.name .. "'")
 end
 
 function C:pullFromRaceFile()
   local raceFname = self:getRaceFilename()
-  local race = loadRace(raceFname)
+  local race = self.loadRace(raceFname)
   local pacenotesFromRace = race.pacenotes:onSerialize()
   local selectedPacenotesVersion = self:getSelectedVersion()
   -- printPacenotesVersion(selectedPacenotesVersion)
   selectedPacenotesVersion.pacenotes = pacenotesFromRace
   log('I', logTag, "updated pacenotes with name '" .. selectedPacenotesVersion.name .. "' from race file " .. raceFname)
-  printPacenotesVersion(selectedPacenotesVersion)
+  self.printPacenotesVersion(selectedPacenotesVersion)
 end
 
-function printPacenotesVersion(ver)
+function C:printPacenotesVersion(ver)
   log('D', logTag,
     'pacenoteVersion ' ..
       'name="' .. ver.name .. '" ' ..
@@ -103,12 +104,13 @@ function C:getRaceFilename()
   return raceFile
 end
 
-function saveRace(race, savePath)
+function C.saveRace(race, savePath)
   local json = race:onSerialize()
   jsonWriteFile(savePath, json, true)
 end
 
-function loadRace(filename)
+function C.loadRace(filename)
+  -- print(filename)
   if not filename then
     return
   end
@@ -119,14 +121,13 @@ function loadRace(filename)
   end
   local dir, filename, ext = path.split(filename)
   local race = require('/lua/ge/extensions/gameplay/race/path')("New Race")
+  -- print('race at right after init: '.. dumps(race))
   race:onDeserialized(json)
-  -- p._dir = dir
-  -- local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  -- p._fnWithoutExt = fn2
+  -- print('race at end of loadrace: '.. dumps(race))
   return race
 end
 
-function reloadRaceFile(raceFname)
+function C.reloadRaceFile(raceFname)
   if editor_raceEditor then
     if not editor.active then
       editor.setEditorActive(true)
@@ -227,10 +228,6 @@ function C:draw()
   im.BeginChild1("currentSegment", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
     if self.index then
       local versionData = self.pacenotes.versions[self.index]
-
-      if im.Button("Delete") then
-        print("TODO delete pacenote version")
-      end
       im.SameLine()
       if im.Button("Push to Race File") then
         self:pushToRaceFile()
@@ -239,6 +236,10 @@ function C:draw()
       if im.Button("Pull from Race File") then
         self:pullFromRaceFile()
       end
+
+      -- if im.Button("Delete") then
+      --   print("TODO delete pacenote version")
+      -- end
 
       im.BeginChild1("currentVersionInner", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
       im.HeaderText("Pacenotes Version Info")
@@ -251,8 +252,9 @@ function C:draw()
       local versionNameText = im.ArrayChar(1024, versionData.name)
       editor.uiInputText("##versionName", versionNameText, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
-        print('updated version')
-        -- self.pacenotes.versions[index] = ffi.string(nameText)
+        local selectedPacenotesVersion = self:getSelectedVersion()
+        local newValue = ffi.string(versionNameText)
+        selectedPacenotesVersion.name = newValue
       end
       im.NextColumn()
 
@@ -266,23 +268,41 @@ function C:draw()
       im.Text(tostring(#versionData.pacenotes))
       im.NextColumn()
 
+      im.Text("Voice")
+      im.NextColumn()
+      local currentVoice = self:getSelectedVersion().voice
+      if im.BeginCombo('##voiceDropdown', currentVoice) then
+        for _, voiceName in ipairs(self.aiPacenotesTool.voiceNamesSorted) do
+          if im.Selectable1(voiceName, voiceName == currentVoice) then
+            local selectedPacenotesVersion = self:getSelectedVersion()
+            selectedPacenotesVersion.voice = voiceName
+          end
+        end
+        im.EndCombo()
+      end
+      im.NextColumn()
+
       im.Text("Authors")
       im.NextColumn()
       local editEnded = im.BoolPtr(false)
       local authorsText = im.ArrayChar(1024, versionData.authors)
       editor.uiInputText("##authors", authorsText, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
-        print('updated authors')
+        local selectedPacenotesVersion = self:getSelectedVersion()
+        local newValue = ffi.string(authorsText)
+        selectedPacenotesVersion.authors = newValue
       end
       im.NextColumn()
 
       im.Text("Description")
       im.NextColumn()
       local editEnded = im.BoolPtr(false)
-      local authorsText = im.ArrayChar(1024, versionData.description)
-      editor.uiInputTextMultiline("##description", authorsText, 2048, im.ImVec2(0,100), nil, nil, nil, editEnded)
+      local descText = im.ArrayChar(1024, versionData.description)
+      editor.uiInputTextMultiline("##description", descText, 2048, im.ImVec2(0,100), nil, nil, nil, editEnded)
       if editEnded[0] then
-        print('updated description')
+        local selectedPacenotesVersion = self:getSelectedVersion()
+        local newValue = ffi.string(descText)
+        selectedPacenotesVersion.description = newValue
       end
       im.NextColumn()
 

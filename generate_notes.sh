@@ -13,7 +13,10 @@ MISSION_ID="utah/timeTrial/aip-stage-tarmac-canyon"
 
 echo "creating pacenotes for: ${MISSION_ID}"
 
-VOICE="british_female"
+# british female
+LANGUAGE_CODE="en-GB"
+VOICE_NAME="en-GB-Neural2-A"
+
 SPEAKING_RATE="1.0"
 I18N="en-uk"
 PACENOTES_AUDIO_OUTDIR="${MOD_HOME}/art/sound/aipacenotes/${MISSION_ID}/audio_files/${I18N}"
@@ -23,7 +26,7 @@ mkdir -p "${PACENOTES_AUDIO_OUTDIR}"
 rm -vf out.zip
 
 curl -H'Content-Type: application/json' \
-  "https://pacenotes-mo5q6vt2ea-uw.a.run.app/pacenotes?voice=${VOICE}&speaking_rate=${SPEAKING_RATE}" \
+  "https://pacenotes-mo5q6vt2ea-uw.a.run.app/pacenotes?language_code=${LANGUAGE_CODE}&voice_name=${VOICE_NAME}&speaking_rate=${SPEAKING_RATE}" \
   -d@"${MOD_HOME}/gameplay/missions/${MISSION_ID}/race.race.json" > \
   "${PACENOTES_AUDIO_OUTDIR}/out.zip"
 

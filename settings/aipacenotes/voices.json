@@ -1,0 +1,22 @@
+{
+    "australian_female": {
+        "language_code": "en-AU",
+        "voice_name": "en-AU-Neural2-C"
+    },
+    "australian_male": {
+        "language_code": "en-AU",
+        "voice_name": "en-AU-Neural2-D"
+    },
+    "british_female": {
+        "language_code": "en-GB",
+        "voice_name": "en-GB-Neural2-A"
+    },
+    "british_male": {
+        "language_code": "en-GB",
+        "voice_name": "en-GB-Neural2-D"
+    },
+    "spanish_male": {
+        "language_code": "es-ES",
+        "voice_name": "es-ES-Neural2-B"
+    }
+}
