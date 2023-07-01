@@ -1,7 +1,7 @@
 {
   "additionalAttributes":{
     "difficulty":"high",
-    "vehicle":"choice"
+    "vehicle":"own"
   },
   "author":"birdman",
   "careerSetup":{
@@ -56,13 +56,7 @@
     },
     "vehicles":{
       "enabled":true,
-      "isCustomConfig":false,
-      "mode":"choice",
-      "playerConfig":"rally car - road",
-      "playerConfigPath":"vehicles/vivace/rally car - road.pc",
-      "playerModel":"vivace",
-      "playerPaintName":"Jaune Imperial",
-      "usePresetVehicle":false
+      "mode":"own"
     }
   },
   "startCondition":{

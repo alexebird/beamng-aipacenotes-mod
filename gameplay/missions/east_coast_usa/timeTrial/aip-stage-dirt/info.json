@@ -1,7 +1,7 @@
 {
   "additionalAttributes":{
     "difficulty":"high",
-    "vehicle":"choice"
+    "vehicle":"own"
   },
   "author":"birdman",
   "careerSetup":{
@@ -55,7 +55,7 @@
     },
     "vehicles":{
       "enabled":true,
-      "mode":"choice"
+      "mode":"own"
     }
   },
   "startCondition":{
