@@ -16,12 +16,6 @@ function normalize_text(input)
   return input
 end
 
-function printTable(t)
-  for i, v in ipairs(t) do
-    print(i, v)
-  end
-end
-
 function readMissionSpecificSettings(missionId)
   local settingsFname = 'gameplay/missions/' .. missionId .. '/pacenotes/settings.json'
   local json = jsonReadFile(settingsFname)
@@ -43,17 +37,14 @@ function entrypoint()
   local volume = settings.volume or 8
   local pacenotesVersion = settings.currentVersion
 
-  --printTable(self)
-  -- print("missionId: " .. missionId)
-  -- print("pacenote: " .. pacenote .. ", hash=" .. pacenoteHash)
-  local pacenoteFilePath = 'gameplay/missions/' .. missionId .. '/pacenotes/current/pacenote_' .. pacenoteHash .. '.ogg'
-  -- print("user language: Lua.userLanguage=" .. Lua.userLanguage .. " Lua:getSelectedLanguage()=" .. Lua:getSelectedLanguage())
-  -- print("user language=" .. core_settings_settings.getValue('userLanguage'))
+  log('D', logTag, "missionId: " .. missionId)
+  log('D', logTag, "pacenote: " .. pacenote .. ", hash=" .. pacenoteHash)
+  local pacenoteFilePath = 'gameplay/missions/' .. missionId .. '/pacenotes/' .. pacenotesVersion .. '/pacenote_' .. pacenoteHash .. '.ogg'
 
   if file_exists(pacenoteFilePath) then
     Engine.Audio.playOnce('AudioGui', pacenoteFilePath, { volume=volume })
   else
-    print("pacenote audio file does not exist")
+    log('E', logTag, "pacenote audio file does not exist: " .. pacenoteFilePath)
   end
 end
 

@@ -1,6 +1,42 @@
 {
+  "version": 0.2,
+  "frecency": {
+    "node_71": 1661538560,
+    "node_7": 1667483765,
+    "node_60": 1661537760,
+    "node_273": 1654689560,
+    "node_26": 1676324009,
+    "node_15": 1655122570,
+    "node_122": 1678988178,
+    "nodePin_8944-reset-in": 1661537750,
+    "node_8975": 1667483402,
+    "node_94": 1654689490,
+    "nodePin_12-block-in": 1677588944,
+    "nodePin_115-timeOfDay-out": 1661979640,
+    "nodePin_107-timeStr-in": 1661979660,
+    "node_30": 1655122540,
+    "node_41": 1663159521,
+    "node_44": 1678988164,
+    "node_4503": 1661455930,
+    "node_45493": 1676323939,
+    "node_53": 1676323924
+  },
+  "difficulty": 40,
+  "description": "Project description.",
+  "debugEnabled": false,
+  "date": 1688011119,
+  "currentGraphID": 35,
+  "authors": "Anonymous",
+  "activeGraphId": 35,
   "graphs": {
     "58": {
+      "viewZoom": 1,
+      "viewPos": [
+        1780.5,
+        -24.5
+      ],
+      "description": "This graph will show an end screen. Useful for scenario endings.",
+      "dirty": false,
       "links": [
         [
           90,
@@ -362,6 +398,175 @@
       ],
       "name": "SimpleEnd",
       "nodes": {
+        "280": {
+          "type": "logic/compare",
+          "pos": [
+            598,
+            414
+          ],
+          "opSymbol": "<=",
+          "hiddenPins": {
+            "p_out": {
+              "true": true,
+              "flow": false,
+              "false": true,
+              "value": false
+            },
+            "p_in": {
+              "flow": false,
+              "B": false,
+              "A": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "281": {
+          "type": "logic/compare",
+          "pos": [
+            598,
+            554
+          ],
+          "opSymbol": "<=",
+          "hiddenPins": {
+            "p_out": {
+              "true": true,
+              "flow": false,
+              "false": true,
+              "value": false
+            },
+            "p_in": {
+              "flow": false,
+              "B": false,
+              "A": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "8980": {
+          "type": "activity/activityStop",
+          "pos": [
+            3188,
+            50
+          ],
+          "hiddenPins": {
+            "p_out": {},
+            "p_in": {
+              "flow": false,
+              "attempt": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "8989": {
+          "type": "util/project",
+          "pos": [
+            1130,
+            -230
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "graph": true,
+              "flow": false,
+              "graphId": true,
+              "hasLevel": true,
+              "hasFilename": true,
+              "id": true,
+              "name": false,
+              "level": true,
+              "filepath": true,
+              "description": false,
+              "filename": true
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "8": {
+          "type": "logic/wait",
+          "pos": [
+            -4,
+            -566
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "impulse": false,
+              "flow": false
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false,
+              "duration": false,
+              "useDtSim": true
+            }
+          },
+          "hardcodedPins": {
+            "duration": {
+              "value": 3,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "21": {
+          "varName": "playerID",
+          "type": "types/getVariable",
+          "pos": [
+            -4,
+            -398
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "playerID": false
+            },
+            "p_in": {}
+          },
+          "global": true,
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "41": {
+          "type": "recording/stopAutoReplay",
+          "pos": [
+            290,
+            -538
+          ],
+          "hiddenPins": {
+            "p_out": {},
+            "p_in": {
+              "stopRec": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "60": {
+          "type": "events/controlsReset",
+          "pos": [
+            -4,
+            -188
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "value": true,
+              "flow": false
+            },
+            "p_in": {
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {
+            "blocksOnResetGameplay": true
+          }
+        },
         "105": {
           "type": "activity/activityAttempt",
           "pos": [
@@ -511,401 +716,6 @@
           "dynamicMode": "repeat",
           "data": {},
           "count": 2
-        },
-        "70": {
-          "varName": "goldTime",
-          "type": "types/getVariable",
-          "pos": [
-            388,
-            610
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "goldTime": false
-            },
-            "p_in": {}
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "89": {
-          "type": "logic/compare",
-          "pos": [
-            598,
-            274
-          ],
-          "opSymbol": "<=",
-          "hiddenPins": {
-            "p_out": {
-              "true": true,
-              "flow": false,
-              "false": true,
-              "value": false
-            },
-            "p_in": {
-              "flow": false,
-              "B": false,
-              "A": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "90": {
-          "type": "states/transitionStack",
-          "pos": [
-            -4,
-            -48
-          ],
-          "pins": [
-            [
-              "out",
-              "flow",
-              "flow"
-            ],
-            [
-              "in",
-              "flow",
-              "flow"
-            ],
-            [
-              "out",
-              "number",
-              "time",
-              null,
-              ""
-            ],
-            [
-              "out",
-              "table",
-              "raceData",
-              null,
-              ""
-            ]
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "time": false,
-              "raceData": false,
-              "flow": false
-            },
-            "p_in": {
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "102": {
-          "type": "activity/aggregateAttempt",
-          "pos": [
-            1130,
-            -48
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "outroTranslation": false,
-              "outroText": false,
-              "newBestType": true,
-              "flow": false,
-              "change": false
-            },
-            "p_in": {
-              "progressKey": false,
-              "flow": false,
-              "attempt": false,
-              "reset": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "60": {
-          "type": "events/controlsReset",
-          "pos": [
-            -4,
-            -188
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "value": true,
-              "flow": false
-            },
-            "p_in": {
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {
-            "blocksOnResetGameplay": true
-          }
-        },
-        "41": {
-          "type": "recording/stopAutoReplay",
-          "pos": [
-            290,
-            -538
-          ],
-          "hiddenPins": {
-            "p_out": {},
-            "p_in": {
-              "stopRec": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "21": {
-          "varName": "playerID",
-          "type": "types/getVariable",
-          "pos": [
-            -4,
-            -398
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "playerID": false
-            },
-            "p_in": {}
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "8": {
-          "type": "logic/wait",
-          "pos": [
-            -4,
-            -566
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "impulse": false,
-              "flow": false
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false,
-              "duration": false,
-              "useDtSim": true
-            }
-          },
-          "hardcodedPins": {
-            "duration": {
-              "value": 3,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "8989": {
-          "type": "util/project",
-          "pos": [
-            1130,
-            -230
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "name": false,
-              "level": true,
-              "filepath": true,
-              "description": false,
-              "filename": true,
-              "graphId": true,
-              "flow": false,
-              "graph": true,
-              "id": true,
-              "hasFilename": true,
-              "hasLevel": true
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "8980": {
-          "type": "activity/activityStop",
-          "pos": [
-            3188,
-            50
-          ],
-          "hiddenPins": {
-            "p_out": {},
-            "p_in": {
-              "flow": false,
-              "attempt": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "281": {
-          "type": "logic/compare",
-          "pos": [
-            598,
-            554
-          ],
-          "opSymbol": "<=",
-          "hiddenPins": {
-            "p_out": {
-              "true": true,
-              "flow": false,
-              "false": true,
-              "value": false
-            },
-            "p_in": {
-              "flow": false,
-              "B": false,
-              "A": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "280": {
-          "type": "logic/compare",
-          "pos": [
-            598,
-            414
-          ],
-          "opSymbol": "<=",
-          "hiddenPins": {
-            "p_out": {
-              "true": true,
-              "flow": false,
-              "false": true,
-              "value": false
-            },
-            "p_in": {
-              "flow": false,
-              "B": false,
-              "A": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "45493": {
-          "type": "ui/fadeToBlack",
-          "pos": [
-            2320,
-            106
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false,
-              "completed": false,
-              "complete": false,
-              "incomplete": false
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false,
-              "duration": false
-            }
-          },
-          "hardcodedPins": {
-            "duration": {
-              "value": 0.750000000000002,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "45492": {
-          "type": "mission/postClean",
-          "pos": [
-            2908,
-            120
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "vehId": true,
-              "resetStartPos": true,
-              "reset": false,
-              "recoverInPlace": true,
-              "keepVeh": false,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "recoverInPlace": {
-              "value": true,
-              "type": "bool"
-            },
-            "keepVeh": {
-              "value": true,
-              "type": "bool"
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "9140": {
-          "type": "mission/postClean",
-          "pos": [
-            2908,
-            -48
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "vehId": true,
-              "resetStartPos": true,
-              "reset": false,
-              "recoverInPlace": true,
-              "keepVeh": false,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "resetStartPos": {
-              "value": true,
-              "type": "bool"
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "8993": {
-          "type": "ui/missionEndScreen",
-          "pos": [
-            1928,
-            -48
-          ],
-          "options": {},
-          "hiddenPins": {
-            "p_out": {
-              "flow": false,
-              "contStart": false,
-              "contHere": false
-            },
-            "p_in": {
-              "useProvidedVehicle": false,
-              "text": false,
-              "reset": false,
-              "progressKey": false,
-              "flow": false,
-              "failed": true,
-              "customBtnsFirst": true,
-              "change": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {
-            "includeRetryButton": true
-          }
         },
         "149": {
           "type": "states/transition",
@@ -1152,6 +962,232 @@
           "global": true,
           "dynamicMode": "repeat",
           "data": {}
+        },
+        "8993": {
+          "type": "ui/missionEndScreen",
+          "pos": [
+            1928,
+            -48
+          ],
+          "options": {},
+          "hiddenPins": {
+            "p_out": {
+              "flow": false,
+              "contStart": false,
+              "contHere": false
+            },
+            "p_in": {
+              "useProvidedVehicle": false,
+              "text": false,
+              "reset": false,
+              "progressKey": false,
+              "flow": false,
+              "failed": true,
+              "customBtnsFirst": true,
+              "change": false
+            }
+          },
+          "dynamicMode": "once",
+          "data": {
+            "includeRetryButton": true
+          }
+        },
+        "9140": {
+          "type": "mission/postClean",
+          "pos": [
+            2908,
+            -48
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "vehId": true,
+              "resetStartPos": true,
+              "reset": false,
+              "recoverInPlace": true,
+              "keepVeh": false,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "resetStartPos": {
+              "value": true,
+              "type": "bool"
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "45492": {
+          "type": "mission/postClean",
+          "pos": [
+            2908,
+            120
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "vehId": true,
+              "resetStartPos": true,
+              "reset": false,
+              "recoverInPlace": true,
+              "keepVeh": false,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "recoverInPlace": {
+              "value": true,
+              "type": "bool"
+            },
+            "keepVeh": {
+              "value": true,
+              "type": "bool"
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "45493": {
+          "type": "ui/fadeToBlack",
+          "pos": [
+            2320,
+            106
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false,
+              "completed": false,
+              "complete": false,
+              "incomplete": false
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false,
+              "duration": false
+            }
+          },
+          "hardcodedPins": {
+            "duration": {
+              "value": 0.750000000000002,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "102": {
+          "type": "activity/aggregateAttempt",
+          "pos": [
+            1130,
+            -48
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "outroTranslation": false,
+              "outroText": false,
+              "newBestType": true,
+              "flow": false,
+              "change": false
+            },
+            "p_in": {
+              "progressKey": false,
+              "flow": false,
+              "attempt": false,
+              "reset": false
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "90": {
+          "type": "states/transitionStack",
+          "pos": [
+            -4,
+            -48
+          ],
+          "pins": [
+            [
+              "out",
+              "flow",
+              "flow"
+            ],
+            [
+              "in",
+              "flow",
+              "flow"
+            ],
+            [
+              "out",
+              "number",
+              "time",
+              null,
+              ""
+            ],
+            [
+              "out",
+              "table",
+              "raceData",
+              null,
+              ""
+            ]
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "time": false,
+              "raceData": false,
+              "flow": false
+            },
+            "p_in": {
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "89": {
+          "type": "logic/compare",
+          "pos": [
+            598,
+            274
+          ],
+          "opSymbol": "<=",
+          "hiddenPins": {
+            "p_out": {
+              "true": true,
+              "flow": false,
+              "false": true,
+              "value": false
+            },
+            "p_in": {
+              "flow": false,
+              "B": false,
+              "A": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "70": {
+          "varName": "goldTime",
+          "type": "types/getVariable",
+          "pos": [
+            388,
+            610
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "goldTime": false
+            },
+            "p_in": {}
+          },
+          "global": true,
+          "dynamicMode": "repeat",
+          "data": {}
         }
       },
       "showTab": true,
@@ -1159,16 +1195,16 @@
       "variables": {
         "list": {},
         "customVariableOrder": {}
-      },
-      "viewPos": [
-        1780.5,
-        -24.5
-      ],
-      "viewZoom": 1,
-      "dirty": false,
-      "description": "This graph will show an end screen. Useful for scenario endings."
+      }
     },
     "49": {
+      "viewZoom": 1,
+      "viewPos": [
+        -277.4999694824219,
+        -94.49998474121094
+      ],
+      "description": "This is the description for graph New State",
+      "dirty": false,
       "links": [
         [
           53,
@@ -1293,16 +1329,16 @@
       "variables": {
         "list": {},
         "customVariableOrder": {}
-      },
-      "viewPos": [
-        -277.4999694824219,
-        -94.49998474121094
-      ],
-      "viewZoom": 1,
-      "dirty": false,
-      "description": "This is the description for graph New State"
+      }
     },
     "38": {
+      "viewZoom": 1,
+      "viewPos": [
+        -522.5000610351562,
+        -721.5
+      ],
+      "description": "This is the description for graph New State",
+      "dirty": false,
       "links": [
         [
           47,
@@ -1441,16 +1477,16 @@
       "variables": {
         "list": {},
         "customVariableOrder": {}
-      },
-      "viewPos": [
-        -522.5000610351562,
-        -721.5
-      ],
-      "viewZoom": 1,
-      "dirty": false,
-      "description": "This is the description for graph New State"
+      }
     },
     "35": {
+      "viewZoom": 1,
+      "viewPos": [
+        873.42724609375,
+        699.3557739257812
+      ],
+      "description": "This is the description for graph New State",
+      "dirty": false,
       "links": [
         [
           80,
@@ -1980,121 +2016,11 @@
       ],
       "name": "Race",
       "nodes": {
-        "8988": {
-          "varName": "practiceEnabled",
-          "type": "types/getVariable",
+        "84": {
+          "varName": "lastResetTimer",
+          "type": "types/setVariable",
           "pos": [
-            822,
-            -272
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "practiceEnabled": false
-            },
-            "p_in": {}
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "8982": {
-          "type": "logic/branch",
-          "pos": [
-            1144,
-            -300
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": true,
-              "True": false,
-              "False": false
-            },
-            "p_in": {
-              "flow": false,
-              "condition": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "276": {
-          "type": "vehicle/vehicleMapData",
-          "pos": [
-            2446,
-            -566
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "active": true,
-              "damage": true,
-              "dirVec": true,
-              "dirVecUp": true,
-              "flow": false,
-              "position": false,
-              "rotation": true,
-              "velocity": true,
-              "velocityVector": true
-            },
-            "p_in": {
-              "vehId": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "274": {
-          "type": "states/transition",
-          "transitionName": "reset",
-          "pos": [
-            2110,
-            -272
-          ],
-          "pins": [
-            [
-              "in",
-              "flow",
-              "flow",
-              null,
-              "This is a flow pin.",
-              true
-            ]
-          ],
-          "hiddenPins": {
-            "p_out": {},
-            "p_in": {
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "91": {
-          "type": "math/math",
-          "pos": [
-            2684,
-            -510
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "value": false
-            },
-            "p_in": {
-              "c": false,
-              "b": false,
-              "a": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {
-            "safeMode": true,
-            "expression": "(a-b):length()"
-          }
-        },
-        "92": {
-          "type": "ui/message",
-          "pos": [
-            2362,
+            2012,
             -804
           ],
           "hiddenPins": {
@@ -2102,148 +2028,275 @@
               "flow": false
             },
             "p_in": {
-              "message": false,
-              "icon": true,
-              "flow": false,
-              "duration": false,
-              "category": false
+              "lastResetTimer": false,
+              "flow": false
             }
           },
           "hardcodedPins": {
-            "message": {
-              "value": "Reset again to restart the race.",
-              "type": "string"
-            },
-            "icon": {
-              "value": "fast_rewind",
-              "type": "string"
-            },
-            "duration": {
+            "lastResetTimer": {
               "value": 3,
               "type": "number"
             }
           },
+          "global": true,
           "dynamicMode": "repeat",
           "data": {}
         },
-        "62": {
-          "type": "ui/raceCheckpoints",
+        "83": {
+          "type": "gameplay/race/fileRace",
           "pos": [
-            1578,
-            302
+            794,
+            22
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "time": false,
+              "raceData": false,
+              "flow": false,
+              "complete": false,
+              "aiPath": false,
+              "active": false
+            },
+            "p_in": {
+              "vehId_1": false,
+              "rolling": false,
+              "reset": false,
+              "pathData": false,
+              "lapCount": false,
+              "idle": true,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {
+            "useWaypointAudio": true,
+            "useHotlappingApp": true,
+            "useDebugDraw": false
+          },
+          "count": 1
+        },
+        "82": {
+          "type": "gameplay/countdown",
+          "pos": [
+            248,
+            22
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "ongoing": false,
+              "flow": false,
+              "finished": false
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false,
+              "finishMsgDuration": true,
+              "finishMsg": false,
+              "duration": false,
+              "countdownMsg": true
+            }
+          },
+          "hardcodedPins": {
+            "finishMsgDuration": {
+              "value": 1,
+              "type": "number"
+            },
+            "duration": {
+              "value": 3,
+              "type": "number"
+            },
+            "countdownMsg": {
+              "value": "%d",
+              "type": "string"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {
+            "useImgui": false,
+            "playSounds": true,
+            "bigFinishMsg": true,
+            "useMessages": false
+          }
+        },
+        "81": {
+          "type": "util/time",
+          "pos": [
+            934,
+            -762
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "time": false,
+              "dtSim": false,
+              "dtReal": false
+            },
+            "p_in": {}
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "69": {
+          "type": "gameplay/race/raceRecoveryUsed",
+          "pos": [
+            1438,
+            -762
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "recoveriesUsed": false,
+              "impulse": false,
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "raceData": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "65": {
+          "type": "events/controlsReset",
+          "pos": [
+            1410,
+            -300
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "value": true,
+              "flow": false
+            },
+            "p_in": {
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {
+            "blocksOnResetGameplay": true
+          }
+        },
+        "87": {
+          "type": "logic/wait",
+          "pos": [
+            1186,
+            106
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "impulse": false,
+              "flow": false
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false,
+              "duration": false,
+              "useDtSim": true
+            }
+          },
+          "hardcodedPins": {
+            "duration": {
+              "value": 0.5,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "88": {
+          "type": "gameplay/race/raceRecoveryAvailable",
+          "pos": [
+            1760,
+            -300
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "true": false,
+              "false": false
+            },
+            "p_in": {
+              "vehId": false,
+              "raceData": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "209": {
+          "type": "vehicle/freeze",
+          "pos": [
+            794,
+            274
           ],
           "hiddenPins": {
             "p_out": {
               "flow": false
             },
             "p_in": {
-              "max": false,
-              "flow": false,
-              "cur": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "61": {
-          "type": "ui/raceLaps",
-          "pos": [
-            1578,
-            442
-          ],
-          "hiddenPins": {
-            "p_out": {
+              "vehId": false,
+              "freeze": false,
               "flow": false
-            },
-            "p_in": {
-              "max": false,
-              "flow": false,
-              "cur": false
+            }
+          },
+          "hardcodedPins": {
+            "freeze": {
+              "value": false,
+              "type": "bool"
             }
           },
           "dynamicMode": "repeat",
           "data": {}
         },
-        "85": {
-          "type": "states/transitionStack",
+        "106": {
+          "type": "util/customLua",
           "pos": [
-            346,
-            -132
+            1438,
+            820
           ],
           "pins": [
             [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "Inflow for this node.",
+              true
+            ],
+            [
               "out",
               "flow",
-              "flow"
+              "flow",
+              null,
+              "Outflow for this node.",
+              true
             ],
             [
               "in",
-              "flow",
-              "flow"
-            ],
-            [
-              "out",
-              "table",
-              "pathData",
+              "string",
+              "pacenote",
               null,
               ""
             ]
           ],
-          "hiddenPins": {
-            "p_out": {
-              "pathData": false,
-              "flow": false
-            },
-            "p_in": {
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "86": {
-          "type": "gameplay/race/raceMarkers",
-          "pos": [
-            1214,
-            -104
-          ],
+          "name": "Play Pacenote Audio",
           "hiddenPins": {
             "p_out": {
               "flow": false
             },
             "p_in": {
-              "flow": false,
-              "ignoreRecovery": true,
-              "maxAlpha": true,
-              "maxDistance": true,
-              "minAlpha": true,
-              "minDistance": true,
-              "raceData": false,
-              "vehId": false,
-              "clear": false,
-              "alwaysShowFinal": true
-            }
-          },
-          "hardcodedPins": {
-            "minAlpha": {
-              "value": 0.15000000000000005,
-              "type": "number"
-            },
-            "maxDistance": {
-              "value": 50,
-              "type": "number"
-            },
-            "maxAlpha": {
-              "value": 1,
-              "type": "number"
-            },
-            "minDistance": {
-              "value": 5,
-              "type": "number"
+              "pacenote": false,
+              "flow": false
             }
           },
           "dynamicMode": "repeat",
-          "data": {}
+          "data": {},
+          "code": {
+            "onPreRender": "",
+            "_executionStopped": "",
+            "_executionStarted": "",
+            "work": "logTag = 'aiPacenotes_custom_lua_node'\n\nfunction normalize_text(input)\n  -- Convert the input to lower case\n  input = input:lower()\n\n  -- Substitute any non-alphanumeric character with a hyphen\n  input = input:gsub(\"%W\", \"-\")\n\n  -- Remove any consecutive hyphens\n  input = input:gsub(\"%-+\", \"-\")\n\n  -- Remove any leading or trailing hyphens\n  input = input:gsub(\"^%-\", \"\"):gsub(\"%-$\", \"\")\n\n  return input\nend\n\nfunction readMissionSpecificSettings(missionId)\n  local settingsFname = 'gameplay/missions/' .. missionId .. '/pacenotes/settings.json'\n  local json = jsonReadFile(settingsFname)\n  if not json then\n    log('E', logTag, 'unable to read settings file at: ' .. tostring(settingsFname))\n    return\n  end\n  return json\nend\n\nfunction entrypoint()\n  local pacenote = self.pinIn.pacenote.value\n  local levelName = self.pinIn.levelName.value\n  local pathData = self.pinIn.pathData.value\n  local missionId = gameplay_missions_missionManager.getForegroundMissionId()\n\n  local settings = readMissionSpecificSettings(missionId)\n  local pacenoteHash = normalize_text(pacenote)\n  local volume = settings.volume or 8\n  local pacenotesVersion = settings.currentVersion\n\n  log('D', logTag, \"missionId: \" .. missionId)\n  log('D', logTag, \"pacenote: \" .. pacenote .. \", hash=\" .. pacenoteHash)\n  local pacenoteFilePath = 'gameplay/missions/' .. missionId .. '/pacenotes/' .. pacenotesVersion .. '/pacenote_' .. pacenoteHash .. '.ogg'\n\n  if file_exists(pacenoteFilePath) then\n    Engine.Audio.playOnce('AudioGui', pacenoteFilePath, { volume=volume })\n  else\n    log('E', logTag, \"pacenote audio file does not exist: \" .. pacenoteFilePath)\n  end\nend\n\nfunction file_exists(filename)\n  local file = io.open(filename, \"r\")\n  if file == nil then\n    return false\n  else\n    file:close()\n    return true\n  end\nend\n\n-- for cli running and testing of code only\nlocal isDev = os.getenv(\"DEV\")\nif isDev == \"t\" then\n  print(normalize_text(\"Hello, World!\"))\nelse\n  entrypoint()\nend"
+          }
         },
         "78": {
           "type": "math/math",
@@ -2380,6 +2433,522 @@
           "dynamicMode": "repeat",
           "data": {}
         },
+        "57": {
+          "type": "gameplay/race/raceCpLapChange",
+          "pos": [
+            1186,
+            274
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "usedRecovery": false,
+              "recoveryReached": false,
+              "maxLap": false,
+              "maxCP": false,
+              "flow": false,
+              "curLap": false,
+              "curCP": false,
+              "changed": false
+            },
+            "p_in": {
+              "vehId": false,
+              "raceData": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "54": {
+          "type": "gameplay/race/raceRequestRecovery",
+          "pos": [
+            3258,
+            -412
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "success": true,
+              "flow": false,
+              "fail": true
+            },
+            "p_in": {
+              "vehId": false,
+              "raceData": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "97": {
+          "type": "gameplay/race/racePacenoteReached",
+          "pos": [
+            1186,
+            820
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "note": false,
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "raceData": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {
+            "detailed": false
+          }
+        },
+        "96": {
+          "type": "states/transition",
+          "transitionName": "reset",
+          "pos": [
+            3258,
+            -538
+          ],
+          "pins": [
+            [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "This is a flow pin.",
+              true
+            ]
+          ],
+          "hiddenPins": {
+            "p_out": {},
+            "p_in": {
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "95": {
+          "type": "logic/compare",
+          "pos": [
+            2964,
+            -566
+          ],
+          "opSymbol": "<=",
+          "hiddenPins": {
+            "p_out": {
+              "true": false,
+              "flow": false,
+              "false": false,
+              "value": true
+            },
+            "p_in": {
+              "flow": false,
+              "B": false,
+              "A": false
+            }
+          },
+          "hardcodedPins": {
+            "B": {
+              "value": 1,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "93": {
+          "type": "logic/branch",
+          "pos": [
+            1704,
+            610
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": true,
+              "True": false,
+              "False": false
+            },
+            "p_in": {
+              "flow": false,
+              "condition": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "79": {
+          "varName": "lastResetTimer",
+          "type": "types/getVariable",
+          "pos": [
+            822,
+            -860
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "lastResetTimer": false
+            },
+            "p_in": {}
+          },
+          "global": true,
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "80": {
+          "type": "logic/compare",
+          "pos": [
+            2110,
+            -468
+          ],
+          "opSymbol": ">=",
+          "hiddenPins": {
+            "p_out": {
+              "true": false,
+              "flow": false,
+              "false": false,
+              "value": true
+            },
+            "p_in": {
+              "flow": false,
+              "B": false,
+              "A": false
+            }
+          },
+          "hardcodedPins": {
+            "B": {
+              "value": 0,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "101": {
+          "type": "ui/message",
+          "pos": [
+            1942,
+            610
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "message": false,
+              "icon": true,
+              "flow": false,
+              "duration": false,
+              "category": false
+            }
+          },
+          "hardcodedPins": {
+            "message": {
+              "value": "Recovery Reached!",
+              "type": "string"
+            },
+            "icon": {
+              "value": "fast_rewind",
+              "type": "string"
+            },
+            "duration": {
+              "value": 2,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "103": {
+          "type": "vehicle/vehicleMapData",
+          "pos": [
+            1760,
+            -734
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "velocity": true,
+              "velocityVector": true,
+              "active": true,
+              "damage": true,
+              "dirVec": true,
+              "dirVecUp": true,
+              "flow": false,
+              "position": false,
+              "rotation": true
+            },
+            "p_in": {
+              "vehId": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "86": {
+          "type": "gameplay/race/raceMarkers",
+          "pos": [
+            1214,
+            -104
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "raceData": false,
+              "alwaysShowFinal": true,
+              "clear": false,
+              "flow": false,
+              "ignoreRecovery": true,
+              "maxAlpha": true,
+              "maxDistance": true,
+              "minAlpha": true,
+              "minDistance": true
+            }
+          },
+          "hardcodedPins": {
+            "minAlpha": {
+              "value": 0.15000000000000005,
+              "type": "number"
+            },
+            "maxDistance": {
+              "value": 50,
+              "type": "number"
+            },
+            "maxAlpha": {
+              "value": 1,
+              "type": "number"
+            },
+            "minDistance": {
+              "value": 5,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "85": {
+          "type": "states/transitionStack",
+          "pos": [
+            346,
+            -132
+          ],
+          "pins": [
+            [
+              "out",
+              "flow",
+              "flow"
+            ],
+            [
+              "in",
+              "flow",
+              "flow"
+            ],
+            [
+              "out",
+              "table",
+              "pathData",
+              null,
+              ""
+            ]
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "pathData": false,
+              "flow": false
+            },
+            "p_in": {
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "8988": {
+          "varName": "practiceEnabled",
+          "type": "types/getVariable",
+          "pos": [
+            822,
+            -272
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "practiceEnabled": false
+            },
+            "p_in": {}
+          },
+          "global": true,
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "8982": {
+          "type": "logic/branch",
+          "pos": [
+            1144,
+            -300
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": true,
+              "True": false,
+              "False": false
+            },
+            "p_in": {
+              "flow": false,
+              "condition": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "276": {
+          "type": "vehicle/vehicleMapData",
+          "pos": [
+            2446,
+            -566
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "velocity": true,
+              "velocityVector": true,
+              "active": true,
+              "damage": true,
+              "dirVec": true,
+              "dirVecUp": true,
+              "flow": false,
+              "position": false,
+              "rotation": true
+            },
+            "p_in": {
+              "vehId": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "274": {
+          "type": "states/transition",
+          "transitionName": "reset",
+          "pos": [
+            2110,
+            -272
+          ],
+          "pins": [
+            [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "This is a flow pin.",
+              true
+            ]
+          ],
+          "hiddenPins": {
+            "p_out": {},
+            "p_in": {
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "91": {
+          "type": "math/math",
+          "pos": [
+            2684,
+            -510
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "value": false
+            },
+            "p_in": {
+              "c": false,
+              "b": false,
+              "a": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {
+            "safeMode": true,
+            "expression": "(a-b):length()"
+          }
+        },
+        "92": {
+          "type": "ui/message",
+          "pos": [
+            2362,
+            -804
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "message": false,
+              "icon": true,
+              "flow": false,
+              "duration": false,
+              "category": false
+            }
+          },
+          "hardcodedPins": {
+            "message": {
+              "value": "Reset again to restart the race.",
+              "type": "string"
+            },
+            "icon": {
+              "value": "fast_rewind",
+              "type": "string"
+            },
+            "duration": {
+              "value": 3,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "62": {
+          "type": "ui/raceCheckpoints",
+          "pos": [
+            1578,
+            302
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "max": false,
+              "flow": false,
+              "cur": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "61": {
+          "type": "ui/raceLaps",
+          "pos": [
+            1578,
+            442
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "max": false,
+              "flow": false,
+              "cur": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
         "99": {
           "varName": "practiceEnabled",
           "type": "types/getVariable",
@@ -2489,539 +3058,6 @@
           },
           "dynamicMode": "repeat",
           "data": {}
-        },
-        "106": {
-          "type": "util/customLua",
-          "pos": [
-            1438,
-            820
-          ],
-          "pins": [
-            [
-              "in",
-              "flow",
-              "flow",
-              null,
-              "Inflow for this node.",
-              true
-            ],
-            [
-              "out",
-              "flow",
-              "flow",
-              null,
-              "Outflow for this node.",
-              true
-            ],
-            [
-              "in",
-              "string",
-              "pacenote",
-              null,
-              ""
-            ]
-          ],
-          "name": "Play Pacenote Audio",
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "pacenote": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {},
-          "code": {
-            "onPreRender": "",
-            "_executionStopped": "",
-            "_executionStarted": "",
-            "work": "logTag = 'aiPacenotes_custom_lua_node'\n\nfunction normalize_text(input)\n  -- Convert the input to lower case\n  input = input:lower()\n\n  -- Substitute any non-alphanumeric character with a hyphen\n  input = input:gsub(\"%W\", \"-\")\n\n  -- Remove any consecutive hyphens\n  input = input:gsub(\"%-+\", \"-\")\n\n  -- Remove any leading or trailing hyphens\n  input = input:gsub(\"^%-\", \"\"):gsub(\"%-$\", \"\")\n\n  return input\nend\n\nfunction printTable(t)\n  for i, v in ipairs(t) do\n    print(i, v)\n  end\nend\n\nfunction readMissionSpecificSettings(missionId)\n  local settingsFname = 'gameplay/missions/' .. missionId .. '/pacenotes/settings.json'\n  local json = jsonReadFile(settingsFname)\n  if not json then\n    log('E', logTag, 'unable to read settings file at: ' .. tostring(settingsFname))\n    return\n  end\n  return json\nend\n\nfunction entrypoint()\n  local pacenote = self.pinIn.pacenote.value\n  local levelName = self.pinIn.levelName.value\n  local pathData = self.pinIn.pathData.value\n  local missionId = gameplay_missions_missionManager.getForegroundMissionId()\n\n  local settings = readMissionSpecificSettings(missionId)\n  local pacenoteHash = normalize_text(pacenote)\n  local volume = settings.volume or 8\n  local pacenotesVersion = settings.currentVersion\n\n  --printTable(self)\n  -- print(\"missionId: \" .. missionId)\n  -- print(\"pacenote: \" .. pacenote .. \", hash=\" .. pacenoteHash)\n  local pacenoteFilePath = 'gameplay/missions/' .. missionId .. '/pacenotes/current/pacenote_' .. pacenoteHash .. '.ogg'\n  -- print(\"user language: Lua.userLanguage=\" .. Lua.userLanguage .. \" Lua:getSelectedLanguage()=\" .. Lua:getSelectedLanguage())\n  -- print(\"user language=\" .. core_settings_settings.getValue('userLanguage'))\n\n  if file_exists(pacenoteFilePath) then\n    Engine.Audio.playOnce('AudioGui', pacenoteFilePath, { volume=volume })\n  else\n    print(\"pacenote audio file does not exist\")\n  end\nend\n\nfunction file_exists(filename)\n  local file = io.open(filename, \"r\")\n  if file == nil then\n    return false\n  else\n    file:close()\n    return true\n  end\nend\n\n-- for cli running and testing of code only\nlocal isDev = os.getenv(\"DEV\")\nif isDev == \"t\" then\n  print(normalize_text(\"Hello, World!\"))\nelse\n  entrypoint()\nend"
-          }
-        },
-        "209": {
-          "type": "vehicle/freeze",
-          "pos": [
-            794,
-            274
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "freeze": false,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "freeze": {
-              "value": false,
-              "type": "bool"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "88": {
-          "type": "gameplay/race/raceRecoveryAvailable",
-          "pos": [
-            1760,
-            -300
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "true": false,
-              "false": false
-            },
-            "p_in": {
-              "vehId": false,
-              "raceData": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "87": {
-          "type": "logic/wait",
-          "pos": [
-            1186,
-            106
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "impulse": false,
-              "flow": false
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false,
-              "duration": false,
-              "useDtSim": true
-            }
-          },
-          "hardcodedPins": {
-            "duration": {
-              "value": 0.5,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "65": {
-          "type": "events/controlsReset",
-          "pos": [
-            1410,
-            -300
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "value": true,
-              "flow": false
-            },
-            "p_in": {
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {
-            "blocksOnResetGameplay": true
-          }
-        },
-        "69": {
-          "type": "gameplay/race/raceRecoveryUsed",
-          "pos": [
-            1438,
-            -762
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "recoveriesUsed": false,
-              "impulse": false,
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "raceData": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "81": {
-          "type": "util/time",
-          "pos": [
-            934,
-            -762
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "time": false,
-              "dtSim": false,
-              "dtReal": false
-            },
-            "p_in": {}
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "82": {
-          "type": "gameplay/countdown",
-          "pos": [
-            248,
-            22
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "ongoing": false,
-              "flow": false,
-              "finished": false
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false,
-              "finishMsgDuration": true,
-              "finishMsg": false,
-              "duration": false,
-              "countdownMsg": true
-            }
-          },
-          "hardcodedPins": {
-            "finishMsgDuration": {
-              "value": 1,
-              "type": "number"
-            },
-            "duration": {
-              "value": 3,
-              "type": "number"
-            },
-            "countdownMsg": {
-              "value": "%d",
-              "type": "string"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {
-            "useImgui": false,
-            "playSounds": true,
-            "bigFinishMsg": true,
-            "useMessages": false
-          }
-        },
-        "83": {
-          "type": "gameplay/race/fileRace",
-          "pos": [
-            794,
-            22
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "time": false,
-              "raceData": false,
-              "flow": false,
-              "complete": false,
-              "aiPath": false,
-              "active": false
-            },
-            "p_in": {
-              "vehId_1": false,
-              "rolling": false,
-              "reset": false,
-              "pathData": false,
-              "lapCount": false,
-              "idle": true,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {
-            "useWaypointAudio": true,
-            "useHotlappingApp": true,
-            "useDebugDraw": false
-          },
-          "count": 1
-        },
-        "84": {
-          "varName": "lastResetTimer",
-          "type": "types/setVariable",
-          "pos": [
-            2012,
-            -804
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "lastResetTimer": false,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "lastResetTimer": {
-              "value": 3,
-              "type": "number"
-            }
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "57": {
-          "type": "gameplay/race/raceCpLapChange",
-          "pos": [
-            1186,
-            274
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "usedRecovery": false,
-              "recoveryReached": false,
-              "maxLap": false,
-              "maxCP": false,
-              "flow": false,
-              "curLap": false,
-              "curCP": false,
-              "changed": false
-            },
-            "p_in": {
-              "vehId": false,
-              "raceData": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "54": {
-          "type": "gameplay/race/raceRequestRecovery",
-          "pos": [
-            3258,
-            -412
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "success": true,
-              "flow": false,
-              "fail": true
-            },
-            "p_in": {
-              "vehId": false,
-              "raceData": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "103": {
-          "type": "vehicle/vehicleMapData",
-          "pos": [
-            1760,
-            -734
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "active": true,
-              "damage": true,
-              "dirVec": true,
-              "dirVecUp": true,
-              "flow": false,
-              "position": false,
-              "rotation": true,
-              "velocity": true,
-              "velocityVector": true
-            },
-            "p_in": {
-              "vehId": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "101": {
-          "type": "ui/message",
-          "pos": [
-            1942,
-            610
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "message": false,
-              "icon": true,
-              "flow": false,
-              "duration": false,
-              "category": false
-            }
-          },
-          "hardcodedPins": {
-            "message": {
-              "value": "Recovery Reached!",
-              "type": "string"
-            },
-            "icon": {
-              "value": "fast_rewind",
-              "type": "string"
-            },
-            "duration": {
-              "value": 2,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "80": {
-          "type": "logic/compare",
-          "pos": [
-            2110,
-            -468
-          ],
-          "opSymbol": ">=",
-          "hiddenPins": {
-            "p_out": {
-              "true": false,
-              "flow": false,
-              "false": false,
-              "value": true
-            },
-            "p_in": {
-              "flow": false,
-              "B": false,
-              "A": false
-            }
-          },
-          "hardcodedPins": {
-            "B": {
-              "value": 0,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "79": {
-          "varName": "lastResetTimer",
-          "type": "types/getVariable",
-          "pos": [
-            822,
-            -860
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "lastResetTimer": false
-            },
-            "p_in": {}
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "93": {
-          "type": "logic/branch",
-          "pos": [
-            1704,
-            610
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": true,
-              "True": false,
-              "False": false
-            },
-            "p_in": {
-              "flow": false,
-              "condition": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "95": {
-          "type": "logic/compare",
-          "pos": [
-            2964,
-            -566
-          ],
-          "opSymbol": "<=",
-          "hiddenPins": {
-            "p_out": {
-              "true": false,
-              "flow": false,
-              "false": false,
-              "value": true
-            },
-            "p_in": {
-              "flow": false,
-              "B": false,
-              "A": false
-            }
-          },
-          "hardcodedPins": {
-            "B": {
-              "value": 1,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "96": {
-          "type": "states/transition",
-          "transitionName": "reset",
-          "pos": [
-            3258,
-            -538
-          ],
-          "pins": [
-            [
-              "in",
-              "flow",
-              "flow",
-              null,
-              "This is a flow pin.",
-              true
-            ]
-          ],
-          "hiddenPins": {
-            "p_out": {},
-            "p_in": {
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "97": {
-          "type": "gameplay/race/racePacenoteReached",
-          "pos": [
-            1186,
-            820
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "note": false,
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "raceData": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {
-            "detailed": false
-          }
         }
       },
       "showTab": true,
@@ -3029,58 +3065,10 @@
       "variables": {
         "list": {},
         "customVariableOrder": {}
-      },
-      "viewPos": [
-        873.42724609375,
-        699.3557739257812
-      ],
-      "viewZoom": 1,
-      "dirty": false,
-      "description": "This is the description for graph New State"
+      }
     },
     "31": {
-      "links": [
-        [
-          39,
-          "reset",
-          56,
-          "flow",
-          false
-        ],
-        [
-          36,
-          "reset",
-          56,
-          "flow",
-          false
-        ],
-        [
-          33,
-          "flow",
-          36,
-          "flow",
-          false
-        ],
-        [
-          36,
-          "success",
-          34,
-          "flow",
-          false
-        ],
-        [
-          33,
-          "flow",
-          39,
-          "flow",
-          false
-        ]
-      ],
-      "isStateGraph": true,
-      "dirty": false,
-      "description": "This is the description for graph New Group State",
-      "showTab": true,
-      "parentId": 3,
+      "name": "Gameplay Race",
       "nodes": {
         "56": {
           "type": "states/stateExit",
@@ -3224,19 +3212,67 @@
           "data": {}
         }
       },
-      "name": "Gameplay Race",
-      "viewZoom": 1.5,
-      "viewPos": [
-        -245.34881591796875,
-        -210.6988983154297
-      ],
+      "parentId": 3,
+      "showTab": true,
+      "type": "graph",
       "variables": {
         "list": {},
         "customVariableOrder": {}
       },
-      "type": "graph"
+      "viewPos": [
+        -245.34881591796875,
+        -210.6988983154297
+      ],
+      "viewZoom": 1.5,
+      "links": [
+        [
+          39,
+          "reset",
+          56,
+          "flow",
+          false
+        ],
+        [
+          36,
+          "reset",
+          56,
+          "flow",
+          false
+        ],
+        [
+          33,
+          "flow",
+          36,
+          "flow",
+          false
+        ],
+        [
+          36,
+          "success",
+          34,
+          "flow",
+          false
+        ],
+        [
+          33,
+          "flow",
+          39,
+          "flow",
+          false
+        ]
+      ],
+      "isStateGraph": true,
+      "dirty": false,
+      "description": "This is the description for graph New Group State"
     },
     "17": {
+      "viewZoom": 1,
+      "viewPos": [
+        492.50006103515625,
+        -304.5
+      ],
+      "description": "This is the description for graph New State",
+      "dirty": false,
       "links": [
         [
           24,
@@ -3535,245 +3571,48 @@
       ],
       "name": "Setup Vehicle",
       "nodes": {
-        "20": {
-          "type": "gameplay/race/filePath",
-          "pos": [
-            248,
-            22
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "branching": true,
-              "checkpointCount": true,
-              "closed": true,
-              "desc": false,
-              "flow": false,
-              "laps": true,
-              "name": false,
-              "pathData": false,
-              "recoveryCount": true
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false,
-              "file": false,
-              "reverse": false
-            }
-          },
-          "hardcodedPins": {
-            "file": {
-              "value": "race.race.json",
-              "type": "string"
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "22": {
-          "type": "gameplay/race/moveVehicleToStartposition",
+        "42": {
+          "type": "ui/raceLaps",
           "pos": [
             752,
-            106
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "rot": false,
-              "pos": false,
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "rolling": false,
-              "reverse": false,
-              "pathData": false,
-              "name": false,
-              "lowPrecision": true,
-              "id": false,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "lowPrecision": {
-              "value": false,
-              "type": "bool"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "24": {
-          "type": "logic/once",
-          "pos": [
-            514,
-            106
+            498
           ],
           "hiddenPins": {
             "p_out": {
               "flow": false
             },
             "p_in": {
-              "reset": false,
-              "flow": false
+              "max": false,
+              "flow": false,
+              "cur": false
             }
           },
           "dynamicMode": "repeat",
           "data": {}
         },
-        "25": {
-          "type": "vehicle/enterVehicle",
-          "pos": [
-            2852,
-            204
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "26": {
-          "type": "ui/fadeFromBlack",
+        "30": {
+          "varName": "startScreenText",
+          "type": "types/getVariable",
           "pos": [
             1032,
-            -174
+            190
           ],
           "hiddenPins": {
             "p_out": {
-              "flow": false,
-              "completed": false,
-              "complete": false,
-              "incomplete": false
+              "startScreenText": false
             },
-            "p_in": {
-              "reset": false,
-              "flow": false,
-              "duration": false
-            }
+            "p_in": {}
           },
-          "hardcodedPins": {
-            "duration": {
-              "value": 0.7500000000000017,
-              "type": "number"
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "77": {
-          "type": "vehicle/freeze",
-          "pos": [
-            1578,
-            204
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "freeze": false,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "freeze": {
-              "value": true,
-              "type": "bool"
-            }
-          },
+          "global": true,
           "dynamicMode": "repeat",
           "data": {}
         },
-        "73": {
-          "type": "states/transition",
-          "transitionName": "success",
-          "pos": [
-            2656,
-            -6
-          ],
-          "pins": [
-            [
-              "in",
-              "flow",
-              "flow"
-            ],
-            [
-              "in",
-              "table",
-              "pathData",
-              null,
-              ""
-            ]
-          ],
-          "hiddenPins": {
-            "p_out": {},
-            "p_in": {
-              "pathData": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "64": {
-          "type": "util/project",
-          "pos": [
-            1032,
-            -342
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "name": false,
-              "level": true,
-              "filepath": true,
-              "description": false,
-              "filename": true,
-              "graphId": true,
-              "flow": false,
-              "graph": true,
-              "id": true,
-              "hasFilename": true,
-              "hasLevel": true
-            },
-            "p_in": {
-              "reset": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "114": {
-          "type": "scene/resetPrefab",
-          "pos": [
-            2208,
-            204
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "reset": false,
-              "id": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "130": {
+        "29": {
           "varName": "playerID",
           "type": "types/getVariable",
           "pos": [
-            500,
-            -48
+            2656,
+            260
           ],
           "hiddenPins": {
             "p_out": {
@@ -3782,64 +3621,6 @@
             "p_in": {}
           },
           "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "279": {
-          "type": "scene/resetPrefab",
-          "pos": [
-            2446,
-            204
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "reset": false,
-              "id": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "27": {
-          "type": "ui/startScreen",
-          "pos": [
-            1354,
-            -6
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "buttonText": true,
-              "flow": false,
-              "layout": false,
-              "portraitImg": true,
-              "progressKey": true,
-              "reset": false,
-              "showProgress": true,
-              "text": false,
-              "title": false
-            }
-          },
-          "hardcodedPins": {
-            "showProgress": {
-              "value": true,
-              "type": "bool"
-            },
-            "layout": {
-              "value": "portrait",
-              "type": "string"
-            },
-            "buttonText": {
-              "value": "ui.scenarios.start.start",
-              "type": "string"
-            }
-          },
           "dynamicMode": "repeat",
           "data": {}
         },
@@ -3888,12 +3669,70 @@
           "dynamicMode": "repeat",
           "data": {}
         },
-        "29": {
+        "27": {
+          "type": "ui/startScreen",
+          "pos": [
+            1354,
+            -6
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "text": false,
+              "title": false,
+              "buttonText": true,
+              "flow": false,
+              "layout": false,
+              "portraitImg": true,
+              "progressKey": true,
+              "reset": false,
+              "showProgress": true
+            }
+          },
+          "hardcodedPins": {
+            "showProgress": {
+              "value": true,
+              "type": "bool"
+            },
+            "layout": {
+              "value": "portrait",
+              "type": "string"
+            },
+            "buttonText": {
+              "value": "ui.scenarios.start.start",
+              "type": "string"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "279": {
+          "type": "scene/resetPrefab",
+          "pos": [
+            2446,
+            204
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "reset": false,
+              "id": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "130": {
           "varName": "playerID",
           "type": "types/getVariable",
           "pos": [
-            2656,
-            260
+            500,
+            -48
           ],
           "hiddenPins": {
             "p_out": {
@@ -3905,59 +3744,57 @@
           "dynamicMode": "repeat",
           "data": {}
         },
-        "30": {
-          "varName": "startScreenText",
-          "type": "types/getVariable",
+        "114": {
+          "type": "scene/resetPrefab",
           "pos": [
-            1032,
-            190
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "startScreenText": false
-            },
-            "p_in": {}
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "42": {
-          "type": "ui/raceLaps",
-          "pos": [
-            752,
-            498
+            2208,
+            204
           ],
           "hiddenPins": {
             "p_out": {
               "flow": false
             },
             "p_in": {
-              "max": false,
-              "flow": false,
-              "cur": false
+              "reset": false,
+              "id": false,
+              "flow": false
             }
           },
-          "dynamicMode": "repeat",
+          "dynamicMode": "once",
           "data": {}
         },
-        "43": {
-          "type": "ui/raceCheckpoints",
+        "20": {
+          "type": "gameplay/race/filePath",
           "pos": [
-            976,
-            498
+            248,
+            22
           ],
           "hiddenPins": {
             "p_out": {
-              "flow": false
+              "pathData": false,
+              "recoveryCount": true,
+              "branching": true,
+              "checkpointCount": true,
+              "closed": true,
+              "desc": false,
+              "flow": false,
+              "laps": true,
+              "name": false
             },
             "p_in": {
-              "max": false,
+              "reset": false,
               "flow": false,
-              "cur": false
+              "file": false,
+              "reverse": false
             }
           },
-          "dynamicMode": "repeat",
+          "hardcodedPins": {
+            "file": {
+              "value": "race.race.json",
+              "type": "string"
+            }
+          },
+          "dynamicMode": "once",
           "data": {}
         },
         "19": {
@@ -4008,6 +3845,11 @@
           "data": {}
         },
         "10": {
+          "pos": [
+            752,
+            414
+          ],
+          "type": "util/customLua",
           "code": {
             "work": "if(core_hotlapping) then\n  core_hotlapping.onClientStartMission()\nend",
             "_executionStopped": "",
@@ -4036,12 +3878,7 @@
               "flow",
               "flow"
             ]
-          ],
-          "pos": [
-            752,
-            414
-          ],
-          "type": "util/customLua"
+          ]
         },
         "94": {
           "type": "recording/startAutoReplay",
@@ -4127,6 +3964,205 @@
           },
           "dynamicMode": "repeat",
           "data": {}
+        },
+        "43": {
+          "type": "ui/raceCheckpoints",
+          "pos": [
+            976,
+            498
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "max": false,
+              "flow": false,
+              "cur": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "64": {
+          "type": "util/project",
+          "pos": [
+            1032,
+            -342
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "graph": true,
+              "flow": false,
+              "graphId": true,
+              "hasLevel": true,
+              "hasFilename": true,
+              "id": true,
+              "name": false,
+              "level": true,
+              "filepath": true,
+              "description": false,
+              "filename": true
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "73": {
+          "type": "states/transition",
+          "transitionName": "success",
+          "pos": [
+            2656,
+            -6
+          ],
+          "pins": [
+            [
+              "in",
+              "flow",
+              "flow"
+            ],
+            [
+              "in",
+              "table",
+              "pathData",
+              null,
+              ""
+            ]
+          ],
+          "hiddenPins": {
+            "p_out": {},
+            "p_in": {
+              "pathData": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "77": {
+          "type": "vehicle/freeze",
+          "pos": [
+            1578,
+            204
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "freeze": false,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "freeze": {
+              "value": true,
+              "type": "bool"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "26": {
+          "type": "ui/fadeFromBlack",
+          "pos": [
+            1032,
+            -174
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false,
+              "completed": false,
+              "complete": false,
+              "incomplete": false
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false,
+              "duration": false
+            }
+          },
+          "hardcodedPins": {
+            "duration": {
+              "value": 0.7500000000000017,
+              "type": "number"
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "25": {
+          "type": "vehicle/enterVehicle",
+          "pos": [
+            2852,
+            204
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "24": {
+          "type": "logic/once",
+          "pos": [
+            514,
+            106
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "reset": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "22": {
+          "type": "gameplay/race/moveVehicleToStartposition",
+          "pos": [
+            752,
+            106
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "rot": false,
+              "pos": false,
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "rolling": false,
+              "reverse": false,
+              "pathData": false,
+              "name": false,
+              "lowPrecision": true,
+              "id": false,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "lowPrecision": {
+              "value": false,
+              "type": "bool"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
         }
       },
       "showTab": true,
@@ -4134,24 +4170,61 @@
       "variables": {
         "list": {},
         "customVariableOrder": {}
-      },
-      "viewPos": [
-        492.50006103515625,
-        -304.5
-      ],
-      "viewZoom": 1,
-      "dirty": false,
-      "description": "This is the description for graph New State"
+      }
     },
     "3": {
-      "viewZoom": 0.7499999403953552,
-      "viewPos": [
-        -124.82585144042969,
-        -211.76759338378906
+      "name": "States",
+      "links": [
+        [
+          18,
+          "success",
+          32,
+          "flow",
+          false
+        ],
+        [
+          50,
+          "success",
+          18,
+          "flow",
+          false
+        ],
+        [
+          4,
+          "success",
+          18,
+          "flow",
+          false
+        ],
+        [
+          5,
+          "flow",
+          4,
+          "flow",
+          false
+        ],
+        [
+          59,
+          "retry",
+          50,
+          "flow",
+          false
+        ],
+        [
+          32,
+          "reset",
+          50,
+          "flow",
+          false
+        ],
+        [
+          32,
+          "success",
+          59,
+          "flow",
+          false
+        ]
       ],
-      "isStateGraph": true,
-      "description": "This is the description for graph New State",
-      "dirty": false,
       "nodes": {
         "59": {
           "type": "states/stateNode",
@@ -4404,66 +4477,29 @@
           "data": {}
         }
       },
-      "links": [
-        [
-          18,
-          "success",
-          32,
-          "flow",
-          false
-        ],
-        [
-          50,
-          "success",
-          18,
-          "flow",
-          false
-        ],
-        [
-          4,
-          "success",
-          18,
-          "flow",
-          false
-        ],
-        [
-          5,
-          "flow",
-          4,
-          "flow",
-          false
-        ],
-        [
-          59,
-          "retry",
-          50,
-          "flow",
-          false
-        ],
-        [
-          32,
-          "reset",
-          50,
-          "flow",
-          false
-        ],
-        [
-          32,
-          "success",
-          59,
-          "flow",
-          false
-        ]
-      ],
-      "name": "States",
+      "type": "graph",
+      "showTab": true,
       "variables": {
         "list": {},
         "customVariableOrder": {}
       },
-      "showTab": true,
-      "type": "graph"
+      "viewZoom": 0.7499999403953552,
+      "viewPos": [
+        -124.82585144042969,
+        -211.76759338378906
+      ],
+      "isStateGraph": true,
+      "description": "This is the description for graph New State",
+      "dirty": false
     },
     "1": {
+      "viewZoom": 1,
+      "viewPos": [
+        -1460.5,
+        -208
+      ],
+      "description": "This is the description for graph New State",
+      "dirty": false,
       "links": [
         [
           110,
@@ -4622,6 +4658,342 @@
       ],
       "name": "Setup Ui",
       "nodes": {
+        "104": {
+          "type": "scene/spawnPrefab",
+          "pos": [
+            -382,
+            92
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "success": true,
+              "origVehId": false,
+              "id": false,
+              "flow": false,
+              "created": false
+            },
+            "p_in": {
+              "useGlobalTranslation": true,
+              "silent": true,
+              "resetVeh": false,
+              "pos": false,
+              "path": false,
+              "name": true,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "silent": {
+              "value": true,
+              "type": "bool"
+            },
+            "path": {
+              "value": "mainPrefab",
+              "type": "string"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "110": {
+          "type": "logic/branch",
+          "pos": [
+            94,
+            92
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": true,
+              "True": false,
+              "False": false
+            },
+            "p_in": {
+              "flow": false,
+              "condition": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "113": {
+          "type": "logic/select",
+          "pos": [
+            1144,
+            92
+          ],
+          "mode": "first",
+          "hiddenPins": {
+            "p_out": {
+              "value": false,
+              "flow": false
+            },
+            "p_in": {
+              "value_2": false,
+              "value_1": false,
+              "select_2": false,
+              "select_1": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {},
+          "count": 2
+        },
+        "117": {
+          "varName": "playerID",
+          "type": "types/setVariable",
+          "pos": [
+            -1306,
+            -160
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "playerID": false,
+              "flow": false
+            }
+          },
+          "global": true,
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "121": {
+          "type": "scene/getPlayerVehicle",
+          "pos": [
+            -1586,
+            -132
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "vehId": false
+            },
+            "p_in": {}
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "125": {
+          "type": "vehicle/enterVehicle",
+          "pos": [
+            1480,
+            302
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "flow": false
+            },
+            "p_in": {
+              "vehId": false,
+              "flow": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "277": {
+          "type": "scene/spawnPrefab",
+          "pos": [
+            696,
+            92
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "success": true,
+              "origVehId": false,
+              "id": false,
+              "flow": false,
+              "created": false
+            },
+            "p_in": {
+              "useGlobalTranslation": true,
+              "silent": true,
+              "resetVeh": false,
+              "pos": false,
+              "path": false,
+              "name": true,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "silent": {
+              "value": true,
+              "type": "bool"
+            },
+            "path": {
+              "value": "reversePrefab",
+              "type": "string"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "278": {
+          "type": "scene/spawnPrefab",
+          "pos": [
+            696,
+            288
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "success": true,
+              "origVehId": false,
+              "id": false,
+              "flow": false,
+              "created": false
+            },
+            "p_in": {
+              "useGlobalTranslation": true,
+              "silent": true,
+              "resetVeh": false,
+              "pos": false,
+              "path": false,
+              "name": true,
+              "flow": false
+            }
+          },
+          "hardcodedPins": {
+            "silent": {
+              "value": true,
+              "type": "bool"
+            },
+            "path": {
+              "value": "forwardPrefab",
+              "type": "string"
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "44": {
+          "type": "mission/preClean",
+          "pos": [
+            -914,
+            92
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "vehId": false,
+              "flow": false
+            },
+            "p_in": {
+              "keepTraffic": false,
+              "keepPlayer": false,
+              "flow": false,
+              "reset": false
+            }
+          },
+          "dynamicMode": "once",
+          "data": {}
+        },
+        "16": {
+          "type": "states/transition",
+          "transitionName": "success",
+          "pos": [
+            1802,
+            92
+          ],
+          "pins": [
+            [
+              "in",
+              "flow",
+              "flow"
+            ],
+            [
+              "in",
+              "number",
+              "vehId",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "mainPrefabId",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "sidePrefabId",
+              null,
+              ""
+            ]
+          ],
+          "hiddenPins": {
+            "p_out": {},
+            "p_in": {
+              "sidePrefabId": false,
+              "mainPrefabId": false,
+              "flow": false,
+              "vehId": false
+            }
+          },
+          "dynamicMode": "repeat",
+          "data": {}
+        },
+        "12": {
+          "type": "input/blacklistActionFilter",
+          "pos": [
+            -1348,
+            92
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "id": true,
+              "flow": false
+            },
+            "p_in": {
+              "reset": false,
+              "ignoreUnrestriced": true,
+              "id": true,
+              "flow": false,
+              "block": true
+            }
+          },
+          "hardcodedPins": {
+            "ignoreUnrestriced": {
+              "value": true,
+              "type": "bool"
+            },
+            "block": {
+              "value": true,
+              "type": "bool"
+            }
+          },
+          "dynamicMode": "once",
+          "data": {},
+          "activeTemplates": {
+            "vehicleTeleporting": true,
+            "walkingMode": true,
+            "aiControls": true,
+            "bigMap": true,
+            "freeCam": true,
+            "funStuff": true,
+            "physicsControls": true,
+            "vehicleMenues": true,
+            "vehicleSwitching": true
+          }
+        },
+        "11": {
+          "varName": "reverse",
+          "type": "types/getVariable",
+          "pos": [
+            -270,
+            8
+          ],
+          "hiddenPins": {
+            "p_out": {
+              "reverse": false
+            },
+            "p_in": {}
+          },
+          "global": true,
+          "dynamicMode": "repeat",
+          "data": {}
+        },
         "9": {
           "type": "ui/setUILayout",
           "pos": [
@@ -4673,342 +5045,6 @@
           },
           "dynamicMode": "repeat",
           "data": {}
-        },
-        "125": {
-          "type": "vehicle/enterVehicle",
-          "pos": [
-            1480,
-            302
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "vehId": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "121": {
-          "type": "scene/getPlayerVehicle",
-          "pos": [
-            -1586,
-            -132
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "vehId": false
-            },
-            "p_in": {}
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "117": {
-          "varName": "playerID",
-          "type": "types/setVariable",
-          "pos": [
-            -1306,
-            -160
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": false
-            },
-            "p_in": {
-              "playerID": false,
-              "flow": false
-            }
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "113": {
-          "type": "logic/select",
-          "pos": [
-            1144,
-            92
-          ],
-          "mode": "first",
-          "hiddenPins": {
-            "p_out": {
-              "value": false,
-              "flow": false
-            },
-            "p_in": {
-              "value_2": false,
-              "value_1": false,
-              "select_2": false,
-              "select_1": false,
-              "flow": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {},
-          "count": 2
-        },
-        "110": {
-          "type": "logic/branch",
-          "pos": [
-            94,
-            92
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "flow": true,
-              "True": false,
-              "False": false
-            },
-            "p_in": {
-              "flow": false,
-              "condition": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "104": {
-          "type": "scene/spawnPrefab",
-          "pos": [
-            -382,
-            92
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "success": true,
-              "origVehId": false,
-              "id": false,
-              "flow": false,
-              "created": false
-            },
-            "p_in": {
-              "useGlobalTranslation": true,
-              "silent": true,
-              "resetVeh": false,
-              "pos": false,
-              "path": false,
-              "name": true,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "silent": {
-              "value": true,
-              "type": "bool"
-            },
-            "path": {
-              "value": "mainPrefab",
-              "type": "string"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "11": {
-          "varName": "reverse",
-          "type": "types/getVariable",
-          "pos": [
-            -270,
-            8
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "reverse": false
-            },
-            "p_in": {}
-          },
-          "global": true,
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "12": {
-          "type": "input/blacklistActionFilter",
-          "pos": [
-            -1348,
-            92
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "id": true,
-              "flow": false
-            },
-            "p_in": {
-              "reset": false,
-              "ignoreUnrestriced": true,
-              "id": true,
-              "flow": false,
-              "block": true
-            }
-          },
-          "hardcodedPins": {
-            "ignoreUnrestriced": {
-              "value": true,
-              "type": "bool"
-            },
-            "block": {
-              "value": true,
-              "type": "bool"
-            }
-          },
-          "dynamicMode": "once",
-          "data": {},
-          "activeTemplates": {
-            "aiControls": true,
-            "bigMap": true,
-            "freeCam": true,
-            "funStuff": true,
-            "physicsControls": true,
-            "vehicleMenues": true,
-            "vehicleSwitching": true,
-            "vehicleTeleporting": true,
-            "walkingMode": true
-          }
-        },
-        "16": {
-          "type": "states/transition",
-          "transitionName": "success",
-          "pos": [
-            1802,
-            92
-          ],
-          "pins": [
-            [
-              "in",
-              "flow",
-              "flow"
-            ],
-            [
-              "in",
-              "number",
-              "vehId",
-              null,
-              ""
-            ],
-            [
-              "in",
-              "number",
-              "mainPrefabId",
-              null,
-              ""
-            ],
-            [
-              "in",
-              "number",
-              "sidePrefabId",
-              null,
-              ""
-            ]
-          ],
-          "hiddenPins": {
-            "p_out": {},
-            "p_in": {
-              "sidePrefabId": false,
-              "mainPrefabId": false,
-              "flow": false,
-              "vehId": false
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "44": {
-          "type": "mission/preClean",
-          "pos": [
-            -914,
-            92
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "vehId": false,
-              "flow": false
-            },
-            "p_in": {
-              "keepTraffic": false,
-              "keepPlayer": false,
-              "flow": false,
-              "reset": false
-            }
-          },
-          "dynamicMode": "once",
-          "data": {}
-        },
-        "278": {
-          "type": "scene/spawnPrefab",
-          "pos": [
-            696,
-            288
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "success": true,
-              "origVehId": false,
-              "id": false,
-              "flow": false,
-              "created": false
-            },
-            "p_in": {
-              "useGlobalTranslation": true,
-              "silent": true,
-              "resetVeh": false,
-              "pos": false,
-              "path": false,
-              "name": true,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "silent": {
-              "value": true,
-              "type": "bool"
-            },
-            "path": {
-              "value": "forwardPrefab",
-              "type": "string"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
-        },
-        "277": {
-          "type": "scene/spawnPrefab",
-          "pos": [
-            696,
-            92
-          ],
-          "hiddenPins": {
-            "p_out": {
-              "success": true,
-              "origVehId": false,
-              "id": false,
-              "flow": false,
-              "created": false
-            },
-            "p_in": {
-              "useGlobalTranslation": true,
-              "silent": true,
-              "resetVeh": false,
-              "pos": false,
-              "path": false,
-              "name": true,
-              "flow": false
-            }
-          },
-          "hardcodedPins": {
-            "silent": {
-              "value": true,
-              "type": "bool"
-            },
-            "path": {
-              "value": "reversePrefab",
-              "type": "string"
-            }
-          },
-          "dynamicMode": "repeat",
-          "data": {}
         }
       },
       "showTab": true,
@@ -5016,43 +5052,9 @@
       "variables": {
         "list": {},
         "customVariableOrder": {}
-      },
-      "viewPos": [
-        -1460.5,
-        -208
-      ],
-      "viewZoom": 1,
-      "dirty": false,
-      "description": "This is the description for graph New State"
+      }
     }
   },
-  "frecency": {
-    "node_30": 1655122540,
-    "nodePin_107-timeStr-in": 1661979660,
-    "nodePin_115-timeOfDay-out": 1661979640,
-    "node_273": 1654689560,
-    "node_26": 1676324009,
-    "node_15": 1655122570,
-    "node_122": 1678988178,
-    "nodePin_8944-reset-in": 1661537750,
-    "node_41": 1663159521,
-    "node_44": 1678988164,
-    "node_4503": 1661455930,
-    "node_45493": 1676323939,
-    "node_53": 1676323924,
-    "node_60": 1661537760,
-    "node_7": 1667483765,
-    "node_71": 1661538560,
-    "node_8975": 1667483402,
-    "node_94": 1654689490,
-    "nodePin_12-block-in": 1677588944
-  },
-  "difficulty": 40,
-  "description": "Project description.",
-  "debugEnabled": false,
-  "date": 1688011119,
-  "currentGraphID": 35,
-  "authors": "Anonymous",
   "isScenario": false,
   "macros": {},
   "name": "ttFg",
@@ -5264,7 +5266,5 @@
       "allowRollingStart",
       "useProvidedVehicle"
     ]
-  },
-  "version": 0.2,
-  "activeGraphId": 35
+  }
 }

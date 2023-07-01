@@ -55,6 +55,26 @@ function C:openRaceFile()
   self.reloadRaceFile(raceFname)
 end
 
+function C:updateMissionSpecificSettingsCurrentVersion(newVer)
+  local verString = "version" .. newVer.id
+  local settingsFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes/settings.json'
+
+  local settings = jsonReadFile(settingsFname)
+  if not settings then
+    log('E', logTag, "couldnt read mission-specific settings file: " .. settingsFname)
+    return false
+  end
+
+  settings.currentVersion = verString
+
+  if not jsonWriteFile(settingsFname, settings, true) then
+    log('E', logTag, "couldnt write mission-specific settings file: " .. settingsFname)
+    return false
+  end
+
+  return true
+end
+
 function C:pushToRaceFile()
   local raceFname = self:getRaceFilename()
   local race = self.loadRace(raceFname)
@@ -63,9 +83,14 @@ function C:pushToRaceFile()
   race.pacenotes:onDeserialized(selectedPacenotesVersion.pacenotes, {})
 
   self:setInstalledVersion(selectedPacenotesVersion)
+  if not self:updateMissionSpecificSettingsCurrentVersion(selectedPacenotesVersion) then
+    log('E', logTag, "couldnt push to race file. things may be in a bad state :(")
+  end
+
   local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
   self.aiPacenotesTool.savePacenotes(self.pacenotes, pacenotesFname)
   log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
+
   self.saveRace(race, raceFname)
   self.reloadRaceFile(raceFname)
   log('I', logTag, "updated pacenotes in race file " .. raceFname .. " with version named '" .. selectedPacenotesVersion.name .. "'")
@@ -140,77 +165,6 @@ function C.reloadRaceFile(raceFname)
 end
 
 function C:draw()
-  -- im.Columns(2)
-  -- im.SetColumnWidth(0,150)
-
-  -- im.Text("Current version")
-  -- im.NextColumn()
-  -- local editEnded = im.BoolPtr(false)
-  -- im.PushItemWidth(im.GetContentRegionAvailWidth() - 35)
-  -- editor.uiInputText("##currentVersion", self.currentVersionText, 1024, nil, nil, nil, editEnded)
-  -- im.PopItemWidth()
-  -- if editEnded[0] then
-  --   self.pacenotes.current_version = ffi.string(self.currentVersionText)
-  --   self.pacenotes._dirty = true
-  -- end
-
-  -- im.NextColumn()
-
-  -- latest working version
-  -- im.Text("Current version")
-  -- im.NextColumn()
-  -- im.PushItemWidth(200)
-  -- -- type dropdown menu
-  -- if im.BeginCombo('##currentVersionDropdown', self.pacenotes.current_version or "None!") then
-  --   for _, versionName in ipairs(self:getAllVersions()) do
-  --     if im.Selectable1(versionName, versionName == self.pacenotes.current_version) then
-  --       self:setCurrentVersion(versionName)
-  --       self.pacenotes._dirty = true
-  --     end
-  --   --   if im.IsItemHovered() then
-  --   --     im.BeginTooltip()
-  --   --     im.PushTextWrapPos(200 * editor.getPreference("ui.general.scale"))
-  --   --     im.TextWrapped(gameplay_missions_missions.getMissionStaticData(mType)["description"] or "No Description")
-  --   --     im.PopTextWrapPos()
-  --   --     im.EndTooltip()
-  --   --   end
-  --   end
-  --   im.EndCombo()
-  -- end
-  -- im.SameLine()
-  -- /latest working version
-
---   if not self._titleTranslated then
---     self._titleTranslated = translateLanguage(self.mission.name, noTranslation, true)
---   end
---   editor.uiIconImage(editor.icons.translate, imVec24x24 , (self._titleTranslated or noTranslation) == noTranslation and imVec4Red or imVec4Green)
---   if im.IsItemHovered() then
---     im.tooltip(self._titleTranslated)
---   end
-
-
---   im.NextColumn()
-
---   im.Text("Description")
---   im.NextColumn()
---   editEnded = im.BoolPtr(false)
---   im.PushItemWidth(im.GetContentRegionAvailWidth() - 35)
---   editor.uiInputTextMultiline("##Description", self.descText, 2048, im.ImVec2(0,100), nil, nil, nil, editEnded)
---   im.PopItemWidth()
---   if editEnded[0] then
---     self.mission.description = ffi.string(self.descText)
---     self._descTranslated = nil
---     self.mission._dirty = true
---   end
---     im.SameLine()
---   if not self._descTranslated then
---     self._descTranslated = translateLanguage(self.mission.description, noTranslation, true)
---   end
---   editor.uiIconImage(editor.icons.translate, imVec24x24 , (self._descTranslated or noTranslation) == noTranslation and imVec4Red or imVec4Green)
---   if im.IsItemHovered() then
---     im.tooltip(self._descTranslated)
---   end
-
   im.BeginChild1("versions", im.ImVec2(225 * im.uiscale[0], 0), im.WindowFlags_ChildWindow)
   for i, version in ipairs(self.pacenotes.versions) do
     local versionName = version.name
@@ -247,11 +201,39 @@ function C:draw()
       --   print("TODO delete pacenote version")
       -- end
 
-      im.BeginChild1("currentVersionInner", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
-      im.HeaderText("Pacenotes Version Info")
-      im.Columns(2)
-      im.SetColumnWidth(0,150)
 
+      im.BeginChild1("currentVersionInner", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
+
+      im.Columns(1)
+      im.HeaderText("Generate Audio Files")
+
+      im.Columns(2)
+      im.SetColumnWidth(0,200)
+      im.Text("BeamNG.drive user folder")
+      im.NextColumn()
+      local pacenotesFname = 'C://Users/<username>/AppData/Local/BeamNG.drive'
+      local ptxt = im.ArrayChar(1024, pacenotesFname)
+      editor.uiInputText("##userpath", ptxt, nil, nil, nil, nil, nil)
+      im.NextColumn()
+      im.Text("Pacenotes file in user folder")
+      im.NextColumn()
+      local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
+      local ptxt = im.ArrayChar(1024, pacenotesFname)
+      editor.uiInputText("##notepath", ptxt, nil, nil, nil, nil, nil)
+      im.NextColumn()
+      im.Text("Upload pacenotes here")
+      im.NextColumn()
+      local urltxt = im.ArrayChar(1024, "https://pacenotes-mo5q6vt2ea-uw.a.run.app")
+      editor.uiInputText("##url", urltxt, nil, nil, nil, nil, nil)
+
+      im.NextColumn()
+
+      im.Columns(1)
+      im.Separator()
+      im.HeaderText("Pacenotes Version Info")
+
+      im.Columns(2)
+      -- im.SetColumnWidth(0,150)
       im.Text("Name")
       im.NextColumn()
       local editEnded = im.BoolPtr(false)
@@ -274,6 +256,11 @@ function C:draw()
       im.Text(tostring(#versionData.pacenotes))
       im.NextColumn()
 
+      im.Text("Version id")
+      im.NextColumn()
+      im.Text('version' .. tostring(versionData.id))
+      im.NextColumn()
+
       im.Text("Voice")
       im.NextColumn()
       local currentVoice = self:getSelectedVersion().voice
@@ -281,7 +268,10 @@ function C:draw()
         for _, voiceName in ipairs(self.aiPacenotesTool.voiceNamesSorted) do
           if im.Selectable1(voiceName, voiceName == currentVoice) then
             local selectedPacenotesVersion = self:getSelectedVersion()
+            local voiceParams = self.aiPacenotesTool.voices[voiceName]
             selectedPacenotesVersion.voice = voiceName
+            selectedPacenotesVersion.language_code = voiceParams.language_code
+            selectedPacenotesVersion.voice_name = voiceParams.voice_name
           end
         end
         im.EndCombo()

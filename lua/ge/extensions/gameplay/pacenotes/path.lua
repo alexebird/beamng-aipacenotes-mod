@@ -21,6 +21,8 @@ function C:createNew()
     installed = false,
     name = 'New version #' .. newId,
     voice = 'british_female',
+    voice_name = "en-GB-Neural2-A",
+    language_code = "en-GB",
     authors = '',
     description = '',
     pacenotes = {}, -- this is NOT a /lua/ge/extensions/gameplay/util/sortedList instance like in gameplay/race/path.lua.
