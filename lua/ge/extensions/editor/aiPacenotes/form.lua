@@ -132,6 +132,9 @@ function C:getRaceFilename()
   local missionDir = self.aiPacenotesTool.getCurrentPath()._dir
   local raceFile = missionDir .. 'race.race.json'
   return raceFile
+
+  -- local override = "/levels/jungle_rock_island/quickrace/jri_road_race.race.json"
+  -- return override
 end
 
 function C.saveRace(race, savePath)
