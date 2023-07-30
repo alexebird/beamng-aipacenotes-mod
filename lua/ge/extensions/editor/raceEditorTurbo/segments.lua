@@ -35,6 +35,15 @@ function C:unselect()
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
 end
+function C:unselectNone()
+  if not self.path then return end
+  --self:selectSegment(nil)
+  for _, seg in pairs(self.path.segments.objects) do
+    seg._drawMode = 'none'
+  end
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
+end
 
 function C:selectSegment(index)
   self.index = index

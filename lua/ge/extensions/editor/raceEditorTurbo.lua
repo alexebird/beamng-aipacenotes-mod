@@ -21,7 +21,7 @@ currentPath._fnWithoutExt = 'NewRace'
 currentPath._dir = previousFilepath
 local allFiles = {}
 
-local spWindow, pnWindow, segWindow, tlWindow, toolsWindow
+local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow
 
 local raceTestWindowOpen = im.BoolPtr(false)
 local mouseInfo = {}
@@ -416,7 +416,7 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
   testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
   currentWindow = windows[1]
-  pnWindow, segWindow, spWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[5], windows[7]
+  pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7]
   currentWindow:setPath(currentPath)
   currentWindow:selected()
 end
@@ -485,4 +485,7 @@ M.onWindowGotFocus = onWindowGotFocus
 M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized
 M.getToolsWindow = function() return toolsWindow end
+M.getPathnodesWindow = function() return pnWindow end
+M.getPacenotesWindow = function() return pacenotesWindow end
+M.getSegmentsWindow = function() return segWindow end
 return M

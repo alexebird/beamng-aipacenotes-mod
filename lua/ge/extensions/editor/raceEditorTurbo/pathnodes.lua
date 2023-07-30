@@ -45,6 +45,15 @@ function C:unselect()
   self.fields = {}
   self.addFieldText = im.ArrayChar(256, "")
 end
+function C:unselectNone()
+  if not self.path then return end
+  for _, n in pairs(self.path.pathnodes.objects) do
+    n._drawMode = 'none'
+  end
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
+  self.fields = {}
+  self.addFieldText = im.ArrayChar(256, "")
+end
 
 function C:selectPathnode(id)
   self.index = id
