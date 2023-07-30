@@ -4,8 +4,8 @@
 
 local M = {}
 local u_32_max_int = 4294967295
-local logTag = 'race_editor_test'
-local toolWindowName = "raceEditorTool"
+local logTag = 'race_editor_turbo'
+local toolWindowName = "raceEditorTurbo"
 local editModeName = "Edit Races"
 local im = ui_imgui
 local ffi = require('ffi')
@@ -210,7 +210,7 @@ end
 
 
 local function onEditorGui()
-  if editor.beginWindow(toolWindowName, "Race Tool", im.WindowFlags_MenuBar) then
+  if editor.beginWindow(toolWindowName, "Race Editor Turbo", im.WindowFlags_MenuBar) then
     if im.BeginMenuBar() then
       if im.BeginMenu("File") then
         im.Text(previousFilepath .. previousFilename)
@@ -406,7 +406,7 @@ local function onEditorInitialized()
   }
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_LMB] = "Select"
   editor.registerWindow(toolWindowName, im.ImVec2(500, 500))
-  editor.addWindowMenuItem("Race/Path Editor", function() show() end,{groupMenuName="Gameplay"})
+  editor.addWindowMenuItem("Race Editor Turbo", function() show() end,{groupMenuName="Gameplay"})
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/pathnodes')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/segments')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/startPositions')(M))
@@ -457,8 +457,8 @@ local function onDeserialized(data)
 end
 
 local function onEditorRegisterPreferences(prefsRegistry)
-  prefsRegistry:registerCategory("raceEditor")
-  prefsRegistry:registerSubCategory("raceEditor", "general", nil,
+  prefsRegistry:registerCategory("raceEditorTurbo")
+  prefsRegistry:registerSubCategory("raceEditorTurbo", "general", nil,
   {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
     {directionalNodes = {"bool", true, "Enable directional nodes for best-quality races"}},
