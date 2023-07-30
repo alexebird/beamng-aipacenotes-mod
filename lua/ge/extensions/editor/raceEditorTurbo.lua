@@ -70,16 +70,81 @@ local function saveRace(race, savePath)
   race._fnWithoutExt = fn2
 end
 
+local function createEmptyRaceFiles(missionDir)
+  -- Create the pacenotes directory
+  os.execute('mkdir "' .. missionDir .. '\\pacenotes" 2> nul')
+
+  -- A utility function to write data into a file
+  local function writeToFile(file, data)
+      local f = io.open(file, "w")
+      if f then
+          f:write(data)
+          f:close()
+      else
+          print("Error: Unable to open file: " .. file)
+      end
+  end
+
+  -- Create the json files
+  writeToFile(missionDir .. "\\race.race.json", '{}')
+  writeToFile(missionDir .. "\\pacenotes.pacenotes.json", '{"versions":[]}')
+  writeToFile(missionDir .. "\\pacenotes\\settings.json", '{"volume": 4, "currentVersion":"version1"}')
+end
+
+local function createEmptyRaceFiles(missionDir)
+  -- Create the pacenotes directory
+  os.execute('mkdir "' .. missionDir .. '\\pacenotes" 2> nul')
+
+  -- A utility function to write data into a file
+  local function writeToFile(file, data)
+      local f = io.open(file, "w")
+      if f then
+          f:write(data)
+          f:close()
+      else
+          print("Error: Unable to open file: " .. file)
+      end
+  end
+
+  -- Create the json files
+  writeToFile(missionDir .. "\\race.race.json", '{}')
+  writeToFile(missionDir .. "\\pacenotes.pacenotes.json", [[
+    {
+      "versions":[
+        {
+          "authors":"",
+          "description":"",
+          "id":1,
+          "installed":true,
+          "language_code":"en-GB",
+          "name":"Primary",
+          "pacenotes":[],
+          "voice":"british_female",
+          "voice_name":"en-GB-Neural2-A"
+        }
+      ]
+    }
+  ]])
+  writeToFile(missionDir .. "\\pacenotes\\settings.json", [[
+    {
+      "currentVersion":"version1",
+      "volume": 4
+    }
+  ]])
+end
+
 local function loadRace(filename)
   if not filename then
     return
   end
+  local dir, filename, ext = path.split(filename)
   local json = readJsonFile(filename)
   if not json then
-    log('E', logTag, 'unable to find race file: ' .. tostring(filename))
-    return
+    -- log('E', logTag, 'unable to find race file: ' .. tostring(filename))
+    log('I', logTag, 'creating empty race files at ' .. tostring(filename))
+    createEmptyRaceFiles(dir)
+    json = readJsonFile(filename)
   end
-  local dir, filename, ext = path.split(filename)
   previousFilepath = dir
   previousFilename = filename
   local p = require('/lua/ge/extensions/gameplay/race/path')("New Race")
