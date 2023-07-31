@@ -35,6 +35,16 @@ function C:getSelectedVersion()
   end
 end
 
+function C:getInstalledVersion()
+  if self.pacenotes then
+    for _, version in ipairs(self.pacenotes.versions) do
+      if version.installed then
+        return version
+      end
+    end
+  end
+end
+
 function C:createEmptyVersion()
   local newEntry = self.pacenotes:createNew()
   self.index = newEntry.id
@@ -57,7 +67,7 @@ end
 
 function C:updateMissionSpecificSettingsCurrentVersion(newVer)
   local verString = "version" .. newVer.id
-  local settingsFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes/settings.json'
+  local settingsFname = self.aiPacenotesTool:getCurrentPath()._dir .. 'pacenotes/settings.json'
 
   local settings = jsonReadFile(settingsFname)
   if not settings then
@@ -75,40 +85,68 @@ function C:updateMissionSpecificSettingsCurrentVersion(newVer)
   return true
 end
 
-function C:pushToRaceFile()
-  local raceFname = self:getRaceFilename()
-  local race = self.loadRace(raceFname)
+function C:useSelectedVersionInRaceFile()
+  -- local raceFname = self:getRaceFilename()
+  -- local race = self.loadRace(raceFname)
+
+  -- get the current race
+  local race = self.aiPacenotesTool:getRace()
+  -- get the selected pacenotes version.
   local selectedPacenotesVersion = self:getSelectedVersion()
 
+  -- set the pacenotes of the current race to the selected pacenotes version.
   race.pacenotes:onDeserialized(selectedPacenotesVersion.pacenotes, {})
 
+  -- mark that pacenotes version as installed.
   self:setInstalledVersion(selectedPacenotesVersion)
+  -- update the pacenotes settings file to the new version
   if not self:updateMissionSpecificSettingsCurrentVersion(selectedPacenotesVersion) then
     log('E', logTag, "couldnt push to race file. things may be in a bad state :(")
   end
 
-  local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
-  self.aiPacenotesTool.savePacenotes(self.pacenotes, pacenotesFname)
-  log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
+  -- local pacenotesFname = self.aiPacenotesTool:getCurrentPath()._dir .. self.aiPacenotesTool:getDefaultPacenotesFname()
+  -- self.aiPacenotesTool:savePacenotes(self.pacenotes, pacenotesFname)
+  -- log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
 
-  self.saveRace(race, raceFname)
-  self.reloadRaceFile(raceFname)
-  log('I', logTag, "updated pacenotes in race file " .. raceFname .. " with version named '" .. selectedPacenotesVersion.name .. "'")
+  -- self.saveRace(race, raceFname)
+  -- self.reloadRaceFile(raceFname)
+  -- log('I', logTag, "updated pacenotes in race file " .. raceFname .. " with version named '" .. selectedPacenotesVersion.name .. "'")
 end
 
-function C:pullFromRaceFile()
-  local raceFname = self:getRaceFilename()
-  local race = self.loadRace(raceFname)
-  local pacenotesFromRace = race.pacenotes:onSerialize()
-  local selectedPacenotesVersion = self:getSelectedVersion()
-  -- printPacenotesVersion(selectedPacenotesVersion)
-  selectedPacenotesVersion.pacenotes = pacenotesFromRace
-  local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
-  self.aiPacenotesTool.savePacenotes(self.pacenotes, pacenotesFname)
-  log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
-  log('I', logTag, "updated pacenotes with name '" .. selectedPacenotesVersion.name .. "' from race file " .. raceFname)
-  self.printPacenotesVersion(selectedPacenotesVersion)
-end
+-- function C:pushToRaceFile()
+--   local raceFname = self:getRaceFilename()
+--   local race = self.loadRace(raceFname)
+--   local selectedPacenotesVersion = self:getSelectedVersion()
+
+--   race.pacenotes:onDeserialized(selectedPacenotesVersion.pacenotes, {})
+
+--   self:setInstalledVersion(selectedPacenotesVersion)
+--   if not self:updateMissionSpecificSettingsCurrentVersion(selectedPacenotesVersion) then
+--     log('E', logTag, "couldnt push to race file. things may be in a bad state :(")
+--   end
+
+--   local pacenotesFname = self.aiPacenotesTool:getCurrentPath()._dir .. self.aiPacenotesTool:getDefaultPacenotesFname()
+--   self.aiPacenotesTool:savePacenotes(self.pacenotes, pacenotesFname)
+--   log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
+
+--   self.saveRace(race, raceFname)
+--   self.reloadRaceFile(raceFname)
+--   log('I', logTag, "updated pacenotes in race file " .. raceFname .. " with version named '" .. selectedPacenotesVersion.name .. "'")
+-- end
+
+-- function C:pullFromRaceFile()
+--   local raceFname = self:getRaceFilename()
+--   local race = self.loadRace(raceFname)
+--   local pacenotesFromRace = race.pacenotes:onSerialize()
+--   local selectedPacenotesVersion = self:getSelectedVersion()
+--   -- printPacenotesVersion(selectedPacenotesVersion)
+--   selectedPacenotesVersion.pacenotes = pacenotesFromRace
+--   local pacenotesFname = self.aiPacenotesTool:getCurrentPath()._dir .. self.aiPacenotesTool:getDefaultPacenotesFname()
+--   self.aiPacenotesTool:savePacenotes(self.pacenotes, pacenotesFname)
+--   log('I', logTag, "saved pacenotes to file " .. pacenotesFname)
+--   log('I', logTag, "updated pacenotes with name '" .. selectedPacenotesVersion.name .. "' from race file " .. raceFname)
+--   self.printPacenotesVersion(selectedPacenotesVersion)
+-- end
 
 function C.printPacenotesVersion(ver)
   log('D', logTag,
@@ -129,7 +167,7 @@ function C.printPacenotesVersion(ver)
 end
 
 function C:getRaceFilename()
-  local missionDir = self.aiPacenotesTool.getCurrentPath()._dir
+  local missionDir = self.aiPacenotesTool:getCurrentPath()._dir
   local raceFile = missionDir .. 'race.race.json'
   return raceFile
 
@@ -187,52 +225,27 @@ function C:draw()
   im.BeginChild1("currentSegment", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
     if self.index then
       local versionData = self.pacenotes.versions[self.index]
+      -- im.SameLine()
+      -- if im.Button("Open Race File") then
+      --   self:openRaceFile()
+      -- end
       im.SameLine()
-      if im.Button("Open Race File") then
-        self:openRaceFile()
+      if im.Button("Use in Race File") then
+        self:useSelectedVersionInRaceFile()
       end
-      im.SameLine()
-      if im.Button("Push to Race File") then
-        self:pushToRaceFile()
-      end
-      im.SameLine()
-      if im.Button("Pull from Race File") then
-        self:pullFromRaceFile()
-      end
+      -- im.SameLine()
+      -- if im.Button("Pull from Race File") then
+      --   self:pullFromRaceFile()
+      -- end
 
       -- if im.Button("Delete") then
       --   print("TODO delete pacenote version")
       -- end
 
-
       im.BeginChild1("currentVersionInner", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
 
       im.Columns(1)
-      im.HeaderText("Generate Audio Files")
-
-      im.Columns(2)
-      im.SetColumnWidth(0,200)
-      im.Text("BeamNG.drive user folder")
-      im.NextColumn()
-      local pacenotesFname = 'C://Users/<username>/AppData/Local/BeamNG.drive'
-      local ptxt = im.ArrayChar(1024, pacenotesFname)
-      editor.uiInputText("##userpath", ptxt, nil, nil, nil, nil, nil)
-      im.NextColumn()
-      im.Text("Pacenotes file in user folder")
-      im.NextColumn()
-      local pacenotesFname = self.aiPacenotesTool.getCurrentPath()._dir .. 'pacenotes.pacenotes.json'
-      local ptxt = im.ArrayChar(1024, pacenotesFname)
-      editor.uiInputText("##notepath", ptxt, nil, nil, nil, nil, nil)
-      im.NextColumn()
-      im.Text("Upload pacenotes here")
-      im.NextColumn()
-      local urltxt = im.ArrayChar(1024, "https://pacenotes-mo5q6vt2ea-uw.a.run.app")
-      editor.uiInputText("##url", urltxt, nil, nil, nil, nil, nil)
-
-      im.NextColumn()
-
-      im.Columns(1)
-      im.Separator()
+      -- im.Separator()
       im.HeaderText("Pacenotes Version Info")
 
       im.Columns(2)
@@ -268,10 +281,10 @@ function C:draw()
       im.NextColumn()
       local currentVoice = self:getSelectedVersion().voice
       if im.BeginCombo('##voiceDropdown', currentVoice) then
-        for _, voiceName in ipairs(self.aiPacenotesTool.voiceNamesSorted) do
+        for _, voiceName in ipairs(self.aiPacenotesTool:getVoiceNamesSorted()) do
           if im.Selectable1(voiceName, voiceName == currentVoice) then
             local selectedPacenotesVersion = self:getSelectedVersion()
-            local voiceParams = self.aiPacenotesTool.voices[voiceName]
+            local voiceParams = self.aiPacenotesTool:getVoices()[voiceName]
             selectedPacenotesVersion.voice = voiceName
             selectedPacenotesVersion.language_code = voiceParams.language_code
             selectedPacenotesVersion.voice_name = voiceParams.voice_name

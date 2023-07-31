@@ -21,7 +21,7 @@ currentPath._fnWithoutExt = 'NewRace'
 currentPath._dir = previousFilepath
 local allFiles = {}
 
-local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow
+local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow, aiPnWindow
 
 local raceTestWindowOpen = im.BoolPtr(false)
 local mouseInfo = {}
@@ -68,43 +68,44 @@ local function saveRace(race, savePath)
   race._dir = dir
   local a, fn2, b = path.splitWithoutExt(previousFilename, true)
   race._fnWithoutExt = fn2
+
+  -- get the pacenotes field from race, and update the pacenotes.
+  -- serialize it so it becomes a table.
+  local racePacenotes = race.pacenotes:onSerialize()
+  aiPnWindow:setNotesForInstalledVersion(racePacenotes)
+  aiPnWindow:save()
 end
 
 local function createEmptyRaceFiles(missionDir)
-  -- Create the pacenotes directory
-  os.execute('mkdir "' .. missionDir .. '\\pacenotes" 2> nul')
+  -- A utility function to check if a file exists
+  local function fileExists(file)
+    local f = io.open(file, "r")
+    if f then
+      f:close()
+      return true
+    else
+      return false
+    end
+  end
 
   -- A utility function to write data into a file
   local function writeToFile(file, data)
+    if not fileExists(file) then
       local f = io.open(file, "w")
       if f then
-          f:write(data)
-          f:close()
+        f:write(data)
+        f:close()
       else
-          print("Error: Unable to open file: " .. file)
+        print("Error: Unable to open file: " .. file)
       end
+    else
+      log('D', logTag, 'file '..file..' already exists')
+    end
   end
 
-  -- Create the json files
-  writeToFile(missionDir .. "\\race.race.json", '{}')
-  writeToFile(missionDir .. "\\pacenotes.pacenotes.json", '{"versions":[]}')
-  writeToFile(missionDir .. "\\pacenotes\\settings.json", '{"volume": 4, "currentVersion":"version1"}')
-end
-
-local function createEmptyRaceFiles(missionDir)
-  -- Create the pacenotes directory
-  os.execute('mkdir "' .. missionDir .. '\\pacenotes" 2> nul')
-
-  -- A utility function to write data into a file
-  local function writeToFile(file, data)
-      local f = io.open(file, "w")
-      if f then
-          f:write(data)
-          f:close()
-      else
-          print("Error: Unable to open file: " .. file)
-      end
-  end
+  -- Ensure the pacenotes directory exists
+  local pacenotesDir = missionDir .. '\\pacenotes'
+  os.execute('mkdir "' .. pacenotesDir .. '" 2> nul')
 
   -- Create the json files
   writeToFile(missionDir .. "\\race.race.json", '{}')
@@ -133,17 +134,16 @@ local function createEmptyRaceFiles(missionDir)
   ]])
 end
 
-local function loadRace(filename)
-  if not filename then
+local function loadRace(full_filename)
+  if not full_filename then
     return
   end
-  local dir, filename, ext = path.split(filename)
-  local json = readJsonFile(filename)
+  local json = readJsonFile(full_filename)
+  local dir, filename, ext = path.split(full_filename)
   if not json then
-    -- log('E', logTag, 'unable to find race file: ' .. tostring(filename))
-    log('I', logTag, 'creating empty race files at ' .. tostring(filename))
+    log('I', logTag, 'creating empty race files at ' .. tostring(dir))
     createEmptyRaceFiles(dir)
-    json = readJsonFile(filename)
+    json = readJsonFile(full_filename)
   end
   previousFilepath = dir
   previousFilename = filename
@@ -156,6 +156,9 @@ local function loadRace(filename)
   editor.history:commitAction("Set path to " .. p.name,
   {path = p, fp = dir, fn = filename},
    setRaceUndo, setRaceRedo)
+
+  local pacenotesFile = aiPnWindow:getPacenotesFileForMission(dir)
+  aiPnWindow:loadPacenotes(pacenotesFile)
 
   return currentPath
 end
@@ -401,6 +404,10 @@ local function onEditorGui()
         editor.selectEditMode(editor.editModes.raceEditMode)
       end
     end
+    if im.Button("Save") then
+      saveRace(currentPath, previousFilepath .. previousFilename)
+    end
+    im.Separator()
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
         local flags = nil
@@ -457,7 +464,7 @@ local function onDeactivate()
   editor.clearObjectSelection()
 end
 
-
+-- this is called after you Ctrl+L to reload lua.
 local function onEditorInitialized()
   editor.editModes.raceEditMode =
   {
@@ -472,18 +479,21 @@ local function onEditorInitialized()
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_LMB] = "Select"
   editor.registerWindow(toolWindowName, im.ImVec2(500, 500))
   editor.addWindowMenuItem("Race Editor Turbo", function() show() end,{groupMenuName="Gameplay"})
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/pathnodes')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/segments')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/startPositions')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/pacenotes')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/trackLayout')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/timeTrials')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
-  testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
-  currentWindow = windows[1]
-  pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7]
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/pathnodes')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/segments')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/startPositions')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/pacenotes')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/trackLayout')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/timeTrials')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/tools')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/aiPacenotes')(M))
+  testingWindow =  require('/lua/ge/extensions/editor/raceEditorTurbo/testing')(M)
+  pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow, aiPnWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7], windows[8]
+  currentWindow = pnWindow
   currentWindow:setPath(currentPath)
   currentWindow:selected()
+  local pacenotesFile = aiPnWindow:getPacenotesFileForMission(currentPath._dir)
+  aiPnWindow:loadPacenotes(pacenotesFile)
 end
 
 local function onEditorToolWindowHide(windowName)
