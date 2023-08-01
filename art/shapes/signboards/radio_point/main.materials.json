@@ -1,0 +1,19 @@
+{
+  "RadioPointIconMaterial": {
+    "name": "RadioPointIconMaterial",
+    "mapTo": "RadioPointIconMaterial",
+    "class": "Material",
+    "persistentId": "816a9fb7-2256-406b-a350-677903cbc17e",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/radio_point/signboard_radio_point.color.png",
+        "normalMap": "/art/shapes/signboards/radio_point/signboard_radio_point.normal.png",
+        "roughnessMap": "/art/shapes/signboards/radio_point/signboard_radio_point.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

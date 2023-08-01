@@ -1,0 +1,19 @@
+{
+  "RadioPointWarningIconMaterial": {
+    "name": "RadioPointWarningIconMaterial",
+    "mapTo": "RadioPointWarningIconMaterial",
+    "class": "Material",
+    "persistentId": "f6257c70-a3cd-4e91-88d4-d204ea4ab955",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/signboard_radio_point_warning/signboard_radio_point_warning.color.png",
+        "normalMap": "/art/shapes/signboards/signboard_radio_point_warning/signboard_radio_point_warning.normal.png",
+        "roughnessMap": "/art/shapes/signboards/signboard_radio_point_warning/signboard_radio_point_warning.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}
