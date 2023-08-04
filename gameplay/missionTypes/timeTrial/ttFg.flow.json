@@ -2,7 +2,7 @@
   "activeGraphId":35,
   "authors":"Anonymous",
   "currentGraphID":35,
-  "date":1690632701,
+  "date":1691139569,
   "debugEnabled":false,
   "description":"Project description.",
   "difficulty":40,
@@ -33,34 +33,6 @@
       "dirty":false,
       "links":[
         [
-          110,
-          "False",
-          278,
-          "flow",
-          false
-        ],
-        [
-          2,
-          "flow",
-          12,
-          "flow",
-          false
-        ],
-        [
-          104,
-          "flow",
-          110,
-          "flow",
-          false
-        ],
-        [
-          11,
-          "reverse",
-          110,
-          "condition",
-          false
-        ],
-        [
           113,
           "flow",
           9,
@@ -68,9 +40,9 @@
           false
         ],
         [
-          110,
-          "True",
-          277,
+          2,
+          "flow",
+          12,
           "flow",
           false
         ],
@@ -103,14 +75,42 @@
           true
         ],
         [
+          110,
+          "True",
           277,
+          "flow",
+          false
+        ],
+        [
+          110,
+          "False",
+          278,
+          "flow",
+          false
+        ],
+        [
+          104,
+          "flow",
+          110,
+          "flow",
+          false
+        ],
+        [
+          11,
+          "reverse",
+          110,
+          "condition",
+          false
+        ],
+        [
+          278,
           "flow",
           113,
           "flow",
           false
         ],
         [
-          278,
+          277,
           "flow",
           113,
           "flow",
@@ -585,10 +585,10 @@
         "list":{}
       },
       "viewPos":[
-        -1460.50000000000000000000,
-        -208
+        -891.62194824218750000000,
+        -235.85644531250000000000
       ],
-      "viewZoom":1
+      "viewZoom":0.50000000000000000000
     },
     "3":{
       "description":"This is the description for graph New State",
@@ -596,30 +596,23 @@
       "isStateGraph":true,
       "links":[
         [
-          18,
-          "success",
-          32,
-          "flow",
-          false
-        ],
-        [
-          50,
-          "success",
-          18,
-          "flow",
-          false
-        ],
-        [
-          4,
-          "success",
-          18,
-          "flow",
-          false
-        ],
-        [
           5,
           "flow",
           4,
+          "flow",
+          false
+        ],
+        [
+          32,
+          "success",
+          59,
+          "flow",
+          false
+        ],
+        [
+          18,
+          "success",
+          32,
           "flow",
           false
         ],
@@ -638,9 +631,16 @@
           false
         ],
         [
-          32,
+          50,
           "success",
-          59,
+          18,
+          "flow",
+          false
+        ],
+        [
+          4,
+          "success",
+          18,
           "flow",
           false
         ]
@@ -950,10 +950,17 @@
           false
         ],
         [
-          19,
+          118,
           "flow",
           20,
           "flow",
+          false
+        ],
+        [
+          118,
+          "raceFile",
+          20,
+          "file",
           false
         ],
         [
@@ -1076,6 +1083,27 @@
           false
         ],
         [
+          28,
+          "flow",
+          114,
+          "flow",
+          false
+        ],
+        [
+          19,
+          "enterState",
+          114,
+          "reset",
+          true
+        ],
+        [
+          28,
+          "mainPrefabId",
+          114,
+          "id",
+          false
+        ],
+        [
           114,
           "flow",
           279,
@@ -1097,6 +1125,20 @@
           false
         ],
         [
+          20,
+          "flow",
+          64,
+          "flow",
+          false
+        ],
+        [
+          19,
+          "enterState",
+          64,
+          "reset",
+          true
+        ],
+        [
           42,
           "flow",
           43,
@@ -1104,31 +1146,10 @@
           false
         ],
         [
-          15,
+          19,
           "flow",
-          111,
+          118,
           "flow",
-          false
-        ],
-        [
-          130,
-          "playerID",
-          111,
-          "vehId",
-          false
-        ],
-        [
-          111,
-          "flow",
-          77,
-          "flow",
-          false
-        ],
-        [
-          130,
-          "playerID",
-          77,
-          "vehId",
           false
         ],
         [
@@ -1153,45 +1174,17 @@
           true
         ],
         [
-          20,
+          15,
           "flow",
-          64,
-          "flow",
-          false
-        ],
-        [
-          19,
-          "enterState",
-          64,
-          "reset",
-          true
-        ],
-        [
-          28,
-          "flow",
-          114,
+          111,
           "flow",
           false
         ],
         [
-          19,
-          "enterState",
-          114,
-          "reset",
-          true
-        ],
-        [
-          28,
-          "mainPrefabId",
-          114,
-          "id",
-          false
-        ],
-        [
-          24,
-          "flow",
-          42,
-          "flow",
+          130,
+          "playerID",
+          111,
+          "vehId",
           false
         ],
         [
@@ -1207,6 +1200,27 @@
           73,
           "pathData",
           true
+        ],
+        [
+          24,
+          "flow",
+          42,
+          "flow",
+          false
+        ],
+        [
+          111,
+          "flow",
+          77,
+          "flow",
+          false
+        ],
+        [
+          130,
+          "playerID",
+          77,
+          "vehId",
+          false
         ]
       ],
       "name":"Setup Vehicle",
@@ -1289,7 +1303,7 @@
             }
           },
           "pos":[
-            -172,
+            -270,
             -6
           ],
           "type":"events/onUpdate"
@@ -1297,12 +1311,6 @@
         "20":{
           "data":{},
           "dynamicMode":"once",
-          "hardcodedPins":{
-            "file":{
-              "type":"string",
-              "value":"race.race.json"
-            }
-          },
           "hiddenPins":{
             "p_in":{
               "reverse":false,
@@ -1402,7 +1410,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000188738
+              "value":0.75000000000000000000
             }
           },
           "hiddenPins":{
@@ -1768,6 +1776,30 @@
           ],
           "type":"scene/resetPrefab"
         },
+        "118":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{
+              "active":true,
+              "currentVersion":true,
+              "flow":false,
+              "inactive":true,
+              "missionDir":true,
+              "raceFile":false,
+              "unavailable":false,
+              "volume":true
+            }
+          },
+          "pos":[
+            -4,
+            22
+          ],
+          "type":"gameplay/race/aiPacenotesInfo"
+        },
         "130":{
           "data":{},
           "dynamicMode":"repeat",
@@ -1812,10 +1844,10 @@
         "list":{}
       },
       "viewPos":[
-        492.50006103515625000000,
-        -304.50000000000000000000
+        -294.00906372070312500000,
+        -336.86550903320312500000
       ],
-      "viewZoom":1
+      "viewZoom":0.74999994039535522461
     },
     "31":{
       "description":"This is the description for graph New Group State",
@@ -2021,17 +2053,185 @@
       "links":[
         [
           80,
-          "true",
-          276,
+          "false",
+          54,
           "flow",
+          false
+        ],
+        [
+          95,
+          "false",
+          54,
+          "flow",
+          false
+        ],
+        [
+          83,
+          "raceData",
+          54,
+          "raceData",
+          true
+        ],
+        [
+          23,
+          "playerID",
+          54,
+          "vehId",
+          true
+        ],
+        [
+          83,
+          "active",
+          57,
+          "flow",
+          false
+        ],
+        [
+          83,
+          "raceData",
+          57,
+          "raceData",
           false
         ],
         [
           23,
           "playerID",
-          276,
+          57,
           "vehId",
           true
+        ],
+        [
+          57,
+          "changed",
+          61,
+          "flow",
+          false
+        ],
+        [
+          57,
+          "curLap",
+          61,
+          "cur",
+          false
+        ],
+        [
+          57,
+          "maxLap",
+          61,
+          "max",
+          false
+        ],
+        [
+          57,
+          "changed",
+          62,
+          "flow",
+          false
+        ],
+        [
+          57,
+          "curCP",
+          62,
+          "cur",
+          false
+        ],
+        [
+          57,
+          "maxCP",
+          62,
+          "max",
+          false
+        ],
+        [
+          8982,
+          "True",
+          65,
+          "flow",
+          false
+        ],
+        [
+          8982,
+          "True",
+          69,
+          "flow",
+          false
+        ],
+        [
+          83,
+          "raceData",
+          69,
+          "raceData",
+          true
+        ],
+        [
+          23,
+          "playerID",
+          69,
+          "vehId",
+          true
+        ],
+        [
+          8982,
+          "True",
+          71,
+          "flow",
+          false
+        ],
+        [
+          78,
+          "value",
+          71,
+          "lastResetTimer",
+          false
+        ],
+        [
+          87,
+          "flow",
+          72,
+          "flow",
+          false
+        ],
+        [
+          83,
+          "time",
+          72,
+          "time",
+          true
+        ],
+        [
+          83,
+          "raceData",
+          72,
+          "raceData",
+          true
+        ],
+        [
+          103,
+          "flow",
+          76,
+          "flow",
+          false
+        ],
+        [
+          103,
+          "position",
+          76,
+          "lastResetPos",
+          false
+        ],
+        [
+          79,
+          "lastResetTimer",
+          78,
+          "a",
+          false
+        ],
+        [
+          81,
+          "dtSim",
+          78,
+          "b",
+          false
         ],
         [
           88,
@@ -2048,7 +2248,21 @@
           false
         ],
         [
+          37,
+          "flow",
           82,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          82,
+          "reset",
+          false
+        ],
+        [
+          119,
           "flow",
           83,
           "flow",
@@ -2056,14 +2270,14 @@
         ],
         [
           37,
-          "enterState",
+          "exitState",
           83,
           "reset",
           true
         ],
         [
           37,
-          "exitState",
+          "enterState",
           83,
           "reset",
           true
@@ -2090,6 +2304,13 @@
           false
         ],
         [
+          119,
+          "unavailable",
+          83,
+          "useWaypointAudio",
+          false
+        ],
+        [
           23,
           "playerID",
           83,
@@ -2097,241 +2318,10 @@
           false
         ],
         [
-          57,
-          "recoveryReached",
-          98,
-          "a",
-          false
-        ],
-        [
-          99,
-          "practiceEnabled",
-          98,
-          "b",
-          false
-        ],
-        [
-          8982,
-          "True",
-          65,
+          103,
           "flow",
-          false
-        ],
-        [
-          37,
-          "flow",
-          82,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          82,
-          "reset",
-          false
-        ],
-        [
-          57,
-          "changed",
-          93,
-          "flow",
-          false
-        ],
-        [
-          98,
-          "value",
-          93,
-          "condition",
-          false
-        ],
-        [
-          82,
-          "finished",
-          209,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "playerID",
-          209,
-          "vehId",
-          false
-        ],
-        [
           84,
           "flow",
-          92,
-          "flow",
-          false
-        ],
-        [
-          103,
-          "flow",
-          76,
-          "flow",
-          false
-        ],
-        [
-          103,
-          "position",
-          76,
-          "lastResetPos",
-          false
-        ],
-        [
-          276,
-          "flow",
-          95,
-          "flow",
-          false
-        ],
-        [
-          91,
-          "value",
-          95,
-          "A",
-          false
-        ],
-        [
-          57,
-          "changed",
-          62,
-          "flow",
-          false
-        ],
-        [
-          57,
-          "curCP",
-          62,
-          "cur",
-          false
-        ],
-        [
-          57,
-          "maxCP",
-          62,
-          "max",
-          false
-        ],
-        [
-          95,
-          "false",
-          54,
-          "flow",
-          false
-        ],
-        [
-          80,
-          "false",
-          54,
-          "flow",
-          false
-        ],
-        [
-          83,
-          "raceData",
-          54,
-          "raceData",
-          true
-        ],
-        [
-          23,
-          "playerID",
-          54,
-          "vehId",
-          true
-        ],
-        [
-          79,
-          "lastResetTimer",
-          78,
-          "a",
-          false
-        ],
-        [
-          81,
-          "dtSim",
-          78,
-          "b",
-          false
-        ],
-        [
-          57,
-          "changed",
-          61,
-          "flow",
-          false
-        ],
-        [
-          57,
-          "curLap",
-          61,
-          "cur",
-          false
-        ],
-        [
-          57,
-          "maxLap",
-          61,
-          "max",
-          false
-        ],
-        [
-          87,
-          "flow",
-          72,
-          "flow",
-          false
-        ],
-        [
-          83,
-          "time",
-          72,
-          "time",
-          true
-        ],
-        [
-          83,
-          "raceData",
-          72,
-          "raceData",
-          true
-        ],
-        [
-          276,
-          "position",
-          91,
-          "a",
-          false
-        ],
-        [
-          74,
-          "lastResetPos",
-          91,
-          "b",
-          false
-        ],
-        [
-          93,
-          "True",
-          101,
-          "flow",
-          false
-        ],
-        [
-          97,
-          "flow",
-          116,
-          "flow",
-          false
-        ],
-        [
-          97,
-          "note",
-          116,
-          "note",
           false
         ],
         [
@@ -2342,129 +2332,10 @@
           false
         ],
         [
-          8982,
-          "True",
-          71,
-          "flow",
-          false
-        ],
-        [
-          78,
-          "value",
-          71,
-          "lastResetTimer",
-          false
-        ],
-        [
-          103,
-          "flow",
-          84,
-          "flow",
-          false
-        ],
-        [
-          69,
-          "impulse",
-          103,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "playerID",
-          103,
-          "vehId",
-          true
-        ],
-        [
-          95,
-          "true",
-          96,
-          "flow",
-          false
-        ],
-        [
-          83,
-          "complete",
-          87,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          87,
-          "reset",
-          true
-        ],
-        [
-          83,
-          "active",
-          8982,
-          "flow",
-          false
-        ],
-        [
-          8988,
-          "practiceEnabled",
-          8982,
-          "condition",
-          false
-        ],
-        [
-          65,
-          "flow",
-          88,
-          "flow",
-          false
-        ],
-        [
-          83,
-          "raceData",
-          88,
-          "raceData",
-          true
-        ],
-        [
-          23,
-          "playerID",
-          88,
-          "vehId",
-          true
-        ],
-        [
-          8982,
-          "True",
-          69,
-          "flow",
-          false
-        ],
-        [
-          83,
-          "raceData",
-          69,
-          "raceData",
-          true
-        ],
-        [
-          23,
-          "playerID",
-          69,
-          "vehId",
-          true
-        ],
-        [
-          83,
-          "active",
+          119,
+          "inactive",
           86,
           "flow",
-          false
-        ],
-        [
-          83,
-          "complete",
-          86,
-          "clear",
           false
         ],
         [
@@ -2473,6 +2344,13 @@
           86,
           "clear",
           true
+        ],
+        [
+          83,
+          "complete",
+          86,
+          "clear",
+          false
         ],
         [
           37,
@@ -2497,6 +2375,97 @@
         ],
         [
           83,
+          "complete",
+          87,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          87,
+          "reset",
+          true
+        ],
+        [
+          65,
+          "flow",
+          88,
+          "flow",
+          false
+        ],
+        [
+          83,
+          "raceData",
+          88,
+          "raceData",
+          true
+        ],
+        [
+          23,
+          "playerID",
+          88,
+          "vehId",
+          true
+        ],
+        [
+          276,
+          "position",
+          91,
+          "a",
+          false
+        ],
+        [
+          74,
+          "lastResetPos",
+          91,
+          "b",
+          false
+        ],
+        [
+          84,
+          "flow",
+          92,
+          "flow",
+          false
+        ],
+        [
+          57,
+          "changed",
+          93,
+          "flow",
+          false
+        ],
+        [
+          98,
+          "value",
+          93,
+          "condition",
+          false
+        ],
+        [
+          276,
+          "flow",
+          95,
+          "flow",
+          false
+        ],
+        [
+          91,
+          "value",
+          95,
+          "A",
+          false
+        ],
+        [
+          95,
+          "true",
+          96,
+          "flow",
+          false
+        ],
+        [
+          83,
           "active",
           97,
           "flow",
@@ -2515,6 +2484,111 @@
           97,
           "vehId",
           true
+        ],
+        [
+          57,
+          "recoveryReached",
+          98,
+          "a",
+          false
+        ],
+        [
+          99,
+          "practiceEnabled",
+          98,
+          "b",
+          false
+        ],
+        [
+          93,
+          "True",
+          101,
+          "flow",
+          false
+        ],
+        [
+          69,
+          "impulse",
+          103,
+          "flow",
+          false
+        ],
+        [
+          23,
+          "playerID",
+          103,
+          "vehId",
+          true
+        ],
+        [
+          82,
+          "flow",
+          119,
+          "flow",
+          false
+        ],
+        [
+          97,
+          "flow",
+          123,
+          "flow",
+          false
+        ],
+        [
+          97,
+          "note",
+          123,
+          "note",
+          false
+        ],
+        [
+          119,
+          "currentVersion",
+          123,
+          "version",
+          false
+        ],
+        [
+          119,
+          "missionDir",
+          123,
+          "missionDir",
+          false
+        ],
+        [
+          119,
+          "volume",
+          123,
+          "volume",
+          false
+        ],
+        [
+          80,
+          "true",
+          276,
+          "flow",
+          false
+        ],
+        [
+          23,
+          "playerID",
+          276,
+          "vehId",
+          true
+        ],
+        [
+          83,
+          "active",
+          8982,
+          "flow",
+          false
+        ],
+        [
+          8988,
+          "practiceEnabled",
+          8982,
+          "condition",
+          false
         ],
         [
           88,
@@ -2524,25 +2598,18 @@
           false
         ],
         [
-          83,
-          "active",
-          57,
+          82,
+          "finished",
+          209,
           "flow",
-          false
-        ],
-        [
-          83,
-          "raceData",
-          57,
-          "raceData",
           false
         ],
         [
           23,
           "playerID",
-          57,
+          209,
           "vehId",
-          true
+          false
         ]
       ],
       "name":"Race",
@@ -2593,7 +2660,7 @@
           },
           "pos":[
             444,
-            400
+            386
           ],
           "type":"types/getVariable",
           "varName":"playerID"
@@ -2613,7 +2680,7 @@
             }
           },
           "pos":[
-            -4,
+            -424,
             -6
           ],
           "type":"events/onUpdate"
@@ -2634,8 +2701,8 @@
             }
           },
           "pos":[
-            3258,
-            -412
+            3286,
+            -958
           ],
           "type":"gameplay/race/raceRequestRecovery"
         },
@@ -2718,8 +2785,8 @@
             }
           },
           "pos":[
-            1410,
-            -300
+            1438,
+            -846
           ],
           "type":"events/controlsReset"
         },
@@ -2739,8 +2806,8 @@
             }
           },
           "pos":[
-            1438,
-            -762
+            1466,
+            -1308
           ],
           "type":"gameplay/race/raceRecoveryUsed"
         },
@@ -2758,8 +2825,8 @@
             }
           },
           "pos":[
-            1438,
-            -888
+            1466,
+            -1434
           ],
           "type":"types/setVariable",
           "varName":"lastResetTimer"
@@ -2814,8 +2881,8 @@
             }
           },
           "pos":[
-            2390,
-            -454
+            2418,
+            -1000
           ],
           "type":"types/getVariable",
           "varName":"lastResetPos"
@@ -2831,8 +2898,8 @@
             }
           },
           "pos":[
-            1788,
-            -440
+            1816,
+            -986
           ],
           "type":"types/getVariable",
           "varName":"lastResetTimer"
@@ -2851,8 +2918,8 @@
             }
           },
           "pos":[
-            2012,
-            -706
+            2040,
+            -1252
           ],
           "type":"types/setVariable",
           "varName":"lastResetPos"
@@ -2874,8 +2941,8 @@
             }
           },
           "pos":[
-            1144,
-            -860
+            1172,
+            -1406
           ],
           "type":"math/math"
         },
@@ -2890,8 +2957,8 @@
             }
           },
           "pos":[
-            822,
-            -860
+            850,
+            -1406
           ],
           "type":"types/getVariable",
           "varName":"lastResetTimer"
@@ -2920,8 +2987,8 @@
           },
           "opSymbol":">=",
           "pos":[
-            2110,
-            -468
+            2138,
+            -1014
           ],
           "type":"logic/compare"
         },
@@ -2937,8 +3004,8 @@
             }
           },
           "pos":[
-            934,
-            -762
+            962,
+            -1308
           ],
           "type":"util/time"
         },
@@ -2980,7 +3047,7 @@
             }
           },
           "pos":[
-            248,
+            -130,
             22
           ],
           "type":"gameplay/countdown"
@@ -2989,8 +3056,7 @@
           "count":1,
           "data":{
             "useDebugDraw":false,
-            "useHotlappingApp":true,
-            "useWaypointAudio":true
+            "useHotlappingApp":true
           },
           "dynamicMode":"repeat",
           "hiddenPins":{
@@ -3001,6 +3067,7 @@
               "pathData":false,
               "reset":false,
               "rolling":false,
+              "useWaypointAudio":false,
               "vehId_1":false
             },
             "p_out":{
@@ -3013,8 +3080,8 @@
             }
           },
           "pos":[
-            794,
-            22
+            724,
+            -20
           ],
           "type":"gameplay/race/fileRace"
         },
@@ -3038,8 +3105,8 @@
             }
           },
           "pos":[
-            2012,
-            -804
+            2040,
+            -1350
           ],
           "type":"types/setVariable",
           "varName":"lastResetTimer"
@@ -3076,7 +3143,7 @@
             ]
           ],
           "pos":[
-            346,
+            -32,
             -132
           ],
           "type":"states/transitionStack"
@@ -3099,7 +3166,7 @@
             },
             "minAlpha":{
               "type":"number",
-              "value":0.15000000000000010547
+              "value":0.14999999999999999445
             }
           },
           "hiddenPins":{
@@ -3120,8 +3187,8 @@
             }
           },
           "pos":[
-            1214,
-            -104
+            1620,
+            -314
           ],
           "type":"gameplay/race/raceMarkers"
         },
@@ -3167,8 +3234,8 @@
             }
           },
           "pos":[
-            1760,
-            -300
+            1788,
+            -846
           ],
           "type":"gameplay/race/raceRecoveryAvailable"
         },
@@ -3189,8 +3256,8 @@
             }
           },
           "pos":[
-            2684,
-            -510
+            2712,
+            -1056
           ],
           "type":"math/math"
         },
@@ -3224,8 +3291,8 @@
             }
           },
           "pos":[
-            2362,
-            -804
+            2390,
+            -1350
           ],
           "type":"ui/message"
         },
@@ -3273,8 +3340,8 @@
           },
           "opSymbol":"<=",
           "pos":[
-            2964,
-            -566
+            2992,
+            -1112
           ],
           "type":"logic/compare"
         },
@@ -3298,8 +3365,8 @@
             ]
           ],
           "pos":[
-            3258,
-            -538
+            3286,
+            -1084
           ],
           "transitionName":"reset",
           "type":"states/transition"
@@ -3321,8 +3388,8 @@
             }
           },
           "pos":[
-            1186,
-            820
+            1256,
+            -552
           ],
           "type":"gameplay/race/racePacenoteReached"
         },
@@ -3421,35 +3488,53 @@
             }
           },
           "pos":[
-            1760,
-            -734
+            1788,
+            -1280
           ],
           "type":"vehicle/vehicleMapData"
         },
-        "116":{
-          "data":{
-            "detailed":false
-          },
+        "119":{
+          "data":{},
           "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "use_race_editor":{
-              "type":"bool",
-              "value":false
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{
+              "active":true,
+              "currentVersion":false,
+              "flow":false,
+              "inactive":false,
+              "missionDir":false,
+              "raceFile":true,
+              "unavailable":false,
+              "volume":false
             }
           },
+          "pos":[
+            304,
+            -202
+          ],
+          "type":"gameplay/race/aiPacenotesInfo"
+        },
+        "123":{
+          "data":{},
+          "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
               "flow":false,
+              "missionDir":false,
               "note":false,
-              "use_race_editor":false
+              "version":false,
+              "volume":false
             },
             "p_out":{}
           },
           "pos":[
-            1452,
-            820
+            1550,
+            -552
           ],
-          "type":"gameplay/race/playPacenoteAudio"
+          "type":"gameplay/race/aiPacenotesPlayPacenote"
         },
         "209":{
           "data":{},
@@ -3496,8 +3581,8 @@
             ]
           ],
           "pos":[
-            2110,
-            -272
+            2138,
+            -818
           ],
           "transitionName":"reset",
           "type":"states/transition"
@@ -3523,8 +3608,8 @@
             }
           },
           "pos":[
-            2446,
-            -566
+            2474,
+            -1112
           ],
           "type":"vehicle/vehicleMapData"
         },
@@ -3543,8 +3628,8 @@
             }
           },
           "pos":[
-            1144,
-            -300
+            1172,
+            -846
           ],
           "type":"logic/branch"
         },
@@ -3559,8 +3644,8 @@
             }
           },
           "pos":[
-            822,
-            -272
+            850,
+            -818
           ],
           "type":"types/getVariable",
           "varName":"practiceEnabled"
@@ -3573,10 +3658,10 @@
         "list":{}
       },
       "viewPos":[
-        429.07043457031250000000,
-        498.26690673828125000000
+        -492.28039550781250000000,
+        -193.83573913574218750000
       ],
-      "viewZoom":0.75000005960464477539
+      "viewZoom":0.25000000000000000000
     },
     "38":{
       "description":"This is the description for graph New State",
@@ -3721,10 +3806,10 @@
         "list":{}
       },
       "viewPos":[
-        -522.50006103515625000000,
-        -721.50000000000000000000
+        -542.18334960937500000000,
+        -540.81677246093750000000
       ],
-      "viewZoom":1
+      "viewZoom":0.74999994039535522461
     },
     "49":{
       "description":"This is the description for graph New State",
@@ -3886,10 +3971,10 @@
           false
         ],
         [
-          154,
-          "exitState",
-          153,
-          "flow",
+          8,
+          "impulse",
+          41,
+          "stopRec",
           false
         ],
         [
@@ -3900,16 +3985,9 @@
           false
         ],
         [
-          45492,
+          154,
           "flow",
-          8980,
-          "flow",
-          false
-        ],
-        [
-          9140,
-          "flow",
-          8980,
+          90,
           "flow",
           false
         ],
@@ -3949,10 +4027,31 @@
           false
         ],
         [
-          60,
+          105,
           "flow",
-          149,
+          108,
           "flow",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          108,
+          "reset",
+          true
+        ],
+        [
+          21,
+          "playerID",
+          108,
+          "vehId",
+          false
+        ],
+        [
+          105,
+          "attempt",
+          108,
+          "attempt",
           false
         ],
         [
@@ -4005,38 +4104,17 @@
           false
         ],
         [
-          138,
+          154,
           "flow",
-          9140,
+          8,
           "flow",
           false
         ],
         [
           154,
-          "flow",
-          90,
-          "flow",
-          false
-        ],
-        [
-          89,
-          "flow",
-          280,
-          "flow",
-          false
-        ],
-        [
-          90,
-          "time",
-          280,
-          "A",
-          false
-        ],
-        [
-          68,
-          "silverTime",
-          280,
-          "B",
+          "enterState",
+          8,
+          "reset",
           false
         ],
         [
@@ -4082,6 +4160,62 @@
           false
         ],
         [
+          138,
+          "flow",
+          9140,
+          "flow",
+          false
+        ],
+        [
+          45492,
+          "flow",
+          8980,
+          "flow",
+          false
+        ],
+        [
+          9140,
+          "flow",
+          8980,
+          "flow",
+          false
+        ],
+        [
+          89,
+          "flow",
+          280,
+          "flow",
+          false
+        ],
+        [
+          90,
+          "time",
+          280,
+          "A",
+          false
+        ],
+        [
+          68,
+          "silverTime",
+          280,
+          "B",
+          false
+        ],
+        [
+          154,
+          "exitState",
+          153,
+          "flow",
+          false
+        ],
+        [
+          60,
+          "flow",
+          149,
+          "flow",
+          false
+        ],
+        [
           108,
           "flow",
           89,
@@ -4103,24 +4237,10 @@
           false
         ],
         [
-          154,
+          137,
           "flow",
-          8,
+          45492,
           "flow",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          8,
-          "reset",
-          false
-        ],
-        [
-          8,
-          "impulse",
-          41,
-          "stopRec",
           false
         ],
         [
@@ -4170,41 +4290,6 @@
           "value",
           66,
           "goldTime",
-          false
-        ],
-        [
-          137,
-          "flow",
-          45492,
-          "flow",
-          false
-        ],
-        [
-          105,
-          "flow",
-          108,
-          "flow",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          108,
-          "reset",
-          true
-        ],
-        [
-          21,
-          "playerID",
-          108,
-          "vehId",
-          false
-        ],
-        [
-          105,
-          "attempt",
-          108,
-          "attempt",
           false
         ],
         [
@@ -4993,7 +5078,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000222045
+              "value":0.75000000000000000000
             }
           },
           "hiddenPins":{
@@ -5023,10 +5108,10 @@
         "list":{}
       },
       "viewPos":[
-        1780.50000000000000000000,
-        -24.50000000000000000000
+        818.87481689453125000000,
+        -234.87503051757812500000
       ],
-      "viewZoom":1
+      "viewZoom":0.74999994039535522461
     }
   },
   "isScenario":false,
@@ -5064,48 +5149,22 @@
     ],
     "list":[
       {
-        "index":8,
-        "mergeStrat":"last",
-        "name":"prefab",
-        "type":"string",
-        "value":""
-      },
-      {
-        "fixedType":false,
-        "index":4,
-        "mergeStrat":"last",
-        "name":"laps",
-        "type":"number",
-        "value":1
-      },
-      {
-        "index":10,
-        "mergeStrat":"last",
-        "name":"forwardPrefab",
-        "type":"string",
-        "value":""
-      },
-      {
-        "fixedType":false,
-        "index":1,
-        "mergeStrat":"last",
-        "name":"fileRace",
-        "type":"string",
-        "value":"/gameplay/temp/timeTrials/gridmap-ez_circle-procedural.json"
-      },
-      {
-        "index":18,
-        "mergeStrat":"last",
-        "name":"playerModel",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":11,
+        "index":7,
         "mergeStrat":"max",
-        "name":"bronzeTime",
+        "name":"lastResetTimer",
         "type":"number",
         "value":0
+      },
+      {
+        "index":6,
+        "mergeStrat":"last",
+        "name":"lastResetPos",
+        "type":"vec3",
+        "value":[
+          0,
+          0,
+          0
+        ]
       },
       {
         "index":14,
@@ -5115,11 +5174,32 @@
         "value":0
       },
       {
-        "index":13,
+        "index":11,
         "mergeStrat":"max",
-        "name":"goldTime",
+        "name":"bronzeTime",
         "type":"number",
         "value":0
+      },
+      {
+        "index":8,
+        "mergeStrat":"last",
+        "name":"prefab",
+        "type":"string",
+        "value":""
+      },
+      {
+        "index":9,
+        "mergeStrat":"last",
+        "name":"reversePrefab",
+        "type":"string",
+        "value":""
+      },
+      {
+        "index":10,
+        "mergeStrat":"last",
+        "name":"forwardPrefab",
+        "type":"string",
+        "value":""
       },
       {
         "fixedType":false,
@@ -5137,6 +5217,21 @@
         "value":true
       },
       {
+        "index":21,
+        "mergeStrat":"last",
+        "name":"endScreenText",
+        "type":"string",
+        "value":""
+      },
+      {
+        "fixedType":false,
+        "index":1,
+        "mergeStrat":"last",
+        "name":"fileRace",
+        "type":"string",
+        "value":"/gameplay/temp/timeTrials/gridmap-ez_circle-procedural.json"
+      },
+      {
         "index":15,
         "mergeStrat":"or_",
         "name":"timeOfDayActive",
@@ -5144,16 +5239,38 @@
         "value":true
       },
       {
-        "index":20,
+        "fixedType":false,
+        "index":4,
         "mergeStrat":"last",
-        "name":"startScreenText",
+        "name":"laps",
+        "type":"number",
+        "value":1
+      },
+      {
+        "index":17,
+        "mergeStrat":"last",
+        "name":"playerConfig",
         "type":"string",
         "value":""
+      },
+      {
+        "index":13,
+        "mergeStrat":"max",
+        "name":"goldTime",
+        "type":"number",
+        "value":0
       },
       {
         "index":23,
         "mergeStrat":"or_",
         "name":"allowRollingStart",
+        "type":"bool",
+        "value":false
+      },
+      {
+        "index":24,
+        "mergeStrat":"or_",
+        "name":"useProvidedVehicle",
         "type":"bool",
         "value":false
       },
@@ -5165,37 +5282,9 @@
         "value":false
       },
       {
-        "index":17,
+        "index":20,
         "mergeStrat":"last",
-        "name":"playerConfig",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":21,
-        "mergeStrat":"last",
-        "name":"endScreenText",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":7,
-        "mergeStrat":"max",
-        "name":"lastResetTimer",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":19,
-        "mergeStrat":"max",
-        "name":"playerID",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":9,
-        "mergeStrat":"last",
-        "name":"reversePrefab",
+        "name":"startScreenText",
         "type":"string",
         "value":""
       },
@@ -5208,22 +5297,18 @@
         "value":false
       },
       {
-        "index":16,
-        "mergeStrat":"or_",
-        "name":"providedVehicleActive",
-        "type":"bool",
-        "value":false
+        "index":19,
+        "mergeStrat":"max",
+        "name":"playerID",
+        "type":"number",
+        "value":0
       },
       {
-        "index":6,
+        "index":18,
         "mergeStrat":"last",
-        "name":"lastResetPos",
-        "type":"vec3",
-        "value":[
-          0,
-          0,
-          0
-        ]
+        "name":"playerModel",
+        "type":"string",
+        "value":""
       },
       {
         "index":12,
@@ -5233,9 +5318,9 @@
         "value":0
       },
       {
-        "index":24,
+        "index":16,
         "mergeStrat":"or_",
-        "name":"useProvidedVehicle",
+        "name":"providedVehicleActive",
         "type":"bool",
         "value":false
       }

@@ -1413,4 +1413,9 @@ end
 M.onConsoleLog = function(timer, lvl, origin, line)
   print(timer)
 end
+
+M.getSelectedMissionId = function()
+  return clickedMission
+end
+
 return M

@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"Anonymous",
   "currentGraphID":1,
-  "date":1690688434,
+  "date":1690885255,
   "debugEnabled":false,
   "description":"Project description.",
   "difficulty":40,
@@ -12,6 +12,13 @@
       "description":"This is the description for graph New State",
       "dirty":false,
       "links":[
+        [
+          2,
+          "flow",
+          8,
+          "flow",
+          false
+        ],
         [
           17,
           "flow",
@@ -34,7 +41,7 @@
           false
         ],
         [
-          2,
+          8,
           "flow",
           14,
           "flow",
@@ -46,6 +53,13 @@
           14,
           "reset",
           true
+        ],
+        [
+          8,
+          "fname",
+          14,
+          "file",
+          false
         ],
         [
           14,
@@ -196,6 +210,56 @@
           ],
           "type":"events/onUpdate"
         },
+        "8":{
+          "code":{
+            "work":"local fname = editor_raceEditorTurbo.getCurrentFilename()\nself.pinOut.fname.value = fname",
+            "_executionStarted":"",
+            "_executionStopped":"",
+            "onPreRender":""
+          },
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{
+              "flow":false,
+              "fname":false
+            }
+          },
+          "name":"RaceEditorTurbo race.json",
+          "pins":[
+            [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "Inflow for this node.",
+              true
+            ],
+            [
+              "out",
+              "flow",
+              "flow",
+              null,
+              "Outflow for this node.",
+              true
+            ],
+            [
+              "out",
+              "string",
+              "fname",
+              null,
+              ""
+            ]
+          ],
+          "pos":[
+            374,
+            260
+          ],
+          "type":"util/customLua"
+        },
         "12":{
           "data":{
             "detailed":false
@@ -250,12 +314,6 @@
         "14":{
           "data":{},
           "dynamicMode":"once",
-          "hardcodedPins":{
-            "file":{
-              "type":"string",
-              "value":"/gameplay/missions/jungle_rock_island/timeTrial/aip-island-loop/race.race.json"
-            }
-          },
           "hiddenPins":{
             "p_in":{
               "reverse":false,
@@ -276,8 +334,8 @@
             }
           },
           "pos":[
-            472,
-            190
+            640,
+            162
           ],
           "type":"gameplay/race/filePath"
         },
@@ -407,7 +465,7 @@
         },
         "27":{
           "code":{
-            "work":"editor_raceEditor.getPacenotesWindow():unselect()\neditor_raceEditor.getPathnodesWindow():unselectNone()\neditor_raceEditor.getSegmentsWindow():unselectNone()",
+            "work":"editor_raceEditorTurbo.getPacenotesWindow():unselect()\neditor_raceEditorTurbo.getPathnodesWindow():unselectNone()\neditor_raceEditorTurbo.getSegmentsWindow():unselectNone()",
             "_executionStarted":"",
             "_executionStopped":"",
             "onPreRender":""
@@ -483,7 +541,7 @@
         },
         "39":{
           "code":{
-            "work":"editor_raceEditor.getPacenotesWindow():selected()\neditor_raceEditor.getPathnodesWindow():selected()\neditor_raceEditor.getSegmentsWindow():selected()",
+            "work":"editor_raceEditorTurbo.getPacenotesWindow():selected()\neditor_raceEditorTurbo.getPathnodesWindow():selected()\neditor_raceEditorTurbo.getSegmentsWindow():selected()",
             "_executionStarted":"",
             "_executionStopped":"",
             "onPreRender":""
@@ -601,10 +659,10 @@
         ]
       },
       "viewPos":[
-        -193.11340332031250000000,
-        99.62509155273437500000
+        77.63470458984375000000,
+        19.35795783996582031250
       ],
-      "viewZoom":0.50000000000000000000
+      "viewZoom":0.74999994039535522461
     },
     "3":{
       "description":"This is the description for graph States",
@@ -612,9 +670,9 @@
       "isStateGraph":true,
       "links":[
         [
+          5,
+          "flow",
           4,
-          "success",
-          6,
           "flow",
           false
         ],
@@ -626,9 +684,9 @@
           false
         ],
         [
-          5,
-          "flow",
           4,
+          "success",
+          6,
           "flow",
           false
         ],
