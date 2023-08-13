@@ -10,8 +10,8 @@
     ],
     "showInFreeroam":true,
     "starOutroTexts":{
-      "silverTime":"I'm listening...",
-      "bronzeTime":"Goo Ga Ga",
+      "silverTime":"",
+      "bronzeTime":"",
       "goldTime":"Way to go!",
       "noStarUnlocked":"Maybe just one more try?"
     },
