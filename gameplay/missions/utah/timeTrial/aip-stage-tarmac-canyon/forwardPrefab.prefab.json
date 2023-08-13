@@ -1,2 +1,0 @@
-{"name":"forwardPrefab_group","class":"SimGroup","persistentId":"97efaf09-357a-4246-a45b-fc9bf8c1f6dc","groupPosition":"0 0 0"}
-{"class":"TSStatic","persistentId":"0b078d45-a43a-4537-b5dd-a9617ae08d8f","__parent":"forwardPrefab_group","position":[-757.631836,228.712128,265.393066],"isRenderEnabled":false,"rotationMatrix":[-0.979854941,0.199227422,0.0139251351,-0.199709952,-0.977867365,-0.0623905659,0.00118701858,-0.0639146566,0.997954667],"shapeName":"/levels/utah/art/shapes/race/race_rally_gate.dae","useInstanceRenderData":true}

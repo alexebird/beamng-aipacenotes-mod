@@ -44,8 +44,6 @@ function C:init(mgr, ...)
   self.raceFile = nil
   self.pacenotesFile = nil
   self.settings = nil
-  
-  self:detectMissionId()
 end
 
 function C:getMissionSpecificSettings()
@@ -106,6 +104,8 @@ function C:detectMissionId()
   local theMissionId = detectMissionManagerMissionId()
   if theMissionId then
     log('D', logTag, 'missionId "'.. theMissionId ..'"detected from missionManager')
+  else
+    log('W', logTag, 'no mission detected from missionManager')
   end
 
   -- then try the mission editor
@@ -113,6 +113,8 @@ function C:detectMissionId()
     theMissionId = detectMissionEditorMissionId()
     if theMissionId then
       log('D', logTag, 'missionId "'.. theMissionId ..'"detected from missionEditor')
+    else
+      log('W', logTag, 'no mission detected from editor')
     end
   end
 
@@ -121,6 +123,7 @@ function C:detectMissionId()
     self.missionDir = '/gameplay/missions/'..theMissionId
   else
     log('E', logTag, 'couldnt detect missionId')
+    error('missionId was not detected')
   end
 end
 
@@ -139,6 +142,7 @@ function C:getRaceFile()
   if self.raceFile then
     return self.raceFile
   end
+  -- bug
   self.raceFile = self.missionDir..'/race.race.json'
   if not fileExists(self.raceFile) then
     self.raceFile = nil
@@ -162,6 +166,10 @@ function C:getRaceFile()
 end
 
 function C:work(args)
+  if not self.missionDir then
+    self:detectMissionId()
+  end
+
   local missionDir = self.missionDir
   local raceFname = self:getRaceFile()
   local isActive = not not self:getPacenotesFile()
