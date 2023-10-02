@@ -37,8 +37,8 @@ local oldMissionTypeData = {}
 local filter = {
   onlyCurrentLevel = false,
   hideProcedural = true,
-  showCareerMissions = true,
-  showFreeroamMissions = true,
+  showCareerMissions = false,
+  showFreeroamMissions = false,
 }
 local filterNamesSorted = {
   {name = "Current Level Only", key = "onlyCurrentLevel"},
@@ -583,6 +583,37 @@ local function exportMissionOverview()
   csvdata:write("missionOverview.csv")
 end
 
+local function exportContentOverview()
+  local csvdata = require('csvlib').newCSV("Name","Date","Origin","Map","Type 1","Type 2", "Type 3")
+
+  for _, mission in ipairs(missionList) do
+    local instance = gameplay_missions_missions.getMissionById(mission.id)
+    local translatedName = translateLanguage(mission.name, mission.name, true)
+    local type2 = ""
+    local origin = "Mission"
+    if mission.procedural and mission.missionType == "busMode" then origin = "Bus Route" end
+    if mission.procedural and mission.missionType == "generatedTimeTrial" then origin = "Time Trials" end
+    csvdata:add(translatedName, mission.date or -1, origin, mission.startTrigger and mission.startTrigger.level or "None", mission.missionType, mission.careerSetup.showInFreeroam and "Freeroam" or "Career")
+  end
+
+  for _, scenario in ipairs(scenario_scenariosLoader.getList()) do
+    local origin = "Scenario"
+    if scenario.restrictToCampaign then origin = "Campaign" end
+
+    local type2 = ""
+    if scenario.isCreatedFromFlowgraph or scenario.flowgraph then type2 = "Flowgraph" end
+    if not scenario.isCreatedFromMission then
+      csvdata:add(translateLanguage(scenario.name, scenario.name, true), tonumber(scenario.date or -1), origin, string.lower(scenario.levelName), type2)
+    end
+  end
+
+--  for _, qr in ipairs(scenario_quickRaceLoader.getQuickraceList()) do
+--    csvdata:add(translateLanguage(qr.scenarioName, qr.scenarioName, true), tonumber(qr.date), "Time Trial")
+--  end
+
+  csvdata:write("content.csv")
+end
+
 local function escapeCSV(s)
   if string.find(s, '[,"]') then
     s = '"' .. string.gsub(s, '"', '""') .. '"'
@@ -973,6 +1004,9 @@ local function onEditorGui()
         end
         if im.MenuItem1("Import mission overview") then
           importMissionOverview()
+        end
+        if im.MenuItem1("Export Content Overview") then
+          exportContentOverview()
         end
         im.Separator()
         if im.MenuItem1("Time Updater") then
