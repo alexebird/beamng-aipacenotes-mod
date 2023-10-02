@@ -33,8 +33,12 @@ end
 -- overwrite the pacenotes field in the currently installed pacenotes version
 -- with the specified pacenotes.
 function C:setNotesForInstalledVersion(newPacenotes)
-  local selectedPacenotesVersion = form:getInstalledVersion()
-  selectedPacenotesVersion.pacenotes = newPacenotes
+  if form then
+    local selectedPacenotesVersion = form:getInstalledVersion()
+    if selectedPacenotesVersion then
+      selectedPacenotesVersion.pacenotes = newPacenotes
+    end
+  end
 end
 
 -- path is a sort of confusing abstraction for representing the pacenotes file.

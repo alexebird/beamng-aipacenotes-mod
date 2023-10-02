@@ -138,6 +138,40 @@ function C:getPacenotesFile()
   return self.pacenotesFile
 end
 
+function C:readPacenotesFile()
+  local fname = self:getPacenotesFile()
+  if fname then
+    local json = jsonReadFile(fname)
+    if not json then
+      log('E', logTag, 'unable to read pacenotes.pacenotes.json file at: ' .. tostring(fname))
+      return nil
+    end
+    return json
+  end
+  return nil
+end
+
+function C:areThereAnyPacenotes()
+  local pacenotes = self:readPacenotesFile()
+  if pacenotes then
+    local versions = pacenotes.versions
+    if versions and #versions > 0 then
+      for key,version in pairs(versions) do
+        local pn = version.pacenotes
+        if pn and #pn > 1 then
+          return true
+        else
+          return false
+        end
+      end
+    else
+      return false
+    end
+  else
+    return false
+  end
+end
+
 function C:getRaceFile()
   if self.raceFile then
     return self.raceFile
@@ -172,7 +206,7 @@ function C:work(args)
 
   local missionDir = self.missionDir
   local raceFname = self:getRaceFile()
-  local isActive = not not self:getPacenotesFile()
+  local isActive = not not self:areThereAnyPacenotes()
   local settings = self:getMissionSpecificSettings()
 
   self.pinOut.flow.value = self.pinIn.flow.value

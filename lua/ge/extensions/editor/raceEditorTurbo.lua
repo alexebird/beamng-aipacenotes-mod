@@ -105,7 +105,7 @@ local function createEmptyRaceFiles(missionDir)
 
   -- Ensure the pacenotes directory exists
   local pacenotesDir = missionDir .. '\\pacenotes'
-  os.execute('mkdir "' .. pacenotesDir .. '" 2> nul')
+  os.execute('mkdir "' .. pacenotesDir .. '"')
 
   -- Create the json files
   writeToFile(missionDir .. "\\race.race.json", '{}')
@@ -129,7 +129,7 @@ local function createEmptyRaceFiles(missionDir)
   writeToFile(missionDir .. "\\pacenotes\\settings.json", [[
     {
       "currentVersion":"version1",
-      "volume": 4
+      "volume": 2
     }
   ]])
 end
@@ -138,12 +138,13 @@ local function loadRace(full_filename)
   if not full_filename then
     return
   end
-  local json = readJsonFile(full_filename)
   local dir, filename, ext = path.split(full_filename)
+  log('I', logTag, 'creating empty race files at ' .. tostring(dir))
+  createEmptyRaceFiles(dir)
+  local json = readJsonFile(full_filename)
   if not json then
-    log('I', logTag, 'creating empty race files at ' .. tostring(dir))
-    createEmptyRaceFiles(dir)
-    json = readJsonFile(full_filename)
+    -- json = readJsonFile(full_filename)
+    log('E', logTag, 'couldnt find race file even after createEmptyRaceFiles')
   end
   previousFilepath = dir
   previousFilename = filename

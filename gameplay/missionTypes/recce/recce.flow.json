@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"Anonymous",
   "currentGraphID":1,
-  "date":1690885255,
+  "date":1692443252,
   "debugEnabled":false,
   "description":"Project description.",
   "difficulty":40,
@@ -20,20 +20,6 @@
           false
         ],
         [
-          17,
-          "flow",
-          12,
-          "flow",
-          false
-        ],
-        [
-          17,
-          "note",
-          12,
-          "note",
-          false
-        ],
-        [
           34,
           "flow",
           13,
@@ -42,6 +28,13 @@
         ],
         [
           8,
+          "flow",
+          14,
+          "flow",
+          false
+        ],
+        [
+          20,
           "flow",
           14,
           "flow",
@@ -111,6 +104,13 @@
           false
         ],
         [
+          2,
+          "flow",
+          20,
+          "flow",
+          false
+        ],
+        [
           52,
           "flow",
           25,
@@ -122,6 +122,41 @@
           "value",
           25,
           "A",
+          false
+        ],
+        [
+          17,
+          "flow",
+          26,
+          "flow",
+          false
+        ],
+        [
+          17,
+          "note",
+          26,
+          "note",
+          false
+        ],
+        [
+          20,
+          "currentVersion",
+          26,
+          "version",
+          false
+        ],
+        [
+          20,
+          "missionDir",
+          26,
+          "missionDir",
+          false
+        ],
+        [
+          20,
+          "volume",
+          26,
+          "volume",
           false
         ],
         [
@@ -143,6 +178,13 @@
           "vehId",
           34,
           "vehId",
+          false
+        ],
+        [
+          25,
+          "true",
+          39,
+          "flow",
           false
         ],
         [
@@ -179,13 +221,6 @@
           53,
           "B",
           false
-        ],
-        [
-          25,
-          "true",
-          39,
-          "flow",
-          false
         ]
       ],
       "name":"Recce",
@@ -205,8 +240,8 @@
             }
           },
           "pos":[
-            150,
-            134
+            80,
+            120
           ],
           "type":"events/onUpdate"
         },
@@ -255,35 +290,10 @@
             ]
           ],
           "pos":[
-            374,
-            260
+            304,
+            -48
           ],
           "type":"util/customLua"
-        },
-        "12":{
-          "data":{
-            "detailed":false
-          },
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "use_race_editor":{
-              "type":"bool",
-              "value":true
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "note":false,
-              "use_race_editor":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            1984,
-            204
-          ],
-          "type":"gameplay/race/playPacenoteAudio"
         },
         "13":{
           "data":{},
@@ -305,8 +315,8 @@
             ]
           ],
           "pos":[
-            206,
-            442
+            136,
+            428
           ],
           "transitionName":"reset",
           "type":"states/transition"
@@ -334,8 +344,8 @@
             }
           },
           "pos":[
-            640,
-            162
+            696,
+            148
           ],
           "type":"gameplay/race/filePath"
         },
@@ -343,8 +353,7 @@
           "count":1,
           "data":{
             "useDebugDraw":false,
-            "useHotlappingApp":true,
-            "useWaypointAudio":true
+            "useHotlappingApp":true
           },
           "dynamicMode":"repeat",
           "hardcodedPins":{
@@ -365,6 +374,7 @@
               "pathData":false,
               "reset":false,
               "rolling":false,
+              "useWaypointAudio":false,
               "vehId_1":false
             },
             "p_out":{
@@ -404,6 +414,30 @@
           ],
           "type":"gameplay/race/racePacenoteReached"
         },
+        "20":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{
+              "active":false,
+              "currentVersion":false,
+              "flow":false,
+              "inactive":false,
+              "missionDir":false,
+              "raceFile":false,
+              "unavailable":false,
+              "volume":false
+            }
+          },
+          "pos":[
+            318,
+            288
+          ],
+          "type":"gameplay/race/aiPacenotesInfo"
+        },
         "21":{
           "data":{},
           "dynamicMode":"repeat",
@@ -429,8 +463,8 @@
             }
           },
           "pos":[
-            122,
-            722
+            52,
+            708
           ],
           "type":"environment/getPause"
         },
@@ -462,6 +496,25 @@
             764
           ],
           "type":"logic/compare"
+        },
+        "26":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "missionDir":false,
+              "note":false,
+              "version":false,
+              "volume":false
+            },
+            "p_out":{}
+          },
+          "pos":[
+            1970,
+            204
+          ],
+          "type":"gameplay/race/aiPacenotesPlayPacenote"
         },
         "27":{
           "code":{
@@ -519,8 +572,8 @@
             }
           },
           "pos":[
-            -4,
-            442
+            -74,
+            428
           ],
           "type":"vehicle/onVehicleReset"
         },
@@ -534,8 +587,8 @@
             }
           },
           "pos":[
-            -298,
-            470
+            -368,
+            456
           ],
           "type":"scene/getPlayerVehicle"
         },
@@ -619,8 +672,8 @@
           },
           "opSymbol":"==",
           "pos":[
-            416,
-            820
+            346,
+            806
           ],
           "type":"logic/compare"
         },
@@ -635,8 +688,8 @@
             }
           },
           "pos":[
-            122,
-            876
+            52,
+            862
           ],
           "type":"types/getVariable",
           "varName":"lastGetPause"
@@ -659,10 +712,10 @@
         ]
       },
       "viewPos":[
-        77.63470458984375000000,
-        19.35795783996582031250
+        74.10237121582031250000,
+        -16.92953109741210937500
       ],
-      "viewZoom":0.74999994039535522461
+      "viewZoom":0.75000000000000000000
     },
     "3":{
       "description":"This is the description for graph States",
