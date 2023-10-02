@@ -39,7 +39,9 @@ function C:selected()
 
 end
 function C:unselect()
-  if not self.path then return end
+  -- TODO is this needed?
+  -- if not self.path then return end
+
   --self:selectPacenote(nil)
   for _, n in pairs(self.path.pacenotes.objects) do
     n._drawMode = 'none'

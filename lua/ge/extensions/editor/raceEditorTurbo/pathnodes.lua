@@ -45,6 +45,8 @@ function C:unselect()
   self.fields = {}
   self.addFieldText = im.ArrayChar(256, "")
 end
+
+-- TODO is this needed?
 function C:unselectNone()
   if not self.path then return end
   for _, n in pairs(self.path.pathnodes.objects) do
@@ -676,7 +678,7 @@ function C:autoRecoverPos(reverse)
     function(data)
       local sp = data.self.path.startPositions:create(nil, data.spid or nil)
       sp:set(data.pos, quatFromDir(data.normal):normalized())
-      sp.name = node.name .. " Recovery"
+      sp.name = node.name .. " Recovery " .. (reverse and "Reverse" or "Forward")
       data.spid = sp.id
       data.self.path.pathnodes.objects[data.index][data.field] = sp.id
     end)

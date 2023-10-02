@@ -76,6 +76,36 @@ local function saveRace(race, savePath)
   aiPnWindow:save()
 end
 
+local function loadRace(full_filename)
+  if not full_filename then
+    return
+  end
+  local dir, filename, ext = path.split(full_filename)
+  log('I', logTag, 'creating empty race files at ' .. tostring(dir))
+  createEmptyRaceFiles(dir)
+  local json = readJsonFile(full_filename)
+  if not json then
+    -- json = readJsonFile(full_filename)
+    log('E', logTag, 'couldnt find race file even after createEmptyRaceFiles')
+  end
+  previousFilepath = dir
+  previousFilename = filename
+  local p = require('/lua/ge/extensions/gameplay/race/path')("New Race")
+  p:onDeserialized(json)
+  p._dir = dir
+  local a, fn2, b = path.splitWithoutExt(previousFilename, true)
+  p._fnWithoutExt = fn2
+
+  editor.history:commitAction("Set path to " .. p.name,
+  {path = p, fp = dir, fn = filename},
+   setRaceUndo, setRaceRedo)
+
+  local pacenotesFile = aiPnWindow:getPacenotesFileForMission(dir)
+  aiPnWindow:loadPacenotes(pacenotesFile)
+
+  return currentPath
+end
+
 local function createEmptyRaceFiles(missionDir)
   -- A utility function to check if a file exists
   local function fileExists(file)
@@ -132,36 +162,6 @@ local function createEmptyRaceFiles(missionDir)
       "volume": 2
     }
   ]])
-end
-
-local function loadRace(full_filename)
-  if not full_filename then
-    return
-  end
-  local dir, filename, ext = path.split(full_filename)
-  log('I', logTag, 'creating empty race files at ' .. tostring(dir))
-  createEmptyRaceFiles(dir)
-  local json = readJsonFile(full_filename)
-  if not json then
-    -- json = readJsonFile(full_filename)
-    log('E', logTag, 'couldnt find race file even after createEmptyRaceFiles')
-  end
-  previousFilepath = dir
-  previousFilename = filename
-  local p = require('/lua/ge/extensions/gameplay/race/path')("New Race")
-  p:onDeserialized(json)
-  p._dir = dir
-  local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  p._fnWithoutExt = fn2
-
-  editor.history:commitAction("Set path to " .. p.name,
-  {path = p, fp = dir, fn = filename},
-   setRaceUndo, setRaceRedo)
-
-  local pacenotesFile = aiPnWindow:getPacenotesFileForMission(dir)
-  aiPnWindow:loadPacenotes(pacenotesFile)
-
-  return currentPath
 end
 
 local function setupRace()
@@ -370,8 +370,13 @@ local function onEditorGui()
             if pn.hasNormal and (pn.recovery == -1 or newPath.startPositions.objects[pn.recovery].missing) then
               local sp = newPath.startPositions:create()
               sp:set(pn.pos, quatFromDir(pn.normal):normalized())
-              sp.name = pn.name .. " Recovery"
+              sp.name = pn.name .. " Recovery Forward"
               pn.recovery = sp.id
+
+              local spr = newPath.startPositions:create()
+              spr:set(pn.pos, quatFromDir(pn.normal*-1):normalized())
+              spr.name = pn.name .. " Recovery Reverse"
+              pn.reverseRecovery = spr.id
             end
           end
 
