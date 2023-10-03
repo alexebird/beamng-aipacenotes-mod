@@ -76,36 +76,6 @@ local function saveRace(race, savePath)
   aiPnWindow:save()
 end
 
-local function loadRace(full_filename)
-  if not full_filename then
-    return
-  end
-  local dir, filename, ext = path.split(full_filename)
-  log('I', logTag, 'creating empty race files at ' .. tostring(dir))
-  createEmptyRaceFiles(dir)
-  local json = readJsonFile(full_filename)
-  if not json then
-    -- json = readJsonFile(full_filename)
-    log('E', logTag, 'couldnt find race file even after createEmptyRaceFiles')
-  end
-  previousFilepath = dir
-  previousFilename = filename
-  local p = require('/lua/ge/extensions/gameplay/race/path')("New Race")
-  p:onDeserialized(json)
-  p._dir = dir
-  local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  p._fnWithoutExt = fn2
-
-  editor.history:commitAction("Set path to " .. p.name,
-  {path = p, fp = dir, fn = filename},
-   setRaceUndo, setRaceRedo)
-
-  local pacenotesFile = aiPnWindow:getPacenotesFileForMission(dir)
-  aiPnWindow:loadPacenotes(pacenotesFile)
-
-  return currentPath
-end
-
 local function createEmptyRaceFiles(missionDir)
   -- A utility function to check if a file exists
   local function fileExists(file)
@@ -162,6 +132,36 @@ local function createEmptyRaceFiles(missionDir)
       "volume": 2
     }
   ]])
+end
+
+local function loadRace(full_filename)
+  if not full_filename then
+    return
+  end
+  local dir, filename, ext = path.split(full_filename)
+  log('I', logTag, 'creating empty race files at ' .. tostring(dir))
+  createEmptyRaceFiles(dir)
+  local json = readJsonFile(full_filename)
+  if not json then
+    -- json = readJsonFile(full_filename)
+    log('E', logTag, 'couldnt find race file even after createEmptyRaceFiles')
+  end
+  previousFilepath = dir
+  previousFilename = filename
+  local p = require('/lua/ge/extensions/gameplay/race/path')("New Race")
+  p:onDeserialized(json)
+  p._dir = dir
+  local a, fn2, b = path.splitWithoutExt(previousFilename, true)
+  p._fnWithoutExt = fn2
+
+  editor.history:commitAction("Set path to " .. p.name,
+  {path = p, fp = dir, fn = filename},
+   setRaceUndo, setRaceRedo)
+
+  local pacenotesFile = aiPnWindow:getPacenotesFileForMission(dir)
+  aiPnWindow:loadPacenotes(pacenotesFile)
+
+  return currentPath
 end
 
 local function setupRace()
@@ -487,13 +487,13 @@ local function onEditorInitialized()
   editor.addWindowMenuItem("Race Editor Turbo", function() show() end,{groupMenuName="Gameplay"})
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/pathnodes')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/segments')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/startPositions')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/startPositions')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/pacenotes')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/trackLayout')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/timeTrials')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/tools')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/trackLayout')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/timeTrials')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditorTurbo/aiPacenotes')(M))
-  testingWindow =  require('/lua/ge/extensions/editor/raceEditorTurbo/testing')(M)
+  testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
   pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow, aiPnWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7], windows[8]
   currentWindow = pnWindow
   currentWindow:setPath(currentPath)

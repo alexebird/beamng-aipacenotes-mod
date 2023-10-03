@@ -35,9 +35,9 @@ function C:unselect()
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
 end
--- TODO is this still used?
-function C:unselectNone()
-  if not self.path then return end
+
+function C:unselectAndSetDrawModeToNone()
+  -- if not self.path then return end
   --self:selectSegment(nil)
   for _, seg in pairs(self.path.segments.objects) do
     seg._drawMode = 'none'

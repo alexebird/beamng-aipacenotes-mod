@@ -46,9 +46,8 @@ function C:unselect()
   self.addFieldText = im.ArrayChar(256, "")
 end
 
--- TODO is this needed?
-function C:unselectNone()
-  if not self.path then return end
+function C:unselectAndSetDrawModeToNone()
+  -- if not self.path then return end
   for _, n in pairs(self.path.pathnodes.objects) do
     n._drawMode = 'none'
   end
