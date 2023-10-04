@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"birdman",
   "currentGraphID":1,
-  "date":1696460699,
+  "date":1696290997,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -12,69 +12,6 @@
       "description":"This is the description for graph New State",
       "dirty":false,
       "links":[
-        [
-          2,
-          "flow",
-          8,
-          "flow",
-          true
-        ],
-        [
-          17,
-          "flow",
-          8,
-          "enqueue",
-          false
-        ],
-        [
-          2,
-          "enterState",
-          8,
-          "reset",
-          false
-        ],
-        [
-          17,
-          "note",
-          8,
-          "note",
-          false
-        ],
-        [
-          20,
-          "currentVersion",
-          8,
-          "version",
-          false
-        ],
-        [
-          20,
-          "missionDir",
-          8,
-          "missionDir",
-          false
-        ],
-        [
-          20,
-          "volume",
-          8,
-          "volume",
-          false
-        ],
-        [
-          2,
-          "flow",
-          10,
-          "flow",
-          false
-        ],
-        [
-          35,
-          "vehId",
-          10,
-          "vehId",
-          false
-        ],
         [
           25,
           "flow",
@@ -189,6 +126,13 @@
         ],
         [
           17,
+          "flow",
+          26,
+          "flow",
+          false
+        ],
+        [
+          17,
           "note",
           26,
           "note",
@@ -293,107 +237,6 @@
             190
           ],
           "type":"events/onUpdate"
-        },
-        "8":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "enqueue":false,
-              "flow":false,
-              "missionDir":false,
-              "note":false,
-              "reset":false,
-              "version":false,
-              "volume":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            2096,
-            260
-          ],
-          "type":"gameplay/race/aiPacenotesEnqueueAudio"
-        },
-        "9":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "channel":{
-              "type":"string",
-              "value":"AudioMusic"
-            },
-            "fadeInTime":{
-              "type":"number",
-              "value":-1
-            },
-            "fadeOutTime":{
-              "type":"number",
-              "value":-1
-            },
-            "file":{
-              "type":"string",
-              "value":"event:UI_Checkpoint"
-            },
-            "pitch":{
-              "type":"number",
-              "value":1
-            },
-            "unique":{
-              "type":"bool",
-              "value":false
-            },
-            "volume":{
-              "type":"number",
-              "value":1
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "channel":true,
-              "fadeInTime":true,
-              "fadeOutTime":true,
-              "file":false,
-              "flow":false,
-              "pitch":true,
-              "unique":true,
-              "volume":true
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            2110,
-            582
-          ],
-          "type":"audio/playOnce"
-        },
-        "10":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "vehId":false
-            },
-            "p_out":{
-              "active":true,
-              "damage":false,
-              "dirVec":false,
-              "dirVecUp":true,
-              "flow":false,
-              "position":false,
-              "rotation":true,
-              "velocity":false,
-              "velocityVector":true
-            }
-          },
-          "pos":[
-            1774,
-            540
-          ],
-          "type":"vehicle/vehicleMapData"
         },
         "11":{
           "data":{},
@@ -627,8 +470,8 @@
             "p_out":{}
           },
           "pos":[
-            2096,
-            50
+            1998,
+            260
           ],
           "type":"gameplay/race/aiPacenotesPlayPacenote"
         },
@@ -766,10 +609,10 @@
         ]
       },
       "viewPos":[
-        704.21215820312500000000,
-        124.14422607421875000000
+        -321.18365478515625000000,
+        1467.78515625000000000000
       ],
-      "viewZoom":0.75000000000000000000
+      "viewZoom":2
     },
     "3":{
       "description":"This is the description for graph States",
@@ -777,15 +620,15 @@
       "isStateGraph":true,
       "links":[
         [
-          37,
-          "success",
+          5,
+          "flow",
           4,
           "flow",
           false
         ],
         [
-          5,
-          "flow",
+          37,
+          "success",
           4,
           "flow",
           false
