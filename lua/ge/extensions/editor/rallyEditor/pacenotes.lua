@@ -3,27 +3,48 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 local im  = ui_imgui
 
+-- notebook form fields
 local notebookNameText = im.ArrayChar(1024, "")
 
+-- pacenote form fields
 local pacenotePosition = im.ArrayFloat(3)
 local pacenoteNormal = im.ArrayFloat(3)
 local pacenoteRadius = im.FloatPtr(0)
 local pacenoteNameText = im.ArrayChar(1024, "")
 local pacenoteNoteText = im.ArrayChar(2048, "")
 
+-- waypoint form fields
+local waypointNameText = im.ArrayChar(1024, "")
+
 local C = {}
 C.windowDescription = 'Pacenotes'
 
-local function selectPacenoteUndo(data) data.self:selectPacenote(data.old) end
-local function selectPacenoteRedo(data) data.self:selectPacenote(data.new) end
+local function selectPacenoteUndo(data)
+  data.self:selectPacenote(data.old)
+end
+local function selectPacenoteRedo(data)
+  data.self:selectPacenote(data.new)
+end
 
-local function selectNotebookUndo(data) data.self:selectNotebook(data.old) end
-local function selectNotebookRedo(data) data.self:selectNotebook(data.new) end
+local function selectNotebookUndo(data)
+  data.self:selectNotebook(data.old)
+end
+local function selectNotebookRedo(data)
+  data.self:selectNotebook(data.new)
+end
+
+local function selectWaypointUndo(data)
+  data.self:selectWaypoint(data.old)
+end
+local function selectWaypointRedo(data)
+  data.self:selectWaypoint(data.new)
+end
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
-  self.notebook_index = 22 -- TODO
+  self.notebook_index = nil
   self.pacenote_index = nil
+  self.waypoint_index = nil
   self.mouseInfo = {}
 end
 
@@ -35,7 +56,26 @@ function C:selectedNotebook()
   if not self.path then return nil end
   if self.notebook_index then
     return self.path.notebooks.objects[self.notebook_index]
-  else return nil
+  else
+    return nil
+  end
+end
+
+function C:selectedPacenote()
+  if not self:selectedNotebook() then return nil end
+  if self.pacenote_index then
+    return self:selectedNotebook().pacenotes.objects[self.pacenote_index]
+  else
+    return nil
+  end
+end
+
+function C:selectedWaypoint()
+  if not self:selectedPacenote() then return nil end
+  if self.waypoint_index then
+    return self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
+  else
+    return nil
   end
 end
 
@@ -75,26 +115,6 @@ function C:unselect()
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
 end
 
-function C:selectPacenote(id)
-  if not self:selectedNotebook() then return end
-
-  self.pacenote_index = id
-  for _, note in pairs(self:selectedNotebook().pacenotes.objects) do
-    note._drawMode = (id == note.id) and 'highlight' or 'normal'
-  end
-  if id then
-    local note = self:selectedNotebook().pacenotes.objects[id]
-    pacenoteNameText = im.ArrayChar(1024, note.name)
-    self:updateTransform(id)
-    pacenoteNoteText = im.ArrayChar(2048, note.note)
-  else
-    for _, seg in pairs(self.path.segments.objects) do
-      seg._drawMode = 'faded'
-    end
-    pacenoteNoteText = im.ArrayChar(2048, "")
-  end
-end
-
 function C:selectNotebook(id)
   log('D', 'wtf', 'selecting notebook: '..tostring(id))
   self.notebook_index = id
@@ -114,6 +134,40 @@ function C:selectNotebook(id)
   end
 end
 
+function C:selectPacenote(id)
+  if not self:selectedNotebook() then return end
+
+  self.pacenote_index = id
+  for _, note in pairs(self:selectedNotebook().pacenotes.objects) do
+    note._drawMode = (id == note.id) and 'highlight' or 'normal'
+  end
+
+  if id then
+    local note = self:selectedNotebook().pacenotes.objects[id]
+    pacenoteNameText = im.ArrayChar(1024, note.name)
+    -- moved to selectWaypoint
+    -- self:updateTransform(id)
+    pacenoteNoteText = im.ArrayChar(2048, note.note)
+  else
+    for _, seg in pairs(self.path.segments.objects) do
+      seg._drawMode = 'faded'
+    end
+    pacenoteNoteText = im.ArrayChar(2048, "")
+  end
+end
+
+function C:selectWaypoint(id)
+  log('D', 'wtf', 'selecting waypoint: '..tostring(id))
+  self.waypoint_index = id
+  if id then
+    local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
+    waypointNameText = im.ArrayChar(1024, waypoint.name)
+    -- TODO
+    -- self:updateTransform(id)
+  end
+end
+
+-- TODO error is from here: 'unable to convert argument to vec3 / float3'
 function C:updateTransform(index)
   if not self:selectedNotebook() then return end
   if not self.rallyEditor.allowGizmo() then return end
@@ -121,20 +175,17 @@ function C:updateTransform(index)
   local note = self:selectedNotebook().pacenotes.objects[index]
   local rotation = QuatF(0,0,0,1)
 
-
-    if editor.getAxisGizmoAlignment() == editor.AxisGizmoAlignment_Local then
-      local q = quatFromDir(note.normal, vec3(0,0,1))
-      rotation = QuatF(q.x, q.y, q.z, q.w)
-    else
-      rotation = QuatF(0, 0, 0, 1)
-    end
-
+  if editor.getAxisGizmoAlignment() == editor.AxisGizmoAlignment_Local then
+    local q = quatFromDir(note.normal, vec3(0,0,1))
+    rotation = QuatF(q.x, q.y, q.z, q.w)
+  else
+    rotation = QuatF(0, 0, 0, 1)
+  end
 
   local transform = rotation:getMatrix()
   transform:setPosition(note.pos)
   editor.setAxisGizmoTransform(transform)
 end
-
 
 function C:beginDrag()
   if not self:selectedNotebook() then return end
@@ -221,11 +272,10 @@ function C:draw(mouseInfo)
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
     editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
+    -- TODO
     -- self:input()
   end
   self:drawNotebookList()
-  im.SameLine()
-  self:drawPacenoteList()
 end
 
 function C:createManualPacenote()
@@ -323,14 +373,34 @@ function C:input()
   end
 end
 
-local function movePacenoteUndo(data) data.self:selectedNotebook().pacenotes:move(data.index, -data.dir) end
-local function movePacenoteRedo(data) data.self:selectedNotebook().pacenotes:move(data.index,  data.dir) end
+-- for pacenote 'Move Up'/'Move Down' buttons, I think?
+local function movePacenoteUndo(data)
+  data.self:selectedNotebook().pacenotes:move(data.index, -data.dir)
+end
+local function movePacenoteRedo(data)
+  data.self:selectedNotebook().pacenotes:move(data.index,  data.dir)
+end
 
-local function setFieldUndo(data) data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.old data.self:updateTransform(data.index) end
-local function setFieldRedo(data) data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.new data.self:updateTransform(data.index) end
+local function setPacenoteFieldUndo(data)
+  data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.old data.self:updateTransform(data.index)
+end
+local function setPacenoteFieldRedo(data)
+  data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.new data.self:updateTransform(data.index)
+end
 
-local function setNormalUndo(data) data.self:selectedNotebook().pacenotes.objects[data.index]:setNormal(data.old) data.self:updateTransform(data.index) end
-local function setNormalRedo(data) data.self:selectedNotebook().pacenotes.objects[data.index]:setNormal(data.new) data.self:updateTransform(data.index) end
+local function setWaypointFieldUndo(data)
+  data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.old data.self:updateTransform(data.index)
+end
+local function setWaypointFieldRedo(data)
+  data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.new data.self:updateTransform(data.index)
+end
+
+local function setNormalUndo(data)
+  data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:setNormal(data.old) data.self:updateTransform(data.index)
+end
+local function setNormalRedo(data)
+  data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:setNormal(data.new) data.self:updateTransform(data.index)
+end
 
 function C:drawNotebookList()
   local avail = im.GetContentRegionAvail()
@@ -349,19 +419,36 @@ function C:drawNotebookList()
   if im.Selectable1('New...', self.notebook_index == nil) then
     self:selectNotebook(nil)
   end
-  -- im.tooltip("Shift-Drag in the world to create a new pacenote.")
-  im.EndChild()
+  im.EndChild() -- notebooks child window
+
+  if self.notebook_index then
+    im.SameLine()
+    im.BeginChild1("currentNotebook", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
+    im.HeaderText("Notebook Info")
+    im.Text("Current Notebook: #" .. self.notebook_index)
+
+    im.Text("TODO")
+    im.Text("- name")
+    im.Text("- authors")
+    im.Text("- desc")
+    im.Text("- installed")
+    im.Text("- voice")
+
+    local notebook = self:selectedNotebook()
+    self:drawPacenoteList(notebook)
+
+    im.EndChild() -- currentNotebook child window
+  end
 end
 
-function C:drawPacenoteList()
-  if not self:selectedNotebook() then return end
+function C:drawPacenoteList(notebook)
+  if not notebook then return end
 
   local avail = im.GetContentRegionAvail()
 
+  im.HeaderText("Pacenotes")
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
-  im.Text("Pacenotes")
-  im.Separator()
-  for i, note in ipairs(self:selectedNotebook().pacenotes.sorted) do
+  for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1(note.name, note.id == self.pacenote_index) then
       editor.history:commitAction("Select Pacenote",
         {old = self.pacenote_index, new = note.id, self = self},
@@ -373,137 +460,173 @@ function C:drawPacenoteList()
     self:selectPacenote(nil)
   end
   im.tooltip("Shift-Drag in the world to create a new pacenote.")
-  im.EndChild()
+  im.EndChild() -- pacenotes child window
 
   im.SameLine()
   im.BeginChild1("currentPacenote", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
-    if self.pacenote_index then
-      local note = self:selectedNotebook().pacenotes.objects[self.pacenote_index]
-      if self.rallyEditor.allowGizmo() then
-        editor.drawAxisGizmo()
-      end
-      im.Text("Current Pacenote: #" .. self.pacenote_index)
-      im.SameLine()
-      if im.Button("Delete") then
-        editor.history:commitAction("Delete Note",
-        {index = self.pacenote_index, self = self},
-        function(data) -- undo
-          local note = self:selectedNotebook().pacenotes:create(nil, data.noteData.oldId)
-          note:onDeserialized(data.noteData)
-          self:selectPacenote(data.index)
-        end,function(data) --redo
-          data.noteData = self:selectedNotebook().pacenotes.objects[data.index]:onSerialize()
-          self:selectedNotebook().pacenotes:remove(data.index)
-          self:selectPacenote(nil)
-        end)
-      end
-      im.SameLine()
-      if im.Button("Move Up") then
-        editor.history:commitAction("Move Pacenote in List",
-          {index = self.pacenote_index, self = self, dir = -1},
-          movePacenoteUndo, movePacenoteRedo)
-      end
-      im.SameLine()
-      if im.Button("Move Down") then
-        editor.history:commitAction("Move Pacenote in List",
-          {index = self.pacenote_index, self = self, dir = 1},
-          movePacenoteUndo, movePacenoteRedo)
-      end
 
-      im.BeginChild1("self.indexInner", im.ImVec2(0, 0), im.WindowFlags_ChildWindow)
-      local editEnded = im.BoolPtr(false)
-      editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
-      if editEnded[0] then
-        editor.history:commitAction("Change Name of Note",
-          {index = self.pacenote_index, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
-          setFieldUndo, setFieldRedo)
-        --note.name = ffi.string(nameText)
-      end
-
-      im.Separator()
-
-      -- pacenotePosition[0] = note.pos.x
-      -- pacenotePosition[1] = note.pos.y
-      -- pacenotePosition[2] = note.pos.z
-      -- if im.InputFloat3("Position", pacenotePosition, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
-      --   editor.history:commitAction("Change note Position",
-      --     {index = self.pacenote_index, old = note.pos, new = vec3(pacenotePosition[0], pacenotePosition[1], pacenotePosition[2]), field = 'pos', self = self},
-      --     setFieldUndo, setFieldRedo)
-      -- end
-      -- if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
-      --   editor.history:commitAction("Drop Note to Ground",
-      --     {index = self.pacenote_index, old = note.pos,self = self, new = vec3(pacenotePosition[0], pacenotePosition[1], core_terrain.getTerrainHeight(note.pos)), field = 'pos'},
-      --     setFieldUndo, setFieldRedo)
-
-      -- end
-      -- pacenoteRadius[0] = note.radius
-      -- if im.InputFloat("Radius",pacenoteRadius, 0.1, 0.5, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
-      --   if pacenoteRadius[0] < 0 then
-      --     pacenoteRadius[0] = 0
-      --   end
-      --   editor.history:commitAction("Change Note Size",
-      --     {index = self.pacenote_index, old = note.radius, new = pacenoteRadius[0], self = self, field = 'radius'},
-      --     setFieldUndo, setFieldRedo)
-      -- end
-
-
-      -- pacenoteNormal[0] = note.normal.x
-      -- pacenoteNormal[1] = note.normal.y
-      -- pacenoteNormal[2] = note.normal.z
-      -- if im.InputFloat3("Normal", pacenoteNormal, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
-      --   editor.history:commitAction("Change Normal",
-      --     {index = self.pacenote_index, old = note.normal, self = self, new = vec3(pacenoteNormal[0], pacenoteNormal[1], pacenoteNormal[2])},
-      --     setNormalUndo, setNormalRedo)
-      -- end
-      -- if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
-      --   local normalTip = note.pos + note.normal*note.radius
-      --   normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
-      --   editor.history:commitAction("Align Normal with Terrain",
-      --     {index = self.pacenote_index, old = note.normal, self = self, new = normalTip - note.pos},
-      --     setNormalUndo, setNormalRedo)
-      -- end
-
-      -- self:selector('Segment','segment', 'Associated Segment')
-      -- for _, seg in pairs(self.path.segments.objects) do
-      --   seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
-      -- end
-
-      -- editEnded = im.BoolPtr(false)
-      -- editor.uiInputText("Note", pacenoteNoteText, nil, nil, nil, nil, editEnded)
-      -- if editEnded[0] then
-      --   editor.history:commitAction("Change Note of Pacenote",
-      --     {index = self.pacenote_index, self = self, old = note.note, new = ffi.string(pacenoteNoteText), field = 'note'},
-      --     setFieldUndo, setFieldRedo)
-      --   --note.name = ffi.string(nameText)
-      -- end
-
-
-
-
-      im.EndChild()
+  if self.pacenote_index then
+    local note = notebook.pacenotes.objects[self.pacenote_index]
+    if self.rallyEditor.allowGizmo() then
+      editor.drawAxisGizmo()
     end
-  im.EndChild()
+    im.HeaderText("Pacenote Info")
+    im.Text("Current Pacenote: #" .. self.pacenote_index)
+    im.SameLine()
+    if im.Button("Delete") then
+      editor.history:commitAction("Delete Note",
+      {index = self.pacenote_index, self = self},
+      function(data) -- undo
+        local note = notebook.pacenotes:create(nil, data.noteData.oldId)
+        note:onDeserialized(data.noteData)
+        self:selectPacenote(data.index)
+      end,function(data) --redo
+        data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
+        notebook.pacenotes:remove(data.index)
+        self:selectPacenote(nil)
+      end)
+    end
+    im.SameLine()
+    if im.Button("Move Up") then
+      editor.history:commitAction("Move Pacenote in List",
+        {index = self.pacenote_index, self = self, dir = -1},
+        movePacenoteUndo, movePacenoteRedo)
+    end
+    im.SameLine()
+    if im.Button("Move Down") then
+      editor.history:commitAction("Move Pacenote in List",
+        {index = self.pacenote_index, self = self, dir = 1},
+        movePacenoteUndo, movePacenoteRedo)
+    end
+
+    local editEnded = im.BoolPtr(false)
+    editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Name of Note",
+        {index = self.pacenote_index, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
+        setPacenoteFieldUndo, setPacenoteFieldRedo)
+      --note.name = ffi.string(nameText)
+    end
+
+    self:segmentSelector('Segment','segment', 'Associated Segment')
+    for _, seg in pairs(self.path.segments.objects) do
+      seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
+    end
+
+    editEnded = im.BoolPtr(false)
+    editor.uiInputText("Note", pacenoteNoteText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Note of Pacenote",
+        {index = self.pacenote_index, self = self, old = note.note, new = ffi.string(pacenoteNoteText), field = 'note'},
+        setPacenoteFieldUndo, setPacenoteFieldRedo)
+    end
+
+    self:drawWaypointList(note)
+
+    im.EndChild() -- currentPacenote child window
+  end -- / if pacenote_index
+end
+
+function C:drawWaypointList(note)
+  im.HeaderText("Waypoints")
+  im.BeginChild1("waypoints", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
+
+  for i, waypoint in ipairs(note.pacenoteWaypoints.sorted) do
+    if im.Selectable1(waypoint.name, waypoint.id == self.waypoint_index) then
+      editor.history:commitAction("Select Waypoint",
+        {old = self.waypoint_index, new = waypoint.id, self = self},
+        selectWaypointUndo, selectWaypointRedo)
+    end
+  end
+
+  im.Separator()
+
+  if im.Selectable1('New...', self.waypoint_index == nil) then
+    self:selectWaypoint(nil)
+  end
+
+  im.tooltip("Shift-Drag in the world to create a new pacenote waypoint.")
+  im.EndChild() -- waypoints child window
+
+  im.SameLine()
+  im.BeginChild1("currentWaypoint", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
+
+  if self.waypoint_index then
+    local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
+    im.HeaderText("Waypoint Info")
+    im.Text("Current Waypoint: #" .. self.waypoint_index)
+
+    local editEnded = im.BoolPtr(false)
+    editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Name of Waypoint",
+        {index = self.waypoint_index, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'waypointName'},
+        setWaypointFieldUndo, setWaypointFieldRedo)
+    end
+
+    self:waypointTypeSelector(note)
+
+    pacenotePosition[0] = waypoint.pos.x
+    pacenotePosition[1] = waypoint.pos.y
+    pacenotePosition[2] = waypoint.pos.z
+    if im.InputFloat3("Position", pacenotePosition, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
+      editor.history:commitAction("Change note Position",
+        {index = self.pacenote_index, old = waypoint.pos, new = vec3(pacenotePosition[0], pacenotePosition[1], pacenotePosition[2]), field = 'pos', self = self},
+        setWaypointFieldUndo, setWaypointFieldRedo)
+    end
+    if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
+      editor.history:commitAction("Drop Note to Ground",
+        {index = self.pacenote_index, old = waypoint.pos,self = self, new = vec3(pacenotePosition[0], pacenotePosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
+        setWaypointFieldUndo, setWaypointFieldRedo)
+    end
+    pacenoteRadius[0] = waypoint.radius
+    if im.InputFloat("Radius",pacenoteRadius, 0.1, 0.5, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
+      if pacenoteRadius[0] < 0 then
+        pacenoteRadius[0] = 0
+      end
+      editor.history:commitAction("Change Note Size",
+        {index = self.pacenote_index, old = waypoint.radius, new = pacenoteRadius[0], self = self, field = 'radius'},
+        setWaypointFieldUndo, setWaypointFieldRedo)
+    end
+
+    pacenoteNormal[0] = waypoint.normal.x
+    pacenoteNormal[1] = waypoint.normal.y
+    pacenoteNormal[2] = waypoint.normal.z
+    if im.InputFloat3("Normal", pacenoteNormal, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
+      editor.history:commitAction("Change Normal",
+        {index = self.pacenote_index, old = waypoint.normal, self = self, new = vec3(pacenoteNormal[0], pacenoteNormal[1], pacenoteNormal[2])},
+        setNormalUndo, setNormalRedo)
+    end
+    if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
+      local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
+      normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
+      editor.history:commitAction("Align Normal with Terrain",
+        {index = self.pacenote_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
+        setNormalUndo, setNormalRedo)
+    end
+
+  end -- / if waypoint_index
+  im.EndChild() -- currentWaypoint child window
 end
 
 
-function C:selector(name, fieldName, tt)
+function C:segmentSelector(name, fieldName, tt)
   if not self:selectedNotebook() then return end
 
   local node = self:selectedNotebook().pacenotes.objects[self.pacenote_index]
   local objects = self.path.segments.objects
 
-
   if im.BeginCombo(name..'##'..fieldName, objects[node[fieldName]].name) then
     if im.Selectable1('#'..0 .. " - None", node[fieldName] == -1) then
       editor.history:commitAction("Removed Segment for pacenote",
         {index = self.pacenote_index, self = self, old = node[fieldName], new = -1, field = fieldName},
-        setFieldUndo, setFieldRedo)
+        setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
     for i, sp in ipairs(self.path.segments.sorted) do
       if im.Selectable1('#'..i .. " - " .. sp.name, node[fieldName] == sp.id) then
               editor.history:commitAction("Changed Segment for pacenote",
         {index = self.pacenote_index, self = self, old = node[fieldName], new = sp.id, field = fieldName},
-        setFieldUndo, setFieldRedo)
+        setPacenoteFieldUndo, setPacenoteFieldRedo)
       end
     end
     im.EndCombo()
@@ -512,6 +635,38 @@ function C:selector(name, fieldName, tt)
   im.tooltip(tt or "")
 end
 
+function C:waypointTypeSelector(note)
+  if not self:selectedWaypoint() then return end
+
+  local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
+  local waypointTypes = {
+    "fwdAudioTrigger",
+    "revAudioTrigger",
+    "cornerStart",
+    "cornerEnd",
+    "distanceMarker",
+  }
+
+  local name = 'WaypointType'
+  local fieldName = 'waypointType'
+  local tt = 'Set the waypointType'
+
+  if im.BeginCombo(name..'##'..fieldName, waypoint.waypointType) then
+
+    for i, wt in ipairs(waypointTypes) do
+      -- log('D', 'wtf', 'i='..i..' type='..wt)
+      if im.Selectable1(wt, waypoint[fieldName] == wt) then
+        editor.history:commitAction("Changed waypointType for waypoint",
+          {index = self.waypoint_index, self = self, old = waypoint[fieldName], new = wt, field = fieldName},
+          setWaypointFieldUndo, setWaypointFieldRedo)
+      end
+    end
+
+    im.EndCombo()
+  end
+
+  im.tooltip(tt)
+end
 
 return function(...)
   local o = {}
