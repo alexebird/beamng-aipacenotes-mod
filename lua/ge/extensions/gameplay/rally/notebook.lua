@@ -35,9 +35,6 @@ function C:getNextUniqueIdentifier()
 end
 
 function C:onSerialize()
-end
-
-function C:onSerialize()
   local ret = {
     oldId = self.id,
     name = self.name,
@@ -57,6 +54,10 @@ function C:onDeserialized(data, oldIdMap)
   self.installed = data.installed or false
   self.voice = data.voice or "british_female"
   self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
+end
+
+function C:drawDebug(drawMode, clr, extraText)
+  self.pacenotes:drawDebug(drawMode, clr, extraText)
 end
 
 return function(...)

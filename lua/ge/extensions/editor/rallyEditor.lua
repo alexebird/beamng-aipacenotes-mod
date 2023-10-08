@@ -491,4 +491,11 @@ M.onWindowGotFocus = onWindowGotFocus
 M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized
 M.getToolsWindow = function() return toolsWindow end
+
+M.wpTypeFwdAudioTrigger = "fwdAudioTrigger"
+M.wpTypeRevAudioTrigger = "revAudioTrigger"
+M.wpTypeCornerStart = "cornerStart"
+M.wpTypeCornerEnd = "cornerEnd"
+M.wpTypeDistanceMarker = "distanceMarker"
+
 return M

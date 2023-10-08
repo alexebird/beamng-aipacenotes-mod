@@ -7,11 +7,11 @@
 local C = {}
 local modes = {"manual","navgraph"}
 
-function C:init(path, name, forceId)
-  self.path = path
+function C:init(note, name, forceId)
+  self.note = note
 
-  self.id = forceId or path:getNextUniqueIdentifier()
-  self.name = name
+  self.id = forceId or note:getNextUniqueIdentifier()
+  self.name = name or 'Waypoint '..self.id
   self.waypointType = 'fwdAudioTrigger'
   self.normal = vec3(0,1,0)
   self.pos = vec3()
@@ -19,6 +19,7 @@ function C:init(path, name, forceId)
 
   self._drawMode = 'none'
   self.sortOrder = 999999
+  self.mode = nil
 end
 
 function C:setManual(pos, radius, normal)
@@ -136,11 +137,20 @@ function C:intersectCornersOrig(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
+function C:textForDrawDebug()
+  local txt = '['..self.waypointType..']'
+  if self.waypointType == editor_rallyEditor.wpTypeCornerStart then
+    txt = txt .. ' ' .. self.note.note
+  end
+  return txt
+end
+
 function C:drawDebug(drawMode, clr, extraText)
+  -- log('D', 'wtf', 'pacenoteWaypoint drawDebug')
   drawMode = drawMode or self._drawMode
   if drawMode == 'none' then return end
 
-  clr = clr or rainbowColor(#self.path.pacenotes.sorted, (self.sortOrder-1), 1)
+  clr = clr or rainbowColor(#self.note.notebook.pacenotes.sorted, (self.note.sortOrder-1), 1)
   if drawMode == 'highlight' then clr = {1,1,1,1} end
   --clr = {1,1,1,1}
   local shapeAlpha = (drawMode == 'highlight') and 0.5 or 0.25
@@ -148,13 +158,14 @@ function C:drawDebug(drawMode, clr, extraText)
   debugDrawer:drawSphere((self.pos), self.radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
 
   local alpha = (drawMode == 'normal') and 0.5 or 1
-  if self.note == '' then alpha = alpha * 0.4 end
+  if self.note.note == '' then alpha = alpha * 0.4 end
   if drawMode ~= 'faded' then
-    local str = self.note or ''
-    if str == '' then
-      str = self.name or 'Note'
-      str = '('..str..')'
-    end
+    -- local str = self.note.note or ''
+    -- if str == '' then
+    --   str = self.note.name or 'Note'
+    --   str = '('..str..')'
+    -- end
+    local str = self:textForDrawDebug()
     if extraText then
       str = str .. ' ' .. extraText
     end
@@ -180,8 +191,6 @@ function C:drawDebug(drawMode, clr, extraText)
     Point2F(0,0),
     ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66))
 end
-
-
 
 return function(...)
   local o = {}

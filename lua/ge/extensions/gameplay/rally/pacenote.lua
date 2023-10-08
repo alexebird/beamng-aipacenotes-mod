@@ -5,21 +5,9 @@
 local C = {}
 local modes = {"manual","navgraph"}
 
-function C:init(path, name, forceId)
-  -- old
-  -- self.path = path
-  -- self.id = forceId or path:getNextUniqueIdentifier()
-  -- self.name = name or "Pacenote " .. self.id
-  -- self.pos = vec3()
-  -- self.normal = vec3(0,1,0)
-  -- self.radius = 0
-
-  -- self.note = ""
-  -- self.segment = -1
-
-  -- new
-  self.path = path
-  self.id = forceId or path:getNextUniqueIdentifier()
+function C:init(notebook, name, forceId)
+  self.notebook = notebook
+  self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or "Pacenote " .. self.id
   self.note = ""
   self.segment = -1
@@ -28,16 +16,62 @@ function C:init(path, name, forceId)
     self,
     require('/lua/ge/extensions/gameplay/rally/pacenoteWaypoint')
   )
+  self.pacenoteWaypointsByType = nil
 
-  -- reusing from old
   self._drawMode = 'none'
   self.sortOrder = 999999
 end
 
 function C:getNextUniqueIdentifier()
-  return self.path:getNextUniqueIdentifier()
-  -- self._uid = self._uid + 1
-  -- return self._uid
+  return self.notebook:getNextUniqueIdentifier()
+end
+
+function C:indexWaypointsByType()
+  self.pacenoteWaypointsByType = {}
+
+  for i, wp in pairs(self.pacenoteWaypoints.objects) do
+    local wpType = wp.waypointType
+    if self.pacenoteWaypointsByType[wpType] == nil then
+      self.pacenoteWaypointsByType[wpType] = {}
+    end
+    table.insert(self.pacenoteWaypointsByType[wpType], wp)
+  end
+end
+
+function C:validateWaypointTypes()
+  -- TODO
+  return true
+end
+
+function C:getCornerStartWaypoint()
+  local wpListForType = self.pacenoteWaypointsByType[editor_rallyEditor.wpTypeCornerStart]
+  if wpListForType then
+    local k, v = next(wpListForType)
+    return v
+  else
+    return nil
+  end
+end
+
+function C:onSerialize()
+  local ret = {
+    oldId = self.id,
+    name = self.name,
+    note = self.note,
+    segment = self.segment,
+    pacenoteWaypoints = self.pacenoteWaypoints:onSerialize(),
+  }
+
+  return ret
+end
+
+function C:onDeserialized(data, oldIdMap)
+  self.name = data.name
+  self.note = data.note
+  self.segment = oldIdMap and oldIdMap[data.segment] or data.segment or -1
+  self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
+
+  self:indexWaypointsByType()
 end
 
 -- function C:setNormal(normal)
@@ -139,68 +173,16 @@ end
 --   return minT <= 1, minT
 -- end
 
-function C:onSerialize()
-  local ret = {
-    oldId = self.id,
-    name = self.name,
-    note = self.note,
-    segment = self.segment,
-    pacenoteWaypoints = self.pacenoteWaypoints:onSerialize(),
-  }
-  return ret
+function C:drawDebug(drawMode, clr, extraText)
+  -- local wp = self:getCornerStartWaypoint()
+  -- if wp then
+  --   wp:drawDebug(self._drawMode, clr, extraText)
+  -- end
+
+  for i,wp in pairs(self.pacenoteWaypoints.objects) do
+    wp:drawDebug(self._drawMode, clr, extraText)
+  end
 end
-
-function C:onDeserialized(data, oldIdMap)
-  self.name = data.name
-  self.note = data.note
-  self.segment = oldIdMap and oldIdMap[data.segment] or data.segment or -1
-  self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
-end
-
--- function C:drawDebug(drawMode, clr, extraText)
---   drawMode = drawMode or self._drawMode
---   if drawMode == 'none' then return end
-
---   clr = clr or rainbowColor(#self.path.pacenotes.sorted, (self.sortOrder-1), 1)
---   if drawMode == 'highlight' then clr = {1,1,1,1} end
---   --clr = {1,1,1,1}
---   local shapeAlpha = (drawMode == 'highlight') and 0.5 or 0.25
-
---   debugDrawer:drawSphere((self.pos), self.radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
-
---   local alpha = (drawMode == 'normal') and 0.5 or 1
---   if self.note == '' then alpha = alpha * 0.4 end
---   if drawMode ~= 'faded' then
---     local str = self.note or ''
---     if str == '' then
---       str = self.name or 'Note'
---       str = '('..str..')'
---     end
---     if extraText then
---       str = str .. ' ' .. extraText
---     end
---     debugDrawer:drawTextAdvanced((self.pos),
---       String(str),
---       ColorF(1,1,1,alpha),true, false,
---       ColorI(0,0,0,alpha*255))
---  end
-
-
---   local midWidth = self.radius*2
---   local side = self.normal:cross(vec3(0,0,1)) *(self.radius - midWidth/2)
---   debugDrawer:drawSquarePrism(
---     self.pos,
---     (self.pos + self.radius * self.normal),
---     Point2F(1,self.radius/2),
---     Point2F(0,0),
---     ColorF(clr[1],clr[2],clr[3],shapeAlpha*1.25))
---   debugDrawer:drawSquarePrism(
---     (self.pos+side),
---     (self.pos + 0.25 * self.normal + side ),
---     Point2F(5,midWidth),
---     Point2F(0,0),
---     ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66))
--- end
 
 return function(...)
   local o = {}

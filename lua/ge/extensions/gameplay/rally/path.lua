@@ -31,8 +31,8 @@ function C:init(name)
   self.segments = require('/lua/ge/extensions/gameplay/util/sortedList')("segments", self, require('/lua/ge/extensions/gameplay/race/segment'))
   self.startPositions = require('/lua/ge/extensions/gameplay/util/sortedList')("startPositions", self, require('/lua/ge/extensions/gameplay/race/startPosition'))
 
-  -- self.pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')("pacenotes", self, require('/lua/ge/extensions/gameplay/rally/pacenote'))
   self.notebooks = require('/lua/ge/extensions/gameplay/util/sortedList')("notebooks", self, require('/lua/ge/extensions/gameplay/rally/notebook'))
+  self.installedNotebook = nil
 
   self.pathnodes.postCreate = function(o)
     if self.startNode == -1 then
@@ -218,8 +218,9 @@ function C:drawDebug()
   self.pathnodes:drawDebug()
   self.segments:drawDebug()
   self.startPositions:drawDebug()
-  -- TODO
-  -- self.pacenotes:drawDebug()
+  if self.installedNotebook then
+    self.installedNotebook:drawDebug()
+  end
 end
 
 function C:drawAiRouteDebug()
@@ -319,7 +320,6 @@ function C:onSerialize()
     defaultLaps = self.defaultLaps,
     pathnodes = self.pathnodes:onSerialize(),
     segments = self.segments:onSerialize(),
-    -- pacenotes = self.pacenotes:onSerialize(),
     notebooks = self.notebooks:onSerialize(),
     startNode = self.startNode,
     endNode = self.endNode,
@@ -356,8 +356,8 @@ function C:onDeserialized(data)
   self.startPositions:onDeserialized(data.startPositions, oldIdMap)
   self.pathnodes:onDeserialized(data.pathnodes, oldIdMap)
   self.segments:onDeserialized(data.segments, oldIdMap)
-  -- self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
   self.notebooks:onDeserialized(data.notebooks, oldIdMap)
+  self:cacheInstalledNotebook()
   for _, f in ipairs(idFields) do
     self[f] = oldIdMap[data[f]] or -1
   end
@@ -366,6 +366,14 @@ function C:onDeserialized(data)
   end
   if data.hideMission ~= nil then
     self.hideMission = data.hideMission
+  end
+end
+
+function C:cacheInstalledNotebook()
+  for i,nb in pairs(self.notebooks.objects) do
+    if nb.installed then
+      self.installedNotebook = nb
+    end
   end
 end
 
