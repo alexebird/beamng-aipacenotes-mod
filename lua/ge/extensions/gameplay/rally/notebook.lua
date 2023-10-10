@@ -9,7 +9,7 @@ function C:init(path, name, forceId)
 
   self.id = forceId or path:getNextUniqueIdentifier()
   self.name = name or "Notebook " .. self.id
-  self.authors = 'Anonymous'
+  self.authors = ''
   self.description = ''
   self.installed = false
   self.voice = 'british_female'
@@ -26,6 +26,27 @@ function C:init(path, name, forceId)
   )
 
   self.sortOrder = 999999
+end
+
+function C:allWaypoints()
+  local wps = {}
+  for i, pacenote in pairs(self.pacenotes.objects) do
+    for i, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
+      table.insert(wps, waypoint.id, waypoint)
+    end
+  end
+  return wps
+end
+
+function C:getWaypoint(wpId)
+  for i, pacenote in pairs(self.pacenotes.objects) do
+    for i, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
+      if waypoint.id == wpId then
+        return waypoint
+      end
+    end
+  end
+  return nil
 end
 
 function C:getNextUniqueIdentifier()

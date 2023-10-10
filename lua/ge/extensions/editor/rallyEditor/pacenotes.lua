@@ -26,18 +26,18 @@ local voiceNamesSorted = {}
 local C = {}
 C.windowDescription = 'Pacenotes'
 
-local function selectPacenoteUndo(data)
-  data.self:selectPacenote(data.old)
-end
-local function selectPacenoteRedo(data)
-  data.self:selectPacenote(data.new)
-end
-
 local function selectNotebookUndo(data)
   data.self:selectNotebook(data.old)
 end
 local function selectNotebookRedo(data)
   data.self:selectNotebook(data.new)
+end
+
+local function selectPacenoteUndo(data)
+  data.self:selectPacenote(data.old)
+end
+local function selectPacenoteRedo(data)
+  data.self:selectPacenote(data.new)
 end
 
 local function selectWaypointUndo(data)
@@ -90,20 +90,37 @@ end
 function C:selected()
   self.notebook_index = nil
   self.pacenote_index = nil
+  self.waypoint_index = nil
 
   if not self.path then return end
+
+  -- select the installed notebook when the pacenotes tab is selected.
+  for i,notebook in pairs(self.path.notebooks.objects) do
+    if notebook.installed then
+      self:selectNotebook(notebook.id)
+    end
+  end
+
   if not self:selectedNotebook() then return end
 
-  for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
-    n._drawMode = 'normal'
+  -- for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
+  --   n._drawMode = 'normal'
+  -- end
+
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
+    wp._drawMode = 'normal'
   end
-  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add New"
+
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
   self.map = map.getMap()
 
   for _, seg in pairs(self.path.segments.objects) do
     seg._drawMode = 'faded'
   end
 
+  -- force redraw of shortcutLegend window
+  extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
 -- called by RallyEditor when this tab is unselected.
@@ -111,15 +128,22 @@ function C:unselect()
   if not self.path then return end
   if not self:selectedNotebook() then return end
 
+  self:selectWaypoint(nil)
   self:selectPacenote(nil)
 
-  for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
-    n._drawMode = 'none'
+  -- for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
+  --   n._drawMode = 'none'
+  -- end
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
+    wp._drawMode = 'none'
   end
 
   self:selectNotebook(nil)
 
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
+  -- force redraw of shortcutLegend window
+  extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
 function C:selectNotebook(id)
@@ -132,58 +156,69 @@ function C:selectNotebook(id)
     self:loadVoices()
     local notebook = self.path.notebooks.objects[id]
     notebookNameText = im.ArrayChar(1024, notebook.name)
-    -- self:updateTransform(id)
-    -- noteText = im.ArrayChar(2048, note.note)
-  -- else
-    -- for _, seg in pairs(self.path.segments.objects) do
-      -- seg._drawMode = 'faded'
-    -- end
-    -- noteText = im.ArrayChar(2048, "")
+  else
+    notebookNameText = im.ArrayChar(1024, "")
   end
 end
 
 function C:selectPacenote(id)
-  -- log('D', 'wtf', 'selecting waypoint: '..tostring(id))
-  -- if not self:selectedNotebook() then return end
-
+  log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
 
-  for _, note in pairs(self:selectedNotebook().pacenotes.objects) do
-    note._drawMode = (id == note.id) and 'highlight' or 'normal'
-  end
+  -- for _, note in pairs(self:selectedNotebook().pacenotes.objects) do
+  --   note._drawMode = (id == note.id) and 'highlight' or 'normal'
+  -- end
 
   if id then
-    local note = self:selectedNotebook().pacenotes.objects[id]
+    local note = nil
+    local wp = self:selectedWaypoint()
+    if not wp or wp.missing then
+      note = self:selectedNotebook().pacenotes.objects[id]
+      wp = note:getCornerStartWaypoint()
+      if wp then
+        self:selectWaypoint(wp.id)
+      end
+    else
+      note = wp.note
+    end
+
     pacenoteNameText = im.ArrayChar(1024, note.name)
     pacenoteNoteText = im.ArrayChar(2048, note.note)
-    -- moved to selectWaypoint
-    -- self:updateTransform(id)
-    local defaultWp = note:getCornerStartWaypoint()
-    self:selectWaypoint(defaultWp.id)
   else
-    for _, seg in pairs(self.path.segments.objects) do
-      seg._drawMode = 'faded'
-    end
+    -- for _, seg in pairs(self.path.segments.objects) do
+    --   seg._drawmode = 'faded'
+    -- end
+    pacenoteNameText = im.ArrayChar(1024, "")
     pacenoteNoteText = im.ArrayChar(2048, "")
   end
 end
 
 function C:selectWaypoint(id)
-  -- log('D', 'wtf', 'selecting waypoint: '..tostring(id))
+  log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
+
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
+    wp._drawMode = (id == wp.id) and 'highlight' or 'normal'
+    log('D', 'wtf', 'waypoint['..wp.id..']: drawMode set to '..wp._drawMode)
+  end
+
   if id then
-    local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
-    self.pacenote_index = waypoint.note.id
+    -- local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
+    local waypoint = self:selectedNotebook():getWaypoint(id)
+    log('D', 'wtf', dumps(id))
+    self:selectPacenote(waypoint.note.id)
     waypointNameText = im.ArrayChar(1024, waypoint.name)
     self:updateTransform(id)
+  else
+    waypointNameText = im.ArrayChar(1024, "")
+    -- self:selectPacenote(nil)
   end
 end
 
 function C:updateTransform(index)
-  if not self:selectedPacenote() then return end
   if not self.rallyEditor.allowGizmo() then return end
 
-  local wp = self:selectedPacenote().pacenoteWaypoints.objects[index]
+  local wp = self:selectedNotebook():getWaypoint(index)
   local rotation = QuatF(0,0,0,1)
 
   if editor.getAxisGizmoAlignment() == editor.AxisGizmoAlignment_Local then
@@ -281,8 +316,8 @@ function C:onEditModeActivate()
   -- if self.note then
   --   self:selectPacenote(self.note.id)
   -- end
-  if self.pacenote_index then
-    self:selectPacenote(self.pacenote_index)
+  if self.notebook_index then
+    self:selectNotebook(self.notebook_index)
   end
 end
 
@@ -298,11 +333,18 @@ end
 function C:createManualPacenote()
   if not self:selectedNotebook() then return end
 
+end
+
+function C:createManualWaypoint()
+  if not self:selectedNotebook() then return end
+
   if not self.mouseInfo.rayCast then
     return
   end
-  local txt = "Add manual Pacenote (Drag for Size)"
+
+  local txt = "Add manual Pacenote Waypoint (Drag for Size)"
   debugDrawer:drawTextAdvanced(vec3(self.mouseInfo.rayCast.pos), String(txt), ColorF(1,1,1,1),true, false, ColorI(0,0,0,255))
+
   if self.mouseInfo.hold then
 
     local radius = (self.mouseInfo._downPos - self.mouseInfo._holdPos):length()
@@ -326,8 +368,12 @@ function C:createManualPacenote()
   else
     if self.mouseInfo.up then
       editor.history:commitAction("Create Manual Pacenote Waypoint",
-      {mouseInfo = deepcopy(self.mouseInfo), index = self.waypoint_index, self = self,
-      normal =(self.mouseInfo._upPos - self.mouseInfo._downPos)},
+      {
+        mouseInfo = deepcopy(self.mouseInfo),
+        index = self.waypoint_index,
+        self = self,
+        normal =(self.mouseInfo._upPos - self.mouseInfo._downPos),
+      },
       function(data) -- undo
         if data.wpId then
           data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
@@ -335,7 +381,9 @@ function C:createManualPacenote()
         data.self:selectWaypoint(data.index)
       end,
       function(data) --redo
+        -- log('D', 'wtf', dumps(data.self:selectedPacenote()))
         local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpId or nil)
+        -- log('D', 'wtf', dumps(wp))
         data.wpId = wp.id
         local normal = data.normal
         local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
@@ -352,25 +400,40 @@ end
 
 -- figures out which pacenote to select with the mouse in the 3D scene.
 function C:mouseOverWaypoints()
-  if not self:selectedPacenote() then return end
-  if self:selectedPacenote().missing then return end
+  if not self:selectedNotebook() then return end
+  -- if self:selectedPacenote().missing then return end
 
   local minNoteDist = 4294967295
   local closestWp = nil
-  for idx, waypoint in pairs(self:selectedPacenote().pacenoteWaypoints.objects) do
-    -- use the corner start marker to represent pacenotes for mouse select purposes.
-    -- local waypoint = wp:getCornerStartWaypoint()
 
-    local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
-    local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
-    local sphereRadius = waypoint.radius
-    if noteRayDistance <= sphereRadius then
-      if distNoteToCam < minNoteDist then
-        minNoteDist = distNoteToCam
-        closestWp = waypoint
+  for _, pacenote in pairs(self:selectedNotebook().pacenotes.objects) do
+    for _, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
+      local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
+      local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
+      local sphereRadius = waypoint.radius
+      if noteRayDistance <= sphereRadius then
+        if distNoteToCam < minNoteDist then
+          minNoteDist = distNoteToCam
+          closestWp = waypoint
+        end
       end
     end
   end
+
+  -- for idx, waypoint in pairs(self:selectedPacenote().pacenoteWaypoints.objects) do
+  --   -- use the corner start marker to represent pacenotes for mouse select purposes.
+  --   -- local waypoint = wp:getCornerStartWaypoint()
+  --
+  --   local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
+  --   local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
+  --   local sphereRadius = waypoint.radius
+  --   if noteRayDistance <= sphereRadius then
+  --     if distNoteToCam < minNoteDist then
+  --       minNoteDist = distNoteToCam
+  --       closestWp = waypoint
+  --     end
+  --   end
+  -- end
   return closestWp
 end
 
@@ -378,45 +441,53 @@ function C:input()
   if not self.mouseInfo.valid then return end
 
   if editor.keyModifiers.shift then
+    self:createManualWaypoint()
+  elseif editor.keyModifiers.ctrl then
     self:createManualPacenote()
   else
-    local selected = self:mouseOverWaypoints()
+    local selectedWp = self:mouseOverWaypoints()
     if self.mouseInfo.down and not editor.isAxisGizmoHovered() then
-      if selected then
-        self:selectPacenote(selected.id)
+      if selectedWp then
+        self:selectWaypoint(selectedWp.id)
       else
-        self:selectPacenote(nil)
+        self:selectWaypoint(nil)
       end
     end
   end
 end
 
-local function setNotebookFieldUndo(data)
-  data.self.path.notebooks.objects[data.index][data.field] = data.old
-  -- data.self:updateTransform(data.index)
-end
-local function setNotebookFieldRedo(data)
-  data.self.path.notebooks.objects[data.index][data.field] = data.new
-  -- data.self:updateTransform(data.index)
-end
-
 -- for pacenote 'Move Up'/'Move Down' buttons, I think?
+local function moveNotebookUndo(data)
+  data.self.path.notebooks:move(data.index, -data.dir)
+end
+local function moveNotebookRedo(data)
+  data.self.path.notebooks:move(data.index,  data.dir)
+end
 local function movePacenoteUndo(data)
   data.self:selectedNotebook().pacenotes:move(data.index, -data.dir)
 end
 local function movePacenoteRedo(data)
   data.self:selectedNotebook().pacenotes:move(data.index,  data.dir)
 end
+local function moveWaypointUndo(data)
+  data.self:selectedPacenote().pacenoteWaypoints:move(data.index, -data.dir)
+end
+local function moveWaypointRedo(data)
+  data.self:selectedPacenote().pacenoteWaypoints:move(data.index,  data.dir)
+end
 
+local function setNotebookFieldUndo(data)
+  data.self.path.notebooks.objects[data.index][data.field] = data.old
+end
+local function setNotebookFieldRedo(data)
+  data.self.path.notebooks.objects[data.index][data.field] = data.new
+end
 local function setPacenoteFieldUndo(data)
   data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.old
-  -- data.self:updateTransform(data.index)
 end
 local function setPacenoteFieldRedo(data)
   data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.new
-  -- data.self:updateTransform(data.index)
 end
-
 local function setWaypointFieldUndo(data)
   data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.old
   data.self:updateTransform(data.index)
@@ -441,8 +512,8 @@ function C:drawNotebookList()
   im.BeginChild1("notebooks", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   im.Text("Notebooks")
   im.Separator()
-  for i, notebook in ipairs(self.path.notebooks.sorted) do
-    if im.Selectable1(notebook.name, notebook.id == self.notebook_index) then
+  for i, notebook in pairs(self.path.notebooks.sorted) do
+    if im.Selectable1((notebook.installed and '* ' or '')..notebook.name, notebook.id == self.notebook_index) then
       editor.history:commitAction("Select Notebook",
         {old = self.notebook_index, new = notebook.id, self = self},
         selectNotebookUndo, selectNotebookRedo)
@@ -450,7 +521,8 @@ function C:drawNotebookList()
   end
   im.Separator()
   if im.Selectable1('New...', self.notebook_index == nil) then
-    self:selectNotebook(nil)
+    local notebook = self.path.notebooks:create(nil, nil)
+    self:selectNotebook(notebook.id)
   end
   im.EndChild() -- notebooks child window
 
@@ -461,6 +533,43 @@ function C:drawNotebookList()
     im.BeginChild1("currentNotebook", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
     im.HeaderText("Notebook Info")
     im.Text("Current Notebook: #" .. self.notebook_index)
+    im.SameLine()
+    if im.Button("Delete..") then im.OpenPopup("Delete?") end
+    -- if im.Button("Delete") then
+    if im.BeginPopupModal("Delete?", nil, ImGuiWindowFlags_AlwaysAutoResize) then
+      im.Text("Really delete notebook?\n(Actually you can still use Ctrl+z to undo)\n\n")
+      -- im.Separator()
+      if im.Button("OK", im.ImVec2(120,0)) then
+        editor.history:commitAction("Delete Notebook",
+        {index = self.notebook_index, self = self},
+        function(data) -- undo
+          local note = data.self.path.notebooks:create(nil, data.notebookData.oldId)
+          note:onDeserialized(data.notebookData, {})
+          self:selectNotebook(data.index)
+        end,function(data) --redo
+          data.notebookData = data.self.path.notebooks.objects[data.index]:onSerialize()
+          data.self.path.notebooks:remove(data.index)
+          self:selectNotebook(nil)
+        end)
+      end
+      im.SetItemDefaultFocus()
+      im.SameLine()
+      if im.Button("Cancel", im.ImVec2(120,0)) then im.CloseCurrentPopup() end
+      im.EndPopup()
+    end
+
+    im.SameLine()
+    if im.Button("Move Up") then
+      editor.history:commitAction("Move Notebook in List",
+        {index = self.notebook_index, self = self, dir = -1},
+        moveNotebookUndo, moveNotebookRedo)
+    end
+    im.SameLine()
+    if im.Button("Move Down") then
+      editor.history:commitAction("Move Notebook in List",
+        {index = self.notebook_index, self = self, dir = 1},
+        moveNotebookUndo, moveNotebookRedo)
+    end
 
     im.Text("Installed: " .. tostring(notebook.installed))
 
@@ -510,11 +619,12 @@ function C:drawPacenoteList(notebook)
         selectPacenoteUndo, selectPacenoteRedo)
     end
   end
-  -- im.Separator()
-  -- if im.Selectable1('New...', self.pacenote_index == nil) then
-  --   self:selectPacenote(nil)
-  -- end
-  -- im.tooltip("Shift-Drag in the world to create a new pacenote.")
+  im.Separator()
+  if im.Selectable1('New...', self.pacenote_index == nil) then
+    local pacenote = self:selectedNotebook().pacenotes:create(nil, nil)
+    self:selectPacenote(pacenote.id)
+  end
+  im.tooltip("Ctrl-Drag in the world to create a new pacenote.")
   im.EndChild() -- pacenotes child window
 
   im.SameLine()
@@ -522,9 +632,12 @@ function C:drawPacenoteList(notebook)
 
   if self.pacenote_index then
     local note = notebook.pacenotes.objects[self.pacenote_index]
-    if self.rallyEditor.allowGizmo() then
-      editor.drawAxisGizmo()
-    end
+
+    if not note.missing then
+
+    -- if self.rallyEditor.allowGizmo() then
+      -- editor.drawAxisGizmo()
+    -- end
     im.HeaderText("Pacenote Info")
     im.Text("Current Pacenote: #" .. self.pacenote_index)
     im.SameLine()
@@ -533,7 +646,7 @@ function C:drawPacenoteList(notebook)
       {index = self.pacenote_index, self = self},
       function(data) -- undo
         local note = notebook.pacenotes:create(nil, data.noteData.oldId)
-        note:onDeserialized(data.noteData)
+        note:onDeserialized(data.noteData, {})
         self:selectPacenote(data.index)
       end,function(data) --redo
         data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
@@ -578,6 +691,8 @@ function C:drawPacenoteList(notebook)
     self:drawWaypointList(note)
 
     im.EndChild() -- currentPacenote child window
+
+    end -- / if not note.missing then
   end -- / if pacenote_index
 end
 
@@ -609,9 +724,40 @@ function C:drawWaypointList(note)
     local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
 
     if not waypoint.missing then
+
+    -- only draw the axis gizmo if there is a selected waypoint
+    if self.rallyEditor.allowGizmo() then
+      editor.drawAxisGizmo()
+    end
       
     im.HeaderText("Waypoint Info")
     im.Text("Current Waypoint: #" .. self.waypoint_index)
+    im.SameLine()
+    if im.Button("Delete") then
+      editor.history:commitAction("Delete Pacenote Waypoint",
+      {index = self.waypoint_index, self = self},
+      function(data) -- undo
+        local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpData.oldId)
+        wp:onDeserialized(data.wpData)
+        self:selectWaypoint(data.index)
+      end,function(data) --redo
+        data.wpData = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:onSerialize()
+        data.self:selectedPacenote().pacenoteWaypoints:remove(data.index)
+        self:selectWaypoint(nil)
+      end)
+    end
+    im.SameLine()
+    if im.Button("Move Up") then
+      editor.history:commitAction("Move Pacenote Waypoint in List",
+        {index = self.waypoint_index, self = self, dir = -1},
+        moveWaypointUndo, moveWaypointRedo)
+    end
+    im.SameLine()
+    if im.Button("Move Down") then
+      editor.history:commitAction("Move Pacenote Waypoint in List",
+        {index = self.waypoint_index, self = self, dir = 1},
+        moveWaypointUndo, moveWaypointRedo)
+    end
 
     local editEnded = im.BoolPtr(false)
     editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)

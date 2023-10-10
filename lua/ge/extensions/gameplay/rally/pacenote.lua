@@ -16,7 +16,7 @@ function C:init(notebook, name, forceId)
     self,
     require('/lua/ge/extensions/gameplay/rally/pacenoteWaypoint')
   )
-  self.pacenoteWaypointsByType = nil
+  self.pacenoteWaypointsByType = {}
 
   self._drawMode = 'none'
   self.sortOrder = 999999
@@ -180,7 +180,8 @@ function C:drawDebug(drawMode, clr, extraText)
   -- end
 
   for i,wp in pairs(self.pacenoteWaypoints.objects) do
-    wp:drawDebug(self._drawMode, clr, extraText)
+    -- wp:drawDebug(self._drawMode, clr, extraText)
+    wp:drawDebug()
   end
 end
 

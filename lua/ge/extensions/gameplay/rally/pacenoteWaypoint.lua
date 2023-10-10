@@ -12,7 +12,7 @@ function C:init(note, name, forceId)
 
   self.id = forceId or note:getNextUniqueIdentifier()
   self.name = name or 'Waypoint '..self.id
-  self.waypointType = 'fwdAudioTrigger'
+  self.waypointType = editor_rallyEditor.wpTypeCornerStart
   self.normal = vec3(0,1,0)
   self.pos = vec3()
   self.radius = 0
