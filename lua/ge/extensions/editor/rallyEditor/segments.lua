@@ -62,7 +62,7 @@ function C:selectSegment(index)
   end
 
   -- TODO
-  for _, n in pairs(self.path.pacenotes.objects) do
+  for _, n in pairs(self.path.installedNotebook.pacenotes.objects) do
     if index and index ~= -1 and n.segment == index then
       n._drawMode = 'normal'
     else

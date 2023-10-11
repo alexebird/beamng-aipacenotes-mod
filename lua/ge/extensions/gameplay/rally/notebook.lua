@@ -79,6 +79,10 @@ end
 
 function C:drawDebug(drawMode, clr, extraText)
   self.pacenotes:drawDebug(drawMode, clr, extraText)
+
+  -- for _,o in ipairs(self.pacenotes.sorted) do
+  --   o:drawDebug()
+  -- end
 end
 
 return function(...)

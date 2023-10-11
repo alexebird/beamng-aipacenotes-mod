@@ -137,10 +137,16 @@ function C:intersectCornersOrig(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
-function C:textForDrawDebug()
-  local txt = '['..self.waypointType..']'
+function C:textForDrawDebug(drawMode)
+  local txt = ''
   if self.waypointType == editor_rallyEditor.wpTypeCornerStart then
-    txt = txt .. ' ' .. self.note.note
+    if drawMode == 'highlight' or self.note._drawMode == 'highlight' then
+      txt = '['..self.waypointType..'] ' .. self.note.note
+    else
+      txt = self.note.note
+    end
+  else
+    txt = '['..self.waypointType..']'
   end
   return txt
 end
@@ -157,7 +163,7 @@ function C:drawDebug(drawMode, clr, extraText)
 
   debugDrawer:drawSphere((self.pos), self.radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
 
-  local alpha = (drawMode == 'normal') and 0.5 or 1
+  local alpha = (drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1
   if self.note.note == '' then alpha = alpha * 0.4 end
   if drawMode ~= 'faded' then
     -- local str = self.note.note or ''
@@ -165,7 +171,7 @@ function C:drawDebug(drawMode, clr, extraText)
     --   str = self.note.name or 'Note'
     --   str = '('..str..')'
     -- end
-    local str = self:textForDrawDebug()
+    local str = self:textForDrawDebug(drawMode)
     if extraText then
       str = str .. ' ' .. extraText
     end

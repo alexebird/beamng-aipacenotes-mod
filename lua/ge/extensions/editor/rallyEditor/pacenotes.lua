@@ -162,12 +162,41 @@ function C:selectNotebook(id)
 end
 
 function C:selectPacenote(id)
-  log('D', 'wtf', 'selecting pacenote id='..tostring(id))
+  -- log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
+  -- local prev = nil
+  -- local prevPrev = nil
 
-  -- for _, note in pairs(self:selectedNotebook().pacenotes.objects) do
-  --   note._drawMode = (id == note.id) and 'highlight' or 'normal'
-  -- end
+  -- local thePrev = nil
+  -- local thePrevPrev = nil
+
+  -- local note_i = nil
+  -- local prev_i = nil
+  -- local next_i = nil
+  local pacenotesSorted = self:selectedNotebook().pacenotes.sorted
+  for i, note in ipairs(pacenotesSorted) do
+    -- log('D', 'wtf', 'i='..i..' note='..note.name)
+    if self.pacenote_index == note.id then
+      -- note_i = i
+      -- prev_i = note_i-1
+      -- next_i = note_i+1
+      local prevNote = pacenotesSorted[i-1]
+      local nextNote = pacenotesSorted[i+1]
+      note._drawMode = 'highlight'
+      note:setAdjacentNotes(prevNote, nextNote)
+    else
+      note._drawMode = self.waypoint_index and 'undistract' or 'normal'
+      note:clearAdjacentNotes()
+    end
+  end
+
+  -- local prevNote = pacenotesSorted[prev_i]
+  -- local nextNote = pacenotesSorted[next_i]
+  -- local currnote = pacenotesSorted[note_i]
+  -- log('D', 'wtf', 'prev='..prevNote.name)
+  -- log('D', 'wtf', 'note='..currnote.name)
+  -- log('D', 'wtf', 'next='..nextNote.name)
+  -- currnote:setPrevNote(prevNote)
 
   if id then
     local note = nil
@@ -182,6 +211,8 @@ function C:selectPacenote(id)
       note = wp.note
     end
 
+    note:indexWaypointsByType()
+
     pacenoteNameText = im.ArrayChar(1024, note.name)
     pacenoteNoteText = im.ArrayChar(2048, note.note)
   else
@@ -194,18 +225,18 @@ function C:selectPacenote(id)
 end
 
 function C:selectWaypoint(id)
-  log('D', 'wtf', 'selecting waypoint id='..tostring(id))
+  -- log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
 
   for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
     wp._drawMode = (id == wp.id) and 'highlight' or 'normal'
-    log('D', 'wtf', 'waypoint['..wp.id..']: drawMode set to '..wp._drawMode)
+    -- log('D', 'wtf', 'waypoint['..wp.id..']: drawMode set to '..wp._drawMode)
   end
 
   if id then
     -- local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
     local waypoint = self:selectedNotebook():getWaypoint(id)
-    log('D', 'wtf', dumps(id))
+    -- log('D', 'wtf', dumps(id))
     self:selectPacenote(waypoint.note.id)
     waypointNameText = im.ArrayChar(1024, waypoint.name)
     self:updateTransform(id)
@@ -342,6 +373,8 @@ function C:createManualWaypoint()
     return
   end
 
+  local defaultRadius = 2
+
   local txt = "Add manual Pacenote Waypoint (Drag for Size)"
   debugDrawer:drawTextAdvanced(vec3(self.mouseInfo.rayCast.pos), String(txt), ColorF(1,1,1,1),true, false, ColorI(0,0,0,255))
 
@@ -349,7 +382,7 @@ function C:createManualWaypoint()
 
     local radius = (self.mouseInfo._downPos - self.mouseInfo._holdPos):length()
     if radius <= 1 then
-      radius = 5
+      radius = defaultRadius
     end
     debugDrawer:drawSphere((self.mouseInfo._downPos), radius, ColorF(1,1,1,0.8))
     local normal = (self.mouseInfo._holdPos - self.mouseInfo._downPos):normalized()
@@ -381,14 +414,12 @@ function C:createManualWaypoint()
         data.self:selectWaypoint(data.index)
       end,
       function(data) --redo
-        -- log('D', 'wtf', dumps(data.self:selectedPacenote()))
         local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpId or nil)
-        -- log('D', 'wtf', dumps(wp))
         data.wpId = wp.id
         local normal = data.normal
         local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
         if radius <= 1 then
-          radius = 5
+          radius = defaultRadius
         end
         wp:setManual(data.mouseInfo._downPos, radius, normal)
 
@@ -450,7 +481,11 @@ function C:input()
       if selectedWp then
         self:selectWaypoint(selectedWp.id)
       else
-        self:selectWaypoint(nil)
+        if self:selectedWaypoint() then
+          self:selectWaypoint(nil)
+        else
+          self:selectPacenote(nil)
+        end
       end
     end
   end
@@ -701,7 +736,7 @@ function C:drawWaypointList(note)
   im.BeginChild1("waypoints", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
 
   for i, waypoint in ipairs(note.pacenoteWaypoints.sorted) do
-    if im.Selectable1(waypoint.name, waypoint.id == self.waypoint_index) then
+    if im.Selectable1(waypoint.waypointType..' ('..waypoint.name..')', waypoint.id == self.waypoint_index) then
       editor.history:commitAction("Select Waypoint",
         {old = self.waypoint_index, new = waypoint.id, self = self},
         selectWaypointUndo, selectWaypointRedo)
