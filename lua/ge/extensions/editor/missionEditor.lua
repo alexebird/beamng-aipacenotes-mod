@@ -137,7 +137,6 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
       im.SameLine()
 
       if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
-        log('D', 'WTF', 'TODO open recce flowgraph')
         -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
         openRallyEditor(shownMission)
         editor_flowgraphEditor.open()

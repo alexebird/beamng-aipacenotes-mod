@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"birdman",
   "currentGraphID":1,
-  "date":1697192510,
+  "date":1697238014,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -32,6 +32,13 @@
           8,
           "reset",
           true
+        ],
+        [
+          71,
+          "flow",
+          8,
+          "damage",
+          false
         ],
         [
           17,
@@ -216,6 +223,20 @@
           false
         ],
         [
+          67,
+          "flow",
+          47,
+          "flow",
+          false
+        ],
+        [
+          10,
+          "damage",
+          47,
+          "currentDamage",
+          false
+        ],
+        [
           53,
           "false",
           52,
@@ -249,6 +270,69 @@
           53,
           "B",
           false
+        ],
+        [
+          10,
+          "velocity",
+          55,
+          "A",
+          false
+        ],
+        [
+          10,
+          "damage",
+          57,
+          "a",
+          false
+        ],
+        [
+          45,
+          "currentDamage",
+          57,
+          "b",
+          false
+        ],
+        [
+          10,
+          "flow",
+          67,
+          "flow",
+          false
+        ],
+        [
+          57,
+          "value",
+          67,
+          "A",
+          false
+        ],
+        [
+          67,
+          "true",
+          71,
+          "flow",
+          false
+        ],
+        [
+          69,
+          "flow",
+          71,
+          "reset",
+          false
+        ],
+        [
+          10,
+          "flow",
+          69,
+          "flow",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          69,
+          "reset",
+          true
         ]
       ],
       "name":"Recce",
@@ -278,6 +362,7 @@
           "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
+              "damage":false,
               "enqueue":false,
               "flow":false,
               "missionDir":false,
@@ -288,64 +373,10 @@
             "p_out":{}
           },
           "pos":[
-            2096,
-            260
+            2404,
+            288
           ],
           "type":"gameplay/race/aiPacenotesEnqueueAudio"
-        },
-        "9":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "channel":{
-              "type":"string",
-              "value":"AudioMusic"
-            },
-            "fadeInTime":{
-              "type":"number",
-              "value":-1
-            },
-            "fadeOutTime":{
-              "type":"number",
-              "value":-1
-            },
-            "file":{
-              "type":"string",
-              "value":"event:UI_Checkpoint"
-            },
-            "pitch":{
-              "type":"number",
-              "value":1
-            },
-            "unique":{
-              "type":"bool",
-              "value":false
-            },
-            "volume":{
-              "type":"number",
-              "value":1
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "channel":true,
-              "fadeInTime":true,
-              "fadeOutTime":true,
-              "file":false,
-              "flow":false,
-              "pitch":true,
-              "unique":true,
-              "volume":true
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            2110,
-            582
-          ],
-          "type":"audio/playOnce"
         },
         "10":{
           "data":{},
@@ -358,18 +389,18 @@
             "p_out":{
               "active":true,
               "damage":false,
-              "dirVec":false,
+              "dirVec":true,
               "dirVecUp":true,
               "flow":false,
-              "position":false,
+              "position":true,
               "rotation":true,
               "velocity":false,
               "velocityVector":true
             }
           },
           "pos":[
-            1774,
-            540
+            1096,
+            498
           ],
           "type":"vehicle/vehicleMapData"
         },
@@ -426,8 +457,8 @@
             "p_out":{}
           },
           "pos":[
-            1326,
-            764
+            1004,
+            1436
           ],
           "type":"gameplay/race/aiPacenotesRallyEditorGizmos"
         },
@@ -544,8 +575,8 @@
             }
           },
           "pos":[
-            52,
-            778
+            -276,
+            1324
           ],
           "type":"environment/getPause"
         },
@@ -573,8 +604,8 @@
           },
           "opSymbol":"==",
           "pos":[
-            1004,
-            764
+            682,
+            1436
           ],
           "type":"logic/compare"
         },
@@ -659,6 +690,43 @@
           ],
           "type":"scene/getPlayerVehicle"
         },
+        "45":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "global":false,
+          "hiddenPins":{
+            "p_in":{},
+            "p_out":{
+              "currentDamage":false
+            }
+          },
+          "pos":[
+            990,
+            890
+          ],
+          "type":"types/getVariable",
+          "varName":"currentDamage"
+        },
+        "47":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "global":false,
+          "hiddenPins":{
+            "p_in":{
+              "currentDamage":false,
+              "flow":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            1950,
+            834
+          ],
+          "type":"types/setVariable",
+          "varName":"currentDamage"
+        },
         "52":{
           "data":{},
           "dynamicMode":"repeat",
@@ -673,8 +741,8 @@
             }
           },
           "pos":[
-            704,
-            708
+            360,
+            1324
           ],
           "type":"types/setVariable",
           "varName":"lastGetPause"
@@ -697,8 +765,8 @@
           },
           "opSymbol":"==",
           "pos":[
-            346,
-            806
+            18,
+            1352
           ],
           "type":"logic/compare"
         },
@@ -713,20 +781,158 @@
             }
           },
           "pos":[
-            52,
-            862
+            -276,
+            1408
           ],
           "type":"types/getVariable",
           "varName":"lastGetPause"
+        },
+        "55":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "B":{
+              "type":"number",
+              "value":1
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "A":false,
+              "B":false,
+              "flow":false
+            },
+            "p_out":{
+              "value":true,
+              "false":true,
+              "flow":true,
+              "true":false
+            }
+          },
+          "opSymbol":"<",
+          "pos":[
+            1418,
+            596
+          ],
+          "type":"logic/compare"
+        },
+        "57":{
+          "data":{
+            "expression":"a-b",
+            "safeMode":true
+          },
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "a":false,
+              "b":false,
+              "c":false
+            },
+            "p_out":{
+              "value":false
+            }
+          },
+          "pos":[
+            1264,
+            862
+          ],
+          "type":"math/math"
+        },
+        "67":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "B":{
+              "type":"number",
+              "value":0
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "A":false,
+              "B":false,
+              "flow":false
+            },
+            "p_out":{
+              "value":true,
+              "false":false,
+              "flow":false,
+              "true":false
+            }
+          },
+          "opSymbol":">",
+          "pos":[
+            1494,
+            834
+          ],
+          "type":"logic/compare"
+        },
+        "69":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "asDuration":{
+              "type":"bool",
+              "value":true
+            },
+            "input":{
+              "type":"number",
+              "value":10
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "asDuration":true,
+              "dt":true,
+              "flow":false,
+              "input":false,
+              "reset":false,
+              "reverseHit":true
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            1726,
+            540
+          ],
+          "type":"logic/rateLimit"
+        },
+        "71":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "reset":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            2152,
+            638
+          ],
+          "type":"logic/once"
         }
       },
       "showTab":true,
       "type":"graph",
       "variables":{
         "customVariableOrder":[
-          "lastGetPause"
+          "lastGetPause",
+          "currentDamage"
         ],
         "list":[
+          {
+            "index":2,
+            "mergeStrat":"max",
+            "name":"currentDamage",
+            "type":"number",
+            "value":0
+          },
           {
             "index":1,
             "mergeStrat":"or_",
@@ -737,10 +943,10 @@
         ]
       },
       "viewPos":[
-        131.22897338867187500000,
-        19.81675720214843750000
+        617.41143798828125000000,
+        186.33898925781250000000
       ],
-      "viewZoom":0.50000000000000000000
+      "viewZoom":0.74999994039535522461
     },
     "3":{
       "description":"This is the description for graph States",

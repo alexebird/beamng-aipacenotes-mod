@@ -136,11 +136,11 @@ local function loadRace(full_filename)
   end
   local dir, filename, ext = path.split(full_filename)
   log('I', logTag, 'creating empty rally files at ' .. tostring(dir))
-  createEmptyRaceFiles(dir)
+  -- createEmptyRaceFiles(dir)
   local json = readJsonFile(full_filename)
   if not json then
     -- json = readJsonFile(full_filename)
-    log('E', logTag, 'couldnt find rally file even after createEmptyRaceFiles')
+    log('E', logTag, 'couldnt find rally file')
   end
   previousFilepath = dir
   previousFilename = filename

@@ -19,6 +19,7 @@ C.pinSchema = {
   {dir = 'in', type = 'flow', name = 'flow', description = 'Inflow for this node.'},
   {dir = 'in', type = 'flow', name = 'enqueue', description = 'Inflow for when audio is enqueued.'},
   {dir = 'in', type = 'flow', name = 'reset', description = 'Inflow for resetting audio queue.'},
+  {dir = 'in', type = 'flow', name = 'damage', description = 'Inflow for damage audio .'},
   {dir = 'in', type = 'string', name = 'note', description = 'The pacenote.'},
   {dir = 'in', type = 'string', name = 'notebookName', description = 'The notebook name.'},
   {dir = 'in', type = 'string', name = 'missionDir', description = 'Root path of the mission.'},
@@ -37,15 +38,22 @@ function C:resetAudioQueue()
   self.queue = dequeue.new()
 
   if self.currAudioObj then
-    local sfxSource = scenetree.findObjectById(self.currAudioObj.sourceId)
-    if sfxSource then
-      sfxSource:stop(-1)
-    end
-    local fn = '/tmp/pacenote_damage.ogg'
-    local res = Engine.Audio.playOnce('AudioGui', fn)
+    self:stopSfxSource(self.currAudioObj.sourceId)
   end
 
   self.currAudioObj = nil
+end
+
+function C:stopSfxSource(sourceId)
+  local sfxSource = scenetree.findObjectById(sourceId)
+  if sfxSource then
+    sfxSource:stop(-1)
+  end
+end
+
+function C:playDamageSfx()
+  local fn = '/tmp/pacenote_damage.ogg'
+  local res = Engine.Audio.playOnce('AudioGui', fn)
 end
 
 local function normalize_text(s)
@@ -176,6 +184,12 @@ end
 function C:work(args)
   if self.pinIn.reset.value then
     self:resetAudioQueue()
+    return
+  end
+
+  if self.pinIn.damage.value then
+    self:resetAudioQueue()
+    -- self:playDamageSfx()
     return
   end
 

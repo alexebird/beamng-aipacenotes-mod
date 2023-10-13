@@ -59,11 +59,8 @@ function C:calcAIPath()
 end
 
 function C:setPath(path)
-  log('D', 'wtf', 'race setPath')
   self.path = path
-  -- log('D', 'wtf', dumps(path))
   self.path:autoConfig()
-  log('D', 'wtf', 'race after autoconfig')
   self:calcAIPath()
 end
 
@@ -657,24 +654,16 @@ function C:updateVehicle(id, dt)
 end
 
 function C:handlePacenotes(id)
-  -- log('D', 'wtf', 'hereA')
   local state = self.states[id]
   if state.complete then return end
-  -- log('D', 'wtf', 'hereB')
 
   for _, segId in ipairs(state.currentSegments) do
-    -- log('D', 'wtf', 'hereC')
     local pnIds = self.path.config.segmentToPacenotes[segId]
-    -- log('D', 'wtf', tostring(#pnIds)) -- returns 0
     for _, pni in ipairs(pnIds) do
-      -- log('D', 'wtf', 'hereD')
       if not state.completedPacenotes[pni] then
-        -- log('D', 'wtf', 'hereE')
         local pn = self.path.pacenotes.objects[pni]
         if not pn.missing then
-          -- log('D', 'wtf', 'hereF')
           if pn:intersectCorners(state.previousCorners, state.currentCorners) then
-            log('D', 'wtf', 'hereG')
             state.events.pacenoteReached = true
             state.events.pacenoteIdReached = pni
             state.completedPacenotes[pni] = true
