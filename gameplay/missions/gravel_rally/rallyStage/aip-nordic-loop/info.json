@@ -1,0 +1,90 @@
+{
+  "additionalAttributes":{
+    "difficulty":"high",
+    "vehicle":"choice"
+  },
+  "author":"birdman",
+  "careerSetup":{
+    "defaultStarKeys":[
+      "goldTime"
+    ],
+    "showInFreeroam":true,
+    "starOutroTexts":{
+      "silverTime":"",
+      "bronzeTime":"",
+      "goldTime":"Way to go!",
+      "noStarUnlocked":"Maybe just one more try?"
+    },
+    "starRewards":{},
+    "starsActive":{
+      "bronzeTime":false,
+      "goldTime":true,
+      "silverTime":false
+    }
+  },
+  "customAdditionalAttributes":{},
+  "date":1695803991,
+  "description":"Counter-clockwise run around the island's outer loop.",
+  "devMission":false,
+  "grouping":{
+    "id":"ai-pacenotes",
+    "label":"AI Pacenotes"
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowRollingStart":false,
+    "bronzeTime":165,
+    "closed":true,
+    "defaultLaps":1,
+    "endScreenText":"Nice driving!",
+    "goldTime":154.7839966,
+    "mapPreviewMode":"navgraph",
+    "reversible":true,
+    "silverTime":162.5,
+    "startScreenText":"How many racecars will you destroy today?"
+  },
+  "name":"Nordic Loop (AI Pacenotes)",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":true,
+      "time":0.2291666667
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "enabled":true,
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"rally car - off road",
+      "playerConfigPath":"vehicles/vivace/rally car - off road.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"",
+      "usePresetVehicle":true
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"gravel_rally",
+    "pos":[
+      -837.6843262,
+      684.982605,
+      34.15224075
+    ],
+    "radius":2.820513677,
+    "rot":[
+      0.01992208426,
+      -0.03192276176,
+      0.9990925071,
+      0.01995520179
+    ],
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}

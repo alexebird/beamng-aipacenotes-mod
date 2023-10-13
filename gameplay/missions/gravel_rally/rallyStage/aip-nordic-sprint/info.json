@@ -1,0 +1,83 @@
+{
+  "additionalAttributes":{
+    "difficulty":"high",
+    "vehicle":"own"
+  },
+  "author":"birdman",
+  "careerSetup":{
+    "defaultStarKeys":[
+      "goldTime"
+    ],
+    "showInFreeroam":true,
+    "starOutroTexts":{
+      "silverTime":"",
+      "bronzeTime":"",
+      "goldTime":"Way to go!",
+      "noStarUnlocked":"Maybe just one more try?"
+    },
+    "starRewards":{},
+    "starsActive":{
+      "bronzeTime":false,
+      "goldTime":true,
+      "silverTime":false
+    }
+  },
+  "customAdditionalAttributes":{},
+  "date":1684795828,
+  "description":"Counter-clockwise run around the island's outer loop.",
+  "devMission":false,
+  "grouping":{
+    "id":"ai-pacenotes",
+    "label":"AI Pacenotes"
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowRollingStart":false,
+    "bronzeTime":165,
+    "closed":false,
+    "defaultLaps":1,
+    "endScreenText":"Nice driving!",
+    "goldTime":154.7839966,
+    "mapPreviewMode":"navgraph",
+    "reversible":false,
+    "silverTime":162.5,
+    "startScreenText":"How many racecars will you destroy today?"
+  },
+  "name":"Nordic Sprint (AI Pacenotes)",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":false
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "enabled":true,
+      "mode":"own"
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"gravel_rally",
+    "pos":[
+      -837.6843262,
+      684.982605,
+      34.15224075
+    ],
+    "radius":2.820513677,
+    "rot":[
+      0.01992208426,
+      -0.03192276176,
+      0.9990925071,
+      0.01995520179
+    ],
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}

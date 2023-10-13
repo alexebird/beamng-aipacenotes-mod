@@ -2,6 +2,8 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
+local waypointTypes = require('/lua/ge/extensions/gameplay/rally/waypointTypes')
+
 local C = {}
 local modes = {"manual","navgraph"}
 local logTag = 'aipacenotes_pacenote'
@@ -53,7 +55,7 @@ function C:validateWaypointTypes()
 end
 
 function C:getCornerStartWaypoint()
-  local wpListForType = self.pacenoteWaypointsByType[editor_rallyEditor.wpTypeCornerStart]
+  local wpListForType = self.pacenoteWaypointsByType[waypointTypes.wpTypeCornerStart]
   if wpListForType then
     local k, v = next(wpListForType)
     return v
@@ -63,7 +65,7 @@ function C:getCornerStartWaypoint()
 end
 
 function C:getCornerEndWaypoint()
-  local wpListForType = self.pacenoteWaypointsByType[editor_rallyEditor.wpTypeCornerEnd]
+  local wpListForType = self.pacenoteWaypointsByType[waypointTypes.wpTypeCornerEnd]
   if wpListForType then
     local k, v = next(wpListForType)
     return v
@@ -77,11 +79,11 @@ function C:getDistanceMarkerWaypointsAfterEnd()
   local wps = {}
 
   for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
-    if wp.waypointType == editor_rallyEditor.wpTypeCornerEnd then
+    if wp.waypointType == waypointTypes.wpTypeCornerEnd then
       cornerEndFound = true 
     end
 
-    if cornerEndFound and wp.waypointType == editor_rallyEditor.wpTypeDistanceMarker then
+    if cornerEndFound and wp.waypointType == waypointTypes.wpTypeDistanceMarker then
       table.insert(wps, wp)
     end
   end
@@ -93,9 +95,9 @@ function C:getDistanceMarkerWaypointsBeforeStart()
   local wps = {}
 
   for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
-    if wp.waypointType == editor_rallyEditor.wpTypeDistanceMarker then
+    if wp.waypointType == waypointTypes.wpTypeDistanceMarker then
       table.insert(wps, wp)
-    elseif wp.waypointType == editor_rallyEditor.wpTypeCornerStart then
+    elseif wp.waypointType == waypointTypes.wpTypeCornerStart then
       break
     end
   end
@@ -124,24 +126,9 @@ function C:onDeserialized(data, oldIdMap)
   self:indexWaypointsByType()
 end
 
--- function C:setNormal(normal)
---   if not normal then
---     self.normal = vec3(0,1,0)
---   end
---   if normal:length() > 0.9 then
---     self.normal = normal:normalized()
---   end
--- end
 
--- function C:setManual(pos, radius, normal)
---   self.mode = "manual"
---   self.pos = vec3(pos)
---   self.radius = radius
---   self:setNormal(normal)
---   self.navgraphName = nil
--- end
-
--- function C:setNavgraph(navgraphName, fallback)
+function C:setNavgraph(navgraphName, fallback)
+  log('W', logTag, 'setNavgraph() not implemented')
 --   self.mode = "navgraph"
 --   self.navgraphName = navgraphName
 --   local n = map.getMap().nodes[navgraphName]
@@ -155,7 +142,7 @@ end
 --     end
 --   end
 --   self:setNormal(nil)
--- end
+end
 
 
 -- function C:inside(pos)
@@ -167,61 +154,32 @@ end
 --   end
 -- end
 
--- function C:intersectCorners(fromCorners, toCorners)
---     return self:intersectCorners(fromCorners, toCorners)
--- end
+function C:intersectCorners(fromCorners, toCorners)
+  local wp = self:getActiveFwdAudioTrigger()
+  if not wp then
+    -- log('D', logTag, 'couldnt find waypoint for intersectCorners()')
+    return false
+  -- else
+  --   log('D', logTag, 'found wp')
+  end
+  return wp:intersectCorners(fromCorners, toCorners)
+end
 
--- function C:intersectCornersDynamic(fromCorners, toCorners)
---   local minT = math.huge
---   for i = 1, #fromCorners do
---     local rPos, rDir = fromCorners[i], toCorners[i]-fromCorners[i]
---     local len = rDir:length()
---     if len > 0 then
---       len = 1/len
---       rDir:normalize()
---       local sMin, sMax = intersectsRay_Sphere(rPos, rDir, self.pos, self.radius)
---       --adjust for normlized rDir
---       sMin = sMin * len
---       sMax = sMax * len
---       -- inside sphere?
---       if sMin <= 0 and sMax >= 1 then
---         local t = intersectsRay_Plane(rPos, rDir, self.pos, self.normal)
---         t = t*len
---         if t<=1 and t>=0 then
---           minT = math.min(t, minT)
---         end
---       end
---     end
---   end
-
---   return minT <= 1, minT
--- end
-
--- function C:intersectCornersOrig(fromCorners, toCorners)
---   local minT = math.huge
---   for i = 1, #fromCorners do
---     local rPos, rDir = fromCorners[i], toCorners[i]-fromCorners[i]
---     local len = rDir:length()
---     if len > 0 then
---       len = 1/len
---       rDir:normalize()
---       local sMin, sMax = intersectsRay_Sphere(rPos, rDir, self.pos, self.radius)
---       --adjust for normlized rDir
---       sMin = sMin * len
---       sMax = sMax * len
---       -- inside sphere?
---       if sMin <= 0 and sMax >= 1 then
---         local t = intersectsRay_Plane(rPos, rDir, self.pos, self.normal)
---         t = t*len
---         if t<=1 and t>=0 then
---           minT = math.min(t, minT)
---         end
---       end
---     end
---   end
-
---   return minT <= 1, minT
--- end
+function C:getActiveFwdAudioTrigger()
+  -- local wpListForType = self.pacenoteWaypointsByType[waypointTypes.wpTypeFwdAudioTrigger]
+  -- if wpListForType then
+    -- for i,wp in pairs(wpListForType) do
+    for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+      if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger and wp.name == 'curr' then
+        -- log('D', 'wtf', 'wp.name='..wp.name)
+        return wp
+      end
+    end
+  -- else
+    -- log('W', logTag, 'no fwd audio waypoints found')
+    return nil
+  -- end
+end
 
 local function reverseList(list)
   local reversed = {}
@@ -260,7 +218,7 @@ function C:drawDebug(drawMode, clr, extraText)
     -- wp:drawDebug(self._drawMode, clr, extraText)
     if drawMode == 'highlight' then
       local clr = nil
-      if wp.waypointType == editor_rallyEditor.wpTypeCornerStart then
+      if wp.waypointType == waypointTypes.wpTypeCornerStart then
         clr = {0, 1, 0} -- green
         local cornerEnd = self:getCornerEndWaypoint()
         if cornerEnd then
@@ -268,15 +226,15 @@ function C:drawDebug(drawMode, clr, extraText)
         else
           log('W', logTag, 'pacenote "'..self.name..'" cornerEnd is nil')
         end
-      elseif wp.waypointType == editor_rallyEditor.wpTypeCornerEnd then
+      elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
         clr = {1, 0, 0} -- red
-      elseif wp.waypointType == editor_rallyEditor.wpTypeFwdAudioTrigger then
+      elseif wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
         clr = {0, 0, 1} -- blue
         self:drawLink(wp, self:getCornerStartWaypoint(), clr)
-      elseif wp.waypointType == editor_rallyEditor.wpTypeRevAudioTrigger then
+      elseif wp.waypointType == waypointTypes.wpTypeRevAudioTrigger then
         -- clr = {0, 0.5, 1} -- slightly more cyan than blue
         -- self:drawLink(wp, self:getCornerEndWaypoint(), clr)
-      elseif wp.waypointType == editor_rallyEditor.wpTypeDistanceMarker then
+      elseif wp.waypointType == waypointTypes.wpTypeDistanceMarker then
         clr = distClr
         local cornerStartOrder = self:getCornerStartWaypoint().sortOrder
         local cornerEndOrder = self:getCornerEndWaypoint().sortOrder
@@ -295,7 +253,7 @@ function C:drawDebug(drawMode, clr, extraText)
               end
             else
               -- once "from" is found, then find the next distanceMarker or cornerStart
-              if wp2.waypointType == editor_rallyEditor.wpTypeCornerStart or wp2.waypointType == editor_rallyEditor.wpTypeDistanceMarker then
+              if wp2.waypointType == waypointTypes.wpTypeCornerStart or wp2.waypointType == waypointTypes.wpTypeDistanceMarker then
                 to = wp2
                 break
               end
@@ -323,7 +281,7 @@ function C:drawDebug(drawMode, clr, extraText)
               end
             else
               -- once "from" is found, then find the next distanceMarker or cornerStart
-              if wp2.waypointType == editor_rallyEditor.wpTypeCornerEnd or wp2.waypointType == editor_rallyEditor.wpTypeDistanceMarker then
+              if wp2.waypointType == waypointTypes.wpTypeCornerEnd or wp2.waypointType == waypointTypes.wpTypeDistanceMarker then
                 from = wp2
                 break
               end

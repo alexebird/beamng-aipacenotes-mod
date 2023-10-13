@@ -2,6 +2,8 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
+local httpClient = require("socket.http")
+
 local M = {}
 local u_32_max_int = 4294967295
 local logTag = 'rally_editor'
@@ -21,7 +23,7 @@ currentPath._fnWithoutExt = 'NewRally'
 currentPath._dir = previousFilepath
 local allFiles = {}
 
-local spWindow, pnWindow, segWindow, tlWindow, toolsWindow
+local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow
 
 local raceTestWindowOpen = im.BoolPtr(false)
 local mouseInfo = {}
@@ -70,21 +72,80 @@ local function saveRace(race, savePath)
   race._fnWithoutExt = fn2
 end
 
-local function loadRace(filename)
-  if not filename then
+local function createEmptyRaceFiles(missionDir)
+  -- A utility function to check if a file exists
+  local function fileExists(file)
+    local f = io.open(file, "r")
+    if f then
+      f:close()
+      return true
+    else
+      return false
+    end
+  end
+
+  -- A utility function to write data into a file
+  local function writeToFile(file, data)
+    if not fileExists(file) then
+      local f = io.open(file, "w")
+      if f then
+        f:write(data)
+        f:close()
+      else
+        print("Error: Unable to open file: " .. file)
+      end
+    else
+      log('D', logTag, 'file '..file..' already exists')
+    end
+  end
+
+  -- Ensure the pacenotes directory exists
+  local pacenotesDir = missionDir .. '\\pacenotes'
+  os.execute('mkdir "' .. pacenotesDir .. '"')
+
+  -- Create the json files
+  writeToFile(missionDir .. "\\race.race.json", '{}')
+  writeToFile(missionDir .. "\\pacenotes.pacenotes.json", [[
+    {
+      "versions":[
+        {
+          "authors":"",
+          "description":"",
+          "id":1,
+          "installed":true,
+          "language_code":"en-GB",
+          "name":"Primary",
+          "pacenotes":[],
+          "voice":"british_female",
+          "voice_name":"en-GB-Neural2-A"
+        }
+      ]
+    }
+  ]])
+  writeToFile(missionDir .. "\\pacenotes\\settings.json", [[
+    {
+      "currentVersion":"version1",
+      "volume": 2
+    }
+  ]])
+end
+
+local function loadRace(full_filename)
+  if not full_filename then
     return
   end
-  local json = readJsonFile(filename)
+  local dir, filename, ext = path.split(full_filename)
+  log('I', logTag, 'creating empty rally files at ' .. tostring(dir))
+  createEmptyRaceFiles(dir)
+  local json = readJsonFile(full_filename)
   if not json then
-    log('E', logTag, 'unable to find race file: ' .. tostring(filename))
-    return
+    -- json = readJsonFile(full_filename)
+    log('E', logTag, 'couldnt find rally file even after createEmptyRaceFiles')
   end
-  local dir, filename, ext = path.split(filename)
   previousFilepath = dir
   previousFilename = filename
   local p = require('/lua/ge/extensions/gameplay/rally/path')("New Rally")
   p:onDeserialized(json)
-
   p._dir = dir
   local a, fn2, b = path.splitWithoutExt(previousFilename, true)
   p._fnWithoutExt = fn2
@@ -171,7 +232,7 @@ end
 
 local function findIssues()
   local issues = {}
-  if not editor.getPreference("rallyEditor.general.directionalNodes") then
+  if not editor.getPreference("raceEditor.general.directionalNodes") then
     table.insert(issues, {"Directional nodes disabled. Enable for best-quality races.", nop})
   end
   local missingNormals = 0
@@ -209,6 +270,40 @@ local function copyFromTimeTrials()
     setRaceUndo, setRaceRedo)
 end
 
+local function jsonRequest(uri, data)
+    -- GET
+    local respbody = {}
+    local body, code, headers, status = httpClient.request {
+        method = 'GET',
+        url = uri,
+        sink = ltn12.sink.table(respbody)
+    }
+
+    -- local respbody = {}
+    -- local reqbody = "data=" .. jsonEncode(data)
+    -- local body, code, headers, status = httpClient.request {
+    --     method = 'POST',
+    --     url = uri,
+    --     source = ltn12.source.string(reqbody),
+    --     headers = {
+    --         ["Accept"] = "*/*",
+    --         --["Accept-Encoding"] = "gzip, deflate",
+    --         --["Accept-Language"] = "en-us",
+    --         ["Content-Type"] = "application/x-www-form-urlencoded",
+    --         ["content-length"] = string.len(reqbody)
+    --     },
+    --     sink = ltn12.sink.table(respbody)
+    -- }
+    if code ~= 200 then
+        return {ok = false, error = code}
+    end
+
+    --print('body:' .. tostring(body))
+    --print('code:' .. tostring(code))
+    --print('headers:' .. dumps(headers))
+    --print('status:' .. tostring(status))
+    return jsonDecode(table.concat(respbody), 'json request response')
+end
 
 local function onEditorGui()
   if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
@@ -270,14 +365,14 @@ local function onEditorGui()
         im.EndMenu()
       end
       if im.BeginMenu("Preferences") then
-        local ptr = im.BoolPtr(editor.getPreference("rallyEditor.general.directionalNodes"))
+        local ptr = im.BoolPtr(editor.getPreference("raceEditor.general.directionalNodes"))
         if im.Checkbox('Directional Nodes', ptr) then
-          editor.setPreference("rallyEditor.general.directionalNodes", ptr[0])
+          editor.setPreference("raceEditor.general.directionalNodes", ptr[0])
         end
         im.tooltip("Created pathnodes have a direction or not.")
-        local ptr2 = im.BoolPtr(editor.getPreference("rallyEditor.general.showAiRoute") or false)
+        local ptr2 = im.BoolPtr(editor.getPreference("raceEditor.general.showAiRoute") or false)
         if im.Checkbox('Show AI Route', ptr2) then
-          editor.setPreference("rallyEditor.general.showAiRoute", ptr2[0])
+          editor.setPreference("raceEditor.general.showAiRoute", ptr2[0])
         end
         im.tooltip("Previews the AI Route for this racepath.")
         im.EndMenu()
@@ -342,6 +437,14 @@ local function onEditorGui()
         editor.selectEditMode(editor.editModes.raceEditMode)
       end
     end
+    if im.Button("Save") then
+      saveRace(currentPath, previousFilepath .. previousFilename)
+    end
+    if im.Button("HelloWorld") then
+      local resp = jsonRequest('http://localhost:5000/test.json')
+      log('D', 'wtf', dumps(resp))
+    end
+    im.Separator()
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
         local flags = nil
@@ -362,7 +465,7 @@ local function onEditorGui()
     updateMouseInfo()
 
     currentPath:drawDebug()
-    if editor.getPreference("rallyEditor.general.showAiRoute") then
+    if editor.getPreference("raceEditor.general.showAiRoute") then
       currentPath:drawAiRouteDebug()
     end
     currentWindow:draw(mouseInfo)
@@ -398,7 +501,7 @@ local function onDeactivate()
   editor.clearObjectSelection()
 end
 
-
+-- this is called after you Ctrl+L to reload lua.
 local function onEditorInitialized()
   editor.editModes.raceEditMode =
   {
@@ -422,7 +525,12 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
   testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
   currentWindow = windows[1]
-  pnWindow, segWindow, spWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[5], windows[7]
+  pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7]
+
+  for i,win in pairs(windows) do
+    win:setPath(currentPath)
+  end
+
   currentWindow:setPath(currentPath)
   currentWindow:selected()
 end
@@ -491,11 +599,14 @@ M.onWindowGotFocus = onWindowGotFocus
 M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized
 M.getToolsWindow = function() return toolsWindow end
+M.getPathnodesWindow = function() return pnWindow end
+M.getPacenotesWindow = function() return pacenotesWindow end
+M.getSegmentsWindow = function() return segWindow end
 
-M.wpTypeFwdAudioTrigger = "fwdAudioTrigger"
-M.wpTypeRevAudioTrigger = "revAudioTrigger"
-M.wpTypeCornerStart = "cornerStart"
-M.wpTypeCornerEnd = "cornerEnd"
-M.wpTypeDistanceMarker = "distanceMarker"
+-- M.wpTypeFwdAudioTrigger = "fwdAudioTrigger"
+-- M.wpTypeRevAudioTrigger = "revAudioTrigger"
+-- M.wpTypeCornerStart = "cornerStart"
+-- M.wpTypeCornerEnd = "cornerEnd"
+-- M.wpTypeDistanceMarker = "distanceMarker"
 
 return M

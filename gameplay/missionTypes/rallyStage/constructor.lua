@@ -16,6 +16,7 @@ function C:init()
   -- end
 
   self.fgVariables = deepcopy(self.missionTypeData)
+  self.missionTypeLabel = "Rally Stage"
   local reverse = false
   if self.missionTypeData.reversible then reverse = false end
   local rolling = false
@@ -208,8 +209,8 @@ function C:getWorldPreviewRoute()
       return self.cachedWorldPreviewRoute
     end
     -- load path from file
-    local path = require('/lua/ge/extensions/gameplay/race/path')("New Path")
-    path:onDeserialized(readJsonFile(self.missionFolder.."/race.race.json"))
+    local path = require('/lua/ge/extensions/gameplay/rally/path')("New Path")
+    path:onDeserialized(readJsonFile(self.missionFolder.."/rally.rally.json"))
     path:autoConfig()
     local ret = {}
     for i, nId in ipairs(path.config.linearSegments) do

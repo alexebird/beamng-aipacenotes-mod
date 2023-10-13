@@ -1,8 +1,10 @@
 -- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
+
 local im  = ui_imgui
 local logTag = 'aipacenotes'
+local waypointTypes = require('/lua/ge/extensions/gameplay/rally/waypointTypes')
 
 -- notebook form fields
 local notebookNameText = im.ArrayChar(1024, "")
@@ -134,8 +136,10 @@ function C:unselect()
   -- for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
   --   n._drawMode = 'none'
   -- end
-  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
-    wp._drawMode = 'none'
+  if self:selectedNotebook() then
+    for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
+      wp._drawMode = 'none'
+    end
   end
 
   self:selectNotebook(nil)
@@ -162,6 +166,8 @@ function C:selectNotebook(id)
 end
 
 function C:selectPacenote(id)
+  if not self:selectedNotebook() then return end
+  if not self:selectedNotebook().pacenotes then return end
   -- log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
   -- local prev = nil
@@ -225,6 +231,7 @@ function C:selectPacenote(id)
 end
 
 function C:selectWaypoint(id)
+  if not self:selectedNotebook() then return end
   -- log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
 
@@ -361,12 +368,7 @@ function C:draw(mouseInfo)
   self:drawNotebookList()
 end
 
-function C:createManualPacenote()
-  if not self:selectedNotebook() then return end
-
-end
-
-function C:createManualWaypoint()
+function C:createManualWaypoint(shouldCreateNewPacenote)
   if not self:selectedNotebook() then return end
 
   if not self.mouseInfo.rayCast then
@@ -376,6 +378,9 @@ function C:createManualWaypoint()
   local defaultRadius = 2
 
   local txt = "Add manual Pacenote Waypoint (Drag for Size)"
+  if shouldCreateNewPacenote then
+    txt = "Create new Pacenote and add manual Pacenote Waypoint (Drag for Size)"
+  end
   debugDrawer:drawTextAdvanced(vec3(self.mouseInfo.rayCast.pos), String(txt), ColorF(1,1,1,1),true, false, ColorI(0,0,0,255))
 
   if self.mouseInfo.hold then
@@ -400,6 +405,11 @@ function C:createManualWaypoint()
       ColorF(1,1,1,0.4))
   else
     if self.mouseInfo.up then
+      if shouldCreateNewPacenote then
+        local pacenote = self:selectedNotebook().pacenotes:create(nil, nil)
+        self:selectPacenote(pacenote.id)
+      end
+
       editor.history:commitAction("Create Manual Pacenote Waypoint",
       {
         mouseInfo = deepcopy(self.mouseInfo),
@@ -432,6 +442,7 @@ end
 -- figures out which pacenote to select with the mouse in the 3D scene.
 function C:mouseOverWaypoints()
   if not self:selectedNotebook() then return end
+  if not self:selectedNotebook().pacenotes then return end
   -- if self:selectedPacenote().missing then return end
 
   local minNoteDist = 4294967295
@@ -472,9 +483,9 @@ function C:input()
   if not self.mouseInfo.valid then return end
 
   if editor.keyModifiers.shift then
-    self:createManualWaypoint()
+    self:createManualWaypoint(false)
   elseif editor.keyModifiers.ctrl then
-    self:createManualPacenote()
+    self:createManualWaypoint(true)
   else
     local selectedWp = self:mouseOverWaypoints()
     if self.mouseInfo.down and not editor.isAxisGizmoHovered() then
@@ -642,6 +653,7 @@ end
 
 function C:drawPacenoteList(notebook)
   if not notebook then return end
+  if not notebook.pacenotes then return end
 
   local avail = im.GetContentRegionAvail()
 
@@ -736,7 +748,7 @@ function C:drawWaypointList(note)
   im.BeginChild1("waypoints", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
 
   for i, waypoint in ipairs(note.pacenoteWaypoints.sorted) do
-    if im.Selectable1(waypoint.waypointType..' ('..waypoint.name..')', waypoint.id == self.waypoint_index) then
+    if im.Selectable1('['..waypointTypes.shortenWaypointType(waypoint.waypointType)..'] '..waypoint.name, waypoint.id == self.waypoint_index) then
       editor.history:commitAction("Select Waypoint",
         {old = self.waypoint_index, new = waypoint.id, self = self},
         selectWaypointUndo, selectWaypointRedo)
@@ -798,7 +810,7 @@ function C:drawWaypointList(note)
     editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
       editor.history:commitAction("Change Name of Waypoint",
-        {index = self.waypoint_index, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'waypointName'},
+        {index = self.waypoint_index, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'name'},
         setWaypointFieldUndo, setWaypointFieldRedo)
     end
 
@@ -878,12 +890,12 @@ function C:waypointTypeSelector(note)
   if not self:selectedWaypoint() then return end
 
   local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
-  local waypointTypes = {
-    editor_rallyEditor.wpTypeFwdAudioTrigger,
-    editor_rallyEditor.wpTypeRevAudioTrigger,
-    editor_rallyEditor.wpTypeCornerStart,
-    editor_rallyEditor.wpTypeCornerEnd,
-    editor_rallyEditor.wpTypeDistanceMarker,
+  local wpTypesList = {
+    waypointTypes.wpTypeFwdAudioTrigger,
+    waypointTypes.wpTypeRevAudioTrigger,
+    waypointTypes.wpTypeCornerStart,
+    waypointTypes.wpTypeCornerEnd,
+    waypointTypes.wpTypeDistanceMarker,
   }
 
   local name = 'WaypointType'
@@ -892,7 +904,7 @@ function C:waypointTypeSelector(note)
 
   if im.BeginCombo(name..'##'..fieldName, waypoint.waypointType) then
 
-    for i, wt in ipairs(waypointTypes) do
+    for i, wt in ipairs(wpTypesList) do
       -- log('D', 'wtf', 'i='..i..' type='..wt)
       if im.Selectable1(wt, waypoint[fieldName] == wt) then
         editor.history:commitAction("Changed waypointType for waypoint",

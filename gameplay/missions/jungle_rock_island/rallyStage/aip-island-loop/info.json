@@ -1,0 +1,79 @@
+{
+  "additionalAttributes":{
+    "difficulty":"high",
+    "vehicle":"own"
+  },
+  "author":"birdman",
+  "careerSetup":{
+    "defaultStarKeys":[
+      "goldTime"
+    ],
+    "showInFreeroam":true,
+    "starOutroTexts":{
+      "goldTime":"Way to go!",
+      "noStarUnlocked":"Maybe just one more try?"
+    },
+    "starRewards":{},
+    "starsActive":{
+      "goldTime":true
+    }
+  },
+  "customAdditionalAttributes":{},
+  "date":1690352647,
+  "description":"A Jungle-y tarmac race.",
+  "devMission":false,
+  "grouping":{
+    "id":"ai-pacenotes",
+    "label":"AI Pacenotes"
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowRollingStart":false,
+    "bronzeTime":180,
+    "closed":false,
+    "defaultLaps":1,
+    "endScreenText":"Nice driving!",
+    "goldTime":159.9900055,
+    "mapPreviewMode":"navgraph",
+    "reversible":false,
+    "silverTime":120,
+    "startScreenText":"How many racecars will you destroy today?"
+  },
+  "name":"aip-island-loop",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":false
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "enabled":true,
+      "mode":"own"
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"jungle_rock_island",
+    "pos":[
+      507.480631,
+      -446.4660951,
+      129.35915
+    ],
+    "radius":3,
+    "rot":{
+      "z":0,
+      "w":1,
+      "x":0,
+      "y":0
+    },
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}

@@ -79,18 +79,18 @@ local missionSearchTxt = im.ArrayChar(256, "")
 local missionSearchDisplayResult = false
 local missionSearchResults = {}
 
-local function openRaceEditorTurbo(shownMission)
-  if editor_raceEditorTurbo then
+local function openRallyEditor(shownMission)
+  if editor_rallyEditor then
     if not editor.active then
       editor.setEditorActive(true)
     end
-    editor_raceEditorTurbo.show()
+    editor_rallyEditor.show()
 
     local folder = shownMission.missionFolder
-    local raceFname = folder .. '/' .. 'race.race.json'
-    log('D', 'WTF', 'raceFname='..raceFname)
+    local raceFname = folder .. '/' .. 'rally.rally.json'
+    log('D', 'WTF', 'rallyFname='..raceFname)
 
-    editor_raceEditorTurbo.loadRace(raceFname)
+    editor_rallyEditor.loadRace(raceFname)
   end
 end
 
@@ -129,22 +129,24 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
     ui_flowgraph_editor.tooltip("Start Mission\n(Needs loaded map and vehicle)")
     im.SameLine()
 
-    if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
-      openRaceEditorTurbo(shownMission)
-    end
-    ui_flowgraph_editor.tooltip("Open Race Editor Turbo")
-    im.SameLine()
+    if shownMission.missionType == 'rallyStage' then
+      if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
+          openRallyEditor(shownMission)
+      end
+      ui_flowgraph_editor.tooltip("Open Race Editor Turbo")
+      im.SameLine()
 
-    if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
-      log('D', 'WTF', 'TODO open recce flowgraph')
-      -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
-      openRaceEditorTurbo(shownMission)
-      editor_flowgraphEditor.open()
-      local recceFname = "/gameplay/missionTypes/recce/recce.flow.json"
-      editor_flowgraphEditor.openFile({filepath = recceFname}, true)
+      if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
+        log('D', 'WTF', 'TODO open recce flowgraph')
+        -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
+        openRallyEditor(shownMission)
+        editor_flowgraphEditor.open()
+        local recceFname = "/gameplay/missionTypes/rallyStage/recce.flow.json"
+        editor_flowgraphEditor.openFile({filepath = recceFname}, true)
+      end
+      ui_flowgraph_editor.tooltip("Open Recce Flowgraph")
+      im.SameLine()
     end
-    ui_flowgraph_editor.tooltip("Open Recce Flowgraph")
-    im.SameLine()
 
   end
   if shownMission then

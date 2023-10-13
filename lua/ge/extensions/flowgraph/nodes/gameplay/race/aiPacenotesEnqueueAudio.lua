@@ -11,7 +11,7 @@ local C = {}
 
 C.name = 'AI Pacenote Enqueue Audio'
 C.description = 'Adds an audio object to the play queue based on the audios unhashed text.'
-C.category = 'aipacenotes'
+-- C.category = 'aipacenotes'
 
 C.color = im.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
@@ -20,9 +20,9 @@ C.pinSchema = {
   {dir = 'in', type = 'flow', name = 'enqueue', description = 'Inflow for when audio is enqueued.'},
   {dir = 'in', type = 'flow', name = 'reset', description = 'Inflow for resetting audio queue.'},
   {dir = 'in', type = 'string', name = 'note', description = 'The pacenote.'},
-  {dir = 'in', type = 'string', name = 'version', description = 'Pacenotes version string.'},
+  {dir = 'in', type = 'string', name = 'notebookName', description = 'The notebook name.'},
   {dir = 'in', type = 'string', name = 'missionDir', description = 'Root path of the mission.'},
-  {dir = 'in', type = 'number', name = 'volume', description = 'The volume.'},
+  -- {dir = 'in', type = 'number', name = 'volume', description = 'The volume.'},
 }
 
 C.tags = {'scenario', 'aipacenotes'}
@@ -38,7 +38,9 @@ function C:resetAudioQueue()
 
   if self.currAudioObj then
     local sfxSource = scenetree.findObjectById(self.currAudioObj.sourceId)
-    sfxSource:stop(-1)
+    if sfxSource then
+      sfxSource:stop(-1)
+    end
     local fn = '/tmp/pacenote_damage.ogg'
     local res = Engine.Audio.playOnce('AudioGui', fn)
   end
@@ -69,20 +71,20 @@ local function getTime()
   return os.clockhp()
 end
 
-function printFields(obj)
-  for k, v in pairs(obj) do
-    -- if type(v) == "function" then
-      print(k)
-    -- end
-  end
-end
+-- function printFields(obj)
+--   for k, v in pairs(obj) do
+--     -- if type(v) == "function" then
+--       print(k)
+--     -- end
+--   end
+-- end
 
 function C:enqueueFromPinIns()
   local pacenote = self.pinIn.note.value
   local missionDir = self.pinIn.missionDir.value
   local pacenoteHash = normalize_text(pacenote)
-  local pacenotesVersion = self.pinIn.version.value
-  local volume = self.pinIn.volume.value
+  local pacenotesVersion = self.pinIn.notebookName.value
+  -- local volume = self.pinIn.volume.value
 
   -- printFunctions(Engine.Audio)
 
@@ -92,7 +94,7 @@ function C:enqueueFromPinIns()
   local audioObj = {
     audioType = 'pacenote',
     pacenoteFname = pacenoteFname,
-    volume = volume,
+    volume = 2,
     time = getTime(),
     audioLen = nil,
     timeout = nil,
@@ -143,9 +145,9 @@ local function playPacenote(audioObj)
   local ch = 'AudioGUI' -- volume is controlled by OTHER
   -- local ch = 'AudioMusic' -- volume is controlled by MUSIC
   local res = Engine.Audio.playOnce(ch, audioObj.pacenoteFname, opts)
-  printFields(res)
+  -- printFields(res)
   local sfxSource = scenetree.findObjectById(res.sourceId)
-  log('D', logTag, dumps(sfxSource))
+  -- log('D', logTag, dumps(sfxSource))
   -- printFields(sfxSource)
   if res == nil then
     log('E', logTag, 'error playing audio')
@@ -154,7 +156,7 @@ local function playPacenote(audioObj)
   audioObj.audioLen = res.len
   audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
   audioObj.sourceId = res.sourceId
-  log('D', 'wtf', 'audioObj audioLen='..tostring(audioObj.audioLen) .. ' timeout='..tostring(audioObj.timeout))
+  log('D', logTag, 'audioObj audioLen='..tostring(audioObj.audioLen) .. ' timeout='..tostring(audioObj.timeout))
 
   -- once we know the timeout of the audio, we can calculate the breath timeout.
   -- self.queue:push_right(self:makeBreath(2.0))
@@ -188,7 +190,7 @@ function C:work(args)
   -- this doesnt need to be in a while loop because flow is always coming in.
   if self:previousAudioIsDone() then
     self.currAudioObj = self.queue:pop_left()
-    log('D', 'wtf', dumps(self.currAudioObj))
+    -- log('D', 'wtf', dumps(self.currAudioObj))
     if self.currAudioObj.audioType == 'pacenote' then
       playPacenote(self.currAudioObj)
     -- elseif self.currAudioObj.audioType == 'breath' then

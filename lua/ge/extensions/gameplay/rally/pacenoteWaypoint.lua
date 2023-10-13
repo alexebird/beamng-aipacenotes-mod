@@ -4,6 +4,8 @@
 
 -- This class is a near copy of pacenote.lua.
 
+local waypointTypes = require('/lua/ge/extensions/gameplay/rally/waypointTypes')
+
 local C = {}
 local modes = {"manual","navgraph"}
 
@@ -12,7 +14,7 @@ function C:init(note, name, forceId)
 
   self.id = forceId or note:getNextUniqueIdentifier()
   self.name = name or 'Waypoint '..self.id
-  self.waypointType = editor_rallyEditor.wpTypeCornerStart
+  self.waypointType = self:getNextWaypointType()
   self.normal = vec3(0,1,0)
   self.pos = vec3()
   self.radius = 0
@@ -20,6 +22,28 @@ function C:init(note, name, forceId)
   self._drawMode = 'none'
   self.sortOrder = 999999
   self.mode = nil
+end
+
+function C:getNextWaypointType()
+  local foundTypes = {
+    [waypointTypes.wpTypeCornerStart] = false,
+    [waypointTypes.wpTypeCornerEnd] = false,
+    [waypointTypes.wpTypeFwdAudioTrigger] = false,
+  }
+
+  for i,wp in pairs(self.note.pacenoteWaypoints.objects) do
+    foundTypes[wp.waypointType] = true
+  end
+
+  if foundTypes[waypointTypes.wpTypeCornerStart] == false then
+    return waypointTypes.wpTypeCornerStart
+  elseif foundTypes[waypointTypes.wpTypeCornerEnd] == false then
+    return waypointTypes.wpTypeCornerEnd
+  elseif foundTypes[waypointTypes.wpTypeFwdAudioTrigger] == false then
+    return waypointTypes.wpTypeFwdAudioTrigger
+  else
+    return waypointTypes.wpTypeDistanceMarker
+  end
 end
 
 function C:setManual(pos, radius, normal)
@@ -72,20 +96,16 @@ function C:setNavgraph(navgraphName, fallback)
   self:setNormal(nil)
 end
 
-function C:inside(pos)
-  local inside = (pos-self.pos):length() <= self.radius
-  if self.hasNormal then
-    return inside and ((pos-self.pos):normalized():dot(self.normal) >= 0)
-  else
-    return inside
-  end
-end
+-- function C:inside(pos)
+--   local inside = (pos-self.pos):length() <= self.radius
+--   if self.hasNormal then
+--     return inside and ((pos-self.pos):normalized():dot(self.normal) >= 0)
+--   else
+--     return inside
+--   end
+-- end
 
 function C:intersectCorners(fromCorners, toCorners)
-    return self:intersectCorners(fromCorners, toCorners)
-end
-
-function C:intersectCornersDynamic(fromCorners, toCorners)
   local minT = math.huge
   for i = 1, #fromCorners do
     local rPos, rDir = fromCorners[i], toCorners[i]-fromCorners[i]
@@ -111,42 +131,33 @@ function C:intersectCornersDynamic(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
-function C:intersectCornersOrig(fromCorners, toCorners)
-  local minT = math.huge
-  for i = 1, #fromCorners do
-    local rPos, rDir = fromCorners[i], toCorners[i]-fromCorners[i]
-    local len = rDir:length()
-    if len > 0 then
-      len = 1/len
-      rDir:normalize()
-      local sMin, sMax = intersectsRay_Sphere(rPos, rDir, self.pos, self.radius)
-      --adjust for normlized rDir
-      sMin = sMin * len
-      sMax = sMax * len
-      -- inside sphere?
-      if sMin <= 0 and sMax >= 1 then
-        local t = intersectsRay_Plane(rPos, rDir, self.pos, self.normal)
-        t = t*len
-        if t<=1 and t>=0 then
-          minT = math.min(t, minT)
-        end
-      end
-    end
-  end
-
-  return minT <= 1, minT
+local shortener_map = {
+  [waypointTypes.wpTypeFwdAudioTrigger] = "F",
+  [waypointTypes.wpTypeRevAudioTrigger] = "R",
+  [waypointTypes.wpTypeCornerStart] = "CS",
+  [waypointTypes.wpTypeCornerEnd] = "CE",
+  [waypointTypes.wpTypeDistanceMarker] = "D",
+}
+local function shortenWaypointType(wpType)
+  return shortener_map[wpType]
 end
 
 function C:textForDrawDebug(drawMode)
   local txt = ''
-  if self.waypointType == editor_rallyEditor.wpTypeCornerStart then
+  if self.waypointType == waypointTypes.wpTypeCornerStart then
     if drawMode == 'highlight' or self.note._drawMode == 'highlight' then
-      txt = '['..self.waypointType..'] ' .. self.note.note
+      txt = '['..shortenWaypointType(self.waypointType)..'] ' .. self.note.note
     else
       txt = self.note.note
     end
+  elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger or self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
+    if self.name == 'curr' then
+      txt = shortenWaypointType(self.waypointType) .. ' ['..self.name..']'
+    else
+      txt = shortenWaypointType(self.waypointType)
+    end
   else
-    txt = '['..self.waypointType..']'
+    txt = shortenWaypointType(self.waypointType)
   end
   return txt
 end
@@ -184,12 +195,14 @@ function C:drawDebug(drawMode, clr, extraText)
 
   local midWidth = self.radius*2
   local side = self.normal:cross(vec3(0,0,1)) *(self.radius - midWidth/2)
+  -- this square prism is the "arrow" of the pacenote.
   debugDrawer:drawSquarePrism(
     self.pos,
     (self.pos + self.radius * self.normal),
     Point2F(1,self.radius/2),
     Point2F(0,0),
     ColorF(clr[1],clr[2],clr[3],shapeAlpha*1.25))
+  -- this square prism is the "plane" of the pacenote.
   debugDrawer:drawSquarePrism(
     (self.pos+side),
     (self.pos + 0.25 * self.normal + side ),

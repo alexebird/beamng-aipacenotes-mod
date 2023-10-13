@@ -34,6 +34,11 @@ function C:init(name)
   self.notebooks = require('/lua/ge/extensions/gameplay/util/sortedList')("notebooks", self, require('/lua/ge/extensions/gameplay/rally/notebook'))
   self.installedNotebook = nil
 
+  -- This is for backwards compatibility with the un-modded path.lua. Various places
+  -- throughout the code expect this variable to be set.
+  -- Since we know this field is only used outside of World Editor, we can just set it once upon load.
+  self.pacenotes = nil
+
   self.pathnodes.postCreate = function(o)
     if self.startNode == -1 then
       self.startNode = o.id
@@ -55,12 +60,15 @@ end
 -- It takes the first (= lowest ID) pathnode and creates a path from there, using segments.
 -- assumes there is only one "first" segment.
 function C:autoConfig()
+  log('D', 'wtf', 'path autoconfig')
   local config = {}
   local startNode = self.pathnodes.objects[self.startNode]
   if startNode.missing then
     self.config = {}
     return
   end
+
+  log('D', 'wtf', 'path autoconfig after checks')
 
   config.startNode = startNode.id
   -- use the first segment that starts with startNode as start.
@@ -179,16 +187,15 @@ function C:autoConfig()
   config.startSegments = self:findSegments(startNode.id, nil)
 
   -- find pacenotes for each segment
-  -- TODO
-  -- config.segmentToPacenotes = {}
-  -- for id, seg in pairs(self.segments.objects) do
-  --   config.segmentToPacenotes[id] = {}
-  --   for _, pn in ipairs(self.pacenotes.sorted) do
-  --     if self.segments.objects[pn.segment].missing or pn.segment == id then
-  --       table.insert(config.segmentToPacenotes[id], pn.id)
-  --     end
-  --   end
-  -- end
+  config.segmentToPacenotes = {}
+  for id, seg in pairs(self.segments.objects) do
+    config.segmentToPacenotes[id] = {}
+    for _, pn in ipairs(self.installedNotebook.pacenotes.sorted) do
+      if self.segments.objects[pn.segment].missing or pn.segment == id then
+        table.insert(config.segmentToPacenotes[id], pn.id)
+      end
+    end
+  end
 
   self.config = config
 end
@@ -228,7 +235,7 @@ function C:drawAiRouteDebug()
   if not self.config or not self.config.graph or not self.config.startSegments or not next(self.config.startSegments) then
     return
   end
-  self:getAiPath()
+  -- self:getAiPath()
 
   for i, e in ipairs(self.aiDetailedPath) do
     local clr = rainbowColor(#self.aiDetailedPath, i, 1)
@@ -373,6 +380,7 @@ function C:cacheInstalledNotebook()
   for i,nb in pairs(self.notebooks.objects) do
     if nb.installed then
       self.installedNotebook = nb
+      self.pacenotes = nb.pacenotes
     end
   end
 end
