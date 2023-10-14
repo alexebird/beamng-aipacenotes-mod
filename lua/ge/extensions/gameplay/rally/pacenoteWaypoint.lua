@@ -9,10 +9,10 @@ local waypointTypes = require('/lua/ge/extensions/gameplay/rally/waypointTypes')
 local C = {}
 local modes = {"manual","navgraph"}
 
-function C:init(note, name, forceId)
-  self.note = note
+function C:init(pacenote, name, forceId)
+  self.pacenote = pacenote
 
-  self.id = forceId or note:getNextUniqueIdentifier()
+  self.id = forceId or pacenote:getNextUniqueIdentifier()
   self.name = name or 'Waypoint '..self.id
   self.waypointType = self:getNextWaypointType()
   self.normal = vec3(0,1,0)
@@ -31,7 +31,7 @@ function C:getNextWaypointType()
     [waypointTypes.wpTypeFwdAudioTrigger] = false,
   }
 
-  for i,wp in pairs(self.note.pacenoteWaypoints.objects) do
+  for i,wp in pairs(self.pacenote.pacenoteWaypoints.objects) do
     foundTypes[wp.waypointType] = true
   end
 
@@ -131,67 +131,74 @@ function C:intersectCorners(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
-local shortener_map = {
-  [waypointTypes.wpTypeFwdAudioTrigger] = "F",
-  [waypointTypes.wpTypeRevAudioTrigger] = "R",
-  [waypointTypes.wpTypeCornerStart] = "CS",
-  [waypointTypes.wpTypeCornerEnd] = "CE",
-  [waypointTypes.wpTypeDistanceMarker] = "D",
-}
-local function shortenWaypointType(wpType)
-  return shortener_map[wpType]
-end
-
 function C:textForDrawDebug(drawMode)
   local txt = ''
   if self.waypointType == waypointTypes.wpTypeCornerStart then
-    if drawMode == 'highlight' or self.note._drawMode == 'highlight' then
-      txt = '['..shortenWaypointType(self.waypointType)..'] ' .. self.note.note
+    if drawMode == 'highlight' or self.pacenote._drawMode == 'highlight' then
+      txt = '['..waypointTypes.shortenWaypointType(self.waypointType)..'] ' .. self.pacenote.note
     else
-      txt = self.note.note
+      txt = self.pacenote.note
     end
   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger or self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
     if self.name == 'curr' then
-      txt = shortenWaypointType(self.waypointType) .. ' ['..self.name..']'
+      txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..'] ' .. self.name..''
     else
-      txt = shortenWaypointType(self.waypointType)
+      txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..']'
     end
   else
-    txt = shortenWaypointType(self.waypointType)
+    txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..']'
   end
   return txt
 end
 
-function C:drawDebug(drawMode, clr, extraText)
-  -- log('D', 'wtf', 'pacenoteWaypoint drawDebug')
+function C:drawDebug(drawMode, clr, extraTextSuffix, extraTextPrefix, textAlpha)
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'pacenoteWaypoint drawDebug start')
+  --   log('D', 'wtf', '_drawmode='..self._drawMode)
+  -- end
   drawMode = drawMode or self._drawMode
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'drawmode='..drawMode)
+  -- end
   if drawMode == 'none' then return end
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'pacenoteWaypoint drawDebug passed checks and drawMode is not none')
+  -- end
 
-  clr = clr or rainbowColor(#self.note.notebook.pacenotes.sorted, (self.note.sortOrder-1), 1)
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'HERE6')
+  -- end
+
+  clr = clr or rainbowColor(#self.pacenote.notebook.pacenotes.sorted, (self.pacenote.sortOrder-1), 1)
   if drawMode == 'highlight' then clr = {1,1,1,1} end
   --clr = {1,1,1,1}
   local shapeAlpha = (drawMode == 'highlight') and 0.5 or 0.25
 
   debugDrawer:drawSphere((self.pos), self.radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
 
-  local alpha = (drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1
-  if self.note.note == '' then alpha = alpha * 0.4 end
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'HERE7')
+  -- end
+
+  textAlpha = textAlpha or ((drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1)
+  if self.pacenote.note == '' then textAlpha = textAlpha * 0.4 end
   if drawMode ~= 'faded' then
-    -- local str = self.note.note or ''
-    -- if str == '' then
-    --   str = self.note.name or 'Note'
-    --   str = '('..str..')'
-    -- end
     local str = self:textForDrawDebug(drawMode)
-    if extraText then
-      str = str .. ' ' .. extraText
+    if extraTextPrefix then
+      str = extraTextPrefix .. ' ' .. str
+    end
+    if extraTextSuffix then
+      str = str .. ' ' .. extraTextSuffix
     end
     debugDrawer:drawTextAdvanced((self.pos),
       String(str),
-      ColorF(1,1,1,alpha),true, false,
-      ColorI(0,0,0,alpha*255))
- end
+      ColorF(1,1,1,textAlpha),true, false,
+      ColorI(0,0,0,textAlpha*255))
+  end
 
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'HERE8')
+  -- end
 
   local midWidth = self.radius*2
   local side = self.normal:cross(vec3(0,0,1)) *(self.radius - midWidth/2)
@@ -209,6 +216,10 @@ function C:drawDebug(drawMode, clr, extraText)
     Point2F(5,midWidth),
     Point2F(0,0),
     ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66))
+  
+  -- if self.waypointType == 'cornerEnd' then
+  --   log('D', 'wtf', 'HERE9')
+  -- end
 end
 
 return function(...)

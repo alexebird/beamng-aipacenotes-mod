@@ -96,6 +96,13 @@ function C:selected()
 
   if not self.path then return end
 
+  for _, n in pairs(self.path.pathnodes.objects) do
+    n._drawMode = 'none'
+  end
+  for _, seg in pairs(self.path.segments.objects) do
+    seg._drawMode = 'none'
+  end
+
   -- select the installed notebook when the pacenotes tab is selected.
   for i,notebook in pairs(self.path.notebooks.objects) do
     if notebook.installed then
@@ -117,9 +124,9 @@ function C:selected()
   editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
   self.map = map.getMap()
 
-  for _, seg in pairs(self.path.segments.objects) do
-    seg._drawMode = 'faded'
-  end
+  -- for _, seg in pairs(self.path.segments.objects) do
+  --   seg._drawMode = 'faded'
+  -- end
 
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
@@ -132,6 +139,13 @@ function C:unselect()
 
   self:selectWaypoint(nil)
   self:selectPacenote(nil)
+
+  for _, n in pairs(self.path.pathnodes.objects) do
+    n._drawMode = 'faded'
+  end
+  for _, seg in pairs(self.path.segments.objects) do
+    seg._drawMode = 'faded'
+  end
 
   -- for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
   --   n._drawMode = 'none'
@@ -170,54 +184,44 @@ function C:selectPacenote(id)
   if not self:selectedNotebook().pacenotes then return end
   -- log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
-  -- local prev = nil
-  -- local prevPrev = nil
 
-  -- local thePrev = nil
-  -- local thePrevPrev = nil
+  -- un-highlight all waypoints
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
+    wp._drawMode = 'normal'
+  end
 
-  -- local note_i = nil
-  -- local prev_i = nil
-  -- local next_i = nil
+  -- find the pacenotes before and after the selected one.
   local pacenotesSorted = self:selectedNotebook().pacenotes.sorted
   for i, note in ipairs(pacenotesSorted) do
-    -- log('D', 'wtf', 'i='..i..' note='..note.name)
     if self.pacenote_index == note.id then
-      -- note_i = i
-      -- prev_i = note_i-1
-      -- next_i = note_i+1
       local prevNote = pacenotesSorted[i-1]
       local nextNote = pacenotesSorted[i+1]
       note._drawMode = 'highlight'
       note:setAdjacentNotes(prevNote, nextNote)
     else
-      note._drawMode = self.waypoint_index and 'undistract' or 'normal'
+      -- note._drawMode = self.waypoint_index and 'undistract' or 'normal'
+      note._drawMode = 'undistract'
       note:clearAdjacentNotes()
     end
   end
 
-  -- local prevNote = pacenotesSorted[prev_i]
-  -- local nextNote = pacenotesSorted[next_i]
-  -- local currnote = pacenotesSorted[note_i]
-  -- log('D', 'wtf', 'prev='..prevNote.name)
-  -- log('D', 'wtf', 'note='..currnote.name)
-  -- log('D', 'wtf', 'next='..nextNote.name)
-  -- currnote:setPrevNote(prevNote)
-
+  -- select the pacenote
   if id then
-    local note = nil
-    local wp = self:selectedWaypoint()
-    if not wp or wp.missing then
-      note = self:selectedNotebook().pacenotes.objects[id]
-      wp = note:getCornerStartWaypoint()
-      if wp then
-        self:selectWaypoint(wp.id)
-      end
-    else
-      note = wp.note
-    end
+    -- local note = nil
+    local note = self:selectedNotebook().pacenotes.objects[id]
+    -- local wp = self:selectedWaypoint()
+    -- if not wp or wp.missing then
+      -- note = self:selectedNotebook().pacenotes.objects[id]
+      -- wp = note:getCornerStartWaypoint()
+      -- if wp then
+        -- self:selectWaypoint(wp.id)
+      -- end
+    -- else
+      -- note = wp.pacenote
+    -- end
+    -- note._drawMode = 'highlight'
 
-    note:indexWaypointsByType()
+    -- note:indexWaypointsByType()
 
     pacenoteNameText = im.ArrayChar(1024, note.name)
     pacenoteNoteText = im.ArrayChar(2048, note.note)
@@ -231,6 +235,7 @@ function C:selectPacenote(id)
 end
 
 function C:selectWaypoint(id)
+  -- log('D', 'wtf', 'begin select waypoint')
   if not self:selectedNotebook() then return end
   -- log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
@@ -244,7 +249,7 @@ function C:selectWaypoint(id)
     -- local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
     local waypoint = self:selectedNotebook():getWaypoint(id)
     -- log('D', 'wtf', dumps(id))
-    self:selectPacenote(waypoint.note.id)
+    self:selectPacenote(waypoint.pacenote.id)
     waypointNameText = im.ArrayChar(1024, waypoint.name)
     self:updateTransform(id)
   else
@@ -257,6 +262,8 @@ function C:updateTransform(index)
   if not self.rallyEditor.allowGizmo() then return end
 
   local wp = self:selectedNotebook():getWaypoint(index)
+  if not wp then return end
+
   local rotation = QuatF(0,0,0,1)
 
   if editor.getAxisGizmoAlignment() == editor.AxisGizmoAlignment_Local then
@@ -543,12 +550,18 @@ local function setWaypointFieldRedo(data)
   data.self:updateTransform(data.index)
 end
 
-local function setNormalUndo(data)
-  data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:setNormal(data.old)
+local function setWaypointNormalUndo(data)
+  local wp = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]
+  if wp then
+    wp:setNormal(data.old)
+  end
   data.self:updateTransform(data.index)
 end
-local function setNormalRedo(data)
-  data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:setNormal(data.new)
+local function setWaypointNormalRedo(data)
+  local wp = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]
+  if wp and not wp.missing then
+    wp:setNormal(data.new)
+  end
   data.self:updateTransform(data.index)
 end
 
@@ -723,9 +736,9 @@ function C:drawPacenoteList(notebook)
     end
 
     self:segmentSelector('Segment','segment', 'Associated Segment')
-    for _, seg in pairs(self.path.segments.objects) do
-      seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
-    end
+    -- for _, seg in pairs(self.path.segments.objects) do
+    --   seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
+    -- end
 
     editEnded = im.BoolPtr(false)
     editor.uiInputText("Note", pacenoteNoteText, nil, nil, nil, nil, editEnded)
@@ -821,12 +834,12 @@ function C:drawWaypointList(note)
     waypointPosition[2] = waypoint.pos.z
     if im.InputFloat3("Position", waypointPosition, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
       editor.history:commitAction("Change note Position",
-        {index = self.pacenote_index, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
+        {index = self.waypoint_index, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
         setWaypointFieldUndo, setWaypointFieldRedo)
     end
     if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
       editor.history:commitAction("Drop Note to Ground",
-        {index = self.pacenote_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
+        {index = self.waypoint_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
         setWaypointFieldUndo, setWaypointFieldRedo)
     end
     waypointRadius[0] = waypoint.radius
@@ -835,7 +848,7 @@ function C:drawWaypointList(note)
         waypointRadius[0] = 0
       end
       editor.history:commitAction("Change Note Size",
-        {index = self.pacenote_index, old = waypoint.radius, new = waypointRadius[0], self = self, field = 'radius'},
+        {index = self.waypoint_index, old = waypoint.radius, new = waypointRadius[0], self = self, field = 'radius'},
         setWaypointFieldUndo, setWaypointFieldRedo)
     end
 
@@ -844,15 +857,15 @@ function C:drawWaypointList(note)
     waypointNormal[2] = waypoint.normal.z
     if im.InputFloat3("Normal", waypointNormal, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
       editor.history:commitAction("Change Normal",
-        {index = self.pacenote_index, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
-        setNormalUndo, setNormalRedo)
+        {index = self.waypoint_index, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
+        setWaypointNormalUndo, setWaypointNormalRedo)
     end
     if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
       local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
       normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
       editor.history:commitAction("Align Normal with Terrain",
-        {index = self.pacenote_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
-        setNormalUndo, setNormalRedo)
+        {index = self.waypoint_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
+        setWaypointNormalUndo, setWaypointNormalRedo)
     end
 
     end -- / if waypoint

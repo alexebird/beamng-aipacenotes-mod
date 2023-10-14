@@ -133,7 +133,7 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
       if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
           openRallyEditor(shownMission)
       end
-      ui_flowgraph_editor.tooltip("Open Race Editor Turbo")
+      ui_flowgraph_editor.tooltip("Open Rally Editor")
       im.SameLine()
 
       if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then

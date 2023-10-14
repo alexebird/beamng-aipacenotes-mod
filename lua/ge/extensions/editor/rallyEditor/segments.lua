@@ -37,7 +37,6 @@ function C:unselect()
 end
 
 function C:unselectAndSetDrawModeToNone()
-  -- if not self.path then return end
   --self:selectSegment(nil)
   for _, seg in pairs(self.path.segments.objects) do
     seg._drawMode = 'none'
@@ -61,7 +60,6 @@ function C:selectSegment(index)
     editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
   end
 
-  -- TODO
   for _, n in pairs(self.path.installedNotebook.pacenotes.objects) do
     if index and index ~= -1 and n.segment == index then
       n._drawMode = 'normal'

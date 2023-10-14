@@ -60,15 +60,12 @@ end
 -- It takes the first (= lowest ID) pathnode and creates a path from there, using segments.
 -- assumes there is only one "first" segment.
 function C:autoConfig()
-  log('D', 'wtf', 'path autoconfig')
   local config = {}
   local startNode = self.pathnodes.objects[self.startNode]
   if startNode.missing then
     self.config = {}
     return
   end
-
-  log('D', 'wtf', 'path autoconfig after checks')
 
   config.startNode = startNode.id
   -- use the first segment that starts with startNode as start.

@@ -440,10 +440,11 @@ local function onEditorGui()
     if im.Button("Save") then
       saveRace(currentPath, previousFilepath .. previousFilename)
     end
-    if im.Button("HelloWorld") then
-      local resp = jsonRequest('http://localhost:5000/test.json')
-      log('D', 'wtf', dumps(resp))
-    end
+    -- im.SameLine()
+    -- if im.Button("HelloWorld") then
+    --   local resp = jsonRequest('http://localhost:5000/test.json')
+    --   log('D', 'wtf', dumps(resp))
+    -- end
     im.Separator()
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do

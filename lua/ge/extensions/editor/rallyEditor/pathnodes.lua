@@ -47,7 +47,6 @@ function C:unselect()
 end
 
 function C:unselectAndSetDrawModeToNone()
-  -- if not self.path then return end
   for _, n in pairs(self.path.pathnodes.objects) do
     n._drawMode = 'none'
   end

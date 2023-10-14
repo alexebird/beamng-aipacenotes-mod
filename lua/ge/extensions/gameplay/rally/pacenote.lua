@@ -24,7 +24,7 @@ function C:init(notebook, name, forceId)
   -- self.pacenoteWaypoints.postRemove = function() self:indexWaypointsByType() end
   -- self.pacenoteWaypoints.postCreate = function() self:indexWaypointsByType() end
 
-  self.pacenoteWaypointsByType = {}
+  -- self.pacenoteWaypointsByType = {}
 
   self.prevNote = nil
   self.nextNote = nil
@@ -37,17 +37,17 @@ function C:getNextUniqueIdentifier()
   return self.notebook:getNextUniqueIdentifier()
 end
 
-function C:indexWaypointsByType()
-  self.pacenoteWaypointsByType = {}
+-- function C:indexWaypointsByType()
+--   self.pacenoteWaypointsByType = {}
 
-  for i, wp in pairs(self.pacenoteWaypoints.objects) do
-    local wpType = wp.waypointType
-    if self.pacenoteWaypointsByType[wpType] == nil then
-      self.pacenoteWaypointsByType[wpType] = {}
-    end
-    table.insert(self.pacenoteWaypointsByType[wpType], wp)
-  end
-end
+--   for i, wp in pairs(self.pacenoteWaypoints.objects) do
+--     local wpType = wp.waypointType
+--     if self.pacenoteWaypointsByType[wpType] == nil then
+--       self.pacenoteWaypointsByType[wpType] = {}
+--     end
+--     table.insert(self.pacenoteWaypointsByType[wpType], wp)
+--   end
+-- end
 
 function C:validateWaypointTypes()
   -- TODO
@@ -55,23 +55,35 @@ function C:validateWaypointTypes()
 end
 
 function C:getCornerStartWaypoint()
-  local wpListForType = self.pacenoteWaypointsByType[waypointTypes.wpTypeCornerStart]
-  if wpListForType then
-    local k, v = next(wpListForType)
-    return v
-  else
-    return nil
+  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    if wp.waypointType == waypointTypes.wpTypeCornerStart then
+      return wp
+    end
   end
+  return nil
 end
 
 function C:getCornerEndWaypoint()
-  local wpListForType = self.pacenoteWaypointsByType[waypointTypes.wpTypeCornerEnd]
-  if wpListForType then
-    local k, v = next(wpListForType)
-    return v
-  else
-    return nil
+  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    if wp.waypointType == waypointTypes.wpTypeCornerEnd then
+      return wp
+    end
   end
+  return nil
+end
+
+function C:getAudioTriggerWaypoints()
+  local wps = {}
+
+  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+      table.insert(wps, wp)
+    elseif wp.waypointType == waypointTypes.wpTypeRevAudioTrigger then
+      table.insert(wps, wp)
+    end
+  end
+
+  return wps
 end
 
 function C:getDistanceMarkerWaypointsAfterEnd()
@@ -123,7 +135,7 @@ function C:onDeserialized(data, oldIdMap)
   self.segment = oldIdMap and oldIdMap[data.segment] or data.segment or -1
   self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
 
-  self:indexWaypointsByType()
+  -- self:indexWaypointsByType()
 end
 
 
@@ -209,25 +221,34 @@ function C:drawDebug(drawMode, clr, extraText)
   -- local linkClr = {1.0, 1.0, 1.0} -- white
   local linkClr = {0, 1, 0} -- green
   local undistractClr = {0.2, 0.2, 0.2} -- gray
+  local undistractClrEmphasis = {0.0, 0.0, 0.0} -- gray
   local distClr = {1, 0.6, 0.2} -- orange
 
   -- drawMode = drawMode or self._drawMode
   drawMode = self._drawMode
+
+
+  ----------------------------------------------------------------------------------------
+  -- draw nodes for the current pacenote
+  --
 
   for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
     -- wp:drawDebug(self._drawMode, clr, extraText)
     if drawMode == 'highlight' then
       local clr = nil
       if wp.waypointType == waypointTypes.wpTypeCornerStart then
-        clr = {0, 1, 0} -- green
+        clr = linkClr
         local cornerEnd = self:getCornerEndWaypoint()
         if cornerEnd then
-          self:drawLink(wp, cornerEnd, linkClr)
+          self:drawLink(wp, cornerEnd, clr)
         else
           log('W', logTag, 'pacenote "'..self.name..'" cornerEnd is nil')
         end
       elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
         clr = {1, 0, 0} -- red
+        -- log('D', 'wtf', 'HEREa')
+        -- log('D', 'wtf', 'ce='..wp.name)
+        -- wp:drawDebug(nil, clr, nil) -- wp._drawMode)
       elseif wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
         clr = {0, 0, 1} -- blue
         self:drawLink(wp, self:getCornerStartWaypoint(), clr)
@@ -302,17 +323,26 @@ function C:drawDebug(drawMode, clr, extraText)
           log('E', logTag, 'distance marker must be before cornerStart or after cornerEnd, not in between')
         end
       end
-      wp:drawDebug(nil, clr, nil) -- wp._drawMode)
-    elseif drawMode == 'undistract' then
-      if wp.waypointType == 'cornerStart' then
-        wp:drawDebug(nil, undistractClr, nil) -- wp._drawMode)
-      end
-    else
-      if wp.waypointType == 'cornerStart' then
-        wp:drawDebug(nil, nil, nil) -- wp._drawMode)
-      end
+      -- if wp.waypointType == waypointTypes.wpTypeCornerEnd then
+        -- log('D', 'wtf', 'drawing wp name='..wp.name..' clr='..dumps(clr))
+        wp:drawDebug(nil, clr, nil, '*', 1.0) -- wp._drawMode)
+        -- log('D', 'wtf', '--------------------------------------------------------------------------------')
+      -- end
+    -- elseif drawMode == 'undistract' then
+    --   if wp.waypointType == 'cornerStart' then
+    --     wp:drawDebug(nil, undistractClr, nil) -- wp._drawMode)
+    --   end
+    -- else
+    --   if wp.waypointType == 'cornerStart' then
+    --     wp:drawDebug(nil, nil, nil) -- wp._drawMode)
+    --   end
     end
   end
+
+
+  ----------------------------------------------------------------------------------------
+  -- draw a couple nodes from the previous pacenote
+  --
 
   if self.prevNote then
     local clr = undistractClr
@@ -323,9 +353,16 @@ function C:drawDebug(drawMode, clr, extraText)
       self:drawLink(prevCornerStart, prevCornerEnd, clr)
     end
 
-    if prevCornerEnd then
-      prevCornerEnd:drawDebug(nil, undistractClr, nil)
+    -- draw a more dim version of audio trigger waypoints.
+    local prevTriggers = self.prevNote:getAudioTriggerWaypoints()
+    local clrDarkBlue = {0, 0, 0.3}
+    for i,wp in ipairs(prevTriggers) do
+      self:drawLink(wp, prevCornerStart, clrDarkBlue)
+      wp:drawDebug(nil, clrDarkBlue)
     end
+
+    prevCornerStart:drawDebug(nil, undistractClr, nil, '['.. waypointTypes.shortenWaypointType(waypointTypes.wpTypeCornerStart) ..']')
+    prevCornerEnd:drawDebug(nil, undistractClr, nil) -- maybe use undistractClrEmphasis here
 
     local selfCornerStart = self:getCornerStartWaypoint()
 
@@ -359,24 +396,35 @@ function C:drawDebug(drawMode, clr, extraText)
       local alpha = highlightDist and 1 or 0.5
       local dist = round(from.pos:distance(to.pos))
       debugDrawer:drawTextAdvanced(textPos,
-        String(tostring(dist)..'m'),
+        String('['..waypointTypes.shortenWaypointType(from.waypointType)..']->'..tostring(dist)..'m'),
         ColorF(1, 1, 1, alpha), true, false,
         ColorI(0, 0, 0, alpha * 255)
+
       )
     end
   end
 
+  ----------------------------------------------------------------------------------------
+  -- draw a couple nodes from the next pacenote
+  --
   if self.nextNote then
-    local clr = undistractClr
-
     local nextCornerStart = self.nextNote:getCornerStartWaypoint()
     local nextCornerEnd = self.nextNote:getCornerEndWaypoint()
 
-    -- if nextCornerEnd then
-      -- self:drawLink(nextCornerStart, nextCornerEnd, clr)
-    -- end
+    if nextCornerStart and nextCornerEnd then
+      self:drawLink(nextCornerStart, nextCornerEnd, undistractClrEmphasis)
+    end
 
-    -- nextCornerStart:drawDebug(nil, undistractClr, nil)
+    nextCornerStart:drawDebug(nil, undistractClr, nil, '['.. waypointTypes.shortenWaypointType(waypointTypes.wpTypeCornerStart) ..']')
+    nextCornerEnd:drawDebug(nil, undistractClr, nil)
+
+    -- draw a more dim version of audio trigger waypoints.
+    local nextTriggers = self.nextNote:getAudioTriggerWaypoints()
+    local clrDarkBlue = {0, 0, 0.3}
+    for i,wp in ipairs(nextTriggers) do
+      self:drawLink(wp, nextCornerStart, clrDarkBlue)
+      wp:drawDebug(nil, clrDarkBlue)
+    end
 
     local from = self:getCornerEndWaypoint()
     local selfDmsAfter = self:getDistanceMarkerWaypointsAfterEnd()
@@ -387,9 +435,10 @@ function C:drawDebug(drawMode, clr, extraText)
 
     local to = nextCornerStart
 
+    local clr = undistractClrEmphasis
     local nextDmsBefore = self.nextNote:getDistanceMarkerWaypointsBeforeStart()
     for i,nextDm in ipairs(nextDmsBefore) do
-      nextDm:drawDebug(nil, undistractClr, nil)
+      nextDm:drawDebug(nil, clr, nil)
       local linkDm = nextDmsBefore[i+1]
       if linkDm then
         self:drawLink(nextDm, linkDm, clr)
@@ -398,6 +447,8 @@ function C:drawDebug(drawMode, clr, extraText)
     if #nextDmsBefore > 0 then
       to = nextDmsBefore[1]
       self:drawLink(nextDmsBefore[#nextDmsBefore], nextCornerStart, clr)
+    -- else
+      -- to:drawDebug(nil, clr, nil)
     end
 
     clr = distClr
@@ -408,10 +459,32 @@ function C:drawDebug(drawMode, clr, extraText)
       local alpha = highlightDist and 1 or 0.5
       local dist = round(from.pos:distance(to.pos))
       debugDrawer:drawTextAdvanced(textPos,
-        String(tostring(dist)..'m'),
+        String(tostring(dist)..'m->['..waypointTypes.shortenWaypointType(to.waypointType)..']'),
         ColorF(1, 1, 1, alpha), true, false,
         ColorI(0, 0, 0, alpha * 255)
       )
+    end
+  end
+
+
+
+  ----------------------------------------------------------------------------------------
+  -- draw the rest of the pacenotes.
+  --
+
+  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    if not ((self.nextNote and wp.pacenote.id == self.nextNote.id) and (self.prevNote and wp.pacenote.id == self.prevNote.id)) then
+      if drawMode == 'highlight' then
+        -- pass
+      elseif drawMode == 'undistract' then
+        if wp.waypointType == 'cornerStart' then
+          -- wp:drawDebug(nil, undistractClr, nil) -- wp._drawMode)
+        end
+      else
+        if wp.waypointType == 'cornerStart' then
+          wp:drawDebug(nil, nil, nil) -- wp._drawMode)
+        end
+      end
     end
   end
 end
@@ -421,7 +494,7 @@ function C:drawLink(from, to, clr)
     from.pos,
     to.pos,
     Point2F(1,1),
-    Point2F(0,0),
+    Point2F(0.25,0.25),
     ColorF(clr[1],clr[2],clr[3],0.25)
   )
 end

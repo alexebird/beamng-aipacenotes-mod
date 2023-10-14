@@ -31,10 +31,15 @@ end
 function C:allWaypoints()
   local wps = {}
   for i, pacenote in pairs(self.pacenotes.objects) do
-    for i, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
-      table.insert(wps, waypoint.id, waypoint)
+    for j, wp in pairs(pacenote.pacenoteWaypoints.objects) do
+      -- if wp.id == 136 or wp.id == 137 then
+        -- log('D', 'wtf', 'waypoint['.. wp.id..','..wp.name ..']')
+      -- end
+      -- table.insert(wps, wp.id, wp)
+      wps[wp.id] = wp
     end
   end
+  -- log('D', 'wtf', 'waypoint[137]='..(wps[137].name)..','..wps[137].waypointType)
   return wps
 end
 
