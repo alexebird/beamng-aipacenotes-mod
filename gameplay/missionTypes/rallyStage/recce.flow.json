@@ -1,8 +1,8 @@
 {
-  "activeGraphId":1,
+  "activeGraphId":3,
   "authors":"birdman",
-  "currentGraphID":1,
-  "date":1697238014,
+  "currentGraphID":3,
+  "date":1697260723,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -927,32 +927,46 @@
         ],
         "list":[
           {
-            "index":2,
-            "mergeStrat":"max",
-            "name":"currentDamage",
-            "type":"number",
-            "value":0
-          },
-          {
             "index":1,
             "mergeStrat":"or_",
             "name":"lastGetPause",
             "type":"bool",
             "value":true
+          },
+          {
+            "index":2,
+            "mergeStrat":"max",
+            "name":"currentDamage",
+            "type":"number",
+            "value":0
           }
         ]
       },
       "viewPos":[
-        617.41143798828125000000,
-        186.33898925781250000000
+        -291.79159545898437500000,
+        -100.55786132812500000000
       ],
-      "viewZoom":0.74999994039535522461
+      "viewZoom":0.50000000000000000000
     },
     "3":{
       "description":"This is the description for graph States",
       "dirty":false,
       "isStateGraph":true,
       "links":[
+        [
+          37,
+          "success",
+          4,
+          "flow",
+          false
+        ],
+        [
+          11,
+          "success",
+          4,
+          "flow",
+          false
+        ],
         [
           4,
           "success",
@@ -963,14 +977,7 @@
         [
           5,
           "flow",
-          4,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "success",
-          4,
+          11,
           "flow",
           false
         ],
@@ -1036,8 +1043,8 @@
             }
           },
           "pos":[
-            24,
-            78
+            -235,
+            100
           ],
           "type":"states/stateEntry"
         },
@@ -1065,6 +1072,48 @@
           ],
           "transitionName":"",
           "type":"states/stateExit"
+        },
+        "11":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{
+              "fail":false,
+              "success":false
+            }
+          },
+          "pins":[
+            [
+              "out",
+              "state",
+              "success",
+              null,
+              "This is a flow pin."
+            ],
+            [
+              "out",
+              "state",
+              "fail",
+              null,
+              "This is a flow pin."
+            ],
+            [
+              "in",
+              "state",
+              "flow",
+              null,
+              "This is a flow pin."
+            ]
+          ],
+          "pos":[
+            -51,
+            77
+          ],
+          "targetGraphId":9,
+          "type":"states/stateNode"
         },
         "37":{
           "data":{},
@@ -1116,8 +1165,8 @@
         "list":{}
       },
       "viewPos":[
-        -294,
-        -77
+        -200,
+        -200
       ],
       "viewZoom":1
     },
@@ -1191,6 +1240,139 @@
       "viewPos":[
         -294,
         -77
+      ],
+      "viewZoom":1
+    },
+    "9":{
+      "description":"This is the description for graph New State",
+      "dirty":false,
+      "links":[
+        [
+          72,
+          "flow",
+          79,
+          "flow",
+          false
+        ],
+        [
+          14,
+          "flow",
+          72,
+          "flow",
+          false
+        ]
+      ],
+      "name":"Setup UI",
+      "nodes":{
+        "14":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{},
+            "p_out":{
+              "dtRaw":true,
+              "dtReal":true,
+              "dtSim":true,
+              "enterState":false,
+              "exitState":false,
+              "flow":false
+            }
+          },
+          "pos":[
+            276,
+            204
+          ],
+          "type":"events/onUpdate"
+        },
+        "72":{
+          "data":{},
+          "dynamicMode":"once",
+          "hardcodedPins":{
+            "layout":{
+              "type":"string",
+              "value":"recceMission"
+            },
+            "menu":{
+              "type":"string",
+              "value":"mission"
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "gameStateName":true,
+              "keepLayout":false,
+              "layout":false,
+              "menu":false,
+              "reset":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            486,
+            204
+          ],
+          "type":"ui/setUILayout"
+        },
+        "79":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "vehId":false,
+              "flow":false,
+              "mainPrefabId":false,
+              "sidePrefabId":false
+            },
+            "p_out":{}
+          },
+          "pins":[
+            [
+              "in",
+              "flow",
+              "flow"
+            ],
+            [
+              "in",
+              "number",
+              "vehId",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "mainPrefabId",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "sidePrefabId",
+              null,
+              ""
+            ]
+          ],
+          "pos":[
+            808,
+            204
+          ],
+          "transitionName":"success",
+          "type":"states/transition"
+        }
+      },
+      "showTab":true,
+      "type":"graph",
+      "variables":{
+        "customVariableOrder":{},
+        "list":{}
+      },
+      "viewPos":[
+        0,
+        0
       ],
       "viewZoom":1
     }

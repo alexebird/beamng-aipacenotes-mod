@@ -217,8 +217,6 @@ function C:drawDebug(drawMode, clr, extraText)
   --   wp:drawDebug(self._drawMode, clr, extraText)
   -- end
 
-  -- local linkClr = {0.2, 0.2, 0.2} -- gray
-  -- local linkClr = {1.0, 1.0, 1.0} -- white
   local linkClr = {0, 1, 0} -- green
   local undistractClr = {0.2, 0.2, 0.2} -- gray
   local undistractClrEmphasis = {0.0, 0.0, 0.0} -- gray
@@ -475,7 +473,7 @@ function C:drawDebug(drawMode, clr, extraText)
   for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
     if not ((self.nextNote and wp.pacenote.id == self.nextNote.id) and (self.prevNote and wp.pacenote.id == self.prevNote.id)) then
       if drawMode == 'highlight' then
-        -- pass
+        -- pass, already taken care of in the above loop.
       elseif drawMode == 'undistract' then
         if wp.waypointType == 'cornerStart' then
           -- wp:drawDebug(nil, undistractClr, nil) -- wp._drawMode)

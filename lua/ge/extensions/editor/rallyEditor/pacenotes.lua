@@ -167,8 +167,8 @@ end
 function C:selectNotebook(id)
   -- log('D', 'wtf', 'selecting notebook: '..tostring(id))
   self.notebook_index = id
-  -- for _, note in pairs(self.path.notebooks.objects) do
-  --   note._drawMode = (id == note.id) and 'highlight' or 'normal'
+  -- for _, notebook in pairs(self.path.notebooks.objects) do
+  --   notebook._drawMode = (id == notebook.id) and 'highlight' or 'normal'
   -- end
   if id then
     self:loadVoices()
@@ -199,8 +199,8 @@ function C:selectPacenote(id)
       note._drawMode = 'highlight'
       note:setAdjacentNotes(prevNote, nextNote)
     else
-      -- note._drawMode = self.waypoint_index and 'undistract' or 'normal'
-      note._drawMode = 'undistract'
+      note._drawMode = self.waypoint_index and 'undistract' or 'normal'
+      -- note._drawMode = 'undistract'
       note:clearAdjacentNotes()
     end
   end
@@ -226,6 +226,9 @@ function C:selectPacenote(id)
     pacenoteNameText = im.ArrayChar(1024, note.name)
     pacenoteNoteText = im.ArrayChar(2048, note.note)
   else
+    for _,note in pairs(self:selectedNotebook().pacenotes.objects) do
+      note._drawmode = 'normal'
+    end
     -- for _, seg in pairs(self.path.segments.objects) do
     --   seg._drawmode = 'faded'
     -- end
