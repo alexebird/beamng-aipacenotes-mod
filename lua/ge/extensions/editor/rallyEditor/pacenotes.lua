@@ -200,7 +200,7 @@ function C:selectPacenote(id)
       note:setAdjacentNotes(prevNote, nextNote)
     else
       note._drawMode = self.waypoint_index and 'undistract' or 'normal'
-      -- note._drawMode = 'undistract'
+      -- note._drawMode = 'undistr
       note:clearAdjacentNotes()
     end
   end
@@ -399,7 +399,8 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
     if radius <= 1 then
       radius = defaultRadius
     end
-    debugDrawer:drawSphere((self.mouseInfo._downPos), radius, ColorF(1,1,1,0.8))
+    local rr = 10
+    debugDrawer:drawSphere((self.mouseInfo._downPos), rr, ColorF(1,1,1,0.8))
     local normal = (self.mouseInfo._holdPos - self.mouseInfo._downPos):normalized()
     debugDrawer:drawSquarePrism(
       (self.mouseInfo._downPos),
@@ -431,19 +432,38 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
         if data.wpId then
           data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
         end
+        if data.wpIdCE then
+          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpIdCE)
+        end
         data.self:selectWaypoint(data.index)
       end,
       function(data) --redo
-        local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpId or nil)
-        data.wpId = wp.id
-        local normal = data.normal
-        local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
-        if radius <= 1 then
-          radius = defaultRadius
-        end
-        wp:setManual(data.mouseInfo._downPos, radius, normal)
+        local note = data.self:selectedPacenote()
+        if note then
+          local wp = note.pacenoteWaypoints:create(nil, data.wpId or nil)
+          local wpCE = nil
 
-        data.self:selectWaypoint(wp.id)
+          if not note:getCornerEndWaypoint() then
+            wpCE = note.pacenoteWaypoints:create(nil, data.wpIdCE or nil)
+            data.wpIdCE = wpCE.id
+          end
+
+          data.wpId = wp.id
+          local normal = data.normal
+          local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
+          if radius <= 1 then
+            radius = defaultRadius
+          end
+          -- if radius >= 10 then
+          --   radius = 10
+          -- end
+          wp:setManual(data.mouseInfo._downPos, 10, normal)
+          if wpCE then
+            wpCE:setManual(data.mouseInfo._upPos, 10, normal)
+          end
+
+          data.self:selectWaypoint(wp.id)
+        end
       end)
     end
   end

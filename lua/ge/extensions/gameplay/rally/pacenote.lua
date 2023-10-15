@@ -182,7 +182,7 @@ function C:getActiveFwdAudioTrigger()
   -- if wpListForType then
     -- for i,wp in pairs(wpListForType) do
     for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
-      if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger and wp.name == 'curr' then
+      if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then -- TODO and wp.name == 'curr' then
         -- log('D', 'wtf', 'wp.name='..wp.name)
         return wp
       end
@@ -413,14 +413,20 @@ function C:drawDebug(drawMode, clr, extraText)
       self:drawLink(nextCornerStart, nextCornerEnd, undistractClrEmphasis)
     end
 
-    nextCornerStart:drawDebug(nil, undistractClr, nil, '['.. waypointTypes.shortenWaypointType(waypointTypes.wpTypeCornerStart) ..']')
-    nextCornerEnd:drawDebug(nil, undistractClr, nil)
+    if nextCornerStart then
+      nextCornerStart:drawDebug(nil, undistractClr, nil, '['.. waypointTypes.shortenWaypointType(waypointTypes.wpTypeCornerStart) ..']')
+    end
+    if nextCornerEnd then
+      nextCornerEnd:drawDebug(nil, undistractClr, nil)
+    end
 
     -- draw a more dim version of audio trigger waypoints.
     local nextTriggers = self.nextNote:getAudioTriggerWaypoints()
     local clrDarkBlue = {0, 0, 0.3}
     for i,wp in ipairs(nextTriggers) do
-      self:drawLink(wp, nextCornerStart, clrDarkBlue)
+      if nextCornerStart then
+        self:drawLink(wp, nextCornerStart, clrDarkBlue)
+      end
       wp:drawDebug(nil, clrDarkBlue)
     end
 
@@ -444,7 +450,9 @@ function C:drawDebug(drawMode, clr, extraText)
     end
     if #nextDmsBefore > 0 then
       to = nextDmsBefore[1]
-      self:drawLink(nextDmsBefore[#nextDmsBefore], nextCornerStart, clr)
+      if nextCornerStart then
+        self:drawLink(nextDmsBefore[#nextDmsBefore], nextCornerStart, clr)
+      end
     -- else
       -- to:drawDebug(nil, clr, nil)
     end
