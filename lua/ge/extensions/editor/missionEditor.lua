@@ -37,8 +37,8 @@ local oldMissionTypeData = {}
 local filter = {
   onlyCurrentLevel = false,
   hideProcedural = true,
-  showCareerMissions = true,
-  showFreeroamMissions = true,
+  showCareerMissions = false,
+  showFreeroamMissions = false,
 }
 local filterNamesSorted = {
   {name = "Current Level Only", key = "onlyCurrentLevel"},
@@ -79,7 +79,20 @@ local missionSearchTxt = im.ArrayChar(256, "")
 local missionSearchDisplayResult = false
 local missionSearchResults = {}
 
+local function openRallyEditor(shownMission)
+  if editor_rallyEditor then
+    if not editor.active then
+      editor.setEditorActive(true)
+    end
+    editor_rallyEditor.show()
 
+    local folder = shownMission.missionFolder
+    local raceFname = folder .. '/' .. 'rally.rally.json'
+    log('D', 'WTF', 'rallyFname='..raceFname)
+
+    editor_rallyEditor.loadRace(raceFname)
+  end
+end
 
 local lastShownMission = nil -- always force an update on first call
 local function displayHeader(clickedMission, hoveredMission, shownMission)
@@ -113,25 +126,27 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
         -- TODO: switch to this mission in cluster
       end
     end
-    im.SameLine()
-    if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
-      log('D', 'WTF', "open race editor turbo button")
-      if editor_raceEditorTurbo then
-        if not editor.active then
-          editor.setEditorActive(true)
-        end
-        editor_raceEditorTurbo.show()
-
-        local folder = shownMission.missionFolder
-        local raceFname = folder .. '/' .. 'race.race.json'
-        log('D', 'WTF', 'raceFname='..raceFname)
-
-        editor_raceEditorTurbo.loadRace(raceFname)
-      end
-    end
-
     ui_flowgraph_editor.tooltip("Start Mission\n(Needs loaded map and vehicle)")
     im.SameLine()
+
+    if shownMission.missionType == 'rallyStage' then
+      if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
+          openRallyEditor(shownMission)
+      end
+      ui_flowgraph_editor.tooltip("Open Rally Editor")
+      im.SameLine()
+
+      if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
+        -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
+        openRallyEditor(shownMission)
+        editor_flowgraphEditor.open()
+        local recceFname = "/gameplay/missionTypes/rallyStage/recce.flow.json"
+        editor_flowgraphEditor.openFile({filepath = recceFname}, true)
+      end
+      ui_flowgraph_editor.tooltip("Open Recce Flowgraph")
+      im.SameLine()
+    end
+
   end
   if shownMission then
     im.Text("Mission ID:\n"..shownMission.id)
@@ -583,6 +598,37 @@ local function exportMissionOverview()
   csvdata:write("missionOverview.csv")
 end
 
+local function exportContentOverview()
+  local csvdata = require('csvlib').newCSV("Name","Date","Origin","Map","Type 1","Type 2", "Type 3")
+
+  for _, mission in ipairs(missionList) do
+    local instance = gameplay_missions_missions.getMissionById(mission.id)
+    local translatedName = translateLanguage(mission.name, mission.name, true)
+    local type2 = ""
+    local origin = "Mission"
+    if mission.procedural and mission.missionType == "busMode" then origin = "Bus Route" end
+    if mission.procedural and mission.missionType == "generatedTimeTrial" then origin = "Time Trials" end
+    csvdata:add(translatedName, mission.date or -1, origin, mission.startTrigger and mission.startTrigger.level or "None", mission.missionType, mission.careerSetup.showInFreeroam and "Freeroam" or "Career")
+  end
+
+  for _, scenario in ipairs(scenario_scenariosLoader.getList()) do
+    local origin = "Scenario"
+    if scenario.restrictToCampaign then origin = "Campaign" end
+
+    local type2 = ""
+    if scenario.isCreatedFromFlowgraph or scenario.flowgraph then type2 = "Flowgraph" end
+    if not scenario.isCreatedFromMission then
+      csvdata:add(translateLanguage(scenario.name, scenario.name, true), tonumber(scenario.date or -1), origin, string.lower(scenario.levelName), type2)
+    end
+  end
+
+--  for _, qr in ipairs(scenario_quickRaceLoader.getQuickraceList()) do
+--    csvdata:add(translateLanguage(qr.scenarioName, qr.scenarioName, true), tonumber(qr.date), "Time Trial")
+--  end
+
+  csvdata:write("content.csv")
+end
+
 local function escapeCSV(s)
   if string.find(s, '[,"]') then
     s = '"' .. string.gsub(s, '"', '""') .. '"'
@@ -973,6 +1019,9 @@ local function onEditorGui()
         end
         if im.MenuItem1("Import mission overview") then
           importMissionOverview()
+        end
+        if im.MenuItem1("Export Content Overview") then
+          exportContentOverview()
         end
         im.Separator()
         if im.MenuItem1("Time Updater") then

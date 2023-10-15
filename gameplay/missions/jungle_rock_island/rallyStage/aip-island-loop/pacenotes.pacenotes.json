@@ -1,0 +1,441 @@
+{
+  "versions":[
+    {
+      "authors":"birdman",
+      "description":"",
+      "id":1,
+      "installed":true,
+      "language_code":"en-GB",
+      "name":"Primary",
+      "pacenotes":[
+        {
+          "name":"Pacenote 37",
+          "normal":[
+            -0.498440508,
+            0.8669215821,
+            -0.002007604357
+          ],
+          "note":"start 50 over crest?",
+          "oldId":62,
+          "pos":[
+            513.1069336,
+            -455.6046143,
+            128.2488098
+          ],
+          "radius":4.301881449,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 38",
+          "normal":[
+            -0.515397819,
+            0.8569307425,
+            0.00589837033
+          ],
+          "note":"6 left? into 5 left up hill over crest?",
+          "oldId":38,
+          "pos":[
+            490.6315002,
+            -415.9785461,
+            128.2132263
+          ],
+          "radius":4.27101795,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 39",
+          "normal":[
+            -0.6075602473,
+            0.7941833333,
+            -0.01197409288
+          ],
+          "note":"into 5 right plus?",
+          "oldId":39,
+          "pos":[
+            419.6330566,
+            -307.0632019,
+            127.1589966
+          ],
+          "radius":10.1085656,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 41",
+          "normal":[
+            -0.9426524535,
+            -0.329496103,
+            -0.05327917115
+          ],
+          "note":"and 5 left over bridge wall exit? into 5 left care dip?",
+          "oldId":40,
+          "pos":[
+            91.21907806,
+            -356.4431763,
+            133.5291748
+          ],
+          "radius":9.154270291,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 42",
+          "normal":[
+            -0.6255239583,
+            0.7801987118,
+            0.00312213566
+          ],
+          "note":"and 5 right tightens extra long through tunnel?",
+          "oldId":41,
+          "pos":[
+            -98.7230835,
+            -327.2094727,
+            132.7462769
+          ],
+          "radius":10.28774995,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 43",
+          "normal":[
+            -0.5970104101,
+            0.8021365419,
+            0.01247149999
+          ],
+          "note":"into 6 left? 100.",
+          "oldId":42,
+          "pos":[
+            -480.0103149,
+            -217.8428345,
+            134.960968
+          ],
+          "radius":14.69292671,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 44",
+          "normal":[
+            -0.05297770874,
+            0.9985112405,
+            -0.01298710688
+          ],
+          "note":"6 right, into 5 left care bumps?",
+          "oldId":43,
+          "pos":[
+            -452.555481,
+            61.89098358,
+            135.5736084
+          ],
+          "radius":9.072391168,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 45",
+          "normal":[
+            -0.2546739133,
+            0.966143167,
+            0.04133495873
+          ],
+          "note":"and 5 right into 4 left long?",
+          "oldId":44,
+          "pos":[
+            -501.6998901,
+            304.696106,
+            143.4769592
+          ],
+          "radius":10.66990394,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 46",
+          "normal":[
+            -0.3822482188,
+            0.9239212639,
+            0.01599366426
+          ],
+          "note":"into 3 right long?",
+          "oldId":45,
+          "pos":[
+            -643.7139282,
+            654.0643921,
+            150.6569519
+          ],
+          "radius":12.81959814,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 47",
+          "normal":[
+            -0.7950515878,
+            0.6045112629,
+            -0.04958937142
+          ],
+          "note":"into 3 right hook, care rock entry? and 3 right through tunnel?",
+          "oldId":46,
+          "pos":[
+            -859.5232544,
+            713.0892334,
+            135.3446045
+          ],
+          "radius":10.31507691,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 48",
+          "normal":[
+            0.576446223,
+            0.8169555369,
+            0.01712900291
+          ],
+          "note":"into care 4 left tightens 3 down hill? 50.",
+          "oldId":47,
+          "pos":[
+            -928.2000732,
+            880.7026978,
+            140.7043457
+          ],
+          "radius":12.06342965,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 49",
+          "normal":[
+            0.7532069719,
+            -0.6575082926,
+            -0.01902899583
+          ],
+          "note":"6 right? 50.",
+          "oldId":48,
+          "pos":[
+            -731.1004639,
+            811.0828857,
+            146.5868225
+          ],
+          "radius":8.896096817,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 50",
+          "normal":[
+            0.9505401152,
+            0.3105941176,
+            -0.002187126005
+          ],
+          "note":"into flat left?",
+          "oldId":49,
+          "pos":[
+            -318.7126465,
+            850.7932739,
+            132.124527
+          ],
+          "radius":15.10442391,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 51",
+          "normal":[
+            0.8933146413,
+            -0.4494318098,
+            0
+          ],
+          "note":"into care 5 left hook?",
+          "oldId":50,
+          "pos":[
+            -197.9591064,
+            842.4453125,
+            131.9946289
+          ],
+          "radius":12.05528774,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 52",
+          "normal":[
+            0.9918138931,
+            -0.1276180036,
+            0.004341277138
+          ],
+          "note":"and 6 left?",
+          "oldId":51,
+          "pos":[
+            184.2818604,
+            715.1777344,
+            132.6365662
+          ],
+          "radius":10.99434352,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 53",
+          "normal":[
+            0.8904082677,
+            -0.4490152641,
+            0.07455474134
+          ],
+          "note":"into brake 5 right down hill? 30.",
+          "oldId":52,
+          "pos":[
+            361.0053101,
+            710.6811523,
+            138.1700592
+          ],
+          "radius":9.661033839,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 54",
+          "normal":[
+            0.8017621789,
+            -0.5845255754,
+            -0.1245281499
+          ],
+          "note":"6 right into 5 left long?",
+          "oldId":53,
+          "pos":[
+            647.307373,
+            535.5308228,
+            151.6869202
+          ],
+          "radius":11.27780094,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 55",
+          "normal":[
+            -0.1368273755,
+            -0.9892916751,
+            0.05079616926
+          ],
+          "note":"into 5 right into 6 left?",
+          "oldId":54,
+          "pos":[
+            586.5464478,
+            25.13908386,
+            133.4690094
+          ],
+          "radius":8.570219768,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 56",
+          "normal":[
+            0.2274846072,
+            -0.9735527745,
+            0.0211127621
+          ],
+          "note":"into 5 right? 20.",
+          "oldId":55,
+          "pos":[
+            759.4095459,
+            -220.7518616,
+            132.1221771
+          ],
+          "radius":14.39933287,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 57",
+          "normal":[
+            0.6550950246,
+            -0.7543919371,
+            0.04175301051
+          ],
+          "note":"and 4 right long? 20.",
+          "oldId":56,
+          "pos":[
+            839.6387329,
+            -379.7092896,
+            136.0986633
+          ],
+          "radius":12.56415113,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 58",
+          "normal":[
+            0.1979387413,
+            -0.9790758945,
+            0.04722973195
+          ],
+          "note":"and 4 right?",
+          "oldId":57,
+          "pos":[
+            909.6889648,
+            -591.2165527,
+            144.6072693
+          ],
+          "radius":13.75011112,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 59",
+          "normal":[
+            -0.9832920409,
+            0.122289084,
+            0.1348411742
+          ],
+          "note":"into 4 right wall exit?",
+          "oldId":58,
+          "pos":[
+            267.2799683,
+            -239.2953491,
+            132.1490173
+          ],
+          "radius":9.272881362,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 60",
+          "normal":[
+            0.9955153544,
+            -0.08516543013,
+            -0.04118286949
+          ],
+          "note":"6 right minus?",
+          "oldId":59,
+          "pos":[
+            -524.5326538,
+            817.7275391,
+            129.7076721
+          ],
+          "radius":12.54080372,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 61",
+          "normal":[
+            0.889743225,
+            -0.4564389139,
+            -0.004528955465
+          ],
+          "note":"into 6 right?",
+          "oldId":60,
+          "pos":[
+            -78.79679108,
+            778.4182129,
+            131.9549255
+          ],
+          "radius":12.84998758,
+          "segment":-1
+        },
+        {
+          "name":"Pacenote 62",
+          "normal":[
+            -0.984198223,
+            0.1364929997,
+            -0.112798577
+          ],
+          "note":"into 5 left right opens over finish.",
+          "oldId":61,
+          "pos":[
+            756.2879639,
+            -718.1591187,
+            145.9160461
+          ],
+          "radius":12.46298963,
+          "segment":-1
+        }
+      ],
+      "voice":"british_female",
+      "voice_name":"en-GB-Neural2-A"
+    }
+  ]
+}

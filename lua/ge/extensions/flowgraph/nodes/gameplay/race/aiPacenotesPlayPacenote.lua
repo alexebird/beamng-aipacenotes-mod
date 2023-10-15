@@ -8,7 +8,7 @@ local C = {}
 
 C.name = 'AI Pacenote Play'
 C.description = 'Plays a pacenote audio file.'
-C.category = 'aipacenotes'
+-- C.category = 'aipacenotes'
 
 C.color = im.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 

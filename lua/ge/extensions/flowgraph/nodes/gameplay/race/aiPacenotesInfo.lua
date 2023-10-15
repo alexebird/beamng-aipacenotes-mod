@@ -8,7 +8,7 @@ local C = {}
 
 C.name = 'AI Pacenotes Info'
 C.description = 'Get data related to the AI Pacenotes mod.'
-C.category = 'aipacenotes'
+-- C.category = 'aipacenotes'
 
 C.color = im.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
@@ -19,11 +19,11 @@ C.pinSchema = {
   {dir = 'out', type = 'flow', name = 'flow', description = 'Outflow from this node.', impulse = false},
   {dir = 'out', type = 'flow', name = 'active', description = 'Outflow if pacenotes ARE detected for this mission.', impulse = false},
   {dir = 'out', type = 'flow', name = 'inactive', description = 'Outflow if pacenotes ARE NOT detected for this mission.', impulse = false},
-  {dir = 'out', type = 'string', name = 'currentVersion', default = nil, description = 'The version string of the installed pacenotes version. (see <mission-path>/pacenotes/settings.json)'},
-  {dir = 'out', type = 'number', name = 'volume', default = nil, description = 'The volume when playing audio files. (see <mission-path>/pacenotes/settings.json)'},
+  {dir = 'out', type = 'string', name = 'notebookName', default = nil, description = 'The version string of the installed pacenotes version. (see <mission-path>/pacenotes/settings.json)'},
+  -- {dir = 'out', type = 'number', name = 'volume', default = nil, description = 'The volume when playing audio files. (see <mission-path>/pacenotes/settings.json)'},
 
   {dir = 'out', type = 'string', name = 'missionDir', default = nil, description = 'Path of the mission\'s root directory.'},
-  {dir = 'out', type = 'string', name = 'raceFile', default = nil, description = 'Path of the mission\'s race file.'},
+  {dir = 'out', type = 'string', name = 'rallyFile', default = nil, description = 'Path of the mission\'s rally file.'},
 
   {dir = 'out', type = 'bool', name = 'unavailable', default = true, description = 'If AI pacenotes are detected and enabled for this mission.'},
 
@@ -41,28 +41,28 @@ local logTag = 'aipacenotes'
 function C:init(mgr, ...)
   self.missionId = nil
   self.missionDir = nil
-  self.raceFile = nil
+  self.rallyFile = nil
   self.pacenotesFile = nil
   self.settings = nil
 end
 
-function C:getMissionSpecificSettings()
-  if self.settings then
-    return self.settings
-  end
-  if not self.missionDir then
-    self:detectMissionId()
-  end
-  local settingsFname = self.missionDir..'/pacenotes/settings.json'
-  log('D', logTag, 'reading settings file: ' .. tostring(settingsFname))
-  local json = jsonReadFile(settingsFname)
-  if not json then
-    log('E', logTag, 'unable to read settings file at: ' .. tostring(settingsFname))
-    return nil
-  end
-  self.settings = json
-  return self.settings
-end
+-- function C:getMissionSpecificSettings()
+--   if self.settings then
+--     return self.settings
+--   end
+--   if not self.missionDir then
+--     self:detectMissionId()
+--   end
+--   local settingsFname = self.missionDir..'/pacenotes/settings.json'
+--   log('D', logTag, 'reading settings file: ' .. tostring(settingsFname))
+--   local json = jsonReadFile(settingsFname)
+--   if not json then
+--     log('E', logTag, 'unable to read settings file at: ' .. tostring(settingsFname))
+--     return nil
+--   end
+--   self.settings = json
+--   return self.settings
+-- end
 
 local function fileExists(filename)
   log('D', logTag, 'checking file exists: '..filename)
@@ -127,61 +127,61 @@ function C:detectMissionId()
   end
 end
 
-function C:getPacenotesFile()
-  if self.pacenotesFile then
-    return self.pacenotesFile
-  end
-  self.pacenotesFile = self.missionDir..'/pacenotes.pacenotes.json'
-  if not fileExists(self.pacenotesFile) then
-    self.pacenotesFile = nil
-  end
-  return self.pacenotesFile
-end
+-- function C:getPacenotesFile()
+--   if self.pacenotesFile then
+--     return self.pacenotesFile
+--   end
+--   self.pacenotesFile = self.missionDir..'/pacenotes.pacenotes.json'
+--   if not fileExists(self.pacenotesFile) then
+--     self.pacenotesFile = nil
+--   end
+--   return self.pacenotesFile
+-- end
 
-function C:readPacenotesFile()
-  local fname = self:getPacenotesFile()
-  if fname then
-    local json = jsonReadFile(fname)
-    if not json then
-      log('E', logTag, 'unable to read pacenotes.pacenotes.json file at: ' .. tostring(fname))
-      return nil
-    end
-    return json
-  end
-  return nil
-end
+-- function C:readPacenotesFile()
+--   local fname = self:getPacenotesFile()
+--   if fname then
+--     local json = jsonReadFile(fname)
+--     if not json then
+--       log('E', logTag, 'unable to read pacenotes.pacenotes.json file at: ' .. tostring(fname))
+--       return nil
+--     end
+--     return json
+--   end
+--   return nil
+-- end
 
-function C:areThereAnyPacenotes()
-  local pacenotes = self:readPacenotesFile()
-  if pacenotes then
-    local versions = pacenotes.versions
-    if versions and #versions > 0 then
-      for key,version in pairs(versions) do
-        local pn = version.pacenotes
-        if pn and #pn > 1 then
-          return true
-        else
-          return false
-        end
-      end
-    else
-      return false
-    end
-  else
-    return false
-  end
-end
+-- function C:areThereAnyPacenotes()
+--   local pacenotes = self:readPacenotesFile()
+--   if pacenotes then
+--     local versions = pacenotes.versions
+--     if versions and #versions > 0 then
+--       for key,version in pairs(versions) do
+--         local pn = version.pacenotes
+--         if pn and #pn > 1 then
+--           return true
+--         else
+--           return false
+--         end
+--       end
+--     else
+--       return false
+--     end
+--   else
+--     return false
+--   end
+-- end
 
-function C:getRaceFile()
-  if self.raceFile then
-    return self.raceFile
+function C:getRallyFile()
+  if self.rallyFile then
+    return self.rallyFile
   end
   -- bug
-  self.raceFile = self.missionDir..'/race.race.json'
-  if not fileExists(self.raceFile) then
-    self.raceFile = nil
+  self.rallyFile = self.missionDir..'/rally.rally.json'
+  if not fileExists(self.rallyFile) then
+    self.rallyFile = nil
   end
-  return self.raceFile
+  return self.rallyFile
 
   -- local ret = editor_raceEditorTurbo
   -- if ret then
@@ -199,27 +199,49 @@ function C:getRaceFile()
   -- end
 end
 
+function C:readRallyFile()
+  if not self.rallyFile then return end
+  local json = readJsonFile(self.rallyFile)
+  if not json then
+    log('E', logTag, 'couldnt read rally file')
+    return
+  end
+  return json
+end
+
+function C:getInstalledNotebookName()
+  local rally = self:readRallyFile()
+  -- log("D", 'wtf', dumps(rally))
+  for i,notebook in pairs(rally['notebooks']) do
+    if notebook['installed'] then
+      return notebook['name']
+    end
+  end
+  return nil
+end
+
 function C:work(args)
   if not self.missionDir then
     self:detectMissionId()
   end
 
   local missionDir = self.missionDir
-  local raceFname = self:getRaceFile()
-  local isActive = not not self:areThereAnyPacenotes()
-  local settings = self:getMissionSpecificSettings()
+  local rallyFname = self:getRallyFile()
+  -- local isActive = not not self:areThereAnyPacenotes()
+  local isActive = true
+  -- local settings = self:getMissionSpecificSettings()
 
   self.pinOut.flow.value = self.pinIn.flow.value
   self.pinOut.active.value = isActive
   self.pinOut.inactive.value = not isActive
   self.pinOut.unavailable.value = not isActive
 
-  if settings then
-    self.pinOut.currentVersion.value = settings.currentVersion
-    self.pinOut.volume.value = settings.volume
-  end
+  -- if settings then
+    self.pinOut.notebookName.value = self:getInstalledNotebookName()
+    -- self.pinOut.volume.value = settings.volume
+  -- end
 
-  self.pinOut.raceFile.value = raceFname
+  self.pinOut.rallyFile.value = rallyFname
   self.pinOut.missionDir.value = missionDir
 end
 

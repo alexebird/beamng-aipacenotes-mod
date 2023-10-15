@@ -1,0 +1,83 @@
+{
+  "additionalAttributes":{
+    "difficulty":"high",
+    "vehicle":"own"
+  },
+  "author":"birdman",
+  "careerSetup":{
+    "defaultStarKeys":[
+      "goldTime"
+    ],
+    "showInFreeroam":true,
+    "starOutroTexts":{
+      "silverTime":"I'm listening...",
+      "bronzeTime":"Goo Ga Ga",
+      "goldTime":"Way to go!",
+      "noStarUnlocked":"Maybe just one more try?"
+    },
+    "starRewards":{},
+    "starsActive":{
+      "bronzeTime":false,
+      "goldTime":true,
+      "silverTime":false
+    }
+  },
+  "customAdditionalAttributes":{},
+  "date":1686290213,
+  "description":"Mostly dirt stage with expected time around 3:00.",
+  "devMission":false,
+  "grouping":{
+    "id":"ai-pacenotes",
+    "label":"AI Pacenotes"
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowRollingStart":false,
+    "bronzeTime":600,
+    "closed":false,
+    "defaultLaps":1,
+    "endScreenText":"Nice driving!",
+    "goldTime":165.6340027,
+    "mapPreviewMode":"navgraph",
+    "reversible":false,
+    "silverTime":600,
+    "startScreenText":"How many racecars will you destroy today?"
+  },
+  "name":"Exciting Dirt Stage",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":false
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "enabled":true,
+      "mode":"own"
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"east_coast_usa",
+    "pos":[
+      -372.0237122,
+      96.33509064,
+      34.12205887
+    ],
+    "radius":3,
+    "rot":[
+      0,
+      0,
+      0.9031088352,
+      -0.4294119179
+    ],
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}
