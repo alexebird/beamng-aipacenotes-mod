@@ -220,7 +220,8 @@ function C:drawDebug(drawMode, clr, extraText)
   local linkClr = {0, 1, 0} -- green
   local undistractClr = {0.2, 0.2, 0.2} -- gray
   local undistractClrEmphasis = {0.0, 0.0, 0.0} -- gray
-  local distClr = {1, 0.6, 0.2} -- orange
+  -- local distClr = {1, 0.6, 0.2} -- orange
+  local distClr = {1, 0.0, 0.9} -- pink
 
   -- drawMode = drawMode or self._drawMode
   drawMode = self._drawMode

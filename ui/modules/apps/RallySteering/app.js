@@ -104,7 +104,7 @@ angular.module('beamng.apps')
           }
 
           if (updated) {
-            console.log(`${steeringVal.toFixed(1)}° ` + JSON.stringify(scope.history))
+            // console.log(`${steeringVal.toFixed(1)}° ` + JSON.stringify(scope.history))
             let textContent = scope.history[0]
             let textFFB = svg.getElementById('textFFB')
             let tspan = textFFB.querySelector('tspan')

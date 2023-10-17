@@ -1,0 +1,4 @@
+{
+"toggle_voice_transcription"   :{"cat":"gameplay", "order": 1, "ctx": "tlua", "onDown": "extensions.gameplay_rally_transcribe.recording_start()", "onUp": "extensions.gameplay_rally_transcribe.recording_stop()", "title": "Toggle Voice Transcription", "desc": "Push down to start recording, and release to stop. Requires AI-Pacenotes desktop app." },
+"cut_voice_transcription"      :{"cat":"gameplay", "order": 1, "ctx": "tlua", "onDown": "extensions.gameplay_rally_transcribe.recording_cut()", "title": "Cut Voice Transcription", "desc": "If a recording is running, this stops it and immediately starts another. Requires AI-Pacenotes desktop app." }
+}
