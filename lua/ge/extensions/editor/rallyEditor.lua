@@ -431,7 +431,7 @@ local function onEditorGui()
 
     updateMouseInfo()
 
-    currentPath:drawDebug()
+    -- currentPath:drawDebug()
     -- if editor.getPreference("raceEditor.general.showAiRoute") then
       -- currentPath:drawAiRouteDebug()
     -- end

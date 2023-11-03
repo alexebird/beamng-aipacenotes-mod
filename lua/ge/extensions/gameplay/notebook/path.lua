@@ -33,7 +33,7 @@ function C:init(name)
 
   self.id = self:getNextUniqueIdentifier()
 
-  self._hoverWaypoint = nil
+  self._hover_waypoint_id = nil
 
 --   self.pathnodes = require('/lua/ge/extensions/gameplay/util/sortedList')("pathnodes", self, require('/lua/ge/extensions/gameplay/race/pathnode'))
 --   self.segments = require('/lua/ge/extensions/gameplay/util/sortedList')("segments", self, require('/lua/ge/extensions/gameplay/race/segment'))
@@ -64,20 +64,33 @@ function C:init(name)
 end
 ---- Debug and Serialization
 
-function C:drawDebug()
+function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
 --   self.pathnodes:drawDebug()
 --   self.segments:drawDebug()
 --   self.startPositions:drawDebug()
 --   if self.installedNotebook then
     -- self.installedNotebook:drawDebug()
 --   end
+
   local i = 1
+  local selected_i = -1
+  -- local i_prev = -1
+  -- local i_next = -1
   while i <= #self.pacenotes.sorted do
     -- Do something with a_list[index]
     local pacenote = self.pacenotes.sorted[i]
-    pacenote:drawDebugCustom(self._hoverWaypoint)
+    pacenote:drawDebugCustom(self._hover_waypoint_id)
+    if pacenote.id == selected_pacenote_id then
+      selected_i = i
+    end
+    -- i_prev = i
     i = i + 1
+    -- i_next = i + 1
   end
+
+  local prev_i = selected_i - 1
+  local next_i = selected_i + 1
+  -- log('D', 'wtf', 'prev='..prev_i..' i='..selected_i..' next='..next_i)
 end
 
 function C:onSerialize()
@@ -164,6 +177,7 @@ function C:getLanguages()
   for lang, _ in pairs(lang_set) do
     table.insert(languages, lang)
   end
+  table.sort(languages)
   return languages
 end
 

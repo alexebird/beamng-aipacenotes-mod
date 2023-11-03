@@ -373,6 +373,10 @@ function C:onEditModeActivate()
 end
 
 function C:draw(mouseInfo)
+  if self.path then
+    self.path:drawDebug(self.pacenote_index, self.waypoint_index)
+  end
+
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
     editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
@@ -523,11 +527,15 @@ function C:mouseOverWaypoints()
 end
 
 function C:clearHover()
-  self.path._hoverWaypoint = nil
+  self.path._hover_waypoint_id = nil
 end
 
 function C:setHover(wp)
-  self.path._hoverWaypoint = wp
+  if wp then
+    self.path._hover_waypoint_id = wp.id
+  else
+    self.path._hover_waypoint_id = nil
+  end
   -- if self.hoverWaypoint == wp then
     -- no change
   -- else
@@ -730,12 +738,8 @@ end
 
 function C:drawPacenotesList(notebook)
   if not self.path then return end
-  -- if not notebook then return end
-  -- if not notebook.pacenotes then return end
 
   local notebook = self.path
-
-  -- local avail = im.GetContentRegionAvail()
 
   im.HeaderText("Pacenotes")
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)

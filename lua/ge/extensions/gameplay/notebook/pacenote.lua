@@ -213,10 +213,10 @@ function C:clearAdjacentNotes()
   self:setAdjacentNotes(nil, nil)
 end
 
-function C:drawDebugCustom(hoverWaypoint)
+function C:drawDebugCustom(hover_waypoint_id, selected_pn_id, selected_wp_id)
   local cs = self:getCornerStartWaypoint()
 
-  local isHover = hoverWaypoint and cs and hoverWaypoint.id == cs.id
+  local isHover = hover_waypoint_id and cs and hover_waypoint_id == cs.id
 
   local drawMode = 'normal'
 
