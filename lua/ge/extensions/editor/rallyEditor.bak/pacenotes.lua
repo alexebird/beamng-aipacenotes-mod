@@ -4,16 +4,16 @@
 
 local im  = ui_imgui
 local logTag = 'aipacenotes'
-local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+local waypointTypes = require('/lua/ge/extensions/gameplay/rally/waypointTypes')
 
 -- notebook form fields
--- local notebookNameText = im.ArrayChar(1024, "")
--- local notebookAuthorsText = im.ArrayChar(1024, "")
--- local notebookDescText = im.ArrayChar(2048, "")
+local notebookNameText = im.ArrayChar(1024, "")
+local notebookAuthorsText = im.ArrayChar(1024, "")
+local notebookDescText = im.ArrayChar(2048, "")
 
 -- pacenote form fields
 local pacenoteNameText = im.ArrayChar(1024, "")
--- local pacenoteNoteText = im.ArrayChar(2048, "")
+local pacenoteNoteText = im.ArrayChar(2048, "")
 
 -- waypoint form fields
 local waypointNameText = im.ArrayChar(1024, "")
@@ -21,19 +21,19 @@ local waypointPosition = im.ArrayFloat(3)
 local waypointNormal = im.ArrayFloat(3)
 local waypointRadius = im.FloatPtr(0)
 
--- local voiceFname = "/settings/aipacenotes/voices.json"
--- local voices = {}
--- local voiceNamesSorted = {}
+local voiceFname = "/settings/aipacenotes/voices.json"
+local voices = {}
+local voiceNamesSorted = {}
 
 local C = {}
 C.windowDescription = 'Pacenotes'
 
--- local function selectNotebookUndo(data)
---   data.self:selectNotebook(data.old)
--- end
--- local function selectNotebookRedo(data)
---   data.self:selectNotebook(data.new)
--- end
+local function selectNotebookUndo(data)
+  data.self:selectNotebook(data.old)
+end
+local function selectNotebookRedo(data)
+  data.self:selectNotebook(data.new)
+end
 
 local function selectPacenoteUndo(data)
   data.self:selectPacenote(data.old)
@@ -51,7 +51,7 @@ end
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
-  -- self.notebook_index = nil
+  self.notebook_index = nil
   self.pacenote_index = nil
   self.waypoint_index = nil
   self.mouseInfo = {}
@@ -61,10 +61,19 @@ function C:setPath(path)
   self.path = path
 end
 
-function C:selectedPacenote()
+function C:selectedNotebook()
   if not self.path then return nil end
+  if self.notebook_index then
+    return self.path.notebooks.objects[self.notebook_index]
+  else
+    return nil
+  end
+end
+
+function C:selectedPacenote()
+  if not self:selectedNotebook() then return nil end
   if self.pacenote_index then
-    return self.path.pacenotes.objects[self.pacenote_index]
+    return self:selectedNotebook().pacenotes.objects[self.pacenote_index]
   else
     return nil
   end
@@ -81,39 +90,39 @@ end
 
 -- called by RallyEditor when this tab is selected.
 function C:selected()
-  -- self.notebook_index = nil
+  self.notebook_index = nil
   self.pacenote_index = nil
   self.waypoint_index = nil
 
   if not self.path then return end
 
-  -- for _, n in pairs(self.path.pathnodes.objects) do
-  --   n._drawMode = 'none'
-  -- end
-  -- for _, seg in pairs(self.path.segments.objects) do
-  --   seg._drawMode = 'none'
-  -- end
+  for _, n in pairs(self.path.pathnodes.objects) do
+    n._drawMode = 'none'
+  end
+  for _, seg in pairs(self.path.segments.objects) do
+    seg._drawMode = 'none'
+  end
 
   -- select the installed notebook when the pacenotes tab is selected.
-  -- for i,notebook in pairs(self.path.notebooks.objects) do
-  --   if notebook.installed then
-  --     self:selectNotebook(notebook.id)
-  --   end
-  -- end
+  for i,notebook in pairs(self.path.notebooks.objects) do
+    if notebook.installed then
+      self:selectNotebook(notebook.id)
+    end
+  end
 
-  -- if not self.path then return end
+  if not self:selectedNotebook() then return end
 
-  -- for _, n in pairs(self.path.pacenotes.objects) do
+  -- for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
   --   n._drawMode = 'normal'
   -- end
 
-  for _, wp in pairs(self.path:allWaypoints()) do
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
     wp._drawMode = 'normal'
   end
 
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
-  -- self.map = map.getMap()
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
+  self.map = map.getMap()
 
   -- for _, seg in pairs(self.path.segments.objects) do
   --   seg._drawMode = 'faded'
@@ -126,72 +135,72 @@ end
 -- called by RallyEditor when this tab is unselected.
 function C:unselect()
   if not self.path then return end
+  if not self:selectedNotebook() then return end
 
   self:selectWaypoint(nil)
   self:selectPacenote(nil)
 
-  -- for _, n in pairs(self.path.pathnodes.objects) do
-  --   n._drawMode = 'faded'
-  -- end
-  -- for _, seg in pairs(self.path.segments.objects) do
-  --   seg._drawMode = 'faded'
-  -- end
+  for _, n in pairs(self.path.pathnodes.objects) do
+    n._drawMode = 'faded'
+  end
+  for _, seg in pairs(self.path.segments.objects) do
+    seg._drawMode = 'faded'
+  end
 
-  -- for _, n in pairs(self.path.pacenotes.objects) do
+  -- for _, n in pairs(self:selectedNotebook().pacenotes.objects) do
   --   n._drawMode = 'none'
   -- end
-  if self.path then
-    for _, wp in pairs(self.path:allWaypoints()) do
+  if self:selectedNotebook() then
+    for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
       wp._drawMode = 'none'
     end
   end
 
-  -- self:selectNotebook(nil)
+  self:selectNotebook(nil)
 
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
+  editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
--- function C:selectNotebook(id)
---   -- log('D', 'wtf', 'selecting notebook: '..tostring(id))
---   self.notebook_index = id
---   -- for _, notebook in pairs(self.path.notebooks.objects) do
---   --   notebook._drawMode = (id == notebook.id) and 'highlight' or 'normal'
---   -- end
---   if id then
---     self:loadVoices()
---     local notebook = self.path.notebooks.objects[id]
---     notebookNameText = im.ArrayChar(1024, notebook.name)
---   else
---     notebookNameText = im.ArrayChar(1024, "")
---   end
--- end
+function C:selectNotebook(id)
+  -- log('D', 'wtf', 'selecting notebook: '..tostring(id))
+  self.notebook_index = id
+  -- for _, notebook in pairs(self.path.notebooks.objects) do
+  --   notebook._drawMode = (id == notebook.id) and 'highlight' or 'normal'
+  -- end
+  if id then
+    self:loadVoices()
+    local notebook = self.path.notebooks.objects[id]
+    notebookNameText = im.ArrayChar(1024, notebook.name)
+  else
+    notebookNameText = im.ArrayChar(1024, "")
+  end
+end
 
 function C:selectPacenote(id)
-  if not self.path then return end
-  if not self.path.pacenotes then return end
-
+  if not self:selectedNotebook() then return end
+  if not self:selectedNotebook().pacenotes then return end
   -- log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
 
   -- un-highlight all waypoints
-  -- for _, wp in pairs(self.path:allWaypoints()) do
-  --   wp._drawMode = 'normal'
-  -- end
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
+    wp._drawMode = 'normal'
+  end
 
   -- find the pacenotes before and after the selected one.
-  local pacenotesSorted = self.path.pacenotes.sorted
+  local pacenotesSorted = self:selectedNotebook().pacenotes.sorted
   for i, note in ipairs(pacenotesSorted) do
     if self.pacenote_index == note.id then
       local prevNote = pacenotesSorted[i-1]
       local nextNote = pacenotesSorted[i+1]
-      -- note._drawMode = 'highlight'
+      note._drawMode = 'highlight'
       note:setAdjacentNotes(prevNote, nextNote)
     else
       note._drawMode = self.waypoint_index and 'undistract' or 'normal'
-      -- note._drawMode = 'undistract'
+      -- note._drawMode = 'undistr
       note:clearAdjacentNotes()
     end
   end
@@ -199,10 +208,10 @@ function C:selectPacenote(id)
   -- select the pacenote
   if id then
     -- local note = nil
-    local note = self.path.pacenotes.objects[id]
+    local note = self:selectedNotebook().pacenotes.objects[id]
     -- local wp = self:selectedWaypoint()
     -- if not wp or wp.missing then
-      -- note = self.path.pacenotes.objects[id]
+      -- note = self:selectedNotebook().pacenotes.objects[id]
       -- wp = note:getCornerStartWaypoint()
       -- if wp then
         -- self:selectWaypoint(wp.id)
@@ -215,33 +224,33 @@ function C:selectPacenote(id)
     -- note:indexWaypointsByType()
 
     pacenoteNameText = im.ArrayChar(1024, note.name)
-    -- pacenoteNoteText = im.ArrayChar(2048, note.notes)
+    pacenoteNoteText = im.ArrayChar(2048, note.note)
   else
-    for _,note in pairs(self.path.pacenotes.objects) do
+    for _,note in pairs(self:selectedNotebook().pacenotes.objects) do
       note._drawmode = 'normal'
     end
     -- for _, seg in pairs(self.path.segments.objects) do
     --   seg._drawmode = 'faded'
     -- end
     pacenoteNameText = im.ArrayChar(1024, "")
-    -- pacenoteNoteText = im.ArrayChar(2048, "")
+    pacenoteNoteText = im.ArrayChar(2048, "")
   end
 end
 
 function C:selectWaypoint(id)
   -- log('D', 'wtf', 'begin select waypoint')
-  if not self.path then return end
+  if not self:selectedNotebook() then return end
   -- log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
 
-  for _, wp in pairs(self.path:allWaypoints()) do
+  for _, wp in pairs(self:selectedNotebook():allWaypoints()) do
     wp._drawMode = (id == wp.id) and 'highlight' or 'normal'
     -- log('D', 'wtf', 'waypoint['..wp.id..']: drawMode set to '..wp._drawMode)
   end
 
   if id then
     -- local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
-    local waypoint = self.path:getWaypoint(id)
+    local waypoint = self:selectedNotebook():getWaypoint(id)
     -- log('D', 'wtf', dumps(id))
     self:selectPacenote(waypoint.pacenote.id)
     waypointNameText = im.ArrayChar(1024, waypoint.name)
@@ -249,25 +258,13 @@ function C:selectWaypoint(id)
   else
     waypointNameText = im.ArrayChar(1024, "")
     -- self:selectPacenote(nil)
-    -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
-    -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover. 
-    self:resetTransform()
   end
-end
-
-function C:resetTransform()
-  -- if not self.rallyEditor.allowGizmo() then return end
-  local rotation = QuatF(0,0,0,1)
-  local transform = rotation:getMatrix()
-  local pos = {0, 0, 0}
-  transform:setPosition(pos)
-  editor.setAxisGizmoTransform(transform)
 end
 
 function C:updateTransform(index)
   if not self.rallyEditor.allowGizmo() then return end
 
-  local wp = self.path:getWaypoint(index)
+  local wp = self:selectedNotebook():getWaypoint(index)
   if not wp then return end
 
   local rotation = QuatF(0,0,0,1)
@@ -367,9 +364,9 @@ function C:onEditModeActivate()
   -- if self.note then
   --   self:selectPacenote(self.note.id)
   -- end
-  -- if self.notebook_index then
-    -- self:selectNotebook(self.notebook_index)
-  -- end
+  if self.notebook_index then
+    self:selectNotebook(self.notebook_index)
+  end
 end
 
 function C:draw(mouseInfo)
@@ -378,12 +375,11 @@ function C:draw(mouseInfo)
     editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
     self:input()
   end
-  -- self:drawNotebookList()
-  self:drawPacenotesList()
+  self:drawNotebookList()
 end
 
 function C:createManualWaypoint(shouldCreateNewPacenote)
-  if not self.path then return end
+  if not self:selectedNotebook() then return end
 
   if not self.mouseInfo.rayCast then
     return
@@ -421,7 +417,7 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
   else
     if self.mouseInfo.up then
       if shouldCreateNewPacenote then
-        local pacenote = self.path.pacenotes:create(nil, nil)
+        local pacenote = self:selectedNotebook().pacenotes:create(nil, nil)
         self:selectPacenote(pacenote.id)
       end
 
@@ -475,29 +471,25 @@ end
 
 -- figures out which pacenote to select with the mouse in the 3D scene.
 function C:mouseOverWaypoints()
-  if not self.path then return end
-  if not self.path.pacenotes then return end
+  if not self:selectedNotebook() then return end
+  if not self:selectedNotebook().pacenotes then return end
   -- if self:selectedPacenote().missing then return end
 
   local minNoteDist = 4294967295
   local closestWp = nil
 
-  for _, pacenote in pairs(self.path.pacenotes.objects) do
-    local waypoint = pacenote:getCornerStartWaypoint()
-    -- for _, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
-
-    -- TODO filter out waypoints that aren't visible.
-    local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
-    local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
-    local sphereRadius = waypoint.radius
-    if noteRayDistance <= sphereRadius then
-      if distNoteToCam < minNoteDist then
-        minNoteDist = distNoteToCam
-        closestWp = waypoint
+  for _, pacenote in pairs(self:selectedNotebook().pacenotes.objects) do
+    for _, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
+      local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
+      local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
+      local sphereRadius = waypoint.radius
+      if noteRayDistance <= sphereRadius then
+        if distNoteToCam < minNoteDist then
+          minNoteDist = distNoteToCam
+          closestWp = waypoint
+        end
       end
     end
-
-    -- end
   end
 
   -- for idx, waypoint in pairs(self:selectedPacenote().pacenoteWaypoints.objects) do
@@ -514,49 +506,18 @@ function C:mouseOverWaypoints()
   --     end
   --   end
   -- end
-
-  -- if not closestWp then
-    -- log('E', 'wtf', 'closestWP is nil')
-  -- end
-
   return closestWp
 end
 
-function C:clearHover()
-  self.path._hoverWaypoint = nil
-end
-
-function C:setHover(wp)
-  self.path._hoverWaypoint = wp
-  -- if self.hoverWaypoint == wp then
-    -- no change
-  -- else
-    -- self.hoverWaypoint = wp
-    -- log('D', 'wtf', 'hover changed')
-  -- end
-  -- if self.hoverWaypoint then
-    -- log('D', 'wtf', 'yes hover')
-  -- else
-    -- log('D', 'wtf', 'no hover')
-  -- end
-end
-
 function C:input()
-  if not self.mouseInfo.valid then
-    log('E', 'wtf', 'mouseInfo is not valid')
-    return
-  end
-
-  -- log('D', 'wtf', dumps(self.mouseInfo))
+  if not self.mouseInfo.valid then return end
 
   if editor.keyModifiers.shift then
     self:createManualWaypoint(false)
   elseif editor.keyModifiers.ctrl then
     self:createManualWaypoint(true)
   else
-    self:clearHover()
     local selectedWp = self:mouseOverWaypoints()
-
     if self.mouseInfo.down and not editor.isAxisGizmoHovered() then
       if selectedWp then
         self:selectWaypoint(selectedWp.id)
@@ -567,24 +528,22 @@ function C:input()
           self:selectPacenote(nil)
         end
       end
-    elseif not self.mouseInfo.hold and not self.mouseInfo.up and not self.mouseInfo.down and not editor.isAxisGizmoHovered() then
-      self:setHover(selectedWp)
     end
   end
 end
 
 -- for pacenote 'Move Up'/'Move Down' buttons, I think?
--- local function moveNotebookUndo(data)
---   data.self.path.notebooks:move(data.index, -data.dir)
--- end
--- local function moveNotebookRedo(data)
---   data.self.path.notebooks:move(data.index,  data.dir)
--- end
+local function moveNotebookUndo(data)
+  data.self.path.notebooks:move(data.index, -data.dir)
+end
+local function moveNotebookRedo(data)
+  data.self.path.notebooks:move(data.index,  data.dir)
+end
 local function movePacenoteUndo(data)
-  data.self.path.pacenotes:move(data.index, -data.dir)
+  data.self:selectedNotebook().pacenotes:move(data.index, -data.dir)
 end
 local function movePacenoteRedo(data)
-  data.self.path.pacenotes:move(data.index,  data.dir)
+  data.self:selectedNotebook().pacenotes:move(data.index,  data.dir)
 end
 local function moveWaypointUndo(data)
   data.self:selectedPacenote().pacenoteWaypoints:move(data.index, -data.dir)
@@ -593,17 +552,17 @@ local function moveWaypointRedo(data)
   data.self:selectedPacenote().pacenoteWaypoints:move(data.index,  data.dir)
 end
 
--- local function setNotebookFieldUndo(data)
---   data.self.path.notebooks.objects[data.index][data.field] = data.old
--- end
--- local function setNotebookFieldRedo(data)
---   data.self.path.notebooks.objects[data.index][data.field] = data.new
--- end
+local function setNotebookFieldUndo(data)
+  data.self.path.notebooks.objects[data.index][data.field] = data.old
+end
+local function setNotebookFieldRedo(data)
+  data.self.path.notebooks.objects[data.index][data.field] = data.new
+end
 local function setPacenoteFieldUndo(data)
-  data.self.path.pacenotes.objects[data.index][data.field] = data.old
+  data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.old
 end
 local function setPacenoteFieldRedo(data)
-  data.self.path.pacenotes.objects[data.index][data.field] = data.new
+  data.self:selectedNotebook().pacenotes.objects[data.index][data.field] = data.new
 end
 local function setWaypointFieldUndo(data)
   data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.old
@@ -629,113 +588,110 @@ local function setWaypointNormalRedo(data)
   data.self:updateTransform(data.index)
 end
 
--- function C:drawNotebookList()
-  -- local avail = im.GetContentRegionAvail()
+function C:drawNotebookList()
+  local avail = im.GetContentRegionAvail()
 
-  -- im.BeginChild1("notebooks", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
-  -- im.Text("Notebooks")
-  -- im.Separator()
-  -- for i, notebook in pairs(self.path.notebooks.sorted) do
-  --   if im.Selectable1((notebook.installed and '* ' or '')..notebook.name, notebook.id == self.notebook_index) then
-  --     editor.history:commitAction("Select Notebook",
-  --       {old = self.notebook_index, new = notebook.id, self = self},
-  --       selectNotebookUndo, selectNotebookRedo)
-  --   end
-  -- end
-  -- im.Separator()
-  -- if im.Selectable1('New...', self.notebook_index == nil) then
-  --   local notebook = self.path.notebooks:create(nil, nil)
-  --   self:selectNotebook(notebook.id)
-  -- end
-  -- im.EndChild() -- notebooks child window
+  im.BeginChild1("notebooks", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
+  im.Text("Notebooks")
+  im.Separator()
+  for i, notebook in pairs(self.path.notebooks.sorted) do
+    if im.Selectable1((notebook.installed and '* ' or '')..notebook.name, notebook.id == self.notebook_index) then
+      editor.history:commitAction("Select Notebook",
+        {old = self.notebook_index, new = notebook.id, self = self},
+        selectNotebookUndo, selectNotebookRedo)
+    end
+  end
+  im.Separator()
+  if im.Selectable1('New...', self.notebook_index == nil) then
+    local notebook = self.path.notebooks:create(nil, nil)
+    self:selectNotebook(notebook.id)
+  end
+  im.EndChild() -- notebooks child window
 
-  -- if self.notebook_index then
-  --   local notebook = self.path
+  if self.notebook_index then
+    local notebook = self:selectedNotebook()
 
-  --   im.SameLine()
-  --   im.BeginChild1("currentNotebook", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
-  --   im.HeaderText("Notebook Info")
-  --   im.Text("Current Notebook: #" .. self.notebook_index)
-  --   im.SameLine()
-  --   if im.Button("Delete..") then im.OpenPopup("Delete?") end
-  --   -- if im.Button("Delete") then
-  --   if im.BeginPopupModal("Delete?", nil, ImGuiWindowFlags_AlwaysAutoResize) then
-  --     im.Text("Really delete notebook?\n(Actually you can still use Ctrl+z to undo)\n\n")
-  --     -- im.Separator()
-  --     if im.Button("OK", im.ImVec2(120,0)) then
-  --       editor.history:commitAction("Delete Notebook",
-  --       {index = self.notebook_index, self = self},
-  --       function(data) -- undo
-  --         local note = data.self.path.notebooks:create(nil, data.notebookData.oldId)
-  --         note:onDeserialized(data.notebookData, {})
-  --         self:selectNotebook(data.index)
-  --       end,function(data) --redo
-  --         data.notebookData = data.self.path.notebooks.objects[data.index]:onSerialize()
-  --         data.self.path.notebooks:remove(data.index)
-  --         self:selectNotebook(nil)
-  --       end)
-  --     end
-  --     im.SetItemDefaultFocus()
-  --     im.SameLine()
-  --     if im.Button("Cancel", im.ImVec2(120,0)) then im.CloseCurrentPopup() end
-  --     im.EndPopup()
-  --   end
+    im.SameLine()
+    im.BeginChild1("currentNotebook", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
+    im.HeaderText("Notebook Info")
+    im.Text("Current Notebook: #" .. self.notebook_index)
+    im.SameLine()
+    if im.Button("Delete..") then im.OpenPopup("Delete?") end
+    -- if im.Button("Delete") then
+    if im.BeginPopupModal("Delete?", nil, ImGuiWindowFlags_AlwaysAutoResize) then
+      im.Text("Really delete notebook?\n(Actually you can still use Ctrl+z to undo)\n\n")
+      -- im.Separator()
+      if im.Button("OK", im.ImVec2(120,0)) then
+        editor.history:commitAction("Delete Notebook",
+        {index = self.notebook_index, self = self},
+        function(data) -- undo
+          local note = data.self.path.notebooks:create(nil, data.notebookData.oldId)
+          note:onDeserialized(data.notebookData, {})
+          self:selectNotebook(data.index)
+        end,function(data) --redo
+          data.notebookData = data.self.path.notebooks.objects[data.index]:onSerialize()
+          data.self.path.notebooks:remove(data.index)
+          self:selectNotebook(nil)
+        end)
+      end
+      im.SetItemDefaultFocus()
+      im.SameLine()
+      if im.Button("Cancel", im.ImVec2(120,0)) then im.CloseCurrentPopup() end
+      im.EndPopup()
+    end
 
-  --   im.SameLine()
-  --   if im.Button("Move Up") then
-  --     editor.history:commitAction("Move Notebook in List",
-  --       {index = self.notebook_index, self = self, dir = -1},
-  --       moveNotebookUndo, moveNotebookRedo)
-  --   end
-  --   im.SameLine()
-  --   if im.Button("Move Down") then
-  --     editor.history:commitAction("Move Notebook in List",
-  --       {index = self.notebook_index, self = self, dir = 1},
-  --       moveNotebookUndo, moveNotebookRedo)
-  --   end
+    im.SameLine()
+    if im.Button("Move Up") then
+      editor.history:commitAction("Move Notebook in List",
+        {index = self.notebook_index, self = self, dir = -1},
+        moveNotebookUndo, moveNotebookRedo)
+    end
+    im.SameLine()
+    if im.Button("Move Down") then
+      editor.history:commitAction("Move Notebook in List",
+        {index = self.notebook_index, self = self, dir = 1},
+        moveNotebookUndo, moveNotebookRedo)
+    end
 
-  --   im.Text("Installed: " .. tostring(notebook.installed))
+    im.Text("Installed: " .. tostring(notebook.installed))
 
-  --   local editEnded = im.BoolPtr(false)
-  --   editor.uiInputText("Name", notebookNameText, nil, nil, nil, nil, editEnded)
-  --   if editEnded[0] then
-  --     editor.history:commitAction("Change Name of Notebook",
-  --       {index = self.notebook_index, self = self, old = notebook.name, new = ffi.string(notebookNameText), field = 'name'},
-  --       setNotebookFieldUndo, setNotebookFieldRedo)
-  --   end
+    local editEnded = im.BoolPtr(false)
+    editor.uiInputText("Name", notebookNameText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Name of Notebook",
+        {index = self.notebook_index, self = self, old = notebook.name, new = ffi.string(notebookNameText), field = 'name'},
+        setNotebookFieldUndo, setNotebookFieldRedo)
+    end
 
-  --   editEnded = im.BoolPtr(false)
-  --   editor.uiInputText("Authors", notebookAuthorsText, nil, nil, nil, nil, editEnded)
-  --   if editEnded[0] then
-  --     editor.history:commitAction("Change Authors of Notebook",
-  --       {index = self.notebook_index, self = self, old = notebook.authors, new = ffi.string(notebookAuthorsText), field = 'authors'},
-  --       setNotebookFieldUndo, setNotebookFieldRedo)
-  --   end
+    editEnded = im.BoolPtr(false)
+    editor.uiInputText("Authors", notebookAuthorsText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Authors of Notebook",
+        {index = self.notebook_index, self = self, old = notebook.authors, new = ffi.string(notebookAuthorsText), field = 'authors'},
+        setNotebookFieldUndo, setNotebookFieldRedo)
+    end
 
-  --   editEnded = im.BoolPtr(false)
-  --   editor.uiInputText("Description", notebookDescText, nil, nil, nil, nil, editEnded)
-  --   if editEnded[0] then
-  --     editor.history:commitAction("Change Description of Notebook",
-  --       {index = self.notebook_index, self = self, old = notebook.description, new = ffi.string(notebookDescText), field = 'description'},
-  --       setNotebookFieldUndo, setNotebookFieldRedo)
-  --   end
+    editEnded = im.BoolPtr(false)
+    editor.uiInputText("Description", notebookDescText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Description of Notebook",
+        {index = self.notebook_index, self = self, old = notebook.description, new = ffi.string(notebookDescText), field = 'description'},
+        setNotebookFieldUndo, setNotebookFieldRedo)
+    end
 
-    -- self:voicesSelector(notebook)
+    self:voicesSelector(notebook)
 
-    -- self:drawPacenoteList(notebook)
+    self:drawPacenoteList(notebook)
 
-    -- im.EndChild() -- currentNotebook child window
-  -- end
--- end
+    im.EndChild() -- currentNotebook child window
+  end
+end
 
-function C:drawPacenotesList(notebook)
-  if not self.path then return end
-  -- if not notebook then return end
-  -- if not notebook.pacenotes then return end
+function C:drawPacenoteList(notebook)
+  if not notebook then return end
+  if not notebook.pacenotes then return end
 
-  local notebook = self.path
-
-  -- local avail = im.GetContentRegionAvail()
+  local avail = im.GetContentRegionAvail()
 
   im.HeaderText("Pacenotes")
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
@@ -748,7 +704,7 @@ function C:drawPacenotesList(notebook)
   end
   im.Separator()
   if im.Selectable1('New...', self.pacenote_index == nil) then
-    local pacenote = notebook.pacenotes:create(nil, nil)
+    local pacenote = self:selectedNotebook().pacenotes:create(nil, nil)
     self:selectPacenote(pacenote.id)
   end
   im.tooltip("Ctrl-Drag in the world to create a new pacenote.")
@@ -802,24 +758,17 @@ function C:drawPacenotesList(notebook)
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
 
-    -- self:segmentSelector('Segment','segment', 'Associated Segment')
+    self:segmentSelector('Segment','segment', 'Associated Segment')
     -- for _, seg in pairs(self.path.segments.objects) do
     --   seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
     -- end
 
-    im.HeaderText("Languages")
-    for i,language in ipairs(self.path:getLanguages()) do
-      editEnded = im.BoolPtr(false)
-
-      local buf = im.ArrayChar(256, note.notes[language])
-      editor.uiInputText(language, buf, nil, nil, nil, nil, editEnded)
-      if editEnded[0] then
-        local newVal = note.notes
-        newVal[language] = ffi.string(buf)
-        editor.history:commitAction("Change Notes of Pacenote",
-          {index = self.pacenote_index, self = self, old = note.notes, new = newVal, field = 'notes'},
-          setPacenoteFieldUndo, setPacenoteFieldRedo)
-      end
+    editEnded = im.BoolPtr(false)
+    editor.uiInputText("Note", pacenoteNoteText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change Note of Pacenote",
+        {index = self.pacenote_index, self = self, old = note.note, new = ffi.string(pacenoteNoteText), field = 'note'},
+        setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
 
     self:drawWaypointList(note)
@@ -949,9 +898,9 @@ end
 
 
 function C:segmentSelector(name, fieldName, tt)
-  if not self.path then return end
+  if not self:selectedNotebook() then return end
 
-  local node = self.path.pacenotes.objects[self.pacenote_index]
+  local node = self:selectedNotebook().pacenotes.objects[self.pacenote_index]
   local objects = self.path.segments.objects
 
   if im.BeginCombo(name..'##'..fieldName, objects[node[fieldName]].name) then
@@ -1006,26 +955,26 @@ function C:waypointTypeSelector(note)
   im.tooltip(tt)
 end
 
--- function C:voicesSelector(notebook)
---   local name = 'Voice'
---   local fieldName = 'voice'
---   local tt = 'Set the text-to-speech voice'
+function C:voicesSelector(notebook)
+  local name = 'Voice'
+  local fieldName = 'voice'
+  local tt = 'Set the text-to-speech voice'
 
---   if im.BeginCombo(name..'##'..fieldName, notebook.voice) then
+  if im.BeginCombo(name..'##'..fieldName, notebook.voice) then
 
---     for i, voice in ipairs(voiceNamesSorted) do
---       if im.Selectable1(voice, notebook[fieldName] == voice) then
---         editor.history:commitAction("Changed voice for notebook",
---           {index = self.notebook_index, self = self, old = notebook[fieldName], new = voice, field = fieldName},
---           setNotebookFieldUndo, setNotebookFieldRedo)
---       end
---     end
+    for i, voice in ipairs(voiceNamesSorted) do
+      if im.Selectable1(voice, notebook[fieldName] == voice) then
+        editor.history:commitAction("Changed voice for notebook",
+          {index = self.notebook_index, self = self, old = notebook[fieldName], new = voice, field = fieldName},
+          setNotebookFieldUndo, setNotebookFieldRedo)
+      end
+    end
 
---     im.EndCombo()
---   end
+    im.EndCombo()
+  end
 
---   im.tooltip(tt)
--- end
+  im.tooltip(tt)
+end
 
  function C:loadVoices()
   voices = readJsonFile(voiceFname)

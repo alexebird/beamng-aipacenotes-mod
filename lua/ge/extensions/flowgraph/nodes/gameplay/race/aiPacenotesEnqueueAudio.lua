@@ -87,16 +87,26 @@ end
 --   end
 -- end
 
+local function normalize_notebook_name(name)
+  -- Replace everything but letters and numbers with '_'
+  name = string.gsub(name, "[^a-zA-Z0-9]", "_")
+
+  -- Replace multiple consecutive '_' with a single '_'
+  name = string.gsub(name, "(_+)", "_")
+
+  return name
+end
+
 function C:enqueueFromPinIns()
   local pacenote = self.pinIn.note.value
   local missionDir = self.pinIn.missionDir.value
   local pacenoteHash = normalize_text(pacenote)
-  local pacenotesVersion = self.pinIn.notebookName.value
+  local notebookName = normalize_notebook_name(self.pinIn.notebookName.value)
   -- local volume = self.pinIn.volume.value
 
   -- printFunctions(Engine.Audio)
 
-  local pacenoteFname = missionDir .. '/pacenotes/' .. pacenotesVersion .. '/pacenote_' .. pacenoteHash .. '.ogg'
+  local pacenoteFname = missionDir .. '/pacenotes/' .. notebookName .. '/pacenote_' .. pacenoteHash .. '.ogg'
   log('I', logTag, "pacenote='" .. pacenote .. "', filename=" .. pacenoteFname)
 
   local audioObj = {
