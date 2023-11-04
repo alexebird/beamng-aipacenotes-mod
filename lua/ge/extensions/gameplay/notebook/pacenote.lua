@@ -51,6 +51,14 @@ end
 --   end
 -- end
 
+function C:setAllRadii(newRadius, wpType)
+  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    if not wpType or wp.waypointType == wpType then
+      wp.radius = newRadius
+    end
+  end
+end
+
 function C:validateWaypointTypes()
   -- TODO
   return true
@@ -213,318 +221,240 @@ function C:clearAdjacentNotes()
   self:setAdjacentNotes(nil, nil)
 end
 
-function C:drawDebugCustom(hover_waypoint_id, selected_pn_id, selected_wp_id)
-  local cs = self:getCornerStartWaypoint()
-
-  local isHover = hover_waypoint_id and cs and hover_waypoint_id == cs.id
-
-  local drawMode = 'normal'
-
-  if isHover then
-    drawMode = 'hover'
+local function textForDrawDebug(wp, cs_prefix, note_text, dist_text)
+  local txt = ''
+  if wp.waypointType == waypointTypes.wpTypeCornerStart then
+    if cs_prefix then
+      txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)..'] ' .. note_text
+    else
+      txt = note_text
+    end
+  elseif wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger or wp.waypointType == waypointTypes.wpTypeRevAudioTrigger then
+    txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
+    if dist_text then
+      txt = txt..','..dist_text
+    end
+    txt = txt..']'
+  else
+    txt = '['..waypointTypes.shortenWaypointType(wp.waypointType) ..']'
   end
+  return txt
+end
 
-  -- cs:drawDebug(nil, nil, nil, '*', 1.0)
+local function drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+  if not wp then return end
+
+  local hover = hover_wp_id and hover_wp_id == wp.id
+  local cs_prefix = nil
   local clr = nil
-  local extraTextSuffix = nil
-  local extraTextPrefix = nil -- '*'
-  local textAlpha = nil -- 1.0
-  cs:drawDebug(drawMode, clr, extraTextSuffix, extraTextPrefix, textAlpha)
+  -- local shapeAlpha = alpha
+  -- local textAlpha = alpha
+
+  -- determine if the waypoint is selected
+  if selected_wp_id and selected_wp_id == wp.id then
+    wp_drawMode = 'selected_wp'
+  end
+
+  -- enumerate all wp_drawModes
+  if wp_drawMode == 'selected_wp' then
+    cs_prefix = true
+    clr = wp:colorForWpType()
+    -- shapeAlpha = 0.8
+    -- textAlpha = 0.8
+  elseif wp_drawMode == 'selected_pn' then
+    cs_prefix = true
+    clr = wp:colorForWpType()
+    -- shapeAlpha = 0.8
+    -- textAlpha = 0.8
+  elseif wp_drawMode == 'normal' then
+    cs_prefix = false
+    clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
+    shapeAlpha = 0.25
+    textAlpha = 0.5
+  end
+
+  local text = textForDrawDebug(wp, cs_prefix, note_text, dist_text)
+
+  wp:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 end
 
-function C:drawDebug(drawMode, clr, extraText)
-  -- local wp = self:getCornerStartWaypoint()
-  -- if wp then
-  --   wp:drawDebug(self._drawMode, clr, extraText)
-  -- end
+-- function C:drawDebugSelectedWaypoint(note_text, hover_wp_id, selected_wp_id)
+--   for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
+--     drawWaypoint(wp, 'selected_pn', note_text, hover_wp_id, selected_wp_id)
+--   end
+--   for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
+--     drawWaypoint(wp, 'selected_pn', note_text, hover_wp_id, selected_wp_id)
+--   end
+--   drawWaypoint(self:getCornerStartWaypoint(), 'selected_pn', note_text, hover_wp_id, selected_wp_id)
+--   drawWaypoint(self:getCornerEndWaypoint(), 'selected_pn', note_text, hover_wp_id, selected_wp_id)
+--   for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
+--     drawWaypoint(wp, 'selected_pn', note_text, hover_wp_id, selected_wp_id)
+--   end
+-- end
 
-  local linkClr = {0, 1, 0} -- green
-  local undistractClr = {0.2, 0.2, 0.2} -- gray
-  local undistractClrEmphasis = {0.0, 0.0, 0.0} -- gray
-  -- local distClr = {1, 0.6, 0.2} -- orange
-  local distClr = {1, 0.0, 0.9} -- pink
-
-  -- drawMode = drawMode or self._drawMode
-  drawMode = self._drawMode
-
-
-  ----------------------------------------------------------------------------------------
-  -- draw nodes for the current pacenote
-  --
-
-  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
-    -- wp:drawDebug(self._drawMode, clr, extraText)
-    if drawMode == 'highlight' then
-      local clr = nil
-      if wp.waypointType == waypointTypes.wpTypeCornerStart then
-        clr = linkClr
-        local cornerEnd = self:getCornerEndWaypoint()
-        if cornerEnd then
-          self:drawLink(wp, cornerEnd, clr)
-        else
-          log('W', logTag, 'pacenote "'..self.name..'" cornerEnd is nil')
-        end
-      elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
-        clr = {1, 0, 0} -- red
-        -- log('D', 'wtf', 'HEREa')
-        -- log('D', 'wtf', 'ce='..wp.name)
-        -- wp:drawDebug(nil, clr, nil) -- wp._drawMode)
-      elseif wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-        clr = {0, 0, 1} -- blue
-        self:drawLink(wp, self:getCornerStartWaypoint(), clr)
-      elseif wp.waypointType == waypointTypes.wpTypeRevAudioTrigger then
-        -- clr = {0, 0.5, 1} -- slightly more cyan than blue
-        -- self:drawLink(wp, self:getCornerEndWaypoint(), clr)
-      elseif wp.waypointType == waypointTypes.wpTypeDistanceMarker then
-        clr = distClr
-        local cornerStartOrder = self:getCornerStartWaypoint().sortOrder
-        local cornerEndOrder = self:getCornerEndWaypoint().sortOrder
-        local wpOrder = wp.sortOrder
-        local from = nil
-        local to = nil
-
-        if wpOrder < cornerStartOrder then
-          from = wp
-          local toFound = false
-          for i,wp2 in ipairs(self.pacenoteWaypoints.sorted) do
-            if not toFound then
-              -- advance to the "from" waypoint
-              if wp2.id == from.id then
-                toFound = true
-              end
-            else
-              -- once "from" is found, then find the next distanceMarker or cornerStart
-              if wp2.waypointType == waypointTypes.wpTypeCornerStart or wp2.waypointType == waypointTypes.wpTypeDistanceMarker then
-                to = wp2
-                break
-              end
-            end
-          end
-
-          self:drawLink(from, to, clr)
-          local textPos = (from.pos + to.pos) / 2
-          local highlightDist = from._drawMode == 'highlight' or to._drawMode == 'highlight'
-          local alpha = highlightDist and 1 or 0.5
-          local dist = round(from.pos:distance(to.pos))
-          debugDrawer:drawTextAdvanced(textPos,
-            String(tostring(dist)..'m'),
-            ColorF(1, 1, 1, alpha), true, false,
-            ColorI(0, 0, 0, alpha * 255)
-          )
-        elseif wpOrder > cornerEndOrder then
-          to = wp
-          local fromFound = false
-          for i,wp2 in ipairs(reverseList(self.pacenoteWaypoints.sorted)) do
-            if not fromFound then
-              -- advance to the "from" waypoint
-              if wp2.id == to.id then
-                fromFound = true
-              end
-            else
-              -- once "from" is found, then find the next distanceMarker or cornerStart
-              if wp2.waypointType == waypointTypes.wpTypeCornerEnd or wp2.waypointType == waypointTypes.wpTypeDistanceMarker then
-                from = wp2
-                break
-              end
-            end
-          end
-
-          self:drawLink(from, to, clr)
-          local textPos = (from.pos + to.pos) / 2
-          local highlightDist = from._drawMode == 'highlight' or to._drawMode == 'highlight'
-          local alpha = highlightDist and 1 or 0.5
-          local dist = round(from.pos:distance(to.pos))
-          debugDrawer:drawTextAdvanced(textPos,
-            String(tostring(dist)..'m'),
-            ColorF(1, 1, 1, alpha), true, false,
-            ColorI(0, 0, 0, alpha * 255)
-          )
-        else
-          log('E', logTag, 'distance marker must be before cornerStart or after cornerEnd, not in between')
-        end
-      end
-      -- if wp.waypointType == waypointTypes.wpTypeCornerEnd then
-        -- log('D', 'wtf', 'drawing wp name='..wp.name..' clr='..dumps(clr))
-        wp:drawDebug(nil, clr, nil, '*', 1.0) -- wp._drawMode)
-        -- log('D', 'wtf', '--------------------------------------------------------------------------------')
-      -- end
-    -- elseif drawMode == 'undistract' then
-    --   if wp.waypointType == 'cornerStart' then
-    --     wp:drawDebug(nil, undistractClr, nil) -- wp._drawMode)
-    --   end
-    -- else
-    --   if wp.waypointType == 'cornerStart' then
-    --     wp:drawDebug(nil, nil, nil) -- wp._drawMode)
-    --   end
-    end
-  end
-
-
-  ----------------------------------------------------------------------------------------
-  -- draw a couple nodes from the previous pacenote
-  --
-
-  if self.prevNote then
-    local clr = undistractClr
-
-    local prevCornerStart = self.prevNote:getCornerStartWaypoint()
-    local prevCornerEnd = self.prevNote:getCornerEndWaypoint()
-    if prevCornerStart and prevCornerEnd then
-      self:drawLink(prevCornerStart, prevCornerEnd, clr)
-    end
-
-    -- draw a more dim version of audio trigger waypoints.
-    local prevTriggers = self.prevNote:getAudioTriggerWaypoints()
-    local clrDarkBlue = {0, 0, 0.3}
-    for i,wp in ipairs(prevTriggers) do
-      self:drawLink(wp, prevCornerStart, clrDarkBlue)
-      wp:drawDebug(nil, clrDarkBlue)
-    end
-
-    prevCornerStart:drawDebug(nil, undistractClr, nil, '['.. waypointTypes.shortenWaypointType(waypointTypes.wpTypeCornerStart) ..']')
-    prevCornerEnd:drawDebug(nil, undistractClr, nil) -- maybe use undistractClrEmphasis here
-
-    local selfCornerStart = self:getCornerStartWaypoint()
-
-    local to = selfCornerStart
-    local selfDmsBefore = self:getDistanceMarkerWaypointsBeforeStart()
-    if #selfDmsBefore > 0 then
-      to = selfDmsBefore[1]
-    end
-
-    local prevDms = self.prevNote:getDistanceMarkerWaypointsAfterEnd()
-    for i,prevDm in ipairs(prevDms) do
-      prevDm:drawDebug(nil, undistractClr, nil)
-      local linkDm = prevDms[i+1]
-      if linkDm then
-        self:drawLink(prevDm, linkDm, clr)
-      end
-    end
-
-    local from = prevCornerEnd
-    if #prevDms > 0 then
-      local linkDm = prevDms[1]
-      self:drawLink(prevCornerEnd, linkDm, clr)
-      from = prevDms[#prevDms]
-    end
-
-    clr = distClr
-    if from and to then
-      self:drawLink(from, to, clr)
-      local textPos = (from.pos + to.pos) / 2
-      local highlightDist = from._drawMode == 'highlight' or to._drawMode == 'highlight'
-      local alpha = highlightDist and 1 or 0.5
-      local dist = round(from.pos:distance(to.pos))
-      debugDrawer:drawTextAdvanced(textPos,
-        String('['..waypointTypes.shortenWaypointType(from.waypointType)..']->'..tostring(dist)..'m'),
-        ColorF(1, 1, 1, alpha), true, false,
-        ColorI(0, 0, 0, alpha * 255)
-
-      )
-    end
-  end
-
-  ----------------------------------------------------------------------------------------
-  -- draw a couple nodes from the next pacenote
-  --
-  if self.nextNote then
-    local nextCornerStart = self.nextNote:getCornerStartWaypoint()
-    local nextCornerEnd = self.nextNote:getCornerEndWaypoint()
-
-    if nextCornerStart and nextCornerEnd then
-      self:drawLink(nextCornerStart, nextCornerEnd, undistractClrEmphasis)
-    end
-
-    if nextCornerStart then
-      nextCornerStart:drawDebug(nil, undistractClr, nil, '['.. waypointTypes.shortenWaypointType(waypointTypes.wpTypeCornerStart) ..']')
-    end
-    if nextCornerEnd then
-      nextCornerEnd:drawDebug(nil, undistractClr, nil)
-    end
-
-    -- draw a more dim version of audio trigger waypoints.
-    local nextTriggers = self.nextNote:getAudioTriggerWaypoints()
-    local clrDarkBlue = {0, 0, 0.3}
-    for i,wp in ipairs(nextTriggers) do
-      if nextCornerStart then
-        self:drawLink(wp, nextCornerStart, clrDarkBlue)
-      end
-      wp:drawDebug(nil, clrDarkBlue)
-    end
-
-    local from = self:getCornerEndWaypoint()
-    local selfDmsAfter = self:getDistanceMarkerWaypointsAfterEnd()
-
-    if #selfDmsAfter > 0 then
-      from = selfDmsAfter[#selfDmsAfter]
-    end
-
-    local to = nextCornerStart
-
-    local clr = undistractClrEmphasis
-    local nextDmsBefore = self.nextNote:getDistanceMarkerWaypointsBeforeStart()
-    for i,nextDm in ipairs(nextDmsBefore) do
-      nextDm:drawDebug(nil, clr, nil)
-      local linkDm = nextDmsBefore[i+1]
-      if linkDm then
-        self:drawLink(nextDm, linkDm, clr)
-      end
-    end
-    if #nextDmsBefore > 0 then
-      to = nextDmsBefore[1]
-      if nextCornerStart then
-        self:drawLink(nextDmsBefore[#nextDmsBefore], nextCornerStart, clr)
-      end
-    -- else
-      -- to:drawDebug(nil, clr, nil)
-    end
-
-    clr = distClr
-    if from and to then
-      self:drawLink(from, to, clr)
-      local textPos = (from.pos + to.pos) / 2
-      local highlightDist = from._drawMode == 'highlight' or to._drawMode == 'highlight'
-      local alpha = highlightDist and 1 or 0.5
-      local dist = round(from.pos:distance(to.pos))
-      debugDrawer:drawTextAdvanced(textPos,
-        String(tostring(dist)..'m->['..waypointTypes.shortenWaypointType(to.waypointType)..']'),
-        ColorF(1, 1, 1, alpha), true, false,
-        ColorI(0, 0, 0, alpha * 255)
-      )
-    end
-  end
-
-
-
-  ----------------------------------------------------------------------------------------
-  -- draw the rest of the pacenotes.
-  --
-
-  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
-    if not ((self.nextNote and wp.pacenote.id == self.nextNote.id) and (self.prevNote and wp.pacenote.id == self.prevNote.id)) then
-      if drawMode == 'highlight' then
-        -- pass, already taken care of in the above loop.
-      elseif drawMode == 'undistract' then
-        if wp.waypointType == 'cornerStart' then
-          -- wp:drawDebug(nil, undistractClr, nil) -- wp._drawMode)
-        end
-      else
-        if wp.waypointType == 'cornerStart' then
-          wp:drawDebug(nil, nil, nil) -- wp._drawMode)
-        end
-      end
-    end
-  end
-end
-
-function C:drawLink(from, to, clr)
+local function drawLink2(from, to, clr, alpha)
   debugDrawer:drawSquarePrism(
     from.pos,
     to.pos,
     Point2F(1,1),
     Point2F(0.25,0.25),
-    ColorF(clr[1],clr[2],clr[3],0.25)
+    ColorF(clr[1],clr[2],clr[3],alpha)
   )
+end
+
+local function prettyDistanceStringMeters(from, to)
+  local dist = round(from.pos:distance(to.pos))
+  return tostring(dist)..'m' --'->['..waypointTypes.shortenWaypointType(to.waypointType)..']'
+end
+
+local function drawLinkLabel(from, to, text, alpha, clr_fg, clr_bg)
+  local textPos = (from.pos + to.pos) / 2
+
+  clr_fg = clr_fg or {1,1,1}
+  clr_bg = clr_bg or {0,0,0}
+
+  debugDrawer:drawTextAdvanced(textPos,
+    String(text),
+    ColorF(clr_fg[1],clr_fg[2],clr_fg[3], alpha),
+    true,
+    false,
+    ColorI(clr_bg[1]*255,clr_bg[2]*255,clr_bg[3]*255, alpha * 255)
+  )
+end
+
+function C:drawDebugSelected(note_text, hover_wp_id)
+  local shapeAlpha = 0.8
+  local textAlpha = 1.0
+  local dist_text = nil
+  local wp_drawMode = 'selected_pn'
+
+  for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
+    dist_text = prettyDistanceStringMeters(wp, self:getCornerStartWaypoint())
+    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+    drawLink2(wp, self:getCornerStartWaypoint(), {0,0,1.0}, shapeAlpha)
+  end
+
+  local nextwp = self:getCornerStartWaypoint()
+  for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
+    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+    drawLink2(wp, nextwp, {1.0,0.64,0}, shapeAlpha)
+    local distStr = prettyDistanceStringMeters(wp, nextwp)
+    drawLinkLabel(wp, nextwp, distStr, textAlpha)
+    nextwp = wp
+  end
+
+  drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+  drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+  drawLink2(self:getCornerStartWaypoint(), self:getCornerEndWaypoint(), {0.25,0.25,0.25}, shapeAlpha)
+
+  local prevwp = self:getCornerEndWaypoint()
+  for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
+    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+    drawLink2(prevwp, wp, {1.0,0.64,0}, shapeAlpha)
+    local distStr = prettyDistanceStringMeters(prevwp, wp)
+    drawLinkLabel(prevwp, wp, distStr, textAlpha)
+    prevwp = wp
+  end
+end
+
+function C:drawDebugPrevious(note_text, hover_wp_id)
+  local shapeAlpha = 0.25
+  local textAlpha = 0.5
+  local dist_text = nil
+  local wp_drawMode = 'selected_pn'
+
+  local clr_orange = {1.0,0.64,0}
+  local clr_blue = {0,0,1.0}
+  local clr_grey = {0.25,0.25,0.25}
+
+  for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
+    -- dist_text = prettyDistanceStringMeters(wp, self:getCornerStartWaypoint())
+    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+    drawLink2(wp, self:getCornerStartWaypoint(), clr_blue, shapeAlpha)
+    -- drawLinkLabel(wp, self:getCornerStartWaypoint(), alpha_dist_label)
+  end
+
+  -- local nextwp = self:getCornerStartWaypoint()
+  -- for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
+  --   drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id)
+  --   drawLink2(wp, nextwp, clr_orange, alpha)
+  --   drawLinkLabel(wp, nextwp, alpha_dist_label)
+  --   nextwp = wp
+  -- end
+
+  drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+  drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+  drawLink2(self:getCornerStartWaypoint(), self:getCornerEndWaypoint(), clr_grey, shapeAlpha)
+
+  local prevwp = self:getCornerEndWaypoint()
+  for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
+    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+    drawLink2(prevwp, wp, clr_orange, shapeAlpha)
+    local distStr = prettyDistanceStringMeters(prevwp, wp)
+    drawLinkLabel(prevwp, wp, distStr, textAlpha)
+    prevwp = wp
+  end
+end
+
+function C:drawLinkToPacenote(to_pacenote)
+  local clr_orange = {1.0,0.64,0}
+  local clr_pink = {1.0,0.0,1.0}
+  local clr = clr_pink
+  local shapeAlpha = 0.8
+  local textAlpha = 1.0
+  
+  local from_wp = self:getCornerEndWaypoint()
+  local afterEnd = self:getDistanceMarkerWaypointsAfterEnd()
+  if #afterEnd > 0 then
+    from_wp = afterEnd[#afterEnd]
+  end
+
+
+  local to_wp = to_pacenote:getCornerStartWaypoint()
+  local before_start = to_pacenote:getDistanceMarkerWaypointsBeforeStart()
+  if #before_start > 0 then
+    to_wp = before_start[1]
+  end
+
+  local distStr = prettyDistanceStringMeters(from_wp, to_wp)
+  distStr = '<'..distStr..'>'
+
+  drawLink2(from_wp, to_wp, clr, shapeAlpha)
+  drawLinkLabel(from_wp, to_wp, distStr, textAlpha, {0,0,0}, clr)
+end
+
+function C:drawDebugCustom(drawMode, note_language, hover_wp_id, selected_wp_id)
+  local note_text = self.notes[note_language] or ''
+
+  if drawMode == 'selected' then
+    -- self:drawDebugSelected(note_text, hover_wp_id, selected_wp_id)
+  -- elseif drawMode == 'selected_pacenote' then
+    self:drawDebugSelected(note_text, hover_wp_id, selected_wp_id)
+  elseif drawMode == 'previous' then
+    self:drawDebugPrevious(note_text, hover_wp_id, selected_wp_id)
+  elseif drawMode == 'normal' then
+    drawWaypoint(self:getCornerStartWaypoint(), 'normal', note_text, dist_text, hover_wp_id, nil, 0.25, 0.5)
+    -- local wp_drawMode = 'normal'
+
+    -- local clr = nil
+    -- local extraTextSuffix = nil
+    -- local extraTextPrefix = nil -- '*'
+    -- local textAlpha = nil -- 1.0
+    -- local drawArrow = false
+    -- local hover = hover_wp_id and hover_wp_id == cs.id
+    -- cs:drawDebug(wp_drawMode, clr, extraTextSuffix, extraTextPrefix, textAlpha, drawArrow, hover, note_language)
+  end
+
+  -- step 1 determine the pacenote's state
+  -- - normal -> rainbow
+  -- - hover -> white
+  -- - selected -> white with less alpha
+  -- local drawMode = 'normal'
+
+  -- local isWpSelected = selected_wp_id and cs and selected_wp_id == cs.id
+  -- if isWpSelected then
+  --   drawMode = 'selected'
+  -- end
 end
 
 return function(...)

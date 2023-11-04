@@ -87,10 +87,10 @@ local function openRallyEditor(shownMission)
     editor_rallyEditor.show()
 
     local folder = shownMission.missionFolder
-    local raceFname = folder .. '/' .. 'rally.rally.json'
-    log('D', 'WTF', 'rallyFname='..raceFname)
+    local notebookFname = folder .. '/aipacenotes/notebooks/primary.notebook.json'
+    -- log('D', 'WTF', 'rallyFname='..raceFname)
 
-    editor_rallyEditor.loadRace(raceFname)
+    editor_rallyEditor.loadNotebook(notebookFname)
   end
 end
 
@@ -102,10 +102,10 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
         gameplay_missions_missions.saveMission(shownMission,shownMission.missionFolder)
         shownMission._dirty = false
       end
-      ui_flowgraph_editor.tooltip("Save unsaved changes for this mission")
+      im.tooltip("Save unsaved changes for this mission")
     else
       if editor.uiIconImageButton(editor.icons.save, im.ImVec2(40, 40)) then end
-      ui_flowgraph_editor.tooltip("No unsaved changes for this mission")
+      im.tooltip("No unsaved changes for this mission")
     end
     im.SameLine()
     if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(40, 40)) then
@@ -126,25 +126,25 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
         -- TODO: switch to this mission in cluster
       end
     end
-    ui_flowgraph_editor.tooltip("Start Mission\n(Needs loaded map and vehicle)")
+    im.tooltip("Start Mission\n(Needs loaded map and vehicle)")
     im.SameLine()
 
     if shownMission.missionType == 'rallyStage' then
-      if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
-          openRallyEditor(shownMission)
+      if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
+        openRallyEditor(shownMission)
       end
-      ui_flowgraph_editor.tooltip("Open Rally Editor")
+      im.tooltip("Open Notebook in Rally Editor")
       im.SameLine()
 
-      if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
-        -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
-        openRallyEditor(shownMission)
-        editor_flowgraphEditor.open()
-        local recceFname = "/gameplay/missionTypes/rallyStage/recce.flow.json"
-        editor_flowgraphEditor.openFile({filepath = recceFname}, true)
-      end
-      ui_flowgraph_editor.tooltip("Open Recce Flowgraph")
-      im.SameLine()
+      -- if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
+      --   -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
+      --   openRallyEditor(shownMission)
+      --   editor_flowgraphEditor.open()
+      --   local recceFname = "/gameplay/missionTypes/rallyStage/recce.flow.json"
+      --   editor_flowgraphEditor.openFile({filepath = recceFname}, true)
+      -- end
+      -- im.tooltip("Open Recce Flowgraph")
+      -- im.SameLine()
     end
 
   end

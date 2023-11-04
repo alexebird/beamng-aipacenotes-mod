@@ -393,7 +393,7 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
     return
   end
 
-  local defaultRadius = 2
+  local defaultRadius = self.rallyEditor:getOptionsWindow().options_data.default_radius
 
   local txt = "Add manual Pacenote Waypoint (Drag for Size)"
   if shouldCreateNewPacenote then
@@ -407,8 +407,7 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
     if radius <= 1 then
       radius = defaultRadius
     end
-    local rr = 10
-    debugDrawer:drawSphere((self.mouseInfo._downPos), rr, ColorF(1,1,1,0.8))
+    debugDrawer:drawSphere((self.mouseInfo._downPos), radius, ColorF(1,1,1,0.8))
     local normal = (self.mouseInfo._holdPos - self.mouseInfo._downPos):normalized()
     debugDrawer:drawSquarePrism(
       (self.mouseInfo._downPos),
@@ -462,12 +461,9 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
           if radius <= 1 then
             radius = defaultRadius
           end
-          -- if radius >= 10 then
-          --   radius = 10
-          -- end
-          wp:setManual(data.mouseInfo._downPos, 10, normal)
+          wp:setManual(data.mouseInfo._downPos, defaultRadius, normal)
           if wpCE then
-            wpCE:setManual(data.mouseInfo._upPos, 10, normal)
+            wpCE:setManual(data.mouseInfo._upPos, defaultRadius, normal)
           end
 
           data.self:selectWaypoint(wp.id)
@@ -485,12 +481,30 @@ function C:mouseOverWaypoints()
 
   local minNoteDist = 4294967295
   local closestWp = nil
+  local selected_i = -1
+  local waypoints = {}
 
-  for _, pacenote in pairs(self.path.pacenotes.objects) do
-    local waypoint = pacenote:getCornerStartWaypoint()
-    -- for _, waypoint in pairs(pacenote.pacenoteWaypoints.objects) do
+  for i, pacenote in ipairs(self.path.pacenotes.sorted) do
+    if self:selectedPacenote() and self:selectedPacenote().id == pacenote.id then
+      selected_i = i
+      for _,waypoint in ipairs(pacenote.pacenoteWaypoints.sorted) do
+        table.insert(waypoints, waypoint)
+      end
+    elseif not self:selectedWaypoint() then
+      local waypoint = pacenote:getCornerStartWaypoint()
+      table.insert(waypoints, waypoint)
+    end
+  end
 
-    -- TODO filter out waypoints that aren't visible.
+  local prev_i = selected_i - 1
+  if prev_i > 0 and self:selectedWaypoint() then
+    local pn_prev = self.path.pacenotes.sorted[prev_i]
+    for _,waypoint in ipairs(pn_prev.pacenoteWaypoints.sorted) do
+      table.insert(waypoints, waypoint)
+    end
+  end
+
+  for _, waypoint in ipairs(waypoints) do
     local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
     local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
     local sphereRadius = waypoint.radius
@@ -500,8 +514,6 @@ function C:mouseOverWaypoints()
         closestWp = waypoint
       end
     end
-
-    -- end
   end
 
   -- for idx, waypoint in pairs(self:selectedPacenote().pacenoteWaypoints.objects) do
@@ -551,7 +563,7 @@ end
 
 function C:input()
   if not self.mouseInfo.valid then
-    log('E', 'wtf', 'mouseInfo is not valid')
+    -- log('E', 'wtf', 'mouseInfo is not valid')
     return
   end
 
@@ -567,7 +579,12 @@ function C:input()
 
     if self.mouseInfo.down and not editor.isAxisGizmoHovered() then
       if selectedWp then
-        self:selectWaypoint(selectedWp.id)
+        local selectedPn = selectedWp.pacenote
+        if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
+          self:selectWaypoint(selectedWp.id)
+        elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
+          self:selectPacenote(selectedPn.id)
+        end
       else
         if self:selectedWaypoint() then
           self:selectWaypoint(nil)

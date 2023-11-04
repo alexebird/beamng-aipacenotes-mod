@@ -34,6 +34,7 @@ function C:init(name)
   self.id = self:getNextUniqueIdentifier()
 
   self._hover_waypoint_id = nil
+  self._default_note_lang = 'english'
 
 --   self.pathnodes = require('/lua/ge/extensions/gameplay/util/sortedList')("pathnodes", self, require('/lua/ge/extensions/gameplay/race/pathnode'))
 --   self.segments = require('/lua/ge/extensions/gameplay/util/sortedList')("segments", self, require('/lua/ge/extensions/gameplay/race/segment'))
@@ -64,6 +65,25 @@ function C:init(name)
 end
 ---- Debug and Serialization
 
+function C:drawPacenoteModeNormal(pacenote)
+  pacenote:drawDebugCustom('normal', self._default_note_lang, self._hover_waypoint_id)
+end
+
+-- function C:drawPacenoteModePnSelected(pacenote)
+--   pacenote:drawDebugCustom('selected_pacenote', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+-- end
+
+function C:drawPacenoteModeSelected(pacenote, selected_wp_id)
+  pacenote:drawDebugCustom('selected', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+end
+
+function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
+  pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+end
+
+-- function C:drawPacenoteModeNext()
+-- end
+
 function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
 --   self.pathnodes:drawDebug()
 --   self.segments:drawDebug()
@@ -74,23 +94,57 @@ function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
 
   local i = 1
   local selected_i = -1
-  -- local i_prev = -1
-  -- local i_next = -1
   while i <= #self.pacenotes.sorted do
-    -- Do something with a_list[index]
     local pacenote = self.pacenotes.sorted[i]
-    pacenote:drawDebugCustom(self._hover_waypoint_id)
     if pacenote.id == selected_pacenote_id then
       selected_i = i
+    -- else
+      -- drawPacenoteModeNormal(pacenote, self._hover_waypoint_id)
     end
-    -- i_prev = i
     i = i + 1
-    -- i_next = i + 1
   end
 
-  local prev_i = selected_i - 1
-  local next_i = selected_i + 1
-  -- log('D', 'wtf', 'prev='..prev_i..' i='..selected_i..' next='..next_i)
+  -- if selected_i > 0 then
+  if selected_pacenote_id and selected_waypoint_id then
+    local prev_i = math.max(selected_i - 1, 1)
+    local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
+    -- log('D', 'wtf', 'prev='..prev_i..' i='..selected_i..' next='..next_i)
+
+    local pn_sel = self.pacenotes.sorted[selected_i]
+    local pn_prev = self.pacenotes.sorted[prev_i]
+    local pn_next = self.pacenotes.sorted[next_i]
+    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id)
+    if pn_prev and pn_prev.id ~= pn_sel.id then
+      self:drawPacenoteModePrevious(pn_prev)
+      pn_prev:drawLinkToPacenote(pn_sel)
+    end
+    -- self:drawPacenoteModeNext(pn_next)
+  elseif selected_pacenote_id and not selected_waypoint_id then
+    local pn_sel = self.pacenotes.sorted[selected_i]
+    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id)
+
+    -- draw the rest of the pacenotes
+    local i = 1
+    while i <= #self.pacenotes.sorted do
+      local pacenote = self.pacenotes.sorted[i]
+      if i ~= selected_i then
+        self:drawPacenoteModeNormal(pacenote)
+      end
+      i = i + 1
+    end
+  else
+    local i = 1
+    while i <= #self.pacenotes.sorted do
+      local pacenote = self.pacenotes.sorted[i]
+      self:drawPacenoteModeNormal(pacenote)
+      i = i + 1
+    end
+  end
+
+  -- notebook drawdebug modes:
+  -- - nothing selected -> normal -> rainbow CornerStarts
+  -- - click on a waypoint -> waypoint is selected -> pacenote is selected
+  --   - only draw i-1,i,i+1 pacenotes
 end
 
 function C:onSerialize()
@@ -179,6 +233,12 @@ function C:getLanguages()
   end
   table.sort(languages)
   return languages
+end
+
+function C:setAllRadii(newRadius, wpType)
+  for i, pacenote in pairs(self.pacenotes.objects) do
+    pacenote:setAllRadii(newRadius, wpType)
+  end
 end
 
 return function(...)

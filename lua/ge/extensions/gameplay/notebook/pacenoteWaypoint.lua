@@ -131,83 +131,136 @@ function C:intersectCorners(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
-function C:textForDrawDebug(drawMode)
-  local txt = ''
+-- function C:textForDrawDebug(cs_prefix, note_text, dist_text)
+--   local txt = ''
+--   if self.waypointType == waypointTypes.wpTypeCornerStart then
+--     if cs_prefix then
+--       txt = '['..waypointTypes.shortenWaypointType(self.waypointType)..'] ' .. note_text
+--     else
+--       txt = note_text
+--     end
+--   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger or self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
+--     txt = '['..waypointTypes.shortenWaypointType(self.waypointType)
+--     if dist_text then
+--       txt = txt..','..dist_text
+--     end
+--     txt = txt..']'
+
+--     -- if self.name == 'curr' then
+--     --   txt = txt..' '..self.name
+--     -- end
+--   else
+--     txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..']'
+--   end
+--   return txt
+-- end
+
+function C:colorForWpType()
   if self.waypointType == waypointTypes.wpTypeCornerStart then
-    if drawMode == 'highlight' then
-      txt = '['..waypointTypes.shortenWaypointType(self.waypointType)..'] ' .. self.pacenote.notes['english']
-    else
-      txt = self.pacenote.notes['english']
-    end
-  elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger or self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
-    if self.name == 'curr' then
-      txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..'] ' .. self.name..''
-    else
-      txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..']'
-    end
-  else
-    txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..']'
+    return {0,1,0} -- green
+  elseif self.waypointType == waypointTypes.wpTypeCornerEnd then
+    return {1,0,0} -- red
+  elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+    return {0,0,1} -- blue
+  elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
+    return {0,0,1} -- blue
+  elseif self.waypointType == waypointTypes.wpTypeDistanceMarker then
+    return {1,0.64,0} -- orange
   end
-  return txt
 end
 
-function C:drawDebug(drawMode, clr, extraTextSuffix, extraTextPrefix, textAlpha)
-  if not drawMode then
-    log('E', 'wtf', 'drawMode not set')
+function C:shouldDrawArrow()
+  if self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+    return true
+  elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
+    return true
+  else
+    return false
   end
+end
 
-  if drawMode == 'none' then return end
+-- function C:drawDebug(drawMode, hover, note_text, dist_text, clr, shapeAlpha, textAlpha)
+function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
+  -- if not drawMode then
+  --   log('E', 'wtf', 'drawMode not set')
+  --   return
+  -- end
 
-  clr = clr or rainbowColor(#self.pacenote.notebook.pacenotes.sorted, (self.pacenote.sortOrder-1), 1)
-  local shapeAlpha = 0.25
+  -- if drawMode == 'none' then return end
 
-  if drawMode == 'hover' then
+  -- local clr = nil
+  -- local shapeAlpha = 0.25
+  -- local textAlpha = 0.5
+  -- local cs_prefix = false
+
+  if hover then
     clr = {1,1,1}
-    shapeAlpha = 0.5
+    shapeAlpha = 1.0
+    textAlpha = 1.0
+    -- cs_prefix = true
   end
 
-  if drawMode == 'highlight' then
-    clr = {1,1,1}
-    shapeAlpha = 0.75
+  -- elseif drawMode == 'selected_wp' then
+  --   clr = {1,1,1}
+  --   shapeAlpha = 0.75
+  --   textAlpha = 1.0
+  --   cs_prefix = true
+  -- elseif drawMode == 'selected_pn' then
+  --   clr = self:colorForWpType()
+  --   shapeAlpha = 0.75
+  --   textAlpha = 0.9
+  --   cs_prefix = true
+  -- else
+    -- clr = rainbowColor(#self.pacenote.notebook.pacenotes.sorted, (self.pacenote.sortOrder-1), 1)
+  -- end
+
+  debugDrawer:drawSphere((self.pos),
+    self.radius,
+    ColorF(clr[1],clr[2],clr[3],shapeAlpha)
+  )
+
+  -- textAlpha = textAlpha or ((drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1)
+
+  -- if self.pacenote.notes[note_language] == '' then
+    -- textAlpha = textAlpha * 0.4
+  -- end
+
+  -- if drawMode ~= 'faded' then
+  -- local str = self:textForDrawDebug(cs_prefix, note_text, dist_text)
+  -- if extraTextPrefix then
+  --   str = extraTextPrefix .. ' ' .. str
+  -- end
+  -- if extraTextSuffix then
+  --   str = str .. ' ' .. extraTextSuffix
+  -- end
+
+  debugDrawer:drawTextAdvanced((self.pos),
+    String(text),
+    ColorF(1,1,1,textAlpha),true, false,
+    ColorI(0,0,0,textAlpha*255)
+  )
+  -- end
+
+  if self:shouldDrawArrow() then
+    local midWidth = self.radius*2
+    local side = self.normal:cross(vec3(0,0,1)) *(self.radius - midWidth/2)
+    -- this square prism is the "arrow" of the pacenote.
+    debugDrawer:drawSquarePrism(
+      self.pos,
+      (self.pos + self.radius * self.normal),
+      Point2F(1,self.radius/2),
+      Point2F(0,0),
+      ColorF(clr[1],clr[2],clr[3],shapeAlpha*1.25)
+    )
+    -- this square prism is the "plane" of the pacenote.
+    debugDrawer:drawSquarePrism(
+      (self.pos+side),
+      (self.pos + 0.25 * self.normal + side ),
+      Point2F(5,midWidth),
+      Point2F(0,0),
+      ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66)
+    )
   end
-
-  debugDrawer:drawSphere((self.pos), self.radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
-
-  textAlpha = textAlpha or ((drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1)
-  if self.pacenote.notes['english'] == '' then
-    textAlpha = textAlpha * 0.4
-  end
-
-  if drawMode ~= 'faded' then
-    local str = self:textForDrawDebug(drawMode)
-    if extraTextPrefix then
-      str = extraTextPrefix .. ' ' .. str
-    end
-    if extraTextSuffix then
-      str = str .. ' ' .. extraTextSuffix
-    end
-    debugDrawer:drawTextAdvanced((self.pos),
-      String(str),
-      ColorF(1,1,1,textAlpha),true, false,
-      ColorI(0,0,0,textAlpha*255))
-  end
-
-  local midWidth = self.radius*2
-  local side = self.normal:cross(vec3(0,0,1)) *(self.radius - midWidth/2)
-  -- this square prism is the "arrow" of the pacenote.
-  debugDrawer:drawSquarePrism(
-    self.pos,
-    (self.pos + self.radius * self.normal),
-    Point2F(1,self.radius/2),
-    Point2F(0,0),
-    ColorF(clr[1],clr[2],clr[3],shapeAlpha*1.25))
-  -- this square prism is the "plane" of the pacenote.
-  debugDrawer:drawSquarePrism(
-    (self.pos+side),
-    (self.pos + 0.25 * self.normal + side ),
-    Point2F(5,midWidth),
-    Point2F(0,0),
-    ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66))
 end
 
 return function(...)

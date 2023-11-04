@@ -35,7 +35,7 @@ function C:init()
 
   self:addDecoSeparator()
 
-  self:addFixedFile("Rally File","/rally.rally.json",{tooltip = 'This is the main rally file that contains the race.'})
+  self:addFixedFile("Race File","/race.race.json",{tooltip = 'This is the main race file that contains the race.'})
   self:addFixedFile("Prefab",{"/mainPrefab.prefab","/mainPrefab.prefab.json"},{tooltip = 'This prefab is always loaded.', optional=true})
   self:addFixedFile("Forward Prefab",{"/forwardPrefab.prefab","/forwardPrefab.prefab.json"},{tooltip = 'This prefab is only loaded in forward mode.',optional=true})
   self:addFixedFile("Reverse Prefab",{"/reversePrefab.prefab","/reversePrefab.prefab.json"},{tooltip = 'This prefab is only loaded in reverse mode.',optional=true})

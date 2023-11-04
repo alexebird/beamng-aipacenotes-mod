@@ -22,7 +22,7 @@ currentPath._dir = previousFilepath
 local allFiles = {}
 
 -- local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow
-local notebookInfoWindow, pacenotesWindow
+local notebookInfoWindow, pacenotesWindow, optionsWindow
 
 -- local raceTestWindowOpen = im.BoolPtr(false)
 local mouseInfo = {}
@@ -59,7 +59,7 @@ local function setRaceUndo(data)
   -- raceTestWindowOpen[0] = false
 end
 
-local function saveRace(race, savePath)
+local function saveNotebook(race, savePath)
   if not race then race = currentPath end
   local json = race:onSerialize()
   jsonWriteFile(savePath, json, true)
@@ -129,7 +129,7 @@ end
 --   ]])
 -- end
 
-local function loadRace(full_filename)
+local function loadNotebook(full_filename)
   if not full_filename then
     return
   end
@@ -276,14 +276,14 @@ local function onEditorGui()
         im.Text(previousFilepath .. previousFilename)
         im.Separator()
         if im.MenuItem1("Load...") then
-          editor_fileDialog.openFile(function(data) loadRace(data.filepath) end, {{"Notebook files",".notebook.json"}}, false, previousFilepath)
+          editor_fileDialog.openFile(function(data) loadNotebook(data.filepath) end, {{"Notebook files",".notebook.json"}}, false, previousFilepath)
         end
         local canSave = currentPath and previousFilepath
         if im.MenuItem1("Save") then
-          saveRace(currentPath, previousFilepath .. previousFilename)
+          saveNotebook(currentPath, previousFilepath .. previousFilename)
         end
         if im.MenuItem1("Save as...") then
-          extensions.editor_fileDialog.saveFile(function(data) saveRace(currentPath, data.filepath) end,
+          extensions.editor_fileDialog.saveFile(function(data) saveNotebook(currentPath, data.filepath) end,
                                         {{"Notebook files",".notebook.json"}}, false, previousFilepath)
         end
         if im.MenuItem1("Clear") then
@@ -404,7 +404,7 @@ local function onEditorGui()
       end
     end
     if im.Button("Save") then
-      saveRace(currentPath, previousFilepath .. previousFilename)
+      saveNotebook(currentPath, previousFilepath .. previousFilename)
     end
     -- im.SameLine()
     -- if im.Button("HelloWorld") then
@@ -486,6 +486,7 @@ local function onEditorInitialized()
 
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/options')(M))
 
   -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/segments')(M))
   -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/startPositions')(M))
@@ -495,7 +496,7 @@ local function onEditorInitialized()
   -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
   -- testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
   -- pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7]
-  notebookInfoWindow, pacenotesWindow = windows[1], windows[2]
+  notebookInfoWindow, pacenotesWindow, optionsWindow = windows[1], windows[2], windows[3]
 
   currentWindow = notebookInfoWindow
 
@@ -580,18 +581,19 @@ M.isVisible = function() return editor.isWindowVisible(toolWindowName) end
 M.changedFromExternal = function() currentWindow:setPath(currentPath) end
 -- M.setupRace = setupRace
 M.show = show
-M.loadRace = loadRace
-M.saveRace = saveRace
+M.loadNotebook = loadNotebook
+M.saveNotebook = saveNotebook
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
 
 -- M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized
-M.getToolsWindow = function() return toolsWindow end
-M.getPathnodesWindow = function() return pnWindow end
-M.getPacenotesWindow = function() return pacenotesWindow end
-M.getSegmentsWindow = function() return segWindow end
+-- M.getToolsWindow = function() return toolsWindow end
+-- M.getPathnodesWindow = function() return pnWindow end
+-- M.getPacenotesWindow = function() return pacenotesWindow end
+-- M.getSegmentsWindow = function() return segWindow end
+M.getOptionsWindow = function() return optionsWindow end
 M.getMissionDir = getMissionDir
 
 -- M.wpTypeFwdAudioTrigger = "fwdAudioTrigger"
