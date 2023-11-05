@@ -1,3 +1,6 @@
 {
-    "notebook_filename": "default.notebook.json"
+    "notebook": {
+        "filename": "primary.notebook.json",
+        "codriver": "Klaus"
+    }
 }
