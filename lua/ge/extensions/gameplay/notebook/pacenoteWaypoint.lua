@@ -260,6 +260,10 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
       Point2F(0,0),
       ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66)
     )
+
+    local from = (self.pos)
+    local to = (self.pos + self.normal)
+    debugDrawer:drawLine(from, to, ColorF(1.0, 0.0, 0.0, 1.0))
   end
 end
 

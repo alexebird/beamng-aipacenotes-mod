@@ -29,41 +29,109 @@ function C:init(name)
     require('/lua/ge/extensions/gameplay/notebook/pacenote')
   )
 
---   self.sortOrder = 999999
-
   self.id = self:getNextUniqueIdentifier()
 
   self._hover_waypoint_id = nil
   self._default_note_lang = 'english'
-
---   self.pathnodes = require('/lua/ge/extensions/gameplay/util/sortedList')("pathnodes", self, require('/lua/ge/extensions/gameplay/race/pathnode'))
---   self.segments = require('/lua/ge/extensions/gameplay/util/sortedList')("segments", self, require('/lua/ge/extensions/gameplay/race/segment'))
---   self.startPositions = require('/lua/ge/extensions/gameplay/util/sortedList')("startPositions", self, require('/lua/ge/extensions/gameplay/race/startPosition'))
-
---   self.notebooks = require('/lua/ge/extensions/gameplay/util/sortedList')("notebooks", self, require('/lua/ge/extensions/gameplay/rally/notebook'))
---   self.installedNotebook = nil
-
-  -- This is for backwards compatibility with the un-modded path.lua. Various places
-  -- throughout the code expect this variable to be set.
-  -- Since we know this field is only used outside of World Editor, we can just set it once upon load.
---   self.pacenotes = nil
-
---   self.pathnodes.postCreate = function(o)
---     if self.startNode == -1 then
---       self.startNode = o.id
---     end
---   end
---   self.startPositions.postCreate = function(o)
---     if self.defaultStartPosition == -1 then
---       self.defaultStartPosition = o.id
---     end
---   end
---   self.defaultLaps = 1
---   self.config = {}
-
---   self.hideMission = false
 end
----- Debug and Serialization
+
+local function extractTrailingNumber(str)
+  local num = string.match(str, "%d+%.?%d*$")
+  return num and tonumber(num) or nil
+end
+
+local function sortByNameNumeric(a, b)
+  local numA = extractTrailingNumber(a.name)
+  local numB = extractTrailingNumber(b.name)
+  
+  if numA and numB then
+    -- If both have numbers, compare by number
+    return numA < numB
+  elseif numA then
+    -- If only a has a number, it comes first
+    return true
+  elseif numB then
+    -- If only b has a number, it comes first
+    return false
+  else
+    -- If neither has a number, compare by name
+    return a.name < b.name
+  end
+end
+
+function C:sortPacenotesByName()
+  local newList = {}
+  for i, v in ipairs(self.pacenotes.sorted) do
+    table.insert(newList, v)
+  end
+
+  table.sort(newList, sortByNameNumeric)
+
+  -- Assign "sortOrder" in the sorted list
+  for i, v in ipairs(newList) do
+    v.sortOrder = i
+  end
+
+  self.pacenotes:sort()
+end
+
+function C:cleanupPacenoteNames()
+  for i, v in ipairs(self.pacenotes.sorted) do
+    -- log("D", "WTF", 'renamed "'..v.name..'" sortOrder='..v.sortOrder)
+    v.name = "Pacenote "..i
+  end
+  -- re-index names.
+  self.pacenotes:buildNamesDir()
+end
+
+local function calcPointForSegment(racePath, segmentId)
+  local pathnodes = racePath.pathnodes.objects
+  local segment = racePath.segments.objects[segmentId]
+  local from = pathnodes[segment.from]
+  local to = pathnodes[segment.to]
+  local center = (from.pos + to.pos) / 2
+  -- log("D", 'wtf', dumps(center))
+  -- debugDrawer:drawSphere((center),
+  --   50,
+  --   ColorF(1, 0, 0, 1)
+  -- )
+  return center
+end
+
+local function findClosestSegmentCenter(pos, segmentCenters)
+  local minDist = 4294967295
+  local closest_seg_id = nil
+  local dist = nil
+
+  for seg_id,center_pos in pairs(segmentCenters) do
+    dist = pos:distance(center_pos)
+    if dist < minDist then
+      minDist = dist
+      closest_seg_id = seg_id
+    end
+  end
+
+  return closest_seg_id
+end
+
+function C:autoAssignSegments(racePath)
+  local segment_centers = {}
+
+  for seg_id,segment in pairs(racePath.segments.objects) do
+    local center = calcPointForSegment(racePath, seg_id)
+    segment_centers[seg_id] = center
+  end
+
+  -- clear the segments. probably not necessary.
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
+    pacenote.segment = -1    
+  end
+
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
+    local closest_seg_id = findClosestSegmentCenter(pacenote:getCornerStartWaypoint().pos, segment_centers)
+    pacenote.segment = closest_seg_id
+  end
+end
 
 function C:drawPacenoteModeNormal(pacenote)
   pacenote:drawDebugCustom('normal', self._default_note_lang, self._hover_waypoint_id)
@@ -73,8 +141,8 @@ end
 --   pacenote:drawDebugCustom('selected_pacenote', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
 -- end
 
-function C:drawPacenoteModeSelected(pacenote, selected_wp_id)
-  pacenote:drawDebugCustom('selected', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+function C:drawPacenoteModeSelected(pacenote, selected_wp_id, pacenote_next)
+  pacenote:drawDebugCustom('selected', self._default_note_lang, self._hover_waypoint_id, selected_wp_id, pacenote_next)
 end
 
 function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
@@ -113,7 +181,7 @@ function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
     local pn_sel = self.pacenotes.sorted[selected_i]
     local pn_prev = self.pacenotes.sorted[prev_i]
     local pn_next = self.pacenotes.sorted[next_i]
-    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id)
+    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
     if pn_prev and pn_prev.id ~= pn_sel.id then
       self:drawPacenoteModePrevious(pn_prev)
       pn_prev:drawLinkToPacenote(pn_sel)
@@ -121,7 +189,9 @@ function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
     -- self:drawPacenoteModeNext(pn_next)
   elseif selected_pacenote_id and not selected_waypoint_id then
     local pn_sel = self.pacenotes.sorted[selected_i]
-    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id)
+    local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
+    local pn_next = self.pacenotes.sorted[next_i]
+    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
 
     -- draw the rest of the pacenotes
     local i = 1
@@ -186,28 +256,23 @@ function C:copy()
 end
 
 -- switches start/endNode, all segments and direction of pathnodes. startPositions are not changed.
-function C:reverse()
-  if self.endNode ~= -1 then
-    self.startNode, self.endNode = self.endNode, self.startNode
-  end
-  for _, s in pairs(self.segments.objects) do
-    s.from, s.to = s.to, s.from
-  end
-  self.isReversed = not self.isReversed
-end
+-- function C:reverse()
+--   if self.endNode ~= -1 then
+--     self.startNode, self.endNode = self.endNode, self.startNode
+--   end
+--   for _, s in pairs(self.segments.objects) do
+--     s.from, s.to = s.to, s.from
+--   end
+--   self.isReversed = not self.isReversed
+-- end
 
 function C:allWaypoints()
   local wps = {}
   for i, pacenote in pairs(self.pacenotes.objects) do
     for j, wp in pairs(pacenote.pacenoteWaypoints.objects) do
-      -- if wp.id == 136 or wp.id == 137 then
-        -- log('D', 'wtf', 'waypoint['.. wp.id..','..wp.name ..']')
-      -- end
-      -- table.insert(wps, wp.id, wp)
       wps[wp.id] = wp
     end
   end
-  -- log('D', 'wtf', 'waypoint[137]='..(wps[137].name)..','..wps[137].waypointType)
   return wps
 end
 

@@ -55,6 +55,7 @@ function C:init(rallyEditor)
   self.pacenote_index = nil
   self.waypoint_index = nil
   self.mouseInfo = {}
+  self._road_snap = false
 end
 
 function C:setPath(path)
@@ -113,6 +114,7 @@ function C:selected()
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Snap to Road"
   -- self.map = map.getMap()
 
   -- for _, seg in pairs(self.path.segments.objects) do
@@ -150,6 +152,7 @@ function C:unselect()
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
@@ -251,11 +254,11 @@ function C:selectWaypoint(id)
     -- self:selectPacenote(nil)
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover. 
-    self:resetTransform()
+    self:resetGizmoTransformAtOrigin()
   end
 end
 
-function C:resetTransform()
+function C:resetGizmoTransformAtOrigin()
   -- if not self.rallyEditor.allowGizmo() then return end
   local rotation = QuatF(0,0,0,1)
   local transform = rotation:getMatrix()
@@ -384,6 +387,13 @@ function C:draw(mouseInfo)
   end
   -- self:drawNotebookList()
   self:drawPacenotesList()
+
+  if self._road_snap then
+    self.rallyEditor.getOptionsWindow():drawSnapRoad()
+  end
+end
+
+function C:dragWithRoadSnap()
 end
 
 function C:createManualWaypoint(shouldCreateNewPacenote)
@@ -542,6 +552,47 @@ function C:clearHover()
   self.path._hover_waypoint_id = nil
 end
 
+-- local function calculateForwardNormal(snap_pos, next_pos)
+--   local forwardNormal = {
+--     x = next_pos.x - snap_pos.x,
+--     y = next_pos.y - snap_pos.y,
+--     z = next_pos.z - snap_pos.z
+--   }
+
+--   -- Optionally, normalize the forward normal if needed
+--   local magnitude = math.sqrt(forwardNormal.x^2 + forwardNormal.y^2 + forwardNormal.z^2)
+--   if magnitude ~= 0 then
+--     forwardNormal.x = forwardNormal.x / magnitude
+--     forwardNormal.y = forwardNormal.y / magnitude
+--     forwardNormal.z = forwardNormal.z / magnitude
+--   end
+
+--   return forwardNormal
+-- end
+
+-- args are both vec3
+local function calculateForwardNormal(snap_pos, next_pos)
+  -- Ensure the positions are indeed tables and have three elements
+  -- if not (type(snap_pos) == "table" and type(next_pos) == "table") then
+    -- error("Positions must be tables.")
+  -- end
+  -- if not (#snap_pos == 3 and #next_pos == 3) then
+    -- error("Positions must have three elements.")
+  -- end
+  
+  local dx = next_pos.x - snap_pos.x
+  local dy = next_pos.y - snap_pos.y
+  local dz = next_pos.z - snap_pos.z
+
+  local magnitude = math.sqrt(dx*dx + dy*dy + dz*dz)
+  if magnitude == 0 then
+    error("The two positions must not be identical.")
+  end
+
+  return vec3(dx / magnitude, dy / magnitude, dz / magnitude)
+end
+
+
 function C:setHover(wp)
   if wp then
     self.path._hover_waypoint_id = wp.id
@@ -569,6 +620,11 @@ function C:input()
 
   -- log('D', 'wtf', dumps(self.mouseInfo))
 
+  self._road_snap = false
+  if editor.keyModifiers.alt then
+    self._road_snap = true
+  end
+
   if editor.keyModifiers.shift then
     self:createManualWaypoint(false)
   elseif editor.keyModifiers.ctrl then
@@ -590,6 +646,26 @@ function C:input()
           self:selectWaypoint(nil)
         else
           self:selectPacenote(nil)
+        end
+      end
+    elseif self._road_snap and self.mouseInfo.hold and not editor.isAxisGizmoHovered() then
+      -- log("D", 'wtf', dumps(self.mouseInfo._holdPos))
+      local new_pos = self.mouseInfo._holdPos
+      debugDrawer:drawSphere((new_pos), 2, ColorF(1,0,0,1.0))
+      local wp_sel = self:selectedWaypoint()
+      if wp_sel then
+        if self.mouseInfo.rayCast then
+          local snap_pos, next_pos = self.rallyEditor:getOptionsWindow():closestSnapPos(new_pos)
+          if snap_pos then
+            wp_sel.pos = snap_pos
+            if next_pos then
+              local rv = calculateForwardNormal(snap_pos, next_pos)
+              wp_sel.normal = vec3(rv.x, rv.y, rv.z)
+              -- local normalTip = wp_sel.pos + wp_sel.normal*wp_sel.radius
+              -- normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
+              -- wp_sel.normal = normalTip
+            end
+          end
         end
       end
     elseif not self.mouseInfo.hold and not self.mouseInfo.up and not self.mouseInfo.down and not editor.isAxisGizmoHovered() then
@@ -626,9 +702,11 @@ end
 -- end
 local function setPacenoteFieldUndo(data)
   data.self.path.pacenotes.objects[data.index][data.field] = data.old
+  data.self.path:sortPacenotesByName()
 end
 local function setPacenoteFieldRedo(data)
   data.self.path.pacenotes.objects[data.index][data.field] = data.new
+  data.self.path:sortPacenotesByName()
 end
 local function setWaypointFieldUndo(data)
   data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.old
@@ -654,111 +732,22 @@ local function setWaypointNormalRedo(data)
   data.self:updateTransform(data.index)
 end
 
--- function C:drawNotebookList()
-  -- local avail = im.GetContentRegionAvail()
-
-  -- im.BeginChild1("notebooks", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
-  -- im.Text("Notebooks")
-  -- im.Separator()
-  -- for i, notebook in pairs(self.path.notebooks.sorted) do
-  --   if im.Selectable1((notebook.installed and '* ' or '')..notebook.name, notebook.id == self.notebook_index) then
-  --     editor.history:commitAction("Select Notebook",
-  --       {old = self.notebook_index, new = notebook.id, self = self},
-  --       selectNotebookUndo, selectNotebookRedo)
-  --   end
-  -- end
-  -- im.Separator()
-  -- if im.Selectable1('New...', self.notebook_index == nil) then
-  --   local notebook = self.path.notebooks:create(nil, nil)
-  --   self:selectNotebook(notebook.id)
-  -- end
-  -- im.EndChild() -- notebooks child window
-
-  -- if self.notebook_index then
-  --   local notebook = self.path
-
-  --   im.SameLine()
-  --   im.BeginChild1("currentNotebook", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
-  --   im.HeaderText("Notebook Info")
-  --   im.Text("Current Notebook: #" .. self.notebook_index)
-  --   im.SameLine()
-  --   if im.Button("Delete..") then im.OpenPopup("Delete?") end
-  --   -- if im.Button("Delete") then
-  --   if im.BeginPopupModal("Delete?", nil, ImGuiWindowFlags_AlwaysAutoResize) then
-  --     im.Text("Really delete notebook?\n(Actually you can still use Ctrl+z to undo)\n\n")
-  --     -- im.Separator()
-  --     if im.Button("OK", im.ImVec2(120,0)) then
-  --       editor.history:commitAction("Delete Notebook",
-  --       {index = self.notebook_index, self = self},
-  --       function(data) -- undo
-  --         local note = data.self.path.notebooks:create(nil, data.notebookData.oldId)
-  --         note:onDeserialized(data.notebookData, {})
-  --         self:selectNotebook(data.index)
-  --       end,function(data) --redo
-  --         data.notebookData = data.self.path.notebooks.objects[data.index]:onSerialize()
-  --         data.self.path.notebooks:remove(data.index)
-  --         self:selectNotebook(nil)
-  --       end)
-  --     end
-  --     im.SetItemDefaultFocus()
-  --     im.SameLine()
-  --     if im.Button("Cancel", im.ImVec2(120,0)) then im.CloseCurrentPopup() end
-  --     im.EndPopup()
-  --   end
-
-  --   im.SameLine()
-  --   if im.Button("Move Up") then
-  --     editor.history:commitAction("Move Notebook in List",
-  --       {index = self.notebook_index, self = self, dir = -1},
-  --       moveNotebookUndo, moveNotebookRedo)
-  --   end
-  --   im.SameLine()
-  --   if im.Button("Move Down") then
-  --     editor.history:commitAction("Move Notebook in List",
-  --       {index = self.notebook_index, self = self, dir = 1},
-  --       moveNotebookUndo, moveNotebookRedo)
-  --   end
-
-  --   im.Text("Installed: " .. tostring(notebook.installed))
-
-  --   local editEnded = im.BoolPtr(false)
-  --   editor.uiInputText("Name", notebookNameText, nil, nil, nil, nil, editEnded)
-  --   if editEnded[0] then
-  --     editor.history:commitAction("Change Name of Notebook",
-  --       {index = self.notebook_index, self = self, old = notebook.name, new = ffi.string(notebookNameText), field = 'name'},
-  --       setNotebookFieldUndo, setNotebookFieldRedo)
-  --   end
-
-  --   editEnded = im.BoolPtr(false)
-  --   editor.uiInputText("Authors", notebookAuthorsText, nil, nil, nil, nil, editEnded)
-  --   if editEnded[0] then
-  --     editor.history:commitAction("Change Authors of Notebook",
-  --       {index = self.notebook_index, self = self, old = notebook.authors, new = ffi.string(notebookAuthorsText), field = 'authors'},
-  --       setNotebookFieldUndo, setNotebookFieldRedo)
-  --   end
-
-  --   editEnded = im.BoolPtr(false)
-  --   editor.uiInputText("Description", notebookDescText, nil, nil, nil, nil, editEnded)
-  --   if editEnded[0] then
-  --     editor.history:commitAction("Change Description of Notebook",
-  --       {index = self.notebook_index, self = self, old = notebook.description, new = ffi.string(notebookDescText), field = 'description'},
-  --       setNotebookFieldUndo, setNotebookFieldRedo)
-  --   end
-
-    -- self:voicesSelector(notebook)
-
-    -- self:drawPacenoteList(notebook)
-
-    -- im.EndChild() -- currentNotebook child window
-  -- end
--- end
-
 function C:drawPacenotesList(notebook)
   if not self.path then return end
 
   local notebook = self.path
 
-  im.HeaderText("Pacenotes")
+  im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
+  -- im.SameLine()
+  if im.Button("Clean up names") then
+    self.path:cleanupPacenoteNames()
+  end
+  im.SameLine()
+  if im.Button("Auto-assign segments") then
+    local racePath = editor_raceEditor.getCurrentPath()
+    self.path:autoAssignSegments(racePath)
+  end
+
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1(note.name, note.id == self.pacenote_index) then
@@ -783,9 +772,6 @@ function C:drawPacenotesList(notebook)
 
     if not note.missing then
 
-    -- if self.rallyEditor.allowGizmo() then
-      -- editor.drawAxisGizmo()
-    -- end
     im.HeaderText("Pacenote Info")
     im.Text("Current Pacenote: #" .. self.pacenote_index)
     im.SameLine()
@@ -822,6 +808,7 @@ function C:drawPacenotesList(notebook)
         {index = self.pacenote_index, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
+    im.Text("Segment: "..note.segment)
 
     -- self:segmentSelector('Segment','segment', 'Associated Segment')
     -- for _, seg in pairs(self.path.segments.objects) do
@@ -882,7 +869,12 @@ function C:drawWaypointList(note)
 
     -- only draw the axis gizmo if there is a selected waypoint
     if self.rallyEditor.allowGizmo() then
-      editor.drawAxisGizmo()
+      if self._road_snap then
+        self:resetGizmoTransformAtOrigin()
+      else
+        self:updateTransform(self.waypoint_index)
+        editor.drawAxisGizmo()
+      end
     end
       
     im.HeaderText("Waypoint Info")
@@ -968,7 +960,6 @@ function C:drawWaypointList(note)
   im.EndChild() -- currentWaypoint child window
 end
 
-
 function C:segmentSelector(name, fieldName, tt)
   if not self.path then return end
 
@@ -1027,28 +1018,7 @@ function C:waypointTypeSelector(note)
   im.tooltip(tt)
 end
 
--- function C:voicesSelector(notebook)
---   local name = 'Voice'
---   local fieldName = 'voice'
---   local tt = 'Set the text-to-speech voice'
-
---   if im.BeginCombo(name..'##'..fieldName, notebook.voice) then
-
---     for i, voice in ipairs(voiceNamesSorted) do
---       if im.Selectable1(voice, notebook[fieldName] == voice) then
---         editor.history:commitAction("Changed voice for notebook",
---           {index = self.notebook_index, self = self, old = notebook[fieldName], new = voice, field = fieldName},
---           setNotebookFieldUndo, setNotebookFieldRedo)
---       end
---     end
-
---     im.EndCombo()
---   end
-
---   im.tooltip(tt)
--- end
-
- function C:loadVoices()
+function C:loadVoices()
   voices = readJsonFile(voiceFname)
   voiceNamesSorted = {}
 
