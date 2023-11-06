@@ -12,7 +12,7 @@ function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or "Pacenote " .. self.id
-  -- self.note = ""
+  self.note = nil -- used for interfacing with existing flowgraph race code
   self.notes = {}
   self.segment = -1
   self.pacenoteWaypoints = require('/lua/ge/extensions/gameplay/util/sortedList')(
@@ -21,16 +21,6 @@ function C:init(notebook, name, forceId)
     require('/lua/ge/extensions/gameplay/notebook/pacenoteWaypoint')
   )
 
-  -- self.pacenoteWaypoints.postClear = function() self:indexWaypointsByType() end
-  -- self.pacenoteWaypoints.postRemove = function() self:indexWaypointsByType() end
-  -- self.pacenoteWaypoints.postCreate = function() self:indexWaypointsByType() end
-
-  -- self.pacenoteWaypointsByType = {}
-
-  -- self.prevNote = nil
-  -- self.nextNote = nil
-
-  -- self._drawMode = 'none'
   self.sortOrder = 999999
 end
 
@@ -57,6 +47,16 @@ function C:setAllRadii(newRadius, wpType)
       wp.radius = newRadius
     end
   end
+end
+
+function C:setFieldsForFlowgraph(lang)
+  -- log('D', 'wtf', lang)
+  self.note = self.notes[lang]
+  -- log('D', 'wtf', self.note)
+  local wp_trigger = self:getActiveFwdAudioTrigger()
+  self.radius = wp_trigger.radius
+  self.pos = wp_trigger.pos
+  self.normal = wp_trigger.normal
 end
 
 function C:validateWaypointTypes()

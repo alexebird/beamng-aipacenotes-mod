@@ -1,8 +1,8 @@
 {
-  "activeGraphId":1,
+  "activeGraphId":3,
   "authors":"birdman",
-  "currentGraphID":1,
-  "date":1696290997,
+  "currentGraphID":3,
+  "date":1697260723,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -13,17 +13,73 @@
       "dirty":false,
       "links":[
         [
-          25,
+          2,
           "flow",
-          11,
+          8,
+          "flow",
+          true
+        ],
+        [
+          17,
+          "flow",
+          8,
+          "enqueue",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          8,
+          "reset",
+          true
+        ],
+        [
+          71,
+          "flow",
+          8,
+          "damage",
+          false
+        ],
+        [
+          17,
+          "note",
+          8,
+          "note",
+          false
+        ],
+        [
+          20,
+          "notebookName",
+          8,
+          "notebookName",
+          false
+        ],
+        [
+          20,
+          "missionDir",
+          8,
+          "missionDir",
+          false
+        ],
+        [
+          2,
+          "flow",
+          10,
           "flow",
           false
         ],
         [
-          25,
-          "value",
-          11,
-          "show",
+          35,
+          "vehId",
+          10,
+          "vehId",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          12,
+          "flow",
           false
         ],
         [
@@ -34,28 +90,21 @@
           false
         ],
         [
-          20,
+          25,
           "flow",
-          14,
+          15,
           "flow",
           false
         ],
         [
-          2,
-          "enterState",
-          14,
-          "reset",
-          true
-        ],
-        [
-          20,
-          "raceFile",
-          14,
-          "file",
+          25,
+          "value",
+          15,
+          "show",
           false
         ],
         [
-          14,
+          30,
           "flow",
           16,
           "flow",
@@ -69,7 +118,7 @@
           true
         ],
         [
-          14,
+          30,
           "pathData",
           16,
           "pathData",
@@ -126,23 +175,9 @@
         ],
         [
           17,
-          "flow",
-          26,
-          "flow",
-          false
-        ],
-        [
-          17,
           "note",
           26,
           "note",
-          false
-        ],
-        [
-          20,
-          "currentVersion",
-          26,
-          "version",
           false
         ],
         [
@@ -154,9 +189,23 @@
         ],
         [
           20,
-          "volume",
-          26,
-          "volume",
+          "flow",
+          30,
+          "flow",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          30,
+          "reset",
+          false
+        ],
+        [
+          20,
+          "rallyFile",
+          30,
+          "file",
           false
         ],
         [
@@ -171,6 +220,20 @@
           "vehId",
           34,
           "vehId",
+          false
+        ],
+        [
+          67,
+          "flow",
+          47,
+          "flow",
+          false
+        ],
+        [
+          10,
+          "damage",
+          47,
+          "currentDamage",
           false
         ],
         [
@@ -209,11 +272,67 @@
           false
         ],
         [
-          2,
-          "enterState",
+          10,
+          "velocity",
           55,
+          "A",
+          false
+        ],
+        [
+          10,
+          "damage",
+          57,
+          "a",
+          false
+        ],
+        [
+          45,
+          "currentDamage",
+          57,
+          "b",
+          false
+        ],
+        [
+          10,
+          "flow",
+          67,
           "flow",
           false
+        ],
+        [
+          57,
+          "value",
+          67,
+          "A",
+          false
+        ],
+        [
+          67,
+          "true",
+          71,
+          "flow",
+          false
+        ],
+        [
+          69,
+          "flow",
+          71,
+          "reset",
+          false
+        ],
+        [
+          10,
+          "flow",
+          69,
+          "flow",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          69,
+          "reset",
+          true
         ]
       ],
       "name":"Recce",
@@ -238,7 +357,54 @@
           ],
           "type":"events/onUpdate"
         },
-        "11":{
+        "8":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "damage":false,
+              "enqueue":false,
+              "flow":false,
+              "missionDir":false,
+              "note":false,
+              "notebookName":false,
+              "reset":false
+            },
+            "p_out":{}
+          },
+          "pos":[
+            2404,
+            288
+          ],
+          "type":"gameplay/race/aiPacenotesEnqueueAudio"
+        },
+        "10":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "vehId":false
+            },
+            "p_out":{
+              "active":true,
+              "damage":false,
+              "dirVec":true,
+              "dirVecUp":true,
+              "flow":false,
+              "position":true,
+              "rotation":true,
+              "velocity":false,
+              "velocityVector":true
+            }
+          },
+          "pos":[
+            1096,
+            498
+          ],
+          "type":"vehicle/vehicleMapData"
+        },
+        "12":{
           "data":{},
           "dynamicMode":"repeat",
           "hiddenPins":{
@@ -249,10 +415,10 @@
             "p_out":{}
           },
           "pos":[
-            1284,
-            764
+            -74,
+            92
           ],
-          "type":"gameplay/race/aiPacenotesRaceEditorGizmos"
+          "type":"gameplay/race/aiPacenotesRallyEditorGizmos"
         },
         "13":{
           "data":{},
@@ -280,33 +446,21 @@
           "transitionName":"reset",
           "type":"states/transition"
         },
-        "14":{
+        "15":{
           "data":{},
-          "dynamicMode":"once",
+          "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
-              "reverse":false,
-              "file":false,
               "flow":false,
-              "reset":false
+              "show":false
             },
-            "p_out":{
-              "branching":true,
-              "checkpointCount":true,
-              "closed":true,
-              "desc":false,
-              "flow":false,
-              "laps":true,
-              "name":false,
-              "pathData":false,
-              "recoveryCount":true
-            }
+            "p_out":{}
           },
           "pos":[
-            696,
-            148
+            1004,
+            1436
           ],
-          "type":"gameplay/race/filePath"
+          "type":"gameplay/race/aiPacenotesRallyEditorGizmos"
         },
         "16":{
           "count":1,
@@ -382,13 +536,12 @@
             },
             "p_out":{
               "active":false,
-              "currentVersion":false,
               "flow":false,
               "inactive":false,
               "missionDir":false,
-              "raceFile":false,
-              "unavailable":false,
-              "volume":false
+              "notebookName":false,
+              "rallyFile":false,
+              "unavailable":false
             }
           },
           "pos":[
@@ -422,8 +575,8 @@
             }
           },
           "pos":[
-            52,
-            778
+            -276,
+            1324
           ],
           "type":"environment/getPause"
         },
@@ -451,8 +604,8 @@
           },
           "opSymbol":"==",
           "pos":[
-            1004,
-            764
+            682,
+            1436
           ],
           "type":"logic/compare"
         },
@@ -470,10 +623,38 @@
             "p_out":{}
           },
           "pos":[
-            1998,
-            260
+            2096,
+            50
           ],
           "type":"gameplay/race/aiPacenotesPlayPacenote"
+        },
+        "30":{
+          "data":{},
+          "dynamicMode":"once",
+          "hiddenPins":{
+            "p_in":{
+              "reverse":false,
+              "file":false,
+              "flow":false,
+              "reset":false
+            },
+            "p_out":{
+              "branching":true,
+              "checkpointCount":true,
+              "closed":true,
+              "desc":false,
+              "flow":false,
+              "laps":true,
+              "name":false,
+              "pathData":false,
+              "recoveryCount":true
+            }
+          },
+          "pos":[
+            690,
+            78
+          ],
+          "type":"gameplay/race/aiPacenotesFilePath"
         },
         "34":{
           "data":{},
@@ -509,6 +690,43 @@
           ],
           "type":"scene/getPlayerVehicle"
         },
+        "45":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "global":false,
+          "hiddenPins":{
+            "p_in":{},
+            "p_out":{
+              "currentDamage":false
+            }
+          },
+          "pos":[
+            990,
+            890
+          ],
+          "type":"types/getVariable",
+          "varName":"currentDamage"
+        },
+        "47":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "global":false,
+          "hiddenPins":{
+            "p_in":{
+              "currentDamage":false,
+              "flow":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            1950,
+            834
+          ],
+          "type":"types/setVariable",
+          "varName":"currentDamage"
+        },
         "52":{
           "data":{},
           "dynamicMode":"repeat",
@@ -523,8 +741,8 @@
             }
           },
           "pos":[
-            704,
-            708
+            360,
+            1324
           ],
           "type":"types/setVariable",
           "varName":"lastGetPause"
@@ -547,8 +765,8 @@
           },
           "opSymbol":"==",
           "pos":[
-            346,
-            806
+            18,
+            1352
           ],
           "type":"logic/compare"
         },
@@ -563,8 +781,8 @@
             }
           },
           "pos":[
-            52,
-            862
+            -276,
+            1408
           ],
           "type":"types/getVariable",
           "varName":"lastGetPause"
@@ -573,30 +791,139 @@
           "data":{},
           "dynamicMode":"repeat",
           "hardcodedPins":{
-            "show":{
-              "type":"bool",
-              "value":false
+            "B":{
+              "type":"number",
+              "value":1
             }
           },
           "hiddenPins":{
             "p_in":{
-              "flow":false,
-              "show":false
+              "A":false,
+              "B":false,
+              "flow":false
             },
-            "p_out":{}
+            "p_out":{
+              "value":true,
+              "false":true,
+              "flow":true,
+              "true":false
+            }
+          },
+          "opSymbol":"<",
+          "pos":[
+            1418,
+            596
+          ],
+          "type":"logic/compare"
+        },
+        "57":{
+          "data":{
+            "expression":"a-b",
+            "safeMode":true
+          },
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "a":false,
+              "b":false,
+              "c":false
+            },
+            "p_out":{
+              "value":false
+            }
           },
           "pos":[
-            -214,
-            92
+            1264,
+            862
           ],
-          "type":"gameplay/race/aiPacenotesRaceEditorGizmos"
+          "type":"math/math"
+        },
+        "67":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "B":{
+              "type":"number",
+              "value":0
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "A":false,
+              "B":false,
+              "flow":false
+            },
+            "p_out":{
+              "value":true,
+              "false":false,
+              "flow":false,
+              "true":false
+            }
+          },
+          "opSymbol":">",
+          "pos":[
+            1494,
+            834
+          ],
+          "type":"logic/compare"
+        },
+        "69":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "asDuration":{
+              "type":"bool",
+              "value":true
+            },
+            "input":{
+              "type":"number",
+              "value":10
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "asDuration":true,
+              "dt":true,
+              "flow":false,
+              "input":false,
+              "reset":false,
+              "reverseHit":true
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            1726,
+            540
+          ],
+          "type":"logic/rateLimit"
+        },
+        "71":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "reset":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            2152,
+            638
+          ],
+          "type":"logic/once"
         }
       },
       "showTab":true,
       "type":"graph",
       "variables":{
         "customVariableOrder":[
-          "lastGetPause"
+          "lastGetPause",
+          "currentDamage"
         ],
         "list":[
           {
@@ -605,14 +932,21 @@
             "name":"lastGetPause",
             "type":"bool",
             "value":true
+          },
+          {
+            "index":2,
+            "mergeStrat":"max",
+            "name":"currentDamage",
+            "type":"number",
+            "value":0
           }
         ]
       },
       "viewPos":[
-        -321.18365478515625000000,
-        1467.78515625000000000000
+        -291.79159545898437500000,
+        -100.55786132812500000000
       ],
-      "viewZoom":2
+      "viewZoom":0.50000000000000000000
     },
     "3":{
       "description":"This is the description for graph States",
@@ -620,14 +954,14 @@
       "isStateGraph":true,
       "links":[
         [
-          5,
-          "flow",
+          37,
+          "success",
           4,
           "flow",
           false
         ],
         [
-          37,
+          11,
           "success",
           4,
           "flow",
@@ -637,6 +971,13 @@
           4,
           "success",
           6,
+          "flow",
+          false
+        ],
+        [
+          5,
+          "flow",
+          11,
           "flow",
           false
         ],
@@ -702,8 +1043,8 @@
             }
           },
           "pos":[
-            24,
-            78
+            -235,
+            100
           ],
           "type":"states/stateEntry"
         },
@@ -731,6 +1072,48 @@
           ],
           "transitionName":"",
           "type":"states/stateExit"
+        },
+        "11":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{
+              "fail":false,
+              "success":false
+            }
+          },
+          "pins":[
+            [
+              "out",
+              "state",
+              "success",
+              null,
+              "This is a flow pin."
+            ],
+            [
+              "out",
+              "state",
+              "fail",
+              null,
+              "This is a flow pin."
+            ],
+            [
+              "in",
+              "state",
+              "flow",
+              null,
+              "This is a flow pin."
+            ]
+          ],
+          "pos":[
+            -51,
+            77
+          ],
+          "targetGraphId":9,
+          "type":"states/stateNode"
         },
         "37":{
           "data":{},
@@ -782,8 +1165,8 @@
         "list":{}
       },
       "viewPos":[
-        -294,
-        -77
+        -200,
+        -200
       ],
       "viewZoom":1
     },
@@ -859,12 +1242,145 @@
         -77
       ],
       "viewZoom":1
+    },
+    "9":{
+      "description":"This is the description for graph New State",
+      "dirty":false,
+      "links":[
+        [
+          72,
+          "flow",
+          79,
+          "flow",
+          false
+        ],
+        [
+          14,
+          "flow",
+          72,
+          "flow",
+          false
+        ]
+      ],
+      "name":"Setup UI",
+      "nodes":{
+        "14":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{},
+            "p_out":{
+              "dtRaw":true,
+              "dtReal":true,
+              "dtSim":true,
+              "enterState":false,
+              "exitState":false,
+              "flow":false
+            }
+          },
+          "pos":[
+            276,
+            204
+          ],
+          "type":"events/onUpdate"
+        },
+        "72":{
+          "data":{},
+          "dynamicMode":"once",
+          "hardcodedPins":{
+            "layout":{
+              "type":"string",
+              "value":"recceMission"
+            },
+            "menu":{
+              "type":"string",
+              "value":"mission"
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "gameStateName":true,
+              "keepLayout":false,
+              "layout":false,
+              "menu":false,
+              "reset":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            486,
+            204
+          ],
+          "type":"ui/setUILayout"
+        },
+        "79":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "vehId":false,
+              "flow":false,
+              "mainPrefabId":false,
+              "sidePrefabId":false
+            },
+            "p_out":{}
+          },
+          "pins":[
+            [
+              "in",
+              "flow",
+              "flow"
+            ],
+            [
+              "in",
+              "number",
+              "vehId",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "mainPrefabId",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "sidePrefabId",
+              null,
+              ""
+            ]
+          ],
+          "pos":[
+            808,
+            204
+          ],
+          "transitionName":"success",
+          "type":"states/transition"
+        }
+      },
+      "showTab":true,
+      "type":"graph",
+      "variables":{
+        "customVariableOrder":{},
+        "list":{}
+      },
+      "viewPos":[
+        0,
+        0
+      ],
+      "viewZoom":1
     }
   },
   "isScenario":false,
   "macros":{},
   "name":"recce",
-  "savedDir":"/gameplay/missionTypes/recce/",
+  "savedDir":"/gameplay/missionTypes/rallyStage/",
   "savedFilename":"recce.flow.json",
   "stateGraphId":3,
   "variables":{

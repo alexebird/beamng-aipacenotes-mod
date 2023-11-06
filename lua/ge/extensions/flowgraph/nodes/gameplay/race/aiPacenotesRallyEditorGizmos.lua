@@ -30,21 +30,17 @@ function C:work(args)
   log('D', 'WTF', 'shouldShow: ' .. tostring(shouldShow))
 
   if shouldShow then
-    -- editor_raceEditorTurbo.getPathnodesWindow():selected()
-    -- editor_raceEditorTurbo.getSegmentsWindow():selected()
-    -- editor_raceEditorTurbo.getPacenotesWindow():selected()
-
     -- hide non-pacenotes gizmos
-    editor_rallyEditor.getPathnodesWindow():unselectAndSetDrawModeToNone()
-    editor_rallyEditor.getSegmentsWindow():unselectAndSetDrawModeToNone()
+    -- editor_rallyEditor.getPathnodesWindow():unselectAndSetDrawModeToNone()
+    -- editor_rallyEditor.getSegmentsWindow():unselectAndSetDrawModeToNone()
 
     -- show pacenotes gizmos
-    editor_rallyEditor.getPacenotesWindow():selected()
+    -- editor_rallyEditor.getPacenotesWindow():selected()
   else
     -- hide all gizmos
-    editor_rallyEditor.getPathnodesWindow():unselectAndSetDrawModeToNone()
-    editor_rallyEditor.getSegmentsWindow():unselectAndSetDrawModeToNone()
-    editor_rallyEditor.getPacenotesWindow():unselect()
+    -- editor_rallyEditor.getPathnodesWindow():unselectAndSetDrawModeToNone()
+    -- editor_rallyEditor.getSegmentsWindow():unselectAndSetDrawModeToNone()
+    -- editor_rallyEditor.getPacenotesWindow():unselect()
   end
 end
 

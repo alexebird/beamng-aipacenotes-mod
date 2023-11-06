@@ -136,15 +136,15 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
       im.tooltip("Open Notebook in Rally Editor")
       im.SameLine()
 
-      -- if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
-      --   -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
-      --   openRallyEditor(shownMission)
-      --   editor_flowgraphEditor.open()
-      --   local recceFname = "/gameplay/missionTypes/rallyStage/recce.flow.json"
-      --   editor_flowgraphEditor.openFile({filepath = recceFname}, true)
-      -- end
-      -- im.tooltip("Open Recce Flowgraph")
-      -- im.SameLine()
+      if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then
+        -- need to open raceEditorTurbo before opening recce flowgraph so that the flowgraph can reference things in the race editor.
+        openRallyEditor(shownMission)
+        editor_flowgraphEditor.open()
+        local recceFname = "/gameplay/missionTypes/rallyStage/recce.flow.json"
+        editor_flowgraphEditor.openFile({filepath = recceFname}, true)
+      end
+      im.tooltip("Open Recce Flowgraph")
+      im.SameLine()
     end
 
   end

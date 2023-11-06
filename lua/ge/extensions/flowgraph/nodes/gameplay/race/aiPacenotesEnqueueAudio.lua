@@ -21,9 +21,9 @@ C.pinSchema = {
   {dir = 'in', type = 'flow', name = 'reset', description = 'Inflow for resetting audio queue.'},
   {dir = 'in', type = 'flow', name = 'damage', description = 'Inflow for damage audio .'},
   {dir = 'in', type = 'string', name = 'note', description = 'The pacenote.'},
-  {dir = 'in', type = 'string', name = 'notebookName', description = 'The notebook name.'},
-  {dir = 'in', type = 'string', name = 'missionDir', description = 'Root path of the mission.'},
-  -- {dir = 'in', type = 'number', name = 'volume', description = 'The volume.'},
+  {dir = 'in', type = 'table', tableType = 'aipSettings', name = 'aipSettings', description = 'The settings object.'},
+  -- {dir = 'in', type = 'string', name = 'notebookName', description = 'The notebook name.'},
+  -- {dir = 'in', type = 'string', name = 'missionDir', description = 'Root path of the mission.'},
 }
 
 C.tags = {'scenario', 'aipacenotes'}
@@ -56,7 +56,7 @@ function C:playDamageSfx()
   local res = Engine.Audio.playOnce('AudioGui', fn)
 end
 
-local function normalize_text(s)
+local function pacenote_hash(s)
   local hash_value = 0
   for i = 1, #s do
     hash_value = (hash_value * 33 + string.byte(s, i)) % 2147483647
@@ -87,7 +87,7 @@ end
 --   end
 -- end
 
-local function normalize_notebook_name(name)
+local function normalize_name(name)
   -- Replace everything but letters and numbers with '_'
   name = string.gsub(name, "[^a-zA-Z0-9]", "_")
 
@@ -98,15 +98,16 @@ local function normalize_notebook_name(name)
 end
 
 function C:enqueueFromPinIns()
+  -- log('D', 'wtf', dumps(self.pinIn.aipSettings.value))
   local pacenote = self.pinIn.note.value
-  local missionDir = self.pinIn.missionDir.value
-  local pacenoteHash = normalize_text(pacenote)
-  local notebookName = normalize_notebook_name(self.pinIn.notebookName.value)
-  -- local volume = self.pinIn.volume.value
+  local missionDir = self.pinIn.aipSettings.value.missionDir
+  local notebookName = normalize_name(self.pinIn.aipSettings.value.notebookName)
+  local codriverName = normalize_name(self.pinIn.aipSettings.value.notebook.codriver)
+  local pacenoteHash = pacenote_hash(pacenote)
 
   -- printFunctions(Engine.Audio)
 
-  local pacenoteFname = missionDir .. '/pacenotes/' .. notebookName .. '/pacenote_' .. pacenoteHash .. '.ogg'
+  local pacenoteFname = missionDir .. '/aipacenotes/notebooks/generated_pacenotes/' .. notebookName .. '/' .. codriverName .. '/pacenote_' .. pacenoteHash .. '.ogg'
   log('I', logTag, "pacenote='" .. pacenote .. "', filename=" .. pacenoteFname)
 
   local audioObj = {

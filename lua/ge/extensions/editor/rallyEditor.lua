@@ -509,21 +509,24 @@ local function onEditorInitialized()
 end
 
 local function strip_basename(thepath)
-  return thepath:match("(.*/)")
+  if thepath:sub(-1) == "/" then
+    thepath = thepath:sub(1, -2)
+  end
+  local dirname, fn, e = path.split(thepath)
+  return dirname
 end
 
 local function getMissionDir()
   if not currentPath then return nil end
 
-  -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks
+  -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
   local notebooksDir = currentPath._dir
-  -- local aipDir = strip_basename(notebooksDir)
+  local aipDir = strip_basename(notebooksDir)
   -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
-  -- local missionDir = strip_basename(aipDir)
+  local missionDir = strip_basename(aipDir)
   -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
 
-  -- return missionDir
-  return notebooksDir .. '../..'
+  return missionDir
 end
 
 local function onEditorToolWindowHide(windowName)
