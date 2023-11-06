@@ -1,8 +1,8 @@
 {
-  "activeGraphId":1,
+  "activeGraphId":17,
   "authors":"birdman",
-  "currentGraphID":1,
-  "date":1697259588,
+  "currentGraphID":17,
+  "date":1699249672,
   "debugEnabled":false,
   "description":"This mission type is for making rally stages with audio pacenotes.\\n\\nIt is based on copying the timeTrial missionType flowgraph and making some changes.\\n\\nSince you can't diff flowgraph code, I try to keep new nodes labeled with \"AI Pacenotes\" and with their own color.\\n\\nIf the original ttFg flowgraph is changed, you basically need to re-do the rallyStage changes.",
   "difficulty":40,
@@ -111,14 +111,14 @@
           true
         ],
         [
-          278,
+          277,
           "flow",
           113,
           "flow",
           false
         ],
         [
-          277,
+          278,
           "flow",
           113,
           "flow",
@@ -593,10 +593,10 @@
         "list":{}
       },
       "viewPos":[
-        1943.99584960937500000000,
-        -131.98220825195312500000
+        -435.87597656250000000000,
+        -62.59018707275390625000
       ],
-      "viewZoom":1.49999856948852539063
+      "viewZoom":0.33000001311302185059
     },
     "3":{
       "description":"This is the description for graph New State",
@@ -972,7 +972,7 @@
           false
         ],
         [
-          156,
+          145,
           "pathData",
           22,
           "pathData",
@@ -1021,15 +1021,15 @@
           true
         ],
         [
-          64,
-          "flow",
+          26,
+          "complete",
           27,
           "flow",
           false
         ],
         [
-          26,
-          "complete",
+          64,
+          "flow",
           27,
           "flow",
           false
@@ -1133,6 +1133,34 @@
           false
         ],
         [
+          4325122,
+          "flow",
+          4325124,
+          "flow",
+          false
+        ],
+        [
+          4325122,
+          "value",
+          4325124,
+          "translationString",
+          false
+        ],
+        [
+          4325117,
+          "recoverLimit",
+          4325124,
+          "recoverLimit",
+          false
+        ],
+        [
+          4325126,
+          "recoverPenalty",
+          4325124,
+          "penaltySeconds",
+          false
+        ],
+        [
           4325123,
           "True",
           4325120,
@@ -1175,6 +1203,20 @@
           false
         ],
         [
+          19,
+          "enterState",
+          145,
+          "flow",
+          false
+        ],
+        [
+          19,
+          "enterState",
+          145,
+          "reset",
+          true
+        ],
+        [
           15,
           "flow",
           111,
@@ -1210,25 +1252,25 @@
           false
         ],
         [
-          143,
+          27,
           "flow",
-          156,
+          73,
           "flow",
           false
         ],
         [
-          143,
-          "rallyFile",
-          156,
-          "file",
-          false
+          145,
+          "pathData",
+          73,
+          "pathData",
+          true
         ],
         [
-          100,
-          "reverse",
-          156,
-          "reverse",
-          false
+          145,
+          "aipSettings",
+          73,
+          "aipSettings",
+          true
         ],
         [
           27,
@@ -1250,13 +1292,6 @@
           107,
           "flow",
           false
-        ],
-        [
-          19,
-          "enterState",
-          107,
-          "reset",
-          true
         ],
         [
           107,
@@ -1264,20 +1299,6 @@
           94,
           "startNewRec",
           false
-        ],
-        [
-          27,
-          "flow",
-          73,
-          "flow",
-          false
-        ],
-        [
-          156,
-          "pathData",
-          73,
-          "pathData",
-          true
         ],
         [
           26,
@@ -1329,17 +1350,10 @@
           false
         ],
         [
-          26,
+          19,
+          "enterState",
+          118,
           "flow",
-          124,
-          "flow",
-          false
-        ],
-        [
-          122,
-          "reverse",
-          124,
-          "condition",
           false
         ],
         [
@@ -1357,22 +1371,22 @@
           false
         ],
         [
-          19,
-          "enterState",
-          118,
+          42,
           "flow",
-          false
-        ],
-        [
-          4325123,
-          "True",
-          4325122,
+          43,
           "flow",
           false
         ],
         [
           4325123,
           "False",
+          4325122,
+          "flow",
+          false
+        ],
+        [
+          4325123,
+          "True",
           4325122,
           "flow",
           false
@@ -1399,24 +1413,31 @@
           false
         ],
         [
-          42,
-          "flow",
-          43,
-          "flow",
-          false
-        ],
-        [
-          19,
-          "flow",
-          143,
+          124,
+          "False",
+          128,
           "flow",
           false
         ],
         [
-          19,
-          "enterState",
-          143,
+          124,
+          "True",
+          128,
           "flow",
+          false
+        ],
+        [
+          124,
+          "True",
+          128,
+          "select_1",
+          false
+        ],
+        [
+          124,
+          "False",
+          128,
+          "select_2",
           false
         ],
         [
@@ -1438,34 +1459,6 @@
           "sidePrefabId",
           279,
           "id",
-          false
-        ],
-        [
-          124,
-          "True",
-          128,
-          "flow",
-          false
-        ],
-        [
-          124,
-          "False",
-          128,
-          "flow",
-          false
-        ],
-        [
-          124,
-          "True",
-          128,
-          "select_1",
-          false
-        ],
-        [
-          124,
-          "False",
-          128,
-          "select_2",
           false
         ],
         [
@@ -1525,31 +1518,17 @@
           false
         ],
         [
-          4325122,
+          26,
           "flow",
-          4325124,
+          124,
           "flow",
           false
         ],
         [
-          4325122,
-          "value",
-          4325124,
-          "translationString",
-          false
-        ],
-        [
-          4325117,
-          "recoverLimit",
-          4325124,
-          "recoverLimit",
-          false
-        ],
-        [
-          4325126,
-          "recoverPenalty",
-          4325124,
-          "penaltySeconds",
+          122,
+          "reverse",
+          124,
+          "condition",
           false
         ]
       ],
@@ -1704,7 +1683,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000044409
+              "value":0.75000000000000077716
             }
           },
           "hiddenPins":{
@@ -1937,6 +1916,7 @@
           "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
+              "aipSettings":false,
               "flow":false,
               "pathData":false
             },
@@ -1954,10 +1934,17 @@
               "pathData",
               null,
               ""
+            ],
+            [
+              "in",
+              "table",
+              "aipSettings",
+              null,
+              ""
             ]
           ],
           "pos":[
-            3110,
+            3202,
             8
           ],
           "transitionName":"success",
@@ -2112,8 +2099,8 @@
             }
           },
           "pos":[
-            4,
-            -244
+            -214,
+            -258
           ],
           "type":"environment/setBulletTime"
         },
@@ -2467,56 +2454,39 @@
           ],
           "type":"scene/camera/stopCamPath"
         },
-        "143":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false
-            },
-            "p_out":{
-              "active":true,
-              "flow":false,
-              "inactive":true,
-              "missionDir":true,
-              "notebookName":false,
-              "rallyFile":false,
-              "unavailable":true
-            }
-          },
-          "pos":[
-            -738,
-            78
-          ],
-          "type":"gameplay/race/aiPacenotesInfo"
-        },
-        "156":{
+        "145":{
           "data":{},
           "dynamicMode":"once",
+          "hardcodedPins":{
+            "raceFname":{
+              "type":"string",
+              "value":"race.race.json"
+            }
+          },
           "hiddenPins":{
             "p_in":{
-              "reverse":false,
-              "file":false,
               "flow":false,
+              "raceFname":false,
               "reset":false
             },
             "p_out":{
+              "aipSettings":false,
               "branching":true,
               "checkpointCount":true,
               "closed":true,
-              "desc":false,
+              "desc":true,
               "flow":false,
               "laps":true,
-              "name":false,
+              "name":true,
               "pathData":false,
               "recoveryCount":true
             }
           },
           "pos":[
-            -388,
-            64
+            -312,
+            -104
           ],
-          "type":"gameplay/race/aiPacenotesFilePath"
+          "type":"gameplay/race/aiPacenotesLoader"
         },
         "279":{
           "data":{},
@@ -2790,8 +2760,8 @@
         "list":{}
       },
       "viewPos":[
-        -1009.19049072265625000000,
-        -65.26744079589843750000
+        -1048,
+        -375
       ],
       "viewZoom":1
     },
@@ -3103,20 +3073,6 @@
           false
         ],
         [
-          127,
-          "true",
-          96,
-          "flow",
-          false
-        ],
-        [
-          92,
-          "count",
-          96,
-          "txt",
-          false
-        ],
-        [
           91,
           "True",
           146,
@@ -3159,18 +3115,18 @@
           false
         ],
         [
-          142,
-          "flow",
-          92,
+          127,
+          "true",
+          96,
           "flow",
           false
         ],
         [
-          142,
-          "flow",
           92,
-          "reset",
-          true
+          "count",
+          96,
+          "txt",
+          false
         ],
         [
           103,
@@ -3184,13 +3140,6 @@
           "limit",
           127,
           "A",
-          false
-        ],
-        [
-          82,
-          "flow",
-          24,
-          "flow",
           false
         ],
         [
@@ -3292,18 +3241,11 @@
           false
         ],
         [
-          24,
-          "notebookName",
+          85,
+          "aipSettings",
           157,
-          "notebookName",
-          false
-        ],
-        [
-          24,
-          "missionDir",
-          157,
-          "missionDir",
-          false
+          "aipSettings",
+          true
         ],
         [
           57,
@@ -3327,38 +3269,17 @@
           false
         ],
         [
-          37,
-          "enterState",
-          86,
-          "clear",
-          true
-        ],
-        [
-          83,
-          "complete",
-          86,
-          "clear",
+          142,
+          "flow",
+          92,
+          "flow",
           false
         ],
         [
-          37,
-          "exitState",
-          86,
-          "clear",
-          true
-        ],
-        [
-          83,
-          "raceData",
-          86,
-          "raceData",
-          false
-        ],
-        [
-          23,
-          "playerID",
-          86,
-          "vehId",
+          142,
+          "flow",
+          92,
+          "reset",
           true
         ],
         [
@@ -3460,14 +3381,42 @@
           false
         ],
         [
-          20,
-          "flow",
-          4325214,
-          "flow",
+          37,
+          "exitState",
+          86,
+          "clear",
+          true
+        ],
+        [
+          37,
+          "enterState",
+          86,
+          "clear",
+          true
+        ],
+        [
+          83,
+          "complete",
+          86,
+          "clear",
           false
         ],
         [
-          24,
+          83,
+          "raceData",
+          86,
+          "raceData",
+          false
+        ],
+        [
+          23,
+          "playerID",
+          86,
+          "vehId",
+          true
+        ],
+        [
+          82,
           "flow",
           83,
           "flow",
@@ -3475,14 +3424,14 @@
         ],
         [
           37,
-          "enterState",
+          "exitState",
           83,
           "reset",
           true
         ],
         [
           37,
-          "exitState",
+          "enterState",
           83,
           "reset",
           true
@@ -3614,21 +3563,14 @@
           false
         ],
         [
+          37,
+          "enterState",
+          142,
+          "flow",
+          true
+        ],
+        [
           112,
-          "flow",
-          142,
-          "flow",
-          false
-        ],
-        [
-          54,
-          "flow",
-          142,
-          "flow",
-          false
-        ],
-        [
-          46,
           "flow",
           142,
           "flow",
@@ -3642,11 +3584,18 @@
           false
         ],
         [
-          37,
-          "enterState",
+          46,
+          "flow",
           142,
           "flow",
-          true
+          false
+        ],
+        [
+          54,
+          "flow",
+          142,
+          "flow",
+          false
         ],
         [
           134,
@@ -3768,6 +3717,13 @@
           false
         ],
         [
+          20,
+          "flow",
+          4325214,
+          "flow",
+          false
+        ],
+        [
           83,
           "active",
           57,
@@ -3867,29 +3823,6 @@
           ],
           "type":"types/getVariable",
           "varName":"playerID"
-        },
-        "24":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false
-            },
-            "p_out":{
-              "active":true,
-              "flow":false,
-              "inactive":true,
-              "missionDir":false,
-              "notebookName":false,
-              "rallyFile":false,
-              "unavailable":true
-            }
-          },
-          "pos":[
-            424,
-            736
-          ],
-          "type":"gameplay/race/aiPacenotesInfo"
         },
         "37":{
           "data":{},
@@ -4392,6 +4325,7 @@
               "flow":false
             },
             "p_out":{
+              "aipSettings":false,
               "flow":false,
               "pathData":false
             }
@@ -4413,10 +4347,17 @@
               "pathData",
               null,
               ""
+            ],
+            [
+              "out",
+              "table",
+              "aipSettings",
+              null,
+              ""
             ]
           ],
           "pos":[
-            354,
+            312,
             -174
           ],
           "type":"states/transitionStack"
@@ -4860,12 +4801,11 @@
           "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
+              "aipSettings":false,
               "damage":false,
               "enqueue":false,
               "flow":false,
-              "missionDir":false,
               "note":false,
-              "notebookName":false,
               "reset":false
             },
             "p_out":{}
@@ -5441,10 +5381,10 @@
         ]
       },
       "viewPos":[
-        -54.10726928710937500000,
-        145.10667419433593750000
+        -250.61347961425781250000,
+        -191.46995544433593750000
       ],
-      "viewZoom":0.74999994039535522461
+      "viewZoom":0.33000001311302185059
     },
     "38":{
       "description":"This is the description for graph New State",
@@ -5589,10 +5529,10 @@
         "list":{}
       },
       "viewPos":[
-        -458,
-        -333.50000000000000000000
+        -523.90747070312500000000,
+        -131.71197509765625000000
       ],
-      "viewZoom":1
+      "viewZoom":0.33000001311302185059
     },
     "49":{
       "description":"This is the description for graph New State",
@@ -5723,10 +5663,10 @@
         "list":{}
       },
       "viewPos":[
-        -285.75006103515625000000,
-        -233.37498474121093750000
+        -550.15777587890625000000,
+        -116.25230407714843750000
       ],
-      "viewZoom":1.25000000000000000000
+      "viewZoom":0.33000001311302185059
     },
     "58":{
       "description":"This graph will show an end screen. Useful for scenario endings.",
@@ -5734,14 +5674,14 @@
       "links":[
         [
           4325130,
-          "True",
+          "False",
           4325134,
           "flow",
           false
         ],
         [
           4325130,
-          "False",
+          "True",
           4325134,
           "flow",
           false
@@ -5804,14 +5744,14 @@
         ],
         [
           4325144,
-          "False",
+          "True",
           4325148,
           "flow",
           false
         ],
         [
           4325144,
-          "True",
+          "False",
           4325148,
           "flow",
           false
@@ -6020,14 +5960,14 @@
           false
         ],
         [
-          9140,
+          45492,
           "flow",
           8980,
           "flow",
           false
         ],
         [
-          45492,
+          9140,
           "flow",
           8980,
           "flow",
@@ -6371,14 +6311,14 @@
         ],
         [
           8993,
-          "contHere",
+          "contStart",
           45493,
           "flow",
           false
         ],
         [
           8993,
-          "contStart",
+          "contHere",
           45493,
           "flow",
           false
@@ -6762,14 +6702,14 @@
           false
         ],
         [
-          4325134,
+          102,
           "flow",
           80,
           "flow",
           false
         ],
         [
-          102,
+          4325134,
           "flow",
           80,
           "flow",
@@ -7940,7 +7880,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000044409
+              "value":0.75000000000000077716
             }
           },
           "hiddenPins":{
@@ -8265,7 +8205,7 @@
         },
         "4324679":{
           "data":{
-            "value":0.75000000000000044409
+            "value":0.75000000000000077716
           },
           "dynamicMode":"repeat",
           "hiddenPins":{
@@ -8808,10 +8748,10 @@
         "list":{}
       },
       "viewPos":[
-        -775.53192138671875000000,
-        -354.44656372070312500000
+        -593.64770507812500000000,
+        -124.63146209716796875000
       ],
-      "viewZoom":0.32999998331069946289
+      "viewZoom":0.20000000298023223877
     }
   },
   "isScenario":false,
@@ -8866,12 +8806,47 @@
     ],
     "list":[
       {
+        "index":39,
+        "mergeStrat":"max",
+        "name":"goldTimeTotal",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":34,
+        "mergeStrat":"max",
+        "name":"justFinishPenalty",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":29,
+        "mergeStrat":"max",
+        "name":"recoverPenalty",
+        "type":"number",
+        "value":0
+      },
+      {
         "fixedType":false,
         "index":2,
         "mergeStrat":"last",
         "name":"rolling",
         "type":"bool",
         "value":false
+      },
+      {
+        "index":37,
+        "mergeStrat":"max",
+        "name":"silverTimeTotal",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":17,
+        "mergeStrat":"last",
+        "name":"playerConfig",
+        "type":"string",
+        "value":""
       },
       {
         "fixedType":false,
@@ -8882,103 +8857,11 @@
         "value":"/gameplay/temp/timeTrials/gridmap-ez_circle-procedural.json"
       },
       {
-        "index":14,
-        "mergeStrat":"max",
-        "name":"timeOfDay",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":11,
-        "mergeStrat":"max",
-        "name":"bronzeTime",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":12,
-        "mergeStrat":"max",
-        "name":"silverTime",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":13,
-        "mergeStrat":"max",
-        "name":"goldTime",
-        "type":"number",
-        "value":0
-      },
-      {
-        "fixedType":false,
-        "index":3,
+        "index":20,
         "mergeStrat":"last",
-        "name":"reverse",
-        "type":"bool",
-        "value":false
-      },
-      {
-        "index":8,
-        "mergeStrat":"last",
-        "name":"prefab",
+        "name":"startScreenText",
         "type":"string",
         "value":""
-      },
-      {
-        "index":9,
-        "mergeStrat":"last",
-        "name":"reversePrefab",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":30,
-        "mergeStrat":"or_",
-        "name":"allowFlip",
-        "type":"bool",
-        "value":true
-      },
-      {
-        "index":27,
-        "mergeStrat":"or_",
-        "name":"allowRecover",
-        "type":"bool",
-        "value":true
-      },
-      {
-        "index":36,
-        "mergeStrat":"max",
-        "name":"bronzeTimePenalty",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":35,
-        "mergeStrat":"max",
-        "name":"bronzeTimeTotal",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":21,
-        "mergeStrat":"last",
-        "name":"endScreenText",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":24,
-        "mergeStrat":"or_",
-        "name":"useProvidedVehicle",
-        "type":"bool",
-        "value":false
-      },
-      {
-        "index":26,
-        "mergeStrat":"max",
-        "name":"flipPenalty",
-        "type":"number",
-        "value":0
       },
       {
         "index":5,
@@ -9006,13 +8889,6 @@
         "value":0
       },
       {
-        "index":16,
-        "mergeStrat":"or_",
-        "name":"providedVehicleActive",
-        "type":"bool",
-        "value":false
-      },
-      {
         "index":31,
         "mergeStrat":"max",
         "name":"flipsUsed",
@@ -9027,72 +8903,115 @@
         "value":0
       },
       {
-        "index":29,
+        "index":16,
+        "mergeStrat":"or_",
+        "name":"providedVehicleActive",
+        "type":"bool",
+        "value":false
+      },
+      {
+        "index":24,
+        "mergeStrat":"or_",
+        "name":"useProvidedVehicle",
+        "type":"bool",
+        "value":false
+      },
+      {
+        "index":28,
         "mergeStrat":"max",
-        "name":"recoverPenalty",
+        "name":"recoverLimit",
         "type":"number",
         "value":0
       },
       {
-        "index":38,
-        "mergeStrat":"max",
-        "name":"silverTimePenalty",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":37,
-        "mergeStrat":"max",
-        "name":"silverTimeTotal",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":20,
-        "mergeStrat":"last",
-        "name":"startScreenText",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":41,
-        "mergeStrat":"max",
-        "name":"defaultLaps",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":40,
-        "mergeStrat":"max",
-        "name":"goldTimePenalty",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":17,
-        "mergeStrat":"last",
-        "name":"playerConfig",
-        "type":"string",
-        "value":""
-      },
-      {
-        "index":39,
-        "mergeStrat":"max",
-        "name":"goldTimeTotal",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":34,
-        "mergeStrat":"max",
-        "name":"justFinishPenalty",
-        "type":"number",
-        "value":0
+        "index":15,
+        "mergeStrat":"or_",
+        "name":"timeOfDayActive",
+        "type":"bool",
+        "value":true
       },
       {
         "index":33,
         "mergeStrat":"last",
         "name":"recoveryMode",
+        "type":"string",
+        "value":""
+      },
+      {
+        "index":11,
+        "mergeStrat":"max",
+        "name":"bronzeTime",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":12,
+        "mergeStrat":"max",
+        "name":"silverTime",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":13,
+        "mergeStrat":"max",
+        "name":"goldTime",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":30,
+        "mergeStrat":"or_",
+        "name":"allowFlip",
+        "type":"bool",
+        "value":true
+      },
+      {
+        "index":27,
+        "mergeStrat":"or_",
+        "name":"allowRecover",
+        "type":"bool",
+        "value":true
+      },
+      {
+        "index":14,
+        "mergeStrat":"max",
+        "name":"timeOfDay",
+        "type":"number",
+        "value":0
+      },
+      {
+        "fixedType":false,
+        "index":4,
+        "mergeStrat":"last",
+        "name":"laps",
+        "type":"number",
+        "value":1
+      },
+      {
+        "index":21,
+        "mergeStrat":"last",
+        "name":"endScreenText",
+        "type":"string",
+        "value":""
+      },
+      {
+        "index":25,
+        "mergeStrat":"max",
+        "name":"flipLimit",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":26,
+        "mergeStrat":"max",
+        "name":"flipPenalty",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":9,
+        "mergeStrat":"last",
+        "name":"reversePrefab",
         "type":"string",
         "value":""
       },
@@ -9104,47 +9023,11 @@
         "value":""
       },
       {
-        "fixedType":false,
-        "index":4,
-        "mergeStrat":"last",
-        "name":"laps",
-        "type":"number",
-        "value":1
-      },
-      {
-        "index":15,
-        "mergeStrat":"or_",
-        "name":"timeOfDayActive",
-        "type":"bool",
-        "value":true
-      },
-      {
-        "index":19,
-        "mergeStrat":"max",
-        "name":"playerID",
-        "type":"number",
-        "value":0
-      },
-      {
         "index":22,
         "mergeStrat":"or_",
         "name":"reversible",
         "type":"bool",
         "value":false
-      },
-      {
-        "index":25,
-        "mergeStrat":"max",
-        "name":"flipLimit",
-        "type":"number",
-        "value":0
-      },
-      {
-        "index":28,
-        "mergeStrat":"max",
-        "name":"recoverLimit",
-        "type":"number",
-        "value":0
       },
       {
         "index":23,
@@ -9154,9 +9037,66 @@
         "value":false
       },
       {
+        "index":19,
+        "mergeStrat":"max",
+        "name":"playerID",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":41,
+        "mergeStrat":"max",
+        "name":"defaultLaps",
+        "type":"number",
+        "value":0
+      },
+      {
         "index":18,
         "mergeStrat":"last",
         "name":"playerModel",
+        "type":"string",
+        "value":""
+      },
+      {
+        "index":40,
+        "mergeStrat":"max",
+        "name":"goldTimePenalty",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":38,
+        "mergeStrat":"max",
+        "name":"silverTimePenalty",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":36,
+        "mergeStrat":"max",
+        "name":"bronzeTimePenalty",
+        "type":"number",
+        "value":0
+      },
+      {
+        "index":35,
+        "mergeStrat":"max",
+        "name":"bronzeTimeTotal",
+        "type":"number",
+        "value":0
+      },
+      {
+        "fixedType":false,
+        "index":3,
+        "mergeStrat":"last",
+        "name":"reverse",
+        "type":"bool",
+        "value":false
+      },
+      {
+        "index":8,
+        "mergeStrat":"last",
+        "name":"prefab",
         "type":"string",
         "value":""
       }

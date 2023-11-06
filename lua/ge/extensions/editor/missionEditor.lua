@@ -6,6 +6,7 @@ local M = {}
 local ffi = require("ffi")
 local im = ui_imgui
 local toolWindowName = "mission_editor"
+local logTag = 'aipacenotes_missionEditor'
 M.dependencies = {'gameplay_missions_missions'}
 
 -- form backend
@@ -88,7 +89,7 @@ local function openRallyEditor(shownMission)
 
     local folder = shownMission.missionFolder
     local notebookFname = folder .. '/aipacenotes/notebooks/primary.notebook.json'
-    -- log('D', 'WTF', 'rallyFname='..raceFname)
+    log('D', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
 
     editor_rallyEditor.loadNotebook(notebookFname)
   end

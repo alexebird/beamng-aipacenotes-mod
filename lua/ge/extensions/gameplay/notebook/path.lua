@@ -128,7 +128,7 @@ function C:autoAssignSegments(racePath)
   end
 
   for _,pacenote in ipairs(self.pacenotes.sorted) do
-    local closest_seg_id = findClosestSegmentCenter(pacenote:getCornerStartWaypoint().pos, segment_centers)
+    local closest_seg_id = findClosestSegmentCenter(pacenote:getActiveFwdAudioTrigger().pos, segment_centers)
     pacenote.segment = closest_seg_id
   end
 end

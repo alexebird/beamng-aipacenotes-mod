@@ -808,12 +808,37 @@ function C:drawPacenotesList(notebook)
         {index = self.pacenote_index, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
-    im.Text("Segment: "..note.segment)
+    -- im.Text("Segment: "..note.segment)
 
-    -- self:segmentSelector('Segment','segment', 'Associated Segment')
-    -- for _, seg in pairs(self.path.segments.objects) do
-    --   seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
-    -- end
+    self:segmentSelector('Segment','segment', 'Associated Segment')
+    local racePath = editor_raceEditor.getCurrentPath()
+    local pathnodes = racePath.pathnodes.objects
+    for _, seg in pairs(racePath.segments.objects) do
+      -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
+
+      local from = pathnodes[seg.from]
+      local to = pathnodes[seg.to]
+      local pn_sel = self:selectedPacenote()
+
+      local alpha = 0.6
+      local clr_white = {1,1,1}
+      local clr_red = {1,0,0}
+      local clr = nil
+
+      if seg.id == pn_sel.segment then
+        clr = clr_white
+      else
+        clr = clr_red
+      end
+
+      debugDrawer:drawSquarePrism(
+        from.pos,
+        to.pos,
+        Point2F(10,1),
+        Point2F(10,0.25),
+        ColorF(clr[1],clr[2],clr[3],alpha)
+      )
+    end
 
     im.HeaderText("Languages")
     for i,language in ipairs(self.path:getLanguages()) do
@@ -963,19 +988,24 @@ end
 function C:segmentSelector(name, fieldName, tt)
   if not self.path then return end
 
-  local node = self.path.pacenotes.objects[self.pacenote_index]
-  local objects = self.path.segments.objects
+  local _seg_name = function(seg)
+    return '#'..seg.id .. " - '" .. seg.name.."'"
+  end
 
-  if im.BeginCombo(name..'##'..fieldName, objects[node[fieldName]].name) then
-    if im.Selectable1('#'..0 .. " - None", node[fieldName] == -1) then
+  local racePath = editor_raceEditor.getCurrentPath()
+  local selected_pacenote = self.path.pacenotes.objects[self.pacenote_index]
+  local segments = racePath.segments.objects
+
+  if im.BeginCombo(name..'##'..fieldName, _seg_name(segments[selected_pacenote[fieldName]])) then
+    if im.Selectable1('#'..0 .. " - None", selected_pacenote[fieldName] == -1) then
       editor.history:commitAction("Removed Segment for pacenote",
-        {index = self.pacenote_index, self = self, old = node[fieldName], new = -1, field = fieldName},
+        {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = -1, field = fieldName},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
-    for i, sp in ipairs(self.path.segments.sorted) do
-      if im.Selectable1('#'..i .. " - " .. sp.name, node[fieldName] == sp.id) then
+    for i, sp in ipairs(racePath.segments.sorted) do
+      if im.Selectable1(_seg_name(sp), selected_pacenote[fieldName] == sp.id) then
               editor.history:commitAction("Changed Segment for pacenote",
-        {index = self.pacenote_index, self = self, old = node[fieldName], new = sp.id, field = fieldName},
+        {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = sp.id, field = fieldName},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
       end
     end

@@ -1,8 +1,8 @@
 {
-  "activeGraphId":3,
+  "activeGraphId":1,
   "authors":"birdman",
-  "currentGraphID":3,
-  "date":1697260723,
+  "currentGraphID":1,
+  "date":1699248604,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -48,18 +48,11 @@
           false
         ],
         [
-          20,
-          "notebookName",
+          27,
+          "aipSettings",
           8,
-          "notebookName",
-          false
-        ],
-        [
-          20,
-          "missionDir",
-          8,
-          "missionDir",
-          false
+          "aipSettings",
+          true
         ],
         [
           2,
@@ -104,7 +97,7 @@
           false
         ],
         [
-          30,
+          27,
           "flow",
           16,
           "flow",
@@ -118,7 +111,7 @@
           true
         ],
         [
-          30,
+          27,
           "pathData",
           16,
           "pathData",
@@ -153,13 +146,6 @@
           false
         ],
         [
-          2,
-          "flow",
-          20,
-          "flow",
-          false
-        ],
-        [
           52,
           "flow",
           25,
@@ -174,39 +160,18 @@
           false
         ],
         [
-          17,
-          "note",
-          26,
-          "note",
-          false
-        ],
-        [
-          20,
-          "missionDir",
-          26,
-          "missionDir",
-          false
-        ],
-        [
-          20,
+          2,
           "flow",
-          30,
+          27,
           "flow",
           false
         ],
         [
           2,
           "enterState",
-          30,
+          27,
           "reset",
-          false
-        ],
-        [
-          20,
-          "rallyFile",
-          30,
-          "file",
-          false
+          true
         ],
         [
           2,
@@ -362,19 +327,18 @@
           "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
+              "aipSettings":false,
               "damage":false,
               "enqueue":false,
               "flow":false,
-              "missionDir":false,
               "note":false,
-              "notebookName":false,
               "reset":false
             },
             "p_out":{}
           },
           "pos":[
-            2404,
-            288
+            2474,
+            218
           ],
           "type":"gameplay/race/aiPacenotesEnqueueAudio"
         },
@@ -415,8 +379,8 @@
             "p_out":{}
           },
           "pos":[
-            -74,
-            92
+            -298,
+            -20
           ],
           "type":"gameplay/race/aiPacenotesRallyEditorGizmos"
         },
@@ -527,29 +491,6 @@
           ],
           "type":"gameplay/race/racePacenoteReached"
         },
-        "20":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false
-            },
-            "p_out":{
-              "active":false,
-              "flow":false,
-              "inactive":false,
-              "missionDir":false,
-              "notebookName":false,
-              "rallyFile":false,
-              "unavailable":false
-            }
-          },
-          "pos":[
-            318,
-            288
-          ],
-          "type":"gameplay/race/aiPacenotesInfo"
-        },
         "21":{
           "data":{},
           "dynamicMode":"repeat",
@@ -609,52 +550,39 @@
           ],
           "type":"logic/compare"
         },
-        "26":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "missionDir":false,
-              "note":false,
-              "version":false,
-              "volume":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            2096,
-            50
-          ],
-          "type":"gameplay/race/aiPacenotesPlayPacenote"
-        },
-        "30":{
+        "27":{
           "data":{},
           "dynamicMode":"once",
+          "hardcodedPins":{
+            "raceFname":{
+              "type":"string",
+              "value":"race.race.json"
+            }
+          },
           "hiddenPins":{
             "p_in":{
-              "reverse":false,
-              "file":false,
               "flow":false,
+              "raceFname":false,
               "reset":false
             },
             "p_out":{
+              "aipSettings":false,
               "branching":true,
               "checkpointCount":true,
               "closed":true,
-              "desc":false,
+              "desc":true,
               "flow":false,
               "laps":true,
-              "name":false,
+              "name":true,
               "pathData":false,
               "recoveryCount":true
             }
           },
           "pos":[
-            690,
-            78
+            410,
+            92
           ],
-          "type":"gameplay/race/aiPacenotesFilePath"
+          "type":"gameplay/race/aiPacenotesLoader"
         },
         "34":{
           "data":{},
@@ -927,26 +855,26 @@
         ],
         "list":[
           {
-            "index":1,
-            "mergeStrat":"or_",
-            "name":"lastGetPause",
-            "type":"bool",
-            "value":true
-          },
-          {
             "index":2,
             "mergeStrat":"max",
             "name":"currentDamage",
             "type":"number",
             "value":0
+          },
+          {
+            "index":1,
+            "mergeStrat":"or_",
+            "name":"lastGetPause",
+            "type":"bool",
+            "value":true
           }
         ]
       },
       "viewPos":[
-        -291.79159545898437500000,
-        -100.55786132812500000000
+        -0.00006103515625000000,
+        0
       ],
-      "viewZoom":0.50000000000000000000
+      "viewZoom":1
     },
     "3":{
       "description":"This is the description for graph States",
@@ -954,14 +882,14 @@
       "isStateGraph":true,
       "links":[
         [
-          37,
+          11,
           "success",
           4,
           "flow",
           false
         ],
         [
-          11,
+          37,
           "success",
           4,
           "flow",
@@ -1165,8 +1093,8 @@
         "list":{}
       },
       "viewPos":[
-        -200,
-        -200
+        0,
+        0
       ],
       "viewZoom":1
     },
