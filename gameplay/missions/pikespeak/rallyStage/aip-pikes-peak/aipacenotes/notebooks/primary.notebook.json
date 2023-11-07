@@ -2201,7 +2201,7 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
-      "segment":20
+      "segment":21
     },
     {
       "name":"Pacenote 38",
@@ -3419,7 +3419,7 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
-      "segment":23
+      "segment":22
     },
     {
       "name":"Pacenote 59",
@@ -3477,7 +3477,7 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
-      "segment":23
+      "segment":22
     },
     {
       "name":"Pacenote 60",
@@ -3873,7 +3873,7 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
-      "segment":23
+      "segment":24
     },
     {
       "name":"Pacenote 66",
@@ -3931,7 +3931,7 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
-      "segment":23
+      "segment":24
     },
     {
       "name":"Pacenote 67",
@@ -3989,7 +3989,7 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
-      "segment":23
+      "segment":24
     },
     {
       "name":"Pacenote 68",
@@ -4473,7 +4473,7 @@
           "pos":[
             -845.8865356,
             -1433.168579,
-            1070.204102
+            1068.940063
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -4531,7 +4531,7 @@
           "pos":[
             -824.1873169,
             -1433.111206,
-            1079.99939
+            1070.567993
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -4937,7 +4937,7 @@
           "pos":[
             -980.1817627,
             -1723.568726,
-            1174.486084
+            1166.021973
           ],
           "radius":10,
           "waypointType":"cornerStart"
