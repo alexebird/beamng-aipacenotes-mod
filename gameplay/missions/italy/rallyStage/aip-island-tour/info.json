@@ -1,13 +1,14 @@
 {
   "additionalAttributes":{
-    "difficulty":"high",
-    "vehicle":"own"
+    "vehicle":"choice"
   },
   "author":"birdman",
   "careerSetup":{
     "defaultStarKeys":{},
     "showInFreeroam":true,
-    "starOutroTexts":{},
+    "starOutroTexts":{
+      "noStarUnlocked":"Have another go?"
+    },
     "starRewards":{},
     "starsActive":{}
   },
@@ -16,8 +17,8 @@
   "description":"Rally version of Italy's Island Tour time trial.",
   "devMission":false,
   "grouping":{
-    "id":"ai-pacenotes",
-    "label":"AI Pacenotes"
+    "id":"",
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
@@ -37,14 +38,21 @@
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
-      "enabled":false
+      "enabled":true,
+      "time":0.1666666667
     },
     "traffic":{
       "enabled":false
     },
     "vehicles":{
       "enabled":true,
-      "mode":"own"
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"asphalt_SQ",
+      "playerConfigPath":"vehicles/vivace/asphalt_SQ.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"Cold Steel",
+      "usePresetVehicle":true
     }
   },
   "startCondition":{

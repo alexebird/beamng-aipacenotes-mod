@@ -12,11 +12,11 @@
   },
   "customAdditionalAttributes":{},
   "date":1697263620,
-  "description":"Mission Description for pikespeak/rallyStage/aip-pikes-peak",
+  "description":"Same old classic, now with pacenotes!",
   "devMission":false,
   "grouping":{
     "id":"",
-    "label":"AI Pacenotes"
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
@@ -49,7 +49,8 @@
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
-      "enabled":false
+      "enabled":true,
+      "time":0.125
     },
     "traffic":{
       "enabled":false

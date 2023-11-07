@@ -1,13 +1,10 @@
 {
   "additionalAttributes":{
-    "difficulty":"high",
     "vehicle":"choice"
   },
   "author":"birdman",
   "careerSetup":{
-    "defaultStarKeys":[
-      "goldTime"
-    ],
+    "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
       "silverTime":"",
@@ -18,7 +15,7 @@
     "starRewards":{},
     "starsActive":{
       "bronzeTime":false,
-      "goldTime":true,
+      "goldTime":false,
       "silverTime":false
     }
   },
@@ -27,8 +24,8 @@
   "description":"Counter-clockwise run around the island's outer loop.",
   "devMission":false,
   "grouping":{
-    "id":"ai-pacenotes",
-    "label":"AI Pacenotes"
+    "id":"",
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
@@ -36,11 +33,11 @@
     "allowRollingStart":false,
     "bronzeTime":165,
     "closed":true,
-    "defaultLaps":1,
+    "defaultLaps":2,
     "endScreenText":"Nice driving!",
     "goldTime":154.7839966,
     "mapPreviewMode":"navgraph",
-    "reversible":true,
+    "reversible":false,
     "silverTime":162.5,
     "startScreenText":"How many racecars will you destroy today?"
   },
@@ -48,8 +45,7 @@
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
-      "enabled":true,
-      "time":0.2291666667
+      "enabled":false
     },
     "traffic":{
       "enabled":false
@@ -58,10 +54,10 @@
       "enabled":true,
       "isCustomConfig":false,
       "mode":"choice",
-      "playerConfig":"rally car - off road",
-      "playerConfigPath":"vehicles/vivace/rally car - off road.pc",
+      "playerConfig":"gravel_SQ",
+      "playerConfigPath":"vehicles/vivace/gravel_SQ.pc",
       "playerModel":"vivace",
-      "playerPaintName":"",
+      "playerPaintName":"Vert Cactus",
       "usePresetVehicle":true
     }
   },

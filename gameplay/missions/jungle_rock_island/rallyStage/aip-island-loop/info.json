@@ -1,13 +1,10 @@
 {
   "additionalAttributes":{
-    "difficulty":"high",
-    "vehicle":"own"
+    "vehicle":"choice"
   },
   "author":"birdman",
   "careerSetup":{
-    "defaultStarKeys":[
-      "goldTime"
-    ],
+    "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
       "goldTime":"Way to go!",
@@ -15,7 +12,7 @@
     },
     "starRewards":{},
     "starsActive":{
-      "goldTime":true
+      "goldTime":false
     }
   },
   "customAdditionalAttributes":{},
@@ -23,15 +20,15 @@
   "description":"A Jungle-y tarmac race.",
   "devMission":false,
   "grouping":{
-    "id":"ai-pacenotes",
-    "label":"AI Pacenotes"
+    "id":"",
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
   "missionTypeData":{
     "allowRollingStart":false,
     "bronzeTime":180,
-    "closed":false,
+    "closed":true,
     "defaultLaps":1,
     "endScreenText":"Nice driving!",
     "goldTime":159.9900055,
@@ -44,14 +41,21 @@
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
-      "enabled":false
+      "enabled":true,
+      "time":0.8333333333
     },
     "traffic":{
       "enabled":false
     },
     "vehicles":{
       "enabled":true,
-      "mode":"own"
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"asphalt_SQ",
+      "playerConfigPath":"vehicles/vivace/asphalt_SQ.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"Rouge Bordeaux",
+      "usePresetVehicle":true
     }
   },
   "startCondition":{

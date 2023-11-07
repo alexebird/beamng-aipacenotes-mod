@@ -1,13 +1,10 @@
 {
   "additionalAttributes":{
-    "difficulty":"high",
-    "vehicle":"own"
+    "vehicle":"choice"
   },
   "author":"birdman",
   "careerSetup":{
-    "defaultStarKeys":[
-      "goldTime"
-    ],
+    "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
       "silverTime":"",
@@ -18,7 +15,7 @@
     "starRewards":{},
     "starsActive":{
       "bronzeTime":false,
-      "goldTime":true,
+      "goldTime":false,
       "silverTime":false
     }
   },
@@ -27,8 +24,8 @@
   "description":"Tarmac stage along a winding canyon road, with a fast finish.",
   "devMission":false,
   "grouping":{
-    "id":"ai-pacenotes",
-    "label":"AI Pacenotes"
+    "id":"",
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
@@ -55,7 +52,13 @@
     },
     "vehicles":{
       "enabled":true,
-      "mode":"own"
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"asphalt_SQ",
+      "playerConfigPath":"vehicles/vivace/asphalt_SQ.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"Deep Plum",
+      "usePresetVehicle":true
     }
   },
   "startCondition":{

@@ -209,7 +209,7 @@ function C:getWorldPreviewRoute()
       return self.cachedWorldPreviewRoute
     end
     -- load path from file
-    local path = require('/lua/ge/extensions/gameplay/rally/path')("New Path")
+    local path = require('/lua/ge/extensions/gameplay/race/path')("New Path")
     path:onDeserialized(readJsonFile(self.missionFolder.."/race.race.json"))
     path:autoConfig()
     local ret = {}

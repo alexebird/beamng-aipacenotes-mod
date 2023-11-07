@@ -1,13 +1,10 @@
 {
   "additionalAttributes":{
-    "difficulty":"high",
-    "vehicle":"own"
+    "vehicle":"choice"
   },
   "author":"birdman",
   "careerSetup":{
-    "defaultStarKeys":[
-      "goldTime"
-    ],
+    "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
       "silverTime":"",
@@ -18,7 +15,7 @@
     "starRewards":{},
     "starsActive":{
       "bronzeTime":false,
-      "goldTime":true,
+      "goldTime":false,
       "silverTime":false
     }
   },
@@ -27,8 +24,8 @@
   "description":"Counter-clockwise run around the island's outer loop.",
   "devMission":false,
   "grouping":{
-    "id":"ai-pacenotes",
-    "label":"AI Pacenotes"
+    "id":"",
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
@@ -55,7 +52,13 @@
     },
     "vehicles":{
       "enabled":true,
-      "mode":"own"
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"gravel_SQ",
+      "playerConfigPath":"vehicles/vivace/gravel_SQ.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"Vert Cactus",
+      "usePresetVehicle":true
     }
   },
   "startCondition":{

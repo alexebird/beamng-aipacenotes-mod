@@ -1,13 +1,10 @@
 {
   "additionalAttributes":{
-    "difficulty":"high",
-    "vehicle":"own"
+    "vehicle":"choice"
   },
   "author":"birdman",
   "careerSetup":{
-    "defaultStarKeys":[
-      "goldTime"
-    ],
+    "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
       "silverTime":"I'm listening...",
@@ -17,9 +14,10 @@
     },
     "starRewards":{},
     "starsActive":{
+      "silverTime":false,
       "bronzeTime":false,
-      "goldTime":true,
-      "silverTime":false
+      "goldTime":false,
+      "justFinish":false
     }
   },
   "customAdditionalAttributes":{},
@@ -27,8 +25,8 @@
   "description":"Mostly dirt stage with expected time around 3:00.",
   "devMission":false,
   "grouping":{
-    "id":"ai-pacenotes",
-    "label":"AI Pacenotes"
+    "id":"",
+    "label":""
   },
   "isAvailableAsScenario":true,
   "missionType":"rallyStage",
@@ -55,7 +53,13 @@
     },
     "vehicles":{
       "enabled":true,
-      "mode":"own"
+      "isCustomConfig":false,
+      "mode":"choice",
+      "playerConfig":"gravel_SQ",
+      "playerConfigPath":"vehicles/vivace/gravel_SQ.pc",
+      "playerModel":"vivace",
+      "playerPaintName":"Rouge Carmin",
+      "usePresetVehicle":true
     }
   },
   "startCondition":{
