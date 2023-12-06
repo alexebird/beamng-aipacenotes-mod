@@ -1,0 +1,25 @@
+{
+  "diagnostics": {
+    "globals": [
+      "cameraMouseRayCast",
+      "core_camera",
+      "core_forest",
+      "editor",
+      "editor_fileDialog",
+      "extensions",
+      "getCameraMouseRay",
+      "jsonWriteFile",
+      "log",
+      "nop",
+      "dumps",
+      "path",
+      "readJsonFile",
+      "ui_imgui",
+      "vec3",
+      "ffi",
+      "debugDrawer",
+      "ColorF",
+      "scenetree",
+    ]
+  }
+}

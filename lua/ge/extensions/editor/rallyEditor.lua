@@ -486,6 +486,7 @@ local function onEditorInitialized()
 
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/import')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/options')(M))
 
   -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/segments')(M))
@@ -496,7 +497,7 @@ local function onEditorInitialized()
   -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
   -- testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
   -- pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7]
-  notebookInfoWindow, pacenotesWindow, optionsWindow = windows[1], windows[2], windows[3]
+  notebookInfoWindow, pacenotesWindow, importWindow, optionsWindow = windows[1], windows[2], windows[3], windows[4]
 
   currentWindow = notebookInfoWindow
 
