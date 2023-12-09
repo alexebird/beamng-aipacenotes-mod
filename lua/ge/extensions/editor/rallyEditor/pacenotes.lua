@@ -49,12 +49,18 @@ local function selectWaypointRedo(data)
   data.self:selectWaypoint(data.new)
 end
 
+local dragModes = {
+  simple = 'simple',
+  simple_road_snap = 'simple_road_snap',
+  gizmo = 'gizmo',
+}
+
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.pacenote_index = nil
   self.waypoint_index = nil
   self.mouseInfo = {}
-  self._road_snap = false
+  self.dragMode = dragModes.simple
 end
 
 function C:setPath(path)
@@ -88,7 +94,8 @@ function C:selected()
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Snap to Road"
+  -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Free Edit with Gizmo"
+  -- editor.editModes.notebookEditMode.auxShortcuts["g"] = "Cycle Drag MMode"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = "Delete"
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
@@ -103,7 +110,7 @@ function C:unselect()
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
+  -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = nil
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
@@ -113,7 +120,6 @@ function C:selectPacenote(id)
   if not self.path then return end
   if not self.path.pacenotes then return end
 
-  -- log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
 
   -- find the pacenotes before and after the selected one.
@@ -124,7 +130,6 @@ function C:selectPacenote(id)
       local nextNote = pacenotesSorted[i+1]
       note:setAdjacentNotes(prevNote, nextNote)
     else
-      -- note._drawMode = self.waypoint_index and 'undistract' or 'normal'
       note:clearAdjacentNotes()
     end
   end
@@ -134,34 +139,21 @@ function C:selectPacenote(id)
     local note = self.path.pacenotes.objects[id]
     pacenoteNameText = im.ArrayChar(1024, note.name)
   else
-    -- for _,note in pairs(self.path.pacenotes.objects) do
-      -- note._drawmode = 'normal'
-    -- end
     pacenoteNameText = im.ArrayChar(1024, "")
   end
 end
 
 function C:selectWaypoint(id)
-  -- log('D', 'wtf', 'begin select waypoint')
   if not self.path then return end
-  -- log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
 
-  -- for _, wp in pairs(self.path:allWaypoints()) do
-    -- wp._drawMode = (id == wp.id) and 'highlight' or 'normal'
-    -- log('D', 'wtf', 'waypoint['..wp.id..']: drawMode set to '..wp._drawMode)
-  -- end
-
   if id then
-    -- local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
     local waypoint = self.path:getWaypoint(id)
-    -- log('D', 'wtf', dumps(id))
     self:selectPacenote(waypoint.pacenote.id)
     waypointNameText = im.ArrayChar(1024, waypoint.name)
-    self:updateTransform(id)
+    self:updateGizmoTransform(id)
   else
     waypointNameText = im.ArrayChar(1024, "")
-    -- self:selectPacenote(nil)
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
     self:resetGizmoTransformAtOrigin()
@@ -169,7 +161,6 @@ function C:selectWaypoint(id)
 end
 
 function C:resetGizmoTransformAtOrigin()
-  -- if not self.rallyEditor.allowGizmo() then return end
   local rotation = QuatF(0,0,0,1)
   local transform = rotation:getMatrix()
   local pos = {0, 0, 0}
@@ -177,7 +168,7 @@ function C:resetGizmoTransformAtOrigin()
   editor.setAxisGizmoTransform(transform)
 end
 
-function C:updateTransform(index)
+function C:updateGizmoTransform(index)
   if not self.rallyEditor.allowGizmo() then return end
 
   local wp = self.path:getWaypoint(index)
@@ -199,7 +190,6 @@ end
 
 function C:beginDrag()
   if not self:selectedPacenote() then return end
-  -- log('D', 'wtf', 'beginDrag')
   local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
   if not wp or wp.missing then return end
 
@@ -211,19 +201,19 @@ function C:beginDrag()
 
   self.beginDragRadius = wp.radius
 
-  if wp.mode == 'navgraph' then
-    self.beginDragRadius = wp.navRadiusScale
-  end
+  -- if wp.mode == 'navgraph' then
+  --   self.beginDragRadius = wp.navRadiusScale
+  -- end
 end
 
 function C:dragging()
   if not self:selectedPacenote() then return end
-  -- log('D', 'wtf', 'dragging')
   local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
   if not wp or wp.missing then return end
 
   -- update/save our gizmo matrix
   if editor.getAxisGizmoMode() == editor.AxisGizmoMode_Translate then
+    -- log('D', 'wtf', dumps(editor.getAxisGizmoTransform():getPosition()))
     wp.pos = vec3(editor.getAxisGizmoTransform():getColumn(3))
   elseif editor.getAxisGizmoMode() == editor.AxisGizmoMode_Rotate then
     local gizmoTransform = editor.getAxisGizmoTransform()
@@ -276,14 +266,8 @@ function C:endDragging()
     end)
 end
 
-function C:onEditModeActivate()
-  -- if self.note then
-  --   self:selectPacenote(self.note.id)
-  -- end
-  -- if self.notebook_index then
-    -- self:selectNotebook(self.notebook_index)
-  -- end
-end
+-- function C:onEditModeActivate()
+-- end
 
 function C:drawDebugNotebookEntrypoint()
   if self.path then
@@ -292,22 +276,20 @@ function C:drawDebugNotebookEntrypoint()
 end
 
 function C:draw(mouseInfo)
-  -- self:drawDebugNotebookEntrypoint()
-
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
-    editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
+    if self.dragMode == dragModes.gizmo then
+      editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
+    end
     self:input()
   end
 
+  -- draw the non-viewport GUI
   self:drawPacenotesList()
 
-  if self._road_snap then
+  if self.dragMode == dragModes.simple_road_snap then
     self.rallyEditor.getOptionsWindow():drawSnapRoad()
   end
-end
-
-function C:dragWithRoadSnap()
 end
 
 function C:createManualWaypoint(shouldCreateNewPacenote)
@@ -430,7 +412,6 @@ end
 function C:mouseOverWaypoints()
   if not self.path then return end
   if not self.path.pacenotes then return end
-  -- if self:selectedPacenote().missing then return end
 
   local minNoteDist = 4294967295
   local closestWp = nil
@@ -468,25 +449,6 @@ function C:mouseOverWaypoints()
       end
     end
   end
-
-  -- for idx, waypoint in pairs(self:selectedPacenote().pacenoteWaypoints.objects) do
-  --   -- use the corner start marker to represent pacenotes for mouse select purposes.
-  --   -- local waypoint = wp:getCornerStartWaypoint()
-  --
-  --   local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
-  --   local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
-  --   local sphereRadius = waypoint.radius
-  --   if noteRayDistance <= sphereRadius then
-  --     if distNoteToCam < minNoteDist then
-  --       minNoteDist = distNoteToCam
-  --       closestWp = waypoint
-  --     end
-  --   end
-  -- end
-
-  -- if not closestWp then
-    -- log('E', 'wtf', 'closestWP is nil')
-  -- end
 
   return closestWp
 end
@@ -555,64 +517,103 @@ function C:setHover(wp)
   -- end
 end
 
+function C:helpDrawGizmo()
+  if self:selectedWaypoint() then
+    -- only draw the axis gizmo if there is a selected waypoint
+    if self.rallyEditor.allowGizmo() then
+      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
+        self:resetGizmoTransformAtOrigin()
+      elseif self.dragMode == dragModes.gizmo then
+        self:updateGizmoTransform(self.waypoint_index)
+        editor.drawAxisGizmo()
+      end
+    end
+  end
+end
+
+-- returns new position for the drag, and another position for orienting the normal perpendicularly.
+function C:wpPosForSimpleDrag(wp, mouse_pos)
+  if self.dragMode == dragModes.simple and wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+    local otherWp = wp.pacenote:getCornerStartWaypoint()
+    if otherWp then
+      return mouse_pos, otherWp.pos
+    else
+      return mouse_pos, nil
+    end
+  elseif self.dragMode == dragModes.simple_road_snap then
+    return self.rallyEditor:getOptionsWindow():closestSnapPos(mouse_pos)
+  else
+    return mouse_pos, nil
+  end
+end
+
+function C:performSimpleDrag()
+  local mouse_pos = self.mouseInfo._holdPos
+  -- this sphere indicates the drag cursor
+  -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
+
+  local wp_sel = self:selectedWaypoint()
+  if wp_sel then
+    if self.mouseInfo.rayCast then
+      local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos)
+      if new_pos then
+        wp_sel.pos = new_pos
+        if normal_align_pos then
+          local rv = calculateForwardNormal(new_pos, normal_align_pos)
+          wp_sel.normal = vec3(rv.x, rv.y, rv.z)
+        end
+      end
+    end
+  end
+end
+
 function C:input()
   if not self.mouseInfo.valid then
-    -- log('E', 'wtf', 'mouseInfo is not valid')
     return
   end
 
-  -- log('D', 'wtf', dumps(self.mouseInfo))
-
-  self._road_snap = false
-  if editor.keyModifiers.alt then
-    self._road_snap = true
-  end
+  self:helpDrawGizmo()
 
   if editor.keyModifiers.shift then
-    self:createManualWaypoint(false)
+    local shouldCreateNewPacenote = false
+    self:createManualWaypoint(shouldCreateNewPacenote)
   elseif editor.keyModifiers.ctrl then
-    self:createManualWaypoint(true)
+    local shouldCreateNewPacenote = true
+    self:createManualWaypoint(shouldCreateNewPacenote)
   else
-    self:clearHover()
-    local selectedWp = self:mouseOverWaypoints()
+    if not editor.isAxisGizmoHovered() then
+      -- if the gizmo is hovered, then dont do any of this, since the gizmo takes precedence for capturing mouse interactions.
 
-    if self.mouseInfo.down and not editor.isAxisGizmoHovered() then
-      if selectedWp then
-        local selectedPn = selectedWp.pacenote
-        if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
-          self:selectWaypoint(selectedWp.id)
-        elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
-          self:selectPacenote(selectedPn.id)
-        end
-      else
-        if self:selectedWaypoint() then
-          self:selectWaypoint(nil)
+      self:clearHover()
+      local selectedWp = self:mouseOverWaypoints()
+
+      if self.mouseInfo.down then
+        -- dragMode is anything and the mouse is down.
+        -- this handles clicking and selecting pacenotes and waypoints.
+
+        if selectedWp then
+          local selectedPn = selectedWp.pacenote
+          if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
+            self:selectWaypoint(selectedWp.id)
+          elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
+            self:selectPacenote(selectedPn.id)
+          end
         else
-          self:selectPacenote(nil)
-        end
-      end
-    elseif self._road_snap and self.mouseInfo.hold and not editor.isAxisGizmoHovered() then
-      -- log("D", 'wtf', dumps(self.mouseInfo._holdPos))
-      local new_pos = self.mouseInfo._holdPos
-      debugDrawer:drawSphere((new_pos), 2, ColorF(1,0,0,1.0))
-      local wp_sel = self:selectedWaypoint()
-      if wp_sel then
-        if self.mouseInfo.rayCast then
-          local snap_pos, next_pos = self.rallyEditor:getOptionsWindow():closestSnapPos(new_pos)
-          if snap_pos then
-            wp_sel.pos = snap_pos
-            if next_pos then
-              local rv = calculateForwardNormal(snap_pos, next_pos)
-              wp_sel.normal = vec3(rv.x, rv.y, rv.z)
-              -- local normalTip = wp_sel.pos + wp_sel.normal*wp_sel.radius
-              -- normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
-              -- wp_sel.normal = normalTip
-            end
+          -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
+          -- you must click twice to deselect everything.
+          if self:selectedWaypoint() then
+            self:selectWaypoint(nil)
+          else
+            self:selectPacenote(nil)
           end
         end
+      elseif (self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap) and self.mouseInfo.hold then
+        -- mode is simple_road_snap and mouse is being held down.
+        self:performSimpleDrag()
+      elseif not self.mouseInfo.hold and not self.mouseInfo.up and not self.mouseInfo.down then
+        -- the mouse is hovering over a waypoint without any other interactions.
+        self:setHover(selectedWp)
       end
-    elseif not self.mouseInfo.hold and not self.mouseInfo.up and not self.mouseInfo.down and not editor.isAxisGizmoHovered() then
-      self:setHover(selectedWp)
     end
   end
 end
@@ -653,11 +654,11 @@ local function setPacenoteFieldRedo(data)
 end
 local function setWaypointFieldUndo(data)
   data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.old
-  data.self:updateTransform(data.index)
+  data.self:updateGizmoTransform(data.index)
 end
 local function setWaypointFieldRedo(data)
   data.self:selectedPacenote().pacenoteWaypoints.objects[data.index][data.field] = data.new
-  data.self:updateTransform(data.index)
+  data.self:updateGizmoTransform(data.index)
 end
 
 local function setWaypointNormalUndo(data)
@@ -665,14 +666,14 @@ local function setWaypointNormalUndo(data)
   if wp then
     wp:setNormal(data.old)
   end
-  data.self:updateTransform(data.index)
+  data.self:updateGizmoTransform(data.index)
 end
 local function setWaypointNormalRedo(data)
   local wp = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]
   if wp and not wp.missing then
     wp:setNormal(data.new)
   end
-  data.self:updateTransform(data.index)
+  data.self:updateGizmoTransform(data.index)
 end
 
 function C:deleteSelected()
@@ -724,7 +725,6 @@ function C:deleteSelectedPacenote()
 end
 
 function C:selectPrevPacenote()
-  log('D', logTag, 'hello world: prev')
   local notebook = self.path
   local curr = notebook.pacenotes.objects[self.pacenote_index]
   if curr and not curr.missing then
@@ -746,7 +746,6 @@ function C:selectPrevPacenote()
 end
 
 function C:selectNextPacenote()
-  log('D', logTag, 'hello world: next')
   local notebook = self.path
   local curr = notebook.pacenotes.objects[self.pacenote_index]
   if curr and not curr.missing then
@@ -765,6 +764,20 @@ function C:selectNextPacenote()
   if self.rallyEditor:getOptionsWindow():getPrefTopDownCameraFollow() then
     self:setCameraToPacenote()
   end
+end
+
+function C:cycleDragMode()
+  self:resetGizmoTransformAtOrigin()
+
+  if self.dragMode == dragModes.simple then
+    self.dragMode = dragModes.simple_road_snap
+  elseif self.dragMode == dragModes.simple_road_snap then
+    self.dragMode = dragModes.gizmo
+  elseif self.dragMode == dragModes.gizmo then
+    self.dragMode = dragModes.simple
+  end
+
+  log('D', logTag, 'cycle dragMode to '..self.dragMode)
 end
 
 function C:drawDebugSegments()
@@ -925,88 +938,76 @@ function C:drawWaypointList(note)
 
   if self.waypoint_index then
     local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
-
     if not waypoint.missing then
-
-    -- only draw the axis gizmo if there is a selected waypoint
-    if self.rallyEditor.allowGizmo() then
-      if self._road_snap then
-        self:resetGizmoTransformAtOrigin()
-      else
-        self:updateTransform(self.waypoint_index)
-        editor.drawAxisGizmo()
+      im.HeaderText("Waypoint Info")
+      im.Text("Current Waypoint: #" .. self.waypoint_index)
+      im.SameLine()
+      if im.Button("Delete") then
+        self:deleteSelectedWaypoint()
       end
-    end
-
-    im.HeaderText("Waypoint Info")
-    im.Text("Current Waypoint: #" .. self.waypoint_index)
-    im.SameLine()
-    if im.Button("Delete") then
-      self:deleteSelectedWaypoint()
-    end
-    im.SameLine()
-    if im.Button("Move Up") then
-      editor.history:commitAction("Move Pacenote Waypoint in List",
-        {index = self.waypoint_index, self = self, dir = -1},
-        moveWaypointUndo, moveWaypointRedo)
-    end
-    im.SameLine()
-    if im.Button("Move Down") then
-      editor.history:commitAction("Move Pacenote Waypoint in List",
-        {index = self.waypoint_index, self = self, dir = 1},
-        moveWaypointUndo, moveWaypointRedo)
-    end
-
-    local editEnded = im.BoolPtr(false)
-    editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)
-    if editEnded[0] then
-      editor.history:commitAction("Change Name of Waypoint",
-        {index = self.waypoint_index, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'name'},
-        setWaypointFieldUndo, setWaypointFieldRedo)
-    end
-
-    self:waypointTypeSelector(note)
-
-    waypointPosition[0] = waypoint.pos.x
-    waypointPosition[1] = waypoint.pos.y
-    waypointPosition[2] = waypoint.pos.z
-    if im.InputFloat3("Position", waypointPosition, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
-      editor.history:commitAction("Change note Position",
-        {index = self.waypoint_index, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
-        setWaypointFieldUndo, setWaypointFieldRedo)
-    end
-    if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
-      editor.history:commitAction("Drop Note to Ground",
-        {index = self.waypoint_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
-        setWaypointFieldUndo, setWaypointFieldRedo)
-    end
-    waypointRadius[0] = waypoint.radius
-    if im.InputFloat("Radius",waypointRadius, 0.1, 0.5, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
-      if waypointRadius[0] < 0 then
-        waypointRadius[0] = 0
+      im.SameLine()
+      if im.Button("Move Up") then
+        editor.history:commitAction("Move Pacenote Waypoint in List",
+          {index = self.waypoint_index, self = self, dir = -1},
+          moveWaypointUndo, moveWaypointRedo)
       end
-      editor.history:commitAction("Change Note Size",
-        {index = self.waypoint_index, old = waypoint.radius, new = waypointRadius[0], self = self, field = 'radius'},
-        setWaypointFieldUndo, setWaypointFieldRedo)
-    end
+      im.SameLine()
+      if im.Button("Move Down") then
+        editor.history:commitAction("Move Pacenote Waypoint in List",
+          {index = self.waypoint_index, self = self, dir = 1},
+          moveWaypointUndo, moveWaypointRedo)
+      end
 
-    waypointNormal[0] = waypoint.normal.x
-    waypointNormal[1] = waypoint.normal.y
-    waypointNormal[2] = waypoint.normal.z
-    if im.InputFloat3("Normal", waypointNormal, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
-      editor.history:commitAction("Change Normal",
-        {index = self.waypoint_index, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
-        setWaypointNormalUndo, setWaypointNormalRedo)
-    end
-    if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
-      local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
-      normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
-      editor.history:commitAction("Align Normal with Terrain",
-        {index = self.waypoint_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
-        setWaypointNormalUndo, setWaypointNormalRedo)
-    end
+      local editEnded = im.BoolPtr(false)
+      editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)
+      if editEnded[0] then
+        editor.history:commitAction("Change Name of Waypoint",
+          {index = self.waypoint_index, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'name'},
+          setWaypointFieldUndo, setWaypointFieldRedo)
+      end
 
-    end -- / if waypoint
+      self:waypointTypeSelector(note)
+
+      waypointPosition[0] = waypoint.pos.x
+      waypointPosition[1] = waypoint.pos.y
+      waypointPosition[2] = waypoint.pos.z
+      if im.InputFloat3("Position", waypointPosition, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
+        editor.history:commitAction("Change note Position",
+          {index = self.waypoint_index, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
+          setWaypointFieldUndo, setWaypointFieldRedo)
+      end
+      if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
+        editor.history:commitAction("Drop Note to Ground",
+          {index = self.waypoint_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
+          setWaypointFieldUndo, setWaypointFieldRedo)
+      end
+      waypointRadius[0] = waypoint.radius
+      if im.InputFloat("Radius",waypointRadius, 0.1, 0.5, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
+        if waypointRadius[0] < 0 then
+          waypointRadius[0] = 0
+        end
+        editor.history:commitAction("Change Note Size",
+          {index = self.waypoint_index, old = waypoint.radius, new = waypointRadius[0], self = self, field = 'radius'},
+          setWaypointFieldUndo, setWaypointFieldRedo)
+      end
+
+      waypointNormal[0] = waypoint.normal.x
+      waypointNormal[1] = waypoint.normal.y
+      waypointNormal[2] = waypoint.normal.z
+      if im.InputFloat3("Normal", waypointNormal, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
+        editor.history:commitAction("Change Normal",
+          {index = self.waypoint_index, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
+          setWaypointNormalUndo, setWaypointNormalRedo)
+      end
+      if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
+        local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
+        normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
+        editor.history:commitAction("Align Normal with Terrain",
+          {index = self.waypoint_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
+          setWaypointNormalUndo, setWaypointNormalRedo)
+      end
+
+    end -- / if not waypoint.missing
   end -- / if waypoint_index
   im.EndChild() -- currentWaypoint child window
 end

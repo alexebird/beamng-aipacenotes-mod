@@ -80,21 +80,21 @@ function C:onDeserialized(data, oldIdMap)
   self:setManual(vec3(data.pos), data.radius, vec3(data.normal))
 end
 
-function C:setNavgraph(navgraphName, fallback)
-  self.mode = "navgraph"
-  self.navgraphName = navgraphName
-  local n = map.getMap().nodes[navgraphName]
-  if n then
-    self.pos = n.pos
-    self.radius = n.radius * self.navRadiusScale
-  else
-    if fallback then
-      self.pos = fallback.pos
-      self.radius = fallback.radius * self.navRadiusScale
-    end
-  end
-  self:setNormal(nil)
-end
+-- function C:setNavgraph(navgraphName, fallback)
+--   self.mode = "navgraph"
+--   self.navgraphName = navgraphName
+--   local n = map.getMap().nodes[navgraphName]
+--   if n then
+--     self.pos = n.pos
+--     self.radius = n.radius * self.navRadiusScale
+--   else
+--     if fallback then
+--       self.pos = fallback.pos
+--       self.radius = fallback.radius * self.navRadiusScale
+--     end
+--   end
+--   self:setNormal(nil)
+-- end
 
 -- function C:inside(pos)
 --   local inside = (pos-self.pos):length() <= self.radius
@@ -217,6 +217,11 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 
   -- if false, no other 3d objects seem to cause clipping, such as the terrain.
   local clipArg1 = true
+
+  if self:shouldDrawArrow() then
+    -- make the arrow a little easier to see
+    shapeAlpha = shapeAlpha * 0.9
+  end
 
   debugDrawer:drawSphere((self.pos),
     self.radius,

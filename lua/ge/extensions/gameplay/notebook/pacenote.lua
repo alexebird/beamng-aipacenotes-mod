@@ -272,7 +272,10 @@ local function textForDrawDebug(wp, cs_prefix, note_text, dist_text)
   return txt
 end
 
-local function drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+local function drawWaypoint(wp, wp_drawMode, note_text, dist_text,
+                            hover_wp_id, selected_wp_id,
+                            shapeAlpha, textAlpha)
+
   if not wp then return end
 
   local hover = hover_wp_id and hover_wp_id == wp.id
@@ -289,14 +292,11 @@ local function drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, 
   -- enumerate all wp_drawModes
   if wp_drawMode == 'selected_wp' then
     cs_prefix = true
-    clr = wp:colorForWpType()
-    -- shapeAlpha = 0.8
-    -- textAlpha = 0.8
+    -- clr = wp:colorForWpType()
+    clr = {1, 1, 1}
   elseif wp_drawMode == 'selected_pn' then
     cs_prefix = true
     clr = wp:colorForWpType()
-    -- shapeAlpha = 0.8
-    -- textAlpha = 0.8
   elseif wp_drawMode == 'normal' then
     cs_prefix = false
     clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
@@ -308,20 +308,6 @@ local function drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, 
 
   wp:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 end
-
--- function C:drawDebugSelectedWaypoint(note_text, hover_wp_id, selected_wp_id)
---   for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
---     drawWaypoint(wp, 'selected_pn', note_text, hover_wp_id, selected_wp_id)
---   end
---   for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
---     drawWaypoint(wp, 'selected_pn', note_text, hover_wp_id, selected_wp_id)
---   end
---   drawWaypoint(self:getCornerStartWaypoint(), 'selected_pn', note_text, hover_wp_id, selected_wp_id)
---   drawWaypoint(self:getCornerEndWaypoint(), 'selected_pn', note_text, hover_wp_id, selected_wp_id)
---   for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
---     drawWaypoint(wp, 'selected_pn', note_text, hover_wp_id, selected_wp_id)
---   end
--- end
 
 local function drawLink2(from, to, clr, alpha)
   if not (from and to) then return end
@@ -338,20 +324,6 @@ local function drawLink2(from, to, clr, alpha)
     ColorF(clr[1],clr[2],clr[3],alpha)
   )
 end
-
--- local function calcTopOfSphere(pos, radius)
---   return {x = pos.x, y = pos.y, z = pos.z + radius}
--- end
-
--- local function drawLink2(from, to, clr, alpha)
---   debugDrawer:drawSquarePrism(
---     calcTopOfSphere(from.pos, from.radius),
---     calcTopOfSphere(to.pos, to.radius),
---     Point2F(1,1),
---     Point2F(0.25,0.25),
---     ColorF(clr[1],clr[2],clr[3],alpha)
---   )
--- end
 
 local function prettyDistanceStringMeters(from, to)
   if not (from and to) then return "?m" end
@@ -374,7 +346,7 @@ local function drawLinkLabel(from, to, text, alpha, clr_fg, clr_bg)
   )
 end
 
-function C:drawDebugSelected(note_text, hover_wp_id, pacenote_next)
+function C:drawDebugSelected(note_text, hover_wp_id, selected_wp_id, pacenote_next)
   local shapeAlpha = 0.8
   local textAlpha = 1.0
   local dist_text = nil
@@ -539,20 +511,12 @@ function C:drawDebugCustom(drawMode, note_language, hover_wp_id, selected_wp_id,
   local note_text = self.notes[note_language] or ''
 
   if drawMode == 'selected' then
-    self:drawDebugSelected(note_text, hover_wp_id, pacenote_next)
+    self:drawDebugSelected(note_text, hover_wp_id, selected_wp_id, pacenote_next)
   elseif drawMode == 'previous' then
     self:drawDebugPrevious(note_text, hover_wp_id)
   elseif drawMode == 'normal' then
+    local dist_text = nil
     drawWaypoint(self:getCornerStartWaypoint(), 'normal', note_text, dist_text, hover_wp_id, nil, 0.25, 0.5)
-    -- local wp_drawMode = 'normal'
-
-    -- local clr = nil
-    -- local extraTextSuffix = nil
-    -- local extraTextPrefix = nil -- '*'
-    -- local textAlpha = nil -- 1.0
-    -- local drawArrow = false
-    -- local hover = hover_wp_id and hover_wp_id == cs.id
-    -- cs:drawDebug(wp_drawMode, clr, extraTextSuffix, extraTextPrefix, textAlpha, drawArrow, hover, note_language)
   end
 
   -- step 1 determine the pacenote's state

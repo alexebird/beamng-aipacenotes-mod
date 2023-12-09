@@ -119,6 +119,11 @@ local function selectNextPacenote()
   pacenotesWindow:selectNextPacenote()
 end
 
+local function cycleDragMode()
+  -- if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:cycleDragMode()
+end
+
 local function loadNotebook(full_filename)
   if not full_filename then
     return
@@ -376,6 +381,8 @@ local function onEditorGui()
       resetCameraFix()
     end
     im.tooltip("There is a bug where the camera rotation can get weird. Fix the camera with this button.")
+    im.SameLine()
+    im.Text('DragMode: '..pacenotesWindow.dragMode)
     im.Separator()
 
     if im.BeginTabBar("modes") then
@@ -555,6 +562,7 @@ M.onWindowGotFocus = onWindowGotFocus
 
 M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
+M.cycleDragMode = cycleDragMode
 
 -- M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized

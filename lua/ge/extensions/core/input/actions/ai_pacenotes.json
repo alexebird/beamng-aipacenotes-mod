@@ -29,7 +29,7 @@
     "title": "Rally Editor Save",
     "desc": "Save the current notebook.",
     "onDown": "editor_rallyEditor.saveCurrent()"
-  }
+  },
   "rallyEditorPacenoteSelectPrev": {
     "cat": "editor",
     "ctx": "tlua",
@@ -38,7 +38,7 @@
     "title": "Rally Editor Select Previous Pacenote",
     "desc": "Select the previous pacenote.",
     "onDown": "editor_rallyEditor.selectPrevPacenote()"
-  }
+  },
   "rallyEditorPacenoteSelectNext": {
     "cat": "editor",
     "ctx": "tlua",
@@ -47,5 +47,14 @@
     "title": "Rally Editor Select Next Pacenote",
     "desc": "Select the next pacenote.",
     "onDown": "editor_rallyEditor.selectNextPacenote()"
+  },
+  "rallyEditorCycleDragMode": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor Cycle Drag Mode",
+    "desc": "Cycle between drag modes (simple, simple+road snap, free edit w/gizmo)",
+    "onDown": "editor_rallyEditor.cycleDragMode()"
   }
 }

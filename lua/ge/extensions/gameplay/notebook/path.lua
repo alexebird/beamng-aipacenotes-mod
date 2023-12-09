@@ -137,7 +137,7 @@ function C:autoAssignSegments(racePath)
 end
 
 function C:drawPacenoteModeNormal(pacenote)
-  pacenote:drawDebugCustom('normal', self._default_note_lang, self._hover_waypoint_id)
+  pacenote:drawDebugCustom('normal', self._default_note_lang, self._hover_waypoint_id, nil, nil)
 end
 
 -- function C:drawPacenoteModePnSelected(pacenote)
@@ -150,7 +150,7 @@ end
 
 function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
   if editor_rallyEditor:getOptionsWindow():getPrefShowPreviousPacenote() then
-    pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+    pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id, nil)
   end
 end
 
