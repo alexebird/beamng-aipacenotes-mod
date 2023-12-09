@@ -6,14 +6,11 @@ local im  = ui_imgui
 local logTag = 'aipacenotes'
 
 local C = {}
-C.windowDescription = 'Options'
+C.windowDescription = 'Tools'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
-  -- self.mouseInfo = {}
   self.options_data = {
-    default_radius = 10,
-    show_distance_markers = true,
     snap_road_positions_sparse = {},
     snap_road_positions_dense = {},
   }
@@ -143,25 +140,25 @@ function C:draw(mouseInfo)
 
   if not self.path then return end
 
-  im.HeaderText("Options")
+  im.HeaderText("Tools")
 
-  if im.Checkbox("Show distance markers (orange waypoints)", im.BoolPtr(self.options_data.show_distance_markers)) then
-    self.options_data.show_distance_markers = not self.options_data.show_distance_markers
-  end
-  im.tooltip("Show/Hide orange waypoints, which are called Distance Markers.")
+  -- if im.Checkbox("Show distance markers (orange waypoints)", im.BoolPtr(self.options_data.show_distance_markers)) then
+  --   self.options_data.show_distance_markers = not self.options_data.show_distance_markers
+  -- end
+  -- im.tooltip("Show/Hide orange waypoints, which are called Distance Markers.")
 
-  local editEnded = im.BoolPtr(false)
-  local editTxt = im.ArrayChar(1024, tostring(self.options_data.default_radius))
-  editor.uiInputText("Default Radius", editTxt, nil, nil, nil, nil, editEnded)
-  if editEnded[0] then
-    local newVal = tonumber(ffi.string(editTxt))
-    self.options_data.default_radius = newVal
-  end
-  im.tooltip("Default radius of all waypoints.")
+  -- local editEnded = im.BoolPtr(false)
+  -- local editTxt = im.ArrayChar(1024, tostring(self.options_data.default_radius))
+  -- editor.uiInputText("Default Radius", editTxt, nil, nil, nil, nil, editEnded)
+  -- if editEnded[0] then
+  --   local newVal = tonumber(ffi.string(editTxt))
+  --   self.options_data.default_radius = newVal
+  -- end
+  -- im.tooltip("Default radius of all waypoints.")
 
   if im.Button("Set All Radii") then
-    if self.path and self.options_data.default_radius and self.options_data.default_radius > 1 then
-      self.path:setAllRadii(self.options_data.default_radius)
+    if self.path then
+      self.path:setAllRadii(self:getPrefDefaultRadius())
     end
   end
   im.tooltip("Force the radius of all waypoints to the default value.")
@@ -171,6 +168,30 @@ function C:draw(mouseInfo)
   end
 
   self:drawSnapRoad()
+end
+
+-- function C:getPrefShowDistanceMarkers()
+--   return editor.getPreference('rallyEditor.general.showDistanceMarkers')
+-- end
+
+function C:getPrefShowPreviousPacenote()
+  return editor.getPreference('rallyEditor.general.showPreviousPacenote')
+end
+
+function C:getPrefShowRaceSegments()
+  return editor.getPreference('rallyEditor.general.showRaceSegments')
+end
+
+function C:getPrefDefaultRadius()
+  return editor.getPreference('rallyEditor.general.defaultWaypointRadius')
+end
+
+function C:getPrefTopDownCameraElevation()
+  return editor.getPreference('rallyEditor.general.topDownCameraElevation')
+end
+
+function C:getPrefTopDownCameraFollow()
+  return editor.getPreference('rallyEditor.general.topDownCameraFollow')
 end
 
 function C:drawSnapRoad(id)

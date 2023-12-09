@@ -377,7 +377,7 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
     return
   end
 
-  local defaultRadius = self.rallyEditor:getOptionsWindow().options_data.default_radius
+  local defaultRadius = self.rallyEditor:getOptionsWindow():getPrefDefaultRadius()
 
   local txt = "Add manual Pacenote Waypoint (Drag for Size)"
   if shouldCreateNewPacenote then
@@ -800,7 +800,9 @@ function C:selectPrevPacenote()
     end
   end
 
-  self:setCameraToPacenote()
+  if self.rallyEditor:getOptionsWindow():getPrefTopDownCameraFollow() then
+    self:setCameraToPacenote()
+  end
 end
 
 function C:selectNextPacenote()
@@ -820,7 +822,40 @@ function C:selectNextPacenote()
     end
   end
 
-  self:setCameraToPacenote()
+  if self.rallyEditor:getOptionsWindow():getPrefTopDownCameraFollow() then
+    self:setCameraToPacenote()
+  end
+end
+
+function C:drawDebugSegments()
+  local racePath = editor_raceEditor.getCurrentPath()
+  local pathnodes = racePath.pathnodes.objects
+  for _, seg in pairs(racePath.segments.objects) do
+    -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
+
+    local from = pathnodes[seg.from]
+    local to = pathnodes[seg.to]
+    local pn_sel = self:selectedPacenote()
+
+    local alpha = 0.6
+    local clr_white = {1,1,1}
+    local clr_red = {1,0,0}
+    local clr = nil
+
+    if pn_sel and seg.id == pn_sel.segment then
+      clr = clr_white
+    else
+      clr = clr_red
+    end
+
+    debugDrawer:drawSquarePrism(
+      from.pos,
+      to.pos,
+      Point2F(10,1),
+      Point2F(10,0.25),
+      ColorF(clr[1],clr[2],clr[3],alpha)
+    )
+  end
 end
 
 function C:drawPacenotesList()
@@ -882,7 +917,7 @@ function C:drawPacenotesList()
         movePacenoteUndo, movePacenoteRedo)
     end
     im.SameLine()
-    if im.Button("Cam") then
+    if im.Button("Move Camera") then
       self:setCameraToPacenote()
     end
 
@@ -896,33 +931,9 @@ function C:drawPacenotesList()
     -- im.Text("Segment: "..note.segment)
 
     self:segmentSelector('Segment','segment', 'Associated Segment')
-    local racePath = editor_raceEditor.getCurrentPath()
-    local pathnodes = racePath.pathnodes.objects
-    for _, seg in pairs(racePath.segments.objects) do
-      -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
 
-      local from = pathnodes[seg.from]
-      local to = pathnodes[seg.to]
-      local pn_sel = self:selectedPacenote()
-
-      local alpha = 0.6
-      local clr_white = {1,1,1}
-      local clr_red = {1,0,0}
-      local clr = nil
-
-      if pn_sel and seg.id == pn_sel.segment then
-        clr = clr_white
-      else
-        clr = clr_red
-      end
-
-      debugDrawer:drawSquarePrism(
-        from.pos,
-        to.pos,
-        Point2F(10,1),
-        Point2F(10,0.25),
-        ColorF(clr[1],clr[2],clr[3],alpha)
-      )
+    if self.rallyEditor:getOptionsWindow():getPrefShowRaceSegments() then
+      self:drawDebugSegments()
     end
 
     im.HeaderText("Languages")

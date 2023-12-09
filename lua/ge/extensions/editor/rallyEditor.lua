@@ -3,14 +3,14 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
 local M = {}
-local u_32_max_int = 4294967295
+-- local u_32_max_int = 4294967295
 local logTag = 'rally_editor'
 local toolWindowName = "rallyEditor"
 local editModeName = "Edit Notebook"
 local im = ui_imgui
-local ffi = require('ffi')
-local roadRiverGui = extensions.editor_roadRiverGui
-local currentMode = 'Pathnodes'
+-- local ffi = require('ffi')
+-- local roadRiverGui = extensions.editor_roadRiverGui
+-- local currentMode = 'Pathnodes'
 local previousFilepath = "/gameplay/missions/"
 local previousFilename = "NewNotebook.notebook.json"
 local windows = {}
@@ -19,14 +19,12 @@ local currentWindow = {}
 local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
-local allFiles = {}
+-- local allFiles = {}
 
--- local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow
 local notebookInfoWindow, pacenotesWindow, importWindow, optionsWindow
 
--- local raceTestWindowOpen = im.BoolPtr(false)
 local mouseInfo = {}
-local nameText = im.ArrayChar(1024, "")
+-- local nameText = im.ArrayChar(1024, "")
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -44,7 +42,6 @@ local function setNotebookRedo(data)
     currentWindow:unselect()
   end
   currentWindow:selected()
-  -- raceTestWindowOpen[0] = false
 end
 
 local function setNotebookUndo(data)
@@ -56,18 +53,7 @@ local function setNotebookUndo(data)
     currentWindow:unselect()
   end
   currentWindow:selected()
-  -- raceTestWindowOpen[0] = false
 end
-
--- local function ensureMissionSettings()
-
--- {
---     "notebook": {
---         "filename": "primary.notebook.json",
---         "codriver": "elsa"
---     }
--- }
--- end
 
 local function strip_basename(thepath)
   if thepath:sub(-1) == "/" then
@@ -126,74 +112,14 @@ local function selectNextPacenote()
   pacenotesWindow:selectNextPacenote()
 end
 
--- local function createEmptyRaceFiles(missionDir)
---   -- A utility function to check if a file exists
---   local function fileExists(file)
---     local f = io.open(file, "r")
---     if f then
---       f:close()
---       return true
---     else
---       return false
---     end
---   end
-
---   -- A utility function to write data into a file
---   local function writeToFile(file, data)
---     if not fileExists(file) then
---       local f = io.open(file, "w")
---       if f then
---         f:write(data)
---         f:close()
---       else
---         print("Error: Unable to open file: " .. file)
---       end
---     else
---       log('D', logTag, 'file '..file..' already exists')
---     end
---   end
-
---   -- Ensure the pacenotes directory exists
---   local pacenotesDir = missionDir .. '\\pacenotes'
---   os.execute('mkdir "' .. pacenotesDir .. '"')
-
---   -- Create the json files
---   writeToFile(missionDir .. "\\race.race.json", '{}')
---   writeToFile(missionDir .. "\\pacenotes.pacenotes.json", [[
---     {
---       "versions":[
---         {
---           "authors":"",
---           "description":"",
---           "id":1,
---           "installed":true,
---           "language_code":"en-GB",
---           "name":"Primary",
---           "pacenotes":[],
---           "voice":"british_female",
---           "voice_name":"en-GB-Neural2-A"
---         }
---       ]
---     }
---   ]])
---   writeToFile(missionDir .. "\\pacenotes\\settings.json", [[
---     {
---       "currentVersion":"version1",
---       "volume": 2
---     }
---   ]])
--- end
-
 local function loadNotebook(full_filename)
   if not full_filename then
     return
   end
   local dir, filename, ext = path.split(full_filename)
   -- log('I', logTag, 'creating empty notebook file at ' .. tostring(dir))
-  -- createEmptyRaceFiles(dir)
   local json = readJsonFile(full_filename)
   if not json then
-    -- json = readJsonFile(full_filename)
     log('E', logTag, 'couldnt find notebook file')
   end
   previousFilepath = dir
@@ -210,20 +136,6 @@ local function loadNotebook(full_filename)
 
   return currentPath
 end
-
--- local function setupRace()
-  -- raceTestWindowOpen[0] = true
-  -- testingWindow:setPath(currentPath)
-  -- testingWindow:setupRace()
--- end
-
--- Race Testing window
--- local function raceTest(dtReal, dtSim, dtRaw)
---   if not raceTestWindowOpen[0] then return end
---   im.Begin("Notebook Test", raceTestWindowOpen)
---     testingWindow:draw(dtSim)
---   im.End()
--- end
 
 -- local function mouseOverPacenotes(mouseInfo)
 --   local minNodeDist = 4294967295
@@ -313,16 +225,6 @@ local function findIssues()
 
   return issues
 end
-
--- local function copyFromTimeTrials()
---   local path = require('/lua/ge/extensions/gameplay/rally/path')("New Rally")
---   local trackInfo = extensions.scenario_scenarios.getScenario().track
---   path:fromTrack(trackInfo)
-
---   editor.history:commitAction("Set path to parsed Path.",
---     {path = path, fp = trackInfo.directory, fn = trackInfo.trackName..".rally.json"},
---     setRaceUndo, setRaceRedo)
--- end
 
 local function onEditorGui()
   if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
@@ -461,11 +363,6 @@ local function onEditorGui()
     if im.Button("Save") then
       saveNotebook(currentPath, previousFilepath .. previousFilename)
     end
-    -- im.SameLine()
-    -- if im.Button("HelloWorld") then
-    --   local resp = jsonRequest('http://localhost:5000/test.json')
-    --   log('D', 'wtf', dumps(resp))
-    -- end
     im.Separator()
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
@@ -614,7 +511,12 @@ local function onEditorRegisterPreferences(prefsRegistry)
   prefsRegistry:registerSubCategory("rallyEditor", "general", nil,
   {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
-    {directionalNodes = {"bool", true, "Enable directional nodes for best-quality races"}},
+    -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
+    {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
+    {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference."}},
+    {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
+    {topDownCameraElevation = {"int", 100, "Elevation for the top-down camera view.", nil, 1, 1000}},
+    {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
   })
 end
 

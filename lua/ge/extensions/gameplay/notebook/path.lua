@@ -149,7 +149,9 @@ function C:drawPacenoteModeSelected(pacenote, selected_wp_id, pacenote_next)
 end
 
 function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
-  pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+  if editor_rallyEditor:getOptionsWindow():getPrefShowPreviousPacenote() then
+    pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+  end
 end
 
 -- function C:drawPacenoteModeNext()

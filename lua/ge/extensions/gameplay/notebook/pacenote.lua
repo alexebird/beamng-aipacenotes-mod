@@ -616,7 +616,7 @@ local function setTopDownCamera(waypoints, wp1, wp2)
   -- local fovRad = core_camera.getFovRad()
   -- local elevation = calculateWaypointElevation(waypoints, fovRad, windowAspectRatio)
   -- just hardcode elevation for now.
-  local elevation = 100
+  local elevation = editor_rallyEditor:getOptionsWindow():getPrefTopDownCameraElevation()
 
   local cameraPosition = {centroid[1], centroid[2], centroid[3] + elevation}
   core_camera.setPosition(0, vec3(cameraPosition))
