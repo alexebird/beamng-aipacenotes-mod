@@ -563,9 +563,9 @@ local function calculateWaypointsCentroid(waypoints)
   local count = 0
 
   for _,waypoint in ipairs(waypoints) do
-    sumX = sumX + waypoint.pos[1]
-    sumY = sumY + waypoint.pos[2]
-    sumZ = sumZ + waypoint.pos[3]
+    sumX = sumX + waypoint.pos.x
+    sumY = sumY + waypoint.pos.y
+    sumZ = sumZ + waypoint.pos.z
     count = count + 1
   end
 
@@ -576,13 +576,21 @@ local function calculateWaypointExtents(waypoints)
   local minX, maxX, minZ, maxZ = math.huge, -math.huge, math.huge, -math.huge
 
   for _, waypoint in ipairs(waypoints) do
-    minX = math.min(minX, waypoint.pos[1])
-    maxX = math.max(maxX, waypoint.pos[1])
-    minZ = math.min(minZ, waypoint.pos[3])
-    maxZ = math.max(maxZ, waypoint.pos[3])
+    minX = math.min(minX, waypoint.pos.x)
+    maxX = math.max(maxX, waypoint.pos.x)
+    minZ = math.min(minZ, waypoint.pos.z)
+    maxZ = math.max(maxZ, waypoint.pos.z)
   end
 
   return minX, maxX, minZ, maxZ
+end
+
+local function calculateRotationDirection(waypoint1, waypoint2)
+  return vec3(
+    waypoint2.pos.x - waypoint1.pos.x,
+    waypoint2.pos.y - waypoint1.pos.y,
+    0 -- Keep Z component as 0 to maintain top-down view
+  )
 end
 
 local function calculateWaypointElevation(waypoints, fovRad, aspectRatio)
@@ -599,24 +607,47 @@ local function calculateWaypointElevation(waypoints, fovRad, aspectRatio)
   return elevation
 end
 
-local function setTopDownCamera(waypoints)
-    local centroid = calculateWaypointsCentroid(waypoints)
-    local fovRad = core_camera.getFovRad()
+local function setTopDownCamera(waypoints, wp1, wp2)
+  local centroid = calculateWaypointsCentroid(waypoints)
 
-    -- Get the window aspect ratio
-    local vm = GFXDevice.getVideoMode()
-    local windowAspectRatio = vm.width / vm.height
+  -- Get the window aspect ratio
+  -- local vm = GFXDevice.getVideoMode()
+  -- local windowAspectRatio = vm.width / vm.height
+  -- local fovRad = core_camera.getFovRad()
+  -- local elevation = calculateWaypointElevation(waypoints, fovRad, windowAspectRatio)
+  -- just hardcode elevation for now.
+  local elevation = 100
 
-    local elevation = calculateWaypointElevation(waypoints, fovRad, windowAspectRatio)
+  local cameraPosition = {centroid[1], centroid[2], centroid[3] + elevation}
+  core_camera.setPosition(0, vec3(cameraPosition))
 
-    local cameraPosition = {centroid[1], centroid[2] + elevation, centroid[3]}
-    core_camera.setPosition(0, cameraPosition)
-    core_camera.setRotation(0, quatFromDir({0, -1, 0}))
+  local downFacingRotation = quatFromDir(vec3(0, 0, -1), vec3(0, 1, 0))
+
+  local rotationDir = calculateRotationDirection(wp1, wp2)
+  local angleRad = math.atan2(rotationDir.y, rotationDir.x)
+  angleRad = (math.pi*0.5) - angleRad -- why???
+  local waypointRotation = quatFromAxisAngle(vec3(0, 0, 1), angleRad)
+  -- core_camera.setRotation(0, waypointRotation)
+
+  local combinedRotation = downFacingRotation * waypointRotation -- operand order matters here!
+  -- quaternion multiplication is not commutative.
+  core_camera.setRotation(0, combinedRotation)
+end
+
+function C:getRotationWaypoints()
+  local wpAudioTrigger = self:getActiveFwdAudioTrigger()
+
+  if wpAudioTrigger then
+    return wpAudioTrigger, self:getCornerStartWaypoint()
+  else
+    return self:getCornerStartWaypoint(), self:getCornerEndWaypoint()
+  end
 end
 
 function C:setCameraToWaypoints()
   local waypoints = self.pacenoteWaypoints.sorted
-  setTopDownCamera(waypoints)
+  local wp1, wp2 = self:getRotationWaypoints()
+  setTopDownCamera(waypoints, wp1, wp2)
 end
 
 return function(...)

@@ -799,6 +799,8 @@ function C:selectPrevPacenote()
       self:selectPacenote(prev.id)
     end
   end
+
+  self:setCameraToPacenote()
 end
 
 function C:selectNextPacenote()
@@ -817,6 +819,8 @@ function C:selectNextPacenote()
       self:selectPacenote(next.id)
     end
   end
+
+  self:setCameraToPacenote()
 end
 
 function C:drawPacenotesList()
@@ -1141,8 +1145,6 @@ end
 function C:setCameraToPacenote()
   local pacenote = self:selectedPacenote()
   if not pacenote then return end
-
-  log('D', 'wtf', dumps(pacenote))
 
   pacenote:setCameraToWaypoints()
 end
