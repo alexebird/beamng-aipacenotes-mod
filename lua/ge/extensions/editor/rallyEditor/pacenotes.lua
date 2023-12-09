@@ -81,46 +81,15 @@ end
 
 -- called by RallyEditor when this tab is selected.
 function C:selected()
-  -- self.notebook_index = nil
-  self.pacenote_index = nil
-  self.waypoint_index = nil
-
   if not self.path then return end
 
-  -- for _, n in pairs(self.path.pathnodes.objects) do
-  --   n._drawMode = 'none'
-  -- end
-  -- for _, seg in pairs(self.path.segments.objects) do
-  --   seg._drawMode = 'none'
-  -- end
-
-  -- select the installed notebook when the pacenotes tab is selected.
-  -- for i,notebook in pairs(self.path.notebooks.objects) do
-  --   if notebook.installed then
-  --     self:selectNotebook(notebook.id)
-  --   end
-  -- end
-
-  -- if not self.path then return end
-
-  -- for _, n in pairs(self.path.pacenotes.objects) do
-  --   n._drawMode = 'normal'
-  -- end
-
-  for _, wp in pairs(self.path:allWaypoints()) do
-    wp._drawMode = 'normal'
-  end
+  -- self.pacenote_index = nil
+  -- self.waypoint_index = nil
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Snap to Road"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = "Delete"
-  -- self.map = map.getMap()
-
-  -- for _, seg in pairs(self.path.segments.objects) do
-  --   seg._drawMode = 'faded'
-  -- end
-
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
@@ -129,26 +98,8 @@ end
 function C:unselect()
   if not self.path then return end
 
-  self:selectWaypoint(nil)
-  self:selectPacenote(nil)
-
-  -- for _, n in pairs(self.path.pathnodes.objects) do
-  --   n._drawMode = 'faded'
-  -- end
-  -- for _, seg in pairs(self.path.segments.objects) do
-  --   seg._drawMode = 'faded'
-  -- end
-
-  -- for _, n in pairs(self.path.pacenotes.objects) do
-  --   n._drawMode = 'none'
-  -- end
-  if self.path then
-    for _, wp in pairs(self.path:allWaypoints()) do
-      wp._drawMode = 'none'
-    end
-  end
-
-  -- self:selectNotebook(nil)
+  -- self:selectWaypoint(nil)
+  -- self:selectPacenote(nil)
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
@@ -157,21 +108,6 @@ function C:unselect()
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
-
--- function C:selectNotebook(id)
---   -- log('D', 'wtf', 'selecting notebook: '..tostring(id))
---   self.notebook_index = id
---   -- for _, notebook in pairs(self.path.notebooks.objects) do
---   --   notebook._drawMode = (id == notebook.id) and 'highlight' or 'normal'
---   -- end
---   if id then
---     self:loadVoices()
---     local notebook = self.path.notebooks.objects[id]
---     notebookNameText = im.ArrayChar(1024, notebook.name)
---   else
---     notebookNameText = im.ArrayChar(1024, "")
---   end
--- end
 
 function C:selectPacenote(id)
   if not self.path then return end
@@ -188,7 +124,7 @@ function C:selectPacenote(id)
       local nextNote = pacenotesSorted[i+1]
       note:setAdjacentNotes(prevNote, nextNote)
     else
-      note._drawMode = self.waypoint_index and 'undistract' or 'normal'
+      -- note._drawMode = self.waypoint_index and 'undistract' or 'normal'
       note:clearAdjacentNotes()
     end
   end
@@ -198,9 +134,9 @@ function C:selectPacenote(id)
     local note = self.path.pacenotes.objects[id]
     pacenoteNameText = im.ArrayChar(1024, note.name)
   else
-    for _,note in pairs(self.path.pacenotes.objects) do
-      note._drawmode = 'normal'
-    end
+    -- for _,note in pairs(self.path.pacenotes.objects) do
+      -- note._drawmode = 'normal'
+    -- end
     pacenoteNameText = im.ArrayChar(1024, "")
   end
 end
@@ -211,10 +147,10 @@ function C:selectWaypoint(id)
   -- log('D', 'wtf', 'selecting waypoint id='..tostring(id))
   self.waypoint_index = id
 
-  for _, wp in pairs(self.path:allWaypoints()) do
-    wp._drawMode = (id == wp.id) and 'highlight' or 'normal'
+  -- for _, wp in pairs(self.path:allWaypoints()) do
+    -- wp._drawMode = (id == wp.id) and 'highlight' or 'normal'
     -- log('D', 'wtf', 'waypoint['..wp.id..']: drawMode set to '..wp._drawMode)
-  end
+  -- end
 
   if id then
     -- local waypoint = self:selectedPacenote().pacenoteWaypoints.objects[id]
@@ -349,17 +285,21 @@ function C:onEditModeActivate()
   -- end
 end
 
-function C:draw(mouseInfo)
+function C:drawDebugNotebookEntrypoint()
   if self.path then
     self.path:drawDebug(self.pacenote_index, self.waypoint_index)
   end
+end
+
+function C:draw(mouseInfo)
+  -- self:drawDebugNotebookEntrypoint()
 
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
     editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
     self:input()
   end
-  -- self:drawNotebookList()
+
   self:drawPacenotesList()
 
   if self._road_snap then

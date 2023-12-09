@@ -158,26 +158,16 @@ end
 -- end
 
 function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
---   self.pathnodes:drawDebug()
---   self.segments:drawDebug()
---   self.startPositions:drawDebug()
---   if self.installedNotebook then
-    -- self.installedNotebook:drawDebug()
---   end
-
   local i = 1
   local selected_i = -1
   while i <= #self.pacenotes.sorted do
     local pacenote = self.pacenotes.sorted[i]
     if pacenote.id == selected_pacenote_id then
       selected_i = i
-    -- else
-      -- drawPacenoteModeNormal(pacenote, self._hover_waypoint_id)
     end
     i = i + 1
   end
 
-  -- if selected_i > 0 then
   if selected_pacenote_id and selected_waypoint_id then
     local prev_i = math.max(selected_i - 1, 1)
     local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
@@ -189,7 +179,10 @@ function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
     self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
     if pn_prev and pn_prev.id ~= pn_sel.id then
       self:drawPacenoteModePrevious(pn_prev)
-      pn_prev:drawLinkToPacenote(pn_sel)
+      if editor_rallyEditor:getOptionsWindow():getPrefShowPreviousPacenote() then
+        -- this is the pink distance link
+        pn_prev:drawLinkToPacenote(pn_sel)
+      end
     end
     -- self:drawPacenoteModeNext(pn_next)
   elseif selected_pacenote_id and not selected_waypoint_id then

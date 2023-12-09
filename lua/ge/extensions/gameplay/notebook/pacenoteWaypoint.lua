@@ -196,6 +196,7 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
   if hover then
     clr = {1,1,1}
     shapeAlpha = 1.0
+    -- shapeAlpha = 0.9
     textAlpha = 1.0
     -- cs_prefix = true
   end
@@ -214,9 +215,13 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     -- clr = rainbowColor(#self.pacenote.notebook.pacenotes.sorted, (self.pacenote.sortOrder-1), 1)
   -- end
 
+  -- if false, no other 3d objects seem to cause clipping, such as the terrain.
+  local clipArg1 = true
+
   debugDrawer:drawSphere((self.pos),
     self.radius,
-    ColorF(clr[1],clr[2],clr[3],shapeAlpha)
+    ColorF(clr[1],clr[2],clr[3],shapeAlpha),
+    clipArg1
   )
 
   -- textAlpha = textAlpha or ((drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1)

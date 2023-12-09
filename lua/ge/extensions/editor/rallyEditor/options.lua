@@ -170,9 +170,9 @@ function C:draw(mouseInfo)
   self:drawSnapRoad()
 end
 
--- function C:getPrefShowDistanceMarkers()
---   return editor.getPreference('rallyEditor.general.showDistanceMarkers')
--- end
+function C:getPrefShowDistanceMarkers()
+  return editor.getPreference('rallyEditor.general.showDistanceMarkers')
+end
 
 function C:getPrefShowPreviousPacenote()
   return editor.getPreference('rallyEditor.general.showPreviousPacenote')

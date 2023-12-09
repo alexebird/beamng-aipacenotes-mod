@@ -325,11 +325,16 @@ end
 
 local function drawLink2(from, to, clr, alpha)
   if not (from and to) then return end
+   -- could also set based on radius, but there are clipping issues.
+  local fromHeight = from.radius / 2.0
+  local toHeight = to.radius / 2.0
+  local fromWidth = 1
+  local toWidth = 0.25
   debugDrawer:drawSquarePrism(
     from.pos,
     to.pos,
-    Point2F(10,1),
-    Point2F(10,0.25),
+    Point2F(fromHeight, fromWidth),
+    Point2F(toHeight, toWidth),
     ColorF(clr[1],clr[2],clr[3],alpha)
   )
 end
@@ -388,13 +393,15 @@ function C:drawDebugSelected(note_text, hover_wp_id, pacenote_next)
   dist_text = nil
 
   -- draw beforeStart distance markers, draw link, draw link distance label
-  local nextwp = self:getCornerStartWaypoint()
-  for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
-    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
-    drawLink2(wp, nextwp, clr_orange, shapeAlpha)
-    local distStr = prettyDistanceStringMeters(wp, nextwp)
-    drawLinkLabel(wp, nextwp, distStr, textAlpha)
-    nextwp = wp
+  if editor_rallyEditor:getOptionsWindow():getPrefShowDistanceMarkers() then
+    local nextwp = self:getCornerStartWaypoint()
+    for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
+      drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+      drawLink2(wp, nextwp, clr_orange, shapeAlpha)
+      local distStr = prettyDistanceStringMeters(wp, nextwp)
+      drawLinkLabel(wp, nextwp, distStr, textAlpha)
+      nextwp = wp
+    end
   end
 
   -- draw the CS
@@ -429,13 +436,15 @@ function C:drawDebugSelected(note_text, hover_wp_id, pacenote_next)
   end
 
   -- draw the distance markers after CE, links, labels.
-  local prevwp = self:getCornerEndWaypoint()
-  for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
-    drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
-    drawLink2(prevwp, wp, clr_orange, shapeAlpha)
-    local distStr = prettyDistanceStringMeters(prevwp, wp)
-    drawLinkLabel(prevwp, wp, distStr, textAlpha)
-    prevwp = wp
+  if editor_rallyEditor:getOptionsWindow():getPrefShowDistanceMarkers() then
+    local prevwp = self:getCornerEndWaypoint()
+    for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
+      drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, shapeAlpha, textAlpha)
+      drawLink2(prevwp, wp, clr_orange, shapeAlpha)
+      local distStr = prettyDistanceStringMeters(prevwp, wp)
+      drawLinkLabel(prevwp, wp, distStr, textAlpha)
+      prevwp = wp
+    end
   end
 end
 

@@ -98,17 +98,24 @@ local function saveNotebook(notebook, savePath)
   end
 end
 
+local function resetCameraFix()
+  -- make the camera facing straight out towards the horizon.
+  local rot = quatFromAxisAngle(vec3(0, 0, 1), 0.0)
+  core_camera.setRotation(0, rot)
+end
+
 local function saveCurrent()
+  log('I', logTag, 'saving notebook')
   saveNotebook(currentPath, previousFilepath .. previousFilename)
 end
 
 local function selectPrevPacenote()
-  if currentWindow ~= pacenotesWindow then return end
+  -- if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:selectPrevPacenote()
 end
 
 local function selectNextPacenote()
-  if currentWindow ~= pacenotesWindow then return end
+  -- if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:selectNextPacenote()
 end
 
@@ -360,10 +367,17 @@ local function onEditorGui()
         editor.selectEditMode(editor.editModes.notebookEditMode)
       end
     end
+
     if im.Button("Save") then
       saveNotebook(currentPath, previousFilepath .. previousFilename)
     end
+    im.SameLine()
+    if im.Button("Reset Camera") then
+      resetCameraFix()
+    end
+    im.tooltip("There is a bug where the camera rotation can get weird. Fix the camera with this button.")
     im.Separator()
+
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
         local flags = nil
@@ -387,6 +401,7 @@ local function onEditorGui()
     -- if editor.getPreference("raceEditor.general.showAiRoute") then
       -- currentPath:drawAiRouteDebug()
     -- end
+    pacenotesWindow:drawDebugNotebookEntrypoint()
     currentWindow:draw(mouseInfo)
   end
 
@@ -511,7 +526,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
   prefsRegistry:registerSubCategory("rallyEditor", "general", nil,
   {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
-    -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
+    {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference."}},
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
