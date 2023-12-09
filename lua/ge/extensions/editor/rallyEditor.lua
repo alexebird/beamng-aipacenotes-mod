@@ -22,13 +22,13 @@ currentPath._dir = previousFilepath
 local allFiles = {}
 
 -- local spWindow, pnWindow, segWindow, pacenotesWindow, tlWindow, toolsWindow
-local notebookInfoWindow, pacenotesWindow, optionsWindow
+local notebookInfoWindow, pacenotesWindow, importWindow, optionsWindow
 
 -- local raceTestWindowOpen = im.BoolPtr(false)
 local mouseInfo = {}
 local nameText = im.ArrayChar(1024, "")
 
-local function setRaceRedo(data)
+local function setNotebookRedo(data)
   data.previous = currentPath
   data.previousFilepath = previousFilepath
   data.previousFilename = previousFilename
@@ -47,7 +47,7 @@ local function setRaceRedo(data)
   -- raceTestWindowOpen[0] = false
 end
 
-local function setRaceUndo(data)
+local function setNotebookUndo(data)
   currentPath = data.previous
   previousFilename = data.previousFilename
   previousFilepath = data.previousFilepath
@@ -59,16 +59,71 @@ local function setRaceUndo(data)
   -- raceTestWindowOpen[0] = false
 end
 
-local function saveNotebook(race, savePath)
-  if not race then race = currentPath end
-  local json = race:onSerialize()
+-- local function ensureMissionSettings()
+
+-- {
+--     "notebook": {
+--         "filename": "primary.notebook.json",
+--         "codriver": "elsa"
+--     }
+-- }
+-- end
+
+local function strip_basename(thepath)
+  if thepath:sub(-1) == "/" then
+    thepath = thepath:sub(1, -2)
+  end
+  local dirname, fn, e = path.split(thepath)
+  return dirname
+end
+
+local function getMissionDir()
+  if not currentPath then return nil end
+
+  -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
+  local notebooksDir = currentPath._dir
+  local aipDir = strip_basename(notebooksDir)
+  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
+  local missionDir = strip_basename(aipDir)
+  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
+
+  return missionDir
+end
+
+local function saveNotebook(notebook, savePath)
+  if not notebook then notebook = currentPath end
+  local json = notebook:onSerialize()
   jsonWriteFile(savePath, json, true)
   local dir, filename, ext = path.split(savePath)
   previousFilepath = dir
   previousFilename = filename
-  race._dir = dir
+  notebook._dir = dir
   local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  race._fnWithoutExt = fn2
+  notebook._fnWithoutExt = fn2
+
+  local settingsFname = getMissionDir()..'aipacenotes/mission.settings.json'
+  if not FS:fileExists(settingsFname) then
+    log('I', logTag, 'creating mission.settings.json at '..settingsFname)
+    local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')()
+    settings.notebook.filename = filename
+    local assumedCodriverName = notebook.codrivers.sorted[1].name
+    settings.notebook.codriver = assumedCodriverName
+    jsonWriteFile(settingsFname, settings:onSerialize(), true)
+  end
+end
+
+local function saveCurrent()
+  saveNotebook(currentPath, previousFilepath .. previousFilename)
+end
+
+local function selectPrevPacenote()
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:selectPrevPacenote()
+end
+
+local function selectNextPacenote()
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:selectNextPacenote()
 end
 
 -- local function createEmptyRaceFiles(missionDir)
@@ -151,7 +206,7 @@ local function loadNotebook(full_filename)
 
   editor.history:commitAction("Set path to " .. p.name,
   {path = p, fp = dir, fn = filename},
-   setRaceUndo, setRaceRedo)
+   setNotebookUndo, setNotebookRedo)
 
   return currentPath
 end
@@ -290,7 +345,7 @@ local function onEditorGui()
           local path = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
           editor.history:commitAction("Set path to new path.",
             {path = path, fp = "/gameplay/missions/", fn = "new.notebook.json"},
-            setRaceUndo, setRaceRedo)
+            setNotebookUndo, setNotebookRedo)
         end
         -- local canConvert =  extensions.scenario_waypoints and extensions.scenario_waypoints.state
         --                     and extensions.scenario_scenarios and extensions.scenario_scenarios.getScenario()
@@ -468,6 +523,14 @@ local function onDeactivate()
   editor.clearObjectSelection()
 end
 
+local function onDeleteSelection()
+  if not editor.isViewportFocused() then return end
+
+  if currentWindow == pacenotesWindow then
+    pacenotesWindow:deleteSelected()
+  end
+end
+
 -- this is called after you Ctrl+L to reload lua.
 local function onEditorInitialized()
   editor.editModes.notebookEditMode =
@@ -476,6 +539,8 @@ local function onEditorInitialized()
     onUpdate = nop,
     onActivate = onActivate,
     onDeactivate = onDeactivate,
+    onDeleteSelection = onDeleteSelection,
+    actionMap = "rallyEditor", -- if available, not required
     auxShortcuts = {},
     --icon = editor.icons.tb_close_track,
     --iconTooltip = "Race Editor"
@@ -507,27 +572,6 @@ local function onEditorInitialized()
 
   currentWindow:setPath(currentPath)
   currentWindow:selected()
-end
-
-local function strip_basename(thepath)
-  if thepath:sub(-1) == "/" then
-    thepath = thepath:sub(1, -2)
-  end
-  local dirname, fn, e = path.split(thepath)
-  return dirname
-end
-
-local function getMissionDir()
-  if not currentPath then return nil end
-
-  -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
-  local notebooksDir = currentPath._dir
-  local aipDir = strip_basename(notebooksDir)
-  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
-  local missionDir = strip_basename(aipDir)
-  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
-
-  return missionDir
 end
 
 local function onEditorToolWindowHide(windowName)
@@ -587,9 +631,13 @@ M.changedFromExternal = function() currentWindow:setPath(currentPath) end
 M.show = show
 M.loadNotebook = loadNotebook
 M.saveNotebook = saveNotebook
+M.saveCurrent = saveCurrent
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
+
+M.selectPrevPacenote = selectPrevPacenote
+M.selectNextPacenote = selectNextPacenote
 
 -- M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized

@@ -9,9 +9,9 @@ local wpTypeDistanceMarker = "distanceMarker"
 local shortener_map = {
   [wpTypeFwdAudioTrigger] = "Af",
   [wpTypeRevAudioTrigger] = "Ar",
-  [wpTypeCornerStart] = "CS",
-  [wpTypeCornerEnd] = "CE",
-  [wpTypeDistanceMarker] = "D",
+  [wpTypeCornerStart] = "Cs",
+  [wpTypeCornerEnd] = "Ce",
+  [wpTypeDistanceMarker] = "Di",
 }
 
 local function shortenWaypointType(wpType)

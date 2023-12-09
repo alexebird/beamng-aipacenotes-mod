@@ -24,6 +24,10 @@ function C:init(name)
   self.id = self:getNextUniqueIdentifier()
 end
 
+function C:defaultSettings()
+  return default_settings
+end
+
 function C:onSerialize()
   local ret = {
     notebook = self.notebook,
@@ -34,7 +38,7 @@ end
 
 function C:onDeserialized(data)
   if not data then return end
-  self.notebook = data.notebook or ""
+  self.notebook = data.notebook or default_settings.notebook
 end
 
 return function(...)

@@ -43,7 +43,7 @@ end
 local function sortByNameNumeric(a, b)
   local numA = extractTrailingNumber(a.name)
   local numB = extractTrailingNumber(b.name)
-  
+
   if numA and numB then
     -- If both have numbers, compare by number
     return numA < numB
@@ -124,12 +124,15 @@ function C:autoAssignSegments(racePath)
 
   -- clear the segments. probably not necessary.
   for _,pacenote in ipairs(self.pacenotes.sorted) do
-    pacenote.segment = -1    
+    pacenote.segment = -1
   end
 
   for _,pacenote in ipairs(self.pacenotes.sorted) do
-    local closest_seg_id = findClosestSegmentCenter(pacenote:getActiveFwdAudioTrigger().pos, segment_centers)
-    pacenote.segment = closest_seg_id
+    local audioTrigger = pacenote:getActiveFwdAudioTrigger()
+    if audioTrigger then
+      local closest_seg_id = findClosestSegmentCenter(audioTrigger.pos, segment_centers)
+      pacenote.segment = closest_seg_id
+    end
   end
 end
 

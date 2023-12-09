@@ -51,7 +51,6 @@ end
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
-  -- self.notebook_index = nil
   self.pacenote_index = nil
   self.waypoint_index = nil
   self.mouseInfo = {}
@@ -115,6 +114,7 @@ function C:selected()
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Snap to Road"
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = "Delete"
   -- self.map = map.getMap()
 
   -- for _, seg in pairs(self.path.segments.objects) do
@@ -153,6 +153,7 @@ function C:unselect()
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = nil
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
@@ -179,55 +180,28 @@ function C:selectPacenote(id)
   -- log('D', 'wtf', 'selecting pacenote id='..tostring(id))
   self.pacenote_index = id
 
-  -- un-highlight all waypoints
-  -- for _, wp in pairs(self.path:allWaypoints()) do
-  --   wp._drawMode = 'normal'
-  -- end
-
   -- find the pacenotes before and after the selected one.
   local pacenotesSorted = self.path.pacenotes.sorted
   for i, note in ipairs(pacenotesSorted) do
     if self.pacenote_index == note.id then
       local prevNote = pacenotesSorted[i-1]
       local nextNote = pacenotesSorted[i+1]
-      -- note._drawMode = 'highlight'
       note:setAdjacentNotes(prevNote, nextNote)
     else
       note._drawMode = self.waypoint_index and 'undistract' or 'normal'
-      -- note._drawMode = 'undistract'
       note:clearAdjacentNotes()
     end
   end
 
   -- select the pacenote
   if id then
-    -- local note = nil
     local note = self.path.pacenotes.objects[id]
-    -- local wp = self:selectedWaypoint()
-    -- if not wp or wp.missing then
-      -- note = self.path.pacenotes.objects[id]
-      -- wp = note:getCornerStartWaypoint()
-      -- if wp then
-        -- self:selectWaypoint(wp.id)
-      -- end
-    -- else
-      -- note = wp.pacenote
-    -- end
-    -- note._drawMode = 'highlight'
-
-    -- note:indexWaypointsByType()
-
     pacenoteNameText = im.ArrayChar(1024, note.name)
-    -- pacenoteNoteText = im.ArrayChar(2048, note.notes)
   else
     for _,note in pairs(self.path.pacenotes.objects) do
       note._drawmode = 'normal'
     end
-    -- for _, seg in pairs(self.path.segments.objects) do
-    --   seg._drawmode = 'faded'
-    -- end
     pacenoteNameText = im.ArrayChar(1024, "")
-    -- pacenoteNoteText = im.ArrayChar(2048, "")
   end
 end
 
@@ -253,7 +227,7 @@ function C:selectWaypoint(id)
     waypointNameText = im.ArrayChar(1024, "")
     -- self:selectPacenote(nil)
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
-    -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover. 
+    -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
     self:resetGizmoTransformAtOrigin()
   end
 end
@@ -439,46 +413,75 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
       end
 
       editor.history:commitAction("Create Manual Pacenote Waypoint",
-      {
-        mouseInfo = deepcopy(self.mouseInfo),
-        index = self.waypoint_index,
-        self = self,
-        normal =(self.mouseInfo._upPos - self.mouseInfo._downPos),
-      },
-      function(data) -- undo
-        if data.wpId then
-          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
-        end
-        if data.wpIdCE then
-          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpIdCE)
-        end
-        data.self:selectWaypoint(data.index)
-      end,
-      function(data) --redo
-        local note = data.self:selectedPacenote()
-        if note then
-          local wp = note.pacenoteWaypoints:create(nil, data.wpId or nil)
-          local wpCE = nil
-
-          if not note:getCornerEndWaypoint() then
-            wpCE = note.pacenoteWaypoints:create(nil, data.wpIdCE or nil)
-            data.wpIdCE = wpCE.id
+        {
+          mouseInfo = deepcopy(self.mouseInfo),
+          index = self.waypoint_index,
+          self = self,
+          normal =(self.mouseInfo._upPos - self.mouseInfo._downPos),
+        },
+        function(data) -- undo
+          if data.wpId then
+            data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
           end
-
-          data.wpId = wp.id
-          local normal = data.normal
-          local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
-          if radius <= 1 then
-            radius = defaultRadius
+          if data.wpIdCE then
+            data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpIdCE)
           end
-          wp:setManual(data.mouseInfo._downPos, defaultRadius, normal)
-          if wpCE then
-            wpCE:setManual(data.mouseInfo._upPos, defaultRadius, normal)
-          end
+          data.self:selectWaypoint(data.index)
+        end,
+        function(data) --redo
+          local note = data.self:selectedPacenote()
+          if note then
+            -- create a waypoint
+            local wp = note.pacenoteWaypoints:create(nil, data.wpId or nil)
+            local wpCE = nil
 
-          data.self:selectWaypoint(wp.id)
+            -- sort new fwdAudio waypoints to the top.
+            if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+              wp.sortOrder = note.pacenoteWaypoints.sorted[1].sortOrder - 1
+              local fwdTriggerCount = #note:getAudioTriggerWaypoints()
+              if fwdTriggerCount == 1 then
+                -- if the one we just added is the only one.
+                wp.name = "curr"
+              end
+            elseif wp.waypointType == waypointTypes.wpTypeDistanceMarker then
+              local distMarkerCount = #note:getDistanceMarkerWaypoints()
+              wp.name = 'dist'..distMarkerCount
+            elseif wp.waypointType == waypointTypes.wpTypeCornerStart then
+              wp.name = 'corner start'
+              local ce = note:getCornerEndWaypoint()
+              if ce then
+                wp.sortOrder = ce.sortOrder - 1
+              end
+            elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
+              wp.name = 'corner end'
+              local cs = note:getCornerStartWaypoint()
+              if cs then
+                wp.sortOrder = cs.sortOrder + 1
+              end
+            end
+            note.pacenoteWaypoints:sort()
+
+            -- if the CornerEnd doesnt exist, also create it.
+            if not note:getCornerEndWaypoint() then
+              wpCE = note.pacenoteWaypoints:create(nil, data.wpIdCE or nil)
+              data.wpIdCE = wpCE.id
+            end
+
+            data.wpId = wp.id
+            local normal = data.normal
+            local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
+            if radius <= 1 then
+              radius = defaultRadius
+            end
+            wp:setManual(data.mouseInfo._downPos, defaultRadius, normal)
+            if wpCE then
+              wpCE:setManual(data.mouseInfo._upPos, defaultRadius, normal)
+            end
+
+            data.self:selectWaypoint(wp.id)
+          end
         end
-      end)
+      )
     end
   end
 end
@@ -579,7 +582,7 @@ local function calculateForwardNormal(snap_pos, next_pos)
   -- if not (#snap_pos == 3 and #next_pos == 3) then
     -- error("Positions must have three elements.")
   -- end
-  
+
   local dx = next_pos.x - snap_pos.x
   local dy = next_pos.y - snap_pos.y
   local dz = next_pos.z - snap_pos.z
@@ -732,7 +735,91 @@ local function setWaypointNormalRedo(data)
   data.self:updateTransform(data.index)
 end
 
-function C:drawPacenotesList(notebook)
+function C:deleteSelected()
+  if self:selectedWaypoint() then
+    self:deleteSelectedWaypoint()
+  elseif self:selectedPacenote() then
+    self:deleteSelectedPacenote()
+  end
+end
+
+function C:deleteSelectedWaypoint()
+  if not self.path then return end
+
+  editor.history:commitAction(
+    "RallyEditor DeleteSelectedWaypoint",
+    {index = self.waypoint_index, self = self},
+    function(data) -- undo
+      local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpData.oldId)
+      wp:onDeserialized(data.wpData)
+      self:selectWaypoint(data.index)
+    end,
+    function(data) --redo
+      data.wpData = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:onSerialize()
+      data.self:selectedPacenote().pacenoteWaypoints:remove(data.index)
+      self:selectWaypoint(nil)
+    end
+  )
+end
+
+function C:deleteSelectedPacenote()
+  if not self.path then return end
+
+  local notebook = self.path
+
+  editor.history:commitAction(
+    "RallyEditor DeleteSelectedPacenote",
+    {index = self.pacenote_index, self = self},
+    function(data) -- undo
+      local note = notebook.pacenotes:create(nil, data.noteData.oldId)
+      note:onDeserialized(data.noteData, {})
+      self:selectPacenote(data.index)
+    end,
+    function(data) --redo
+      data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
+      notebook.pacenotes:remove(data.index)
+      self:selectPacenote(nil)
+    end
+  )
+end
+
+function C:selectPrevPacenote()
+  log('D', logTag, 'hello world: prev')
+  local notebook = self.path
+  local curr = notebook.pacenotes.objects[self.pacenote_index]
+  if curr and not curr.missing then
+    local prev = notebook.pacenotes.sorted[curr.sortOrder-1]
+    if prev then
+      self:selectPacenote(prev.id)
+    end
+  else
+    -- if no curr, that means no pacenote was selected, so then select the first one.
+    local prev = notebook.pacenotes.sorted[1]
+    if prev then
+      self:selectPacenote(prev.id)
+    end
+  end
+end
+
+function C:selectNextPacenote()
+  log('D', logTag, 'hello world: next')
+  local notebook = self.path
+  local curr = notebook.pacenotes.objects[self.pacenote_index]
+  if curr and not curr.missing then
+    local next = notebook.pacenotes.sorted[curr.sortOrder+1]
+    if next then
+      self:selectPacenote(next.id)
+    end
+  else
+    -- if no curr, that means no pacenote was selected, so then select the first one.
+    local next = notebook.pacenotes.sorted[#notebook.pacenotes.sorted]
+    if next then
+      self:selectPacenote(next.id)
+    end
+  end
+end
+
+function C:drawPacenotesList()
   if not self.path then return end
 
   local notebook = self.path
@@ -776,17 +863,7 @@ function C:drawPacenotesList(notebook)
     im.Text("Current Pacenote: #" .. self.pacenote_index)
     im.SameLine()
     if im.Button("Delete") then
-      editor.history:commitAction("Delete Note",
-      {index = self.pacenote_index, self = self},
-      function(data) -- undo
-        local note = notebook.pacenotes:create(nil, data.noteData.oldId)
-        note:onDeserialized(data.noteData, {})
-        self:selectPacenote(data.index)
-      end,function(data) --redo
-        data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
-        notebook.pacenotes:remove(data.index)
-        self:selectPacenote(nil)
-      end)
+      self:deleteSelectedPacenote()
     end
     im.SameLine()
     if im.Button("Move Up") then
@@ -799,6 +876,10 @@ function C:drawPacenotesList(notebook)
       editor.history:commitAction("Move Pacenote in List",
         {index = self.pacenote_index, self = self, dir = 1},
         movePacenoteUndo, movePacenoteRedo)
+    end
+    im.SameLine()
+    if im.Button("Cam") then
+      self:setCameraToPacenote()
     end
 
     local editEnded = im.BoolPtr(false)
@@ -825,7 +906,7 @@ function C:drawPacenotesList(notebook)
       local clr_red = {1,0,0}
       local clr = nil
 
-      if seg.id == pn_sel.segment then
+      if pn_sel and seg.id == pn_sel.segment then
         clr = clr_white
       else
         clr = clr_red
@@ -867,7 +948,7 @@ function C:drawWaypointList(note)
   im.HeaderText("Waypoints")
   im.BeginChild1("waypoints", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
 
-  for i, waypoint in ipairs(note.pacenoteWaypoints.sorted) do
+  for i,waypoint in ipairs(note.pacenoteWaypoints.sorted) do
     if im.Selectable1('['..waypointTypes.shortenWaypointType(waypoint.waypointType)..'] '..waypoint.name, waypoint.id == self.waypoint_index) then
       editor.history:commitAction("Select Waypoint",
         {old = self.waypoint_index, new = waypoint.id, self = self},
@@ -901,22 +982,12 @@ function C:drawWaypointList(note)
         editor.drawAxisGizmo()
       end
     end
-      
+
     im.HeaderText("Waypoint Info")
     im.Text("Current Waypoint: #" .. self.waypoint_index)
     im.SameLine()
     if im.Button("Delete") then
-      editor.history:commitAction("Delete Pacenote Waypoint",
-      {index = self.waypoint_index, self = self},
-      function(data) -- undo
-        local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpData.oldId)
-        wp:onDeserialized(data.wpData)
-        self:selectWaypoint(data.index)
-      end,function(data) --redo
-        data.wpData = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:onSerialize()
-        data.self:selectedPacenote().pacenoteWaypoints:remove(data.index)
-        self:selectWaypoint(nil)
-      end)
+      self:deleteSelectedWaypoint()
     end
     im.SameLine()
     if im.Button("Move Up") then
@@ -1065,6 +1136,15 @@ function C:loadVoices()
   table.sort(voiceNamesSorted)
 
   log('I', logTag, 'reloaded voices from '..voiceFname)
+end
+
+function C:setCameraToPacenote()
+  local pacenote = self:selectedPacenote()
+  if not pacenote then return end
+
+  log('D', 'wtf', dumps(pacenote))
+
+  pacenote:setCameraToWaypoints()
 end
 
 return function(...)

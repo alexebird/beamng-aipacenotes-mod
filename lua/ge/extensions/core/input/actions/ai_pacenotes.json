@@ -16,4 +16,36 @@
     "desc": "If a recording is running, this stops it and immediately starts another. Requires AI-Pacenotes desktop app.",
     "onDown": "extensions.gameplay_rally_transcribe.recording_cut()"
   }
+
+
+  //----------------------------------------------------
+  // Rally Editor
+  //----------------------------------------------------
+  "rallyEditorSave": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor Save",
+    "desc": "Save the current notebook.",
+    "onDown": "editor_rallyEditor.saveCurrent()"
+  }
+  "rallyEditorPacenoteSelectPrev": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor Select Previous Pacenote",
+    "desc": "Select the previous pacenote.",
+    "onDown": "editor_rallyEditor.selectPrevPacenote()"
+  }
+  "rallyEditorPacenoteSelectNext": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor Select Next Pacenote",
+    "desc": "Select the next pacenote.",
+    "onDown": "editor_rallyEditor.selectNextPacenote()"
+  }
 }

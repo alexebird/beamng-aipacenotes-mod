@@ -10,12 +10,6 @@ C.windowDescription = 'Voice Import'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
-  self.options_data = {
-    -- default_radius = 10,
-    -- show_distance_markers = true,
-    -- snap_road_positions_sparse = {},
-    -- snap_road_positions_dense = {},
-  }
 
   self.default_transcript = "/settings/aipacenotes/transcripts.json"
   self.transcript = nil
@@ -26,7 +20,7 @@ function C:setPath(path)
   self.path = path
 end
 
-local function convertTranscriptToNotebook(transcripts_data)
+function C:convertTranscriptToNotebook(transcripts_data)
   local ts = os.time()
   local fname_out = 'transcript_'..ts..'.notebook.json'
   local notebook = {
@@ -61,7 +55,7 @@ local function convertTranscriptToNotebook(transcripts_data)
 
       local pos = transcript.vehicle_pos.pos or {}
       -- local rot = transcript.vehicle_pos.rot or {}
-      local radius = 10
+      local radius = self.rallyEditor.getOptionsWindow().options_data.default_radius
 
       local pn = {
         name = "Pacenote " .. i,
@@ -131,7 +125,7 @@ function C:unselect()
 end
 
 function C:importTranscripts()
-  local notebook_data, fname_out = convertTranscriptToNotebook(self.transcript)
+  local notebook_data, fname_out = self:convertTranscriptToNotebook(self.transcript)
   fname_out = self.default_notebooks_dir..'/'..fname_out
   jsonWriteFile(fname_out, notebook_data, true)
 end
@@ -146,9 +140,10 @@ function C:draw(mouseInfo)
   if im.Button("Import") then
     self:importTranscripts()
   end
-  im.Separator()
-  im.Text(dumps(self.transcript))
-  im.Separator()
+  im.Text("Note: When you Import, a new notebook is created.")
+  -- im.Separator()
+  -- im.Text(dumps(self.transcript))
+  -- im.Separator()
 
 end
 

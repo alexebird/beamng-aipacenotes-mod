@@ -80,6 +80,25 @@ local missionSearchTxt = im.ArrayChar(256, "")
 local missionSearchDisplayResult = false
 local missionSearchResults = {}
 
+local function openRaceEditor(shownMission)
+  if editor_raceEditor then
+    if not editor.active then
+      editor.setEditorActive(true)
+    end
+    editor_raceEditor.show()
+
+    local folder = shownMission.missionFolder
+    local raceFname = folder .. '/race.race.json'
+    log('D', logTag, 'opening RaceEditor with raceFname='..raceFname)
+
+    if not FS:fileExists(raceFname) then
+      jsonWriteFile(raceFname, {}, true)
+    end
+
+    editor_raceEditor.loadRace(raceFname)
+  end
+end
+
 local function openRallyEditor(shownMission)
   if editor_rallyEditor then
     if not editor.active then
@@ -88,7 +107,52 @@ local function openRallyEditor(shownMission)
     editor_rallyEditor.show()
 
     local folder = shownMission.missionFolder
-    local notebookFname = folder .. '/aipacenotes/notebooks/primary.notebook.json'
+    local settingsFname = folder..'/aipacenotes/mission.settings.json'
+    local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')()
+    local notebooksPath = folder..'/aipacenotes/notebooks/'
+
+    if FS:fileExists(settingsFname) then
+      local json = readJsonFile(settingsFname)
+      if not json then
+        log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
+      else
+        settings:onDeserialized(json)
+      end
+    end
+
+    -- step 1: detect the notebook name from settings file
+    -- if mission.settings.json exists, then read it and use the specified notebook fname.
+    -- local notebookBasename = nil
+    local notebookFname = nil
+
+    if settings.notebook.filename then
+      local settingsAbsName = notebooksPath..settings.notebook.filename
+      if FS:fileExists(settingsAbsName) then
+        notebookFname = settingsAbsName
+      end
+    end
+
+    -- step 2: if cant detect from settings file, or it doesnt exist, detect from listing the dir
+    if not notebookFname then
+      local paths = {}
+      local files = FS:findFiles(notebooksPath, '*.notebook.json', -1, true, false)
+      for _,fname in pairs(files) do
+        table.insert(paths, fname)
+      end
+      table.sort(paths)
+      local latestPath = paths[#paths]
+      -- log('D', 'wtf', dumps(paths))
+      -- log('D', 'wtf', latestPath)
+      notebookFname = latestPath
+    end
+
+    -- step 3: if mission settings file doesnt exist, then use the dir-listed name and create the settings file, including reading the first co-driver name.
+    -- although, that should be done after the notebook file is read, so maybe this should be done in the rally editor.
+
+    if not notebookFname then
+      local defaultNotebookBasename = settings:defaultSettings().notebook.filename
+      notebookFname = notebooksPath..defaultNotebookBasename
+    end
     log('D', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
 
     editor_rallyEditor.loadNotebook(notebookFname)
@@ -131,10 +195,16 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
     im.SameLine()
 
     if shownMission.missionType == 'rallyStage' then
+      if editor.uiIconImageButton(editor.icons.simobject_bng_waypoint, im.ImVec2(40, 40)) then
+        openRaceEditor(shownMission)
+      end
+      im.tooltip("Open Race Editor")
+      im.SameLine()
+
       if editor.uiIconImageButton(editor.icons.import_contacts, im.ImVec2(40, 40)) then
         openRallyEditor(shownMission)
       end
-      im.tooltip("Open Notebook in Rally Editor")
+      im.tooltip("Open Rally Editor")
       im.SameLine()
 
       if editor.uiIconImageButton(editor.icons.fg_vehicle_sports_car, im.ImVec2(40, 40)) then

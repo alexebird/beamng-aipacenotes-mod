@@ -48,7 +48,7 @@ end
 function C:input()
   self._hover_pos = nil
   self._hover_pos = self:mouseOverSnapRoad()
-  
+
   self._snap_pos = nil
   if self.mouseInfo.rayCast then
     local pos = self.mouseInfo.rayCast.pos
@@ -144,7 +144,7 @@ function C:draw(mouseInfo)
   if not self.path then return end
 
   im.HeaderText("Options")
- 
+
   if im.Checkbox("Show distance markers (orange waypoints)", im.BoolPtr(self.options_data.show_distance_markers)) then
     self.options_data.show_distance_markers = not self.options_data.show_distance_markers
   end
@@ -156,10 +156,15 @@ function C:draw(mouseInfo)
   if editEnded[0] then
     local newVal = tonumber(ffi.string(editTxt))
     self.options_data.default_radius = newVal
-    self:onDefaultRadiusUpdated()
   end
-  im.tooltip("Set the radius of all waypoints.")
+  im.tooltip("Default radius of all waypoints.")
 
+  if im.Button("Set All Radii") then
+    if self.path and self.options_data.default_radius and self.options_data.default_radius > 1 then
+      self.path:setAllRadii(self.options_data.default_radius)
+    end
+  end
+  im.tooltip("Force the radius of all waypoints to the default value.")
 
   if im.Button("Load Snap Road") then
     self:loadSnapRoads()
@@ -254,10 +259,6 @@ function C:loadSnapRoad(road)
 
   -- self.options_data.snap_road_positions_sparse = new_sparse
   -- self.options_data.snap_road_positions_dense = new_dense
-end
-
-function C:onDefaultRadiusUpdated()
-  self.path:setAllRadii(self.options_data.default_radius)
 end
 
 return function(...)

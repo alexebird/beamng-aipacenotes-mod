@@ -5,13 +5,13 @@
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 
 local C = {}
-local modes = {"manual","navgraph"}
+-- local modes = {"manual","navgraph"}
 local logTag = 'aipacenotes_pacenote'
 
 function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
-  self.name = name or "Pacenote " .. self.id
+  self.name = name or ("Pacenote " .. self.id)
   self.note = nil -- used for interfacing with existing flowgraph race code
   self.notes = {}
   self.segment = -1
@@ -102,7 +102,7 @@ function C:getDistanceMarkerWaypointsAfterEnd()
 
   for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
     if wp.waypointType == waypointTypes.wpTypeCornerEnd then
-      cornerEndFound = true 
+      cornerEndFound = true
     end
 
     if cornerEndFound and wp.waypointType == waypointTypes.wpTypeDistanceMarker then
@@ -119,7 +119,7 @@ function C:getDistanceMarkerWaypointsInBetween()
 
   for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
     if wp.waypointType == waypointTypes.wpTypeCornerStart then
-      cornerStartFound = true 
+      cornerStartFound = true
     elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
       break
     end
@@ -140,6 +140,18 @@ function C:getDistanceMarkerWaypointsBeforeStart()
       table.insert(wps, wp)
     elseif wp.waypointType == waypointTypes.wpTypeCornerStart then
       break
+    end
+  end
+
+  return wps
+end
+
+function C:getDistanceMarkerWaypoints()
+  local wps = {}
+
+  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    if wp.waypointType == waypointTypes.wpTypeDistanceMarker then
+      table.insert(wps, wp)
     end
   end
 
@@ -312,6 +324,7 @@ end
 -- end
 
 local function drawLink2(from, to, clr, alpha)
+  if not (from and to) then return end
   debugDrawer:drawSquarePrism(
     from.pos,
     to.pos,
@@ -336,6 +349,7 @@ end
 -- end
 
 local function prettyDistanceStringMeters(from, to)
+  if not (from and to) then return "?m" end
   local dist = round(from.pos:distance(to.pos))
   return tostring(dist)..'m' --'->['..waypointTypes.shortenWaypointType(to.waypointType)..']'
 end
@@ -488,7 +502,7 @@ function C:drawLinkToPacenote(to_pacenote)
   local clr = clr_pink
   local shapeAlpha = 0.8
   local textAlpha = 1.0
-  
+
   -- local from_wp = self:getCornerEndWaypoint()
   -- local afterEnd = self:getDistanceMarkerWaypointsAfterEnd()
   -- if #afterEnd > 0 then
@@ -542,6 +556,67 @@ function C:drawDebugCustom(drawMode, note_language, hover_wp_id, selected_wp_id,
   -- if isWpSelected then
   --   drawMode = 'selected'
   -- end
+end
+
+local function calculateWaypointsCentroid(waypoints)
+  local sumX, sumY, sumZ = 0, 0, 0
+  local count = 0
+
+  for _,waypoint in ipairs(waypoints) do
+    sumX = sumX + waypoint.pos[1]
+    sumY = sumY + waypoint.pos[2]
+    sumZ = sumZ + waypoint.pos[3]
+    count = count + 1
+  end
+
+  return {sumX / count, sumY / count, sumZ / count}
+end
+
+local function calculateWaypointExtents(waypoints)
+  local minX, maxX, minZ, maxZ = math.huge, -math.huge, math.huge, -math.huge
+
+  for _, waypoint in ipairs(waypoints) do
+    minX = math.min(minX, waypoint.pos[1])
+    maxX = math.max(maxX, waypoint.pos[1])
+    minZ = math.min(minZ, waypoint.pos[3])
+    maxZ = math.max(maxZ, waypoint.pos[3])
+  end
+
+  return minX, maxX, minZ, maxZ
+end
+
+local function calculateWaypointElevation(waypoints, fovRad, aspectRatio)
+  local minX, maxX, minZ, maxZ = calculateWaypointExtents(waypoints)
+  local width = maxX - minX
+  local depth = maxZ - minZ
+
+  local horizontalFovRad = 2 * math.atan(math.tan(fovRad / 2) * aspectRatio)
+
+  -- Use the larger of the width or depth in relation to the FOV
+  local maxDimension = math.max(width, depth)
+  local elevation = (maxDimension / 2) / math.tan(horizontalFovRad / 2)
+
+  return elevation
+end
+
+local function setTopDownCamera(waypoints)
+    local centroid = calculateWaypointsCentroid(waypoints)
+    local fovRad = core_camera.getFovRad()
+
+    -- Get the window aspect ratio
+    local vm = GFXDevice.getVideoMode()
+    local windowAspectRatio = vm.width / vm.height
+
+    local elevation = calculateWaypointElevation(waypoints, fovRad, windowAspectRatio)
+
+    local cameraPosition = {centroid[1], centroid[2] + elevation, centroid[3]}
+    core_camera.setPosition(0, cameraPosition)
+    core_camera.setRotation(0, quatFromDir({0, -1, 0}))
+end
+
+function C:setCameraToWaypoints()
+  local waypoints = self.pacenoteWaypoints.sorted
+  setTopDownCamera(waypoints)
 end
 
 return function(...)
