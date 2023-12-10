@@ -385,14 +385,6 @@ function C:handleMouseInput()
       self:setHover(hoveredWp)
     end
   end
-
-
-  -- if self.dragMode == dragModes.gizmo then
-  -- editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
-  -- else
-  -- self:resetGizmoTransformToOrigin()
-  -- self:updateSimpleGizmo()
-  -- end
 end
 
 function C:draw(mouseInfo)
@@ -600,95 +592,6 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
   else
     local newPos = offsetMousePos(mousePos, mouseOffset)
     return newPos, nil
-  end
-end
-
-function C:performSimpleDrag()
-  local mouse_pos = self.mouseInfo._holdPos
-  -- this sphere indicates the drag cursor
-  -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
-
-  local wp_sel = self:selectedWaypoint()
-  if wp_sel then
-    if self.mouseInfo.rayCast then
-      local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos)
-      if new_pos then
-        wp_sel.pos = new_pos
-        if normal_align_pos then
-          local rv = calculateForwardNormal(new_pos, normal_align_pos)
-          wp_sel.normal = vec3(rv.x, rv.y, rv.z)
-        end
-
-        editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
-          {
-            self = self, -- the rallyEditor pacenotes tab
-            pacenote_idx = self.pacenote_index,
-            wp_index = self.waypoint_index,
-            old = self.beginDragNoteData,
-            new = wp_sel:onSerialize(),
-          },
-          function(data) -- undo
-            local notebook = data.self.path
-            local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-            local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
-            wp:onDeserialized(data.old)
-            data.self:selectWaypoint(data.wp_index)
-          end,
-          function(data) --redo
-            local notebook = data.self.path
-            local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-            local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
-            wp:onDeserialized(data.new)
-            data.self:selectWaypoint(data.index)
-          end
-        )
-      end
-    end
-  end
-end
-
-function C:updateSimpleGizmo()
-  if editor.keyModifiers.shift then
-    local shouldCreateNewPacenote = false
-    self:createManualWaypoint(shouldCreateNewPacenote)
-  elseif editor.keyModifiers.ctrl then
-    local shouldCreateNewPacenote = true
-    self:createManualWaypoint(shouldCreateNewPacenote)
-  elseif not editor.isAxisGizmoHovered() then
-    -- if the gizmo is hovered, then dont do any of this, since the gizmo takes precedence for capturing mouse interactions.
-    local hoveredWp = self:detectMouseHoverWaypoint()
-
-    if self.mouseInfo.down then
-      -- dragMode is anything and the mouse is down.
-      -- this handles clicking and selecting pacenotes and waypoints.
-
-      if hoveredWp then
-        local selectedPn = hoveredWp.pacenote
-        if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
-          self.beginDragNoteData = hoveredWp:onSerialize()
-          self:selectWaypoint(hoveredWp.id)
-        elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
-          self:selectPacenote(selectedPn.id)
-        end
-      else
-        -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
-        -- you must click twice to deselect everything.
-        if self:selectedWaypoint() then
-          self:selectWaypoint(nil)
-        else
-          self:selectPacenote(nil)
-        end
-      end
-    elseif self.mouseInfo.hold then
-      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
-        -- mode is simple_road_snap and mouse is being held down.
-        self:performSimpleDrag()
-      end
-    elseif self.mouseInfo.up then
-    else
-      -- the mouse is hovering over a waypoint without any other interactions.
-      self:setHover(hoveredWp)
-    end
   end
 end
 
