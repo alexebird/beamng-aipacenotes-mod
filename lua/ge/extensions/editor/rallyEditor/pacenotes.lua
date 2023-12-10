@@ -156,11 +156,11 @@ function C:selectWaypoint(id)
     waypointNameText = im.ArrayChar(1024, "")
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
-    self:resetGizmoTransformAtOrigin()
+    self:resetGizmoTransformToOrigin()
   end
 end
 
-function C:resetGizmoTransformAtOrigin()
+function C:resetGizmoTransformToOrigin()
   local rotation = QuatF(0,0,0,1)
   local transform = rotation:getMatrix()
   local pos = {0, 0, 0}
@@ -263,11 +263,9 @@ function C:endDragging()
       local wp = self:selectedPacenote().pacenoteWaypoints.objects[data.index]
       wp:onDeserialized(data.new)
       data.self:selectWaypoint(data.index)
-    end)
+    end
+  )
 end
-
--- function C:onEditModeActivate()
--- end
 
 function C:drawDebugNotebookEntrypoint()
   if self.path then
@@ -275,18 +273,138 @@ function C:drawDebugNotebookEntrypoint()
   end
 end
 
+-- args are both vec3's representing a position.
+local function calculateForwardNormal(snap_pos, next_pos)
+  local dx = next_pos.x - snap_pos.x
+  local dy = next_pos.y - snap_pos.y
+  local dz = next_pos.z - snap_pos.z
+
+  local magnitude = math.sqrt(dx*dx + dy*dy + dz*dz)
+  if magnitude == 0 then
+    error("The two positions must not be identical.")
+  end
+
+  return vec3(dx / magnitude, dy / magnitude, dz / magnitude)
+end
+
+function C:handleMouseInput()
+  if not self.mouseInfo.valid then return end
+
+  -- handle positioning and drawing of the gizmo
+  if self.dragMode == dragModes.gizmo then
+    self:updateGizmoTransform(self.waypoint_index)
+    editor.drawAxisGizmo()
+  else
+    self:resetGizmoTransformToOrigin()
+  end
+  editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
+
+  self.path._hover_waypoint_id = nil -- clear hover state
+  -- if the gizmo is hovered, allow that to have precednce.
+  if editor.isAxisGizmoHovered() then return end
+
+  local hoveredWp = self:detectMouseHoverWaypoint()
+
+  if editor.keyModifiers.shift then
+    local shouldCreateNewPacenote = false
+    self:createManualWaypoint(shouldCreateNewPacenote)
+  elseif editor.keyModifiers.ctrl then
+    local shouldCreateNewPacenote = true
+    self:createManualWaypoint(shouldCreateNewPacenote)
+  else
+    if self.mouseInfo.down then
+      if hoveredWp then
+        local selectedPn = hoveredWp.pacenote
+        if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
+          -- self.beginSimpleDragMouseData = deepcopy(self.mouseInfo)
+          self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
+          self.beginSimpleDragNoteData = hoveredWp:onSerialize()
+          self:selectWaypoint(hoveredWp.id)
+        elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
+          self:selectPacenote(selectedPn.id)
+        end
+      else
+        -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
+        -- you must click twice to deselect everything.
+        if self:selectedWaypoint() then
+          self:selectWaypoint(nil)
+        else
+          self:selectPacenote(nil)
+        end
+      end
+    elseif self.mouseInfo.hold then
+      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
+        local mouse_pos = self.mouseInfo._holdPos
+        -- this sphere indicates the drag cursor
+        -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
+
+        local wp_sel = self:selectedWaypoint()
+        if wp_sel then
+          if self.mouseInfo.rayCast then
+            local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
+            if new_pos then
+              wp_sel.pos = new_pos
+              if normal_align_pos then
+                local rv = calculateForwardNormal(new_pos, normal_align_pos)
+                wp_sel.normal = vec3(rv.x, rv.y, rv.z)
+              end
+            end
+          end
+        end
+      end
+    elseif self.mouseInfo.up then
+      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
+        local wp_sel = self:selectedWaypoint()
+        if wp_sel then
+          editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
+            {
+              self = self, -- the rallyEditor pacenotes tab
+              pacenote_idx = self.pacenote_index,
+              wp_index = self.waypoint_index,
+              old = self.beginSimpleDragNoteData,
+              new = wp_sel:onSerialize(),
+            },
+            function(data) -- undo
+              local notebook = data.self.path
+              local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+              local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+              wp:onDeserialized(data.old)
+              data.self:selectWaypoint(data.wp_index)
+            end,
+            function(data) --redo
+              local notebook = data.self.path
+              local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+              local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+              wp:onDeserialized(data.new)
+              data.self:selectWaypoint(data.wp_index)
+            end
+          )
+        end
+      end
+    else
+      self:setHover(hoveredWp)
+    end
+  end
+
+
+  -- if self.dragMode == dragModes.gizmo then
+  -- editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
+  -- else
+  -- self:resetGizmoTransformToOrigin()
+  -- self:updateSimpleGizmo()
+  -- end
+end
+
 function C:draw(mouseInfo)
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
-    if self.dragMode == dragModes.gizmo then
-      editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
-    end
-    self:input()
+    self:handleMouseInput()
   end
 
   -- draw the non-viewport GUI
   self:drawPacenotesList()
 
+  -- visualize the snap road points with debugDraw. the same data is utilized separately -- this is just for visualizing.
   if self.dragMode == dragModes.simple_road_snap then
     self.rallyEditor.getOptionsWindow():drawSnapRoad()
   end
@@ -409,7 +527,7 @@ function C:createManualWaypoint(shouldCreateNewPacenote)
 end
 
 -- figures out which pacenote to select with the mouse in the 3D scene.
-function C:mouseOverWaypoints()
+function C:detectMouseHoverWaypoint()
   if not self.path then return end
   if not self.path.pacenotes then return end
 
@@ -453,97 +571,35 @@ function C:mouseOverWaypoints()
   return closestWp
 end
 
-function C:clearHover()
-  self.path._hover_waypoint_id = nil
-end
-
--- local function calculateForwardNormal(snap_pos, next_pos)
---   local forwardNormal = {
---     x = next_pos.x - snap_pos.x,
---     y = next_pos.y - snap_pos.y,
---     z = next_pos.z - snap_pos.z
---   }
-
---   -- Optionally, normalize the forward normal if needed
---   local magnitude = math.sqrt(forwardNormal.x^2 + forwardNormal.y^2 + forwardNormal.z^2)
---   if magnitude ~= 0 then
---     forwardNormal.x = forwardNormal.x / magnitude
---     forwardNormal.y = forwardNormal.y / magnitude
---     forwardNormal.z = forwardNormal.z / magnitude
---   end
-
---   return forwardNormal
--- end
-
--- args are both vec3
-local function calculateForwardNormal(snap_pos, next_pos)
-  -- Ensure the positions are indeed tables and have three elements
-  -- if not (type(snap_pos) == "table" and type(next_pos) == "table") then
-    -- error("Positions must be tables.")
-  -- end
-  -- if not (#snap_pos == 3 and #next_pos == 3) then
-    -- error("Positions must have three elements.")
-  -- end
-
-  local dx = next_pos.x - snap_pos.x
-  local dy = next_pos.y - snap_pos.y
-  local dz = next_pos.z - snap_pos.z
-
-  local magnitude = math.sqrt(dx*dx + dy*dy + dz*dz)
-  if magnitude == 0 then
-    error("The two positions must not be identical.")
-  end
-
-  return vec3(dx / magnitude, dy / magnitude, dz / magnitude)
-end
-
-
 function C:setHover(wp)
   if wp then
     self.path._hover_waypoint_id = wp.id
   else
     self.path._hover_waypoint_id = nil
   end
-  -- if self.hoverWaypoint == wp then
-    -- no change
-  -- else
-    -- self.hoverWaypoint = wp
-    -- log('D', 'wtf', 'hover changed')
-  -- end
-  -- if self.hoverWaypoint then
-    -- log('D', 'wtf', 'yes hover')
-  -- else
-    -- log('D', 'wtf', 'no hover')
-  -- end
 end
 
-function C:helpDrawGizmo()
-  if self:selectedWaypoint() then
-    -- only draw the axis gizmo if there is a selected waypoint
-    if self.rallyEditor.allowGizmo() then
-      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
-        self:resetGizmoTransformAtOrigin()
-      elseif self.dragMode == dragModes.gizmo then
-        self:updateGizmoTransform(self.waypoint_index)
-        editor.drawAxisGizmo()
-      end
-    end
-  end
+local function offsetMousePos(pos, offset)
+  local newPos = pos - offset
+  newPos.z = core_terrain.getTerrainHeight(pos)
+  return newPos
 end
 
 -- returns new position for the drag, and another position for orienting the normal perpendicularly.
-function C:wpPosForSimpleDrag(wp, mouse_pos)
+function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
   if self.dragMode == dragModes.simple and wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+    local newPos = offsetMousePos(mousePos, mouseOffset)
     local otherWp = wp.pacenote:getCornerStartWaypoint()
     if otherWp then
-      return mouse_pos, otherWp.pos
+      return newPos, otherWp.pos
     else
-      return mouse_pos, nil
+      return newPos, nil
     end
   elseif self.dragMode == dragModes.simple_road_snap then
-    return self.rallyEditor:getOptionsWindow():closestSnapPos(mouse_pos)
+    return self.rallyEditor:getOptionsWindow():closestSnapPos(mousePos)
   else
-    return mouse_pos, nil
+    local newPos = offsetMousePos(mousePos, mouseOffset)
+    return newPos, nil
   end
 end
 
@@ -562,58 +618,76 @@ function C:performSimpleDrag()
           local rv = calculateForwardNormal(new_pos, normal_align_pos)
           wp_sel.normal = vec3(rv.x, rv.y, rv.z)
         end
+
+        editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
+          {
+            self = self, -- the rallyEditor pacenotes tab
+            pacenote_idx = self.pacenote_index,
+            wp_index = self.waypoint_index,
+            old = self.beginDragNoteData,
+            new = wp_sel:onSerialize(),
+          },
+          function(data) -- undo
+            local notebook = data.self.path
+            local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+            local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+            wp:onDeserialized(data.old)
+            data.self:selectWaypoint(data.wp_index)
+          end,
+          function(data) --redo
+            local notebook = data.self.path
+            local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+            local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+            wp:onDeserialized(data.new)
+            data.self:selectWaypoint(data.index)
+          end
+        )
       end
     end
   end
 end
 
-function C:input()
-  if not self.mouseInfo.valid then
-    return
-  end
-
-  self:helpDrawGizmo()
-
+function C:updateSimpleGizmo()
   if editor.keyModifiers.shift then
     local shouldCreateNewPacenote = false
     self:createManualWaypoint(shouldCreateNewPacenote)
   elseif editor.keyModifiers.ctrl then
     local shouldCreateNewPacenote = true
     self:createManualWaypoint(shouldCreateNewPacenote)
-  else
-    if not editor.isAxisGizmoHovered() then
-      -- if the gizmo is hovered, then dont do any of this, since the gizmo takes precedence for capturing mouse interactions.
+  elseif not editor.isAxisGizmoHovered() then
+    -- if the gizmo is hovered, then dont do any of this, since the gizmo takes precedence for capturing mouse interactions.
+    local hoveredWp = self:detectMouseHoverWaypoint()
 
-      self:clearHover()
-      local selectedWp = self:mouseOverWaypoints()
+    if self.mouseInfo.down then
+      -- dragMode is anything and the mouse is down.
+      -- this handles clicking and selecting pacenotes and waypoints.
 
-      if self.mouseInfo.down then
-        -- dragMode is anything and the mouse is down.
-        -- this handles clicking and selecting pacenotes and waypoints.
-
-        if selectedWp then
-          local selectedPn = selectedWp.pacenote
-          if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
-            self:selectWaypoint(selectedWp.id)
-          elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
-            self:selectPacenote(selectedPn.id)
-          end
-        else
-          -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
-          -- you must click twice to deselect everything.
-          if self:selectedWaypoint() then
-            self:selectWaypoint(nil)
-          else
-            self:selectPacenote(nil)
-          end
+      if hoveredWp then
+        local selectedPn = hoveredWp.pacenote
+        if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
+          self.beginDragNoteData = hoveredWp:onSerialize()
+          self:selectWaypoint(hoveredWp.id)
+        elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
+          self:selectPacenote(selectedPn.id)
         end
-      elseif (self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap) and self.mouseInfo.hold then
+      else
+        -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
+        -- you must click twice to deselect everything.
+        if self:selectedWaypoint() then
+          self:selectWaypoint(nil)
+        else
+          self:selectPacenote(nil)
+        end
+      end
+    elseif self.mouseInfo.hold then
+      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
         -- mode is simple_road_snap and mouse is being held down.
         self:performSimpleDrag()
-      elseif not self.mouseInfo.hold and not self.mouseInfo.up and not self.mouseInfo.down then
-        -- the mouse is hovering over a waypoint without any other interactions.
-        self:setHover(selectedWp)
       end
+    elseif self.mouseInfo.up then
+    else
+      -- the mouse is hovering over a waypoint without any other interactions.
+      self:setHover(hoveredWp)
     end
   end
 end
@@ -767,7 +841,7 @@ function C:selectNextPacenote()
 end
 
 function C:cycleDragMode()
-  self:resetGizmoTransformAtOrigin()
+  self:resetGizmoTransformToOrigin()
 
   if self.dragMode == dragModes.simple then
     self.dragMode = dragModes.simple_road_snap
@@ -777,7 +851,7 @@ function C:cycleDragMode()
     self.dragMode = dragModes.simple
   end
 
-  log('D', logTag, 'cycle dragMode to '..self.dragMode)
+  -- log('D', logTag, 'cycle dragMode to '..self.dragMode)
 end
 
 function C:drawDebugSegments()

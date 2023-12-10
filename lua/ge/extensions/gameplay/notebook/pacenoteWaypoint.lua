@@ -19,7 +19,6 @@ function C:init(pacenote, name, forceId)
   self.pos = vec3()
   self.radius = 0
 
-  -- self._drawMode = 'none'
   self.sortOrder = 999999
   self.mode = nil
 end
