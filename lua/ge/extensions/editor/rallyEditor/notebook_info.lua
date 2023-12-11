@@ -14,7 +14,7 @@ local notebookDescText = im.ArrayChar(2048, "")
 -- codriver form fields
 local codriverNameText = im.ArrayChar(1024, "")
 local codriverLanguageText = im.ArrayChar(1024, "")
--- local codriverVoiceText = im.ArrayChar(1024, "")
+local codriverVoiceText = im.ArrayChar(1024, "")
 
 local voiceFname = "/settings/aipacenotes/default.voices.json"
 -- local voices = {}

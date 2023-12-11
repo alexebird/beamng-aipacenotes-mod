@@ -149,7 +149,7 @@ function C:drawPacenoteModeSelected(pacenote, selected_wp_id, pacenote_next)
 end
 
 function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
-  if editor_rallyEditor:getOptionsWindow():getPrefShowPreviousPacenote() then
+  if editor_rallyEditor.getPrefShowPreviousPacenote() then
     pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id, nil)
   end
 end
@@ -179,7 +179,7 @@ function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
     self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
     if pn_prev and pn_prev.id ~= pn_sel.id then
       self:drawPacenoteModePrevious(pn_prev)
-      if editor_rallyEditor:getOptionsWindow():getPrefShowPreviousPacenote() then
+      if editor_rallyEditor.getPrefShowPreviousPacenote() then
         -- this is the pink distance link
         pn_prev:drawLinkToPacenote(pn_sel)
       end

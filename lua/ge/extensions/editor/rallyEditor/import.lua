@@ -55,7 +55,7 @@ function C:convertTranscriptToNotebook(transcripts_data)
 
       local pos = transcript.vehicle_pos.pos or {}
       -- local rot = transcript.vehicle_pos.rot or {}
-      local radius = self.rallyEditor.getOptionsWindow():getPrefDefaultRadius()
+      local radius = self.rallyEditor.getPrefDefaultRadius()
 
       local pn = {
         name = "Pacenote " .. i,

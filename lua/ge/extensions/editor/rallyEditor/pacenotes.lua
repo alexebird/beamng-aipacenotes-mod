@@ -77,8 +77,8 @@ function C:selected()
   -- self.pacenote_index = nil
   -- self.waypoint_index = nil
 
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add waypoint to current pacenote"
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Create new pacenote"
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Free Edit with Gizmo"
   -- editor.editModes.notebookEditMode.auxShortcuts["g"] = "Cycle Drag MMode"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = "Delete"
@@ -278,6 +278,101 @@ local function calculateForwardNormal(snap_pos, next_pos, flip)
   return normal
 end
 
+function C:handleMouseDown(hoveredWp)
+  if hoveredWp then
+    local selectedPn = hoveredWp.pacenote
+    if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
+      self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
+      self.beginSimpleDragNoteData = hoveredWp:onSerialize()
+      self:selectWaypoint(hoveredWp.id)
+    elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
+      self:selectPacenote(selectedPn.id)
+    end
+  else
+    -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
+    -- you must click twice to deselect everything.
+    if self:selectedWaypoint() then
+      self:selectWaypoint(nil)
+    else
+      self:selectPacenote(nil)
+    end
+  end
+end
+
+function C:handleMouseHold()
+  if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
+    local mouse_pos = self.mouseInfo._holdPos
+    -- this sphere indicates the drag cursor
+    -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
+
+    local wp_sel = self:selectedWaypoint()
+    if wp_sel then
+      if self.mouseInfo.rayCast then
+        local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
+        if new_pos then
+          wp_sel.pos = new_pos
+          if normal_align_pos then
+            local flip = self.rallyEditor.getPrefFlipSnaproadNormal()
+            local rv = calculateForwardNormal(new_pos, normal_align_pos, flip)
+            wp_sel.normal = vec3(rv.x, rv.y, rv.z)
+          end
+        end
+      end
+    end
+  end
+end
+
+function C:handleMouseUp()
+  if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
+    local wp_sel = self:selectedWaypoint()
+    if wp_sel and not wp_sel.missing then
+      editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
+        {
+          self = self, -- the rallyEditor pacenotes tab
+          pacenote_idx = self.pacenote_index,
+          wp_index = self.waypoint_index,
+          old = self.beginSimpleDragNoteData,
+          new = wp_sel:onSerialize(),
+        },
+        function(data) -- undo
+          local notebook = data.self.path
+          local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+          local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+          wp:onDeserialized(data.old)
+          data.self:selectWaypoint(data.wp_index)
+        end,
+        function(data) --redo
+          local notebook = data.self.path
+          local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+          local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+          wp:onDeserialized(data.new)
+          data.self:selectWaypoint(data.wp_index)
+        end
+      )
+    end
+  end
+end
+
+function C:setHover(wp)
+  if wp then
+    self.path._hover_waypoint_id = wp.id
+  else
+    self.path._hover_waypoint_id = nil
+  end
+end
+
+function C:handleUnmodifiedMouseInteraction(hoveredWp)
+  if self.mouseInfo.down then
+    self:handleMouseDown(hoveredWp)
+  elseif self.mouseInfo.hold then
+    self:handleMouseHold()
+  elseif self.mouseInfo.up then
+    self:handleMouseUp()
+  else
+    self:setHover(hoveredWp)
+  end
+end
+
 function C:handleMouseInput()
   if not self.mouseInfo.valid then return end
 
@@ -297,85 +392,15 @@ function C:handleMouseInput()
   local hoveredWp = self:detectMouseHoverWaypoint()
 
   if editor.keyModifiers.shift then
-    local shouldCreateNewPacenote = false
-    self:createManualWaypoint(shouldCreateNewPacenote)
+    -- local shouldCreateNewPacenote = false
+    -- self:createManualWaypoint(shouldCreateNewPacenote)
+    self:addMouseWaypointToPacenote()
   elseif editor.keyModifiers.ctrl then
-    local shouldCreateNewPacenote = true
-    self:createManualWaypoint(shouldCreateNewPacenote)
+    -- local shouldCreateNewPacenote = true
+    -- self:createManualWaypoint(shouldCreateNewPacenote)
+    self:createMouseDragPacenote()
   else
-    if self.mouseInfo.down then
-      if hoveredWp then
-        local selectedPn = hoveredWp.pacenote
-        if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
-          -- self.beginSimpleDragMouseData = deepcopy(self.mouseInfo)
-          self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
-          self.beginSimpleDragNoteData = hoveredWp:onSerialize()
-          self:selectWaypoint(hoveredWp.id)
-        elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
-          self:selectPacenote(selectedPn.id)
-        end
-      else
-        -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
-        -- you must click twice to deselect everything.
-        if self:selectedWaypoint() then
-          self:selectWaypoint(nil)
-        else
-          self:selectPacenote(nil)
-        end
-      end
-    elseif self.mouseInfo.hold then
-      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
-        local mouse_pos = self.mouseInfo._holdPos
-        -- this sphere indicates the drag cursor
-        -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
-
-        local wp_sel = self:selectedWaypoint()
-        if wp_sel then
-          if self.mouseInfo.rayCast then
-            local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
-            if new_pos then
-              wp_sel.pos = new_pos
-              if normal_align_pos then
-                local flip = self.rallyEditor:getOptionsWindow():getPrefFlipSnaproadNormal()
-                local rv = calculateForwardNormal(new_pos, normal_align_pos, flip)
-                wp_sel.normal = vec3(rv.x, rv.y, rv.z)
-              end
-            end
-          end
-        end
-      end
-    elseif self.mouseInfo.up then
-      if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
-        local wp_sel = self:selectedWaypoint()
-        if wp_sel and not wp_sel.missing then
-          editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
-            {
-              self = self, -- the rallyEditor pacenotes tab
-              pacenote_idx = self.pacenote_index,
-              wp_index = self.waypoint_index,
-              old = self.beginSimpleDragNoteData,
-              new = wp_sel:onSerialize(),
-            },
-            function(data) -- undo
-              local notebook = data.self.path
-              local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-              local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
-              wp:onDeserialized(data.old)
-              data.self:selectWaypoint(data.wp_index)
-            end,
-            function(data) --redo
-              local notebook = data.self.path
-              local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-              local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
-              wp:onDeserialized(data.new)
-              data.self:selectWaypoint(data.wp_index)
-            end
-          )
-        end
-      end
-    else
-      self:setHover(hoveredWp)
-    end
+    self:handleUnmodifiedMouseInteraction(hoveredWp)
   end
 end
 
@@ -395,119 +420,214 @@ function C:draw(mouseInfo)
   end
 end
 
-function C:createManualWaypoint(shouldCreateNewPacenote)
+function C:debugDrawNewPacenote(pos_cs, pos_ce)
+  local defaultRadius = self.rallyEditor.getPrefDefaultRadius()
+  local radius = defaultRadius
+
+  -- local radius = (self.mouseInfo._downPos - self.mouseInfo._holdPos):length()
+  -- if radius <= 1 then
+  --   radius = defaultRadius
+  -- end
+
+  local alpha = 0.8
+  local clr_white = {1.0, 1.0, 1.0}
+  local clr_light_green = {0.5, 1.0, 0.5}
+  local clr_light_red = {1.0, 0.5, 0.5}
+  local clr_link = clr_white
+  local clr_cs = clr_light_green
+  local clr_ce = clr_light_red
+
+  debugDrawer:drawSphere((pos_cs), radius, ColorF(clr_cs[1],clr_cs[2],clr_cs[3],alpha))
+  debugDrawer:drawSphere((pos_ce), radius, ColorF(clr_ce[1],clr_ce[2],clr_ce[3],alpha))
+
+  local linkHeightRadiusShinkFactor = 0.5
+  local linkFromWidth = 1.0
+  local linkToWidth = 0.25
+  local fromHeight = radius * linkHeightRadiusShinkFactor
+  local toHeight = radius * linkHeightRadiusShinkFactor
+  debugDrawer:drawSquarePrism(
+    pos_cs,
+    pos_ce,
+    Point2F(fromHeight, linkFromWidth),
+    Point2F(toHeight, linkToWidth),
+    ColorF(clr_link[1],clr_link[2],clr_link[3],alpha)
+  )
+
+  -- local normal = (self.mouseInfo._holdPos - self.mouseInfo._downPos):normalized()
+  -- debugDrawer:drawSquarePrism(
+  --   (self.mouseInfo._downPos),
+  --   ((self.mouseInfo._downPos) + radius * normal),
+  --   Point2F(1,radius/2),
+  --   Point2F(0,0),
+  --   ColorF(1,1,1,0.5)
+  -- )
+  -- debugDrawer:drawSquarePrism(
+  --   (self.mouseInfo._downPos),
+  --   ((self.mouseInfo._downPos) + 0.25 * normal),
+  --   Point2F(2,radius*2),
+  --   Point2F(0,0),
+  --   ColorF(1,1,1,0.4)
+  -- )
+end
+
+function C:createMouseDragPacenote()
   if not self.path then return end
+  if not self.mouseInfo.rayCast then return end
 
-  if not self.mouseInfo.rayCast then
-    return
-  end
+  local txt = "Create new pacenote (Drag to place corner start and end)"
 
-  local defaultRadius = self.rallyEditor:getOptionsWindow():getPrefDefaultRadius()
+  -- draw the cursor text
+  debugDrawer:drawTextAdvanced(
+    vec3(self.mouseInfo.rayCast.pos),
+    String(txt),
+    ColorF(1,1,1,1),
+    true,
+    false,
+    ColorI(0,0,0,255)
+  )
 
-  local txt = "Add manual Pacenote Waypoint (Drag for Size)"
-  if shouldCreateNewPacenote then
-    txt = "Create new Pacenote and add manual Pacenote Waypoint (Drag for Size)"
-  end
-  debugDrawer:drawTextAdvanced(vec3(self.mouseInfo.rayCast.pos), String(txt), ColorF(1,1,1,1),true, false, ColorI(0,0,0,255))
+  local pos_cs = self.mouseInfo._downPos
+  local pos_ce = self.mouseInfo._holdPos
 
   if self.mouseInfo.hold then
+    self:debugDrawNewPacenote(pos_cs, pos_ce)
+  elseif self.mouseInfo.up then
+    local newPacenote = self.path.pacenotes:create(nil, nil)
+    local wp_cs = newPacenote.pacenoteWaypoints:create('corner start', pos_cs)
+    local wp_ce = newPacenote.pacenoteWaypoints:create('corner end', pos_ce)
 
-    local radius = (self.mouseInfo._downPos - self.mouseInfo._holdPos):length()
-    if radius <= 1 then
-      radius = defaultRadius
-    end
-    debugDrawer:drawSphere((self.mouseInfo._downPos), radius, ColorF(1,1,1,0.8))
-    local normal = (self.mouseInfo._holdPos - self.mouseInfo._downPos):normalized()
-    debugDrawer:drawSquarePrism(
-      (self.mouseInfo._downPos),
-      ((self.mouseInfo._downPos) + radius * normal),
-      Point2F(1,radius/2),
-      Point2F(0,0),
-      ColorF(1,1,1,0.5))
-    debugDrawer:drawSquarePrism(
-      (self.mouseInfo._downPos),
-      ((self.mouseInfo._downPos) + 0.25 * normal),
-      Point2F(2,radius*2),
-      Point2F(0,0),
-      ColorF(1,1,1,0.4))
-  else
-    if self.mouseInfo.up then
-      if shouldCreateNewPacenote then
-        local pacenote = self.path.pacenotes:create(nil, nil)
-        self:selectPacenote(pacenote.id)
+    editor.history:commitAction("Create pacenote from mouse drag",
+      {
+        self = self,
+        pacenote_data = newPacenote:onSerialize(),
+        pacenote_index = newPacenote.id,
+      },
+      function(data) -- undo
+        self.path.pacenotes:remove(data.pacenote_index)
+        self:selectPacenote(nil)
+      end,
+      function(data) -- redo
+        local note = self.path.pacenotes:create(nil, data.pacenote_data.oldId)
+        note:onDeserialized(data.pacenote_data, {})
+        self:selectPacenote(data.pacenote_index)
       end
+    )
+  end
+end
 
-      editor.history:commitAction("Create Manual Pacenote Waypoint",
-        {
-          mouseInfo = deepcopy(self.mouseInfo),
-          index = self.waypoint_index,
-          self = self,
-          normal =(self.mouseInfo._upPos - self.mouseInfo._downPos),
-        },
-        function(data) -- undo
-          if data.wpId then
-            data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
-          end
-          if data.wpIdCE then
-            data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpIdCE)
-          end
-          data.self:selectWaypoint(data.index)
-        end,
-        function(data) --redo
-          local note = data.self:selectedPacenote()
-          if note then
-            -- create a waypoint
-            local wp = note.pacenoteWaypoints:create(nil, data.wpId or nil)
-            local wpCE = nil
+function C:addMouseWaypointToPacenote()
+end
 
-            -- sort new fwdAudio waypoints to the top.
-            if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-              wp.sortOrder = note.pacenoteWaypoints.sorted[1].sortOrder - 1
-              local fwdTriggerCount = #note:getAudioTriggerWaypoints()
-              if fwdTriggerCount == 1 then
-                -- if the one we just added is the only one.
-                wp.name = "curr"
-              end
-            elseif wp.waypointType == waypointTypes.wpTypeDistanceMarker then
-              local distMarkerCount = #note:getDistanceMarkerWaypoints()
-              wp.name = 'dist'..distMarkerCount
-            elseif wp.waypointType == waypointTypes.wpTypeCornerStart then
-              wp.name = 'corner start'
-              local ce = note:getCornerEndWaypoint()
-              if ce then
-                wp.sortOrder = ce.sortOrder - 1
-              end
-            elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
-              wp.name = 'corner end'
-              local cs = note:getCornerStartWaypoint()
-              if cs then
-                wp.sortOrder = cs.sortOrder + 1
-              end
-            end
-            note.pacenoteWaypoints:sort()
+function C:createManualWaypoint(shouldCreateNewPacenote)
+  if not self.path then return end
+  if not self.mouseInfo.rayCast then return end
 
-            -- if the CornerEnd doesnt exist, also create it.
-            if not note:getCornerEndWaypoint() then
-              wpCE = note.pacenoteWaypoints:create(nil, data.wpIdCE or nil)
-              data.wpIdCE = wpCE.id
-            end
+  local txt = "Add waypoint to current pacenote"
+  if shouldCreateNewPacenote then
+    txt = "Create new pacenote (Drag to place corner start and end)"
+  end
 
-            data.wpId = wp.id
-            local normal = data.normal
-            local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
-            if radius <= 1 then
-              radius = defaultRadius
-            end
-            wp:setManual(data.mouseInfo._downPos, defaultRadius, normal)
-            if wpCE then
-              wpCE:setManual(data.mouseInfo._upPos, defaultRadius, normal)
-            end
+  -- draw the cursor text
+  debugDrawer:drawTextAdvanced(
+    vec3(self.mouseInfo.rayCast.pos),
+    String(txt),
+    ColorF(1,1,1,1),
+    true,
+    false,
+    ColorI(0,0,0,255)
+  )
 
-            data.self:selectWaypoint(wp.id)
-          end
-        end
-      )
+  if self.mouseInfo.hold then
+    if shouldCreateNewPacenote then
+      self:debugDrawNewPacenote()
     end
+  elseif self.mouseInfo.up then
+    local created_pacenote_id = nil
+    if shouldCreateNewPacenote then
+      local pacenote = self.path.pacenotes:create(nil, nil)
+      created_pacenote_id = pacenote.id
+      self:selectPacenote(pacenote.id)
+    end
+
+    editor.history:commitAction("Create Manual Pacenote Waypoint",
+      {
+        self = self,
+        mouseInfo = deepcopy(self.mouseInfo),
+        -- wp_index = self.waypoint_index,
+        pacenote_index = self.pacenote_index,
+        created_pacenote_id = created_pacenote_id,
+        normal =(self.mouseInfo._upPos - self.mouseInfo._downPos),
+      },
+      function(data) -- undo
+        if data.wpId then
+          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
+        end
+        if data.wpIdCE then
+          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpIdCE)
+        end
+        if data.pacenote_index then
+          data.self:selectPacenote(data.pacenote_index)
+        end
+      end,
+      function(data) --redo
+        if data.pacenote_index then
+          data.self:selectPacenote(data.pacenote_index)
+        end
+        local note = data.self:selectedPacenote()
+        if note then
+          -- create a waypoint
+          local wp = note.pacenoteWaypoints:create(nil, data.wpId or nil)
+          local wpCE = nil
+
+          -- sort new fwdAudio waypoints to the top.
+          if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+            wp.sortOrder = note.pacenoteWaypoints.sorted[1].sortOrder - 1
+            local fwdTriggerCount = #note:getAudioTriggerWaypoints()
+            if fwdTriggerCount == 1 then
+              -- if the one we just added is the only one.
+              wp.name = "curr"
+            end
+          elseif wp.waypointType == waypointTypes.wpTypeDistanceMarker then
+            local distMarkerCount = #note:getDistanceMarkerWaypoints()
+            wp.name = 'dist'..distMarkerCount
+          elseif wp.waypointType == waypointTypes.wpTypeCornerStart then
+            wp.name = 'corner start'
+            local ce = note:getCornerEndWaypoint()
+            if ce then
+              wp.sortOrder = ce.sortOrder - 1
+            end
+          elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
+            wp.name = 'corner end'
+            local cs = note:getCornerStartWaypoint()
+            if cs then
+              wp.sortOrder = cs.sortOrder + 1
+            end
+          end
+          note.pacenoteWaypoints:sort()
+
+          -- if the CornerEnd doesnt exist, also create it.
+          if not note:getCornerEndWaypoint() then
+            wpCE = note.pacenoteWaypoints:create(nil, data.wpIdCE or nil)
+            data.wpIdCE = wpCE.id
+          end
+
+          data.wpId = wp.id
+          local normal = data.normal
+          -- local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
+          -- if radius <= 1 then
+          --   radius = defaultRadius
+          -- end
+
+          local defaultRadius = self.rallyEditor.getPrefDefaultRadius()
+          wp:setManual(data.mouseInfo._downPos, defaultRadius, normal)
+          if wpCE then
+            wpCE:setManual(data.mouseInfo._upPos, defaultRadius, normal)
+          end
+
+          -- data.self:selectWaypoint(wp.id)
+        end
+      end
+    )
   end
 end
 
@@ -516,52 +636,58 @@ function C:detectMouseHoverWaypoint()
   if not self.path then return end
   if not self.path.pacenotes then return end
 
-  local minNoteDist = 4294967295
-  local closestWp = nil
-  local selected_i = -1
+  local min_note_dist = 4294967295
+  local hover_wp = nil
+  local selected_pacenote_i = -1
   local waypoints = {}
 
+
+  -- figure out which waypoints are available to select.
   for i, pacenote in ipairs(self.path.pacenotes.sorted) do
+    -- if a pacenote is selected, then we can only select it's waypoints.
     if self:selectedPacenote() and self:selectedPacenote().id == pacenote.id then
-      selected_i = i
+      selected_pacenote_i = i
       for _,waypoint in ipairs(pacenote.pacenoteWaypoints.sorted) do
-        table.insert(waypoints, waypoint)
+        if waypoint.waypointType == waypointTypes.wpTypeDistanceMarker and editor_rallyEditor.getPrefShowDistanceMarkers() then
+          table.insert(waypoints, waypoint)
+        elseif waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger and editor_rallyEditor.getPrefShowAudioTriggers() then
+          table.insert(waypoints, waypoint)
+        else
+          table.insert(waypoints, waypoint)
+        end
       end
     elseif not self:selectedWaypoint() then
+    -- if no waypoint is selected (ie at the PacenoteSelected mode), we can select any corner start.
       local waypoint = pacenote:getCornerStartWaypoint()
       table.insert(waypoints, waypoint)
     end
   end
 
-  local prev_i = selected_i - 1
-  if prev_i > 0 and self:selectedWaypoint() then
-    local pn_prev = self.path.pacenotes.sorted[prev_i]
-    for _,waypoint in ipairs(pn_prev.pacenoteWaypoints.sorted) do
-      table.insert(waypoints, waypoint)
+  -- add waypoints from the previous pacenote.
+  if editor_rallyEditor.getPrefShowPreviousPacenote() then
+    local prev_i = selected_pacenote_i - 1
+    if prev_i > 0 and self:selectedWaypoint() then
+      local pn_prev = self.path.pacenotes.sorted[prev_i]
+      for _,waypoint in ipairs(pn_prev.pacenoteWaypoints.sorted) do
+        table.insert(waypoints, waypoint)
+      end
     end
   end
 
+  -- of the available waypoints, figure out the closest one.
   for _, waypoint in ipairs(waypoints) do
     local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
     local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
     local sphereRadius = waypoint.radius
     if noteRayDistance <= sphereRadius then
-      if distNoteToCam < minNoteDist then
-        minNoteDist = distNoteToCam
-        closestWp = waypoint
+      if distNoteToCam < min_note_dist then
+        min_note_dist = distNoteToCam
+        hover_wp = waypoint
       end
     end
   end
 
-  return closestWp
-end
-
-function C:setHover(wp)
-  if wp then
-    self.path._hover_waypoint_id = wp.id
-  else
-    self.path._hover_waypoint_id = nil
-  end
+  return hover_wp
 end
 
 local function offsetMousePosWithTerrainZSnap(pos, offset)
@@ -675,7 +801,7 @@ function C:deleteSelectedWaypoint()
     "RallyEditor DeleteSelectedWaypoint",
     {index = self.waypoint_index, self = self},
     function(data) -- undo
-      local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, data.wpData.oldId)
+      local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, nil, data.wpData.oldId)
       wp:onDeserialized(data.wpData)
       self:selectWaypoint(data.index)
     end,
@@ -724,7 +850,7 @@ function C:selectPrevPacenote()
     end
   end
 
-  if self.rallyEditor:getOptionsWindow():getPrefTopDownCameraFollow() then
+  if self.rallyEditor.getPrefTopDownCameraFollow() then
     self:setCameraToPacenote()
   end
 end
@@ -745,7 +871,7 @@ function C:selectNextPacenote()
     end
   end
 
-  if self.rallyEditor:getOptionsWindow():getPrefTopDownCameraFollow() then
+  if self.rallyEditor.getPrefTopDownCameraFollow() then
     self:setCameraToPacenote()
   end
 end
@@ -756,9 +882,10 @@ function C:cycleDragMode()
   if self.dragMode == dragModes.simple then
     self.dragMode = dragModes.simple_road_snap
   elseif self.dragMode == dragModes.simple_road_snap then
-    self.dragMode = dragModes.gizmo
-  elseif self.dragMode == dragModes.gizmo then
+    -- self.dragMode = dragModes.gizmo
     self.dragMode = dragModes.simple
+  -- elseif self.dragMode == dragModes.gizmo then
+    -- self.dragMode = dragModes.simple
   end
 
   -- log('D', logTag, 'cycle dragMode to '..self.dragMode)
@@ -825,6 +952,13 @@ function C:drawPacenotesList()
   if im.Button("Snap all") then
     self:snapAll()
   end
+  im.SameLine()
+  if im.Button("Set All Radii") then
+    if self.path then
+      self.path:setAllRadii(self.rallyEditor.getPrefDefaultRadius())
+    end
+  end
+  im.tooltip("Force the radius of all waypoints to the default value.")
 
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
@@ -884,7 +1018,7 @@ function C:drawPacenotesList()
 
     self:segmentSelector('Segment','segment', 'Associated Segment')
 
-    if self.rallyEditor:getOptionsWindow():getPrefShowRaceSegments() then
+    if self.rallyEditor.getPrefShowRaceSegments() then
       self:drawDebugSegments()
     end
 

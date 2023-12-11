@@ -8,15 +8,29 @@ local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointType
 
 local C = {}
 
-function C:init(pacenote, name, forceId)
+local clr_white = {1.0, 1.0, 1.0}
+local clr_black = {0.0, 0.0, 0.0}
+local clr_green = {0.0, 1.0, 0.0}
+local clr_red = {1.0, 0.0, 0.0}
+local clr_blue = {0.0, 0.0, 1.0}
+local clr_orange = {1.0, 0.64, 0.0}
+
+local shapeAlpha_hover = 1.0
+local textAlpha_hover = 1.0
+
+local sphereAlphaReducionForArrowFactor = 0.9
+local shapeAlpha_arrowAdjustFactor = 1.25
+local shapeAlpha_arrowPlaneAdjustFactor = 0.66
+
+function C:init(pacenote, name, pos, forceId)
   self.pacenote = pacenote
 
   self.id = forceId or pacenote:getNextUniqueIdentifier()
   self.name = name or 'Waypoint '..self.id
   self.waypointType = self:getNextWaypointType()
   self.normal = vec3(0,1,0)
-  self.pos = vec3()
-  self.radius = 0
+  self.pos = pos
+  self.radius = editor_rallyEditor.getPrefDefaultRadius()
 
   self.sortOrder = 999999
   self.mode = nil
@@ -110,15 +124,15 @@ end
 
 function C:colorForWpType()
   if self.waypointType == waypointTypes.wpTypeCornerStart then
-    return {0,1,0} -- green
+    return clr_green
   elseif self.waypointType == waypointTypes.wpTypeCornerEnd then
-    return {1,0,0} -- red
+    return clr_red
   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-    return {0,0,1} -- blue
+    return clr_blue
   elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
-    return {0,0,1} -- blue
+    return clr_blue
   elseif self.waypointType == waypointTypes.wpTypeDistanceMarker then
-    return {1,0.64,0} -- orange
+    return clr_orange
   end
 end
 
@@ -134,49 +148,62 @@ end
 
 function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
   if hover then
-    clr = {1,1,1}
-    shapeAlpha = 1.0
-    textAlpha = 1.0
+    clr = clr_white
+    shapeAlpha = shapeAlpha_hover
+    textAlpha = textAlpha_hover
   end
 
   -- if false, no other 3d objects seem to cause clipping, such as the terrain.
   local clipArg1 = true
 
+  local shapeAlpha_sphere = shapeAlpha
+
   if self:shouldDrawArrow() then
     -- make the arrow a little easier to see
-    shapeAlpha = shapeAlpha * 0.9
+    shapeAlpha_sphere = shapeAlpha * sphereAlphaReducionForArrowFactor
   end
 
-  debugDrawer:drawSphere((self.pos),
+  debugDrawer:drawSphere(
+    (self.pos),
     self.radius,
-    ColorF(clr[1],clr[2],clr[3],shapeAlpha),
+    ColorF(clr[1], clr[2], clr[3], shapeAlpha_sphere),
     clipArg1
   )
 
-  debugDrawer:drawTextAdvanced((self.pos),
+  local clr_text_fg = clr_white
+  local clr_text_bg = clr_black
+
+  debugDrawer:drawTextAdvanced(
+    (self.pos),
     String(text),
-    ColorF(1,1,1,textAlpha),true, false,
-    ColorI(0,0,0,textAlpha*255)
+    ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
+    true,
+    false,
+    ColorI(clr_text_bg[1], clr_text_bg[2], clr_text_bg[3], textAlpha*255)
   )
 
   if self:shouldDrawArrow() then
     local midWidth = self.radius*2
-    local side = self.normal:cross(vec3(0,0,1)) *(self.radius - midWidth/2)
+    local side = self.normal:cross(vec3(0,0,1)) * (self.radius - midWidth / 2)
+
+    local shapeAlpha_arrow = shapeAlpha * shapeAlpha_arrowAdjustFactor
+    local shapeAlpha_arrowPlane = shapeAlpha * shapeAlpha_arrowPlaneAdjustFactor
+
     -- this square prism is the "arrow" of the pacenote.
     debugDrawer:drawSquarePrism(
       self.pos,
       (self.pos + self.radius * self.normal),
-      Point2F(1,self.radius/2),
-      Point2F(0,0),
-      ColorF(clr[1],clr[2],clr[3],shapeAlpha*1.25)
+      Point2F(1, self.radius / 2),
+      Point2F(0, 0),
+      ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrow)
     )
     -- this square prism is the "plane" of the pacenote.
     debugDrawer:drawSquarePrism(
-      (self.pos+side),
-      (self.pos + 0.25 * self.normal + side ),
-      Point2F(5,midWidth),
-      Point2F(0,0),
-      ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66)
+      (self.pos + side),
+      (self.pos + 0.25 * self.normal + side),
+      Point2F(5, midWidth),
+      Point2F(0, 0),
+      ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrowPlane)
     )
 
     -- draws a tiny red line indicating the forward normal.

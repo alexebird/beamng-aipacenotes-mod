@@ -16,7 +16,7 @@ local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New No
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
-local notebookInfoWindow, pacenotesWindow, importWindow, toolsWindow
+local notebookInfoWindow, pacenotesWindow, importWindow --, toolsWindow
 local mouseInfo = {}
 
 local function setNotebookRedo(data)
@@ -24,8 +24,8 @@ local function setNotebookRedo(data)
   data.previousFilepath = previousFilepath
   data.previousFilename = previousFilename
 
-  previousFilename = data.fn
-  previousFilepath = data.fp
+  previousFilename = data.filename
+  previousFilepath = data.filepath
   currentPath = data.path
   currentPath._dir = previousFilepath
   local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
@@ -137,7 +137,7 @@ local function loadNotebook(full_filename)
   p._fnWithoutExt = fn2
 
   editor.history:commitAction("Set path to " .. p.name,
-  {path = p, fp = dir, fn = filename},
+  {path = p, filepath = dir, filename = filename},
    setNotebookUndo, setNotebookRedo)
 
   return currentPath
@@ -232,12 +232,25 @@ local function findIssues()
   return issues
 end
 
+local function newEmptyNotebook()
+    local path = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
+    editor.history:commitAction(
+      "Set path to new path.",
+      {path = path, filepath = previousFilepath, filename = "new.notebook.json"},
+      setNotebookUndo,
+      setNotebookRedo
+    )
+end
+
 local function drawEditorGui()
   if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
     if im.BeginMenuBar() then
       if im.BeginMenu("File") then
         im.Text(previousFilepath .. previousFilename)
         im.Separator()
+        if im.MenuItem1("New Notebook") then
+          newEmptyNotebook()
+        end
         if im.MenuItem1("Load...") then
           editor_fileDialog.openFile(function(data) loadNotebook(data.filepath) end, {{"Notebook files",".notebook.json"}}, false, previousFilepath)
         end
@@ -246,14 +259,14 @@ local function drawEditorGui()
           saveNotebook(currentPath, previousFilepath .. previousFilename)
         end
         if im.MenuItem1("Save as...") then
-          extensions.editor_fileDialog.saveFile(function(data) saveNotebook(currentPath, data.filepath) end,
-                                        {{"Notebook files",".notebook.json"}}, false, previousFilepath)
-        end
-        if im.MenuItem1("Clear") then
-          local path = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
-          editor.history:commitAction("Set path to new path.",
-            {path = path, fp = "/gameplay/missions/", fn = "new.notebook.json"},
-            setNotebookUndo, setNotebookRedo)
+          extensions.editor_fileDialog.saveFile(
+            function(data)
+              saveNotebook(currentPath, data.filepath)
+            end,
+            {{"Notebook files",".notebook.json"}},
+            false,
+            previousFilepath
+          )
         end
         im.EndMenu()
       end
@@ -368,9 +381,10 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/import')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/options')(M))
+  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/options')(M))
 
-  notebookInfoWindow, pacenotesWindow, importWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4]
+  -- notebookInfoWindow, pacenotesWindow, importWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4]
+  notebookInfoWindow, pacenotesWindow, importWindow = windows[1], windows[2], windows[3]
 
   for i,win in pairs(windows) do
     win:setPath(currentPath)
@@ -421,6 +435,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
   {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
     {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
+    {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference."}},
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
@@ -428,6 +443,38 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
     {flipSnaproadNormal = {"bool", false, "Flip the normal for waypoints during roadsnap editing."}},
   })
+end
+
+local function getPrefShowDistanceMarkers()
+  return editor.getPreference('rallyEditor.general.showDistanceMarkers')
+end
+
+local function getPrefShowAudioTriggers()
+  return editor.getPreference('rallyEditor.general.showAudioTriggers')
+end
+
+local function getPrefShowPreviousPacenote()
+  return editor.getPreference('rallyEditor.general.showPreviousPacenote')
+end
+
+local function getPrefShowRaceSegments()
+  return editor.getPreference('rallyEditor.general.showRaceSegments')
+end
+
+local function getPrefDefaultRadius()
+  return editor.getPreference('rallyEditor.general.defaultWaypointRadius')
+end
+
+local function getPrefTopDownCameraElevation()
+  return editor.getPreference('rallyEditor.general.topDownCameraElevation')
+end
+
+local function getPrefTopDownCameraFollow()
+  return editor.getPreference('rallyEditor.general.topDownCameraFollow')
+end
+
+local function getPrefFlipSnaproadNormal()
+  return editor.getPreference('rallyEditor.general.flipSnaproadNormal')
 end
 
 M.onEditorRegisterPreferences = onEditorRegisterPreferences
@@ -454,10 +501,15 @@ M.flipSnaproadNormal = flipSnaproadNormal
 
 M.onEditorInitialized = onEditorInitialized
 -- M.getToolsWindow = function() return toolsWindow end
--- M.getPathnodesWindow = function() return pnWindow end
--- M.getPacenotesWindow = function() return pacenotesWindow end
--- M.getSegmentsWindow = function() return segWindow end
-M.getOptionsWindow = function() return toolsWindow end
 M.getMissionDir = getMissionDir
+
+M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
+M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
+M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
+M.getPrefShowRaceSegments = getPrefShowRaceSegments
+M.getPrefDefaultRadius = getPrefDefaultRadius
+M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
+M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
+M.getPrefFlipSnaproadNormal = getPrefFlipSnaproadNormal
 
 return M
