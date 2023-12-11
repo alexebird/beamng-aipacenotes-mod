@@ -7,7 +7,6 @@
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 
 local C = {}
-local modes = {"manual","navgraph"}
 
 function C:init(pacenote, name, forceId)
   self.pacenote = pacenote
@@ -21,6 +20,10 @@ function C:init(pacenote, name, forceId)
 
   self.sortOrder = 999999
   self.mode = nil
+end
+
+function C:flipNormal()
+  self.normal = -self.normal
 end
 
 function C:getNextWaypointType()
@@ -79,31 +82,6 @@ function C:onDeserialized(data, oldIdMap)
   self:setManual(vec3(data.pos), data.radius, vec3(data.normal))
 end
 
--- function C:setNavgraph(navgraphName, fallback)
---   self.mode = "navgraph"
---   self.navgraphName = navgraphName
---   local n = map.getMap().nodes[navgraphName]
---   if n then
---     self.pos = n.pos
---     self.radius = n.radius * self.navRadiusScale
---   else
---     if fallback then
---       self.pos = fallback.pos
---       self.radius = fallback.radius * self.navRadiusScale
---     end
---   end
---   self:setNormal(nil)
--- end
-
--- function C:inside(pos)
---   local inside = (pos-self.pos):length() <= self.radius
---   if self.hasNormal then
---     return inside and ((pos-self.pos):normalized():dot(self.normal) >= 0)
---   else
---     return inside
---   end
--- end
-
 function C:intersectCorners(fromCorners, toCorners)
   local minT = math.huge
   for i = 1, #fromCorners do
@@ -130,30 +108,6 @@ function C:intersectCorners(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
--- function C:textForDrawDebug(cs_prefix, note_text, dist_text)
---   local txt = ''
---   if self.waypointType == waypointTypes.wpTypeCornerStart then
---     if cs_prefix then
---       txt = '['..waypointTypes.shortenWaypointType(self.waypointType)..'] ' .. note_text
---     else
---       txt = note_text
---     end
---   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger or self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
---     txt = '['..waypointTypes.shortenWaypointType(self.waypointType)
---     if dist_text then
---       txt = txt..','..dist_text
---     end
---     txt = txt..']'
-
---     -- if self.name == 'curr' then
---     --   txt = txt..' '..self.name
---     -- end
---   else
---     txt = '['..waypointTypes.shortenWaypointType(self.waypointType) ..']'
---   end
---   return txt
--- end
-
 function C:colorForWpType()
   if self.waypointType == waypointTypes.wpTypeCornerStart then
     return {0,1,0} -- green
@@ -178,41 +132,12 @@ function C:shouldDrawArrow()
   end
 end
 
--- function C:drawDebug(drawMode, hover, note_text, dist_text, clr, shapeAlpha, textAlpha)
 function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
-  -- if not drawMode then
-  --   log('E', 'wtf', 'drawMode not set')
-  --   return
-  -- end
-
-  -- if drawMode == 'none' then return end
-
-  -- local clr = nil
-  -- local shapeAlpha = 0.25
-  -- local textAlpha = 0.5
-  -- local cs_prefix = false
-
   if hover then
     clr = {1,1,1}
     shapeAlpha = 1.0
-    -- shapeAlpha = 0.9
     textAlpha = 1.0
-    -- cs_prefix = true
   end
-
-  -- elseif drawMode == 'selected_wp' then
-  --   clr = {1,1,1}
-  --   shapeAlpha = 0.75
-  --   textAlpha = 1.0
-  --   cs_prefix = true
-  -- elseif drawMode == 'selected_pn' then
-  --   clr = self:colorForWpType()
-  --   shapeAlpha = 0.75
-  --   textAlpha = 0.9
-  --   cs_prefix = true
-  -- else
-    -- clr = rainbowColor(#self.pacenote.notebook.pacenotes.sorted, (self.pacenote.sortOrder-1), 1)
-  -- end
 
   -- if false, no other 3d objects seem to cause clipping, such as the terrain.
   local clipArg1 = true
@@ -228,27 +153,11 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     clipArg1
   )
 
-  -- textAlpha = textAlpha or ((drawMode == 'normal' or drawMode == 'faded') and 0.5 or 1)
-
-  -- if self.pacenote.notes[note_language] == '' then
-    -- textAlpha = textAlpha * 0.4
-  -- end
-
-  -- if drawMode ~= 'faded' then
-  -- local str = self:textForDrawDebug(cs_prefix, note_text, dist_text)
-  -- if extraTextPrefix then
-  --   str = extraTextPrefix .. ' ' .. str
-  -- end
-  -- if extraTextSuffix then
-  --   str = str .. ' ' .. extraTextSuffix
-  -- end
-
   debugDrawer:drawTextAdvanced((self.pos),
     String(text),
     ColorF(1,1,1,textAlpha),true, false,
     ColorI(0,0,0,textAlpha*255)
   )
-  -- end
 
   if self:shouldDrawArrow() then
     local midWidth = self.radius*2
@@ -270,9 +179,10 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
       ColorF(clr[1],clr[2],clr[3],shapeAlpha*0.66)
     )
 
-    local from = (self.pos)
-    local to = (self.pos + self.normal)
-    debugDrawer:drawLine(from, to, ColorF(1.0, 0.0, 0.0, 1.0))
+    -- draws a tiny red line indicating the forward normal.
+    -- local from = (self.pos)
+    -- local to = (self.pos + self.normal)
+    -- debugDrawer:drawLine(from, to, ColorF(1.0, 0.0, 0.0, 1.0))
   end
 end
 

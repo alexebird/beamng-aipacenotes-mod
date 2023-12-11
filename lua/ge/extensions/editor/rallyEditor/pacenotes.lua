@@ -5,15 +5,10 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
-
--- notebook form fields
--- local notebookNameText = im.ArrayChar(1024, "")
--- local notebookAuthorsText = im.ArrayChar(1024, "")
--- local notebookDescText = im.ArrayChar(2048, "")
+local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 
 -- pacenote form fields
 local pacenoteNameText = im.ArrayChar(1024, "")
--- local pacenoteNoteText = im.ArrayChar(2048, "")
 
 -- waypoint form fields
 local waypointNameText = im.ArrayChar(1024, "")
@@ -21,19 +16,9 @@ local waypointPosition = im.ArrayFloat(3)
 local waypointNormal = im.ArrayFloat(3)
 local waypointRadius = im.FloatPtr(0)
 
--- local voiceFname = "/settings/aipacenotes/voices.json"
--- local voices = {}
--- local voiceNamesSorted = {}
 
 local C = {}
 C.windowDescription = 'Pacenotes'
-
--- local function selectNotebookUndo(data)
---   data.self:selectNotebook(data.old)
--- end
--- local function selectNotebookRedo(data)
---   data.self:selectNotebook(data.new)
--- end
 
 local function selectPacenoteUndo(data)
   data.self:selectPacenote(data.old)
@@ -274,7 +259,7 @@ function C:drawDebugNotebookEntrypoint()
 end
 
 -- args are both vec3's representing a position.
-local function calculateForwardNormal(snap_pos, next_pos)
+local function calculateForwardNormal(snap_pos, next_pos, flip)
   local dx = next_pos.x - snap_pos.x
   local dy = next_pos.y - snap_pos.y
   local dz = next_pos.z - snap_pos.z
@@ -284,7 +269,13 @@ local function calculateForwardNormal(snap_pos, next_pos)
     error("The two positions must not be identical.")
   end
 
-  return vec3(dx / magnitude, dy / magnitude, dz / magnitude)
+  local normal = vec3(dx / magnitude, dy / magnitude, dz / magnitude)
+
+  if flip then
+    normal = -normal
+  end
+
+  return normal
 end
 
 function C:handleMouseInput()
@@ -345,7 +336,8 @@ function C:handleMouseInput()
             if new_pos then
               wp_sel.pos = new_pos
               if normal_align_pos then
-                local rv = calculateForwardNormal(new_pos, normal_align_pos)
+                local flip = self.rallyEditor:getOptionsWindow():getPrefFlipSnaproadNormal()
+                local rv = calculateForwardNormal(new_pos, normal_align_pos, flip)
                 wp_sel.normal = vec3(rv.x, rv.y, rv.z)
               end
             end
@@ -355,7 +347,7 @@ function C:handleMouseInput()
     elseif self.mouseInfo.up then
       if self.dragMode == dragModes.simple or self.dragMode == dragModes.simple_road_snap then
         local wp_sel = self:selectedWaypoint()
-        if wp_sel then
+        if wp_sel and not wp_sel.missing then
           editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
             {
               self = self, -- the rallyEditor pacenotes tab
@@ -396,9 +388,10 @@ function C:draw(mouseInfo)
   -- draw the non-viewport GUI
   self:drawPacenotesList()
 
-  -- visualize the snap road points with debugDraw. the same data is utilized separately -- this is just for visualizing.
+  -- visualize the snap road points with debugDraw.
+  -- the same data is utilized separately -- this is just for visualizing.
   if self.dragMode == dragModes.simple_road_snap then
-    self.rallyEditor.getOptionsWindow():drawSnapRoad()
+    snaproads.drawSnapRoads(self.mouseInfo)
   end
 end
 
@@ -571,7 +564,7 @@ function C:setHover(wp)
   end
 end
 
-local function offsetMousePos(pos, offset)
+local function offsetMousePosWithTerrainZSnap(pos, offset)
   local newPos = pos - offset
   newPos.z = core_terrain.getTerrainHeight(pos)
   return newPos
@@ -579,19 +572,33 @@ end
 
 -- returns new position for the drag, and another position for orienting the normal perpendicularly.
 function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
-  if self.dragMode == dragModes.simple and wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-    local newPos = offsetMousePos(mousePos, mouseOffset)
-    local otherWp = wp.pacenote:getCornerStartWaypoint()
-    if otherWp then
-      return newPos, otherWp.pos
+  if self.dragMode == dragModes.simple then
+    if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+      local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
+      local otherWp = wp.pacenote:getCornerStartWaypoint()
+      if otherWp then
+        return newPos, otherWp.pos
+      else
+        return newPos, nil
+      end
     else
+      local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
       return newPos, nil
     end
   elseif self.dragMode == dragModes.simple_road_snap then
-    return self.rallyEditor:getOptionsWindow():closestSnapPos(mousePos)
+    -- if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+      if self.mouseInfo.rayCast then
+        return snaproads.closestSnapPos(self.mouseInfo.rayCast.pos)
+      else
+        return newPos, nil
+      end
+    -- else
+    --   local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
+    --   return newPos, nil
+    -- end
   else
-    local newPos = offsetMousePos(mousePos, mouseOffset)
-    return newPos, nil
+    log('W', logTag, 'wpPosForSimpleDrag hit the else when should no hit else')
+    return nil, nil
   end
 end
 
@@ -757,6 +764,17 @@ function C:cycleDragMode()
   -- log('D', logTag, 'cycle dragMode to '..self.dragMode)
 end
 
+function C:flipSnaproadNormal()
+  local curr = editor.getPreference('rallyEditor.general.flipSnaproadNormal')
+  log('D', 'wtf', dumps(curr))
+  editor.setPreference('rallyEditor.general.flipSnaproadNormal', not curr)
+
+  local wp = self:selectedWaypoint()
+  if wp and wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+    wp:flipNormal()
+  end
+end
+
 function C:drawDebugSegments()
   local racePath = editor_raceEditor.getCurrentPath()
   local pathnodes = racePath.pathnodes.objects
@@ -802,6 +820,10 @@ function C:drawPacenotesList()
   if im.Button("Auto-assign segments") then
     local racePath = editor_raceEditor.getCurrentPath()
     self.path:autoAssignSegments(racePath)
+  end
+  im.SameLine()
+  if im.Button("Snap all") then
+    self:snapAll()
   end
 
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
@@ -1076,6 +1098,21 @@ function C:setCameraToPacenote()
   if not pacenote then return end
 
   pacenote:setCameraToWaypoints()
+end
+
+function C:snapAll()
+  -- log('D','wtf', 'snapall')
+  -- log('D','wtf', dumps(self.path:allWaypoints()))
+
+  for i,wp in pairs(self.path:allWaypoints()) do
+    -- log('D','wtf', dumps(wp.pos))
+    local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
+    wp.pos = newPos
+    if normalAlignPos then
+      local rv = calculateForwardNormal(newPos, normalAlignPos, false)
+      wp.normal = vec3(rv.x, rv.y, rv.z)
+    end
+  end
 end
 
 return function(...)

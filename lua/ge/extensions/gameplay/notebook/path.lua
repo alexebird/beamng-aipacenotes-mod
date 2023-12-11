@@ -266,9 +266,10 @@ end
 
 function C:allWaypoints()
   local wps = {}
-  for i, pacenote in pairs(self.pacenotes.objects) do
-    for j, wp in pairs(pacenote.pacenoteWaypoints.objects) do
+  for i,pacenote in pairs(self.pacenotes.objects) do
+    for j,wp in pairs(pacenote.pacenoteWaypoints.objects) do
       wps[wp.id] = wp
+      -- table.insert(wps, wp)
     end
   end
   return wps

@@ -3,28 +3,21 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
 local M = {}
--- local u_32_max_int = 4294967295
+
 local logTag = 'rally_editor'
 local toolWindowName = "rallyEditor"
 local editModeName = "Edit Notebook"
 local im = ui_imgui
--- local ffi = require('ffi')
--- local roadRiverGui = extensions.editor_roadRiverGui
--- local currentMode = 'Pathnodes'
 local previousFilepath = "/gameplay/missions/"
 local previousFilename = "NewNotebook.notebook.json"
 local windows = {}
 local currentWindow = {}
--- local testingWindow
 local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
--- local allFiles = {}
-
-local notebookInfoWindow, pacenotesWindow, importWindow, optionsWindow
-
+local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
+local notebookInfoWindow, pacenotesWindow, importWindow, toolsWindow
 local mouseInfo = {}
--- local nameText = im.ArrayChar(1024, "")
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -110,18 +103,19 @@ local function saveCurrent()
 end
 
 local function selectPrevPacenote()
-  -- if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:selectPrevPacenote()
 end
 
 local function selectNextPacenote()
-  -- if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:selectNextPacenote()
 end
 
 local function cycleDragMode()
-  -- if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:cycleDragMode()
+end
+
+local function flipSnaproadNormal()
+  pacenotesWindow:flipSnaproadNormal()
 end
 
 local function loadNotebook(full_filename)
@@ -238,7 +232,7 @@ local function findIssues()
   return issues
 end
 
-local function onEditorGui()
+local function drawEditorGui()
   if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
     if im.BeginMenuBar() then
       if im.BeginMenu("File") then
@@ -261,112 +255,11 @@ local function onEditorGui()
             {path = path, fp = "/gameplay/missions/", fn = "new.notebook.json"},
             setNotebookUndo, setNotebookRedo)
         end
-        -- local canConvert =  extensions.scenario_waypoints and extensions.scenario_waypoints.state
-        --                     and extensions.scenario_scenarios and extensions.scenario_scenarios.getScenario()
-        --                     and extensions.scenario_scenarios.getScenario().track
-        --                     and not extensions.scenario_scenarios.getScenario().track.raceFile
-        --                     and extensions.scenario_scenarios.getScenario().track.originalInfo
-        -- if canConvert then
-          -- im.Separator()
-          -- if im.MenuItem1("Copy from current Time Trials") then
-            -- copyFromTimeTrials()
-          -- end
-          -- im.tooltip(#(extensions.scenario_waypoints.state.originalBranches or {}) .. " elements")
-        -- end
-
-        -- im.Separator()
-        -- if im.BeginMenu("All Rallies...") then
-        --   if im.SmallButton("Refresh (!)") then
-        --     table.clear(allFiles)
-        --     for _, f in ipairs(FS:findFiles("/", '*.notebook.json', -1, true,true)) do
-        --       local dir, filename, ext = path.split(f)
-        --       table.insert(allFiles,{
-        --         name = string.sub(filename,1,-11),
-        --         file = f
-        --       })
-        --     end
-        --   end
-        --   im.tooltip("This might take a few seconds.")
-        --   im.Separator()
-        --   for _,f in ipairs(allFiles) do
-        --     if im.MenuItem1(f.name..'##'..f.file) then
-        --       loadRace(f.file)
-        --     end
-        --     im.tooltip(f.file)
-        --   end
-        --   im.EndMenu()
-        -- end
         im.EndMenu()
       end
-
-      -- if im.BeginMenu("Preferences") then
-      --   local ptr = im.BoolPtr(editor.getPreference("raceEditor.general.directionalNodes"))
-      --   if im.Checkbox('Directional Nodes', ptr) then
-      --     editor.setPreference("raceEditor.general.directionalNodes", ptr[0])
-      --   end
-      --   im.tooltip("Created pathnodes have a direction or not.")
-      --   local ptr2 = im.BoolPtr(editor.getPreference("raceEditor.general.showAiRoute") or false)
-      --   if im.Checkbox('Show AI Route', ptr2) then
-      --     editor.setPreference("raceEditor.general.showAiRoute", ptr2[0])
-      --   end
-      --   im.tooltip("Previews the AI Route for this racepath.")
-      --   im.EndMenu()
-      -- end
-
-      -- if im.BeginMenu("Tools") then
-      --   local add = nil
-      --   if im.MenuItem1("Add Missing Recovery Positions") then
-      --     add = 'newOnly'
-      --   end
-      --   if im.MenuItem1("Re-Add All Recovery Positions") then
-      --     add = 'all'
-      --   end
-      --   if add then
-      --     local newPath = require('/lua/ge/extensions/gameplay/rally/path')("New Rally")
-      --     newPath:onDeserialized(currentPath:onSerialize())
-      --     for _, pn in ipairs(newPath.pathnodes.sorted) do
-      --       if add == 'all' then
-      --         newPath.startPositions:remove(newPath.startPositions.objects[pn.recovery or -1])
-      --         pn.recovery = -1
-      --       end
-      --       if pn.hasNormal and (pn.recovery == -1 or newPath.startPositions.objects[pn.recovery].missing) then
-      --         local sp = newPath.startPositions:create()
-      --         sp:set(pn.pos, quatFromDir(pn.normal):normalized())
-      --         sp.name = pn.name .. " Recovery Forward"
-      --         pn.recovery = sp.id
-
-      --         local spr = newPath.startPositions:create()
-      --         spr:set(pn.pos, quatFromDir(pn.normal*-1):normalized())
-      --         spr.name = pn.name .. " Recovery Reverse"
-      --         pn.reverseRecovery = spr.id
-      --       end
-      --     end
-
-      --     editor.history:commitAction("Add Missing Recovery Positions",{
-      --       path = newPath, fp =previousFilepath, fn = previousFilename
-      --     }, setRaceUndo, setRaceRedo)
-      --   end
-      --   im.EndMenu()
-      -- end
-
-
-      -- local issues = findIssues()
-      -- if #issues == 0 then
-      --   im.BeginDisabled()
-      --   if im.BeginMenu("No Issues!") then im.EndMenu() end
-      --   im.EndDisabled()
-      -- else
-      --   if im.BeginMenu(#issues..' Issues') then
-      --     for i, issue in ipairs(issues) do
-      --       if im.MenuItem1(issue[1]) then
-      --         --issue[2]()
-      --       end
-      --     end
-      --     im.EndMenu()
-      --   end
-      -- end
       im.EndMenuBar()
     end
+
     if not editor.editMode or editor.editMode.displayName ~= editModeName then
       if im.Button("Switch to Notebook Editor Editmode", im.ImVec2(im.GetContentRegionAvailWidth(),0)) then
         editor.selectEditMode(editor.editModes.notebookEditMode)
@@ -382,6 +275,10 @@ local function onEditorGui()
     end
     im.tooltip("There is a bug where the camera rotation can get weird. Fix the camera with this button.")
     im.SameLine()
+    if im.Button("Reload Snap Roads") then
+      snaproads.loadSnapRoads()
+    end
+    im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
     im.Text('DragMode: '..pacenotesWindow.dragMode)
     im.Separator()
 
@@ -402,14 +299,8 @@ local function onEditorGui()
       im.EndTabBar()
     end
 
-    updateMouseInfo()
-
-    -- currentPath:drawDebug()
-    -- if editor.getPreference("raceEditor.general.showAiRoute") then
-      -- currentPath:drawAiRouteDebug()
-    -- end
-    pacenotesWindow:drawDebugNotebookEntrypoint()
     currentWindow:draw(mouseInfo)
+    pacenotesWindow:drawDebugNotebookEntrypoint()
   end
 
   editor.endWindow()
@@ -417,6 +308,11 @@ local function onEditorGui()
   if not editor.isWindowVisible(toolWindowName) and editor.editModes and editor.editModes.displayName == editModeName then
     editor.selectEditMode(nil)
   end
+end
+
+local function onEditorGui()
+  updateMouseInfo()
+  drawEditorGui()
 end
 
 local function show()
@@ -432,6 +328,7 @@ local function onActivate()
       win:onEditModeActivate()
     end
   end
+  snaproads.loadSnapRoads()
 end
 local function onDeactivate()
   for _, win in ipairs(windows) do
@@ -473,22 +370,13 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/import')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/options')(M))
 
-  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/segments')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/startPositions')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/trackLayout')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/timeTrials')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/raceEditor/tools')(M))
-  -- testingWindow =  require('/lua/ge/extensions/editor/raceEditor/testing')(M)
-  -- pnWindow, segWindow, spWindow, pacenotesWindow, tlWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4], windows[5], windows[7]
-  notebookInfoWindow, pacenotesWindow, importWindow, optionsWindow = windows[1], windows[2], windows[3], windows[4]
-
-  currentWindow = notebookInfoWindow
+  notebookInfoWindow, pacenotesWindow, importWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4]
 
   for i,win in pairs(windows) do
     win:setPath(currentPath)
   end
 
+  currentWindow = notebookInfoWindow
   currentWindow:setPath(currentPath)
   currentWindow:selected()
 end
@@ -524,7 +412,6 @@ local function onDeserialized(data)
     currentPath._dir = previousFilepath
     local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
     currentPath._fnWithoutExt = filename
-
   end
 end
 
@@ -539,6 +426,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
     {topDownCameraElevation = {"int", 100, "Elevation for the top-down camera view.", nil, 1, 1000}},
     {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
+    {flipSnaproadNormal = {"bool", false, "Flip the normal for waypoints during roadsnap editing."}},
   })
 end
 
@@ -551,7 +439,6 @@ M.getCurrentFilename = function() return previousFilepath..previousFilename end
 M.getCurrentPath = function() return currentPath end
 M.isVisible = function() return editor.isWindowVisible(toolWindowName) end
 M.changedFromExternal = function() currentWindow:setPath(currentPath) end
--- M.setupRace = setupRace
 M.show = show
 M.loadNotebook = loadNotebook
 M.saveNotebook = saveNotebook
@@ -563,20 +450,14 @@ M.onWindowGotFocus = onWindowGotFocus
 M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
 M.cycleDragMode = cycleDragMode
+M.flipSnaproadNormal = flipSnaproadNormal
 
--- M.onUpdate = raceTest
 M.onEditorInitialized = onEditorInitialized
 -- M.getToolsWindow = function() return toolsWindow end
 -- M.getPathnodesWindow = function() return pnWindow end
 -- M.getPacenotesWindow = function() return pacenotesWindow end
 -- M.getSegmentsWindow = function() return segWindow end
-M.getOptionsWindow = function() return optionsWindow end
+M.getOptionsWindow = function() return toolsWindow end
 M.getMissionDir = getMissionDir
-
--- M.wpTypeFwdAudioTrigger = "fwdAudioTrigger"
--- M.wpTypeRevAudioTrigger = "revAudioTrigger"
--- M.wpTypeCornerStart = "cornerStart"
--- M.wpTypeCornerEnd = "cornerEnd"
--- M.wpTypeDistanceMarker = "distanceMarker"
 
 return M

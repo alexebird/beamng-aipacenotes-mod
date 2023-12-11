@@ -56,5 +56,14 @@
     "title": "Rally Editor Cycle Drag Mode",
     "desc": "Cycle between drag modes (simple, simple+road snap, free edit w/gizmo)",
     "onDown": "editor_rallyEditor.cycleDragMode()"
+  },
+  "rallyEditorFlipSnaproadNormal": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor Flip Snaproad Normal",
+    "desc": "Flip the normal of Audio Trigger waypoints",
+    "onDown": "editor_rallyEditor.flipSnaproadNormal()"
   }
 }
