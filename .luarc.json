@@ -28,6 +28,7 @@
       "nop",
       "path",
       "quat",
+      "quatFromAxisAngle",
       "quatFromDir",
       "rainbowColor",
       "readJsonFile",

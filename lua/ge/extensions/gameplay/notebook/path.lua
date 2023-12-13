@@ -136,25 +136,11 @@ function C:autoAssignSegments(racePath)
   end
 end
 
-function C:drawPacenoteModeNormal(pacenote)
-  pacenote:drawDebugCustom('normal', self._default_note_lang, self._hover_waypoint_id, nil, nil)
-end
-
--- function C:drawPacenoteModePnSelected(pacenote)
---   pacenote:drawDebugCustom('selected_pacenote', self._default_note_lang, self._hover_waypoint_id, selected_wp_id)
+-- function C:drawPacenoteModeSelected(pacenote, selected_wp_id, pacenote_next)
+--   pacenote:drawDebugPacenote('selected', self._hover_waypoint_id, selected_wp_id, pacenote_next)
 -- end
 
-function C:drawPacenoteModeSelected(pacenote, selected_wp_id, pacenote_next)
-  pacenote:drawDebugCustom('selected', self._default_note_lang, self._hover_waypoint_id, selected_wp_id, pacenote_next)
-end
-
-function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
-  if editor_rallyEditor.getPrefShowPreviousPacenote() then
-    pacenote:drawDebugCustom('previous', self._default_note_lang, self._hover_waypoint_id, selected_wp_id, nil)
-  end
-end
-
--- function C:drawPacenoteModeNext()
+-- function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
 -- end
 
 function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
@@ -169,42 +155,58 @@ function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
   end
 
   if selected_pacenote_id and selected_waypoint_id then
-    local prev_i = math.max(selected_i - 1, 1)
-    local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
-    -- log('D', 'wtf', 'prev='..prev_i..' i='..selected_i..' next='..next_i)
+    local prev_i = selected_i - 1
+    local next_i = selected_i + 1
 
     local pn_sel = self.pacenotes.sorted[selected_i]
+
     local pn_prev = self.pacenotes.sorted[prev_i]
-    local pn_next = self.pacenotes.sorted[next_i]
-    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
-    if pn_prev and pn_prev.id ~= pn_sel.id then
-      self:drawPacenoteModePrevious(pn_prev)
-      if editor_rallyEditor.getPrefShowPreviousPacenote() then
-        -- this is the pink distance link
-        pn_prev:drawLinkToPacenote(pn_sel)
-      end
+    if not pn_prev or pn_prev.missing then
+      pn_prev = nil
     end
+
+    local pn_next = self.pacenotes.sorted[next_i]
+    if not pn_next or pn_next.missing then
+      pn_next = nil
+    end
+
+    -- self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
+    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, selected_waypoint_id, pn_next)
+
+    if editor_rallyEditor.getPrefShowPreviousPacenote() and pn_prev and pn_prev.id ~= pn_sel.id then
+      pn_prev:drawDebugPacenote('previous', self._default_note_lang, self._hover_waypoint_id, nil, nil)
+      -- this is the pink distance link
+      pn_prev:drawLinkToPacenote(pn_sel)
+    end
+
     -- self:drawPacenoteModeNext(pn_next)
+
   elseif selected_pacenote_id and not selected_waypoint_id then
     local pn_sel = self.pacenotes.sorted[selected_i]
-    local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
+    -- local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
+    local next_i = selected_i + 1
     local pn_next = self.pacenotes.sorted[next_i]
-    self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
+    if not pn_next or pn_next.missing then
+      pn_next = nil
+    end
+
+    -- self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
+    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, nil, pn_next)
 
     -- draw the rest of the pacenotes
-    local i = 1
+    i = 1
     while i <= #self.pacenotes.sorted do
       local pacenote = self.pacenotes.sorted[i]
       if i ~= selected_i then
-        self:drawPacenoteModeNormal(pacenote)
+        pacenote:drawDebugPacenote('normal', self._hover_waypoint_id, nil, nil)
       end
       i = i + 1
     end
   else
-    local i = 1
+    i = 1
     while i <= #self.pacenotes.sorted do
       local pacenote = self.pacenotes.sorted[i]
-      self:drawPacenoteModeNormal(pacenote)
+      pacenote:drawDebugPacenote('normal', self._hover_waypoint_id, nil, nil)
       i = i + 1
     end
   end

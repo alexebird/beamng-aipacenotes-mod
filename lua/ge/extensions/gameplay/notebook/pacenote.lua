@@ -42,6 +42,8 @@ function C:init(notebook, name, forceId)
   )
 
   self.sortOrder = 999999
+
+  self.draw_debug_lang = nil
 end
 
 -- used by pacenoteWaypoints.lua
@@ -61,8 +63,30 @@ end
 --   end
 -- end
 
+function C:getNextWaypointType()
+  local foundTypes = {
+    [waypointTypes.wpTypeCornerStart] = false,
+    [waypointTypes.wpTypeCornerEnd] = false,
+    [waypointTypes.wpTypeFwdAudioTrigger] = false,
+  }
+
+  for _,wp in pairs(self.pacenoteWaypoints.objects) do
+    foundTypes[wp.waypointType] = true
+  end
+
+  if foundTypes[waypointTypes.wpTypeCornerStart] == false then
+    return waypointTypes.wpTypeCornerStart
+  elseif foundTypes[waypointTypes.wpTypeCornerEnd] == false then
+    return waypointTypes.wpTypeCornerEnd
+  elseif foundTypes[waypointTypes.wpTypeFwdAudioTrigger] == false then
+    return waypointTypes.wpTypeFwdAudioTrigger
+  else
+    return waypointTypes.wpTypeDistanceMarker
+  end
+end
+
 function C:setAllRadii(newRadius, wpType)
-  for i,wp in ipairs(self.pacenoteWaypoints.sorted) do
+  for _,wp in ipairs(self.pacenoteWaypoints.sorted) do
     if not wpType or wp.waypointType == wpType then
       wp.radius = newRadius
     end
@@ -304,10 +328,14 @@ local function drawLink2(from, to, clr, alpha)
   )
 end
 
+local function formatDistanceStringMeters(dist)
+  return tostring(round(dist))..'m'
+end
+
 local function prettyDistanceStringMeters(from, to)
   if not (from and to) then return "?m" end
-  local dist = round(from.pos:distance(to.pos))
-  return tostring(dist)..'m' --'->['..waypointTypes.shortenWaypointType(to.waypointType)..']'
+  local d = from.pos:distance(to.pos)
+  return formatDistanceStringMeters(d)
 end
 
 local function drawLinkLabel(from, to, text, alpha, clr_fg, clr_bg)
@@ -326,9 +354,14 @@ local function drawLinkLabel(from, to, text, alpha, clr_fg, clr_bg)
   )
 end
 
-function C:drawDebugSelected(note_text, hover_wp_id, selected_wp_id, pacenote_next)
+function C:getDefaultNoteLang()
+  return self.notebook._default_note_lang
+end
+
+function C:drawDebugSelected(hover_wp_id, selected_wp_id, pacenote_next)
   local dist_text = nil
   local wp_drawMode = 'selected_pn'
+  local note_text = self:noteTextForDrawDebug()
 
   -- draw the fwd audio triggers and link them to CS.
   if editor_rallyEditor.getPrefShowAudioTriggers() then
@@ -390,7 +423,7 @@ function C:drawDebugSelected(note_text, hover_wp_id, selected_wp_id, pacenote_ne
 
   -- draw the distance markers after CE, links, labels.
   if editor_rallyEditor.getPrefShowDistanceMarkers() then
-    local prevwp = self:getCornerEndWaypoint()
+    prevwp = self:getCornerEndWaypoint()
     for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
       drawWaypoint(wp, wp_drawMode, note_text, dist_text,
         hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
@@ -402,10 +435,11 @@ function C:drawDebugSelected(note_text, hover_wp_id, selected_wp_id, pacenote_ne
   end
 end
 
-function C:drawDebugPrevious(note_text, hover_wp_id)
+function C:drawDebugPrevious(hover_wp_id)
   local dist_text = nil
   local wp_drawMode = 'selected_pn'
   local selected_wp_id = nil
+  local note_text = self:noteTextForDrawDebug()
 
   for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
     -- dist_text = prettyDistanceStringMeters(wp, self:getCornerStartWaypoint())
@@ -458,6 +492,37 @@ function C:waypointForAfterLink()
   return from_wp
 end
 
+function C:distanceCornerEndToCornerStart(toPacenote)
+  local allWaypoints = {}
+
+  local startWp = self:getCornerEndWaypoint()
+  table.insert(allWaypoints, startWp)
+
+  local selfDistMarkers = self:getDistanceMarkerWaypointsAfterEnd()
+  for _,wp in ipairs(selfDistMarkers) do
+    table.insert(allWaypoints, wp)
+  end
+
+  local toDistMarkers = toPacenote:getDistanceMarkerWaypointsBeforeStart()
+  for _,wp in ipairs(toDistMarkers) do
+    table.insert(allWaypoints, wp)
+  end
+
+  local endWp = toPacenote:getCornerStartWaypoint()
+  table.insert(allWaypoints, endWp)
+
+  local distance = 0.0
+  local lastWp = nil
+  for _,wp in ipairs(allWaypoints) do
+    if lastWp then
+      distance = distance + lastWp.pos:distance(wp.pos)
+    end
+    lastWp = wp
+  end
+
+  return distance
+end
+
 function C:drawLinkToPacenote(to_pacenote)
   local clr = clr_pink
 
@@ -477,23 +542,29 @@ function C:drawLinkToPacenote(to_pacenote)
 
   local to_wp = to_pacenote:waypointForBeforeLink()
 
+  local distStrTotal = formatDistanceStringMeters(self:distanceCornerEndToCornerStart(to_pacenote))
   local distStr = prettyDistanceStringMeters(from_wp, to_wp)
-  distStr = '<'..distStr..'>'
+  -- distStr = '<'..distStr..'>'
+  distStr = distStr..'('.. distStrTotal ..')'
 
   drawLink2(from_wp, to_wp, clr, shapeAlpha_internote_link)
   drawLinkLabel(from_wp, to_wp, distStr, textAlpha_internote_link, clr_black, clr)
 end
 
-function C:drawDebugCustom(drawMode, note_language, hover_wp_id, selected_wp_id, pacenote_next)
-  local note_text = self.notes[note_language] or ''
+function C:noteTextForDrawDebug()
+  return self.notes[self:getDefaultNoteLang()] or ''
+end
+
+function C:drawDebugPacenote(drawMode, hover_wp_id, selected_wp_id, pacenote_next)
+  -- local note_text = self.notes[note_language] or ''
 
   if drawMode == 'selected' then
-    self:drawDebugSelected(note_text, hover_wp_id, selected_wp_id, pacenote_next)
+    self:drawDebugSelected(hover_wp_id, selected_wp_id, pacenote_next)
   elseif drawMode == 'previous' then
-    self:drawDebugPrevious(note_text, hover_wp_id)
+    self:drawDebugPrevious(hover_wp_id)
   elseif drawMode == 'normal' then
     local dist_text = nil
-    drawWaypoint(self:getCornerStartWaypoint(), 'normal', note_text, dist_text,
+    drawWaypoint(self:getCornerStartWaypoint(), 'normal', self:noteTextForDrawDebug(), dist_text,
       hover_wp_id, nil, shapeAlpha_normal, textAlpha_normal)
   end
 

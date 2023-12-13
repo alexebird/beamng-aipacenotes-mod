@@ -439,42 +439,74 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference."}},
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
-    {topDownCameraElevation = {"int", 100, "Elevation for the top-down camera view.", nil, 1, 1000}},
+    {topDownCameraElevation = {"int", 150, "Elevation for the top-down camera view.", nil, 1, 1000}},
     {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
     {flipSnaproadNormal = {"bool", false, "Flip the normal for waypoints during roadsnap editing."}},
   })
 end
 
 local function getPrefShowDistanceMarkers()
-  return editor.getPreference('rallyEditor.general.showDistanceMarkers')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.showDistanceMarkers')
+  else
+    return true
+  end
 end
 
 local function getPrefShowAudioTriggers()
-  return editor.getPreference('rallyEditor.general.showAudioTriggers')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.showAudioTriggers')
+  else
+    return true
+  end
 end
 
 local function getPrefShowPreviousPacenote()
-  return editor.getPreference('rallyEditor.general.showPreviousPacenote')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.showPreviousPacenote')
+  else
+    return true
+  end
 end
 
 local function getPrefShowRaceSegments()
-  return editor.getPreference('rallyEditor.general.showRaceSegments')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.showRaceSegments')
+  else
+    return false
+  end
 end
 
 local function getPrefDefaultRadius()
-  return editor.getPreference('rallyEditor.general.defaultWaypointRadius')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.defaultWaypointRadius')
+  else
+    return 10
+  end
 end
 
 local function getPrefTopDownCameraElevation()
-  return editor.getPreference('rallyEditor.general.topDownCameraElevation')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.topDownCameraElevation')
+  else
+    return 150
+  end
 end
 
 local function getPrefTopDownCameraFollow()
-  return editor.getPreference('rallyEditor.general.topDownCameraFollow')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.topDownCameraFollow')
+  else
+    return true
+  end
 end
 
 local function getPrefFlipSnaproadNormal()
-  return editor.getPreference('rallyEditor.general.flipSnaproadNormal')
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.flipSnaproadNormal')
+  else
+    return false
+  end
 end
 
 M.onEditorRegisterPreferences = onEditorRegisterPreferences

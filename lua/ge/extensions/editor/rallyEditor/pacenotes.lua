@@ -134,9 +134,13 @@ function C:selectWaypoint(id)
 
   if id then
     local waypoint = self.path:getWaypoint(id)
-    self:selectPacenote(waypoint.pacenote.id)
-    waypointNameText = im.ArrayChar(1024, waypoint.name)
-    self:updateGizmoTransform(id)
+    if waypoint then
+      self:selectPacenote(waypoint.pacenote.id)
+      waypointNameText = im.ArrayChar(1024, waypoint.name)
+      self:updateGizmoTransform(id)
+    else
+      log('E', logTag, 'expected to find waypoint with id='..id)
+    end
   else
     waypointNameText = im.ArrayChar(1024, "")
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
@@ -476,9 +480,13 @@ function C:createMouseDragPacenote()
 
   local txt = "Create new pacenote (Drag to place corner start and end)"
 
+  local pos_rayCast = self.mouseInfo.rayCast.pos
+  local pos_cs = self.mouseInfo._downPos
+  local pos_ce = self.mouseInfo._holdPos
+
   -- draw the cursor text
   debugDrawer:drawTextAdvanced(
-    vec3(self.mouseInfo.rayCast.pos),
+    vec3(pos_rayCast),
     String(txt),
     ColorF(1,1,1,1),
     true,
@@ -486,15 +494,12 @@ function C:createMouseDragPacenote()
     ColorI(0,0,0,255)
   )
 
-  local pos_cs = self.mouseInfo._downPos
-  local pos_ce = self.mouseInfo._holdPos
-
   if self.mouseInfo.hold then
     self:debugDrawNewPacenote(pos_cs, pos_ce)
   elseif self.mouseInfo.up then
     local newPacenote = self.path.pacenotes:create(nil, nil)
-    local wp_cs = newPacenote.pacenoteWaypoints:create('corner start', pos_cs)
-    local wp_ce = newPacenote.pacenoteWaypoints:create('corner end', pos_ce)
+    newPacenote.pacenoteWaypoints:create('corner start', pos_cs)
+    newPacenote.pacenoteWaypoints:create('corner end', pos_ce)
 
     editor.history:commitAction("Create pacenote from mouse drag",
       {
@@ -516,6 +521,56 @@ function C:createMouseDragPacenote()
 end
 
 function C:addMouseWaypointToPacenote()
+  if not self.path then return end
+  if not self.mouseInfo.rayCast then return end
+
+  local pacenote = self:selectedPacenote()
+  if not pacenote then return end
+
+  local nextType = pacenote:getNextWaypointType()
+  local txt = "Add ".. nextType .." Waypoint to '".. (pacenote.name) .."'"
+
+  local pos_rayCast = self.mouseInfo.rayCast.pos
+
+  -- draw the cursor text
+  debugDrawer:drawTextAdvanced(
+    vec3(pos_rayCast),
+    String(txt),
+    ColorF(1,1,1,1),
+    true,
+    false,
+    ColorI(0,0,0,255)
+  )
+
+  if self.mouseInfo.down then
+    -- local wp = pacenote.pacenoteWaypoints:create(nil, pos_rayCast)
+
+    editor.history:commitAction("Add waypoint to pacenote '".. pacenote.name .."'",
+      {
+        self = self,
+        pos = pos_rayCast,
+        wp_data = nil,
+        wp_index = nil,
+        pacenote_index = pacenote.id,
+      },
+      function(data) -- undo
+        local note = self.path.pacenotes.objects[data.pacenote_index]
+        note.pacenoteWaypoints:remove(data.wp_index)
+        self:selectPacenote(data.pacenote_index)
+      end,
+      function(data) -- redo
+        local note = self.path.pacenotes.objects[data.pacenote_index]
+        local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
+        if not data.wp_data then
+          data.wp_data = waypoint:onSerialize()
+        else
+          waypoint:onDeserialized(data.wp_data)
+        end
+        data.wp_index = waypoint.id
+        self:selectWaypoint(waypoint.id)
+      end
+    )
+  end
 end
 
 function C:createManualWaypoint(shouldCreateNewPacenote)
@@ -1208,24 +1263,24 @@ function C:waypointTypeSelector(note)
   im.tooltip(tt)
 end
 
-function C:loadVoices()
-  voices = readJsonFile(voiceFname)
-  voiceNamesSorted = {}
-
-  if not voices then
-    log('E', logTag, 'unable to load voices file from ' .. tostring(filename))
-    voices = {"can't load voices file from "..voiceFname}
-    return
-  end
-
-  for voiceName, _ in pairs(voices) do
-    table.insert(voiceNamesSorted, voiceName)
-  end
-
-  table.sort(voiceNamesSorted)
-
-  log('I', logTag, 'reloaded voices from '..voiceFname)
-end
+-- function C:loadVoices()
+--   local voices = readJsonFile(voiceFname)
+--   voiceNamesSorted = {}
+--
+--   if not voices then
+--     log('E', logTag, 'unable to load voices file from ' .. tostring(filename))
+--     voices = {"can't load voices file from "..voiceFname}
+--     return
+--   end
+--
+--   for voiceName, _ in pairs(voices) do
+--     table.insert(voiceNamesSorted, voiceName)
+--   end
+--
+--   table.sort(voiceNamesSorted)
+--
+--   log('I', logTag, 'reloaded voices from '..voiceFname)
+-- end
 
 function C:setCameraToPacenote()
   local pacenote = self:selectedPacenote()

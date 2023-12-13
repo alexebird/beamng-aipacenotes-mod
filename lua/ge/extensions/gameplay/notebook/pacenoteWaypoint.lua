@@ -18,7 +18,7 @@ local clr_orange = {1.0, 0.64, 0.0}
 local shapeAlpha_hover = 1.0
 local textAlpha_hover = 1.0
 
-local sphereAlphaReducionForArrowFactor = 0.9
+local sphereAlphaReducionForArrowFactor = 0.8
 local shapeAlpha_arrowAdjustFactor = 1.25
 local shapeAlpha_arrowPlaneAdjustFactor = 0.66
 
@@ -27,7 +27,7 @@ function C:init(pacenote, name, pos, forceId)
 
   self.id = forceId or pacenote:getNextUniqueIdentifier()
   self.name = name or 'Waypoint '..self.id
-  self.waypointType = self:getNextWaypointType()
+  self.waypointType = self.pacenote:getNextWaypointType()
   self.normal = vec3(0,1,0)
   self.pos = pos
   self.radius = editor_rallyEditor.getPrefDefaultRadius()
@@ -38,28 +38,6 @@ end
 
 function C:flipNormal()
   self.normal = -self.normal
-end
-
-function C:getNextWaypointType()
-  local foundTypes = {
-    [waypointTypes.wpTypeCornerStart] = false,
-    [waypointTypes.wpTypeCornerEnd] = false,
-    [waypointTypes.wpTypeFwdAudioTrigger] = false,
-  }
-
-  for i,wp in pairs(self.pacenote.pacenoteWaypoints.objects) do
-    foundTypes[wp.waypointType] = true
-  end
-
-  if foundTypes[waypointTypes.wpTypeCornerStart] == false then
-    return waypointTypes.wpTypeCornerStart
-  elseif foundTypes[waypointTypes.wpTypeCornerEnd] == false then
-    return waypointTypes.wpTypeCornerEnd
-  elseif foundTypes[waypointTypes.wpTypeFwdAudioTrigger] == false then
-    return waypointTypes.wpTypeFwdAudioTrigger
-  else
-    return waypointTypes.wpTypeDistanceMarker
-  end
 end
 
 function C:setManual(pos, radius, normal)
