@@ -3,30 +3,10 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 
 local C = {}
--- local modes = {"manual","navgraph"}
 local logTag = 'aipacenotes_pacenote'
-
-local clr_white = {1.0, 1.0, 1.0}
-local clr_black = {0.0, 0.0, 0.0}
-local clr_orange = {1.0, 0.64, 0.0}
-local clr_blue = {0.0, 0.0, 1.0}
-local clr_grey = {0.25, 0.25, 0.25}
-local clr_pink = {1.0, 0.0, 1.0}
-
-local shapeAlpha_normal = 0.25
-local textAlpha_normal = 0.5
-local shapeAlpha_selected = 0.8
-local textAlpha_selected = 1.0
-local shapeAlpha_previous = 0.25
-local textAlpha_previous = 0.5
-local shapeAlpha_internote_link = 0.8
-local textAlpha_internote_link = 1.0
-
-local linkHeightRadiusShinkFactor = 0.5
-local linkFromWidth = 1.0
-local linkToWidth = 0.25
 
 function C:init(notebook, name, forceId)
   self.notebook = notebook
@@ -50,18 +30,6 @@ end
 function C:getNextUniqueIdentifier()
   return self.notebook:getNextUniqueIdentifier()
 end
-
--- function C:indexWaypointsByType()
---   self.pacenoteWaypointsByType = {}
-
---   for i, wp in pairs(self.pacenoteWaypoints.objects) do
---     local wpType = wp.waypointType
---     if self.pacenoteWaypointsByType[wpType] == nil then
---       self.pacenoteWaypointsByType[wpType] = {}
---     end
---     table.insert(self.pacenoteWaypointsByType[wpType], wp)
---   end
--- end
 
 function C:getNextWaypointType()
   local foundTypes = {
@@ -243,6 +211,10 @@ function C:getActiveFwdAudioTrigger()
   return nil
 end
 
+function C:getDefaultNoteLang()
+  return self.notebook._default_note_lang
+end
+
 local function reverseList(list)
   local reversed = {}
   local count = #list
@@ -265,7 +237,11 @@ local function textForDrawDebug(wp, cs_prefix, note_text, dist_text)
   local txt = ''
   if wp.waypointType == waypointTypes.wpTypeCornerStart then
     if cs_prefix then
-      txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)..'] ' .. note_text
+      txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
+      if dist_text then
+        txt = txt..','..dist_text
+      end
+      txt = txt..'] ' .. note_text
     else
       txt = note_text
     end
@@ -281,15 +257,19 @@ local function textForDrawDebug(wp, cs_prefix, note_text, dist_text)
   return txt
 end
 
-local function drawWaypoint(wp, wp_drawMode, note_text, dist_text,
+local function drawWaypoint(wp, wp_drawMode,
+                            note_text, dist_text,
                             hover_wp_id, selected_wp_id,
-                            shapeAlpha, textAlpha)
-
+                            alpha)
+  -----------------------------------------------
   if not wp then return end
 
   local hover = hover_wp_id and hover_wp_id == wp.id
   local cs_prefix = nil
   local clr = nil
+
+  local shapeAlpha = alpha * cc.pacenote_shapeAlpha_factor
+  local textAlpha = alpha
 
   -- determine if the waypoint is selected
   if selected_wp_id and selected_wp_id == wp.id then
@@ -299,32 +279,30 @@ local function drawWaypoint(wp, wp_drawMode, note_text, dist_text,
   -- enumerate all wp_drawModes
   if wp_drawMode == 'selected_wp' then
     cs_prefix = true
-    clr = clr_white
+    clr = cc.waypoint_clr_sphere_selected
   elseif wp_drawMode == 'selected_pn' then
     cs_prefix = true
     clr = wp:colorForWpType()
   elseif wp_drawMode == 'normal' then
     cs_prefix = false
     clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
-    shapeAlpha = shapeAlpha_normal
-    textAlpha = textAlpha_normal
   end
 
   local text = textForDrawDebug(wp, cs_prefix, note_text, dist_text)
   wp:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 end
 
-local function drawLink2(from, to, clr, alpha)
+local function drawLink(from, to, clr, alpha)
   if not (from and to) then return end
-   -- could also set based on radius, but there are clipping issues.
-  local fromHeight = from.radius * linkHeightRadiusShinkFactor
-  local toHeight = to.radius * linkHeightRadiusShinkFactor
+  local fromHeight = from.radius * cc.pacenote_linkHeightRadiusShinkFactor
+  local toHeight = to.radius * cc.pacenote_linkHeightRadiusShinkFactor
+  local shapeAlpha = alpha * cc.pacenote_shapeAlpha_factor
   debugDrawer:drawSquarePrism(
     from.pos,
     to.pos,
-    Point2F(fromHeight, linkFromWidth),
-    Point2F(toHeight, linkToWidth),
-    ColorF(clr[1],clr[2],clr[3],alpha)
+    Point2F(fromHeight, cc.pacenote_linkFromWidth),
+    Point2F(toHeight, cc.pacenote_linkToWidth),
+    ColorF(clr[1], clr[2], clr[3], shapeAlpha)
   )
 end
 
@@ -342,8 +320,8 @@ local function drawLinkLabel(from, to, text, alpha, clr_fg, clr_bg)
   -- make the position in the middle of from and to.
   local textPos = (from.pos + to.pos) / 2
 
-  clr_fg = clr_fg or clr_white
-  clr_bg = clr_bg or clr_black
+  clr_fg = clr_fg or cc.pacenote_clr_link_fg
+  clr_bg = clr_bg or cc.pacenote_clr_link_bg
 
   debugDrawer:drawTextAdvanced(textPos,
     String(text),
@@ -354,142 +332,158 @@ local function drawLinkLabel(from, to, text, alpha, clr_fg, clr_bg)
   )
 end
 
-function C:getDefaultNoteLang()
-  return self.notebook._default_note_lang
-end
-
-function C:drawDebugSelected(hover_wp_id, selected_wp_id, pacenote_next)
+function C:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)
   local dist_text = nil
   local wp_drawMode = 'selected_pn'
   local note_text = self:noteTextForDrawDebug()
+  local base_alpha = drawConfig.base_alpha
 
   -- draw the fwd audio triggers and link them to CS.
-  if editor_rallyEditor.getPrefShowAudioTriggers() then
+  if editor_rallyEditor.getPrefShowAudioTriggers() and drawConfig.at then
     for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
+      -- distance is from AT to CS
       dist_text = prettyDistanceStringMeters(wp, self:getCornerStartWaypoint())
-      drawWaypoint(wp, wp_drawMode, note_text, dist_text,
-        hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
-      drawLink2(wp, self:getCornerStartWaypoint(), clr_blue, shapeAlpha_selected)
+      drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
+      drawLink(wp, self:getCornerStartWaypoint(), cc.pacenote_clr_at, base_alpha)
     end
-    dist_text = nil
   end
+  dist_text = nil
 
   -- draw beforeStart distance markers, draw link, draw link distance label
-  if editor_rallyEditor.getPrefShowDistanceMarkers() then
+  if editor_rallyEditor.getPrefShowDistanceMarkers() and drawConfig.di_before then
     local nextwp = self:getCornerStartWaypoint()
     for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
-      drawWaypoint(wp, wp_drawMode, note_text, dist_text,
-        hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
-      drawLink2(wp, nextwp, clr_orange, shapeAlpha_selected)
-      local distStr = prettyDistanceStringMeters(wp, nextwp)
-      drawLinkLabel(wp, nextwp, distStr, textAlpha_selected)
+      drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
+      drawLink(wp, nextwp, cc.pacenote_clr_di, base_alpha)
+      -- distance is from distance marker to: either next distance marker, or CS
+      dist_text = prettyDistanceStringMeters(wp, nextwp)
+      drawLinkLabel(wp, nextwp, dist_text, base_alpha, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
       nextwp = wp
     end
   end
+  dist_text = nil
 
   -- draw the CS
-  drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, note_text, dist_text,
-    hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
+  if drawConfig.cs then
+    if pacenote_prev then
+      -- distance is from prev CS to this CE, including all after and before distance markers
+      dist_text = formatDistanceStringMeters(pacenote_prev:distanceCornerEndToCornerStart(self))
+    end
+    drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
+  end
+  dist_text = nil
 
   -- draw the distance markers, links, and labels, that are between CS and CE
-  local prevwp = self:getCornerStartWaypoint()
   local prevIsCS = true
-  for _,wp in ipairs(self:getDistanceMarkerWaypointsInBetween()) do
-    drawWaypoint(wp, wp_drawMode, note_text, dist_text,
-      hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
-    drawLink2(prevwp, wp, clr_orange, shapeAlpha_selected)
-    local distStr = prettyDistanceStringMeters(prevwp, wp)
-    drawLinkLabel(prevwp, wp, distStr, textAlpha_selected, clr_black, clr_orange)
-    prevwp = wp
-    prevIsCS = false
+  local prevwp = self:getCornerStartWaypoint()
+  if editor_rallyEditor.getPrefShowDistanceMarkers() and drawConfig.di_middle then
+    for _,wp in ipairs(self:getDistanceMarkerWaypointsInBetween()) do
+      drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
+      drawLink(prevwp, wp, cc.pacenote_clr_di, base_alpha)
+      -- distance is from CS to each distance marker
+      dist_text = prettyDistanceStringMeters(prevwp, wp)
+      drawLinkLabel(prevwp, wp, dist_text, base_alpha, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
+      prevwp = wp
+      prevIsCS = false
+    end
   end
+  dist_text = nil
 
   -- draw the CE
-  if pacenote_next then
-    dist_text = prettyDistanceStringMeters(self:getCornerEndWaypoint(), pacenote_next:waypointForBeforeLink())
+  if drawConfig.ce then
+    if pacenote_next then
+      -- distance is from CE to next CS, including all after and before distance markers
+      dist_text = formatDistanceStringMeters(self:distanceCornerEndToCornerStart(pacenote_next))
+      -- dist_text = prettyDistanceStringMeters(self:getCornerEndWaypoint(), pacenote_next:waypointForBeforeLink())
+    end
+    drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
   end
-  drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, note_text, dist_text,
-    hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
   dist_text = nil
 
   -- draw the link into CE depending on some logic.
-  if prevIsCS then
-    drawLink2(prevwp, self:getCornerEndWaypoint(), clr_grey, shapeAlpha_selected)
+  if prevIsCS or not editor_rallyEditor.getPrefShowDistanceMarkers() then
+    drawLink(prevwp, self:getCornerEndWaypoint(), cc.pacenote_clr_cs_to_ce_direct, base_alpha)
   else
-    drawLink2(prevwp, self:getCornerEndWaypoint(), clr_orange, shapeAlpha_selected)
-    local distStr = prettyDistanceStringMeters(prevwp, self:getCornerEndWaypoint())
-    drawLinkLabel(prevwp, self:getCornerEndWaypoint(), distStr, textAlpha_selected, clr_black, clr_orange)
+    if editor_rallyEditor.getPrefShowDistanceMarkers() and drawConfig.di_middle then
+      drawLink(prevwp, self:getCornerEndWaypoint(), cc.pacenote_clr_di, base_alpha)
+      -- distance is from the last middle DI to CE
+      dist_text = prettyDistanceStringMeters(prevwp, self:getCornerEndWaypoint())
+      drawLinkLabel(prevwp, self:getCornerEndWaypoint(), dist_text, base_alpha, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
+    end
   end
+  dist_text = nil
 
   -- draw the distance markers after CE, links, labels.
-  if editor_rallyEditor.getPrefShowDistanceMarkers() then
+  if editor_rallyEditor.getPrefShowDistanceMarkers() and drawConfig.di_after then
     prevwp = self:getCornerEndWaypoint()
     for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
-      drawWaypoint(wp, wp_drawMode, note_text, dist_text,
-        hover_wp_id, selected_wp_id, shapeAlpha_selected, textAlpha_selected)
-      drawLink2(prevwp, wp, clr_orange, shapeAlpha_selected)
-      local distStr = prettyDistanceStringMeters(prevwp, wp)
-      drawLinkLabel(prevwp, wp, distStr, textAlpha_selected)
+      drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
+      drawLink(prevwp, wp, cc.pacenote_clr_di, base_alpha)
+      -- distance is from CE to each DI
+      dist_text = prettyDistanceStringMeters(prevwp, wp)
+      drawLinkLabel(prevwp, wp, dist_text, base_alpha, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
       prevwp = wp
     end
   end
 end
 
-function C:drawDebugPrevious(hover_wp_id)
-  local dist_text = nil
-  local wp_drawMode = 'selected_pn'
-  local selected_wp_id = nil
-  local note_text = self:noteTextForDrawDebug()
-
-  for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
-    -- dist_text = prettyDistanceStringMeters(wp, self:getCornerStartWaypoint())
-    drawWaypoint(wp, wp_drawMode, note_text, dist_text,
-      hover_wp_id, selected_wp_id, shapeAlpha_previous, textAlpha_previous)
-    drawLink2(wp, self:getCornerStartWaypoint(), clr_blue, shapeAlpha_previous)
-    -- drawLinkLabel(wp, self:getCornerStartWaypoint(), alpha_dist_label)
-  end
-
-  -- local nextwp = self:getCornerStartWaypoint()
-  -- for _,wp in ipairs(self:getDistanceMarkerWaypointsBeforeStart()) do
-  --   drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id)
-  --   drawLink2(wp, nextwp, clr_orange, alpha)
-  --   drawLinkLabel(wp, nextwp, alpha_dist_label)
-  --   nextwp = wp
-  -- end
-
-  drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, note_text, dist_text,
-    hover_wp_id, selected_wp_id, shapeAlpha_previous, textAlpha_previous)
-  drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, note_text, dist_text,
-    hover_wp_id, selected_wp_id, shapeAlpha_previous, textAlpha_previous)
-  drawLink2(self:getCornerStartWaypoint(), self:getCornerEndWaypoint(), clr_grey, shapeAlpha_previous)
-
-  local prevwp = self:getCornerEndWaypoint()
-  for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
-    drawWaypoint(wp, wp_drawMode, note_text, dist_text,
-      hover_wp_id, selected_wp_id, shapeAlpha_previous, textAlpha_previous)
-    drawLink2(prevwp, wp, clr_orange, shapeAlpha_previous)
-    local distStr = prettyDistanceStringMeters(prevwp, wp)
-    drawLinkLabel(prevwp, wp, distStr, textAlpha_previous)
-    prevwp = wp
-  end
-end
+-- AT, CS, CE, CS->CE, DI
+-- function C:drawDebugPrevious(hover_wp_id)
+--   local dist_text = nil
+--   local wp_drawMode = 'selected_pn'
+--   local selected_wp_id = nil
+--   local note_text = self:noteTextForDrawDebug()
+--
+--   -- draw the fwd audio triggers and link them to CS.
+--   for _,wp in ipairs(self:getAudioTriggerWaypoints()) do
+--     drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, cc.pacenote_alpha_shape_previous, cc.pacenote_alpha_txt_previous)
+--     drawLink(wp, self:getCornerStartWaypoint(), clr_blue, cc.pacenote_alpha_shape_previous)
+--   end
+--
+--   -- draw the CS
+--   drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, cc.pacenote_alpha_shape_previous, cc.pacenote_alpha_txt_previous)
+--   -- draw the CE
+--   drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, cc.pacenote_alpha_shape_previous, cc.pacenote_alpha_txt_previous)
+--   -- draw the link to CE
+--   drawLink(self:getCornerStartWaypoint(), self:getCornerEndWaypoint(), clr_grey, cc.pacenote_alpha_shape_previous)
+--
+--   -- draw the distance markers after CE, links, labels.
+--   local prevwp = self:getCornerEndWaypoint()
+--   for _,wp in ipairs(self:getDistanceMarkerWaypointsAfterEnd()) do
+--     drawWaypoint(wp, wp_drawMode, note_text, dist_text, hover_wp_id, selected_wp_id, cc.pacenote_alpha_shape_previous, cc.pacenote_alpha_txt_previous)
+--     drawLink(prevwp, wp, cc.pacenote_clr_di, cc.pacenote_alpha_shape_previous)
+--     local distStr = prettyDistanceStringMeters(prevwp, wp)
+--     drawLinkLabel(prevwp, wp, distStr, cc.pacenote_alpha_txt_previous)
+--     prevwp = wp
+--   end
+-- end
 
 function C:waypointForBeforeLink()
-  local to_wp = self:getCornerStartWaypoint()
-  local before_start = self:getDistanceMarkerWaypointsBeforeStart()
-  if #before_start > 0 then
-    to_wp = before_start[1]
+  if editor_rallyEditor.getPrefShowDistanceMarkers() then
+    local to_wp = self:getCornerStartWaypoint()
+    local before_start = self:getDistanceMarkerWaypointsBeforeStart()
+    if #before_start > 0 then
+      to_wp = before_start[1]
+    end
+    return to_wp
+  else
+    local to_wp = self:getCornerStartWaypoint()
+    return to_wp
   end
-  return to_wp
 end
 
 function C:waypointForAfterLink()
-  local from_wp = self:getCornerEndWaypoint()
-  local afterEnd = self:getDistanceMarkerWaypointsAfterEnd()
-  if #afterEnd > 0 then
-    from_wp = afterEnd[#afterEnd]
+  if editor_rallyEditor.getPrefShowDistanceMarkers() then
+    local from_wp = self:getCornerEndWaypoint()
+    local afterEnd = self:getDistanceMarkerWaypointsAfterEnd()
+    if #afterEnd > 0 then
+      from_wp = afterEnd[#afterEnd]
+    end
+    return from_wp
+  else
+    local from_wp = self:getCornerEndWaypoint()
+    return from_wp
   end
-  return from_wp
 end
 
 function C:distanceCornerEndToCornerStart(toPacenote)
@@ -524,60 +518,58 @@ function C:distanceCornerEndToCornerStart(toPacenote)
 end
 
 function C:drawLinkToPacenote(to_pacenote)
-  local clr = clr_pink
-
-  -- local from_wp = self:getCornerEndWaypoint()
-  -- local afterEnd = self:getDistanceMarkerWaypointsAfterEnd()
-  -- if #afterEnd > 0 then
-  --   from_wp = afterEnd[#afterEnd]
-  -- end
-
   local from_wp = self:waypointForAfterLink()
-
-  -- local to_wp = to_pacenote:getCornerStartWaypoint()
-  -- local before_start = to_pacenote:getDistanceMarkerWaypointsBeforeStart()
-  -- if #before_start > 0 then
-  --   to_wp = before_start[1]
-  -- end
-
   local to_wp = to_pacenote:waypointForBeforeLink()
 
   local distStrTotal = formatDistanceStringMeters(self:distanceCornerEndToCornerStart(to_pacenote))
   local distStr = prettyDistanceStringMeters(from_wp, to_wp)
-  -- distStr = '<'..distStr..'>'
-  distStr = distStr..'('.. distStrTotal ..')'
+  distStr = distStrTotal..'('..distStr..')'
 
-  drawLink2(from_wp, to_wp, clr, shapeAlpha_internote_link)
-  drawLinkLabel(from_wp, to_wp, distStr, textAlpha_internote_link, clr_black, clr)
+  drawLink(from_wp, to_wp, cc.pacenote_clr_interlink, cc.pacenote_alpha_interlink)
+  drawLinkLabel(from_wp, to_wp, distStr, cc.pacenote_alpha_interlink, cc.pacenote_clr_interlink_txt, cc.pacenote_clr_interlink)
 end
 
 function C:noteTextForDrawDebug()
   return self.notes[self:getDefaultNoteLang()] or ''
 end
 
-function C:drawDebugPacenote(drawMode, hover_wp_id, selected_wp_id, pacenote_next)
-  -- local note_text = self.notes[note_language] or ''
-
+function C:drawDebugPacenote(drawMode, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)
   if drawMode == 'selected' then
-    self:drawDebugSelected(hover_wp_id, selected_wp_id, pacenote_next)
+    local drawConfig = {
+      di_before = true,
+      at = true,
+      cs = true,
+      di_middle = true,
+      ce = true,
+      di_after = true,
+      base_alpha = cc.pacenote_base_alpha_selected,
+    }
+    self:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)
   elseif drawMode == 'previous' then
-    self:drawDebugPrevious(hover_wp_id)
+    local drawConfig = {
+      di_before = false,
+      at = true,
+      cs = true,
+      di_middle = true,
+      ce = true,
+      di_after = true,
+      base_alpha = cc.pacenote_base_alpha_prev,
+    }
+    self:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)
+  elseif drawMode == 'next' then
+    local drawConfig = {
+      di_before = true,
+      at = true,
+      cs = true,
+      di_middle = true,
+      ce = true,
+      di_after = false,
+      base_alpha = cc.pacenote_base_alpha_next,
+    }
+    self:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)
   elseif drawMode == 'normal' then
-    local dist_text = nil
-    drawWaypoint(self:getCornerStartWaypoint(), 'normal', self:noteTextForDrawDebug(), dist_text,
-      hover_wp_id, nil, shapeAlpha_normal, textAlpha_normal)
+    drawWaypoint(self:getCornerStartWaypoint(), 'normal', self:noteTextForDrawDebug(), nil, hover_wp_id, nil, cc.pacenote_base_alpha_normal)
   end
-
-  -- step 1 determine the pacenote's state
-  -- - normal -> rainbow
-  -- - hover -> white
-  -- - selected -> white with less alpha
-  -- local drawMode = 'normal'
-
-  -- local isWpSelected = selected_wp_id and cs and selected_wp_id == cs.id
-  -- if isWpSelected then
-  --   drawMode = 'selected'
-  -- end
 end
 
 local function calculateWaypointsCentroid(waypoints)

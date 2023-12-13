@@ -6,6 +6,7 @@ local im  = ui_imgui
 local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
+local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 
 -- pacenote form fields
 local pacenoteNameText = im.ArrayChar(1024, "")
@@ -50,6 +51,24 @@ end
 
 function C:setPath(path)
   self.path = path
+end
+
+function C:getRacePath()
+  return editor_raceEditor.getCurrentPath()
+end
+
+function C:selectionString()
+  local pn = self:selectedPacenote()
+  local wp = self:selectedWaypoint()
+  if pn and not pn.missing then
+    local txt = '"' .. pn:noteTextForDrawDebug() .. '" ('.. pn.name ..')'
+    if wp and not wp.missing then
+      txt = txt .. ' > ' .. wp:selectionString()
+    end
+    return txt
+  else
+    return "none"
+  end
 end
 
 function C:selectedPacenote()
@@ -104,6 +123,11 @@ end
 function C:selectPacenote(id)
   if not self.path then return end
   if not self.path.pacenotes then return end
+
+  -- deselect waypoint if we are changing pacenotes.
+  if self.pacenote_index ~= id then
+    self.waypoint_index = nil
+  end
 
   self.pacenote_index = id
 
@@ -258,7 +282,7 @@ end
 
 function C:drawDebugNotebookEntrypoint()
   if self.path then
-    self.path:drawDebug(self.pacenote_index, self.waypoint_index)
+    self.path:drawDebugNotebook(self.pacenote_index, self.waypoint_index)
   end
 end
 
@@ -286,11 +310,19 @@ function C:handleMouseDown(hoveredWp)
   if hoveredWp then
     local selectedPn = hoveredWp.pacenote
     if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
+      -- if a pacenote is already selected and the clicked waypoint is in that pacenote.
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
       self.beginSimpleDragNoteData = hoveredWp:onSerialize()
       self:selectWaypoint(hoveredWp.id)
-    elseif not self:selectedPacenote() or self:selectedPacenote().id ~= selectedPn.id then
+    elseif self:selectedPacenote() and self:selectedPacenote().id ~= selectedPn.id then
+      -- if the selected pacenote is different than clicked waypoint
+      self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
       self:selectPacenote(selectedPn.id)
+      self:selectWaypoint(hoveredWp.id)
+    elseif not self:selectedPacenote() then
+      -- if no pacenote is selected
+      self:selectPacenote(selectedPn.id)
+      self:selectWaypoint(nil)
     end
   else
     -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
@@ -319,6 +351,17 @@ function C:handleMouseHold()
             local flip = self.rallyEditor.getPrefFlipSnaproadNormal()
             local rv = calculateForwardNormal(new_pos, normal_align_pos, flip)
             wp_sel.normal = vec3(rv.x, rv.y, rv.z)
+          elseif wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
+            local note = wp_sel.pacenote
+            -- local at = note:getActiveFwdAudioTrigger()
+            for _,at in ipairs(note:getAudioTriggerWaypoints()) do
+              local rv = calculateForwardNormal(at.pos, wp_sel.pos, false)
+              at.normal = vec3(rv.x, rv.y, rv.z)
+            end
+            -- if at then
+            --   local rv = calculateForwardNormal(at.pos, wp_sel.pos, false)
+            --   at.normal = vec3(rv.x, rv.y, rv.z)
+            -- end
           end
         end
       end
@@ -396,12 +439,8 @@ function C:handleMouseInput()
   local hoveredWp = self:detectMouseHoverWaypoint()
 
   if editor.keyModifiers.shift then
-    -- local shouldCreateNewPacenote = false
-    -- self:createManualWaypoint(shouldCreateNewPacenote)
     self:addMouseWaypointToPacenote()
   elseif editor.keyModifiers.ctrl then
-    -- local shouldCreateNewPacenote = true
-    -- self:createManualWaypoint(shouldCreateNewPacenote)
     self:createMouseDragPacenote()
   else
     self:handleUnmodifiedMouseInteraction(hoveredWp)
@@ -428,50 +467,22 @@ function C:debugDrawNewPacenote(pos_cs, pos_ce)
   local defaultRadius = self.rallyEditor.getPrefDefaultRadius()
   local radius = defaultRadius
 
-  -- local radius = (self.mouseInfo._downPos - self.mouseInfo._holdPos):length()
-  -- if radius <= 1 then
-  --   radius = defaultRadius
-  -- end
-
-  local alpha = 0.8
-  local clr_white = {1.0, 1.0, 1.0}
-  local clr_light_green = {0.5, 1.0, 0.5}
-  local clr_light_red = {1.0, 0.5, 0.5}
-  local clr_link = clr_white
-  local clr_cs = clr_light_green
-  local clr_ce = clr_light_red
-
+  local alpha = cc.new_pacenote_cursor_alpha
+  local clr_link = cc.new_pacenote_cursor_clr_link
+  local clr_cs = cc.new_pacenote_cursor_clr_cs
+  local clr_ce = cc.new_pacenote_cursor_clr_ce
   debugDrawer:drawSphere((pos_cs), radius, ColorF(clr_cs[1],clr_cs[2],clr_cs[3],alpha))
   debugDrawer:drawSphere((pos_ce), radius, ColorF(clr_ce[1],clr_ce[2],clr_ce[3],alpha))
 
-  local linkHeightRadiusShinkFactor = 0.5
-  local linkFromWidth = 1.0
-  local linkToWidth = 0.25
-  local fromHeight = radius * linkHeightRadiusShinkFactor
-  local toHeight = radius * linkHeightRadiusShinkFactor
+  local fromHeight = radius * cc.new_pacenote_cursor_linkHeightRadiusShinkFactor
+  local toHeight = radius * cc.new_pacenote_cursor_linkHeightRadiusShinkFactor
   debugDrawer:drawSquarePrism(
     pos_cs,
     pos_ce,
-    Point2F(fromHeight, linkFromWidth),
-    Point2F(toHeight, linkToWidth),
+    Point2F(fromHeight, cc.new_pacenote_cursor_linkFromWidth),
+    Point2F(toHeight, cc.new_pacenote_cursor_linkToWidth),
     ColorF(clr_link[1],clr_link[2],clr_link[3],alpha)
   )
-
-  -- local normal = (self.mouseInfo._holdPos - self.mouseInfo._downPos):normalized()
-  -- debugDrawer:drawSquarePrism(
-  --   (self.mouseInfo._downPos),
-  --   ((self.mouseInfo._downPos) + radius * normal),
-  --   Point2F(1,radius/2),
-  --   Point2F(0,0),
-  --   ColorF(1,1,1,0.5)
-  -- )
-  -- debugDrawer:drawSquarePrism(
-  --   (self.mouseInfo._downPos),
-  --   ((self.mouseInfo._downPos) + 0.25 * normal),
-  --   Point2F(2,radius*2),
-  --   Point2F(0,0),
-  --   ColorF(1,1,1,0.4)
-  -- )
 end
 
 function C:createMouseDragPacenote()
@@ -481,8 +492,19 @@ function C:createMouseDragPacenote()
   local txt = "Create new pacenote (Drag to place corner start and end)"
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
+  if self.dragMode == dragModes.simple_road_snap then
+    pos_rayCast = snaproads.closestSnapPos(pos_rayCast)
+  end
+
   local pos_cs = self.mouseInfo._downPos
+  if self.dragMode == dragModes.simple_road_snap and pos_cs then
+    pos_cs = snaproads.closestSnapPos(pos_cs)
+  end
+
   local pos_ce = self.mouseInfo._holdPos
+  if self.dragMode == dragModes.simple_road_snap and pos_ce then
+    pos_ce = snaproads.closestSnapPos(pos_ce)
+  end
 
   -- draw the cursor text
   debugDrawer:drawTextAdvanced(
@@ -532,6 +554,10 @@ function C:addMouseWaypointToPacenote()
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
 
+  if self.dragMode == dragModes.simple_road_snap then
+    pos_rayCast = snaproads.closestSnapPos(pos_rayCast)
+  end
+
   -- draw the cursor text
   debugDrawer:drawTextAdvanced(
     vec3(pos_rayCast),
@@ -543,8 +569,6 @@ function C:addMouseWaypointToPacenote()
   )
 
   if self.mouseInfo.down then
-    -- local wp = pacenote.pacenoteWaypoints:create(nil, pos_rayCast)
-
     editor.history:commitAction("Add waypoint to pacenote '".. pacenote.name .."'",
       {
         self = self,
@@ -561,126 +585,23 @@ function C:addMouseWaypointToPacenote()
       function(data) -- redo
         local note = self.path.pacenotes.objects[data.pacenote_index]
         local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
+
+        if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+          local cs = note:getCornerStartWaypoint()
+          if cs then
+            local rv = calculateForwardNormal(data.pos, cs.pos, false)
+            waypoint.normal = vec3(rv.x, rv.y, rv.z)
+          end
+        end
+
         if not data.wp_data then
           data.wp_data = waypoint:onSerialize()
         else
           waypoint:onDeserialized(data.wp_data)
         end
+
         data.wp_index = waypoint.id
         self:selectWaypoint(waypoint.id)
-      end
-    )
-  end
-end
-
-function C:createManualWaypoint(shouldCreateNewPacenote)
-  if not self.path then return end
-  if not self.mouseInfo.rayCast then return end
-
-  local txt = "Add waypoint to current pacenote"
-  if shouldCreateNewPacenote then
-    txt = "Create new pacenote (Drag to place corner start and end)"
-  end
-
-  -- draw the cursor text
-  debugDrawer:drawTextAdvanced(
-    vec3(self.mouseInfo.rayCast.pos),
-    String(txt),
-    ColorF(1,1,1,1),
-    true,
-    false,
-    ColorI(0,0,0,255)
-  )
-
-  if self.mouseInfo.hold then
-    if shouldCreateNewPacenote then
-      self:debugDrawNewPacenote()
-    end
-  elseif self.mouseInfo.up then
-    local created_pacenote_id = nil
-    if shouldCreateNewPacenote then
-      local pacenote = self.path.pacenotes:create(nil, nil)
-      created_pacenote_id = pacenote.id
-      self:selectPacenote(pacenote.id)
-    end
-
-    editor.history:commitAction("Create Manual Pacenote Waypoint",
-      {
-        self = self,
-        mouseInfo = deepcopy(self.mouseInfo),
-        -- wp_index = self.waypoint_index,
-        pacenote_index = self.pacenote_index,
-        created_pacenote_id = created_pacenote_id,
-        normal =(self.mouseInfo._upPos - self.mouseInfo._downPos),
-      },
-      function(data) -- undo
-        if data.wpId then
-          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpId)
-        end
-        if data.wpIdCE then
-          data.self:selectedPacenote().pacenoteWaypoints:remove(data.wpIdCE)
-        end
-        if data.pacenote_index then
-          data.self:selectPacenote(data.pacenote_index)
-        end
-      end,
-      function(data) --redo
-        if data.pacenote_index then
-          data.self:selectPacenote(data.pacenote_index)
-        end
-        local note = data.self:selectedPacenote()
-        if note then
-          -- create a waypoint
-          local wp = note.pacenoteWaypoints:create(nil, data.wpId or nil)
-          local wpCE = nil
-
-          -- sort new fwdAudio waypoints to the top.
-          if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-            wp.sortOrder = note.pacenoteWaypoints.sorted[1].sortOrder - 1
-            local fwdTriggerCount = #note:getAudioTriggerWaypoints()
-            if fwdTriggerCount == 1 then
-              -- if the one we just added is the only one.
-              wp.name = "curr"
-            end
-          elseif wp.waypointType == waypointTypes.wpTypeDistanceMarker then
-            local distMarkerCount = #note:getDistanceMarkerWaypoints()
-            wp.name = 'dist'..distMarkerCount
-          elseif wp.waypointType == waypointTypes.wpTypeCornerStart then
-            wp.name = 'corner start'
-            local ce = note:getCornerEndWaypoint()
-            if ce then
-              wp.sortOrder = ce.sortOrder - 1
-            end
-          elseif wp.waypointType == waypointTypes.wpTypeCornerEnd then
-            wp.name = 'corner end'
-            local cs = note:getCornerStartWaypoint()
-            if cs then
-              wp.sortOrder = cs.sortOrder + 1
-            end
-          end
-          note.pacenoteWaypoints:sort()
-
-          -- if the CornerEnd doesnt exist, also create it.
-          if not note:getCornerEndWaypoint() then
-            wpCE = note.pacenoteWaypoints:create(nil, data.wpIdCE or nil)
-            data.wpIdCE = wpCE.id
-          end
-
-          data.wpId = wp.id
-          local normal = data.normal
-          -- local radius = (data.mouseInfo._downPos - data.mouseInfo._upPos):length()
-          -- if radius <= 1 then
-          --   radius = defaultRadius
-          -- end
-
-          local defaultRadius = self.rallyEditor.getPrefDefaultRadius()
-          wp:setManual(data.mouseInfo._downPos, defaultRadius, normal)
-          if wpCE then
-            wpCE:setManual(data.mouseInfo._upPos, defaultRadius, normal)
-          end
-
-          -- data.self:selectWaypoint(wp.id)
-        end
       end
     )
   end
@@ -729,6 +650,17 @@ function C:detectMouseHoverWaypoint()
     end
   end
 
+  -- add waypoints from the next pacenote.
+  if editor_rallyEditor.getPrefShowNextPacenote() then
+    local next_i = selected_pacenote_i + 1
+    if next_i <= #self.path.pacenotes.sorted and self:selectedWaypoint() then
+      local pn_next = self.path.pacenotes.sorted[next_i]
+      for _,waypoint in ipairs(pn_next.pacenoteWaypoints.sorted) do
+        table.insert(waypoints, waypoint)
+      end
+    end
+  end
+
   -- of the available waypoints, figure out the closest one.
   for _, waypoint in ipairs(waypoints) do
     local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
@@ -771,6 +703,7 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
       if self.mouseInfo.rayCast then
         return snaproads.closestSnapPos(self.mouseInfo.rayCast.pos)
       else
+        local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
         return newPos, nil
       end
     -- else
@@ -958,7 +891,7 @@ function C:flipSnaproadNormal()
 end
 
 function C:drawDebugSegments()
-  local racePath = editor_raceEditor.getCurrentPath()
+  local racePath = self:getRacePath()
   local pathnodes = racePath.pathnodes.objects
   for _, seg in pairs(racePath.segments.objects) do
     -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
@@ -967,23 +900,20 @@ function C:drawDebugSegments()
     local to = pathnodes[seg.to]
     local pn_sel = self:selectedPacenote()
 
-    local alpha = 0.6
-    local clr_white = {1,1,1}
-    local clr_red = {1,0,0}
     local clr = nil
 
     if pn_sel and seg.id == pn_sel.segment then
-      clr = clr_white
+      clr = cc.segments_clr_assigned
     else
-      clr = clr_red
+      clr = cc.segments_clr
     end
 
     debugDrawer:drawSquarePrism(
       from.pos,
       to.pos,
-      Point2F(10,1),
-      Point2F(10,0.25),
-      ColorF(clr[1],clr[2],clr[3],alpha)
+      Point2F(10, 1),
+      Point2F(10, 0.25),
+      ColorF(clr[1], clr[2], clr[3], cc.segments_alpha)
     )
   end
 end
@@ -1000,7 +930,7 @@ function C:drawPacenotesList()
   end
   im.SameLine()
   if im.Button("Auto-assign segments") then
-    local racePath = editor_raceEditor.getCurrentPath()
+    local racePath = self:getRacePath()
     self.path:autoAssignSegments(racePath)
   end
   im.SameLine()
@@ -1164,11 +1094,11 @@ function C:drawWaypointList(note)
           {index = self.waypoint_index, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
           setWaypointFieldUndo, setWaypointFieldRedo)
       end
-      if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
-        editor.history:commitAction("Drop Note to Ground",
-          {index = self.waypoint_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
-          setWaypointFieldUndo, setWaypointFieldRedo)
-      end
+      -- if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
+      --   editor.history:commitAction("Drop Note to Ground",
+      --     {index = self.waypoint_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
+      --     setWaypointFieldUndo, setWaypointFieldRedo)
+      -- end
       waypointRadius[0] = waypoint.radius
       if im.InputFloat("Radius",waypointRadius, 0.1, 0.5, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
         if waypointRadius[0] < 0 then
@@ -1187,13 +1117,13 @@ function C:drawWaypointList(note)
           {index = self.waypoint_index, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
           setWaypointNormalUndo, setWaypointNormalRedo)
       end
-      if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
-        local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
-        normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
-        editor.history:commitAction("Align Normal with Terrain",
-          {index = self.waypoint_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
-          setWaypointNormalUndo, setWaypointNormalRedo)
-      end
+      -- if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
+      --   local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
+      --   normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
+      --   editor.history:commitAction("Align Normal with Terrain",
+      --     {index = self.waypoint_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
+      --     setWaypointNormalUndo, setWaypointNormalRedo)
+      -- end
 
     end -- / if not waypoint.missing
   end -- / if waypoint_index
@@ -1207,7 +1137,7 @@ function C:segmentSelector(name, fieldName, tt)
     return '#'..seg.id .. " - '" .. seg.name.."'"
   end
 
-  local racePath = editor_raceEditor.getCurrentPath()
+  local racePath = self:getRacePath()
   local selected_pacenote = self.path.pacenotes.objects[self.pacenote_index]
   local segments = racePath.segments.objects
 

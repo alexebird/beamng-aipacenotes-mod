@@ -136,85 +136,54 @@ function C:autoAssignSegments(racePath)
   end
 end
 
--- function C:drawPacenoteModeSelected(pacenote, selected_wp_id, pacenote_next)
---   pacenote:drawDebugPacenote('selected', self._hover_waypoint_id, selected_wp_id, pacenote_next)
--- end
-
--- function C:drawPacenoteModePrevious(pacenote, selected_wp_id)
--- end
-
-function C:drawDebug(selected_pacenote_id, selected_waypoint_id)
-  local i = 1
-  local selected_i = -1
-  while i <= #self.pacenotes.sorted do
-    local pacenote = self.pacenotes.sorted[i]
-    if pacenote.id == selected_pacenote_id then
-      selected_i = i
+function C:drawPacenotesAsRainbow(skip_pn)
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
+    if not skip_pn or (skip_pn and pacenote.id ~= skip_pn.id) then
+      pacenote:drawDebugPacenote('normal', self._hover_waypoint_id, nil, nil, nil)
     end
-    i = i + 1
+  end
+end
+
+function C:getAdjacentPacenoteSet(pacenoteId)
+  local function getOrNullify(i)
+    local pn = self.pacenotes.sorted[i]
+    if pn and not pn.missing then
+      return pn
+    else
+      return nil
+    end
   end
 
-  if selected_pacenote_id and selected_waypoint_id then
-    local prev_i = selected_i - 1
-    local next_i = selected_i + 1
-
-    local pn_sel = self.pacenotes.sorted[selected_i]
-
-    local pn_prev = self.pacenotes.sorted[prev_i]
-    if not pn_prev or pn_prev.missing then
-      pn_prev = nil
+  for i,pacenote in ipairs(self.pacenotes.sorted) do
+    if pacenote.id == pacenoteId then
+      return getOrNullify(i-1), pacenote, getOrNullify(i+1)
     end
+  end
 
-    local pn_next = self.pacenotes.sorted[next_i]
-    if not pn_next or pn_next.missing then
-      pn_next = nil
-    end
+  return nil, nil, nil
+end
 
-    -- self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
-    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, selected_waypoint_id, pn_next)
+function C:drawDebugNotebook(selected_pacenote_id, selected_waypoint_id)
+  local pn_prev, pn_sel, pn_next = self:getAdjacentPacenoteSet(selected_pacenote_id)
+
+  if pn_sel and selected_waypoint_id then
+    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, selected_waypoint_id, pn_prev, pn_next)
 
     if editor_rallyEditor.getPrefShowPreviousPacenote() and pn_prev and pn_prev.id ~= pn_sel.id then
-      pn_prev:drawDebugPacenote('previous', self._default_note_lang, self._hover_waypoint_id, nil, nil)
-      -- this is the pink distance link
+      pn_prev:drawDebugPacenote('previous', self._default_note_lang, self._hover_waypoint_id, nil, nil, nil)
       pn_prev:drawLinkToPacenote(pn_sel)
     end
 
-    -- self:drawPacenoteModeNext(pn_next)
-
-  elseif selected_pacenote_id and not selected_waypoint_id then
-    local pn_sel = self.pacenotes.sorted[selected_i]
-    -- local next_i = math.min(selected_i + 1, #self.pacenotes.sorted)
-    local next_i = selected_i + 1
-    local pn_next = self.pacenotes.sorted[next_i]
-    if not pn_next or pn_next.missing then
-      pn_next = nil
+    if editor_rallyEditor.getPrefShowNextPacenote() and pn_next and pn_next.id ~= pn_sel.id then
+      pn_next:drawDebugPacenote('next', self._default_note_lang, self._hover_waypoint_id, nil, nil, nil)
+      pn_sel:drawLinkToPacenote(pn_next)
     end
-
-    -- self:drawPacenoteModeSelected(pn_sel, selected_waypoint_id, pn_next)
-    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, nil, pn_next)
-
-    -- draw the rest of the pacenotes
-    i = 1
-    while i <= #self.pacenotes.sorted do
-      local pacenote = self.pacenotes.sorted[i]
-      if i ~= selected_i then
-        pacenote:drawDebugPacenote('normal', self._hover_waypoint_id, nil, nil)
-      end
-      i = i + 1
-    end
+  elseif pn_sel then
+    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, nil, pn_prev, pn_next)
+    self:drawPacenotesAsRainbow(pn_sel)
   else
-    i = 1
-    while i <= #self.pacenotes.sorted do
-      local pacenote = self.pacenotes.sorted[i]
-      pacenote:drawDebugPacenote('normal', self._hover_waypoint_id, nil, nil)
-      i = i + 1
-    end
+    self:drawPacenotesAsRainbow(nil)
   end
-
-  -- notebook drawdebug modes:
-  -- - nothing selected -> normal -> rainbow CornerStarts
-  -- - click on a waypoint -> waypoint is selected -> pacenote is selected
-  --   - only draw i-1,i,i+1 pacenotes
 end
 
 function C:onSerialize()

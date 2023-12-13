@@ -293,6 +293,8 @@ local function drawEditorGui()
     end
     im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
     im.Text('DragMode: '..pacenotesWindow.dragMode)
+    im.SameLine()
+    im.Text('| Selection: '..pacenotesWindow:selectionString())
     im.Separator()
 
     if im.BeginTabBar("modes") then
@@ -437,7 +439,8 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
-    {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference."}},
+    {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
+    {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference.\nRequires race to be loaded in the Race Tool."}},
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
     {topDownCameraElevation = {"int", 150, "Elevation for the top-down camera view.", nil, 1, 1000}},
     {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
@@ -464,6 +467,14 @@ end
 local function getPrefShowPreviousPacenote()
   if editor and editor.getPreference then
     return editor.getPreference('rallyEditor.general.showPreviousPacenote')
+  else
+    return true
+  end
+end
+
+local function getPrefShowNextPacenote()
+  if editor and editor.getPreference then
+    return editor.getPreference('rallyEditor.general.showNextPacenote')
   else
     return true
   end
@@ -538,6 +549,7 @@ M.getMissionDir = getMissionDir
 M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
 M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
 M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
+M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefShowRaceSegments = getPrefShowRaceSegments
 M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation

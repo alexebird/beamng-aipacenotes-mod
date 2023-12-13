@@ -1,13 +1,10 @@
 local M = {}
+local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local logTag = 'aipacenotes'
 
 local startingMinDist = 4294967295
 
-local radius = 2
-local clr_red = {1,0,0}
-local clr_white = {1,1,1}
-local clr_blue = {0,0,1}
-local shapeAlpha = 0.5
+local radius = cc.snaproads_radius
 
 local handle_points = {}
 local spline_points = {}
@@ -51,19 +48,6 @@ local function mouseOverSnapRoad(mouseInfo)
   local minNoteDist = startingMinDist
   local closestWp = nil
 
-  -- for i,node in ipairs(handle_points) do
-  --   local pos = node
-  --   local distNoteToCam = (pos - mouseInfo.camPos):length()
-  --   local noteRayDistance = (pos - mouseInfo.camPos):cross(mouseInfo.rayDir):length() / mouseInfo.rayDir:length()
-  --   local sphereRadius = radius
-  --   if noteRayDistance <= sphereRadius then
-  --     if distNoteToCam < minNoteDist then
-  --       minNoteDist = distNoteToCam
-  --       closestWp = node
-  --     end
-  --   end
-  -- end
-
   local sphereRadius = radius / 2
   for _,node in ipairs(spline_points) do
     local pos = node
@@ -80,39 +64,26 @@ local function mouseOverSnapRoad(mouseInfo)
   return closestWp
 end
 
--- local function drawSnapRoads(hover_pos, snap_pos)
 local function drawSnapRoads(mouseInfo)
   local closest_snap_for_hover = mouseOverSnapRoad(mouseInfo)
-  local clr = clr_red
-
-  -- for _,pos in pairs(handle_points) do
-  --   if pos == hover_pos then
-  --     clr = clr_white
-  --   elseif pos == snap_pos then
-  --     clr = clr_blue
-  --   else
-  --     clr = clr_red
-  --   end
-  --   debugDrawer:drawSphere(
-  --     (pos),
-  --     radius,
-  --     ColorF(clr[1],clr[2],clr[3],shapeAlpha)
-  --   )
-  -- end
+  local clr = nil
+  local alpha = nil
 
   local small_radius = radius/2
   for _,pos in pairs(spline_points) do
     if pos == closest_snap_for_hover then
-      clr = clr_white
+      clr = cc.snaproads_clr_hover
+      alpha = cc.snaproads_alpha_hover
     -- elseif pos == snap_pos then
     --   clr = clr_blue
     else
-      clr = clr_red
+      clr = cc.snaproads_clr
+      alpha = cc.snaproads_alpha
     end
     debugDrawer:drawSphere(
       (pos),
       small_radius,
-      ColorF(clr[1],clr[2],clr[3],shapeAlpha)--,false)
+      ColorF(clr[1],clr[2],clr[3], alpha)--,false)
     )
   end
 end
@@ -163,16 +134,6 @@ local function closestSnapPos(source_pos)
     end
   end
 
-  -- for i,node in ipairs(self.options_data.snap_road_positions_dense) do
-  --   local pos = node
-  --   local distToMouse = (pos - source_pos):length()
-  --   if distToMouse < minDist then
-  --     minDist = distToMouse
-  --     closestPos = node
-  --     closest_i = i
-  --   end
-  -- end
-
   local posAfter = nil
   if closest_i and closest_i + 1 <= #snaps then
     posAfter = snaps[closest_i + 1]
@@ -182,17 +143,6 @@ local function closestSnapPos(source_pos)
 
   return closestPos, posAfter
 end
-
--- function C:input()
---   self._hover_pos = nil
---   self._hover_pos = self:mouseOverSnapRoad()
---
---   self._snap_pos = nil
---   if self.mouseInfo.rayCast then
---     local pos = self.mouseInfo.rayCast.pos
---     self._snap_pos = self:closestSnapPos(pos)
---   end
--- end
 
 M.loadSnapRoads = loadSnapRoads
 M.drawSnapRoads = drawSnapRoads

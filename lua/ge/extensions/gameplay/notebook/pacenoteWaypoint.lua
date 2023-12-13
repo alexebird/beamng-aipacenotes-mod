@@ -5,35 +5,37 @@
 -- This class is a near copy of pacenote.lua.
 
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 
 local C = {}
-
-local clr_white = {1.0, 1.0, 1.0}
-local clr_black = {0.0, 0.0, 0.0}
-local clr_green = {0.0, 1.0, 0.0}
-local clr_red = {1.0, 0.0, 0.0}
-local clr_blue = {0.0, 0.0, 1.0}
-local clr_orange = {1.0, 0.64, 0.0}
-
-local shapeAlpha_hover = 1.0
-local textAlpha_hover = 1.0
-
-local sphereAlphaReducionForArrowFactor = 0.8
-local shapeAlpha_arrowAdjustFactor = 1.25
-local shapeAlpha_arrowPlaneAdjustFactor = 0.66
 
 function C:init(pacenote, name, pos, forceId)
   self.pacenote = pacenote
 
   self.id = forceId or pacenote:getNextUniqueIdentifier()
-  self.name = name or 'Waypoint '..self.id
-  self.waypointType = self.pacenote:getNextWaypointType()
+
+  local nextType = self.pacenote:getNextWaypointType()
+  if nextType == waypointTypes.wpTypeFwdAudioTrigger then
+    name = "curr"
+  elseif nextType == waypointTypes.wpTypeDistanceMarker then
+    local cnt = #self.pacenote:getDistanceMarkerWaypoints()
+    name = 'dist '..(cnt+1)
+  end
+  self.name = name or ('Waypoint '..self.id)
+  self.waypointType = nextType
+
   self.normal = vec3(0,1,0)
   self.pos = pos
   self.radius = editor_rallyEditor.getPrefDefaultRadius()
 
   self.sortOrder = 999999
   self.mode = nil
+end
+
+function C:selectionString()
+  local txt = '['..waypointTypes.shortenWaypointType(self.waypointType)..']'
+  txt = txt .. ' '..self.name
+  return txt
 end
 
 function C:flipNormal()
@@ -102,15 +104,15 @@ end
 
 function C:colorForWpType()
   if self.waypointType == waypointTypes.wpTypeCornerStart then
-    return clr_green
+    return cc.waypoint_clr_cs
   elseif self.waypointType == waypointTypes.wpTypeCornerEnd then
-    return clr_red
+    return cc.waypoint_clr_ce
   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-    return clr_blue
+    return cc.waypoint_clr_at
   elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
-    return clr_blue
+    return cc.waypoint_clr_at
   elseif self.waypointType == waypointTypes.wpTypeDistanceMarker then
-    return clr_orange
+    return cc.waypoint_clr_di
   end
 end
 
@@ -126,9 +128,9 @@ end
 
 function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
   if hover then
-    clr = clr_white
-    shapeAlpha = shapeAlpha_hover
-    textAlpha = textAlpha_hover
+    clr = cc.waypoint_clr_sphere_hover
+    shapeAlpha = cc.waypoint_shapeAlpha_hover
+    textAlpha = cc.waypoint_textAlpha_hover
   end
 
   -- if false, no other 3d objects seem to cause clipping, such as the terrain.
@@ -138,7 +140,7 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 
   if self:shouldDrawArrow() then
     -- make the arrow a little easier to see
-    shapeAlpha_sphere = shapeAlpha * sphereAlphaReducionForArrowFactor
+    shapeAlpha_sphere = shapeAlpha * cc.waypoint_sphereAlphaReducionForArrowFactor
   end
 
   debugDrawer:drawSphere(
@@ -148,8 +150,8 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     clipArg1
   )
 
-  local clr_text_fg = clr_white
-  local clr_text_bg = clr_black
+  local clr_text_fg = cc.waypoint_clr_txt_fg
+  local clr_text_bg = cc.waypoint_clr_txt_bg
 
   debugDrawer:drawTextAdvanced(
     (self.pos),
@@ -164,8 +166,8 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     local midWidth = self.radius*2
     local side = self.normal:cross(vec3(0,0,1)) * (self.radius - midWidth / 2)
 
-    local shapeAlpha_arrow = shapeAlpha * shapeAlpha_arrowAdjustFactor
-    local shapeAlpha_arrowPlane = shapeAlpha * shapeAlpha_arrowPlaneAdjustFactor
+    local shapeAlpha_arrow = shapeAlpha * cc.waypoint_shapeAlpha_arrowAdjustFactor
+    local shapeAlpha_arrowPlane = shapeAlpha * cc.waypoint_shapeAlpha_arrowPlaneAdjustFactor
 
     -- this square prism is the "arrow" of the pacenote.
     debugDrawer:drawSquarePrism(
