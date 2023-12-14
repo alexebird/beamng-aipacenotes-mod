@@ -8,6 +8,12 @@ local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local C = {}
 local logTag = 'aipacenotes_pacenote'
 
+C.noteFields = {
+  before = 'before',
+  note = 'note',
+  after = 'after',
+}
+
 function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
@@ -61,8 +67,79 @@ function C:setAllRadii(newRadius, wpType)
   end
 end
 
+function C:joinedNote(lang)
+  local txt = ''
+  local lang_data = self.notes[lang]
+
+  local before = lang_data[self.noteFields.before]
+  if before and before ~= '' then
+    txt = txt .. before
+  end
+
+  local note = lang_data[self.noteFields.note]
+  if note and note ~= '' then
+    txt = txt .. ' ' .. note
+  end
+
+  local after = lang_data[self.noteFields.after]
+  if after and after ~= '' then
+    txt = txt .. ' ' .. after
+  end
+
+  return txt
+end
+
+function C:getNoteFieldBefore(lang)
+  local lang_data = self.notes[lang]
+  if not lang_data then return '' end
+  local val = lang_data[self.noteFields.before]
+  if not val then
+    return ''
+  end
+  return val
+end
+
+function C:getNoteFieldNote(lang)
+  local lang_data = self.notes[lang]
+  if not lang_data then return '' end
+  local val = lang_data[self.noteFields.note]
+  if not val then
+    return ''
+  end
+  return val
+end
+
+function C:getNoteFieldAfter(lang)
+  local lang_data = self.notes[lang]
+  if not lang_data then return '' end
+  local val = lang_data[self.noteFields.after]
+  if not val then
+    return ''
+  end
+  return val
+end
+
+function C:setNoteFieldBefore(lang, val)
+  local lang_data = self.notes[lang]
+  if not lang_data then return end
+  lang_data[self.noteFields.before] = val
+end
+
+function C:setNoteFieldNote(lang, val)
+  local lang_data = self.notes[lang]
+  if not lang_data then return end
+  lang_data[self.noteFields.note] = val
+end
+
+function C:setNoteFieldAfter(lang, val)
+  local lang_data = self.notes[lang]
+  if not lang_data then return end
+  lang_data[self.noteFields.after] = val
+end
+
 function C:setFieldsForFlowgraph(lang)
-  self.note = self.notes[lang]
+  self.note = self:joinedNote(lang)
+
   local wp_trigger = self:getActiveFwdAudioTrigger()
   if not wp_trigger then
     log('E', logTag, 'audio trigger not found')
@@ -530,7 +607,9 @@ function C:drawLinkToPacenote(to_pacenote)
 end
 
 function C:noteTextForDrawDebug()
-  return self.notes[self:getDefaultNoteLang()] or ''
+  local txt = self.notes[self:getDefaultNoteLang()][self.noteFields.note] or ''
+  txt = string.gsub(txt, "\n", " ")
+  return txt
 end
 
 function C:drawDebugPacenote(drawMode, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)

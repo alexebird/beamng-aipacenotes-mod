@@ -41,12 +41,19 @@ local dragModes = {
   gizmo = 'gizmo',
 }
 
+local language_form_fields = {}
+language_form_fields.before = im.ArrayChar(64)
+language_form_fields.note = im.ArrayChar(1024)
+language_form_fields.after = im.ArrayChar(256)
+
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.pacenote_index = nil
   self.waypoint_index = nil
   self.mouseInfo = {}
   self.dragMode = dragModes.simple
+
+  self._insertMode = false
 end
 
 function C:setPath(path)
@@ -890,6 +897,10 @@ function C:flipSnaproadNormal()
   end
 end
 
+function C:insertMode()
+  self._insertMode = true
+end
+
 function C:drawDebugSegments()
   local racePath = self:getRacePath()
   local pathnodes = racePath.pathnodes.objects
@@ -928,22 +939,39 @@ function C:drawPacenotesList()
   if im.Button("Clean up names") then
     self.path:cleanupPacenoteNames()
   end
+  im.tooltip("Re-name all pacenotes with increasing numbers.")
   im.SameLine()
   if im.Button("Auto-assign segments") then
     local racePath = self:getRacePath()
     self.path:autoAssignSegments(racePath)
   end
+  im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
   im.SameLine()
   if im.Button("Snap all") then
     self:snapAll()
   end
+  im.tooltip("Snap all waypoints to nearest snaproad point.")
   im.SameLine()
   if im.Button("Set All Radii") then
     if self.path then
       self.path:setAllRadii(self.rallyEditor.getPrefDefaultRadius())
     end
   end
-  im.tooltip("Force the radius of all waypoints to the default value.")
+  im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
+  -- im.SameLine()
+  if im.Button("Normalize All Notes") then
+    if self.path then
+      self.path:normalizeEnglishNote()
+    end
+  end
+  im.tooltip("Add puncuation and replace digits with words.")
+  im.SameLine()
+  if im.Button("Autofill Dist Calls") then
+    if self.path then
+      self.path:autofillDistanceCalls()
+    end
+  end
+  im.tooltip("Autofill distance calls.")
 
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
@@ -1008,17 +1036,38 @@ function C:drawPacenotesList()
     end
 
     im.HeaderText("Languages")
+    editEnded = im.BoolPtr(false)
     for i,language in ipairs(self.path:getLanguages()) do
-      editEnded = im.BoolPtr(false)
+      language_form_fields[language] = language_form_fields[language] or {}
+      local fields = language_form_fields[language]
 
-      local buf = im.ArrayChar(256, note.notes[language])
-      editor.uiInputText(language, buf, nil, nil, nil, nil, editEnded)
+      fields.before = im.ArrayChar(256, note:getNoteFieldBefore(language))
+      fields.note   = im.ArrayChar(1024, note:getNoteFieldNote(language))
+      fields.after  = im.ArrayChar(256, note:getNoteFieldAfter(language))
+
+      im.Text(language..": ")
+      im.SetNextItemWidth(50)
+      editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
-        local newVal = note.notes
-        newVal[language] = ffi.string(buf)
-        editor.history:commitAction("Change Notes of Pacenote",
-          {index = self.pacenote_index, self = self, old = note.notes, new = newVal, field = 'notes'},
-          setPacenoteFieldUndo, setPacenoteFieldRedo)
+        self:handleNoteFieldEdit(note, language, 'before', fields.before)
+      end
+      im.SameLine()
+      im.SetNextItemWidth(300)
+      if self._insertMode then
+        if i == 1 then
+          im.SetKeyboardFocusHere()
+        end
+        self._insertMode = false
+      end
+      editor.uiInputTextMultiline('##'..language..'_note', fields.note, nil, im.ImVec2(300, 2 * im.GetTextLineHeightWithSpacing()), nil, nil, nil, editEnded)
+      if editEnded[0] then
+        self:handleNoteFieldEdit(note, language, 'note', fields.note)
+      end
+      im.SameLine()
+      im.SetNextItemWidth(150)
+      editor.uiInputText('##'..language..'_after', fields.after, nil, nil, nil, nil, editEnded)
+      if editEnded[0] then
+        self:handleNoteFieldEdit(note, language, 'after', fields.after)
       end
     end
 
@@ -1028,6 +1077,16 @@ function C:drawPacenotesList()
 
     end -- / if not note.missing then
   end -- / if pacenote_index
+end
+
+function C:handleNoteFieldEdit(note, language, subfield, buf)
+  local newVal = note.notes
+  local lang_data = newVal[language] or {}
+  lang_data[subfield] = ffi.string(buf)
+  newVal[language] = lang_data
+  editor.history:commitAction("Change Notes of Pacenote",
+    {index = self.pacenote_index, self = self, old = note.notes, new = newVal, field = 'notes'},
+    setPacenoteFieldUndo, setPacenoteFieldRedo)
 end
 
 function C:drawWaypointList(note)

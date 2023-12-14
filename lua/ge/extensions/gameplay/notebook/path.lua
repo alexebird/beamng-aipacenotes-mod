@@ -276,6 +276,161 @@ function C:setAllRadii(newRadius, wpType)
   end
 end
 
+-- Mapping table for digits to written-out numbers
+local number_map = {
+  ["0"] = "zero",
+  ["1"] = "one",
+  ["2"] = "two",
+  ["3"] = "three",
+  ["4"] = "four",
+  ["5"] = "five",
+  ["6"] = "six",
+  ["7"] = "seven",
+  ["8"] = "eight",
+  ["9"] = "nine",
+  ["10"] = "ten",
+  ["-"] = "minus",
+  ["for right"] = "four right",
+  ["for left"] = "four left",
+}
+-- local boundary = "(%W)"
+
+local function stripWhitespace(str)
+  return str:gsub("^%s*(.-)%s*$", "%1")
+end
+
+function C:normalizeEnglishNote()
+  local lang = self._default_note_lang
+
+  for i,pacenote in ipairs(self.pacenotes.sorted) do
+    local note = pacenote:getNoteFieldNote(lang)
+
+    note = stripWhitespace(note)
+
+    if note ~= '' then
+      -- Replace digits with written-out numbers
+      for digit, word in pairs(number_map) do
+        note = note:gsub(digit, word)
+        -- note = note:gsub(boundary .. digit .. boundary, "%1" .. word .. "%1")
+      end
+
+      -- add punction if not present
+      local last_char = note:sub(-1)
+      if not (last_char == "." or last_char == "?" or last_char == "!") then
+        note = note .. "?"
+      end
+
+      pacenote:setNoteFieldNote(lang, note)
+    end
+  end
+end
+
+-- Generalized rounding function
+local function custom_round(dist, round_to)
+  return math.floor(dist / round_to + 0.5) * round_to
+end
+
+-- Function to round the distance based on given rules
+local function round_distance(dist)
+  if dist >= 1000 then
+    return custom_round(dist, 250)/1000, "kilometers"
+  elseif dist >= 100 then
+    return custom_round(dist, 50)
+  -- elseif dist >= 100 then
+    -- return custom_round(dist, 10)
+  else
+    return custom_round(dist, 10)
+  end
+end
+
+local function distance_to_string(dist)
+  local rounded_dist, unit = round_distance(dist)
+  local dist_str = tostring(rounded_dist)
+
+  if unit == "kilometers" then
+    dist_str = dist_str .. " " .. unit
+  elseif rounded_dist >= 100 then
+    -- dist_str = dist_str:sub(1, 1) .. " " .. dist_str:sub(2)
+  end
+
+  return dist_str
+end
+
+local written_out_numbers = {
+  ["10"] = "ten",
+  ["20"] = "twenty",
+  ["30"] = "thirty",
+  ["40"] = "forty",
+  ["50"] = "fifty",
+  ["60"] = "sixty",
+  ["70"] = "seventy",
+  ["80"] = "eighty",
+  ["90"] = "ninety",
+  ["100"] = "one hundred",
+  ["150"] = "one fifty",
+  ["200"] = "two hundred",
+  ["250"] = "two fifty",
+  ["300"] = "three hundred",
+  ["350"] = "three fifty",
+  ["400"] = "four hundred",
+  ["450"] = "four fifty",
+  ["500"] = "five hundred",
+  ["550"] = "five fifty",
+  ["600"] = "six hundred",
+  ["650"] = "six fifty",
+  ["700"] = "seven hundred",
+  ["750"] = "seven fifty",
+  ["800"] = "eight hundred",
+  ["850"] = "eight fifty",
+  ["900"] = "nine hundred",
+  ["950"] = "nine fifty",
+}
+
+-- Function to convert numeric distances to their written-out form
+local function normalize_distance(dist)
+  local dist_str = tostring(dist)
+  return written_out_numbers[dist_str] or dist_str
+end
+
+function C:autofillDistanceCalls()
+  local lang = self._default_note_lang
+
+  -- first clear everything
+  for i,pacenote in ipairs(self.pacenotes.sorted) do
+    pacenote:setNoteFieldBefore(lang, '')
+    pacenote:setNoteFieldAfter(lang, '')
+  end
+
+  local next_prepend = ''
+
+  for i,pacenote in ipairs(self.pacenotes.sorted) do
+    local note = pacenote:getNoteFieldNote(lang)
+
+    -- Apply any prepended text from the previous iteration
+    if next_prepend ~= '' then
+      pacenote:setNoteFieldBefore(lang, next_prepend)
+      next_prepend = ''
+    end
+
+    local pn_next = self.pacenotes.sorted[i + 1]
+    if pn_next and not pn_next.missing then
+      local dist = pacenote:distanceCornerEndToCornerStart(pn_next)
+      local dist_str = distance_to_string(math.floor(dist))
+      dist_str = normalize_distance(dist_str) .. '.'
+
+      -- Decide what to do based on the distance
+      if dist <= 20 then
+        next_prepend = "into"
+      elseif dist <= 40 then
+        next_prepend = "and"
+      else
+        pacenote:setNoteFieldAfter(lang, dist_str)
+      end
+    end
+
+  end
+end
+
 return function(...)
   local o = {}
   setmetatable(o, C)

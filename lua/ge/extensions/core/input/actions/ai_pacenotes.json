@@ -65,5 +65,14 @@
     "title": "Rally Editor Flip Snaproad Normal",
     "desc": "Flip the normal of Audio Trigger waypoints",
     "onDown": "editor_rallyEditor.flipSnaproadNormal()"
+  },
+  "rallyEditorInsertMode": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor Focus Note Edit Field",
+    "desc": "Shortcut to focus the cursor on editing the currently selected note text.",
+    "onDown": "editor_rallyEditor.insertMode()"
   }
 }

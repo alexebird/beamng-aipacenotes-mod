@@ -118,6 +118,10 @@ local function flipSnaproadNormal()
   pacenotesWindow:flipSnaproadNormal()
 end
 
+local function insertMode()
+  pacenotesWindow:insertMode()
+end
+
 local function loadNotebook(full_filename)
   if not full_filename then
     return
@@ -541,6 +545,7 @@ M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
 M.cycleDragMode = cycleDragMode
 M.flipSnaproadNormal = flipSnaproadNormal
+M.insertMode = insertMode
 
 M.onEditorInitialized = onEditorInitialized
 -- M.getToolsWindow = function() return toolsWindow end
