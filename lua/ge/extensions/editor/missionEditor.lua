@@ -19,6 +19,7 @@ local startTrigger
 local prefabs
 local missionTypeData
 local additionalAttributes
+local setupModules
 local careerSetup
 local progressSingle
 local progressMulti
@@ -27,11 +28,13 @@ local unsavedColor = im.ImVec4(1, 0.6, 0.5, 1.0)
 local windows = {}
 local tabs = {}
 local showWindows = {
+  issuesWindow = false,
   generalWindows = true,
-  additionalWindows = false,
+  additionalWindows = true,
+  setupModulesWindows = true,
   missionTypeWindows = true
 }
-local generalWindows, additionalWindows, missionTypeWindows = {}, {} ,{}
+local generalWindows, additionalWindows, setupModulesWindows, missionTypeWindows = {}, {}, {}, {}
 local missionTypeWindow = {}
 local oldMissionTypeData = {}
 
@@ -167,10 +170,10 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
         gameplay_missions_missions.saveMission(shownMission,shownMission.missionFolder)
         shownMission._dirty = false
       end
-      im.tooltip("Save unsaved changes for this mission")
+      ui_flowgraph_editor.tooltip("Save unsaved changes for this mission")
     else
       if editor.uiIconImageButton(editor.icons.save, im.ImVec2(40, 40)) then end
-      im.tooltip("No unsaved changes for this mission")
+      ui_flowgraph_editor.tooltip("No unsaved changes for this mission")
     end
     im.SameLine()
     if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(40, 40)) then
@@ -191,7 +194,8 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
         -- TODO: switch to this mission in cluster
       end
     end
-    im.tooltip("Start Mission\n(Needs loaded map and vehicle)")
+
+    ui_flowgraph_editor.tooltip("Start Mission\n(Needs loaded map and vehicle)")
     im.SameLine()
 
     if shownMission.missionType == 'rallyStage' then
@@ -217,6 +221,7 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
       im.tooltip("Open Recce Flowgraph")
       im.SameLine()
     end
+
 
   end
   if shownMission then
@@ -260,6 +265,11 @@ local function loadWindows()
   additionalAttributes = require('/lua/ge/extensions/editor/missionEditor/additionalAttributes')(M)
   table.insert(windows, additionalAttributes)
   table.insert(additionalWindows, additionalAttributes)
+
+  -- setup modules
+  setupModules = require('/lua/ge/extensions/editor/missionEditor/setupModules')(M)
+  table.insert(windows, setupModules)
+  table.insert(setupModulesWindows, setupModules)
 
   -- missionType Info
   missionTypeWindow = require('/lua/ge/extensions/editor/missionEditor/genericTypeData')(M)
@@ -427,8 +437,6 @@ local function groupMissionsByFunction(missions, propertyFunction)
   end
 return result
 end
-
-
 
 
 local function applyGrouping()
@@ -1037,7 +1045,7 @@ local function onEditorGui()
         end
         im.Separator()
 
-        if im.MenuItem1("Flowgraph Variable check") then
+        if im.MenuItem1("Flowgraph Variable Check") then
           variableClicked = true
         end
         if im.MenuItem1("Translation Helper") then
@@ -1085,10 +1093,10 @@ local function onEditorGui()
           im.EndMenu()
         end
 
-        if im.MenuItem1("Export mission overview") then
+        if im.MenuItem1("Export Mission Overview") then
           exportMissionOverview()
         end
-        if im.MenuItem1("Import mission overview") then
+        if im.MenuItem1("Import Mission Overview") then
           importMissionOverview()
         end
         if im.MenuItem1("Export Content Overview") then
@@ -1342,6 +1350,7 @@ local function onEditorGui()
             im.HeaderText("(...)")
             im.Separator()
           end
+
           im.HeaderText("Additional Info")
           if im.IsItemClicked() then
             showWindows.additionalWindows = not showWindows.additionalWindows
@@ -1360,6 +1369,26 @@ local function onEditorGui()
             im.HeaderText("(...)")
             im.Separator()
           end
+
+          im.HeaderText("Setup Modules")
+          if im.IsItemClicked() then
+            showWindows.setupModulesWindows = not showWindows.setupModulesWindows
+            editor.setPreference("missionEditor.general.showWindows", showWindows)
+            editor.savePreferences()
+          end
+          if showWindows.setupModulesWindows then
+            for idx, win in ipairs(setupModulesWindows) do
+              im.PushID1("setupModulesWindows" .. idx.."_"..shownMission.id)
+              win:draw()
+              im.PopID()
+              im.Separator()
+            end
+          else
+            im.SameLine()
+            im.HeaderText("(...)")
+            im.Separator()
+          end
+
           im.HeaderText("Mission Type Data")
           if im.IsItemClicked() then
             showWindows.missionTypeWindows = not showWindows.missionTypeWindows
@@ -1432,22 +1461,28 @@ local function onEditorInitialized()
   editor.registerWindow("mission_issues", im.ImVec2(700,700))
   editor.addWindowMenuItem("Mission Editor", onWindowMenuItem, {groupMenuName="Missions"})
   loadGroupFilter()
-  showWindows = editor.getPreference("missionEditor.general.showWindows")
+
+  local _showWindows = editor.getPreference("missionEditor.general.showWindows")
+  -- if the value didn't exist in the preferences, use the default bool by skipping the item
+  for k, v in pairs(_showWindows) do
+    if v ~= nil then
+      showWindows[k] = v
+    end
+  end
 end
 
 
 local function onEditorRegisterPreferences(prefsRegistry)
-
   prefsRegistry:registerCategory("missionEditor")
   prefsRegistry:registerSubCategory("missionEditor", "general", "General",
   {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
-    {groupFilter = {"table", {}, "",nil, nil, nil, true}},
-    {showWindows = {"table", showWindows, "",nil, nil, nil, true}},
+    {groupFilter = {"table", {}, "", nil, nil, nil, true}},
+    {showWindows = {"table", deepcopy(showWindows), "", nil, nil, nil, true}},
     {shortIds = {"bool", false, "Use Short Ids", nil, nil, nil, false}},
-    {alwaysShowScreenshots = {'bool',false,"",nil, nil, nil, true}},
+    {alwaysShowScreenshots = {'bool', false, "", nil, nil, nil, true}},
 
-  })
+})
 end
 
 
@@ -1460,7 +1495,6 @@ local function onSerialize()
 end
 
 local function onDeserialized(data)
-
   if data then
     if data.lastSelectedMissionId then
       M.setMissionById(data.lastSelectedMissionId)
@@ -1471,6 +1505,7 @@ local function onDeserialized(data)
     end
   end
 end
+
 M.onSerialize = onSerialize
 M.onDeserialized = onDeserialized
 
