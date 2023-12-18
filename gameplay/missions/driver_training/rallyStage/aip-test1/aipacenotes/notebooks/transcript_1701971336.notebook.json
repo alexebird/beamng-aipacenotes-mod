@@ -1,0 +1,228 @@
+{
+  "authors":"aipacenotes",
+  "codrivers":[
+    {
+      "voice":"british_lady",
+      "language":"english",
+      "name":"Sophia",
+      "oldId":2
+    }
+  ],
+  "created_at":1701971336,
+  "description":"created using aipacenotes voice transcription.",
+  "name":"Transcript 1701971336",
+  "oldId":1,
+  "pacenotes":[
+    {
+      "name":"Pacenote 1",
+      "notes":{
+        "english":"test"
+      },
+      "oldId":2,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":3,
+          "pos":[
+            -282.3658752,
+            -120.3171997,
+            44.91299438
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":3,
+          "pos":[
+            -292.3658752,
+            -120.3171997,
+            44.91299438
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 2",
+      "notes":{
+        "english":"chicken nugget"
+      },
+      "oldId":4,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":5,
+          "pos":[
+            -282.3658752,
+            -120.3171997,
+            44.9129982
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":5,
+          "pos":[
+            -292.3658752,
+            -120.3171997,
+            44.9129982
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 3",
+      "notes":{
+        "english":"cool"
+      },
+      "oldId":6,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":7,
+          "pos":[
+            -351.9641418,
+            13.61663723,
+            48.50601196
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":7,
+          "pos":[
+            -361.9641418,
+            13.61663723,
+            48.50601196
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 4",
+      "notes":{
+        "english":"square right"
+      },
+      "oldId":8,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":9,
+          "pos":[
+            -335.2340088,
+            8.812912941,
+            47.91508865
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":9,
+          "pos":[
+            -345.2340088,
+            8.812912941,
+            47.91508865
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 5",
+      "notes":{
+        "english":"three right"
+      },
+      "oldId":10,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":11,
+          "pos":[
+            -269.036377,
+            -112.6151199,
+            44.9508934
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":11,
+          "pos":[
+            -279.036377,
+            -112.6151199,
+            44.9508934
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    }
+  ],
+  "updated_at":1701971336
+}

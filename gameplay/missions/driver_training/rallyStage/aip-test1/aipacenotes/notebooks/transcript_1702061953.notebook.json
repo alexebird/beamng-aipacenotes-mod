@@ -1,0 +1,143 @@
+{
+  "authors":"aipacenotes",
+  "codrivers":[
+    {
+      "voice":"british_lady",
+      "language":"english",
+      "name":"Sophia",
+      "oldId":2
+    }
+  ],
+  "created_at":1702061953,
+  "description":"created using aipacenotes voice transcription.",
+  "name":"Transcript 1702061953",
+  "pacenotes":[
+    {
+      "name":"Pacenote 1",
+      "notes":{
+        "english":"square"
+      },
+      "oldId":3,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":4,
+          "pos":[
+            -357.9920654,
+            14.55495358,
+            48.5666008
+          ],
+          "radius":5,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":5,
+          "pos":[
+            -362.9920654,
+            14.55495358,
+            48.5666008
+          ],
+          "radius":5,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 2",
+      "notes":{
+        "english":"square right"
+      },
+      "oldId":6,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":7,
+          "pos":[
+            -339.1074219,
+            6.668375492,
+            47.84755325
+          ],
+          "radius":5,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":8,
+          "pos":[
+            -344.1074219,
+            6.668375492,
+            47.84755325
+          ],
+          "radius":5,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 3",
+      "notes":{
+        "english":"three right"
+      },
+      "oldId":9,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":10,
+          "pos":[
+            -275.1326904,
+            -110.2343597,
+            44.93899536
+          ],
+          "radius":5,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":11,
+          "pos":[
+            -280.1326904,
+            -110.2343597,
+            44.93899536
+          ],
+          "radius":5,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    }
+  ],
+  "updated_at":1702061953
+}

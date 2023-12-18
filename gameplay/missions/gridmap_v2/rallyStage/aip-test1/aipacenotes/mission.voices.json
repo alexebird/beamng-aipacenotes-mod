@@ -1,0 +1,12 @@
+{
+    "british_dame": {
+        "gcp_language_code": "en-GB",
+        "gcp_voice_name": "en-GB-Neural2-A",
+        "description": "female, british english"
+    },
+    "italian_lady": {
+        "gcp_language_code": "it-IT",
+        "gcp_voice_name": "it-IT-Neural2-A",
+        "description": "female, italian"
+    }
+}

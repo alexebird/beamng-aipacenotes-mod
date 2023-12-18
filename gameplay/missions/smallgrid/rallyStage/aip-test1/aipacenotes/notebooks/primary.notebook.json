@@ -1,0 +1,132 @@
+{
+  "authors":"birdman",
+  "codrivers":[
+    {
+      "voice":"british_lady",
+      "language":"english",
+      "name":"Sally",
+      "oldId":2
+    }
+  ],
+  "created_at":1701742051,
+  "description":"",
+  "name":"Test 1",
+  "pacenotes":[
+    {
+      "pacenoteWaypoints":[
+        {
+          "name":"Waypoint 6",
+          "normal":[
+            -0.01271170608,
+            -0.999919203,
+            0
+          ],
+          "oldId":6,
+          "pos":[
+            -0.2098846436,
+            -10.94172001,
+            0
+          ],
+          "radius":3,
+          "waypointType":"fwdAudioTrigger"
+        },
+        {
+          "name":"Waypoint 4",
+          "normal":[
+            -0.001986633578,
+            -0.9999980266,
+            0
+          ],
+          "oldId":4,
+          "pos":[
+            -0.3214586079,
+            -20.09138298,
+            0
+          ],
+          "radius":3,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"Waypoint 5",
+          "normal":[
+            0.008942371766,
+            -0.9999600162,
+            0
+          ],
+          "oldId":5,
+          "pos":[
+            -0.3027603924,
+            -26.40030098,
+            0
+          ],
+          "radius":3,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "name":"Pacenote 1",
+      "notes":{
+        "english":"test 1"
+      },
+      "oldId":3
+    },
+    {
+      "name":"Pacenote 2",
+      "notes":{
+        "english":"test 2"
+      },
+      "oldId":7,
+      "pacenoteWaypoints":[
+        {
+          "name":"Waypoint 8",
+          "normal":[
+            2.159650333e-05,
+            -0.9999999998,
+            0
+          ],
+          "oldId":8,
+          "pos":[
+            -0.1173764467,
+            -49.92180634,
+            0
+          ],
+          "radius":3,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"Waypoint 9",
+          "normal":[
+            -0.002126304222,
+            -0.9999977394,
+            0
+          ],
+          "oldId":9,
+          "pos":[
+            -0.1232181266,
+            -56.97377777,
+            0
+          ],
+          "radius":3,
+          "waypointType":"cornerEnd"
+        },
+        {
+          "name":"Waypoint 10",
+          "normal":[
+            0.01001165132,
+            -0.9999498822,
+            0
+          ],
+          "oldId":10,
+          "pos":[
+            -0.1944692284,
+            -36.89260101,
+            0
+          ],
+          "radius":3,
+          "waypointType":"fwdAudioTrigger"
+        }
+      ],
+      "segment":-1
+    }
+  ],
+  "updated_at":1701742051
+}

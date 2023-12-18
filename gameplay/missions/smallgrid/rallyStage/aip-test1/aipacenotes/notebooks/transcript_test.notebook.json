@@ -1,0 +1,186 @@
+{
+  "authors":"aipacenotes",
+  "codrivers":[
+    {
+      "voice":"british_lady",
+      "language":"english",
+      "name":"Sophia",
+      "oldId":2
+    }
+  ],
+  "created_at":1701830571,
+  "description":"created using aipacenotes voice transcription.",
+  "name":"Transcript 1701830571",
+  "oldId":1,
+  "pacenotes":[
+    {
+      "name":"Pacenote 5",
+      "notes":{
+        "english":"xtest"
+      },
+      "oldId":2,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":3,
+          "pos":[
+            -262.8969116,
+            -38.20426178,
+            100.293129
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":3,
+          "pos":[
+            -272.8969116,
+            -38.20426178,
+            100.293129
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 6",
+      "notes":{
+        "english":"[unknown]"
+      },
+      "oldId":4,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":5,
+          "pos":[
+            -270.727417,
+            -110.4550476,
+            100.3157349
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":5,
+          "pos":[
+            -280.727417,
+            -110.4550476,
+            100.3157349
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 7",
+      "notes":{
+        "english":"[unknown]"
+      },
+      "oldId":6,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":7,
+          "pos":[
+            -186.5877075,
+            -178.2127838,
+            100.3021851
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":7,
+          "pos":[
+            -196.5877075,
+            -178.2127838,
+            100.3021851
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    },
+    {
+      "name":"Pacenote 8",
+      "notes":{
+        "english":"test two"
+      },
+      "oldId":8,
+      "pacenoteWaypoints":[
+        {
+          "name":"corner start",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":9,
+          "pos":[
+            -127.2875977,
+            -191.8310089,
+            100.3164368
+          ],
+          "radius":10,
+          "waypointType":"cornerStart"
+        },
+        {
+          "name":"corner end",
+          "normal":[
+            0,
+            1,
+            0
+          ],
+          "oldId":9,
+          "pos":[
+            -137.2875977,
+            -191.8310089,
+            100.3164368
+          ],
+          "radius":10,
+          "waypointType":"cornerEnd"
+        }
+      ],
+      "segment":-1
+    }
+  ],
+  "updated_at":1701830571
+}
