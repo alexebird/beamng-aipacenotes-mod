@@ -112,7 +112,7 @@ local function openRallyEditor(shownMission)
     local notebooksPath = folder..'/aipacenotes/notebooks/'
 
     if FS:fileExists(settingsFname) then
-      local json = readJsonFile(settingsFname)
+      local json = jsonReadFile(settingsFname)
       if not json then
         log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
       else

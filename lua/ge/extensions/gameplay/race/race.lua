@@ -32,7 +32,7 @@ end
 -- this doesnt seem to be called anywhere
 -- function C:setPathFile(file)
 --   if not file then return end
---   local json = readJsonFile(file)
+--   local json = jsonReadFile(file)
 --   if not json then
 --     log('E', 'race', 'unable to find race file: ' .. tostring(file))
 --     return

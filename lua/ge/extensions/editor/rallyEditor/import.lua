@@ -105,7 +105,7 @@ function C:selected()
   if not self.path then return end
   self.default_notebooks_dir = self.path._dir
 
-  local json = readJsonFile(self.default_transcript)
+  local json = jsonReadFile(self.default_transcript)
   if not json then
     log('E', logTag, 'unable to find transcript file: ' .. tostring(self.default_transcript))
   else

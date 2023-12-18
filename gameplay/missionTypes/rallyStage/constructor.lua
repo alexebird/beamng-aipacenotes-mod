@@ -210,7 +210,7 @@ function C:getWorldPreviewRoute()
     end
     -- load path from file
     local path = require('/lua/ge/extensions/gameplay/race/path')("New Path")
-    path:onDeserialized(readJsonFile(self.missionFolder.."/race.race.json"))
+    path:onDeserialized(jsonReadFile(self.missionFolder.."/race.race.json"))
     path:autoConfig()
     local ret = {}
     for i, nId in ipairs(path.config.linearSegments) do

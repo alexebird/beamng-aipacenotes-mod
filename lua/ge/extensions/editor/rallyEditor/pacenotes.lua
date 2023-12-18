@@ -1253,7 +1253,7 @@ function C:waypointTypeSelector(note)
 end
 
 -- function C:loadVoices()
---   local voices = readJsonFile(voiceFname)
+--   local voices = jsonReadFile(voiceFname)
 --   voiceNamesSorted = {}
 --
 --   if not voices then

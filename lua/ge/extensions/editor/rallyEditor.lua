@@ -128,7 +128,7 @@ local function loadNotebook(full_filename)
   end
   local dir, filename, ext = path.split(full_filename)
   -- log('I', logTag, 'creating empty notebook file at ' .. tostring(dir))
-  local json = readJsonFile(full_filename)
+  local json = jsonReadFile(full_filename)
   if not json then
     log('E', logTag, 'couldnt find notebook file')
   end

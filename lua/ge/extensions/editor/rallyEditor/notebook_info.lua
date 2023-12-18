@@ -238,7 +238,7 @@ function C:loadVoices()
 end
 
 function C:loadVoiceFile(voiceFname)
-  local voices = readJsonFile(voiceFname)
+  local voices = jsonReadFile(voiceFname)
 
   if not voices then
     log('W', logTag, 'unable to load voices file from '..voiceFname)
