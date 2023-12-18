@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"birdman",
   "currentGraphID":1,
-  "date":1699248604,
+  "date":1702060582,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -66,7 +66,7 @@
           "vehId",
           10,
           "vehId",
-          false
+          true
         ],
         [
           2,
@@ -97,7 +97,7 @@
           false
         ],
         [
-          27,
+          283,
           "flow",
           16,
           "flow",
@@ -111,7 +111,7 @@
           true
         ],
         [
-          27,
+          283,
           "pathData",
           16,
           "pathData",
@@ -298,6 +298,41 @@
           69,
           "reset",
           true
+        ],
+        [
+          16,
+          "flow",
+          282,
+          "flow",
+          false
+        ],
+        [
+          16,
+          "raceData",
+          282,
+          "raceData",
+          false
+        ],
+        [
+          21,
+          "vehId",
+          282,
+          "vehId",
+          false
+        ],
+        [
+          27,
+          "flow",
+          283,
+          "flow",
+          false
+        ],
+        [
+          27,
+          "pathData",
+          283,
+          "pathData",
+          false
         ]
       ],
       "name":"Recce",
@@ -337,8 +372,8 @@
             "p_out":{}
           },
           "pos":[
-            2474,
-            218
+            2418,
+            330
           ],
           "type":"gameplay/race/aiPacenotesEnqueueAudio"
         },
@@ -404,7 +439,7 @@
             ]
           ],
           "pos":[
-            136,
+            234,
             428
           ],
           "transitionName":"reset",
@@ -501,8 +536,8 @@
             }
           },
           "pos":[
-            920,
-            302
+            815,
+            358
           ],
           "type":"scene/getPlayerVehicle"
         },
@@ -579,8 +614,8 @@
             }
           },
           "pos":[
-            410,
-            92
+            368,
+            78
           ],
           "type":"gameplay/race/aiPacenotesLoader"
         },
@@ -613,7 +648,7 @@
             }
           },
           "pos":[
-            -368,
+            -389,
             456
           ],
           "type":"scene/getPlayerVehicle"
@@ -840,10 +875,126 @@
             }
           },
           "pos":[
-            2152,
-            638
+            2132,
+            610
           ],
           "type":"logic/once"
+        },
+        "282":{
+          "code":{
+            "work":"local racedata = self.pinIn.raceData.value\nlocal vehId = self.pinIn.vehId.value\n\nlocal state = racedata.states[vehId]\nlocal currsegs = state.currentSegments\n\n--log('D', 'wtf', dumps(currsegs))",
+            "_executionStarted":"",
+            "_executionStopped":"",
+            "onPreRender":""
+          },
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "raceData":false,
+              "vehId":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "name":"Custom Lua ",
+          "pins":[
+            [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "Inflow for this node.",
+              true
+            ],
+            [
+              "out",
+              "flow",
+              "flow",
+              null,
+              "Outflow for this node.",
+              true
+            ],
+            [
+              "in",
+              "table",
+              "raceData",
+              null,
+              ""
+            ],
+            [
+              "in",
+              "number",
+              "vehId",
+              null,
+              ""
+            ]
+          ],
+          "pos":[
+            1684,
+            22
+          ],
+          "type":"util/customLua"
+        },
+        "283":{
+          "code":{
+            "work":"-- The purpose of this is to set all pacenotes'\n-- segment to -1, ie clear all segments.\n-- This is just for recce because when you\n-- reset the car at some point along the track,\n-- you have to keep track of what the race's\n-- currentSegment is. Instead of that,\n-- just clear all segments. Then you don't have\n-- to track the segment as the car moves\n-- through the recce.\n--\n-- The downside is that you lose the perf\n-- improvement from indexing pacenotes\n-- to their segment.\n\nlocal pathData = self.pinIn.pathData.value\n\nfor i,pacenote in pairs(pathData.pacenotes.objects) do\n  pacenote.segment = -1\nend\n\n--log('D', 'wtf', dumps(pathData))\n\nself.pinOut.pathData.value = pathData",
+            "_executionStarted":"",
+            "_executionStopped":"",
+            "onPreRender":""
+          },
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "pathData":false
+            },
+            "p_out":{
+              "flow":false,
+              "pathData":false
+            }
+          },
+          "name":"Custom Lua ",
+          "pins":[
+            [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "Inflow for this node.",
+              true
+            ],
+            [
+              "out",
+              "flow",
+              "flow",
+              null,
+              "Outflow for this node.",
+              true
+            ],
+            [
+              "in",
+              "table",
+              "pathData",
+              null,
+              ""
+            ],
+            [
+              "out",
+              "table",
+              "pathData",
+              null,
+              ""
+            ]
+          ],
+          "pos":[
+            822,
+            92
+          ],
+          "type":"util/customLua"
         }
       },
       "showTab":true,
@@ -855,26 +1006,26 @@
         ],
         "list":[
           {
-            "index":2,
-            "mergeStrat":"max",
-            "name":"currentDamage",
-            "type":"number",
-            "value":0
-          },
-          {
             "index":1,
             "mergeStrat":"or_",
             "name":"lastGetPause",
             "type":"bool",
             "value":true
+          },
+          {
+            "index":2,
+            "mergeStrat":"max",
+            "name":"currentDamage",
+            "type":"number",
+            "value":0
           }
         ]
       },
       "viewPos":[
-        -0.00006103515625000000,
-        0
+        182.90838623046875000000,
+        -82.95333862304687500000
       ],
-      "viewZoom":1
+      "viewZoom":0.75000000000000000000
     },
     "3":{
       "description":"This is the description for graph States",
@@ -882,14 +1033,14 @@
       "isStateGraph":true,
       "links":[
         [
-          11,
+          37,
           "success",
           4,
           "flow",
           false
         ],
         [
-          37,
+          11,
           "success",
           4,
           "flow",
@@ -1093,10 +1244,10 @@
         "list":{}
       },
       "viewPos":[
-        0,
-        0
+        -80.50006103515625000000,
+        -27.74999809265136718750
       ],
-      "viewZoom":1
+      "viewZoom":0.74999994039535522461
     },
     "36":{
       "description":"This is the description for graph New State",
@@ -1299,8 +1450,8 @@
         "list":{}
       },
       "viewPos":[
-        0,
-        0
+        -294,
+        -77
       ],
       "viewZoom":1
     }
