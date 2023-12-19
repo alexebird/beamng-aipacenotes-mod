@@ -1,0 +1,19 @@
+{
+  "SharedPostsMaterial": {
+    "name": "SharedPostsMaterial",
+    "mapTo": "PostsMaterial",
+    "class": "Material",
+    "persistentId": "b0fa9d61-856d-4f62-8d53-35c64f6523d3",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/sb_ss_start/sb_ss_start.color.png",
+        "normalMap": "/art/shapes/signboards/sb_ss_start/sb_ss_start.normal.png",
+        "roughnessMap": "/art/shapes/signboards/sb_ss_start/sb_ss_start.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}
