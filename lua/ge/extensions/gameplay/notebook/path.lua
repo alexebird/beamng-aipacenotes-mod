@@ -4,6 +4,8 @@
 
 local C = {}
 
+local currentVersion = "2"
+
 function C:getNextUniqueIdentifier()
   self._uid = self._uid + 1
   return self._uid
@@ -14,6 +16,7 @@ function C:init(name)
   self.name = ""
   self.description = ""
   self.authors = ""
+  self.version = currentVersion
   self.created_at = os.time()
   self.updated_at = self.created_at
 
@@ -203,6 +206,7 @@ end
 function C:onDeserialized(data)
   if not data then return end
 
+  self.version = data.version or currentVersion
   self.name = data.name or ""
   self.description = string.gsub(data.description or "", "\\n", "\n")
   self.authors = data.authors or ""
