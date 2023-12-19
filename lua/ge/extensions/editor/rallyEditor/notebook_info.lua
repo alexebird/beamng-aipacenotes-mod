@@ -33,9 +33,11 @@ function C:selectCodriver(id)
   self.codriver_index = id
   local codriver = self:selectedCodriver()
 
-  codriverNameText = im.ArrayChar(1024, codriver.name)
-  codriverVoiceText = im.ArrayChar(1024, codriver.voice)
-  codriverLanguageText = im.ArrayChar(1024, codriver.language)
+  if codriver then
+    codriverNameText = im.ArrayChar(1024, codriver.name)
+    codriverVoiceText = im.ArrayChar(1024, codriver.voice)
+    codriverLanguageText = im.ArrayChar(1024, codriver.language)
+  end
 end
 
 function C:init(rallyEditor)
@@ -172,6 +174,10 @@ end
 function C:drawCodriverForm(codriver)
   if not codriver then return end
 
+  if im.Button("Delete") then
+    self:deleteCodriver(codriver.id)
+  end
+
   local editEnded = im.BoolPtr(false)
   editor.uiInputText("Name", codriverNameText, nil, nil, nil, nil, editEnded)
   if editEnded[0] then
@@ -247,6 +253,11 @@ function C:loadVoiceFile(voiceFname)
 
   log('I', logTag, 'reloaded voices from '..voiceFname)
   return voices
+end
+
+function C:deleteCodriver(codriver_id)
+  self.path.codrivers:remove(codriver_id)
+  self:selectCodriver(nil)
 end
 
 return function(...)

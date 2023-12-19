@@ -42,6 +42,8 @@ function C:init(mgr, ...)
   self.pathMissionSettings = nil
   self.pathNotebook = nil
 
+  self.codriver = nil
+
   self.clearOutPinsOnStart = false
 end
 
@@ -148,7 +150,7 @@ function C:getMissionSpecificSettings()
     log('E', logTag, 'unable to read settings file at: ' .. tostring(settingsFname))
     return nil
   end
-  local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')()
+  local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
   settings:onDeserialized(json)
   return settings
 end
@@ -157,7 +159,7 @@ function C:getNotebookFile()
   if not self.missionDir then
     self:detectMissionId()
   end
-  local notebookFname = self.missionDir..'/aipacenotes/notebooks/'..self.pathMissionSettings.notebook.filename
+  local notebookFname = self.missionDir..'/'..editor_rallyEditor.notebooksPath..self.pathMissionSettings.notebook.filename
   log('D', logTag, 'reading notebook file: ' .. notebookFname)
   local json = jsonReadFile(notebookFname)
   if not json then
@@ -199,7 +201,7 @@ function C:_executionStopped()
   self.pathNotebook = nil
 end
 
-local function setRacePacenotesFromNotebook(race, notebook, settings)
+local function setupRaceFromNotebook(race, notebook, settings)
   local codriver_name = settings.notebook.codriver
   local codriver = nil
   for i,cd in ipairs(notebook.codrivers.sorted) do
@@ -210,7 +212,7 @@ local function setRacePacenotesFromNotebook(race, notebook, settings)
 
   if not codriver then
     log('E', logTag, 'codriver with name of "'..codriver_name..'" was not found. double-check <mission_dir>/aipacenotes/mission.settings.json')
-    return false
+    return nil
   end
 
   local lang = codriver.language
@@ -220,7 +222,7 @@ local function setRacePacenotesFromNotebook(race, notebook, settings)
   end
 
   race.pacenotes = notebook.pacenotes
-  return true
+  return codriver
 end
 
 function C:work(args)
@@ -250,15 +252,20 @@ function C:work(args)
     -- log('D', 'wtf', self.pathNotebook.name)
   end
 
+  local codriver = nil
   if not self.pathRace then
     self.pathRace = self:getRaceFile()
     if not self.pathRace then
       self:__setNodeError('file', 'unable to find *.race.json file')
     end
-    if not setRacePacenotesFromNotebook(self.pathRace, self.pathNotebook, self.pathMissionSettings) then
+    codriver = setupRaceFromNotebook(self.pathRace, self.pathNotebook, self.pathMissionSettings)
+    if not codriver then
       self:__setNodeError('file', 'unable to update pacenotes from notebook')
     end
   end
+
+  self.pathMissionSettings.language = codriver.language
+  self.pathMissionSettings.voice = codriver.voice
 
   self.pinOut.aipSettings.value = self.pathMissionSettings
 

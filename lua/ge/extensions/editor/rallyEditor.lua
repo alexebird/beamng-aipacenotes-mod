@@ -16,8 +16,9 @@ local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New No
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
-local notebookInfoWindow, pacenotesWindow, importWindow --, toolsWindow
+local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow
 local mouseInfo = {}
+local notebooksPath = 'aipacenotes/notebooks/'
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -83,7 +84,7 @@ local function saveNotebook(notebook, savePath)
   local settingsFname = getMissionDir()..'aipacenotes/mission.settings.json'
   if not FS:fileExists(settingsFname) then
     log('I', logTag, 'creating mission.settings.json at '..settingsFname)
-    local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')()
+    local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
     settings.notebook.filename = filename
     local assumedCodriverName = notebook.codrivers.sorted[1].name
     settings.notebook.codriver = assumedCodriverName
@@ -250,8 +251,8 @@ local function drawEditorGui()
   if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
     if im.BeginMenuBar() then
       if im.BeginMenu("File") then
-        im.Text(previousFilepath .. previousFilename)
-        im.Separator()
+        -- im.Text(previousFilepath .. previousFilename)
+        -- im.Separator()
         if im.MenuItem1("New Notebook") then
           newEmptyNotebook()
         end
@@ -282,6 +283,9 @@ local function drawEditorGui()
         editor.selectEditMode(editor.editModes.notebookEditMode)
       end
     end
+
+    im.Text(previousFilepath .. previousFilename)
+    im.Separator()
 
     if im.Button("Save") then
       saveNotebook(currentPath, previousFilepath .. previousFilename)
@@ -340,6 +344,10 @@ local function show()
   editor.selectEditMode(editor.editModes.notebookEditMode)
 end
 
+local function showPacenotesTab()
+  select(pacenotesWindow)
+end
+
 local function onActivate()
   editor.clearObjectSelection()
   for _, win in ipairs(windows) do
@@ -387,12 +395,11 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/import')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/options')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/race_settings')(M))
 
-  -- notebookInfoWindow, pacenotesWindow, importWindow, toolsWindow = windows[1], windows[2], windows[3], windows[4]
-  notebookInfoWindow, pacenotesWindow, importWindow = windows[1], windows[2], windows[3]
+  notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow = windows[1], windows[2], windows[3], windows[4]
 
-  for i,win in pairs(windows) do
+  for _,win in pairs(windows) do
     win:setPath(currentPath)
   end
 
@@ -524,6 +531,75 @@ local function getPrefFlipSnaproadNormal()
   end
 end
 
+local function loadMissionSettings(folder)
+  local settingsFname = folder..'/aipacenotes/mission.settings.json'
+  local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
+
+  if FS:fileExists(settingsFname) then
+    local json = jsonReadFile(settingsFname)
+    if not json then
+      log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
+      return nil
+    else
+      settings:onDeserialized(json)
+    end
+  end
+
+  return settings
+end
+
+local function listNotebooks(folder)
+  if not folder then
+    folder = getMissionDir()
+  end
+  local notebooksFullPath = folder..notebooksPath
+  local paths = {}
+  local files = FS:findFiles(notebooksFullPath, '*.notebook.json', -1, true, false)
+  for _,fname in pairs(files) do
+    table.insert(paths, fname)
+  end
+  table.sort(paths)
+  return paths
+end
+
+local function detectNotebookToLoad(folder)
+  local settings = loadMissionSettings(folder)
+
+  -- step 1: detect the notebook name from settings file
+  -- if mission.settings.json exists, then read it and use the specified notebook fname.
+  -- local notebookBasename = nil
+  local notebooksFullPath = folder..notebooksPath
+  local notebookFname = nil
+
+  if settings.notebook.filename then
+    local settingsAbsName = notebooksFullPath..settings.notebook.filename
+    if FS:fileExists(settingsAbsName) then
+      notebookFname = settingsAbsName
+    end
+  end
+
+  -- step 2: if cant detect from settings file, or it doesnt exist, detect from listing the dir
+  if not notebookFname then
+    -- local paths = {}
+    -- local files = FS:findFiles(notebooksFullPath, '*.notebook.json', -1, true, false)
+    -- for _,fname in pairs(files) do
+    --   table.insert(paths, fname)
+    -- end
+    -- table.sort(paths)
+    local paths = listNotebooks(folder)
+    notebookFname = paths[#paths]
+  end
+
+  -- step 3: if mission settings file doesnt exist, then use the dir-listed name and create the settings file, including reading the first co-driver name.
+  -- although, that should be done after the notebook file is read, so maybe this should be done in the rally editor.
+  if not notebookFname then
+    local defaultNotebookBasename = settings:defaultSettings().notebook.filename
+    notebookFname = notebooksFullPath..defaultNotebookBasename
+  end
+
+  return notebookFname
+end
+
 M.onEditorRegisterPreferences = onEditorRegisterPreferences
 M.onSerialize = onSerialize
 M.onDeserialized = onDeserialized
@@ -534,12 +610,16 @@ M.getCurrentPath = function() return currentPath end
 M.isVisible = function() return editor.isWindowVisible(toolWindowName) end
 M.changedFromExternal = function() currentWindow:setPath(currentPath) end
 M.show = show
+M.showPacenotesTab = showPacenotesTab
 M.loadNotebook = loadNotebook
 M.saveNotebook = saveNotebook
 M.saveCurrent = saveCurrent
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
+
+M.loadMissionSettings = loadMissionSettings
+M.detectNotebookToLoad = detectNotebookToLoad
 
 M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
@@ -560,5 +640,8 @@ M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefFlipSnaproadNormal = getPrefFlipSnaproadNormal
+
+M.notebooksPath = notebooksPath
+M.listNotebooks = listNotebooks
 
 return M

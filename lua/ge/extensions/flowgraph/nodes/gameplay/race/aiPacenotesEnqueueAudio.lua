@@ -102,12 +102,15 @@ function C:enqueueFromPinIns()
   local pacenote = self.pinIn.note.value
   local missionDir = self.pinIn.aipSettings.value.missionDir
   local notebookName = normalize_name(self.pinIn.aipSettings.value.notebookName)
-  local codriverName = normalize_name(self.pinIn.aipSettings.value.notebook.codriver)
+  local codriverName = self.pinIn.aipSettings.value.notebook.codriver
+  local codriverLang = self.pinIn.aipSettings.value.language
+  local codriverVoice = self.pinIn.aipSettings.value.voice
+  local codriverStr = normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
   local pacenoteHash = pacenote_hash(pacenote)
 
   -- printFunctions(Engine.Audio)
 
-  local pacenoteFname = missionDir .. '/aipacenotes/notebooks/generated_pacenotes/' .. notebookName .. '/' .. codriverName .. '/pacenote_' .. pacenoteHash .. '.ogg'
+  local pacenoteFname = missionDir ..'/'.. editor_rallyEditor.notebooksPath .. 'generated_pacenotes/' .. notebookName .. '/' .. codriverStr .. '/pacenote_' .. pacenoteHash .. '.ogg'
   log('I', logTag, "pacenote='" .. pacenote .. "', filename=" .. pacenoteFname)
 
   local audioObj = {
@@ -137,7 +140,7 @@ end
 --     audioLen = breathLengthSeconds,
 --     timeout = time + breathLengthSeconds,
 --   }
-  
+
 -- end
 
 function C:previousAudioIsDone()

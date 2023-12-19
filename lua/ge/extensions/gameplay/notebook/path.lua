@@ -3,6 +3,7 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
 local C = {}
+local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 
 local currentVersion = "2"
 
@@ -78,11 +79,49 @@ function C:sortPacenotesByName()
   self.pacenotes:sort()
 end
 
-function C:cleanupPacenoteNames()
-  for i, v in ipairs(self.pacenotes.sorted) do
-    -- log("D", "WTF", 'renamed "'..v.name..'" sortOrder='..v.sortOrder)
-    v.name = "Pacenote "..i
+function C:nextImportIdent()
+  local importIdentifiers = {}
+
+  for _, pacenote in ipairs(self.pacenotes.sorted) do
+    -- Extract the alphanumeric identifier from pacenote names that match "Import_X"
+    local identifier = string.match(pacenote.name, "^Import_([%w]+)")
+    if identifier then
+      table.insert(importIdentifiers, identifier)
+    end
   end
+
+  -- Sort the identifiers and return the last one
+  if #importIdentifiers > 0 then
+    table.sort(importIdentifiers)
+    local letter = importIdentifiers[#importIdentifiers]
+    local asciiValue = string.byte(letter)
+    local nextAsciiValue = asciiValue + 1
+    local nextLetter = string.char(nextAsciiValue)
+    -- if you hit Z, it will return non alphabetic chars.
+    return nextLetter
+  end
+
+  return 'A' -- have to start somewhere
+end
+
+function C:cleanupPacenoteNames()
+  -- for i, v in ipairs(self.pacenotes.sorted) do
+  --   v.name = "Pacenote "..i
+  -- end
+
+  for i, v in ipairs(self.pacenotes.sorted) do
+    -- Pattern to match a name ending with a number: capture the non-numeric part and the numeric part
+    local baseName, number = string.match(v.name, "(.-)%s*(%d+)$")
+
+    if baseName and number then
+      -- If the name has a number at the end, replace it with the new index
+      v.name = baseName .. " " .. i
+    else
+      -- If the name does not have a number at the end, append the index
+      v.name = v.name .. " " .. i
+    end
+  end
+
   -- re-index names.
   self.pacenotes:buildNamesDir()
 end
@@ -280,44 +319,19 @@ function C:setAllRadii(newRadius, wpType)
   end
 end
 
--- Mapping table for digits to written-out numbers
-local number_map = {
-  ["0"] = "zero",
-  ["1"] = "one",
-  ["2"] = "two",
-  ["3"] = "three",
-  ["4"] = "four",
-  ["5"] = "five",
-  ["6"] = "six",
-  ["7"] = "seven",
-  ["8"] = "eight",
-  ["9"] = "nine",
-  ["10"] = "ten",
-  ["-"] = "minus",
-  ["for right"] = "four right",
-  ["for left"] = "four left",
-}
--- local boundary = "(%W)"
-
 local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
-function C:normalizeEnglishNote()
-  local lang = self._default_note_lang
+function C:normalizeNotes(lang)
+  lang = lang or self._default_note_lang
 
-  for i,pacenote in ipairs(self.pacenotes.sorted) do
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
     local note = pacenote:getNoteFieldNote(lang)
 
     note = stripWhitespace(note)
 
     if note ~= '' then
-      -- Replace digits with written-out numbers
-      for digit, word in pairs(number_map) do
-        note = note:gsub(digit, word)
-        -- note = note:gsub(boundary .. digit .. boundary, "%1" .. word .. "%1")
-      end
-
       -- add punction if not present
       local last_char = note:sub(-1)
       if not (last_char == "." or last_char == "?" or last_char == "!") then
@@ -328,6 +342,19 @@ function C:normalizeEnglishNote()
     end
   end
 end
+
+-- function C:replaceDigits(lang)
+--   lang = lang or self._default_note_lang
+--
+--   for _,pacenote in ipairs(self.pacenotes.sorted) do
+--     local note = pacenote:getNoteFieldNote(lang)
+--
+--     if note ~= '' then
+--       note = normalizer.replaceDigits(note)
+--       pacenote:setNoteFieldNote(lang, note)
+--     end
+--   end
+-- end
 
 -- Generalized rounding function
 local function custom_round(dist, round_to)

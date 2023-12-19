@@ -108,56 +108,8 @@ local function openRallyEditor(shownMission)
       editor.setEditorActive(true)
     end
     editor_rallyEditor.show()
-
-    local folder = shownMission.missionFolder
-    local settingsFname = folder..'/aipacenotes/mission.settings.json'
-    local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')()
-    local notebooksPath = folder..'/aipacenotes/notebooks/'
-
-    if FS:fileExists(settingsFname) then
-      local json = jsonReadFile(settingsFname)
-      if not json then
-        log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
-      else
-        settings:onDeserialized(json)
-      end
-    end
-
-    -- step 1: detect the notebook name from settings file
-    -- if mission.settings.json exists, then read it and use the specified notebook fname.
-    -- local notebookBasename = nil
-    local notebookFname = nil
-
-    if settings.notebook.filename then
-      local settingsAbsName = notebooksPath..settings.notebook.filename
-      if FS:fileExists(settingsAbsName) then
-        notebookFname = settingsAbsName
-      end
-    end
-
-    -- step 2: if cant detect from settings file, or it doesnt exist, detect from listing the dir
-    if not notebookFname then
-      local paths = {}
-      local files = FS:findFiles(notebooksPath, '*.notebook.json', -1, true, false)
-      for _,fname in pairs(files) do
-        table.insert(paths, fname)
-      end
-      table.sort(paths)
-      local latestPath = paths[#paths]
-      -- log('D', 'wtf', dumps(paths))
-      -- log('D', 'wtf', latestPath)
-      notebookFname = latestPath
-    end
-
-    -- step 3: if mission settings file doesnt exist, then use the dir-listed name and create the settings file, including reading the first co-driver name.
-    -- although, that should be done after the notebook file is read, so maybe this should be done in the rally editor.
-
-    if not notebookFname then
-      local defaultNotebookBasename = settings:defaultSettings().notebook.filename
-      notebookFname = notebooksPath..defaultNotebookBasename
-    end
-    log('D', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
-
+    local notebookFname = editor_rallyEditor.detectNotebookToLoad(shownMission.missionFolder)
+    log('I', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
     editor_rallyEditor.loadNotebook(notebookFname)
   end
 end

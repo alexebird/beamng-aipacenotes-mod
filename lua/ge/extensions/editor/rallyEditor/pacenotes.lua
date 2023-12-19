@@ -937,13 +937,12 @@ function C:drawPacenotesList()
   im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
   -- im.SameLine()
   if im.Button("Clean up names") then
-    self.path:cleanupPacenoteNames()
+    self:cleanupPacenoteNames()
   end
   im.tooltip("Re-name all pacenotes with increasing numbers.")
   im.SameLine()
   if im.Button("Auto-assign segments") then
-    local racePath = self:getRacePath()
-    self.path:autoAssignSegments(racePath)
+    self:autoAssignSegments()
   end
   im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
   im.SameLine()
@@ -953,23 +952,17 @@ function C:drawPacenotesList()
   im.tooltip("Snap all waypoints to nearest snaproad point.")
   im.SameLine()
   if im.Button("Set All Radii") then
-    if self.path then
-      self.path:setAllRadii(self.rallyEditor.getPrefDefaultRadius())
-    end
+    self:setAllRadii()
   end
   im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
   -- im.SameLine()
   if im.Button("Normalize All Notes") then
-    if self.path then
-      self.path:normalizeEnglishNote()
-    end
+    self:normalizeNotes()
   end
   im.tooltip("Add puncuation and replace digits with words.")
   im.SameLine()
   if im.Button("Autofill Dist Calls") then
-    if self.path then
-      self.path:autofillDistanceCalls()
-    end
+    self:autoFillDistanceCalls()
   end
   im.tooltip("Autofill distance calls.")
 
@@ -1279,11 +1272,24 @@ function C:setCameraToPacenote()
 end
 
 function C:snapAll()
-  -- log('D','wtf', 'snapall')
-  -- log('D','wtf', dumps(self.path:allWaypoints()))
+  if not self.path then return end
 
+  editor.history:commitAction("Snap all waypoints",
+    {
+      self = self,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.self.path.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.self:snapAllHelper()
+    end
+  )
+end
+
+function C:snapAllHelper()
   for i,wp in pairs(self.path:allWaypoints()) do
-    -- log('D','wtf', dumps(wp.pos))
     local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
     wp.pos = newPos
     if normalAlignPos then
@@ -1291,6 +1297,92 @@ function C:snapAll()
       wp.normal = vec3(rv.x, rv.y, rv.z)
     end
   end
+end
+
+function C:setAllRadii()
+  if not self.path then return end
+
+  editor.history:commitAction("Set radius of all waypoints",
+    {
+      notebook = self.path,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.notebook:setAllRadii(self.rallyEditor.getPrefDefaultRadius())
+    end
+  )
+end
+
+function C:cleanupPacenoteNames()
+  if not self.path then return end
+
+  editor.history:commitAction("Cleanup pacenote names",
+    {
+      notebook = self.path,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.notebook:cleanupPacenoteNames()
+    end
+  )
+end
+
+function C:autoAssignSegments()
+  if not self.path then return end
+
+  editor.history:commitAction("Auto-assign segments to pacenotes",
+    {
+      racePath = self:getRacePath(),
+      notebook = self.path,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.notebook:autoAssignSegments(data.racePath)
+    end
+  )
+end
+
+function C:normalizeNotes()
+  if not self.path then return end
+
+  editor.history:commitAction("Normalize pacenote.note field",
+    {
+      notebook = self.path,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.notebook:normalizeNotes()
+    end
+  )
+end
+
+function C:autoFillDistanceCalls()
+  if not self.path then return end
+
+  editor.history:commitAction("Auto-fill distance calls",
+    {
+      notebook = self.path,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.notebook:autofillDistanceCalls()
+    end
+  )
 end
 
 return function(...)

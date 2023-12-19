@@ -86,6 +86,9 @@ function C:joinedNote(lang)
     txt = txt .. ' ' .. after
   end
 
+  -- trim string
+  txt = txt:gsub("^%s*(.-)%s*$", "%1")
+
   return txt
 end
 

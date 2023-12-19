@@ -6,7 +6,7 @@ local im  = ui_imgui
 local logTag = 'aipacenotes'
 
 local C = {}
-C.windowDescription = 'Tools'
+C.windowDescription = 'TODO'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
@@ -32,10 +32,10 @@ function C:unselect()
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
-function C:draw(mouseInfo)
+function C:draw(_mouseInfo)
   if not self.path then return end
 
-  im.HeaderText("Tools")
+  im.HeaderText("TODO")
 
 end
 

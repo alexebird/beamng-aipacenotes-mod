@@ -6,8 +6,8 @@ local C = {}
 
 local default_settings = {
   notebook = {
-        filename = "primary.notebook.json",
-        codriver = "Sophia",
+    filename = "primary.notebook.json",
+    codriver = "Sophia",
   }
 }
 
@@ -16,10 +16,11 @@ function C:getNextUniqueIdentifier()
   return self._uid
 end
 
-function C:init(name)
+function C:init(fname)
   self._uid = 0
   self.notebook = default_settings.notebook
   self.missionDir = nil -- can be set by AIP Loader flowgraph node.
+  self.fname = fname
 
   self.id = self:getNextUniqueIdentifier()
 end
@@ -39,6 +40,11 @@ end
 function C:onDeserialized(data)
   if not data then return end
   self.notebook = data.notebook or default_settings.notebook
+end
+
+function C:write()
+  local json = self:onSerialize()
+  jsonWriteFile(self.fname, json, true)
 end
 
 return function(...)

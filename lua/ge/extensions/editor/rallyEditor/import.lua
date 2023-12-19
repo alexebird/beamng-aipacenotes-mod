@@ -4,6 +4,7 @@
 
 local im  = ui_imgui
 local logTag = 'aipacenotes'
+local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 
 local C = {}
 C.windowDescription = 'Voice Import'
@@ -11,7 +12,7 @@ C.windowDescription = 'Voice Import'
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
 
-  self.default_transcript = "/settings/aipacenotes/transcripts.json"
+  self.default_transcript = "/settings/aipacenotes/transcript.json"
   self.transcript = nil
   self.default_notebooks_dir = "/gameplay/aipacenotes"
 end
@@ -20,13 +21,14 @@ function C:setPath(path)
   self.path = path
 end
 
-function C:convertTranscriptToNotebook(transcripts_data)
+function C:convertTranscriptToNotebook(transcript_data, importIdent)
   local ts = os.time()
   local fname_out = 'transcript_'..ts..'.notebook.json'
   local notebook = {
     authors = "aipacenotes",
     description = "created using aipacenotes voice transcription.",
     name = "Transcript "..ts,
+    version = "2",
     oldId = 1,
     created_at = ts,
     updated_at = ts,
@@ -40,26 +42,27 @@ function C:convertTranscriptToNotebook(transcripts_data)
     },
     pacenotes = {},
   }
+
   local i = 1
   local oldId = 2
 
-  for i,transcript in ipairs(transcripts_data['transcripts']) do
+  for _,transcript in ipairs(transcript_data['transcript']) do
     local note = transcript.transcript or ""
-
-    -- add the question mark to make voice inflection go up.
-    -- if note ~= "" then
-      -- note = note..'?'
-    -- end
+    note = normalizer.replaceDigits(note)
 
     if transcript.vehicle_pos then
-
       local pos = transcript.vehicle_pos.pos or {}
       -- local rot = transcript.vehicle_pos.rot or {}
       local radius = self.rallyEditor.getPrefDefaultRadius()
 
+      local name = "Pacenote "..i
+      if importIdent then
+        name = "Import_"..importIdent.." " .. i
+      end
+
       local pn = {
-        name = "Pacenote " .. i,
-        notes = { english = note },
+        name = name,
+        notes = { english = {note = note}},
         oldId = oldId,
         pacenoteWaypoints = {
         --   {
@@ -103,14 +106,7 @@ end
 -- called by RallyEditor when this tab is selected.
 function C:selected()
   if not self.path then return end
-  self.default_notebooks_dir = self.path._dir
-
-  local json = jsonReadFile(self.default_transcript)
-  if not json then
-    log('E', logTag, 'unable to find transcript file: ' .. tostring(self.default_transcript))
-  else
-    self.transcript = json
-  end
+  self:reloadTranscriptFile()
 
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
@@ -124,10 +120,52 @@ function C:unselect()
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
-function C:importTranscripts()
-  local notebook_data, fname_out = self:convertTranscriptToNotebook(self.transcript)
-  fname_out = self.default_notebooks_dir..'/'..fname_out
+function C:reloadTranscriptFile()
+  self.default_notebooks_dir = self.path._dir
+
+  local json = jsonReadFile(self.default_transcript)
+  if not json then
+    log('E', logTag, 'unable to find transcript file: ' .. tostring(self.default_transcript))
+  else
+    self.transcript = json
+  end
+end
+
+function C:importTranscriptToNewNotebook()
+  self:reloadTranscriptFile()
+  local notebook_data, fname_out = self:convertTranscriptToNotebook(self.transcript, nil)
+  fname_out = self.default_notebooks_dir..fname_out
   jsonWriteFile(fname_out, notebook_data, true)
+  self.rallyEditor.loadNotebook(fname_out)
+  self.rallyEditor.showPacenotesTab()
+end
+
+function C:importTranscriptToCurrentNotebook()
+  self:reloadTranscriptFile()
+  local importIdent = self.path:nextImportIdent()
+  local notebook_data, _ = self:convertTranscriptToNotebook(self.transcript, importIdent)
+
+  editor.history:commitAction("Import transcript to current notebook",
+    {
+      self = self,
+      old_pacenotes = self.path.pacenotes:onSerialize(),
+      transcript_notebook = notebook_data,
+    },
+    function(data) -- undo
+      data.self.path.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      -- log("D", 'wtf', dumps(#data.self.path.pacenotes.objects))
+      local curr_notes = data.self.path.pacenotes:onSerialize()
+
+      for _,pn in ipairs(data.transcript_notebook.pacenotes) do
+        table.insert(curr_notes, pn)
+      end
+
+      data.self.path.pacenotes:onDeserialized(curr_notes, {})
+      -- log("D", 'wtf', dumps(#data.self.path.pacenotes.objects))
+    end
+  )
 end
 
 function C:draw(mouseInfo)
@@ -137,14 +175,19 @@ function C:draw(mouseInfo)
 
   im.Text("Importing from: " .. self.default_transcript)
   im.Text("Importing to: " .. self.default_notebooks_dir)
-  if im.Button("Import") then
-    self:importTranscripts()
-  end
-  im.Text("Note: When you Import, a new notebook is created.")
-  -- im.Separator()
-  -- im.Text(dumps(self.transcript))
-  -- im.Separator()
+  im.Separator()
 
+  if im.Button("Import to New Notebook") then
+    self:importTranscriptToNewNotebook()
+  end
+  im.Text("A new notebook will be created.")
+  im.Separator()
+
+  if im.Button("Import to Current Notebook") then
+    self:importTranscriptToCurrentNotebook()
+  end
+  im.Text("The imported notes will be added to the end of the currently loaded notebook.")
+  im.Separator()
 end
 
 return function(...)
