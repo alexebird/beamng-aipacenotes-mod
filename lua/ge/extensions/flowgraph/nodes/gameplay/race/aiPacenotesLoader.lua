@@ -5,6 +5,8 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+
 local C = {}
 
 C.name = 'AI Pacenotes Loader'
@@ -159,7 +161,7 @@ function C:getNotebookFile()
   if not self.missionDir then
     self:detectMissionId()
   end
-  local notebookFname = self.missionDir..'/'..editor_rallyEditor.notebooksPath..self.pathMissionSettings.notebook.filename
+  local notebookFname = self.missionDir..'/'..re_util.notebooksPath..self.pathMissionSettings.notebook.filename
   log('D', logTag, 'reading notebook file: ' .. notebookFname)
   local json = jsonReadFile(notebookFname)
   if not json then

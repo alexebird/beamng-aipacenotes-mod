@@ -105,7 +105,8 @@ function C:init()
     noStarExists = "missions.timeTrials.defaultOutroTexts.justFinish"
   }
 
-  self.bigMapIcon = {icon = "mission_timetrials_01"}
+  -- self.bigMapIcon = {icon = "mission_timeTrials_triangle"}
+  self.bigMapIcon = {icon = "mission_airace02_triangle"}
 
   -- backwards compatibility
   if not self.setupModules.vehicles.enabled and self.missionTypeData.provideVehicleActive then

@@ -4,6 +4,7 @@
 
 local im  = ui_imgui
 local logTag = 'aipacenotes'
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
 C.windowDescription = 'Race Settings'
@@ -66,7 +67,7 @@ end
 
 function C:loadCodrivers()
   local folder = self.rallyEditor.getMissionDir()
-  local full_filename = folder..self.rallyEditor.notebooksPath..self.settings.notebook.filename
+  local full_filename = folder..re_util.notebooksPath..self.settings.notebook.filename
   print(full_filename)
   local json = jsonReadFile(full_filename)
   if not json then

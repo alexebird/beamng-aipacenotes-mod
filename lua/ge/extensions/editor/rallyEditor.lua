@@ -16,9 +16,9 @@ local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New No
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow
 local mouseInfo = {}
-local notebooksPath = 'aipacenotes/notebooks/'
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -552,7 +552,7 @@ local function listNotebooks(folder)
   if not folder then
     folder = getMissionDir()
   end
-  local notebooksFullPath = folder..notebooksPath
+  local notebooksFullPath = folder..re_util.notebooksPath
   local paths = {}
   local files = FS:findFiles(notebooksFullPath, '*.notebook.json', -1, true, false)
   for _,fname in pairs(files) do
@@ -568,7 +568,7 @@ local function detectNotebookToLoad(folder)
   -- step 1: detect the notebook name from settings file
   -- if mission.settings.json exists, then read it and use the specified notebook fname.
   -- local notebookBasename = nil
-  local notebooksFullPath = folder..notebooksPath
+  local notebooksFullPath = folder..re_util.notebooksPath
   local notebookFname = nil
 
   if settings.notebook.filename then
@@ -641,7 +641,6 @@ M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefFlipSnaproadNormal = getPrefFlipSnaproadNormal
 
-M.notebooksPath = notebooksPath
 M.listNotebooks = listNotebooks
 
 return M

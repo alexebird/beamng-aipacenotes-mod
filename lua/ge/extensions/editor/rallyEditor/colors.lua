@@ -1,5 +1,4 @@
 local M = {}
-local logTag = 'aipacenotes'
 
 --
 -- colors

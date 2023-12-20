@@ -3,9 +3,8 @@
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
 local dequeue = require('dequeue')
-
 local im  = ui_imgui
-
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
 
@@ -110,7 +109,7 @@ function C:enqueueFromPinIns()
 
   -- printFunctions(Engine.Audio)
 
-  local pacenoteFname = missionDir ..'/'.. editor_rallyEditor.notebooksPath .. 'generated_pacenotes/' .. notebookName .. '/' .. codriverStr .. '/pacenote_' .. pacenoteHash .. '.ogg'
+  local pacenoteFname = missionDir ..'/'.. re_util.notebooksPath .. 'generated_pacenotes/' .. notebookName .. '/' .. codriverStr .. '/pacenote_' .. pacenoteHash .. '.ogg'
   log('I', logTag, "pacenote='" .. pacenote .. "', filename=" .. pacenoteFname)
 
   local audioObj = {

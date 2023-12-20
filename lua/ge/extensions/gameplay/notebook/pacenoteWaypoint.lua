@@ -26,7 +26,7 @@ function C:init(pacenote, name, pos, forceId)
 
   self.normal = vec3(0,1,0)
   self.pos = pos
-  self.radius = editor_rallyEditor.getPrefDefaultRadius()
+  self.radius = (editor_rallyEditor and editor_rallyEditor.getPrefDefaultRadius()) or 10
 
   self.sortOrder = 999999
   self.mode = nil
