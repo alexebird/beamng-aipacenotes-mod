@@ -1,0 +1,19 @@
+{
+  "SsStartIconMaterial": {
+    "name": "SsStartIconMaterial",
+    "mapTo": "SsStartIconMaterial",
+    "class": "Material",
+    "persistentId": "5dba316b-1f4a-4dbb-9707-1ea788bb59c0",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/sb_ss_start/sb_ss_start.color.png",
+        "normalMap": "/art/shapes/signboards/sb_ss_start/sb_ss_start.normal.png",
+        "roughnessMap": "/art/shapes/signboards/sb_ss_start/sb_ss_start.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

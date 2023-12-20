@@ -34,7 +34,7 @@
     "silverTime":120,
     "startScreenText":""
   },
-  "name":"Island Tour (AI Pacenotes)",
+  "name":"Italy Island Tour (AI Pacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -46,13 +46,16 @@
     },
     "vehicles":{
       "enabled":true,
-      "isCustomConfig":false,
-      "mode":"choice",
-      "playerConfig":"asphalt_SQ",
-      "playerConfigPath":"vehicles/vivace/asphalt_SQ.pc",
-      "playerModel":"vivace",
-      "playerPaintName":"Cold Steel",
-      "usePresetVehicle":true
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "vehicles":[
+        {
+          "config":"rally car - road - italy island tour",
+          "configPath":"vehicles/vivace/rally car - road - italy island tour.pc",
+          "model":"vivace",
+          "useCustomConfig":false
+        }
+      ]
     }
   },
   "startCondition":{

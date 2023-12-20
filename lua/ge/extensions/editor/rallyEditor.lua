@@ -568,7 +568,7 @@ local function detectNotebookToLoad(folder)
   -- step 1: detect the notebook name from settings file
   -- if mission.settings.json exists, then read it and use the specified notebook fname.
   -- local notebookBasename = nil
-  local notebooksFullPath = folder..re_util.notebooksPath
+  local notebooksFullPath = folder..'/'..re_util.notebooksPath
   local notebookFname = nil
 
   if settings.notebook.filename then

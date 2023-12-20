@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"birdman",
   "currentGraphID":1,
-  "date":1702060582,
+  "date":1703047009,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -572,10 +572,10 @@
               "flow":false
             },
             "p_out":{
-              "value":false,
               "false":true,
               "flow":false,
-              "true":true
+              "true":true,
+              "value":false
             }
           },
           "opSymbol":"==",
@@ -720,10 +720,10 @@
               "flow":false
             },
             "p_out":{
-              "value":true,
               "false":false,
               "flow":false,
-              "true":false
+              "true":false,
+              "value":true
             }
           },
           "opSymbol":"==",
@@ -766,10 +766,10 @@
               "flow":false
             },
             "p_out":{
-              "value":true,
               "false":true,
               "flow":true,
-              "true":false
+              "true":false,
+              "value":true
             }
           },
           "opSymbol":"<",
@@ -817,10 +817,10 @@
               "flow":false
             },
             "p_out":{
-              "value":true,
               "false":false,
               "flow":false,
-              "true":false
+              "true":false,
+              "value":true
             }
           },
           "opSymbol":">",
@@ -882,10 +882,10 @@
         },
         "282":{
           "code":{
-            "work":"local racedata = self.pinIn.raceData.value\nlocal vehId = self.pinIn.vehId.value\n\nlocal state = racedata.states[vehId]\nlocal currsegs = state.currentSegments\n\n--log('D', 'wtf', dumps(currsegs))",
             "_executionStarted":"",
             "_executionStopped":"",
-            "onPreRender":""
+            "onPreRender":"",
+            "work":"local racedata = self.pinIn.raceData.value\nlocal vehId = self.pinIn.vehId.value\n\nlocal state = racedata.states[vehId]\nlocal currsegs = state.currentSegments\n\n--log('D', 'wtf', dumps(currsegs))"
           },
           "data":{},
           "dynamicMode":"repeat",
@@ -940,10 +940,10 @@
         },
         "283":{
           "code":{
-            "work":"-- The purpose of this is to set all pacenotes'\n-- segment to -1, ie clear all segments.\n-- This is just for recce because when you\n-- reset the car at some point along the track,\n-- you have to keep track of what the race's\n-- currentSegment is. Instead of that,\n-- just clear all segments. Then you don't have\n-- to track the segment as the car moves\n-- through the recce.\n--\n-- The downside is that you lose the perf\n-- improvement from indexing pacenotes\n-- to their segment.\n\nlocal pathData = self.pinIn.pathData.value\n\nfor i,pacenote in pairs(pathData.pacenotes.objects) do\n  pacenote.segment = -1\nend\n\n--log('D', 'wtf', dumps(pathData))\n\nself.pinOut.pathData.value = pathData",
             "_executionStarted":"",
             "_executionStopped":"",
-            "onPreRender":""
+            "onPreRender":"",
+            "work":"-- The purpose of this is to set all pacenotes'\n-- segment to -1, ie clear all segments.\n-- This is just for recce because when you\n-- reset the car at some point along the track,\n-- you have to keep track of what the race's\n-- currentSegment is. Instead of that,\n-- just clear all segments. Then you don't have\n-- to track the segment as the car moves\n-- through the recce.\n--\n-- The downside is that you lose the perf\n-- improvement from indexing pacenotes\n-- to their segment.\n\nlocal pathData = self.pinIn.pathData.value\n\nfor i,pacenote in pairs(pathData.pacenotes.objects) do\n  pacenote.segment = -1\nend\n\n--log('D', 'wtf', dumps(pathData))\n\nself.pinOut.pathData.value = pathData"
           },
           "data":{},
           "dynamicMode":"repeat",
@@ -1006,26 +1006,26 @@
         ],
         "list":[
           {
-            "index":1,
-            "mergeStrat":"or_",
-            "name":"lastGetPause",
-            "type":"bool",
-            "value":true
-          },
-          {
             "index":2,
             "mergeStrat":"max",
             "name":"currentDamage",
             "type":"number",
             "value":0
+          },
+          {
+            "index":1,
+            "mergeStrat":"or_",
+            "name":"lastGetPause",
+            "type":"bool",
+            "value":true
           }
         ]
       },
       "viewPos":[
-        182.90838623046875000000,
-        -82.95333862304687500000
+        61.63991165161132812500,
+        -103.37937164306640625000
       ],
-      "viewZoom":0.75000000000000000000
+      "viewZoom":0.33000001311302185059
     },
     "3":{
       "description":"This is the description for graph States",
@@ -1033,14 +1033,14 @@
       "isStateGraph":true,
       "links":[
         [
-          37,
+          11,
           "success",
           4,
           "flow",
           false
         ],
         [
-          11,
+          37,
           "success",
           4,
           "flow",
@@ -1249,79 +1249,6 @@
       ],
       "viewZoom":0.74999994039535522461
     },
-    "36":{
-      "description":"This is the description for graph New State",
-      "dirty":false,
-      "links":[
-        [
-          38,
-          "flow",
-          19,
-          "flow",
-          false
-        ]
-      ],
-      "name":"SimpleReset",
-      "nodes":{
-        "19":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false
-            },
-            "p_out":{}
-          },
-          "pins":[
-            [
-              "in",
-              "flow",
-              "flow",
-              null,
-              "This is a flow pin.",
-              true
-            ]
-          ],
-          "pos":[
-            248,
-            22
-          ],
-          "transitionName":"success",
-          "type":"states/transition"
-        },
-        "38":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{},
-            "p_out":{
-              "dtRaw":true,
-              "dtReal":true,
-              "dtSim":true,
-              "enterState":false,
-              "exitState":false,
-              "flow":false
-            }
-          },
-          "pos":[
-            3,
-            -6
-          ],
-          "type":"events/onUpdate"
-        }
-      },
-      "showTab":true,
-      "type":"graph",
-      "variables":{
-        "customVariableOrder":{},
-        "list":{}
-      },
-      "viewPos":[
-        -294,
-        -77
-      ],
-      "viewZoom":1
-    },
     "9":{
       "description":"This is the description for graph New State",
       "dirty":false,
@@ -1400,10 +1327,10 @@
           "dynamicMode":"repeat",
           "hiddenPins":{
             "p_in":{
-              "vehId":false,
               "flow":false,
               "mainPrefabId":false,
-              "sidePrefabId":false
+              "sidePrefabId":false,
+              "vehId":false
             },
             "p_out":{}
           },
@@ -1441,6 +1368,79 @@
           ],
           "transitionName":"success",
           "type":"states/transition"
+        }
+      },
+      "showTab":true,
+      "type":"graph",
+      "variables":{
+        "customVariableOrder":{},
+        "list":{}
+      },
+      "viewPos":[
+        -294,
+        -77
+      ],
+      "viewZoom":1
+    },
+    "36":{
+      "description":"This is the description for graph New State",
+      "dirty":false,
+      "links":[
+        [
+          38,
+          "flow",
+          19,
+          "flow",
+          false
+        ]
+      ],
+      "name":"SimpleReset",
+      "nodes":{
+        "19":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false
+            },
+            "p_out":{}
+          },
+          "pins":[
+            [
+              "in",
+              "flow",
+              "flow",
+              null,
+              "This is a flow pin.",
+              true
+            ]
+          ],
+          "pos":[
+            248,
+            22
+          ],
+          "transitionName":"success",
+          "type":"states/transition"
+        },
+        "38":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{},
+            "p_out":{
+              "dtRaw":true,
+              "dtReal":true,
+              "dtSim":true,
+              "enterState":false,
+              "exitState":false,
+              "flow":false
+            }
+          },
+          "pos":[
+            3,
+            -6
+          ],
+          "type":"events/onUpdate"
         }
       },
       "showTab":true,

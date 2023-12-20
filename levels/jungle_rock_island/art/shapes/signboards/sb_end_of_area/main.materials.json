@@ -1,0 +1,19 @@
+{
+  "EndOfAreaIconMaterial": {
+    "name": "EndOfAreaIconMaterial",
+    "mapTo": "EndOfAreaIconMaterial",
+    "class": "Material",
+    "persistentId": "53c89877-083b-43b6-88e6-f439dc42a63f",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/sb_end_of_area/sb_end_of_area.color.png",
+        "normalMap": "/art/shapes/signboards/sb_end_of_area/sb_end_of_area.normal.png",
+        "roughnessMap": "/art/shapes/signboards/sb_end_of_area/sb_end_of_area.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

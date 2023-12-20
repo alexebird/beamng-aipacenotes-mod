@@ -1,0 +1,19 @@
+{
+  "StopControlIconMaterial": {
+    "name": "StopControlIconMaterial",
+    "mapTo": "StopControlIconMaterial",
+    "class": "Material",
+    "persistentId": "645de15b-d7fe-4ad9-bfbc-25e77cbdeea5",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/sb_stop_control/sb_stop_control.color.png",
+        "normalMap": "/art/shapes/signboards/sb_stop_control/sb_stop_control.normal.png",
+        "roughnessMap": "/art/shapes/signboards/sb_stop_control/sb_stop_control.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

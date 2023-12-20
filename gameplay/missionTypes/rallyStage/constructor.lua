@@ -11,9 +11,9 @@ function C:init()
   self.latestVersion = version
 
   self.fgPath = "/gameplay/missionTypes/rallyStage/rallyStage.flow.json"
-  -- if self.missionTypeData.customFlowgraph then
-  --   self.fgPath = self.missionFolder.."/custom.flow.json"
-  -- end
+  if self.missionTypeData.customFlowgraph then
+    self.fgPath = self.missionFolder.."/custom.flow.json"
+  end
 
   self.fgVariables = deepcopy(self.missionTypeData)
   self.missionTypeLabel = "Rally Stage"
@@ -105,21 +105,9 @@ function C:init()
     noStarExists = "missions.timeTrials.defaultOutroTexts.justFinish"
   }
 
-  -- self.bigMapIcon = {icon = "mission_timeTrials_triangle"}
   self.bigMapIcon = {icon = "mission_airace02_triangle"}
 
-  -- backwards compatibility
-  if not self.setupModules.vehicles.enabled and self.missionTypeData.provideVehicleActive then
-    self.setupModules.vehicles.enabled = true
-    self.setupModules.vehicles.mode = 'choice'
-    self.setupModules.vehicles.playerModel = self.missionTypeData.playerModel
-    self.setupModules.vehicles.playerConfig = self.missionTypeData.playerConfig
-    self.setupModules.vehicles.playerConfigPath = self.missionTypeData.playerConfigPath
-    self.setupModules.vehicles.usePresetVehicle = true
-    self.setupModules.vehicles._compatibility = true
-  end
-
-  self.additionalAttributes.vehicle = self.setupModules.vehicles.enabled and self.setupModules.vehicles.mode or 'none'
+  self:setBackwardsCompatibility({presetVehicleActive = "provideVehicleActive"})
 end
 
 function C:updateAttempt(attempt, newVersion) end
@@ -142,24 +130,13 @@ end
 
 function C:processUserSettings(settings)
   self.userSettings = settings
-  self.setupModules.vehicles.usePresetVehicle = settings.useProvidedVehicle
-  self.setupModules.traffic.useTraffic = settings.useTraffic
+  self:processCommonSettings(settings)
   self.currentProgressKey = string.format("%d-%s-%s",settings.laps or self.missionTypeData.defaultLaps, (settings.reverse or false) and self.missionTypeData.reversible, (settings.rolling or false) and self.missionTypeData.allowRollingStart)
-  if self.setupModules.vehicles.enabled and settings.useProvidedVehicle == nil and self.setupModules.vehicles.mode ~= 'own' then
-    settings.useProvidedVehicle = true
-  end
 end
 
 function C:getUserSettingsData()
-  local sData = {}
-  if self.setupModules.vehicles.enabled and self.setupModules.vehicles.mode == 'choice' then
-    table.insert(sData, {
-      key = 'useProvidedVehicle',
-      label = 'missions.missions.general.userSettings.useProposedCar',
-      type = 'bool',
-      value = self.setupModules.vehicles.usePresetVehicle
-    })
-  end
+  local sData = self:getCommonSettingsData() or {}
+
   if self.missionTypeData.closed then
     table.insert(sData, {
       key = 'laps',
@@ -186,14 +163,6 @@ function C:getUserSettingsData()
       type = 'bool',
       value = false,
       isProgressKey = true,
-    })
-  end
-  if self.setupModules.traffic.enabled then
-    table.insert(sData, {
-      key = 'useTraffic',
-      label = 'missions.missions.general.userSettings.trafficEnabled',
-      type = 'bool',
-      value = self.setupModules.traffic.useTraffic
     })
   end
   return sData

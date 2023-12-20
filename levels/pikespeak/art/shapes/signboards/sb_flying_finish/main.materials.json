@@ -1,0 +1,19 @@
+{
+  "FlyingFinishIconMaterial": {
+    "name": "FlyingFinishIconMaterial",
+    "mapTo": "FlyingFinishIconMaterial",
+    "class": "Material",
+    "persistentId": "a48b865b-4f54-4db6-8dc9-b5f39b154b0d",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/sb_flying_finish/sb_flying_finish.color.png",
+        "normalMap": "/art/shapes/signboards/sb_flying_finish/sb_flying_finish.normal.png",
+        "roughnessMap": "/art/shapes/signboards/sb_flying_finish/sb_flying_finish.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

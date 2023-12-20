@@ -1,0 +1,19 @@
+{
+  "MedicalPointWarningIconMaterial": {
+    "name": "MedicalPointWarningIconMaterial",
+    "mapTo": "MedicalPointWarningIconMaterial",
+    "class": "Material",
+    "persistentId": "0f466448-dff1-41e8-a3ca-887617fee107",
+    "Stages": [
+      {
+        "baseColorMap": "/art/shapes/signboards/sb_medical_point_warning/sb_medical_point_warning.color.png",
+        "normalMap": "/art/shapes/signboards/sb_medical_point_warning/sb_medical_point_warning.normal.png",
+        "roughnessMap": "/art/shapes/signboards/sb_medical_point_warning/sb_medical_point_warning.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}
