@@ -7,17 +7,17 @@
     "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
-      "silverTime":"I'm listening...",
       "bronzeTime":"Goo Ga Ga",
       "goldTime":"Way to go!",
-      "noStarUnlocked":"Maybe just one more try?"
+      "noStarUnlocked":"Maybe just one more try?",
+      "silverTime":"I'm listening..."
     },
     "starRewards":{},
     "starsActive":{
-      "silverTime":false,
       "bronzeTime":false,
       "goldTime":false,
-      "justFinish":false
+      "justFinish":false,
+      "silverTime":false
     }
   },
   "customAdditionalAttributes":{},
@@ -53,13 +53,15 @@
     },
     "vehicles":{
       "enabled":true,
-      "isCustomConfig":false,
-      "mode":"choice",
-      "playerConfig":"gravel_SQ",
-      "playerConfigPath":"vehicles/vivace/gravel_SQ.pc",
-      "playerModel":"vivace",
-      "playerPaintName":"Rouge Carmin",
-      "usePresetVehicle":true
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "vehicles":[
+        {
+          "config":"rally car - off road",
+          "configPath":"vehicles/vivace/rally car - off road.pc",
+          "model":"vivace"
+        }
+      ]
     }
   },
   "startCondition":{

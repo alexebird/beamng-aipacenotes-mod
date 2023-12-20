@@ -7,10 +7,10 @@
     "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
-      "silverTime":"",
       "bronzeTime":"",
       "goldTime":"Way to go!",
-      "noStarUnlocked":"Maybe just one more try?"
+      "noStarUnlocked":"Maybe just one more try?",
+      "silverTime":""
     },
     "starRewards":{},
     "starsActive":{
@@ -51,14 +51,18 @@
       "enabled":false
     },
     "vehicles":{
+      "_selectionIdx":0,
       "enabled":true,
-      "isCustomConfig":false,
-      "mode":"choice",
-      "playerConfig":"gravel_SQ",
-      "playerConfigPath":"vehicles/vivace/gravel_SQ.pc",
-      "playerModel":"vivace",
-      "playerPaintName":"Vert Cactus",
-      "usePresetVehicle":true
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "usePlayerVehicle":true,
+      "vehicles":[
+        {
+          "config":"rally car - off road",
+          "configPath":"vehicles/vivace/rally car - off road.pc",
+          "model":"vivace"
+        }
+      ]
     }
   },
   "startCondition":{

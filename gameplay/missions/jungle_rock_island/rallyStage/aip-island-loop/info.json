@@ -17,7 +17,7 @@
   },
   "customAdditionalAttributes":{},
   "date":1690352647,
-  "description":"A Jungle-y tarmac race.",
+  "description":"A Jungle-y tarmac race.\nIdentical to the Island Loop time trial.",
   "devMission":false,
   "grouping":{
     "id":"",
@@ -37,7 +37,7 @@
     "silverTime":120,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"aip-island-loop",
+  "name":"Jungle Island Loop (AI Pacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -49,13 +49,15 @@
     },
     "vehicles":{
       "enabled":true,
-      "isCustomConfig":false,
-      "mode":"choice",
-      "playerConfig":"asphalt_SQ",
-      "playerConfigPath":"vehicles/vivace/asphalt_SQ.pc",
-      "playerModel":"vivace",
-      "playerPaintName":"Rouge Bordeaux",
-      "usePresetVehicle":true
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "vehicles":[
+        {
+          "config":"rally car - road - jri island loop",
+          "configPath":"vehicles/vivace/rally car - road - jri island loop.pc",
+          "model":"vivace"
+        }
+      ]
     }
   },
   "startCondition":{
@@ -70,10 +72,10 @@
     ],
     "radius":3,
     "rot":{
-      "z":0,
       "w":1,
       "x":0,
-      "y":0
+      "y":0,
+      "z":0
     },
     "type":"coordinates"
   },

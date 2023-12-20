@@ -7,10 +7,10 @@
     "defaultStarKeys":{},
     "showInFreeroam":true,
     "starOutroTexts":{
-      "silverTime":"",
       "bronzeTime":"",
       "goldTime":"Way to go!",
-      "noStarUnlocked":"Maybe just one more try?"
+      "noStarUnlocked":"Maybe just one more try?",
+      "silverTime":""
     },
     "starRewards":{},
     "starsActive":{
@@ -52,13 +52,16 @@
     },
     "vehicles":{
       "enabled":true,
-      "isCustomConfig":false,
-      "mode":"choice",
-      "playerConfig":"asphalt_SQ",
-      "playerConfigPath":"vehicles/vivace/asphalt_SQ.pc",
-      "playerModel":"vivace",
-      "playerPaintName":"Deep Plum",
-      "usePresetVehicle":true
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "vehicles":[
+        {
+          "config":"echo-canyon - vivace rally",
+          "configPath":"vehicles/vivace/echo-canyon - vivace rally.pc",
+          "model":"vivace",
+          "useCustomConfig":false
+        }
+      ]
     }
   },
   "startCondition":{
