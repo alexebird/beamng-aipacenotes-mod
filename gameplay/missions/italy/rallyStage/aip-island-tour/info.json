@@ -34,7 +34,7 @@
     "silverTime":120,
     "startScreenText":""
   },
-  "name":"Italy Island Tour (AI Pacenotes)",
+  "name":"Italy Island Tour (AIPacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{

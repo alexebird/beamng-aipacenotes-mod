@@ -41,7 +41,7 @@
     "silverTime":162.5,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Nordic Sprint (AI Pacenotes)",
+  "name":"Nordic Sprint (AIPacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{

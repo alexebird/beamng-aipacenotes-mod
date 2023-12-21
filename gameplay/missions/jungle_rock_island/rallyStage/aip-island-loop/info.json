@@ -37,7 +37,7 @@
     "silverTime":120,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Jungle Island Loop (AI Pacenotes)",
+  "name":"Jungle Island Loop (AIPacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{

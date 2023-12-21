@@ -41,7 +41,7 @@
     "silverTime":120,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Echo Canyon (AI Pacenotes)",
+  "name":"Echo Canyon (AIPacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{

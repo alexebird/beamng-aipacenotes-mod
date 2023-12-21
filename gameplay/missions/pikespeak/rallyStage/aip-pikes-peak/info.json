@@ -45,7 +45,7 @@
     "silverTimeTotal":120,
     "startScreenText":""
   },
-  "name":"Pikes Peak",
+  "name":"Pikes Peak (AIPacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{

@@ -42,7 +42,7 @@
     "silverTime":600,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Exciting Dirt Stage",
+  "name":"Forbin Pines (AIPacenotes)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
