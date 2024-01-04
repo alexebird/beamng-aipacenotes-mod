@@ -148,24 +148,6 @@ local function loadNotebook(full_filename)
   return currentPath
 end
 
--- local function mouseOverPacenotes(mouseInfo)
---   local minNodeDist = 4294967295
---   local closestNode = nil
---   for idx, pacenote in pairs(currentPath.pacenotes.objects) do
---     local node = pacenote:getCornerStartWaypoint()
---     local distNodeToCam = (node.pos - mouseInfo.camPos):length()
---     local nodeRayDistance = (node.pos - mouseInfo.camPos):cross(mouseInfo.rayDir):length() / mouseInfo.rayDir:length()
---     local sphereRadius = node.radius
---     if nodeRayDistance <= sphereRadius then
---       if distNodeToCam < minNodeDist then
---         minNodeDist = distNodeToCam
---         closestNode = node
---       end
---     end
---   end
---   return closestNode
--- end
-
 local function updateMouseInfo()
   if core_forest.getForestObject() then core_forest.getForestObject():disableCollision() end
   mouseInfo.camPos = core_camera.getPosition()
@@ -179,7 +161,6 @@ local function updateMouseInfo()
     mouseInfo.down = false
     mouseInfo.hold = false
     mouseInfo.up   = false
-    -- mouseInfo.closestNodeHovered = nil
   else
     mouseInfo.down =  im.IsMouseClicked(0) and not im.GetIO().WantCaptureMouse
     mouseInfo.hold = im.IsMouseDown(0) and not im.GetIO().WantCaptureMouse
@@ -194,10 +175,9 @@ local function updateMouseInfo()
     if mouseInfo.up then
       mouseInfo._upPos = vec3(mouseInfo.rayCast.pos)
     end
-
-    -- mouseInfo.closestNodeHovered = mouseOverPacenotes(mouseInfo)
   end
 end
+
 local changedWindow = false
 local function select(window)
   currentWindow:unselect()

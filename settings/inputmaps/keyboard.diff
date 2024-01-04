@@ -1,0 +1,38 @@
+{
+  "bindings":[
+    {
+      "action":"cut_voice_transcription",
+      "control":"b"
+    },
+    {
+      "action":"rallyEditorSave",
+      "control":"ctrl s"
+    },
+    {
+      "action":"rallyEditorCycleDragMode",
+      "control":"g"
+    },
+    {
+      "action":"rallyEditorFlipSnaproadNormal",
+      "control":"v"
+    },
+    {
+      "action":"rallyEditorPacenoteSelectPrev",
+      "control":"k"
+    },
+    {
+      "action":"rallyEditorPacenoteSelectNext",
+      "control":"j"
+    },
+    {
+      "action":"rallyEditorInsertMode",
+      "control":"i"
+    }
+  ],
+  "devicetype":"keyboard",
+  "displayName":"Keyboard",
+  "guid":"{6F1D2B61-D5A0-11CF-BFC7-444553540000}",
+  "name":"Keyboard",
+  "version":1,
+  "vidpid":"6F1D2B61"
+}

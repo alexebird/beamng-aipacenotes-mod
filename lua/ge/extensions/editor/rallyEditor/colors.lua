@@ -27,7 +27,7 @@ M.clr_grey_light  = {0.75, 0.75, 0.75}
 M.snaproads_radius = 1.5
 M.snaproads_alpha = 0.3
 M.snaproads_alpha_hover = 0.9
-M.snaproads_clr = M.clr_lime_green
+M.snaproads_clr = M.clr_red
 M.snaproads_clr_hover = M.clr_white
 
 local clr_at = M.clr_blue

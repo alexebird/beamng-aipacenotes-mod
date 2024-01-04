@@ -4,7 +4,7 @@
 
 local im  = ui_imgui
 local logTag = 'aipacenotes'
-local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+-- local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 
 -- notebook form fields
 local notebookNameText = im.ArrayChar(1024, "")
@@ -14,9 +14,9 @@ local notebookDescText = im.ArrayChar(2048, "")
 -- codriver form fields
 local codriverNameText = im.ArrayChar(1024, "")
 local codriverLanguageText = im.ArrayChar(1024, "")
-local codriverVoiceText = im.ArrayChar(1024, "")
+-- local codriverVoiceText = im.ArrayChar(1024, "")
 
-local voiceFname = "/settings/aipacenotes/default.voices.json"
+-- local voiceFname = "/settings/aipacenotes/default.voices.json"
 -- local voices = {}
 local voiceNamesSorted = {}
 

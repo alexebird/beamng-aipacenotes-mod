@@ -440,8 +440,26 @@ function C:handleMouseInput()
   editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
 
   self.path._hover_waypoint_id = nil -- clear hover state
-  -- if the gizmo is hovered, allow that to have precednce.
-  if editor.isAxisGizmoHovered() then return end
+
+  -- There is a bug (in race tool as well) where if you start the game, open
+  -- the world editor, and try to use the tool without having selected anything
+  -- in Object Select mode (named "Manipulate Object(s)"), then the below line
+  -- (which I copied from race tool) will cause the tool not to respond to
+  -- mouse interactions.
+  --
+  -- The Line (which I have commented):
+  -- if editor.isAxisGizmoHovered() then return end
+  --
+  -- Here's the underlying call that editor.isAxisGizmoHovered() uses from gizmo.lua:
+  --
+  --     -- Return true if the axis gizmo has any hovered elements (axes).
+  --     local function isAxisGizmoHovered()
+  --       return worldEditorCppApi.getAxisGizmoSelectedElement() ~= -1
+  --     end
+  --
+  -- Turns out that worldEditorCppApi.getAxisGizmoSelectedElement() returns 6
+  -- after a cold world editor start. Well, since I'm not using the gizmo for
+  -- this tool, I'm just going to comment it and hope for the best.
 
   local hoveredWp = self:detectMouseHoverWaypoint()
 
