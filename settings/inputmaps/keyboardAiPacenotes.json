@@ -1,10 +1,6 @@
 {
   "bindings":[
     {
-      "action":"cut_voice_transcription",
-      "control":"b"
-    },
-    {
       "action":"rallyEditorSave",
       "control":"ctrl s"
     },

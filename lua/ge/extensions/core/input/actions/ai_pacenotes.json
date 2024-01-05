@@ -1,13 +1,13 @@
 {
-  "toggle_voice_transcription": {
-    "cat": "gameplay",
-    "ctx": "tlua",
-    "order": 1,
-    "title": "Toggle Voice Transcription",
-    "desc": "Push down to start recording, and release to stop. Requires AI-Pacenotes desktop app.",
-    "onDown": "extensions.gameplay_rally_transcribe.recording_start()",
-    "onUp": "extensions.gameplay_rally_transcribe.recording_stop()"
-  },
+  //"toggle_voice_transcription": {
+  //  "cat": "gameplay",
+  //  "ctx": "tlua",
+  //  "order": 1,
+  //  "title": "Toggle Voice Transcription",
+  //  "desc": "Push down to start recording, and release to stop. Requires AI-Pacenotes desktop app.",
+  //  "onDown": "extensions.gameplay_rally_transcribe.recording_start()",
+  //  "onUp": "extensions.gameplay_rally_transcribe.recording_stop()"
+  //},
   "cut_voice_transcription": {
     "cat": "gameplay",
     "ctx": "tlua",
