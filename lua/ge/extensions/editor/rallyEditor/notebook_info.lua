@@ -221,16 +221,12 @@ end
 function C:loadVoices()
   local defaultVoices = self:loadVoiceFile("/settings/aipacenotes/default.voices.json")
   local userVoices = self:loadVoiceFile("/settings/aipacenotes/user.voices.json")
-  local missionVoices = self:loadVoiceFile(self.rallyEditor.getMissionDir() .. "aipacenotes/mission.voices.json")
   local combinedVoices = {}
 
   for k, v in pairs(defaultVoices) do
     combinedVoices[k] = v
   end
   for k, v in pairs(userVoices) do
-    combinedVoices[k] = v
-  end
-  for k, v in pairs(missionVoices) do
     combinedVoices[k] = v
   end
 

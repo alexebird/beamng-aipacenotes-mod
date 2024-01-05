@@ -5,6 +5,7 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
 C.windowDescription = 'Voice Import'
@@ -34,9 +35,9 @@ function C:convertTranscriptToNotebook(transcript_data, importIdent)
     updated_at = ts,
     codrivers = {
       {
-        voice = "british_lady",
-        language = "english",
-        name = "Sophia",
+        voice = re_util.default_codriver_voice,
+        language = re_util.default_codriver_language,
+        name = re_util.default_codriver_name,
         oldId = 2,
       }
     },

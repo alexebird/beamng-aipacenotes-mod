@@ -2,10 +2,9 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
-local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
-local modes = {"manual","navgraph"}
 local logTag = 'aipacenotes_pacenote'
 
 function C:init(notebook, name, forceId)
@@ -13,8 +12,8 @@ function C:init(notebook, name, forceId)
 
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or "Codriver " .. self.id
-  self.language = "english"
-  self.voice = "british_lady"
+  self.language = re_util.default_codriver_language
+  self.voice = re_util.default_codriver_voice
 
   self.sortOrder = 999999
 end
