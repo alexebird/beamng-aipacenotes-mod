@@ -7,6 +7,7 @@ local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 -- pacenote form fields
 local pacenoteNameText = im.ArrayChar(1024, "")
@@ -1048,7 +1049,9 @@ function C:drawPacenotesList()
 
     im.HeaderText("Languages")
     editEnded = im.BoolPtr(false)
-    for i,language in ipairs(self.path:getLanguages()) do
+    for i,lang_data in ipairs(self.path:getLanguages()) do
+      local language = lang_data.language
+      local codriver = lang_data.codriver
       language_form_fields[language] = language_form_fields[language] or {}
       local fields = language_form_fields[language]
 
@@ -1057,6 +1060,46 @@ function C:drawPacenotesList()
       fields.after  = im.ArrayChar(256, note:getNoteFieldAfter(language))
 
       im.Text(language..": ")
+
+      local fname = note:audioFname(codriver)
+      local file_exists = false
+      local voicePlayClr = nil
+      local tooltipStr = nil
+      if re_util.fileExists(fname) then
+        file_exists = true
+        tooltipStr = "Play pacenote audio file:\n\n"..fname
+      else
+        voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
+        tooltipStr = "Pacenote audio file not found:\n\n"..fname
+      end
+      if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
+        if file_exists then
+          local audioObj = re_util.buildAudioObj(fname)
+          re_util.playPacenote(audioObj)
+        end
+      end
+      im.tooltip(tooltipStr)
+      im.SameLine()
+
+      voicePlayClr = nil
+      file_exists = false
+      tooltipStr = "Play audio from voice transcription"
+      if note.metadata.beamng_file and re_util.fileExists(note.metadata.beamng_file) then
+        fname = note.metadata.beamng_file
+        file_exists = true
+      else
+        voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
+        tooltipStr = "No voice transcription audio"
+      end
+      if editor.uiIconImageButton(editor.icons.record_voice_over, im.ImVec2(20, 20), voicePlayClr) then
+        if file_exists then
+          local audioObj = re_util.buildAudioObj(fname)
+          re_util.playPacenote(audioObj)
+        end
+      end
+      im.tooltip(tooltipStr)
+      im.SameLine()
+
       im.SetNextItemWidth(50)
       editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then

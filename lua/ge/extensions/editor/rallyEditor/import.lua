@@ -61,10 +61,18 @@ function C:convertTranscriptToNotebook(transcript_data, importIdent)
         name = "Import_"..importIdent.." " .. i
       end
 
+      local metadata = {}
+      if transcript.beamng_file then
+        metadata['success'] = transcript.success
+        metadata['beamng_file'] = transcript.beamng_file
+      end
+
       local pn = {
         name = name,
         notes = { english = {note = note}},
+        metadata = metadata,
         oldId = oldId,
+        segment = -1,  -- Replace with actual value if available
         pacenoteWaypoints = {
         --   {
         --     name = "curr",
@@ -91,8 +99,7 @@ function C:convertTranscriptToNotebook(transcript_data, importIdent)
             radius = radius,
             waypointType = "cornerEnd"
           }
-        },
-        segment = -1  -- Replace with actual value if available
+        }
       }
 
       table.insert(notebook.pacenotes, pn)

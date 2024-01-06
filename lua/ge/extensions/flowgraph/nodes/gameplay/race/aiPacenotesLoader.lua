@@ -28,9 +28,6 @@ C.pinSchema = {
   {dir = 'out', type = 'number', name = 'checkpointCount', hidden= true,  description = 'Number of checkpoints in total (does nto work for branching)'},
   {dir = 'out', type = 'number', name = 'recoveryCount', hidden= true,  description = 'Number of checkpoints that have a recovery point set up'},
 
-  -- {dir = 'out', type = 'string', name = 'notebookName', default = nil, description = 'The name of the notebook.'},
-  -- {dir = 'out', type = 'string', name = 'missionDir', default = nil, description = "Path of the mission's root directory."},
-  -- {dir = 'out', type = 'string', name = 'raceFile', default = nil, description = "Path of the mission's race file."},
   {dir = 'out', type = 'table', name = 'aipSettings', tableType = 'aipSettings', description = "The loaded mission.settings.json file."},
 }
 

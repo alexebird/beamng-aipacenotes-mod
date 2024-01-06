@@ -4,6 +4,7 @@
 
 local C = {}
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local currentVersion = "2"
 
@@ -303,13 +304,15 @@ end
 function C:getLanguages()
   local lang_set = {}
   for _, codriver in pairs(self.codrivers.objects) do
-    lang_set[codriver.language] = true
+    lang_set[codriver.language] = codriver
   end
   local languages = {}
-  for lang, _ in pairs(lang_set) do
-    table.insert(languages, lang)
+  for lang, codriver in pairs(lang_set) do
+    table.insert(languages, { language = lang , codriver = codriver })
   end
-  table.sort(languages)
+  table.sort(languages, function(a, b)
+    return a.lang < b.lang
+  end)
   return languages
 end
 
@@ -323,6 +326,10 @@ local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
+local function hasPunctuation(last_char)
+  return last_char == "." or last_char == "?" or last_char == "!"
+end
+
 function C:normalizeNotes(lang)
   lang = lang or self._default_note_lang
 
@@ -331,10 +338,10 @@ function C:normalizeNotes(lang)
 
     note = stripWhitespace(note)
 
-    if note ~= '' then
+    if note ~= '' and note ~= re_util.unknown_transcript_str then
       -- add punction if not present
       local last_char = note:sub(-1)
-      if not (last_char == "." or last_char == "?" or last_char == "!") then
+      if  not hasPunctuation(last_char) then
         note = note .. "?"
       end
 

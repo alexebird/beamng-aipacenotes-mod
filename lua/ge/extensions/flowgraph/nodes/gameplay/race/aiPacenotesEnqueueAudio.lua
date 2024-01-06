@@ -21,8 +21,6 @@ C.pinSchema = {
   {dir = 'in', type = 'flow', name = 'damage', description = 'Inflow for damage audio .'},
   {dir = 'in', type = 'string', name = 'note', description = 'The pacenote.'},
   {dir = 'in', type = 'table', tableType = 'aipSettings', name = 'aipSettings', description = 'The settings object.'},
-  -- {dir = 'in', type = 'string', name = 'notebookName', description = 'The notebook name.'},
-  -- {dir = 'in', type = 'string', name = 'missionDir', description = 'Root path of the mission.'},
 }
 
 C.tags = {'scenario', 'aipacenotes'}
@@ -55,75 +53,32 @@ function C:playDamageSfx()
   local res = Engine.Audio.playOnce('AudioGui', fn)
 end
 
-local function pacenote_hash(s)
-  local hash_value = 0
-  for i = 1, #s do
-    hash_value = (hash_value * 33 + string.byte(s, i)) % 2147483647
-  end
-  return hash_value
-end
-
-local function fileExists(filename)
-  local file = io.open(filename, "r")
-  if file == nil then
-    return false
-  else
-    file:close()
-    return true
-  end
-end
-
-local function getTime()
-  -- os.clockhp appears to be beamng-specific.
-  return os.clockhp()
-end
-
--- function printFields(obj)
---   for k, v in pairs(obj) do
---     -- if type(v) == "function" then
---       print(k)
---     -- end
---   end
--- end
-
-local function normalize_name(name)
-  -- Replace everything but letters and numbers with '_'
-  name = string.gsub(name, "[^a-zA-Z0-9]", "_")
-
-  -- Replace multiple consecutive '_' with a single '_'
-  name = string.gsub(name, "(_+)", "_")
-
-  return name
-end
-
 function C:enqueueFromPinIns()
-  -- log('D', 'wtf', dumps(self.pinIn.aipSettings.value))
   local pacenote = self.pinIn.note.value
   local missionDir = self.pinIn.aipSettings.value.missionDir
-  local notebookName = normalize_name(self.pinIn.aipSettings.value.notebookName)
+  local notebookName = re_util.normalize_name(self.pinIn.aipSettings.value.notebookName)
   local codriverName = self.pinIn.aipSettings.value.notebook.codriver
   local codriverLang = self.pinIn.aipSettings.value.language
   local codriverVoice = self.pinIn.aipSettings.value.voice
-  local codriverStr = normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
-  local pacenoteHash = pacenote_hash(pacenote)
-
-  -- printFunctions(Engine.Audio)
+  local codriverStr = re_util.normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
+  local pacenoteHash = re_util.pacenote_hash(pacenote)
 
   local pacenoteFname = missionDir ..'/'.. re_util.notebooksPath .. 'generated_pacenotes/' .. notebookName .. '/' .. codriverStr .. '/pacenote_' .. pacenoteHash .. '.ogg'
   log('I', logTag, "pacenote='" .. pacenote .. "', filename=" .. pacenoteFname)
 
-  local audioObj = {
-    audioType = 'pacenote',
-    pacenoteFname = pacenoteFname,
-    volume = 2,
-    time = getTime(),
-    audioLen = nil,
-    timeout = nil,
-    sourceId = nil,
-    breathSuffixTime = 0.15, -- add time to represent the co-driver taking a breath after reading a pacenote.
-  }
+  local audioObj = re_util.buildAudioObj(pacenoteFname)
+  -- local audioObj = {
+  --   audioType = 'pacenote',
+  --   pacenoteFname = pacenoteFname,
+  --   volume = 2,
+  --   time = re_util.getTime(),
+  --   audioLen = nil,
+  --   timeout = nil,
+  --   sourceId = nil,
+  --   breathSuffixTime = 0.15, -- add time to represent the co-driver taking a breath after reading a pacenote.
+  -- }
 
-  if fileExists(pacenoteFname) then
+  if re_util.fileExists(pacenoteFname) then
     self.queue:push_right(audioObj)
   else
     log('E', logTag, "pacenote audio file does not exist: " .. pacenoteFname)
@@ -148,7 +103,7 @@ function C:previousAudioIsDone()
 
   -- has the current audio reached its timeout?
   if self.currAudioObj then
-    local isPastExpireTime = getTime() > self.currAudioObj.timeout
+    local isPastExpireTime = re_util.getTime() > self.currAudioObj.timeout
     if isPastExpireTime then
       self.currAudioObj = nil
       return queueHasAudio
@@ -161,27 +116,6 @@ function C:previousAudioIsDone()
   end
 end
 
-local function playPacenote(audioObj)
-  local opts = { volume=audioObj.volume }
-  local ch = 'AudioGUI' -- volume is controlled by OTHER
-  -- local ch = 'AudioMusic' -- volume is controlled by MUSIC
-  local res = Engine.Audio.playOnce(ch, audioObj.pacenoteFname, opts)
-  -- printFields(res)
-  local sfxSource = scenetree.findObjectById(res.sourceId)
-  -- log('D', logTag, dumps(sfxSource))
-  -- printFields(sfxSource)
-  if res == nil then
-    log('E', logTag, 'error playing audio')
-  end
-  -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
-  audioObj.audioLen = res.len
-  audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
-  audioObj.sourceId = res.sourceId
-  log('D', logTag, 'audioObj audioLen='..tostring(audioObj.audioLen) .. ' timeout='..tostring(audioObj.timeout))
-
-  -- once we know the timeout of the audio, we can calculate the breath timeout.
-  -- self.queue:push_right(self:makeBreath(2.0))
-end
 
 -- local function playBreath(audioObj)
   -- local opts = { volume=audioObj.volume }
@@ -219,7 +153,7 @@ function C:work(args)
     self.currAudioObj = self.queue:pop_left()
     -- log('D', 'wtf', dumps(self.currAudioObj))
     if self.currAudioObj.audioType == 'pacenote' then
-      playPacenote(self.currAudioObj)
+      re_util.playPacenote(self.currAudioObj)
     -- elseif self.currAudioObj.audioType == 'breath' then
       -- playBreath(self.currAudioObj)
     else

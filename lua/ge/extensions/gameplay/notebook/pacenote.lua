@@ -4,6 +4,7 @@
 
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
 local logTag = 'aipacenotes_pacenote'
@@ -26,6 +27,7 @@ function C:init(notebook, name, forceId)
     self,
     require('/lua/ge/extensions/gameplay/notebook/pacenoteWaypoint')
   )
+  self.metadata = {}
 
   self.sortOrder = 999999
 
@@ -256,6 +258,7 @@ function C:onSerialize()
     oldId = self.id,
     name = self.name,
     notes = self.notes,
+    metadata = self.metadata,
     segment = self.segment,
     pacenoteWaypoints = self.pacenoteWaypoints:onSerialize(),
   }
@@ -266,6 +269,7 @@ end
 function C:onDeserialized(data, oldIdMap)
   self.name = data.name
   self.notes = data.notes
+  self.metadata = data.metadata or {}
   self.segment = oldIdMap and oldIdMap[data.segment] or data.segment or -1
   self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
 end
@@ -744,6 +748,22 @@ function C:setCameraToWaypoints()
   local waypoints = self.pacenoteWaypoints.sorted
   local wp1, wp2 = self:getRotationWaypoints()
   setTopDownCamera(waypoints, wp1, wp2)
+end
+
+function C:audioFname(codriver)
+  local missionDir =  editor_rallyEditor.getMissionDir()
+
+  local notebookName = re_util.normalize_name(self.notebook.name)
+  local codriverName = codriver.name
+  local codriverLang = codriver.language
+  local codriverVoice = codriver.voice
+  local codriverStr = re_util.normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
+  local noteStr = self:joinedNote(codriverLang)
+  local pacenoteHash = re_util.pacenote_hash(noteStr)
+
+  local fname = missionDir ..''.. re_util.notebooksPath .. 'generated_pacenotes/' .. notebookName .. '/' .. codriverStr .. '/pacenote_' .. pacenoteHash .. '.ogg'
+
+  return fname
 end
 
 return function(...)
