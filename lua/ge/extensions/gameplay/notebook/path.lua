@@ -326,10 +326,6 @@ local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
-local function hasPunctuation(last_char)
-  return last_char == "." or last_char == "?" or last_char == "!"
-end
-
 function C:normalizeNotes(lang)
   lang = lang or self._default_note_lang
 
@@ -341,7 +337,7 @@ function C:normalizeNotes(lang)
     if note ~= '' and note ~= re_util.unknown_transcript_str then
       -- add punction if not present
       local last_char = note:sub(-1)
-      if  not hasPunctuation(last_char) then
+      if  not re_util.hasPunctuation(last_char) then
         note = note .. "?"
       end
 

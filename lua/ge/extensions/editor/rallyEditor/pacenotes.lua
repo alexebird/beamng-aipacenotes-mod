@@ -985,12 +985,26 @@ function C:drawPacenotesList()
   end
   im.tooltip("Autofill distance calls.")
 
+  local function mkNoteName(note)
+    note:validate()
+    if note:is_valid() then
+      return note.name
+    else
+      return '[!] '..note.name
+    end
+  end
+
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
-    if im.Selectable1(note.name, note.id == self.pacenote_index) then
+    if im.Selectable1(mkNoteName(note), note.id == self.pacenote_index) then
       editor.history:commitAction("Select Pacenote",
         {old = self.pacenote_index, new = note.id, self = self},
         selectPacenoteUndo, selectPacenoteRedo)
+    end
+    if note:is_valid() then
+      im.tooltip("No issues")
+    else
+      im.tooltip("[!] Found "..(#note.validation_issues).." issue(s).\nCheck pacenote for details ")
     end
   end
   im.Separator()
@@ -1009,7 +1023,18 @@ function C:drawPacenotesList()
 
     if not note.missing then
 
-    im.HeaderText("Pacenote Info")
+    if note:is_valid() then
+      im.HeaderText("Pacenote Info")
+    else
+      im.HeaderText("[!] Pacenote Info")
+      local issues = "Issues (".. (#note.validation_issues) .."):\n"
+      for _, issue in ipairs(note.validation_issues) do
+        issues = issues..'- '..issue..'\n'
+      end
+      im.Text(issues)
+      im.Separator()
+    end
+
     im.Text("Current Pacenote: #" .. self.pacenote_index)
     im.SameLine()
     if im.Button("Delete") then
@@ -1030,6 +1055,10 @@ function C:drawPacenotesList()
     im.SameLine()
     if im.Button("Move Camera") then
       self:setCameraToPacenote()
+    end
+    im.SameLine()
+    if im.Button("Place Vehicle") then
+      self:placeVehicleAtPacenote()
     end
 
     local editEnded = im.BoolPtr(false)
@@ -1444,6 +1473,18 @@ function C:autoFillDistanceCalls()
       data.notebook:autofillDistanceCalls()
     end
   )
+end
+
+function C:placeVehicleAtPacenote()
+  local playerVehicle = be:getPlayerVehicle(0)
+  if playerVehicle then
+    local wp = self:selectedPacenote():getActiveFwdAudioTrigger()
+    spawn.safeTeleport(
+      playerVehicle,
+      wp:posForVehiclePlacement(),
+      wp:rotForVehiclePlacement(playerVehicle)
+    )
+  end
 end
 
 return function(...)

@@ -30,7 +30,17 @@ function C:init(pacenote, name, pos, forceId)
 
   self.sortOrder = 999999
   self.mode = nil
+  -- self.validation_issues = {}
 end
+
+-- function C:validate()
+--   self.validation_issues = {}
+--   return true
+-- end
+--
+-- function C:is_valid()
+--   return #self.validation_issues > 0
+-- end
 
 function C:selectionString()
   local txt = '['..waypointTypes.shortenWaypointType(self.waypointType)..']'
@@ -191,6 +201,28 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     -- local to = (self.pos + self.normal)
     -- debugDrawer:drawLine(from, to, ColorF(1.0, 0.0, 0.0, 1.0))
   end
+end
+
+function C:posForVehiclePlacement()
+  local pos = (self.pos + (self.radius*2) * -self.normal)
+  return pos
+end
+
+function C:rotForVehiclePlacement(vehicle)
+  local pointA = self.pos
+  local pointB = (self.pos + self.radius * self.normal)
+
+  local dx = pointB.x - pointA.x
+  local dy = pointB.y - pointA.y
+  local dz = pointB.z - pointA.z
+
+  local fwd = {x = dx, y = dy, z = dz}
+  fwd = vec3(fwd)
+
+  local up = {x = 0, y = 0 , z = 1}
+  up = vec3(up)
+  local rot = quatFromDir(fwd, up):normalized()
+  return rot
 end
 
 return function(...)

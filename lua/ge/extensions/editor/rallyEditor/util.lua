@@ -89,12 +89,17 @@ local function buildAudioObj(pacenoteFname)
   return audioObj
 end
 
+local function hasPunctuation(last_char)
+  return last_char == "." or last_char == "?" or last_char == "!"
+end
+
 M.pacenote_hash = pacenote_hash
 M.fileExists = fileExists
 M.getTime = getTime
 M.normalize_name = normalize_name
 M.playPacenote = playPacenote
 M.buildAudioObj = buildAudioObj
+M.hasPunctuation = hasPunctuation
 
 M.unknown_transcript_str = '[unknown]'
 M.notebooksPath = 'aipacenotes/notebooks/'

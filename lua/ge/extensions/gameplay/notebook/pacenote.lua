@@ -30,7 +30,7 @@ function C:init(notebook, name, forceId)
   self.metadata = {}
 
   self.sortOrder = 999999
-
+  self.validation_issues = {}
   self.draw_debug_lang = nil
 end
 
@@ -154,9 +154,44 @@ function C:setFieldsForFlowgraph(lang)
   self.normal = wp_trigger.normal
 end
 
-function C:validateWaypointTypes()
-  -- TODO
-  return true
+function C:validate()
+  self.validation_issues = {}
+
+  if not self:getCornerStartWaypoint() then
+    table.insert(self.validation_issues, 'missing CornerStart waypoint')
+  end
+
+  if not self:getCornerEndWaypoint() then
+    table.insert(self.validation_issues, 'missing CornerEnd waypoint')
+  end
+
+  if not self:getActiveFwdAudioTrigger() then
+    table.insert(self.validation_issues, 'missing AudioTrigger waypoint')
+  end
+
+  if not self.segment or self.segment == -1 then
+    table.insert(self.validation_issues, 'need to set segment. (use Assign Segments button?)')
+  end
+
+  if self.name == '' then
+    table.insert(self.validation_issues, 'missing pacenote name')
+  end
+
+  for note_lang, note_data in pairs(self.notes) do
+    local note_field = self:getNoteFieldNote(note_lang)
+    local last_char = note_field:sub(-1)
+    if note_field == '' then
+      table.insert(self.validation_issues, 'missing note for language '..note_lang)
+    elseif note_field == re_util.unknown_transcript_str then
+      table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' note for language "..note_lang)
+    elseif not re_util.hasPunctuation(last_char) then
+      table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..'. (use Normalize button?)')
+    end
+  end
+end
+
+function C:is_valid()
+  return #self.validation_issues == 0
 end
 
 function C:getCornerStartWaypoint()
