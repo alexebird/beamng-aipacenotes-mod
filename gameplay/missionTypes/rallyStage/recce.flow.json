@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"birdman",
   "currentGraphID":1,
-  "date":1703047009,
+  "date":1704622212,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -15,64 +15,15 @@
         [
           2,
           "flow",
-          8,
-          "flow",
-          true
-        ],
-        [
-          17,
-          "flow",
-          8,
-          "enqueue",
-          false
-        ],
-        [
-          2,
-          "enterState",
-          8,
-          "reset",
-          true
-        ],
-        [
-          71,
-          "flow",
-          8,
-          "damage",
-          false
-        ],
-        [
-          17,
-          "note",
-          8,
-          "note",
-          false
-        ],
-        [
-          27,
-          "aipSettings",
-          8,
-          "aipSettings",
-          true
-        ],
-        [
-          2,
-          "flow",
-          10,
+          34,
           "flow",
           false
         ],
         [
           35,
           "vehId",
-          10,
+          34,
           "vehId",
-          true
-        ],
-        [
-          2,
-          "enterState",
-          12,
-          "flow",
           false
         ],
         [
@@ -83,255 +34,24 @@
           false
         ],
         [
-          25,
+          2,
           "flow",
-          15,
-          "flow",
-          false
-        ],
-        [
-          25,
-          "value",
-          15,
-          "show",
-          false
-        ],
-        [
-          283,
-          "flow",
-          16,
+          20,
           "flow",
           false
         ],
         [
           2,
           "enterState",
-          16,
+          20,
           "reset",
-          true
-        ],
-        [
-          283,
-          "pathData",
-          16,
-          "pathData",
-          false
-        ],
-        [
-          21,
-          "vehId",
-          16,
-          "vehId_1",
-          false
-        ],
-        [
-          16,
-          "flow",
-          17,
-          "flow",
-          false
-        ],
-        [
-          16,
-          "raceData",
-          17,
-          "raceData",
-          false
-        ],
-        [
-          21,
-          "vehId",
-          17,
-          "vehId",
-          false
-        ],
-        [
-          52,
-          "flow",
-          25,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "value",
-          25,
-          "A",
-          false
-        ],
-        [
-          2,
-          "flow",
-          27,
-          "flow",
-          false
-        ],
-        [
-          2,
-          "enterState",
-          27,
-          "reset",
-          true
-        ],
-        [
-          2,
-          "flow",
-          34,
-          "flow",
           false
         ],
         [
           35,
           "vehId",
-          34,
+          20,
           "vehId",
-          false
-        ],
-        [
-          67,
-          "flow",
-          47,
-          "flow",
-          false
-        ],
-        [
-          10,
-          "damage",
-          47,
-          "currentDamage",
-          false
-        ],
-        [
-          53,
-          "false",
-          52,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "value",
-          52,
-          "lastGetPause",
-          false
-        ],
-        [
-          2,
-          "flow",
-          53,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "value",
-          53,
-          "A",
-          false
-        ],
-        [
-          54,
-          "lastGetPause",
-          53,
-          "B",
-          false
-        ],
-        [
-          10,
-          "velocity",
-          55,
-          "A",
-          false
-        ],
-        [
-          10,
-          "damage",
-          57,
-          "a",
-          false
-        ],
-        [
-          45,
-          "currentDamage",
-          57,
-          "b",
-          false
-        ],
-        [
-          10,
-          "flow",
-          67,
-          "flow",
-          false
-        ],
-        [
-          57,
-          "value",
-          67,
-          "A",
-          false
-        ],
-        [
-          67,
-          "true",
-          71,
-          "flow",
-          false
-        ],
-        [
-          69,
-          "flow",
-          71,
-          "reset",
-          false
-        ],
-        [
-          10,
-          "flow",
-          69,
-          "flow",
-          false
-        ],
-        [
-          2,
-          "enterState",
-          69,
-          "reset",
-          true
-        ],
-        [
-          16,
-          "flow",
-          282,
-          "flow",
-          false
-        ],
-        [
-          16,
-          "raceData",
-          282,
-          "raceData",
-          false
-        ],
-        [
-          21,
-          "vehId",
-          282,
-          "vehId",
-          false
-        ],
-        [
-          27,
-          "flow",
-          283,
-          "flow",
-          false
-        ],
-        [
-          27,
-          "pathData",
-          283,
-          "pathData",
           false
         ]
       ],
@@ -357,68 +77,6 @@
           ],
           "type":"events/onUpdate"
         },
-        "8":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "aipSettings":false,
-              "damage":false,
-              "enqueue":false,
-              "flow":false,
-              "note":false,
-              "reset":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            2418,
-            330
-          ],
-          "type":"gameplay/race/aiPacenotesEnqueueAudio"
-        },
-        "10":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "vehId":false
-            },
-            "p_out":{
-              "active":true,
-              "damage":false,
-              "dirVec":true,
-              "dirVecUp":true,
-              "flow":false,
-              "position":true,
-              "rotation":true,
-              "velocity":false,
-              "velocityVector":true
-            }
-          },
-          "pos":[
-            1096,
-            498
-          ],
-          "type":"vehicle/vehicleMapData"
-        },
-        "12":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "show":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            -298,
-            -20
-          ],
-          "type":"gameplay/race/aiPacenotesRallyEditorGizmos"
-        },
         "13":{
           "data":{},
           "dynamicMode":"repeat",
@@ -439,185 +97,38 @@
             ]
           ],
           "pos":[
-            234,
-            428
+            24,
+            400
           ],
           "transitionName":"reset",
           "type":"states/transition"
         },
-        "15":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "show":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            1004,
-            1436
-          ],
-          "type":"gameplay/race/aiPacenotesRallyEditorGizmos"
-        },
-        "16":{
-          "count":1,
-          "data":{
-            "useDebugDraw":false,
-            "useHotlappingApp":true,
-            "useWaypointAudio":false
-          },
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "lapCount":{
-              "type":"number",
-              "value":1
-            },
-            "rolling":{
-              "type":"bool",
-              "value":false
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "idle":true,
-              "lapCount":true,
-              "pathData":false,
-              "reset":false,
-              "rolling":false,
-              "vehId_1":false
-            },
-            "p_out":{
-              "active":false,
-              "aiPath":false,
-              "complete":false,
-              "flow":false,
-              "raceData":false,
-              "time":false
-            }
-          },
-          "pos":[
-            1172,
-            78
-          ],
-          "type":"gameplay/race/fileRace"
-        },
-        "17":{
-          "data":{
-            "detailed":false
-          },
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "raceData":false,
-              "vehId":false
-            },
-            "p_out":{
-              "flow":false,
-              "note":false
-            }
-          },
-          "pos":[
-            1676,
-            204
-          ],
-          "type":"gameplay/race/racePacenoteReached"
-        },
-        "21":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{},
-            "p_out":{
-              "vehId":false
-            }
-          },
-          "pos":[
-            815,
-            358
-          ],
-          "type":"scene/getPlayerVehicle"
-        },
-        "23":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{},
-            "p_out":{
-              "value":false
-            }
-          },
-          "pos":[
-            -276,
-            1324
-          ],
-          "type":"environment/getPause"
-        },
-        "25":{
+        "20":{
           "data":{},
           "dynamicMode":"repeat",
           "hardcodedPins":{
-            "B":{
+            "recce":{
               "type":"bool",
               "value":true
             }
           },
           "hiddenPins":{
             "p_in":{
-              "A":false,
-              "B":false,
+              "flow":false,
+              "raceData":false,
+              "recce":false,
+              "reset":false,
+              "vehId":false
+            },
+            "p_out":{
               "flow":false
-            },
-            "p_out":{
-              "false":true,
-              "flow":false,
-              "true":true,
-              "value":false
-            }
-          },
-          "opSymbol":"==",
-          "pos":[
-            682,
-            1436
-          ],
-          "type":"logic/compare"
-        },
-        "27":{
-          "data":{},
-          "dynamicMode":"once",
-          "hardcodedPins":{
-            "raceFname":{
-              "type":"string",
-              "value":"race.race.json"
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "raceFname":false,
-              "reset":false
-            },
-            "p_out":{
-              "aipSettings":false,
-              "branching":true,
-              "checkpointCount":true,
-              "closed":true,
-              "desc":true,
-              "flow":false,
-              "laps":true,
-              "name":true,
-              "pathData":false,
-              "recoveryCount":true
             }
           },
           "pos":[
-            368,
-            78
+            -108,
+            120
           ],
-          "type":"gameplay/race/aiPacenotesLoader"
+          "type":"gameplay/aiPacenotes/vocalizer"
         },
         "34":{
           "data":{},
@@ -633,8 +144,8 @@
             }
           },
           "pos":[
-            -74,
-            428
+            -178,
+            400
           ],
           "type":"vehicle/onVehicleReset"
         },
@@ -648,384 +159,23 @@
             }
           },
           "pos":[
-            -389,
-            456
+            -452,
+            428
           ],
           "type":"scene/getPlayerVehicle"
-        },
-        "45":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "global":false,
-          "hiddenPins":{
-            "p_in":{},
-            "p_out":{
-              "currentDamage":false
-            }
-          },
-          "pos":[
-            990,
-            890
-          ],
-          "type":"types/getVariable",
-          "varName":"currentDamage"
-        },
-        "47":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "global":false,
-          "hiddenPins":{
-            "p_in":{
-              "currentDamage":false,
-              "flow":false
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            1950,
-            834
-          ],
-          "type":"types/setVariable",
-          "varName":"currentDamage"
-        },
-        "52":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "global":false,
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "lastGetPause":false
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            360,
-            1324
-          ],
-          "type":"types/setVariable",
-          "varName":"lastGetPause"
-        },
-        "53":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "A":false,
-              "B":false,
-              "flow":false
-            },
-            "p_out":{
-              "false":false,
-              "flow":false,
-              "true":false,
-              "value":true
-            }
-          },
-          "opSymbol":"==",
-          "pos":[
-            18,
-            1352
-          ],
-          "type":"logic/compare"
-        },
-        "54":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "global":false,
-          "hiddenPins":{
-            "p_in":{},
-            "p_out":{
-              "lastGetPause":false
-            }
-          },
-          "pos":[
-            -276,
-            1408
-          ],
-          "type":"types/getVariable",
-          "varName":"lastGetPause"
-        },
-        "55":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "B":{
-              "type":"number",
-              "value":1
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "A":false,
-              "B":false,
-              "flow":false
-            },
-            "p_out":{
-              "false":true,
-              "flow":true,
-              "true":false,
-              "value":true
-            }
-          },
-          "opSymbol":"<",
-          "pos":[
-            1418,
-            596
-          ],
-          "type":"logic/compare"
-        },
-        "57":{
-          "data":{
-            "expression":"a-b",
-            "safeMode":true
-          },
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "a":false,
-              "b":false,
-              "c":false
-            },
-            "p_out":{
-              "value":false
-            }
-          },
-          "pos":[
-            1264,
-            862
-          ],
-          "type":"math/math"
-        },
-        "67":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "B":{
-              "type":"number",
-              "value":0
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "A":false,
-              "B":false,
-              "flow":false
-            },
-            "p_out":{
-              "false":false,
-              "flow":false,
-              "true":false,
-              "value":true
-            }
-          },
-          "opSymbol":">",
-          "pos":[
-            1494,
-            834
-          ],
-          "type":"logic/compare"
-        },
-        "69":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "asDuration":{
-              "type":"bool",
-              "value":true
-            },
-            "input":{
-              "type":"number",
-              "value":10
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "asDuration":true,
-              "dt":true,
-              "flow":false,
-              "input":false,
-              "reset":false,
-              "reverseHit":true
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            1726,
-            540
-          ],
-          "type":"logic/rateLimit"
-        },
-        "71":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "reset":false
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            2132,
-            610
-          ],
-          "type":"logic/once"
-        },
-        "282":{
-          "code":{
-            "_executionStarted":"",
-            "_executionStopped":"",
-            "onPreRender":"",
-            "work":"local racedata = self.pinIn.raceData.value\nlocal vehId = self.pinIn.vehId.value\n\nlocal state = racedata.states[vehId]\nlocal currsegs = state.currentSegments\n\n--log('D', 'wtf', dumps(currsegs))"
-          },
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "raceData":false,
-              "vehId":false
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "name":"Custom Lua ",
-          "pins":[
-            [
-              "in",
-              "flow",
-              "flow",
-              null,
-              "Inflow for this node.",
-              true
-            ],
-            [
-              "out",
-              "flow",
-              "flow",
-              null,
-              "Outflow for this node.",
-              true
-            ],
-            [
-              "in",
-              "table",
-              "raceData",
-              null,
-              ""
-            ],
-            [
-              "in",
-              "number",
-              "vehId",
-              null,
-              ""
-            ]
-          ],
-          "pos":[
-            1684,
-            22
-          ],
-          "type":"util/customLua"
-        },
-        "283":{
-          "code":{
-            "_executionStarted":"",
-            "_executionStopped":"",
-            "onPreRender":"",
-            "work":"-- The purpose of this is to set all pacenotes'\n-- segment to -1, ie clear all segments.\n-- This is just for recce because when you\n-- reset the car at some point along the track,\n-- you have to keep track of what the race's\n-- currentSegment is. Instead of that,\n-- just clear all segments. Then you don't have\n-- to track the segment as the car moves\n-- through the recce.\n--\n-- The downside is that you lose the perf\n-- improvement from indexing pacenotes\n-- to their segment.\n\nlocal pathData = self.pinIn.pathData.value\n\nfor i,pacenote in pairs(pathData.pacenotes.objects) do\n  pacenote.segment = -1\nend\n\n--log('D', 'wtf', dumps(pathData))\n\nself.pinOut.pathData.value = pathData"
-          },
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "pathData":false
-            },
-            "p_out":{
-              "flow":false,
-              "pathData":false
-            }
-          },
-          "name":"Custom Lua ",
-          "pins":[
-            [
-              "in",
-              "flow",
-              "flow",
-              null,
-              "Inflow for this node.",
-              true
-            ],
-            [
-              "out",
-              "flow",
-              "flow",
-              null,
-              "Outflow for this node.",
-              true
-            ],
-            [
-              "in",
-              "table",
-              "pathData",
-              null,
-              ""
-            ],
-            [
-              "out",
-              "table",
-              "pathData",
-              null,
-              ""
-            ]
-          ],
-          "pos":[
-            822,
-            92
-          ],
-          "type":"util/customLua"
         }
       },
       "showTab":true,
       "type":"graph",
       "variables":{
-        "customVariableOrder":[
-          "lastGetPause",
-          "currentDamage"
-        ],
-        "list":[
-          {
-            "index":2,
-            "mergeStrat":"max",
-            "name":"currentDamage",
-            "type":"number",
-            "value":0
-          },
-          {
-            "index":1,
-            "mergeStrat":"or_",
-            "name":"lastGetPause",
-            "type":"bool",
-            "value":true
-          }
-        ]
+        "customVariableOrder":{},
+        "list":{}
       },
       "viewPos":[
-        61.63991165161132812500,
-        -103.37937164306640625000
+        -675.99993896484375000000,
+        24.74999427795410156250
       ],
-      "viewZoom":0.33000001311302185059
+      "viewZoom":0.74999994039535522461
     },
     "3":{
       "description":"This is the description for graph States",
