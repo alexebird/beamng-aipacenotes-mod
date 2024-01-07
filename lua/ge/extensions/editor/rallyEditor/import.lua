@@ -72,7 +72,7 @@ function C:convertTranscriptToNotebook(transcript_data, importIdent)
         notes = { english = {note = note}},
         metadata = metadata,
         oldId = oldId,
-        segment = -1,  -- Replace with actual value if available
+        -- segment = -1,  -- Replace with actual value if available
         pacenoteWaypoints = {
         --   {
         --     name = "curr",

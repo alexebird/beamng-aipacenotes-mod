@@ -99,8 +99,8 @@ M.new_pacenote_cursor_linkHeightRadiusShinkFactor = 0.5
 M.new_pacenote_cursor_linkFromWidth = 1.0
 M.new_pacenote_cursor_linkToWidth = 0.25
 
-M.segments_alpha = 0.5
-M.segments_clr_assigned = M.clr_white
-M.segments_clr = M.clr_aqua
+-- M.segments_alpha = 0.5
+-- M.segments_clr_assigned = M.clr_white
+-- M.segments_clr = M.clr_aqua
 
 return M

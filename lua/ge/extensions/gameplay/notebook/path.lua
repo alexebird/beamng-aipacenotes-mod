@@ -34,6 +34,8 @@ function C:init(name)
     require('/lua/ge/extensions/gameplay/notebook/pacenote')
   )
 
+  self.static_pacenotes = {}
+
   self.id = self:getNextUniqueIdentifier()
 
   self._hover_waypoint_id = nil
@@ -127,57 +129,57 @@ function C:cleanupPacenoteNames()
   self.pacenotes:buildNamesDir()
 end
 
-local function calcPointForSegment(racePath, segmentId)
-  local pathnodes = racePath.pathnodes.objects
-  local segment = racePath.segments.objects[segmentId]
-  local from = pathnodes[segment.from]
-  local to = pathnodes[segment.to]
-  local center = (from.pos + to.pos) / 2
-  -- log("D", 'wtf', dumps(center))
-  -- debugDrawer:drawSphere((center),
-  --   50,
-  --   ColorF(1, 0, 0, 1)
-  -- )
-  return center
-end
+-- local function calcPointForSegment(racePath, segmentId)
+--   local pathnodes = racePath.pathnodes.objects
+--   local segment = racePath.segments.objects[segmentId]
+--   local from = pathnodes[segment.from]
+--   local to = pathnodes[segment.to]
+--   local center = (from.pos + to.pos) / 2
+--   -- log("D", 'wtf', dumps(center))
+--   -- debugDrawer:drawSphere((center),
+--   --   50,
+--   --   ColorF(1, 0, 0, 1)
+--   -- )
+--   return center
+-- end
 
-local function findClosestSegmentCenter(pos, segmentCenters)
-  local minDist = 4294967295
-  local closest_seg_id = nil
-  local dist = nil
+-- local function findClosestSegmentCenter(pos, segmentCenters)
+--   local minDist = 4294967295
+--   local closest_seg_id = nil
+--   local dist = nil
+--
+--   for seg_id,center_pos in pairs(segmentCenters) do
+--     dist = pos:distance(center_pos)
+--     if dist < minDist then
+--       minDist = dist
+--       closest_seg_id = seg_id
+--     end
+--   end
+--
+--   return closest_seg_id
+-- end
 
-  for seg_id,center_pos in pairs(segmentCenters) do
-    dist = pos:distance(center_pos)
-    if dist < minDist then
-      minDist = dist
-      closest_seg_id = seg_id
-    end
-  end
-
-  return closest_seg_id
-end
-
-function C:autoAssignSegments(racePath)
-  local segment_centers = {}
-
-  for seg_id,segment in pairs(racePath.segments.objects) do
-    local center = calcPointForSegment(racePath, seg_id)
-    segment_centers[seg_id] = center
-  end
-
-  -- clear the segments. probably not necessary.
-  for _,pacenote in ipairs(self.pacenotes.sorted) do
-    pacenote.segment = -1
-  end
-
-  for _,pacenote in ipairs(self.pacenotes.sorted) do
-    local audioTrigger = pacenote:getActiveFwdAudioTrigger()
-    if audioTrigger then
-      local closest_seg_id = findClosestSegmentCenter(audioTrigger.pos, segment_centers)
-      pacenote.segment = closest_seg_id
-    end
-  end
-end
+-- function C:autoAssignSegments(racePath)
+--   local segment_centers = {}
+--
+--   for seg_id,segment in pairs(racePath.segments.objects) do
+--     local center = calcPointForSegment(racePath, seg_id)
+--     segment_centers[seg_id] = center
+--   end
+--
+--   -- clear the segments. probably not necessary.
+--   for _,pacenote in ipairs(self.pacenotes.sorted) do
+--     pacenote.segment = -1
+--   end
+--
+--   for _,pacenote in ipairs(self.pacenotes.sorted) do
+--     local audioTrigger = pacenote:getActiveFwdAudioTrigger()
+--     if audioTrigger then
+--       local closest_seg_id = findClosestSegmentCenter(audioTrigger.pos, segment_centers)
+--       pacenote.segment = closest_seg_id
+--     end
+--   end
+-- end
 
 function C:drawPacenotesAsRainbow(skip_pn)
   for _,pacenote in ipairs(self.pacenotes.sorted) do
@@ -260,6 +262,16 @@ function C:onDeserialized(data)
 
   self.pacenotes:clear()
   self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
+
+  self:addStaticPacenotes()
+end
+
+-- static notes are hardcoded and set on onDeserialized only.
+function C:addStaticPacenotes()
+  local note = {
+
+  }
+  table.insert(self.static_pacenotes, note)
 end
 
 function C:copy()

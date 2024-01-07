@@ -434,7 +434,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
-    {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference.\nRequires race to be loaded in the Race Tool."}},
+    -- {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference.\nRequires race to be loaded in the Race Tool."}},
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
     {topDownCameraElevation = {"int", 150, "Elevation for the top-down camera view.", nil, 1, 1000}},
     {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
@@ -474,13 +474,13 @@ local function getPrefShowNextPacenote()
   end
 end
 
-local function getPrefShowRaceSegments()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.showRaceSegments')
-  else
-    return false
-  end
-end
+-- local function getPrefShowRaceSegments()
+--   if editor and editor.getPreference then
+--     return editor.getPreference('rallyEditor.general.showRaceSegments')
+--   else
+--     return false
+--   end
+-- end
 
 local function getPrefDefaultRadius()
   if editor and editor.getPreference then
@@ -618,7 +618,7 @@ M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
 M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
 M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
 M.getPrefShowNextPacenote = getPrefShowNextPacenote
-M.getPrefShowRaceSegments = getPrefShowRaceSegments
+-- M.getPrefShowRaceSegments = getPrefShowRaceSegments
 M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow

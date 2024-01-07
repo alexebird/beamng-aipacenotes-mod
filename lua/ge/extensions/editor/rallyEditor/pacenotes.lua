@@ -920,33 +920,33 @@ function C:insertMode()
   self._insertMode = true
 end
 
-function C:drawDebugSegments()
-  local racePath = self:getRacePath()
-  local pathnodes = racePath.pathnodes.objects
-  for _, seg in pairs(racePath.segments.objects) do
-    -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
-
-    local from = pathnodes[seg.from]
-    local to = pathnodes[seg.to]
-    local pn_sel = self:selectedPacenote()
-
-    local clr = nil
-
-    if pn_sel and seg.id == pn_sel.segment then
-      clr = cc.segments_clr_assigned
-    else
-      clr = cc.segments_clr
-    end
-
-    debugDrawer:drawSquarePrism(
-      from.pos,
-      to.pos,
-      Point2F(10, 1),
-      Point2F(10, 0.25),
-      ColorF(clr[1], clr[2], clr[3], cc.segments_alpha)
-    )
-  end
-end
+-- function C:drawDebugSegments()
+--   local racePath = self:getRacePath()
+--   local pathnodes = racePath.pathnodes.objects
+--   for _, seg in pairs(racePath.segments.objects) do
+--     -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
+--
+--     local from = pathnodes[seg.from]
+--     local to = pathnodes[seg.to]
+--     local pn_sel = self:selectedPacenote()
+--
+--     local clr = nil
+--
+--     if pn_sel and seg.id == pn_sel.segment then
+--       clr = cc.segments_clr_assigned
+--     else
+--       clr = cc.segments_clr
+--     end
+--
+--     debugDrawer:drawSquarePrism(
+--       from.pos,
+--       to.pos,
+--       Point2F(10, 1),
+--       Point2F(10, 0.25),
+--       ColorF(clr[1], clr[2], clr[3], cc.segments_alpha)
+--     )
+--   end
+-- end
 
 function C:drawPacenotesList()
   if not self.path then return end
@@ -960,10 +960,10 @@ function C:drawPacenotesList()
   end
   im.tooltip("Re-name all pacenotes with increasing numbers.")
   im.SameLine()
-  if im.Button("Auto-assign segments") then
-    self:autoAssignSegments()
-  end
-  im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
+  -- if im.Button("Auto-assign segments") then
+  --   self:autoAssignSegments()
+  -- end
+  -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
   im.SameLine()
   if im.Button("Snap all") then
     self:snapAll()
@@ -1070,11 +1070,11 @@ function C:drawPacenotesList()
     end
     -- im.Text("Segment: "..note.segment)
 
-    self:segmentSelector('Segment','segment', 'Associated Segment')
+    -- self:segmentSelector('Segment','segment', 'Associated Segment')
 
-    if self.rallyEditor.getPrefShowRaceSegments() then
-      self:drawDebugSegments()
-    end
+    -- if self.rallyEditor.getPrefShowRaceSegments() then
+    --   self:drawDebugSegments()
+    -- end
 
     im.HeaderText("Languages")
     editEnded = im.BoolPtr(false)
@@ -1272,35 +1272,35 @@ function C:drawWaypointList(note)
   im.EndChild() -- currentWaypoint child window
 end
 
-function C:segmentSelector(name, fieldName, tt)
-  if not self.path then return end
-
-  local _seg_name = function(seg)
-    return '#'..seg.id .. " - '" .. seg.name.."'"
-  end
-
-  local racePath = self:getRacePath()
-  local selected_pacenote = self.path.pacenotes.objects[self.pacenote_index]
-  local segments = racePath.segments.objects
-
-  if im.BeginCombo(name..'##'..fieldName, _seg_name(segments[selected_pacenote[fieldName]])) then
-    if im.Selectable1('#'..0 .. " - None", selected_pacenote[fieldName] == -1) then
-      editor.history:commitAction("Removed Segment for pacenote",
-        {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = -1, field = fieldName},
-        setPacenoteFieldUndo, setPacenoteFieldRedo)
-    end
-    for i, sp in ipairs(racePath.segments.sorted) do
-      if im.Selectable1(_seg_name(sp), selected_pacenote[fieldName] == sp.id) then
-              editor.history:commitAction("Changed Segment for pacenote",
-        {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = sp.id, field = fieldName},
-        setPacenoteFieldUndo, setPacenoteFieldRedo)
-      end
-    end
-    im.EndCombo()
-  end
-
-  im.tooltip(tt or "")
-end
+-- function C:segmentSelector(name, fieldName, tt)
+--   if not self.path then return end
+--
+--   local _seg_name = function(seg)
+--     return '#'..seg.id .. " - '" .. seg.name.."'"
+--   end
+--
+--   local racePath = self:getRacePath()
+--   local selected_pacenote = self.path.pacenotes.objects[self.pacenote_index]
+--   local segments = racePath.segments.objects
+--
+--   if im.BeginCombo(name..'##'..fieldName, _seg_name(segments[selected_pacenote[fieldName]])) then
+--     if im.Selectable1('#'..0 .. " - None", selected_pacenote[fieldName] == -1) then
+--       editor.history:commitAction("Removed Segment for pacenote",
+--         {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = -1, field = fieldName},
+--         setPacenoteFieldUndo, setPacenoteFieldRedo)
+--     end
+--     for i, sp in ipairs(racePath.segments.sorted) do
+--       if im.Selectable1(_seg_name(sp), selected_pacenote[fieldName] == sp.id) then
+--               editor.history:commitAction("Changed Segment for pacenote",
+--         {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = sp.id, field = fieldName},
+--         setPacenoteFieldUndo, setPacenoteFieldRedo)
+--       end
+--     end
+--     im.EndCombo()
+--   end
+--
+--   im.tooltip(tt or "")
+-- end
 
 function C:waypointTypeSelector(note)
   if not self:selectedWaypoint() then return end
@@ -1423,23 +1423,23 @@ function C:cleanupPacenoteNames()
   )
 end
 
-function C:autoAssignSegments()
-  if not self.path then return end
-
-  editor.history:commitAction("Auto-assign segments to pacenotes",
-    {
-      racePath = self:getRacePath(),
-      notebook = self.path,
-      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
-    },
-    function(data) -- undo
-      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
-    end,
-    function(data) -- redo
-      data.notebook:autoAssignSegments(data.racePath)
-    end
-  )
-end
+-- function C:autoAssignSegments()
+--   if not self.path then return end
+--
+--   editor.history:commitAction("Auto-assign segments to pacenotes",
+--     {
+--       racePath = self:getRacePath(),
+--       notebook = self.path,
+--       old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+--     },
+--     function(data) -- undo
+--       data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+--     end,
+--     function(data) -- redo
+--       data.notebook:autoAssignSegments(data.racePath)
+--     end
+--   )
+-- end
 
 function C:normalizeNotes()
   if not self.path then return end
