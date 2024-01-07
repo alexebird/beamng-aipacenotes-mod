@@ -3,6 +3,11 @@
     "globals": [
       "spawn",
       "be",
+      "editor_missionEditor",
+      "_flowgraph_createNode",
+      "Engine",
+      "simTimeAuthority",
+      "gameplay_missions_missionManager",
       "ColorF",
       "ColorI",
       "clockhp",

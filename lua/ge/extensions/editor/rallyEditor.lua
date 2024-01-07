@@ -19,6 +19,7 @@ local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow
 local mouseInfo = {}
+local showWaypoints = false
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -303,7 +304,9 @@ local function drawEditorGui()
     end
 
     currentWindow:draw(mouseInfo)
-    pacenotesWindow:drawDebugNotebookEntrypoint()
+    if not showWaypoints then
+      pacenotesWindow:drawDebugNotebookEntrypoint()
+    end
   end
 
   editor.endWindow()
@@ -622,5 +625,6 @@ M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefFlipSnaproadNormal = getPrefFlipSnaproadNormal
 
 M.listNotebooks = listNotebooks
+M.showWaypoints = function(show) showWaypoints = show end
 
 return M

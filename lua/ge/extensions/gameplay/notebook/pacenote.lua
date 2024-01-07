@@ -154,6 +154,35 @@ function C:setFieldsForFlowgraph(lang)
   self.normal = wp_trigger.normal
 end
 
+function C:asFlowgraphData(missionSettings, codriver)
+  -- TODO reuse validations here.
+
+  local fname = self:audioFname(codriver, missionSettings.fgNode.missionDir..'/')
+  if not FS:fileExists(fname) then
+    error("pacenote audio file not found: "..fname)
+  end
+
+  local wp_trigger = self:getActiveFwdAudioTrigger()
+  if not wp_trigger then
+    log('E', logTag, 'audio trigger not found')
+    error("no active audio trigger waypoint found for pacenote '".. self.name .."'")
+  end
+
+  local fgData = {
+    id = self.id,
+    trigger_waypoint = wp_trigger,
+    pacenote = self,
+    notebook = self.notebook,
+    note_text = self:joinedNote(codriver.language),
+    audioFname = fname,
+    -- radius = wp_trigger.radius,
+    -- pos = wp_trigger.pos,
+    -- normal = wp_trigger.normal,
+  }
+  self._cached_fgData = fgData
+  return fgData
+end
+
 function C:validate()
   self.validation_issues = {}
 
@@ -785,8 +814,8 @@ function C:setCameraToWaypoints()
   setTopDownCamera(waypoints, wp1, wp2)
 end
 
-function C:audioFname(codriver)
-  local missionDir =  editor_rallyEditor.getMissionDir()
+function C:audioFname(codriver, missionDir)
+  missionDir =  missionDir or editor_rallyEditor.getMissionDir()
 
   local notebookName = re_util.normalize_name(self.notebook.name)
   local codriverName = codriver.name

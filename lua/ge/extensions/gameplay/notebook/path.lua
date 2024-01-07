@@ -465,6 +465,51 @@ function C:autofillDistanceCalls()
   end
 end
 
+function C:getCodriverByName(codriver_name)
+  local codriver = nil
+  for _,cd in ipairs(self.codrivers.sorted) do
+    if cd.name == codriver_name then
+      codriver = cd
+    end
+  end
+
+  return codriver
+end
+
+function C:getFlowgraphPacenotes(missionSettings, codriver)
+  local fgPacenotes = {}
+  for _,pn in ipairs(self.pacenotes.sorted) do
+    local fgNote = pn:asFlowgraphData(missionSettings, codriver)
+    table.insert(fgPacenotes, fgNote)
+  end
+
+  return fgPacenotes
+end
+
+function C:findNClosestPacenotes(pos, n)
+  -- Table to store objects and their distances
+  local distances = {}
+
+  -- Calculate each object's distance from the input position and store it
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
+    local distance = pos:distance(pacenote:getActiveFwdAudioTrigger().pos)  -- using the provided distance method
+    table.insert(distances, {pacenote = pacenote, distance = distance})
+  end
+
+  -- Sort the objects by distance
+  table.sort(distances, function(a, b) return a.distance < b.distance end)
+
+  -- Retrieve the N closest objects
+  local closest = {}
+  for i = 1, n do
+    if distances[i] then  -- Ensure there's an object to add
+      table.insert(closest, distances[i].pacenote)
+    end
+  end
+
+  return closest
+end
+
 return function(...)
   local o = {}
   setmetatable(o, C)
