@@ -333,6 +333,22 @@ function C:generateStaticPacenotesData()
     oldId = oldId+1
   end
 
+  local finish_1 = {
+    oldId = oldId,
+    name = 'finish_1',
+    notes = {
+      english = {
+        before = '',
+        note = 'Thats it, bring the car to a stop.',
+        after = '',
+      }
+    },
+    metadata = {static=true},
+    pacenoteWaypoints = {}
+  }
+  table.insert(notes, finish_1)
+  oldId = oldId+1
+
   return notes
 end
 
