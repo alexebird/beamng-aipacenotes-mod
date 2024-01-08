@@ -17,7 +17,7 @@ currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
-local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow
+local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow, staticPacenotesWindow
 local mouseInfo = {}
 local showWaypoints = false
 
@@ -304,7 +304,16 @@ local function drawEditorGui()
     end
 
     currentWindow:draw(mouseInfo)
-    if not showWaypoints then
+
+    local mgr = editor_flowgraphEditor.getManager()
+    local shouldShow = true
+    if mgr and mgr.runningState ~= 'stopped' then
+      if not showWaypoints then
+        shouldShow = false
+      end
+    end
+
+    if shouldShow then
       pacenotesWindow:drawDebugNotebookEntrypoint()
     end
   end
@@ -377,10 +386,11 @@ local function onEditorInitialized()
 
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/import')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/race_settings')(M))
 
-  notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow = windows[1], windows[2], windows[3], windows[4]
+  notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, importWindow, raceSettingsWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)

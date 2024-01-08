@@ -118,6 +118,8 @@ function C:drawNotebook()
   im.HeaderText("Notebook Info")
   im.Text("Current Notebook: #" .. self.path.id)
 
+  for i = 1,5 do im.Spacing() end
+
   local editEnded = im.BoolPtr(false)
   editor.uiInputText("Name", notebookNameText, nil, nil, nil, nil, editEnded)
   if editEnded[0] then

@@ -12,7 +12,6 @@ local C = {}
 C.name = 'AI Pacenotes Vocalizer'
 C.description = 'Plays pacenotes from a notebook.'
 
--- C.category = 'once_p_duration'
 C.color = im.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
 C.pinSchema = {
@@ -20,7 +19,12 @@ C.pinSchema = {
   { dir = 'in', type = 'flow',   name = 'reset', description = 'Resets this node.', impulse = true },
   { dir = 'in', type = 'number', name = 'vehId', description = 'Vehicle id.'},
   { dir = 'in', type = 'table',  name = 'raceData', tableType = 'raceData', description = 'Race data.'},
-  { dir = 'in', type = 'bool', name = 'recce', description = 'Is any resetting of the car going on like in freeroam?', default = false},
+  -- { dir = 'in', type = 'bool',   name = 'noteSearch', description = 'Reset completed pacenotes to near car.', default = false},
+  { dir = 'in', type = 'flow',   name = 'noteSearch', description = 'Reset completed pacenotes to near car.', impulse = true },
+
+  { dir = 'in', type = 'flow',   name = 'lapChange', description = 'When a lap changes.', impulse = true },
+  { dir = 'in', type = 'number', name = 'currLap', description = 'Current lap number.'},
+  { dir = 'in', type = 'number', name = 'maxLap', description = 'Maximum lap number.'},
 
   { dir = 'out', type = 'flow', name = 'flow', description = 'Outflow from this node.' },
 }
@@ -28,136 +32,61 @@ C.pinSchema = {
 C.tags = {'aipacenotes'}
 
 function C:init(mgr, ...)
-  -- self.mgr = mgr
   self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')()
   self:resetState()
 end
 
 function C:resetState()
+  self.damageThresh = 1000
+  self.closestPacenotes_n = 5
+
   self.setupDone = false
   self.missionId = nil
   self.missionDir = nil
   self.missionSettings = nil
   self.notebook = nil
   self.codriver = nil
-  self.pacenoteState = {
-    nextId = nil, -- this is the id of the pacenote we are looking for every dt.
-  }
+  self.nextId = nil -- this is the id of the pacenote we are looking for every dt.
   self.vehicleTracker = nil
   self.audioManager:resetAudioQueue()
   self.closestPacenotes = nil
-end
-
--- function C:postInit()
-  -- self.pinInLocal.file.allowFiles = {
-  --   {"Rally Files",".notebook.json"},
-  -- }
--- end
-
-local function detectMissionManagerMissionId()
-  if gameplay_missions_missionManager then
-    return gameplay_missions_missionManager.getForegroundMissionId()
-  else
-    return nil
-  end
-end
-
-local function detectMissionEditorMissionId()
-  if editor_missionEditor then
-    local selectedMission = editor_missionEditor.getSelectedMissionId()
-    if selectedMission then
-      return selectedMission.id
-    else
-      return nil
-    end
-  else
-    return nil
-  end
+  self.currLap = -1
+  self.maxLap = -1
 end
 
 function C:detectMissionId()
-  self.missionId = nil
-  self.missionDir = nil
+  local missionId, missionDir, error = re_util.detectMissionIdHelper()
 
-  -- first try the mission manager.
-  local theMissionId = detectMissionManagerMissionId()
-  if theMissionId then
-    log('D', logTag, 'missionId "'.. theMissionId ..'"detected from missionManager')
-  else
-    log('W', logTag, 'no mission detected from missionManager')
+  if error then
+    self:__setNodeError('setup', error)
   end
 
-  -- then try the mission editor
-  if not theMissionId then
-    theMissionId = detectMissionEditorMissionId()
-    if theMissionId then
-      log('D', logTag, 'missionId "'.. theMissionId ..'"detected from missionEditor')
-    else
-      log('W', logTag, 'no mission detected from editor')
-    end
-  end
-
-  if not theMissionId then
-    log('E', logTag, 'couldnt detect missionId')
-    self:__setNodeError('setup', 'missionId could not be detected')
-  end
-
-  self.missionId = theMissionId
-  self.missionDir = '/gameplay/missions/'..theMissionId
+  self.missionId, self.missionDir = missionId, missionDir
 end
 
 function C:getMissionSettings()
-  local settingsFname = self.missionDir..'/aipacenotes/mission.settings.json'
-  if not FS:fileExists(settingsFname) then
-    self:__setNodeError('setup', "mission settings file not found: "..settingsFname)
+  local settings, error = re_util.getMissionSettingsHelper(self.missionDir)
+
+  if error then
+    self:__setNodeError('setup', error)
   end
 
-  log('I', logTag, 'reading settings file: ' .. tostring(settingsFname))
-  local json = jsonReadFile(settingsFname)
-  if not json then
-    self:__setNodeError('setup', 'unable to read settings file at: ' .. tostring(settingsFname))
-  end
-
-  local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
-  settings:onDeserialized(json)
   self.missionSettings = settings
 end
 
 function C:getNotebook()
-  local notebookFname = self.missionDir..'/'..re_util.notebooksPath..self.missionSettings.notebook.filename
-  if not FS:fileExists(notebookFname) then
-    self:__setNodeError('setup', "notebook file not found: "..notebookFname)
+  local notebook, error = re_util.getNotebookHelper(self.missionDir, self.missionSettings)
+
+  if error then
+    self:__setNodeError('setup', error)
   end
 
-  log('D', logTag, 'reading notebook file: ' .. notebookFname)
-  local json = jsonReadFile(notebookFname)
-  if not json then
-    self:__setNodeError('setup', 'unable to read notebook file at: ' .. notebookFname)
-  end
-
-  local notebook = require('/lua/ge/extensions/gameplay/notebook/path')("New Path")
-  notebook:onDeserialized(json)
   self.notebook = notebook
 end
 
--- function C:drawCustomProperties()
---   if im.Button("Open Rally Editor") then
---     if editor_rallyEditor then
---       editor_rallyEditor.show()
---     end
---   end
---   if editor_rallyEditor then
---     local fn = editor_rallyEditor.getCurrentFilename()
---     if fn then
---       im.Text("Currently open file in RallyEditor:")
---       im.Text(fn)
---     end
---   end
+-- function C:onNodeReset()
+  -- self:resetState()
 -- end
-
-function C:onNodeReset()
-  self:resetState()
-end
 
 -- 1. get mission dir
 -- 2. get aipacenotes/mission.settings.json
@@ -168,8 +97,16 @@ function C:initialSetup()
   log('I', logTag, 'setting up AI Pacenotes flowgraph node')
 
   self:detectMissionId()
+
   self:getMissionSettings()
+  if not self.missionSettings then
+    return
+  end
+
   self:getNotebook()
+  if not self.notebook then
+    return
+  end
 
   self.missionSettings.fgNode = { missionDir = self.missionDir }
 
@@ -180,18 +117,13 @@ function C:initialSetup()
 
   self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
 
-  local damageThresh = 1000
   self.vehicleTracker = require('/lua/ge/extensions/gameplay/rally/vehicleTracker')(
     self.pinIn.vehId.value,
-    damageThresh,
+    self.damageThresh,
     self.pinIn.raceData.value
   )
 
-  if self.pinIn.recce.value then
-    self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), 2)
-  else
-    self.pacenoteState.nextId = 1
-  end
+  self.nextId = 1
 
   self.setupDone = true
 end
@@ -202,20 +134,23 @@ end
 
 function C:intersectCorners(pacenote)
   if not pacenote then return false end
-  -- local prevCorners = nil
-  -- local currCorners = nil
-  -- if self:isRace() then
-    -- local state = self.pinIn.raceData.value.states[self.pinIn.vehId.value]
-    -- prevCorners = state.previousCorners
-    -- currCorners = state.currentCorners
-  -- else
   local prevCorners = self.vehicleTracker:getPreviousCorners()
   local currCorners = self.vehicleTracker:getCurrentCorners()
-  -- end
   if prevCorners and currCorners then
     return pacenote.pacenote:intersectCorners(prevCorners, currCorners)
   else
     return false
+  end
+end
+
+function C:handleLapChange()
+  local currLap = self.pinIn.currLap.value
+  self.maxLap = self.pinIn.maxLap.value
+
+  if currLap > self.currLap then
+    self.currLap = currLap
+    log('D', logTag, 'handleLapChange curr='..self.currLap..' max='..self.maxLap)
+    self.nextId = 1
   end
 end
 
@@ -231,7 +166,7 @@ function C:handleWork()
         -- its not the pacenote id, its the index in the ordered list of pacenotes.
         for i,pnData in ipairs(self.fgPacenotes) do
           if pnData.id == pacenote.id then
-            self.pacenoteState.nextId = i+1
+            self.nextId = i+1
             break
           end
         end
@@ -240,17 +175,17 @@ function C:handleWork()
       end
     end
   else
-    local nextId = self.pacenoteState.nextId
+    local nextId = self.nextId
     local pacenote = self.fgPacenotes[nextId]
     if self:intersectCorners(pacenote) then
       self.audioManager:enqueuePacenote(pacenote)
-      self.pacenoteState.nextId = self.pacenoteState.nextId + 1
+      self.nextId = self.nextId + 1
     end
   end
 
-  if self.vehicleTracker:didJustHaveDamage() then
+  if self.vehicleTracker:didJustHaveDamage() and self.notebook and self.missionSettings and self.codriver then
     self.audioManager:resetAudioQueue()
-    self.audioManager:playDamageSfx()
+    self.audioManager:playDamageSfx(self.notebook, self.missionSettings, self.codriver)
   else
     self.audioManager:playNextInQueue()
   end
@@ -259,15 +194,22 @@ end
 function C:work(args)
   if self.pinIn.reset.value then
     self:resetState()
+    self:initialSetup()
     self.pinOut.flow.value = false
+    -- self.pinIn.lapChange.value = false
+    -- self.pinIn.noteSearch.value = false
+  end
+
+  if self.pinIn.lapChange.value then
+    self:handleLapChange()
+  end
+
+  if self.pinIn.noteSearch.value then
+    self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
   end
 
   if self.pinIn.flow.value then
-    if not self.setupDone then
-      self:initialSetup()
-    else
-      self:handleWork()
-    end
+    self:handleWork()
   end
 
   if editor_rallyEditor then

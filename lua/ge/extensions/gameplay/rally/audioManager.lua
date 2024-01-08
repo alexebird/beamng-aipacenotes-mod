@@ -6,17 +6,17 @@ local logTag = 'aipacenotes'
 
 function C:init()
   self:resetAudioQueue()
+  self.damageAudioPlayedAt = nil
 end
 
 function C:resetAudioQueue()
   self.queue = dequeue.new()
 
-  if self.currAudioObj then
+  if self.currAudioObj and self.currAudioObj.sourceId then
     self:stopSfxSource(self.currAudioObj.sourceId)
   end
 
   self.currAudioObj = nil
-  self.damageAudioPlayedAt = nil
   self.damageTimeoutSecs = 3
 end
 
@@ -27,13 +27,21 @@ function C:stopSfxSource(sourceId)
   end
 end
 
-function C:playDamageSfx()
+function C:playDamageSfx(notebook, missionSettings, codriver)
   local now = re_util.getTime()
   if not self.damageAudioPlayedAt or now - self.damageAudioPlayedAt > self.damageTimeoutSecs then
-    self.damageAudioPlayedAt = re_util.getTime()
-    local fname = '/art/aipacenotes/sound/pacenote_damage.ogg'
-    self:enqueueFile(fname)
+    self.damageAudioPlayedAt = now
+    local goNote = notebook:getStaticPacenoteByName('damage_1')
+    local fgNote = goNote:asFlowgraphData(missionSettings, codriver)
+    self:enqueuePauseSecs(0.5)
+    self:enqueuePacenote(fgNote)
   end
+end
+
+function C:enqueuePauseSecs(secs)
+  log('I', logTag, 'pause='..secs..'s')
+  local audioObj = re_util.buildAudioObjPause(secs)
+  self.queue:push_right(audioObj)
 end
 
 function C:enqueuePacenote(pacenoteFgData)
@@ -42,7 +50,7 @@ function C:enqueuePacenote(pacenoteFgData)
 end
 
 function C:enqueueFile(fname)
-  local audioObj = re_util.buildAudioObj(fname)
+  local audioObj = re_util.buildAudioObjPacenote(fname)
   if re_util.fileExists(fname) then
     self.queue:push_right(audioObj)
   else
@@ -69,13 +77,18 @@ function C:previousAudioIsDone()
   end
 end
 
+function C:doPause(audioObj)
+  audioObj.audioLen = audioObj.pauseTime
+  audioObj.timeout = audioObj.time + audioObj.audioLen
+end
+
 function C:playNextInQueue()
   if self:previousAudioIsDone() then
     self.currAudioObj = self.queue:pop_left()
     if self.currAudioObj.audioType == 'pacenote' then
       re_util.playPacenote(self.currAudioObj)
-    -- elseif self.currAudioObj.audioType == 'breath' then
-      -- playBreath(self.currAudioObj)
+    elseif self.currAudioObj.audioType == 'pause' then
+      self:doPause(self.currAudioObj)
     else
       log('E', logTag, 'unknown audioType: '..self.currAudioObj.audioType)
     end

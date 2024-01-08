@@ -6,10 +6,12 @@ local logTag = 'aipacenotes'
 function C:init(vehId, damageThreshold, raceData)
   self.vehId = vehId
   self.damageThreshold = damageThreshold or 1
-  self.lastDamage = 0
-  self.justHadDamage = false
 
   self.vehicle = be:getObjectByID(self.vehId)
+  self:updateVehicleData()
+  self.lastDamage = self:damage()
+  self.lastDamageDiff = 0
+  self.justHadDamage = false
 
   self.wheelOffsets = {}
   self.currentCorners = {}
@@ -70,11 +72,22 @@ function C:updateVehicleDamage()
     self.justHadDamage = false
     return
   end
+
+  -- this is some one time initial setup.
+  -- otherwise, if the vehicle has damage already when the class is instantiated,
+  -- it will erroneously think a big jump in damage has occurred..
+  -- if not self.lastDamage then
+  --   self.lastDamage = currDamage
+  -- end
+
   local diff = currDamage - self.lastDamage
 
-  if currDamage > self.lastDamage and diff >= self.damageThreshold then
+  if currDamage > self.lastDamage then
     self.lastDamage = currDamage
-    self.justHadDamage = true
+    self.lastDamageDiff = diff
+    if self.lastDamageDiff >= self.damageThreshold then
+      self.justHadDamage = true
+    end
   else
     self.justHadDamage = false
   end
@@ -97,6 +110,9 @@ function C:damage()
 end
 
 function C:didJustHaveDamage()
+  if self.justHadDamage then
+    log('I', logTag, 'got damage during last tick. lastDamage='..self.lastDamage ..' diff='..self.lastDamageDiff)
+  end
   return self.justHadDamage
 end
 

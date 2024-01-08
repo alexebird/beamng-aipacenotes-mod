@@ -19,8 +19,15 @@ function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or ("Pacenote " .. self.id)
-  self.note = nil -- used for interfacing with existing flowgraph race code
+  -- self.note = nil -- used for interfacing with existing flowgraph race code
   self.notes = {}
+  for _,lang in ipairs(self.notebook:getLanguages()) do
+    lang = lang.language
+    self.notes[lang] = {}
+    for field,val in pairs(self.noteFields) do
+      self.notes[lang][val] = ''
+    end
+  end
   self.segment = -1
   self.pacenoteWaypoints = require('/lua/ge/extensions/gameplay/util/sortedList')(
     "pacenoteWaypoints",
@@ -72,6 +79,10 @@ end
 function C:joinedNote(lang)
   local txt = ''
   local lang_data = self.notes[lang]
+
+  if not lang_data then
+    return txt
+  end
 
   local before = lang_data[self.noteFields.before]
   if before and before ~= '' then
@@ -142,17 +153,17 @@ function C:setNoteFieldAfter(lang, val)
   lang_data[self.noteFields.after] = val
 end
 
-function C:setFieldsForFlowgraph(lang)
-  self.note = self:joinedNote(lang)
-
-  local wp_trigger = self:getActiveFwdAudioTrigger()
-  if not wp_trigger then
-    log('E', logTag, 'audio trigger not found')
-  end
-  self.radius = wp_trigger.radius
-  self.pos = wp_trigger.pos
-  self.normal = wp_trigger.normal
-end
+-- function C:setFieldsForFlowgraph(lang)
+--   self.note = self:joinedNote(lang)
+--
+--   local wp_trigger = self:getActiveFwdAudioTrigger()
+--   if not wp_trigger then
+--     log('E', logTag, 'audio trigger not found')
+--   end
+--   self.radius = wp_trigger.radius
+--   self.pos = wp_trigger.pos
+--   self.normal = wp_trigger.normal
+-- end
 
 function C:asFlowgraphData(missionSettings, codriver)
   -- TODO reuse validations here.
@@ -163,9 +174,9 @@ function C:asFlowgraphData(missionSettings, codriver)
   end
 
   local wp_trigger = self:getActiveFwdAudioTrigger()
-  if not wp_trigger then
-    log('E', logTag, 'audio trigger not found')
-    error("no active audio trigger waypoint found for pacenote '".. self.name .."'")
+  if not wp_trigger and not self.metadata.static then
+    log('W', logTag, 'audio trigger not found')
+    -- error("no active audio trigger waypoint found for pacenote '".. self.name .."'")
   end
 
   local fgData = {
@@ -175,9 +186,6 @@ function C:asFlowgraphData(missionSettings, codriver)
     notebook = self.notebook,
     note_text = self:joinedNote(codriver.language),
     audioFname = fname,
-    -- radius = wp_trigger.radius,
-    -- pos = wp_trigger.pos,
-    -- normal = wp_trigger.normal,
   }
   self._cached_fgData = fgData
   return fgData
@@ -198,9 +206,9 @@ function C:validate()
     table.insert(self.validation_issues, 'missing AudioTrigger waypoint')
   end
 
-  if not self.segment or self.segment == -1 then
-    table.insert(self.validation_issues, 'need to set segment. (use Assign Segments button?)')
-  end
+  -- if not self.segment or self.segment == -1 then
+  --   table.insert(self.validation_issues, 'need to set segment. (use Assign Segments button?)')
+  -- end
 
   if self.name == '' then
     table.insert(self.validation_issues, 'missing pacenote name')
@@ -208,13 +216,14 @@ function C:validate()
 
   for note_lang, note_data in pairs(self.notes) do
     local note_field = self:getNoteFieldNote(note_lang)
+    -- log('D', 'wtf', dumps(note_field))
     local last_char = note_field:sub(-1)
     if note_field == '' then
       table.insert(self.validation_issues, 'missing note for language '..note_lang)
     elseif note_field == re_util.unknown_transcript_str then
       table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' note for language "..note_lang)
     elseif not re_util.hasPunctuation(last_char) then
-      table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..'. (use Normalize button?)')
+      table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Normalize Note Text' button)")
     end
   end
 end
@@ -678,7 +687,14 @@ function C:drawLinkToPacenote(to_pacenote)
 end
 
 function C:noteTextForDrawDebug()
-  local txt = self.notes[self:getDefaultNoteLang()][self.noteFields.note] or ''
+  local noteData = self.notes[self:getDefaultNoteLang()]
+  local txt = '<empty note>'
+  if noteData then
+    local nd = noteData[self.noteFields.note]
+    if nd and nd ~= '' then
+      txt = nd
+    end
+  end
   txt = string.gsub(txt, "\n", " ")
   return txt
 end

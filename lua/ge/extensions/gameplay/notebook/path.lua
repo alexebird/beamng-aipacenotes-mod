@@ -15,7 +15,7 @@ end
 
 function C:init(name)
   self._uid = 0
-  self.name = ""
+  self.name = name or re_util.default_notebook_name
   self.description = ""
   self.authors = ""
   self.version = currentVersion
@@ -34,7 +34,13 @@ function C:init(name)
     require('/lua/ge/extensions/gameplay/notebook/pacenote')
   )
 
-  self.static_pacenotes = {}
+  self.static_pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
+    "static_pacenotes",
+    self,
+    require('/lua/ge/extensions/gameplay/notebook/pacenote')
+  )
+  local static_pn_data = self:generateStaticPacenotesData()
+  self.static_pacenotes:onDeserialized(static_pn_data, {})
 
   self.id = self:getNextUniqueIdentifier()
 
@@ -240,6 +246,7 @@ function C:onSerialize()
     created_at = self.created_at,
     codrivers = self.codrivers:onSerialize(),
     pacenotes = self.pacenotes:onSerialize(),
+    static_pacenotes = self.static_pacenotes:onSerialize(),
   }
 
   return ret
@@ -263,15 +270,70 @@ function C:onDeserialized(data)
   self.pacenotes:clear()
   self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
 
-  self:addStaticPacenotes()
+  self.static_pacenotes:clear()
+  -- local static_pn_data = data.static_pacenotes or self:generateStaticPacenotesData()
+  local static_pn_data = self:generateStaticPacenotesData()
+  -- log('D', 'wtf', dumps(static_pn_data))
+  self.static_pacenotes:onDeserialized(static_pn_data, oldIdMap)
 end
 
 -- static notes are hardcoded and set on onDeserialized only.
-function C:addStaticPacenotes()
-  local note = {
+function C:generateStaticPacenotesData()
+  local notes = {}
+  local oldId = 1
 
+  local damage_1 = {
+    oldId = oldId,
+    name = 'damage_1',
+    notes = {
+      english = {
+        before = '',
+        note = 'We just took some damage!',
+        after = '',
+      }
+    },
+    metadata = {static=true},
+    pacenoteWaypoints = {}
   }
-  table.insert(self.static_pacenotes, note)
+  table.insert(notes, damage_1)
+  oldId = oldId+1
+
+  local go_time_1 = {
+    oldId = oldId,
+    name = 'go_1',
+    notes = {
+      english = {
+        before = '',
+        note = 'Go!',
+        after = '',
+      }
+    },
+    metadata = {static=true},
+    pacenoteWaypoints = {}
+  }
+  table.insert(notes, go_time_1)
+  oldId = oldId+1
+
+  local numbers = {'one', 'two', 'three'}
+  for i,num in ipairs(numbers) do
+    local countdown = {
+      oldId = oldId,
+      name = 'countdown_'..i,
+      notes = {
+        english = {
+          before = '',
+          note = num,
+          after = '',
+        }
+      },
+      metadata = {static=true},
+      pacenoteWaypoints = {}
+    }
+    table.insert(notes, countdown)
+    oldId = oldId+1
+  end
+
+  return notes
 end
 
 function C:copy()
@@ -520,6 +582,16 @@ function C:findNClosestPacenotes(pos, n)
   end
 
   return closest
+end
+
+function C:getStaticPacenoteByName(name)
+  for _,spn in ipairs(self.static_pacenotes.sorted) do
+    if spn.name == name then
+      return spn
+    end
+  end
+
+  return nil
 end
 
 return function(...)

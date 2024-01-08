@@ -10,6 +10,10 @@ local logTag = 'aipacenotes_pacenote'
 function C:init(notebook, name, forceId)
   self.notebook = notebook
 
+  if #self.notebook.codrivers.objects == 0 then
+    name = re_util.default_codriver_name
+  end
+
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or "Codriver " .. self.id
   self.language = re_util.default_codriver_language

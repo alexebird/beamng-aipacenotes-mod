@@ -515,6 +515,9 @@ function C:createMouseDragPacenote()
   if not self.path then return end
   if not self.mouseInfo.rayCast then return end
 
+  -- self:selectPacenote(nil)
+  self:selectWaypoint(nil)
+
   local txt = "Create new pacenote (Drag to place corner start and end)"
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
@@ -955,7 +958,7 @@ function C:drawPacenotesList()
 
   im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
   -- im.SameLine()
-  if im.Button("Clean up names") then
+  if im.Button("Cleanup names") then
     self:cleanupPacenoteNames()
   end
   im.tooltip("Re-name all pacenotes with increasing numbers.")
@@ -965,7 +968,7 @@ function C:drawPacenotesList()
   -- end
   -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
   im.SameLine()
-  if im.Button("Snap all") then
+  if im.Button("Snap All") then
     self:snapAll()
   end
   im.tooltip("Snap all waypoints to nearest snaproad point.")
@@ -974,8 +977,8 @@ function C:drawPacenotesList()
     self:setAllRadii()
   end
   im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
-  -- im.SameLine()
-  if im.Button("Normalize All Notes") then
+  im.SameLine()
+  if im.Button("Normalize Note Text") then
     self:normalizeNotes()
   end
   im.tooltip("Add puncuation and replace digits with words.")
@@ -993,6 +996,9 @@ function C:drawPacenotesList()
       return '[!] '..note.name
     end
   end
+
+  -- vertical space
+  for i = 1,5 do im.Spacing() end
 
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
@@ -1061,6 +1067,8 @@ function C:drawPacenotesList()
       self:placeVehicleAtPacenote()
     end
 
+    for i = 1,5 do im.Spacing() end
+
     local editEnded = im.BoolPtr(false)
     editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
@@ -1103,7 +1111,7 @@ function C:drawPacenotesList()
       end
       if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
         if file_exists then
-          local audioObj = re_util.buildAudioObj(fname)
+          local audioObj = re_util.buildAudioObjPacenote(fname)
           re_util.playPacenote(audioObj)
         end
       end
@@ -1122,7 +1130,7 @@ function C:drawPacenotesList()
       end
       if editor.uiIconImageButton(editor.icons.record_voice_over, im.ImVec2(20, 20), voicePlayClr) then
         if file_exists then
-          local audioObj = re_util.buildAudioObj(fname)
+          local audioObj = re_util.buildAudioObjPacenote(fname)
           re_util.playPacenote(audioObj)
         end
       end
@@ -1217,6 +1225,8 @@ function C:drawWaypointList(note)
           {index = self.waypoint_index, self = self, dir = 1},
           moveWaypointUndo, moveWaypointRedo)
       end
+
+      for i = 1,5 do im.Spacing() end
 
       local editEnded = im.BoolPtr(false)
       editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)

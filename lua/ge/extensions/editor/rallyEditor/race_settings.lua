@@ -7,10 +7,8 @@ local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
-C.windowDescription = 'Race Settings'
+C.windowDescription = 'Mission Settings'
 
--- local notebookNameText = im.ArrayChar(1024, "")
--- local codriverNameText = im.ArrayChar(1024, "")
 local filenamesNamesSorted = {}
 
 function C:init(rallyEditor)
@@ -41,25 +39,10 @@ function C:unselect()
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
--- local function setFieldUndo(data)
---   data.self.path[data.field] = data.old
--- end
--- local function setFieldRedo(data)
---   data.self.path[data.field] = data.new
--- end
-
 function C:draw(_mouseInfo)
   if not self.path then return end
 
   im.HeaderText("Race Settings")
-
-  -- local editEnded = im.BoolPtr(false)
-  -- editor.uiInputText("Name", notebookNameText, nil, nil, nil, nil, editEnded)
-  -- if editEnded[0] then
-    -- editor.history:commitAction("Change Name of Notebook",
-      -- {self = self, old = self.path.name, new = ffi.string(notebookNameText), field = 'name'},
-      -- setFieldUndo, setFieldRedo)
-  -- end
 
   self:notebookFilenameSelector()
   self:codriverSelector()
@@ -86,17 +69,6 @@ function C:loadCodrivers()
   return codrivers
 end
 
--- local function setNotebookSettingsFieldUndo(data)
---   data.self.codrivers = loadCodrivers(data)
---   data.self.settings.notebook[data.field] = data.old
---   data.self.settings:write()
--- end
--- local function setNotebookSettingsFieldRedo(data)
---   data.self.codrivers = loadCodrivers(data)
---   data.self.settings.notebook[data.field] = data.new
---   data.self.settings:write()
--- end
-
 function C:notebookFilenameSelector()
   local name = 'Notebook'
   local tt = 'Set the notebook filename for this mission.'
@@ -113,9 +85,6 @@ function C:notebookFilenameSelector()
     for _, fname in ipairs(basenames) do
       local current = self.settings.notebook.filename == fname
       if im.Selectable1(((current and '[current] ') or '')..fname, current) then
-        -- editor.history:commitAction("Changed notebook.".. fieldName .." for mission settings",
-        --   {self = self, old = self.settings.notebook[fieldName], new = fname, field = fieldName},
-        --   setNotebookSettingsFieldUndo, setNotebookSettingsFieldRedo)
         self.settings.notebook.filename = fname
         self.codrivers = self:loadCodrivers()
         self.settings.notebook.codriver = self.codrivers[1] or '<none>'
@@ -138,11 +107,6 @@ function C:codriverSelector()
     for _, codriver in ipairs(self.codrivers or {}) do
       local current = self.settings.notebook.codriver == codriver
       if im.Selectable1(((current and '[current] ') or '')..codriver, current) then
-        -- editor.history:commitAction("Changed notebook.".. fieldName .." for mission settings",
-        --   {self = self, old = self.settings.notebook[fieldName], new = fname, field = fieldName},
-        --   setNotebookSettingsFieldUndo, setNotebookSettingsFieldRedo)
-        -- self.codrivers = self:loadCodrivers()
-        -- self.settings.notebook.filename = fname
         self.settings.notebook.codriver = codriver
         self.settings:write()
       end

@@ -183,7 +183,7 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     debugDrawer:drawSquarePrism(
       self.pos,
       (self.pos + self.radius * self.normal),
-      Point2F(1, self.radius / 2),
+      Point2F(1, self.radius * 2),
       Point2F(0, 0),
       ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrow)
     )

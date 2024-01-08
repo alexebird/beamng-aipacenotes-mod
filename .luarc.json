@@ -5,6 +5,8 @@
       "be",
       "editor_missionEditor",
       "_flowgraph_createNode",
+      "guihooks",
+      "editor_flowgraphEditor",
       "Engine",
       "simTimeAuthority",
       "gameplay_missions_missionManager",

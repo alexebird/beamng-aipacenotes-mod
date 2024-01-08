@@ -183,18 +183,23 @@ function C:draw(mouseInfo)
 
   im.Text("Importing from: " .. self.default_transcript)
   im.Text("Importing to: " .. self.default_notebooks_dir)
+  for i = 1,5 do im.Spacing() end
   im.Separator()
+  for i = 1,5 do im.Spacing() end
 
   if im.Button("Import to New Notebook") then
     self:importTranscriptToNewNotebook()
   end
   im.Text("A new notebook will be created.")
+  for i = 1,5 do im.Spacing() end
   im.Separator()
+  for i = 1,5 do im.Spacing() end
 
   if im.Button("Import to Current Notebook") then
     self:importTranscriptToCurrentNotebook()
   end
   im.Text("The imported notes will be added to the end of the currently loaded notebook.")
+  for i = 1,5 do im.Spacing() end
   im.Separator()
 end
 
