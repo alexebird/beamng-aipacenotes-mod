@@ -4,7 +4,9 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local C = {}
 local logTag = 'aipacenotes'
 
-function C:init()
+function C:init(rallyManager)
+  self.rallyManager = rallyManager
+
   self:resetAudioQueue()
   self.damageAudioPlayedAt = nil
 end
@@ -27,12 +29,12 @@ function C:stopSfxSource(sourceId)
   end
 end
 
-function C:playDamageSfx(notebook, missionSettings, codriver)
+function C:enqueueDamageSfx()
   local now = re_util.getTime()
   if not self.damageAudioPlayedAt or now - self.damageAudioPlayedAt > self.damageTimeoutSecs then
     self.damageAudioPlayedAt = now
-    local goNote = notebook:getStaticPacenoteByName('damage_1')
-    local fgNote = goNote:asFlowgraphData(missionSettings, codriver)
+    local goNote = self.rallyManager.notebook:getStaticPacenoteByName('damage_1')
+    local fgNote = goNote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
     self:enqueuePauseSecs(0.5)
     self:enqueuePacenote(fgNote)
   end
@@ -47,6 +49,14 @@ end
 function C:enqueuePacenote(pacenoteFgData)
   log('I', logTag, "pacenote='" .. pacenoteFgData.note_text .. "', filename=" .. pacenoteFgData.audioFname)
   self:enqueueFile(pacenoteFgData.audioFname)
+end
+
+function C:enqueueStaticPacenoteByName(pacenote_name)
+  local pacenote = self.rallyManager.notebook:getStaticPacenoteByName(pacenote_name)
+  if pacenote then
+    local fgNote = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
+    self:enqueuePacenote(fgNote)
+  end
 end
 
 function C:enqueueFile(fname)

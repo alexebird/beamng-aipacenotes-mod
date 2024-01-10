@@ -19,7 +19,6 @@ local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow, staticPacenotesWindow
 local mouseInfo = {}
-local showWaypoints = false
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -306,14 +305,9 @@ local function drawEditorGui()
     currentWindow:draw(mouseInfo)
 
     local mgr = editor_flowgraphEditor.getManager()
-    local shouldShow = true
-    if mgr and mgr.runningState ~= 'stopped' then
-      if not showWaypoints then
-        shouldShow = false
-      end
-    end
+    local paused = simTimeAuthority.getPause()
 
-    if shouldShow then
+    if not (mgr and mgr.runningState ~= 'stopped' and not paused) then
       pacenotesWindow:drawDebugNotebookEntrypoint()
     end
   end
@@ -635,6 +629,5 @@ M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefFlipSnaproadNormal = getPrefFlipSnaproadNormal
 
 M.listNotebooks = listNotebooks
-M.showWaypoints = function(show) showWaypoints = show end
 
 return M

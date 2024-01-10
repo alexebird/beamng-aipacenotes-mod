@@ -16,6 +16,8 @@ local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
 
+local aip_fg_color = ui_imgui.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
+
 local function pacenote_hash(s)
   local hash_value = 0
   for i = 1, #s do
@@ -224,5 +226,6 @@ M.default_notebook_name = default_notebook_name
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
 M.default_codriver_language = default_codriver_language
+M.aip_fg_color = aip_fg_color
 
 return M

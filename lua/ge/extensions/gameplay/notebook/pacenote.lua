@@ -168,9 +168,10 @@ end
 function C:asFlowgraphData(missionSettings, codriver)
   -- TODO reuse validations here.
 
-  local fname = self:audioFname(codriver, missionSettings.fgNode.missionDir..'/')
+  local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir..'/')
   if not FS:fileExists(fname) then
-    error("pacenote audio file not found: "..fname)
+    log('E', logTag, "pacenote audio file not found: "..fname)
+    return
   end
 
   local wp_trigger = self:getActiveFwdAudioTrigger()

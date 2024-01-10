@@ -10,13 +10,14 @@ local C = {}
 C.name = 'AI Pacenotes Countdown'
 C.icon = "timer"
 C.description = 'Manages a Countdown. Displays it on the screen as well, using both Message and FlashMessage.'
+C.color = re_util.aip_fg_color
 --C.category = 'repeat'
-C.color = im.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
 C.pinSchema = {
   { dir = 'in', type = 'flow', name = 'flow', description = 'Inflow for this node.' },
   { dir = 'in', type = 'flow', name = 'reset', description = 'Reset the countdown.', impulse = true },
-  { dir = 'in', type = 'number', name = 'duration', default = 3, description = 'Duration of countdown.' },
+  { dir = 'in', type = 'table',  name = 'rallyManager', tableType = 'rallyManager', description = 'The RallyManager' },
+  { dir = 'in', type = 'number', name = 'duration', default = 5, description = 'Duration of countdown.' },
   { dir = 'in', type = 'string', name = 'countdownMsg', hardcoded = true, hidden = true, default = '%d', description = 'Message to show before the countdown message; %d is the number.' },
   { dir = 'in', type = 'string', name = 'finishMsg', default = 'Go!', description = 'Message to flash at the end of countdown; leave blank to use default translation string.' },
   { dir = 'in', type = 'number', name = 'finishMsgDuration', hardcoded = true, hidden = true, default = 1, description = 'Duration of finish message.' },
@@ -43,8 +44,9 @@ function C:init(mgr, ...)
     finished = false
   }
 
-  self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')()
-  self.audioManager:resetAudioQueue()
+  self.rallyManager = nil
+  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')()
+  -- self.audioManager:resetAudioQueue()
 end
 
 function C:onExecutionStarted()
@@ -80,68 +82,11 @@ function C:startTimer()
   guihooks.trigger('ScenarioFlashMessageClear')
   self.flags.finished = false
   self.pinOut.flow.value = false
-  self:initRally()
 end
 
-function C:initRally()
-  self:detectMissionId()
-
-  self:getMissionSettings()
-  if not self.missionSettings then
-    return
-  end
-
-  self:getNotebook()
-  if not self.notebook then
-    return
-  end
-
-  self.missionSettings.fgNode = { missionDir = self.missionDir }
-
-  self.codriver = self.notebook:getCodriverByName(self.missionSettings.notebook.codriver)
-  if not self.codriver then
-    self:__setNodeError('setup', 'couldnt load codriver: '..self.missionSettings.notebook.codriver)
-  end
-end
-
-function C:detectMissionId()
-  local missionId, missionDir, error = re_util.detectMissionIdHelper()
-
-  if error then
-    self:__setNodeError('setup', error)
-  end
-
-  self.missionId, self.missionDir = missionId, missionDir
-end
-
-function C:getMissionSettings()
-  local settings, error = re_util.getMissionSettingsHelper(self.missionDir)
-
-  if error then
-    self:__setNodeError('setup', error)
-  end
-
-  self.missionSettings = settings
-end
-
-function C:getNotebook()
-  local notebook, error = re_util.getNotebookHelper(self.missionDir, self.missionSettings)
-
-  if error then
-    self:__setNodeError('setup', error)
-  end
-
-  self.notebook = notebook
-end
-
-function C:playAudio(pacenote_name)
-  if self.data.playSounds and self.notebook then
-    local pacenote = self.notebook:getStaticPacenoteByName(pacenote_name)
-    if pacenote then
-      local fgNote = pacenote:asFlowgraphData(self.missionSettings, self.codriver)
-      self.audioManager:enqueuePacenote(fgNote)
-      self.audioManager:playNextInQueue() -- play right away since the countdown node runs once.
-    end
+function C:enqueueStaticPacenoteByName(pacenote_name)
+  if self.data.playSounds then
+    self.rallyManager.audioManager:enqueueStaticPacenoteByName(pacenote_name)
   end
 end
 
@@ -168,7 +113,7 @@ function C:countdown()
   self.timer = self.timer - self.mgr.dtSim
   if self.timer <= 0 then
     self:show(self.msg, self.data.bigFinishMsg, self.pinIn.finishMsgDuration.value)
-    self:playAudio('go_1')
+    self:enqueueStaticPacenoteByName('go_1')
     self.flags.finished = true
     self.running = false
     self.pinOut.flow.value = true
@@ -179,7 +124,7 @@ function C:countdown()
       local countdownMsg = string.format(self.countdownMsg, old)
       local bigMsg = self.countdownMsg == "%d"
       self:show(countdownMsg, bigMsg, 0.95)
-      self:playAudio('countdown_'..countdownMsg)
+      self:enqueueStaticPacenoteByName('countdown_'..countdownMsg)
     end
     if self.data.useImgui then
       local avail = im.GetContentRegionAvail()
@@ -209,21 +154,26 @@ function C:drawMiddle(builder, style)
 end
 
 function C:work(args)
-  if self.pinIn.reset.value then
-    self:reset()
-  end
-  if self.pinIn.flow.value and not self.running and not self.done then
-    self:startTimer()
-  end
-  self:countdown()
-  self.pinOut.flow.value = self.done
-  self.pinOut.ongoing.value = self.running
-  -- set out pins according to flags and reset flags
-  for pName, val in pairs(self.flags) do
-    self.pinOut[pName].value = val
-    self.flags[pName] = false
+  if not self.rallyManager then
+    self.rallyManager = self.pinIn.rallyManager.value
   end
 
+  if self.rallyManager then
+    if self.pinIn.reset.value then
+      self:reset()
+    end
+    if self.pinIn.flow.value and not self.running and not self.done then
+      self:startTimer()
+    end
+    self:countdown()
+    self.pinOut.flow.value = self.done
+    self.pinOut.ongoing.value = self.running
+    -- set out pins according to flags and reset flags
+    for pName, val in pairs(self.flags) do
+      self.pinOut[pName].value = val
+      self.flags[pName] = false
+    end
+  end
 end
 
 return _flowgraph_createNode(C)

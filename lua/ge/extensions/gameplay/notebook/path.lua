@@ -591,6 +591,7 @@ function C:findNClosestPacenotes(pos, n)
 
   -- Retrieve the N closest objects
   local closest = {}
+  n = math.min(#self.pacenotes.sorted, n)
   for i = 1, n do
     if distances[i] then  -- Ensure there's an object to add
       table.insert(closest, distances[i].pacenote)

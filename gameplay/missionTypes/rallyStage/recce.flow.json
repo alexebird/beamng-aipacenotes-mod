@@ -2,7 +2,7 @@
   "activeGraphId":1,
   "authors":"birdman",
   "currentGraphID":1,
-  "date":1704622212,
+  "date":1704868415,
   "debugEnabled":false,
   "description":"Recce mode tries to mimic freeroam, only with the addition of playing pacenote audio like the rallyStage missionType.",
   "difficulty":40,
@@ -13,16 +13,44 @@
       "dirty":false,
       "links":[
         [
+          10,
+          "flow",
+          8,
+          "flow",
+          false
+        ],
+        [
+          10,
+          "rallyManager",
+          8,
+          "rallyManager",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          8,
+          "noteSearch",
+          true
+        ],
+        [
           2,
           "flow",
-          34,
+          10,
           "flow",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          10,
+          "reset",
           false
         ],
         [
           35,
           "vehId",
-          34,
+          10,
           "vehId",
           false
         ],
@@ -34,23 +62,72 @@
           false
         ],
         [
+          10,
+          "rallyManager",
+          15,
+          "rallyManager",
+          false
+        ],
+        [
           2,
+          "enterState",
+          22,
+          "reset",
+          true
+        ],
+        [
+          10,
+          "rallyManager",
+          22,
+          "rallyManager",
+          false
+        ],
+        [
+          10,
           "flow",
-          20,
+          21,
           "flow",
           false
         ],
         [
           2,
           "enterState",
-          20,
+          21,
           "reset",
+          true
+        ],
+        [
+          10,
+          "rallyManager",
+          21,
+          "rallyManager",
+          false
+        ],
+        [
+          10,
+          "flow",
+          23,
+          "flow",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          23,
+          "reset",
+          false
+        ],
+        [
+          2,
+          "flow",
+          34,
+          "flow",
           false
         ],
         [
           35,
           "vehId",
-          20,
+          34,
           "vehId",
           false
         ]
@@ -76,6 +153,59 @@
             190
           ],
           "type":"events/onUpdate"
+        },
+        "8":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "currLap":false,
+              "flow":false,
+              "lapChange":false,
+              "maxLap":false,
+              "noteSearch":false,
+              "rallyManager":false
+            },
+            "p_out":{}
+          },
+          "pos":[
+            290,
+            78
+          ],
+          "type":"gameplay/aiPacenotes/enqueuePacenotes"
+        },
+        "10":{
+          "data":{},
+          "dynamicMode":"once",
+          "hardcodedPins":{
+            "damageThresh":{
+              "type":"number",
+              "value":1000
+            },
+            "searchN":{
+              "type":"number",
+              "value":5
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "damageThresh":false,
+              "flow":false,
+              "raceData":false,
+              "reset":false,
+              "searchN":false,
+              "vehId":false
+            },
+            "p_out":{
+              "flow":false,
+              "rallyManager":false
+            }
+          },
+          "pos":[
+            -206,
+            -62
+          ],
+          "type":"gameplay/aiPacenotes/loader"
         },
         "13":{
           "data":{},
@@ -103,32 +233,108 @@
           "transitionName":"reset",
           "type":"states/transition"
         },
-        "20":{
+        "15":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "rallyManager":false
+            },
+            "p_out":{}
+          },
+          "pos":[
+            836,
+            162
+          ],
+          "type":"gameplay/aiPacenotes/finish"
+        },
+        "21":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "rallyManager":false,
+              "reset":false
+            },
+            "p_out":{}
+          },
+          "pos":[
+            304,
+            -76
+          ],
+          "type":"gameplay/aiPacenotes/audioPlayer"
+        },
+        "22":{
+          "data":{
+            "bigFinishMsg":true,
+            "playSounds":true,
+            "useImgui":false,
+            "useMessages":false,
+            "visualCountdown":true
+          },
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "countdownMsg":{
+              "type":"string",
+              "value":"%d"
+            },
+            "duration":{
+              "type":"number",
+              "value":3
+            },
+            "finishMsgDuration":{
+              "type":"number",
+              "value":1
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "countdownMsg":true,
+              "duration":false,
+              "finishMsg":false,
+              "finishMsgDuration":true,
+              "flow":false,
+              "rallyManager":false,
+              "reset":false
+            },
+            "p_out":{
+              "finished":false,
+              "flow":false,
+              "ongoing":false
+            }
+          },
+          "pos":[
+            318,
+            302
+          ],
+          "type":"gameplay/aiPacenotes/countdown"
+        },
+        "23":{
           "data":{},
           "dynamicMode":"repeat",
           "hardcodedPins":{
-            "recce":{
-              "type":"bool",
-              "value":true
+            "frames":{
+              "type":"number",
+              "value":10
             }
           },
           "hiddenPins":{
             "p_in":{
               "flow":false,
-              "raceData":false,
-              "recce":false,
-              "reset":false,
-              "vehId":false
+              "frames":true,
+              "reset":false
             },
             "p_out":{
               "flow":false
             }
           },
           "pos":[
-            -108,
-            120
+            -4,
+            246
           ],
-          "type":"gameplay/aiPacenotes/vocalizer"
+          "type":"logic/frameDelay"
         },
         "34":{
           "data":{},
@@ -159,8 +365,8 @@
             }
           },
           "pos":[
-            -452,
-            428
+            -263,
+            218
           ],
           "type":"scene/getPlayerVehicle"
         }
@@ -172,10 +378,10 @@
         "list":{}
       },
       "viewPos":[
-        -675.99993896484375000000,
-        24.74999427795410156250
+        -418.00009155273437500000,
+        -92.83341979980468750000
       ],
-      "viewZoom":0.74999994039535522461
+      "viewZoom":0.50000000000000000000
     },
     "3":{
       "description":"This is the description for graph States",
@@ -183,14 +389,14 @@
       "isStateGraph":true,
       "links":[
         [
-          11,
+          37,
           "success",
           4,
           "flow",
           false
         ],
         [
-          37,
+          11,
           "success",
           4,
           "flow",
@@ -296,8 +502,8 @@
             ]
           ],
           "pos":[
-            724,
-            22
+            660,
+            -32
           ],
           "transitionName":"",
           "type":"states/stateExit"
@@ -394,8 +600,8 @@
         "list":{}
       },
       "viewPos":[
-        -80.50006103515625000000,
-        -27.74999809265136718750
+        -272.50006103515625000000,
+        -84.75000762939453125000
       ],
       "viewZoom":0.74999994039535522461
     },
@@ -527,8 +733,8 @@
         "list":{}
       },
       "viewPos":[
-        -294,
-        -77
+        0,
+        0
       ],
       "viewZoom":1
     },

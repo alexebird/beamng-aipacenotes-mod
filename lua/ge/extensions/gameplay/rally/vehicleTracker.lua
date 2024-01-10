@@ -3,7 +3,9 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local C = {}
 local logTag = 'aipacenotes'
 
-function C:init(vehId, damageThreshold, raceData)
+function C:init(rallyManager, vehId, damageThreshold, raceData)
+  self.rallyManager = rallyManager
+
   self.vehId = vehId
   self.damageThreshold = damageThreshold or 1
 

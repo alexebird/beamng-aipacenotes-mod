@@ -1,18 +1,11 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
-local im  = ui_imgui
-local logTag = 'aipacenotes-fg'
-
-local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
-
 local C = {}
+
+local logTag = 'aipacenotes-fg'
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 C.name = 'AI Pacenotes Vocalizer'
 C.description = 'Plays pacenotes from a notebook.'
-
-C.color = im.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
+C.color = re_util.aip_fg_color
 
 C.pinSchema = {
   { dir = 'in', type = 'flow',   name = 'flow',  description = 'Inflow for this node.' },
@@ -21,6 +14,7 @@ C.pinSchema = {
   { dir = 'in', type = 'table',  name = 'raceData', tableType = 'raceData', description = 'Race data.'},
   -- { dir = 'in', type = 'bool',   name = 'noteSearch', description = 'Reset completed pacenotes to near car.', default = false},
   { dir = 'in', type = 'flow',   name = 'noteSearch', description = 'Reset completed pacenotes to near car.', impulse = true },
+  -- { dir = 'in', type = 'flow',   name = 'finish', description = 'On finish', impulse = true },
 
   { dir = 'in', type = 'flow',   name = 'lapChange', description = 'When a lap changes.', impulse = true },
   { dir = 'in', type = 'number', name = 'currLap', description = 'Current lap number.'},
@@ -84,10 +78,6 @@ function C:getNotebook()
   self.notebook = notebook
 end
 
--- function C:onNodeReset()
-  -- self:resetState()
--- end
-
 -- 1. get mission dir
 -- 2. get aipacenotes/mission.settings.json
 -- 3. get notebook from settings
@@ -108,7 +98,7 @@ function C:initialSetup()
     return
   end
 
-  self.missionSettings.fgNode = { missionDir = self.missionDir }
+  self.missionSettings.dynamic = { missionDir = self.missionDir }
 
   self.codriver = self.notebook:getCodriverByName(self.missionSettings.notebook.codriver)
   if not self.codriver then
@@ -141,6 +131,21 @@ function C:intersectCorners(pacenote)
   else
     return false
   end
+end
+
+function C:playAudio(pacenote_name)
+  if self.notebook then
+    local pacenote = self.notebook:getStaticPacenoteByName(pacenote_name)
+    if pacenote then
+      local fgNote = pacenote:asFlowgraphData(self.missionSettings, self.codriver)
+      self.audioManager:enqueuePauseSecs(0.5)
+      self.audioManager:enqueuePacenote(fgNote)
+    end
+  end
+end
+
+function C:handleFinish()
+  self:playAudio('finish_1')
 end
 
 function C:handleLapChange()
@@ -185,7 +190,7 @@ function C:handleWork()
 
   if self.vehicleTracker:didJustHaveDamage() and self.notebook and self.missionSettings and self.codriver then
     self.audioManager:resetAudioQueue()
-    self.audioManager:playDamageSfx(self.notebook, self.missionSettings, self.codriver)
+    self.audioManager:enqueueDamageSfx(self.notebook, self.missionSettings, self.codriver)
   else
     self.audioManager:playNextInQueue()
   end
@@ -206,6 +211,10 @@ function C:work(args)
 
   if self.pinIn.noteSearch.value then
     self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
+  end
+
+  if self.pinIn.finish.value then
+    self:handleFinish()
   end
 
   if self.pinIn.flow.value then
