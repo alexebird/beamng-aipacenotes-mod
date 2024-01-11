@@ -7,13 +7,16 @@ local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
-C.windowDescription = 'Mission Settings'
 
 local filenamesNamesSorted = {}
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.settings = nil
+end
+
+function C:windowDescription()
+  return 'Mission Settings'
 end
 
 function C:setPath(path)
@@ -50,8 +53,7 @@ end
 
 function C:loadCodrivers()
   local folder = self.rallyEditor.getMissionDir()
-  local full_filename = folder..re_util.notebooksPath..self.settings.notebook.filename
-  print(full_filename)
+  local full_filename = folder..'/'..re_util.notebooksPath..'/'..self.settings.notebook.filename
   local json = jsonReadFile(full_filename)
   if not json then
     log('E', logTag, 'couldnt find notebook file')
@@ -61,7 +63,6 @@ function C:loadCodrivers()
 
   local codrivers = {}
   for _,codriver in ipairs(notebook.codrivers.sorted) do
-    print(codriver.name)
     table.insert(codrivers, codriver.name)
   end
   table.sort(codrivers)
@@ -84,11 +85,18 @@ function C:notebookFilenameSelector()
 
     for _, fname in ipairs(basenames) do
       local current = self.settings.notebook.filename == fname
+      if current then
+        self.codrivers = self:loadCodrivers()
+      end
       if im.Selectable1(((current and '[current] ') or '')..fname, current) then
         self.settings.notebook.filename = fname
         self.codrivers = self:loadCodrivers()
         self.settings.notebook.codriver = self.codrivers[1] or '<none>'
         self.settings:write()
+
+        local notebookFname = editor_rallyEditor.detectNotebookToLoad()
+        log('I', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
+        editor_rallyEditor.loadNotebook(notebookFname)
       end
     end
 

@@ -8,13 +8,16 @@ local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
-C.windowDescription = 'Static Pacenotes'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
 
-  self.columnsBasic = {}
+  -- self.columnsBasic = {}
   -- self.columnsBasic.selected = im.IntPtr(-1)
+end
+
+function C:windowDescription()
+  return 'Static Pacenotes'
 end
 
 -- this is the notebook. why am I still calling it a path???
@@ -28,23 +31,23 @@ function C:selected()
 
   self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
 
-  local names = {}
-  local notes = {}
-  local fnames = {}
-  self.codriver = self.path:getCodriverByName(self.settings.notebook.codriver)
-  for i,spn in ipairs(self.path.static_pacenotes.sorted) do
-    table.insert(names, spn.name)
-    table.insert(notes, spn:joinedNote(self.path._default_note_lang))
-    if codriver then
-      table.insert(fnames, spn:audioFname(codriver))
-    else
-      table.insert(fnames, '')
-    end
-  end
+  -- local names = {}
+  -- local notes = {}
+  -- local fnames = {}
+  -- self.codriver = self.path:getCodriverByName(self.settings.notebook.codriver)
+  -- for i,spn in ipairs(self.path.static_pacenotes.sorted) do
+  --   table.insert(names, spn.name)
+  --   table.insert(notes, spn:joinedNote(self.path._default_note_lang))
+  --   if self.codriver then
+  --     table.insert(fnames, spn:audioFname(self.codriver))
+  --   else
+  --     table.insert(fnames, '')
+  --   end
+  -- end
 
-  self.columnsBasic.names = im.ArrayCharPtrByTbl(names)
-  self.columnsBasic.notes = im.ArrayCharPtrByTbl(notes)
-  self.columnsBasic.paths = im.ArrayCharPtrByTbl(fnames)
+  -- self.columnsBasic.names = im.ArrayCharPtrByTbl(names)
+  -- self.columnsBasic.notes = im.ArrayCharPtrByTbl(notes)
+  -- self.columnsBasic.paths = im.ArrayCharPtrByTbl(fnames)
 
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
@@ -65,31 +68,54 @@ function C:draw(mouseInfo)
   im.Text("These are special pacenotes for internal use that are automatically created.")
   for _ = 1,5 do im.Spacing() end
 
-  im.Columns(3, "spn_columns")
+  im.Columns(4, "spn_columns")
   im.Separator()
-  im.Text("Name")       im.NextColumn()
-  im.Text("Note Text")  im.NextColumn()
-  im.Text("File")       im.NextColumn()
+
+  im.Text("Name")
+  im.SetColumnWidth(0, 100)
+  im.NextColumn()
+
+  im.Text("Note Text")
+  im.SetColumnWidth(1, 400)
+  im.NextColumn()
+
+  im.Text("Language")
+  im.SetColumnWidth(2, 100)
+  im.NextColumn()
+
+  im.Text("Files")
+  im.SetColumnWidth(3, 400)
+  im.NextColumn()
+
   im.Separator()
+
+  local lang = self.path._default_note_lang
 
   for _,spn in ipairs(self.path.static_pacenotes.sorted) do
-    im.Text(spn.name)                                      im.NextColumn()
-    im.Text(spn:joinedNote(self.path._default_note_lang))  im.NextColumn()
+    im.Text(spn.name)
+    im.NextColumn()
+    im.Text(spn:joinedNote(lang))
+    im.NextColumn()
+    im.Text(lang)
+    im.NextColumn()
 
-    local fname = ''
-    local tooltipStr = ''
-    local voicePlayClr = nil
-    local file_exists = false
-    if self.codriver then
-      fname = spn:audioFname(self.codriver)
+    for _,codriver in ipairs(self.path.codrivers.sorted) do
+      local fname = ''
+      local tooltipStr = ''
+      local voicePlayClr = nil
+      local file_exists = false
+
+      fname = spn:audioFname(codriver)
       if re_util.fileExists(fname) then
         file_exists = true
-        tooltipStr = "Play pacenote audio file:\n\n"..fname
+        tooltipStr = "Codriver: "..codriver.name.."\nPlay pacenote audio file:\n"..fname
       else
         voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
-        tooltipStr = "Pacenote audio file not found:\n\n"..fname
+        tooltipStr = "Codriver: "..codriver.name.."\nPacenote audio file not found:\n"..fname
       end
 
+      im.Text('[')
+      im.SameLine()
       if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
         if file_exists then
           local audioObj = re_util.buildAudioObjPacenote(fname)
@@ -98,10 +124,15 @@ function C:draw(mouseInfo)
       end
       im.tooltip(tooltipStr)
       im.SameLine()
+      im.Text(codriver.name)
+      im.SameLine()
+      im.Text(']')
+      im.SameLine()
     end
-    im.Text(fname)
+
+    -- im.Text(fname)
     im.NextColumn()
-    im.tooltip(fname)
+    -- im.tooltip(fname)
   end
 
   im.Columns(1)

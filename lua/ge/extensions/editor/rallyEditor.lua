@@ -54,6 +54,10 @@ local function strip_basename(thepath)
     thepath = thepath:sub(1, -2)
   end
   local dirname, fn, e = path.split(thepath)
+
+  if dirname:sub(-1) == "/" then
+    dirname = dirname:sub(1, -2)
+  end
   return dirname
 end
 
@@ -81,7 +85,7 @@ local function saveNotebook(notebook, savePath)
   local a, fn2, b = path.splitWithoutExt(previousFilename, true)
   notebook._fnWithoutExt = fn2
 
-  local settingsFname = getMissionDir()..'aipacenotes/mission.settings.json'
+  local settingsFname = getMissionDir()..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
   if not FS:fileExists(settingsFname) then
     log('I', logTag, 'creating mission.settings.json at '..settingsFname)
     local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
@@ -288,12 +292,17 @@ local function drawEditorGui()
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
         local flags = nil
-        if changedWindow and currentWindow.windowDescription == window.windowDescription then
+        if changedWindow and currentWindow:windowDescription() == window:windowDescription() then
           flags = im.TabItemFlags_SetSelected
           changedWindow = false
         end
-        if im.BeginTabItem(window.windowDescription, nil, flags) then
-          if currentWindow.windowDescription ~= window.windowDescription then
+        local hasError = false
+        if window.isValid then
+          hasError = not window:isValid()
+        end
+        local tabName = (hasError and '[!] ' or '')..window:windowDescription()..'###'..window:windowDescription()
+        if im.BeginTabItem(tabName, nil, flags) then
+          if currentWindow:windowDescription() ~= window:windowDescription() then
             select(window)
           end
           im.EndTabItem()
@@ -519,7 +528,7 @@ local function getPrefFlipSnaproadNormal()
 end
 
 local function loadMissionSettings(folder)
-  local settingsFname = folder..'/aipacenotes/mission.settings.json'
+  local settingsFname = folder..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
   local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
 
   if FS:fileExists(settingsFname) then
@@ -532,6 +541,8 @@ local function loadMissionSettings(folder)
     end
   end
 
+  -- log("D", logTag, dumps(settings))
+
   return settings
 end
 
@@ -539,31 +550,40 @@ local function listNotebooks(folder)
   if not folder then
     folder = getMissionDir()
   end
-  local notebooksFullPath = folder..re_util.notebooksPath
+  local notebooksFullPath = folder..'/'..re_util.notebooksPath
   local paths = {}
+  log('I', logTag, 'loading all notebook names from '..notebooksFullPath)
   local files = FS:findFiles(notebooksFullPath, '*.notebook.json', -1, true, false)
   for _,fname in pairs(files) do
     table.insert(paths, fname)
   end
   table.sort(paths)
+
+  log("D", logTag, dumps(paths))
+
   return paths
 end
 
 local function detectNotebookToLoad(folder)
+  if not folder then
+    folder = getMissionDir()
+  end
   local settings = loadMissionSettings(folder)
 
   -- step 1: detect the notebook name from settings file
   -- if mission.settings.json exists, then read it and use the specified notebook fname.
-  -- local notebookBasename = nil
   local notebooksFullPath = folder..'/'..re_util.notebooksPath
   local notebookFname = nil
 
-  if settings.notebook.filename then
-    local settingsAbsName = notebooksFullPath..settings.notebook.filename
+  if settings and settings.notebook and settings.notebook.filename then
+    local settingsAbsName = notebooksFullPath..'/'..settings.notebook.filename
+    -- log('D', logTag, 'step 1: '..tostring(settingsAbsName))
     if FS:fileExists(settingsAbsName) then
       notebookFname = settingsAbsName
     end
   end
+
+  -- log('D', logTag, 'step 1: '..tostring(notebookFname))
 
   -- step 2: if cant detect from settings file, or it doesnt exist, detect from listing the dir
   if not notebookFname then
@@ -577,12 +597,16 @@ local function detectNotebookToLoad(folder)
     notebookFname = paths[#paths]
   end
 
+  -- log('D', logTag, 'step 2: '..tostring(notebookFname))
+
   -- step 3: if mission settings file doesnt exist, then use the dir-listed name and create the settings file, including reading the first co-driver name.
   -- although, that should be done after the notebook file is read, so maybe this should be done in the rally editor.
   if not notebookFname then
     local defaultNotebookBasename = settings:defaultSettings().notebook.filename
     notebookFname = notebooksFullPath..defaultNotebookBasename
   end
+
+  log('D', logTag, 'detected notebook: '..notebookFname)
 
   return notebookFname
 end

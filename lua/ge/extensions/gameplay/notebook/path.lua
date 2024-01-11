@@ -46,6 +46,29 @@ function C:init(name)
 
   self._hover_waypoint_id = nil
   self._default_note_lang = 'english'
+
+  self.validation_issues = {}
+end
+
+function C:validate()
+  self.validation_issues = {}
+
+  local codriverNameSet = {}
+  local uniqueCount = 0
+  for _,codriver in ipairs(self.codrivers.sorted) do
+    if not codriverNameSet[codriver.name] then
+      -- Count only if the name hasn't been encountered before
+      uniqueCount = uniqueCount + 1
+      codriverNameSet[codriver.name] = true
+    end
+  end
+  if uniqueCount < #self.codrivers.sorted then
+    table.insert(self.validation_issues, 'Duplicate codriver names')
+  end
+end
+
+function C:is_valid()
+  return #self.validation_issues == 0
 end
 
 local function extractTrailingNumber(str)
@@ -394,14 +417,21 @@ end
 function C:getLanguages()
   local lang_set = {}
   for _, codriver in pairs(self.codrivers.objects) do
-    lang_set[codriver.language] = codriver
+    if not lang_set[codriver.language] then
+      lang_set[codriver.language] = {}
+    end
+    table.insert(lang_set[codriver.language], codriver)
   end
   local languages = {}
-  for lang, codriver in pairs(lang_set) do
-    table.insert(languages, { language = lang , codriver = codriver })
+  for lang, codrivers in pairs(lang_set) do
+    table.insert(languages, { language = lang , codrivers = codrivers })
   end
   table.sort(languages, function(a, b)
-    return a.lang < b.lang
+    if a.lang and b.lang then
+      return a.lang < b.lang
+    else
+      return false
+    end
   end)
   return languages
 end
@@ -424,14 +454,16 @@ function C:normalizeNotes(lang)
 
     note = stripWhitespace(note)
 
-    if note ~= '' and note ~= re_util.unknown_transcript_str then
-      -- add punction if not present
-      local last_char = note:sub(-1)
-      if  not re_util.hasPunctuation(last_char) then
-        note = note .. "?"
-      end
+    if note ~= re_util.autofill_blocker then
+      if note ~= '' and note ~= re_util.unknown_transcript_str then
+        -- add punction if not present
+        local last_char = note:sub(-1)
+        if  not re_util.hasPunctuation(last_char) then
+          note = note .. "?"
+        end
 
-      pacenote:setNoteFieldNote(lang, note)
+        pacenote:setNoteFieldNote(lang, note)
+      end
     end
   end
 end
@@ -520,19 +552,23 @@ function C:autofillDistanceCalls()
   local lang = self._default_note_lang
 
   -- first clear everything
-  for i,pacenote in ipairs(self.pacenotes.sorted) do
-    pacenote:setNoteFieldBefore(lang, '')
-    pacenote:setNoteFieldAfter(lang, '')
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
+    if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then
+      pacenote:setNoteFieldBefore(lang, '')
+    end
+    if pacenote:getNoteFieldAfter(lang) ~= re_util.autofill_blocker then
+      pacenote:setNoteFieldAfter(lang, '')
+    end
   end
 
   local next_prepend = ''
 
   for i,pacenote in ipairs(self.pacenotes.sorted) do
-    local note = pacenote:getNoteFieldNote(lang)
-
     -- Apply any prepended text from the previous iteration
     if next_prepend ~= '' then
-      pacenote:setNoteFieldBefore(lang, next_prepend)
+      if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then
+        pacenote:setNoteFieldBefore(lang, next_prepend)
+      end
       next_prepend = ''
     end
 
@@ -548,7 +584,9 @@ function C:autofillDistanceCalls()
       elseif dist <= 40 then
         next_prepend = "and"
       else
-        pacenote:setNoteFieldAfter(lang, dist_str)
+        if pacenote:getNoteFieldAfter(lang) ~= re_util.autofill_blocker then
+          pacenote:setNoteFieldAfter(lang, dist_str)
+        end
       end
     end
 

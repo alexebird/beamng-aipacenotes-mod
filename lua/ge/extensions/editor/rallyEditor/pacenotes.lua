@@ -20,7 +20,6 @@ local waypointRadius = im.FloatPtr(0)
 
 
 local C = {}
-C.windowDescription = 'Pacenotes'
 
 local function selectPacenoteUndo(data)
   data.self:selectPacenote(data.old)
@@ -55,6 +54,17 @@ function C:init(rallyEditor)
   self.dragMode = dragModes.simple
 
   self._insertMode = false
+
+  self.notes_valid = true
+  self.validation_issues = {}
+end
+
+function C:windowDescription()
+  return 'Pacenotes'
+end
+
+function C:isValid()
+  return self.notes_valid and #self.validation_issues == 0
 end
 
 function C:setPath(path)
@@ -951,12 +961,58 @@ end
 --   end
 -- end
 
+function C:validate()
+  self.validation_issues = {}
+  self.notes_valid = true
+  local invalid_notes_count = 0
+
+  for _,note in ipairs(self.path.pacenotes.sorted) do
+    note:validate()
+    if not note:is_valid() then
+      self.notes_valid = false
+      invalid_notes_count = invalid_notes_count + 1
+    end
+  end
+
+  if not self.notes_valid then
+    table.insert(self.validation_issues, tostring(invalid_notes_count)..' pacenote(s) have issues')
+  end
+
+  for _,lang_data in ipairs(self.path:getLanguages()) do
+    local language = lang_data.language
+    local prev = nil
+    for _,curr in ipairs(self.path.pacenotes.sorted) do
+      if prev ~= nil then
+        local prev_after = prev:getNoteFieldAfter(language)
+        local curr_before = curr:getNoteFieldBefore(language)
+        if prev_after == '' and curr_before == '' then
+          table.insert(self.validation_issues, 'missing distance call for '..prev.name..' -> '..curr.name..'. Use "#" if you want none.')
+        end
+      end
+      prev = curr
+    end
+  end
+end
+
 function C:drawPacenotesList()
   if not self.path then return end
 
   local notebook = self.path
+  self:validate()
 
-  im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
+
+  if self:isValid() then
+    im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
+  else
+    im.HeaderText("[!] "..tostring(#notebook.pacenotes.sorted).." Pacenotes")
+    local issues = "Issues (".. (#self.validation_issues) .."):\n"
+    for _, issue in ipairs(self.validation_issues) do
+      issues = issues..'- '..issue..'\n'
+    end
+    im.Text(issues)
+    im.Separator()
+  end
+
   -- im.SameLine()
   if im.Button("Cleanup names") then
     self:cleanupPacenoteNames()
@@ -988,21 +1044,12 @@ function C:drawPacenotesList()
   end
   im.tooltip("Autofill distance calls.")
 
-  local function mkNoteName(note)
-    note:validate()
-    if note:is_valid() then
-      return note.name
-    else
-      return '[!] '..note.name
-    end
-  end
-
   -- vertical space
   for i = 1,5 do im.Spacing() end
 
   im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
-    if im.Selectable1(mkNoteName(note), note.id == self.pacenote_index) then
+    if im.Selectable1( note:nameForSelect(), note.id == self.pacenote_index) then
       editor.history:commitAction("Select Pacenote",
         {old = self.pacenote_index, new = note.id, self = self},
         selectPacenoteUndo, selectPacenoteRedo)
@@ -1088,7 +1135,7 @@ function C:drawPacenotesList()
     editEnded = im.BoolPtr(false)
     for i,lang_data in ipairs(self.path:getLanguages()) do
       local language = lang_data.language
-      local codriver = lang_data.codriver
+      local codrivers = lang_data.codrivers
       language_form_fields[language] = language_form_fields[language] or {}
       local fields = language_form_fields[language]
 
@@ -1098,25 +1145,29 @@ function C:drawPacenotesList()
 
       im.Text(language..": ")
 
-      local fname = note:audioFname(codriver)
       local file_exists = false
       local voicePlayClr = nil
       local tooltipStr = nil
-      if re_util.fileExists(fname) then
-        file_exists = true
-        tooltipStr = "Play pacenote audio file:\n\n"..fname
-      else
-        voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
-        tooltipStr = "Pacenote audio file not found:\n\n"..fname
-      end
-      if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
-        if file_exists then
-          local audioObj = re_util.buildAudioObjPacenote(fname)
-          re_util.playPacenote(audioObj)
+      local fname = nil
+
+      for _,codriver in ipairs(codrivers) do
+        fname = note:audioFname(codriver)
+        if re_util.fileExists(fname) then
+          file_exists = true
+          tooltipStr = "Codriver: "..codriver.name.."\nPlay pacenote audio file:\n"..fname
+        else
+          voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
+          tooltipStr = "Codriver: "..codriver.name.."\nPacenote audio file not found:\n"..fname
         end
+        if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
+          if file_exists then
+            local audioObj = re_util.buildAudioObjPacenote(fname)
+            re_util.playPacenote(audioObj)
+          end
+        end
+        im.tooltip(tooltipStr)
+        im.SameLine()
       end
-      im.tooltip(tooltipStr)
-      im.SameLine()
 
       voicePlayClr = nil
       file_exists = false
@@ -1160,7 +1211,7 @@ function C:drawPacenotesList()
       if editEnded[0] then
         self:handleNoteFieldEdit(note, language, 'after', fields.after)
       end
-    end
+    end -- / self.path:getLanguages()
 
     self:drawWaypointList(note)
 

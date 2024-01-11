@@ -21,7 +21,6 @@ local codriverLanguageText = im.ArrayChar(1024, "")
 local voiceNamesSorted = {}
 
 local C = {}
-C.windowDescription = 'Notebook'
 
 local function selectCodriverUndo(data)
   data.self:selectCodriver(data.old)
@@ -44,6 +43,24 @@ function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.codriver_index = nil
   -- self.mouseInfo = {}
+  self.valid = true
+end
+
+function C:windowDescription()
+  return 'Notebook'
+end
+
+function C:isValid()
+  return self.valid
+end
+
+function C:validate()
+  self.valid = true
+
+  self.path:validate()
+  if not self.path:is_valid() then
+    self.valid = false
+  end
 end
 
 function C:setPath(path)
@@ -115,10 +132,23 @@ end
 function C:drawNotebook()
   if not self.path then return end
 
-  im.HeaderText("Notebook Info")
+  self:validate()
+
+  if self:isValid() then
+    im.HeaderText("Notebook Info")
+  else
+    im.HeaderText("[!] Notebook Info")
+    local issues = "Issues (".. (#self.path.validation_issues) .."):\n"
+    for _, issue in ipairs(self.path.validation_issues) do
+      issues = issues..'- '..issue..'\n'
+    end
+    im.Text(issues)
+    im.Separator()
+  end
+
   im.Text("Current Notebook: #" .. self.path.id)
 
-  for i = 1,5 do im.Spacing() end
+  for _ = 1,5 do im.Spacing() end
 
   local editEnded = im.BoolPtr(false)
   editor.uiInputText("Name", notebookNameText, nil, nil, nil, nil, editEnded)

@@ -85,17 +85,17 @@ function C:joinedNote(lang)
   end
 
   local before = lang_data[self.noteFields.before]
-  if before and before ~= '' then
+  if before and before ~= '' and before ~= re_util.autofill_blocker then
     txt = txt .. before
   end
 
   local note = lang_data[self.noteFields.note]
-  if note and note ~= '' then
+  if note and note ~= '' and note ~= re_util.autofill_blocker then
     txt = txt .. ' ' .. note
   end
 
   local after = lang_data[self.noteFields.after]
-  if after and after ~= '' then
+  if after and after ~= '' and after ~= re_util.autofill_blocker then
     txt = txt .. ' ' .. after
   end
 
@@ -217,20 +217,29 @@ function C:validate()
 
   for note_lang, note_data in pairs(self.notes) do
     local note_field = self:getNoteFieldNote(note_lang)
-    -- log('D', 'wtf', dumps(note_field))
-    local last_char = note_field:sub(-1)
-    if note_field == '' then
-      table.insert(self.validation_issues, 'missing note for language '..note_lang)
-    elseif note_field == re_util.unknown_transcript_str then
-      table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' note for language "..note_lang)
-    elseif not re_util.hasPunctuation(last_char) then
-      table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Normalize Note Text' button)")
+    if note_field ~= re_util.autofill_blocker then
+      local last_char = note_field:sub(-1)
+      if note_field == '' then
+        table.insert(self.validation_issues, 'missing note for language '..note_lang)
+      elseif note_field == re_util.unknown_transcript_str then
+        table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' note for language "..note_lang)
+      elseif not re_util.hasPunctuation(last_char) then
+        table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Normalize Note Text' button)")
+      end
     end
   end
 end
 
 function C:is_valid()
   return #self.validation_issues == 0
+end
+
+function C:nameForSelect()
+  if self:is_valid() then
+    return self.name
+  else
+    return '[!] '..self.name
+  end
 end
 
 function C:getCornerStartWaypoint()
@@ -842,7 +851,7 @@ function C:audioFname(codriver, missionDir)
   local noteStr = self:joinedNote(codriverLang)
   local pacenoteHash = re_util.pacenote_hash(noteStr)
 
-  local fname = missionDir ..''.. re_util.notebooksPath .. 'generated_pacenotes/' .. notebookName .. '/' .. codriverStr .. '/pacenote_' .. pacenoteHash .. '.ogg'
+  local fname = missionDir..'/'..re_util.notebooksPath..'/generated_pacenotes/'..notebookName..'/'..codriverStr..'/pacenote_'..pacenoteHash..'.ogg'
 
   return fname
 end

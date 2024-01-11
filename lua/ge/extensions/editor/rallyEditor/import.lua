@@ -8,7 +8,6 @@ local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
-C.windowDescription = 'Voice Import'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
@@ -16,6 +15,10 @@ function C:init(rallyEditor)
   self.default_transcript = "/settings/aipacenotes/transcript.json"
   self.transcript = nil
   self.default_notebooks_dir = "/gameplay/aipacenotes"
+end
+
+function C:windowDescription()
+  return 'Voice Import'
 end
 
 function C:setPath(path)

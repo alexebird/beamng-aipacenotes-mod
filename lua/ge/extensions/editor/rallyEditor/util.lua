@@ -9,8 +9,11 @@ local logTag = 'aipacenotes'
 local M = {}
 
 
+local autofill_blocker = '#'
 local unknown_transcript_str = '[unknown]'
-local notebooksPath = 'aipacenotes/notebooks/'
+local aipPath = 'aipacenotes'
+local notebooksPath = aipPath..'/notebooks'
+local missionSettingsFname = 'mission.settings.json'
 local default_notebook_name = 'primary'
 local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
@@ -170,7 +173,7 @@ local function detectMissionIdHelper()
 end
 
 local function getMissionSettingsHelper(missionDir)
-  local settingsFname = missionDir..'/aipacenotes/mission.settings.json'
+  local settingsFname = missionDir..'/'..aipPath..'/'..missionSettingsFname
   if not FS:fileExists(settingsFname) then
     return nil, "mission settings file not found: "..settingsFname
   end
@@ -187,7 +190,7 @@ local function getMissionSettingsHelper(missionDir)
 end
 
 local function getNotebookHelper(missionDir, missionSettings)
-  local notebookFname = missionDir..'/'..notebooksPath..missionSettings.notebook.filename
+  local notebookFname = missionDir..'/'..notebooksPath..'/'..missionSettings.notebook.filename
   if not FS:fileExists(notebookFname) then
     return nil, "notebook file not found: "..notebookFname
   end
@@ -220,8 +223,11 @@ M.detectMissionIdHelper = detectMissionIdHelper
 M.getMissionSettingsHelper = getMissionSettingsHelper
 M.getNotebookHelper = getNotebookHelper
 
+M.autofill_blocker = autofill_blocker
 M.unknown_transcript_str = unknown_transcript_str
+M.aipPath = aipPath
 M.notebooksPath = notebooksPath
+M.missionSettingsFname = missionSettingsFname
 M.default_notebook_name = default_notebook_name
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
