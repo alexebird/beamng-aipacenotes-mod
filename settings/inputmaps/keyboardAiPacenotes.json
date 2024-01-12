@@ -9,10 +9,6 @@
       "control":"g"
     },
     {
-      "action":"rallyEditorFlipSnaproadNormal",
-      "control":"v"
-    },
-    {
       "action":"rallyEditorPacenoteSelectPrev",
       "control":"k"
     },

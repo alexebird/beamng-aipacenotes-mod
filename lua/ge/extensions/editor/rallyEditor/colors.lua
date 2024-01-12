@@ -85,7 +85,7 @@ M.waypoint_clr_sphere_selected = M.clr_white
 M.waypoint_shapeAlpha_hover = 1.0
 M.waypoint_textAlpha_hover = 1.0
 M.waypoint_sphereAlphaReducionForArrowFactor = 0.6
-M.waypoint_shapeAlpha_arrowAdjustFactor = 1.25
+-- M.waypoint_shapeAlpha_arrowAdjustFactor = 1.25
 M.waypoint_shapeAlpha_arrowPlaneAdjustFactor = 0.66
 
 --

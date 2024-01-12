@@ -126,15 +126,24 @@ function C:handleLapChange(currLap, maxLap)
   end
 end
 
-function C:intersectCorners(fgPacenote)
-  if not fgPacenote then return false end
+function C:intersectCorners(pacenote)
+  if not pacenote then return false end
   local prevCorners = self.vehicleTracker:getPreviousCorners()
   local currCorners = self.vehicleTracker:getCurrentCorners()
   if prevCorners and currCorners then
-    return fgPacenote.pacenote:intersectCorners(prevCorners, currCorners)
+    return pacenote:intersectCorners(prevCorners, currCorners)
   else
     return false
   end
+end
+
+function C:shouldPlay(pacenote)
+  local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
+  if err then
+    log('E', logTag, 'error in pacenote:playbackAllowed(): '..err)
+    allowed = true
+  end
+  return allowed and self:intersectCorners(pacenote)
 end
 
 function C:update(dtSim, raceData)
@@ -152,8 +161,10 @@ function C:update(dtSim, raceData)
     -- In this case, there is a vehicle position reset and we need to find where
     -- in the pacenotes list we are.
     for _,pacenote in ipairs(self.closestPacenotes) do
-      if self:intersectCorners(pacenote._cached_fgData) then
-        self.audioManager:enqueuePacenote(pacenote._cached_fgData)
+      if self:intersectCorners(pacenote) then
+        if self:shouldPlay(pacenote) then
+          self.audioManager:enqueuePacenote(pacenote._cached_fgData)
+        end
         -- nextId is not the pacenote.id, its the index in the ordered list of fgPacenotes.
         for i,pnData in ipairs(self.fgPacenotes) do
           if pnData.id == pacenote.id then
@@ -168,8 +179,10 @@ function C:update(dtSim, raceData)
   else
     -- In this case, we assume the next pacenote is nextId+1
     local fgPacenote = self.fgPacenotes[self.nextId]
-    if self:intersectCorners(fgPacenote) then
-      self.audioManager:enqueuePacenote(fgPacenote)
+    if fgPacenote and self:intersectCorners(fgPacenote.pacenote) then
+      if self:shouldPlay(fgPacenote.pacenote) then
+        self.audioManager:enqueuePacenote(fgPacenote)
+      end
       self.nextId = self.nextId + 1
     end
   end

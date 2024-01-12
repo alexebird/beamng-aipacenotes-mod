@@ -19,6 +19,7 @@ function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or ("Pacenote " .. self.id)
+  self.playback_rules = nil
   -- self.note = nil -- used for interfacing with existing flowgraph race code
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
@@ -340,6 +341,7 @@ function C:onSerialize()
   local ret = {
     oldId = self.id,
     name = self.name,
+    playback_rules = self.playback_rules,
     notes = self.notes,
     metadata = self.metadata,
     segment = self.segment,
@@ -351,6 +353,7 @@ end
 
 function C:onDeserialized(data, oldIdMap)
   self.name = data.name
+  self.playback_rules = data.playback_rules
   self.notes = data.notes
   self.metadata = data.metadata or {}
   self.segment = oldIdMap and oldIdMap[data.segment] or data.segment or -1
@@ -854,6 +857,47 @@ function C:audioFname(codriver, missionDir)
   local fname = missionDir..'/'..re_util.notebooksPath..'/generated_pacenotes/'..notebookName..'/'..codriverStr..'/pacenote_'..pacenoteHash..'.ogg'
 
   return fname
+end
+
+function C:playbackAllowed(currLap, maxLap)
+  local context = { currLap = currLap, maxLap = maxLap }
+  local condition = self.playback_rules
+  log('D', logTag, "playbackAllowed name='"..self.name.."' condition='"..tostring(condition).."' context="..dumps(context))
+
+  -- If condition is nil or empty/whitespace string, return true
+  if condition == nil or condition:match("^%s*$") then
+    return true, nil
+  end
+
+  -- Lowercase the condition for case-insensitive comparison
+  local lowerCondition = condition:lower()
+
+  -- Check for 'true' or 't'
+  if lowerCondition == 'true' or lowerCondition == 't' then
+    return true, nil
+  end
+
+  -- Check for 'false' or 'f'
+  if lowerCondition == 'false' or lowerCondition == 'f' then
+    return false, nil
+  end
+
+  -- Attempt to load the condition as Lua code
+  local func, err = loadstring("return " .. condition)
+  if func then
+    -- Function compiled successfully, now execute it safely
+    setfenv(func, context)
+    local status, result = pcall(func, context)
+    if status then
+      return result, nil
+    else
+      -- Handle runtime error in the function
+      return false, "Runtime error in condition: " .. result
+    end
+  else
+    -- Handle syntax error in the condition
+    return false, "Syntax error in condition: " .. err
+  end
 end
 
 return function(...)

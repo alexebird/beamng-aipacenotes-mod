@@ -2,6 +2,8 @@
   "diagnostics": {
     "globals": [
       "spawn",
+      "intersectsRay_Plane",
+      "intersectsRay_Sphere",
       "be",
       "editor_missionEditor",
       "_flowgraph_createNode",

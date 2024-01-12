@@ -11,6 +11,7 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 -- pacenote form fields
 local pacenoteNameText = im.ArrayChar(1024, "")
+local playbackRulesText = im.ArrayChar(1024, "")
 
 -- waypoint form fields
 local waypointNameText = im.ArrayChar(1024, "")
@@ -165,8 +166,10 @@ function C:selectPacenote(id)
   if id then
     local note = self.path.pacenotes.objects[id]
     pacenoteNameText = im.ArrayChar(1024, note.name)
+    playbackRulesText = im.ArrayChar(1024, note.playback_rules)
   else
     pacenoteNameText = im.ArrayChar(1024, "")
+    playbackRulesText = im.ArrayChar(1024, "")
   end
 end
 
@@ -305,7 +308,8 @@ function C:drawDebugNotebookEntrypoint()
 end
 
 -- args are both vec3's representing a position.
-local function calculateForwardNormal(snap_pos, next_pos, flip)
+local function calculateForwardNormal(snap_pos, next_pos)
+  local flip = false
   local dx = next_pos.x - snap_pos.x
   local dy = next_pos.y - snap_pos.y
   local dz = next_pos.z - snap_pos.z
@@ -366,18 +370,17 @@ function C:handleMouseHold()
         if new_pos then
           wp_sel.pos = new_pos
           if normal_align_pos then
-            local flip = self.rallyEditor.getPrefFlipSnaproadNormal()
-            local rv = calculateForwardNormal(new_pos, normal_align_pos, flip)
+            local rv = calculateForwardNormal(new_pos, normal_align_pos)
             wp_sel.normal = vec3(rv.x, rv.y, rv.z)
           elseif wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
             local note = wp_sel.pacenote
             -- local at = note:getActiveFwdAudioTrigger()
             for _,at in ipairs(note:getAudioTriggerWaypoints()) do
-              local rv = calculateForwardNormal(at.pos, wp_sel.pos, false)
+              local rv = calculateForwardNormal(at.pos, wp_sel.pos)
               at.normal = vec3(rv.x, rv.y, rv.z)
             end
             -- if at then
-            --   local rv = calculateForwardNormal(at.pos, wp_sel.pos, false)
+            --   local rv = calculateForwardNormal(at.pos, wp_sel.pos)
             --   at.normal = vec3(rv.x, rv.y, rv.z)
             -- end
           end
@@ -628,7 +631,7 @@ function C:addMouseWaypointToPacenote()
         if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
           local cs = note:getCornerStartWaypoint()
           if cs then
-            local rv = calculateForwardNormal(data.pos, cs.pos, false)
+            local rv = calculateForwardNormal(data.pos, cs.pos)
             waypoint.normal = vec3(rv.x, rv.y, rv.z)
           end
         end
@@ -918,17 +921,6 @@ function C:cycleDragMode()
   -- log('D', logTag, 'cycle dragMode to '..self.dragMode)
 end
 
-function C:flipSnaproadNormal()
-  local curr = editor.getPreference('rallyEditor.general.flipSnaproadNormal')
-  log('D', 'wtf', dumps(curr))
-  editor.setPreference('rallyEditor.general.flipSnaproadNormal', not curr)
-
-  local wp = self:selectedWaypoint()
-  if wp and wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-    wp:flipNormal()
-  end
-end
-
 function C:insertMode()
   self._insertMode = true
 end
@@ -1089,9 +1081,13 @@ function C:drawPacenotesList()
     end
 
     im.Text("Current Pacenote: #" .. self.pacenote_index)
+
+    if im.Button("Focus Camera") then
+      self:setCameraToPacenote()
+    end
     im.SameLine()
-    if im.Button("Delete") then
-      self:deleteSelectedPacenote()
+    if im.Button("Place Vehicle") then
+      self:placeVehicleAtPacenote()
     end
     im.SameLine()
     if im.Button("Move Up") then
@@ -1106,15 +1102,11 @@ function C:drawPacenotesList()
         movePacenoteUndo, movePacenoteRedo)
     end
     im.SameLine()
-    if im.Button("Move Camera") then
-      self:setCameraToPacenote()
-    end
-    im.SameLine()
-    if im.Button("Place Vehicle") then
-      self:placeVehicleAtPacenote()
+    if im.Button("Delete") then
+      self:deleteSelectedPacenote()
     end
 
-    for i = 1,5 do im.Spacing() end
+    for _ = 1,5 do im.Spacing() end
 
     local editEnded = im.BoolPtr(false)
     editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
@@ -1123,6 +1115,29 @@ function C:drawPacenotesList()
         {index = self.pacenote_index, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
+
+    editor.uiInputText("Playback Rules", playbackRulesText, nil, nil, nil, nil, editEnded)
+    if editEnded[0] then
+      editor.history:commitAction("Change the playback rules",
+        {index = self.pacenote_index, self = self, old = note.playback_rules, new = ffi.string(playbackRulesText), field = 'playback_rules'},
+        setPacenoteFieldUndo, setPacenoteFieldRedo)
+    end
+    im.tooltip([[Playback Rules
+
+Available variables:
+- currLap (the current lap)
+- maxLap  (the maximum lap)
+
+Any lua code is allowed, so be careful. Examples:
+- '' (empty string, the default) -> audio will play
+- 'true' -> audio will play
+- 'false' -> audio will not play
+- 'currLap > 1' -> audio will play except for on the first lap
+- 'currLap == 3' -> audio will play only on the 3rd lap
+- 'currLap ~= 3' -> audio will play except on the 3rd lap
+- 'currLap < maxLap' -> audio will play except for on the last lap
+]])
+
     -- im.Text("Segment: "..note.segment)
 
     -- self:segmentSelector('Segment','segment', 'Associated Segment')
@@ -1444,7 +1459,7 @@ function C:snapAllHelper()
     local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
     wp.pos = newPos
     if normalAlignPos then
-      local rv = calculateForwardNormal(newPos, normalAlignPos, false)
+      local rv = calculateForwardNormal(newPos, normalAlignPos)
       wp.normal = vec3(rv.x, rv.y, rv.z)
     end
   end

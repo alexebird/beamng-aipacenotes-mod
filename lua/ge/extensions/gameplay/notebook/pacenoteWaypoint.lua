@@ -48,10 +48,6 @@ function C:selectionString()
   return txt
 end
 
-function C:flipNormal()
-  self.normal = -self.normal
-end
-
 function C:setManual(pos, radius, normal)
   self.mode = "manual"
   self.pos = vec3(pos)
@@ -100,10 +96,13 @@ function C:intersectCorners(fromCorners, toCorners)
       sMax = sMax * len
       -- inside sphere?
       if sMin <= 0 and sMax >= 1 then
-        local t = intersectsRay_Plane(rPos, rDir, self.pos, self.normal)
-        t = t*len
-        if t<=1 and t>=0 then
-          minT = math.min(t, minT)
+        -- check both directions of the plane so we dont have to worry about having the normal in the right direction when editing pacenoteWaypoints.
+        local t1 = intersectsRay_Plane(rPos, rDir, self.pos, self.normal)
+        local t2 = intersectsRay_Plane(rPos, rDir, self.pos, -self.normal)
+        t1 = t1*len
+        t2 = t2*len
+        if (t1<=1 and t1>=0) or (t2<=1 and t2>=0) then
+          minT = math.min(t1, t2, minT)
         end
       end
     end
@@ -176,17 +175,17 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     local midWidth = self.radius*2
     local side = self.normal:cross(vec3(0,0,1)) * (self.radius - midWidth / 2)
 
-    local shapeAlpha_arrow = shapeAlpha * cc.waypoint_shapeAlpha_arrowAdjustFactor
+    -- local shapeAlpha_arrow = shapeAlpha * cc.waypoint_shapeAlpha_arrowAdjustFactor
     local shapeAlpha_arrowPlane = shapeAlpha * cc.waypoint_shapeAlpha_arrowPlaneAdjustFactor
 
     -- this square prism is the "arrow" of the pacenote.
-    debugDrawer:drawSquarePrism(
-      self.pos,
-      (self.pos + self.radius * self.normal),
-      Point2F(1, self.radius * 2),
-      Point2F(0, 0),
-      ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrow)
-    )
+    -- debugDrawer:drawSquarePrism(
+    --   self.pos,
+    --   (self.pos + self.radius * self.normal),
+    --   Point2F(1, self.radius * 2),
+    --   Point2F(0, 0),
+    --   ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrow)
+    -- )
     -- this square prism is the "plane" of the pacenote.
     debugDrawer:drawSquarePrism(
       (self.pos + side),

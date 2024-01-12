@@ -119,10 +119,6 @@ local function cycleDragMode()
   pacenotesWindow:cycleDragMode()
 end
 
-local function flipSnaproadNormal()
-  pacenotesWindow:flipSnaproadNormal()
-end
-
 local function insertMode()
   pacenotesWindow:insertMode()
 end
@@ -451,7 +447,6 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
     {topDownCameraElevation = {"int", 150, "Elevation for the top-down camera view.", nil, 1, 1000}},
     {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
-    {flipSnaproadNormal = {"bool", false, "Flip the normal for waypoints during roadsnap editing."}},
   })
 end
 
@@ -516,14 +511,6 @@ local function getPrefTopDownCameraFollow()
     return editor.getPreference('rallyEditor.general.topDownCameraFollow')
   else
     return true
-  end
-end
-
-local function getPrefFlipSnaproadNormal()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.flipSnaproadNormal')
-  else
-    return false
   end
 end
 
@@ -635,7 +622,6 @@ M.detectNotebookToLoad = detectNotebookToLoad
 M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
 M.cycleDragMode = cycleDragMode
-M.flipSnaproadNormal = flipSnaproadNormal
 M.insertMode = insertMode
 
 M.onEditorInitialized = onEditorInitialized
@@ -650,7 +636,6 @@ M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
-M.getPrefFlipSnaproadNormal = getPrefFlipSnaproadNormal
 
 M.listNotebooks = listNotebooks
 
