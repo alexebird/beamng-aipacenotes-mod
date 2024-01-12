@@ -1,0 +1,49 @@
+.ai-pacenotes-recce {
+    font-family: monospace;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width:100%;
+    height: 100%;
+    position: relative;
+    /* background-color: rgba(0.7, 0.7, 0.7, 0.2); */
+}
+
+.steering-angle {
+    text-align: center;
+    font-size: 10em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ff0f59;
+}
+
+.recce-controls {
+    margin: 1em;
+}
+
+.recce-controls button {
+    font-family: monospace;
+    border: 1px solid rgba(255, 255, 255, 1.0);
+    color: rgba(255, 255, 255, 1.0);
+    background-color: rgba(0, 0, 0, 0.0);
+    margin: 0.1em;
+}
+
+.recce-controls button:focus {
+    box-shadow: none;
+}
+
+.recce-controls button:active {
+    background-color: rgba(255, 255, 255, 1.0);
+    color: rgba(0, 0, 0, 0.43);
+}
+
+/* .recce-controls .corner-angles-select { */
+    /* display: block; */
+    /* font-family: monospace; */
+    /* border: 1px solid rgba(255, 255, 255, 0.8); */
+    /* color: rgba(255, 255, 255, 0.8); */
+    /* background-color: rgba(0, 0, 0, 0.43); */
+    /* margin: 0.1em; */
+    /* width: 20em; */
+/* } */

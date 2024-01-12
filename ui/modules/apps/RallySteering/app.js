@@ -16,7 +16,6 @@ angular.module('beamng.apps')
       scope.maxHist = 5
 
       element.on('load', function () {
-
         bngApi.engineLua('extensions.gameplay_rally_cornerAngles.load()', (response) => {
           scope.cornerAngles = response
           // console.log(JSON.stringify(response, null, 2))

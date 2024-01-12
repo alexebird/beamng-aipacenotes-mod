@@ -1,0 +1,14 @@
+<div class="bngApp md-padding" style="width: 100%; height: 100%; font-size: 1.4em;" layout="column" layout-align="center center">
+  <link type="text/css" rel="stylesheet" href="/ui/modules/apps/AiPacenotesRecce/app.css" />
+  <div class="ai-pacenotes-recce">
+    <div class="steering-angle">
+      <span id="cornerCall"></span>
+    </div>
+    <div class="recce-controls">
+      <button ng-click="btnReloadCornerAngles()">reload corner angles</button>
+      <md-select class="corner-angles-select" ng-model="selectedStyleName">
+        <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
+      </md-select>
+    </div>
+  </div>
+</div>
