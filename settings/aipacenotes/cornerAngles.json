@@ -1,7 +1,7 @@
 {
     "pacenoteStyles": [
         {
-            "name": "1(sharp) to 6(flat)",
+            "name": "1(hard) to 6(easy)",
             "angles": [
                 {
                     "cornerCall": "_deadzone",
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "name": "6(sharp) to 1(flat)",
+            "name": "6(hard) to 1(easy)",
             "angles": [
                 {
                     "cornerCall": "_deadzone",

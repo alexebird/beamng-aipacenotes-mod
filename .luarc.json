@@ -3,6 +3,9 @@
     "globals": [
       "spawn",
       "intersectsRay_Plane",
+      "jsonEncode",
+      "jsonDecode",
+      "ltn12",
       "intersectsRay_Sphere",
       "be",
       "editor_missionEditor",

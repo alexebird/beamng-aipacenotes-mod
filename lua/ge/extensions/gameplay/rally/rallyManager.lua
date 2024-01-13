@@ -4,6 +4,11 @@ local C = {}
 local logTag = 'aipacenotes'
 
 function C:init()
+  self.setup_complete = false
+
+  self.overrideMissionId = nil
+  self.overrideMissionDir = nil
+
   self.vehId = nil
 
   self.damageThresh = nil
@@ -24,6 +29,11 @@ function C:init()
 
   self.currLap = -1
   self.maxLap = -1
+end
+
+function C:setOverrideMission(missionId, missionDir)
+  self.overrideMissionId = missionId
+  self.overrideMissionDir = missionDir
 end
 
 -- function C:toString()
@@ -72,6 +82,7 @@ function C:setup(vehId, damageThresh, closestPacenotes_n)
   self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
 
   self:reset()
+  self.setup_complete = true
 end
 
 function C:reset()
@@ -87,6 +98,11 @@ function C:reset()
 end
 
 function C:detectMissionId()
+  if self.overrideMissionId and self.overrideMissionDir then
+    self.missionId, self.missionDir = self.overrideMissionId, self.overrideMissionDir
+    return
+  end
+
   local missionId, missionDir, err = re_util.detectMissionIdHelper()
 
   if err then
@@ -147,6 +163,8 @@ function C:shouldPlay(pacenote)
 end
 
 function C:update(dtSim, raceData)
+  if not self.setup_complete then return end
+
   if self.vehicleTracker then
     self.vehicleTracker:onUpdate(dtSim, raceData)
   end

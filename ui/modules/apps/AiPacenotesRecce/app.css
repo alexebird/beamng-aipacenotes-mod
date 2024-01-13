@@ -15,10 +15,49 @@
     font-weight: bold;
     text-transform: uppercase;
     color: #ff0f59;
+    margin-top: -40px;
+    margin-bottom: -40px;
 }
 
-.recce-controls {
+.transcripts-error {
+    text-align: center;
+    font-style: italic;
+    color: #ff9191;
+}
+
+.transcripts ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+}
+
+.transcripts li {
+    color: #CCC;
+    font-style: italic;
+}
+
+.transcripts li:nth-child(1) {
+    color: #EEE;
+    font-style: normal;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding-bottom: 0.5em;
+}
+/* .transcripts li:nth-child(2) { color: #EEE; } */
+/* .transcripts li:nth-child(3) { color: #DDD; } */
+/* .transcripts li:nth-child(4) { color: #CCC; } */
+/* .transcripts li:nth-child(5) { color: #BBB; } */
+
+/* .recce-controls { */
+    /* margin: 1em; */
+    /* padding-top: 1em; */
+/* } */
+
+.recce-control {
+    margin-bottom: 0.5em;
+    border-top: 1px solid white;
     margin: 1em;
+    padding-top: 1em;
 }
 
 .recce-controls button {

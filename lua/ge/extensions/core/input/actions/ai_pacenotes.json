@@ -5,16 +5,16 @@
   //  "order": 1,
   //  "title": "Toggle Voice Transcription",
   //  "desc": "Push down to start recording, and release to stop. Requires AI-Pacenotes desktop app.",
-  //  "onDown": "extensions.gameplay_rally_transcribe.recording_start()",
-  //  "onUp": "extensions.gameplay_rally_transcribe.recording_stop()"
+  //  "onDown": "extensions.gameplay_rally_client.transcribe_recording_start()",
+  //  "onUp": "extensions.gameplay_rally_client.transcribe_recording_stop()"
   //},
   "cut_voice_transcription": {
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Cut Voice Transcription",
+    "title": "Cut Voice Transcription (AIPacenotes)",
     "desc": "If a recording is running, this stops it and immediately starts another. Requires AI-Pacenotes desktop app.",
-    "onDown": "extensions.gameplay_rally_transcribe.recording_cut()"
+    "onDown": "extensions.gameplay_rally_client.transcribe_recording_cut()"
   }
 
 
@@ -26,7 +26,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor Save",
+    "title": "Rally Editor - Save (AIPacenotes)",
     "desc": "Save the current notebook.",
     "onDown": "editor_rallyEditor.saveCurrent()"
   },
@@ -35,7 +35,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor Select Previous Pacenote",
+    "title": "Rally Editor - Select Previous Pacenote (AIPacenotes)",
     "desc": "Select the previous pacenote.",
     "onDown": "editor_rallyEditor.selectPrevPacenote()"
   },
@@ -44,7 +44,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor Select Next Pacenote",
+    "title": "Rally Editor - Select Next Pacenote (AIPacenotes)",
     "desc": "Select the next pacenote.",
     "onDown": "editor_rallyEditor.selectNextPacenote()"
   },
@@ -53,7 +53,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor Cycle Drag Mode",
+    "title": "Rally Editor - Cycle Drag Mode (AIPacenotes)",
     "desc": "Cycle between drag modes (simple, simple+road snap, free edit w/gizmo)",
     "onDown": "editor_rallyEditor.cycleDragMode()"
   },
@@ -62,7 +62,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor Focus Note Edit Field",
+    "title": "Rally Editor - Focus Note Edit Field (AIPacenotes)",
     "desc": "Shortcut to focus the cursor on editing the currently selected note text.",
     "onDown": "editor_rallyEditor.insertMode()"
   }

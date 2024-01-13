@@ -4,11 +4,32 @@
     <div class="steering-angle">
       <span id="cornerCall"></span>
     </div>
+
+    <div class="transcripts">
+      <div class="transcripts-error" ng-if="transcriptsError" ng-bind-html="transcriptsError"></div>
+      <ul ng-if="!transcriptsError">
+        <li ng-repeat="transcriptObj in transcripts">
+          <span>{{transcriptObj.transcript}}</span>
+        </li>
+      </ul>
+    </div>
+
     <div class="recce-controls">
-      <button ng-click="btnReloadCornerAngles()">reload corner angles</button>
-      <md-select class="corner-angles-select" ng-model="selectedStyleName">
-        <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
-      </md-select>
+      <div class="recce-control">
+        <button ng-click="btnRefreshCornerAngles()">refresh angles</button>
+        <span id="wheelDegrees">0 &deg;</span>
+        <md-select ng-model="selectedStyleName">
+          <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
+        </md-select>
+      </div>
+      <div class="recce-control">
+        <button ng-click="btnRefreshMissions()">refresh missions</button>
+        <button ng-click="btnLoadMission()">load mission</button>
+        <button ng-click="btnUnloadMission()">unload</button>
+        <md-select ng-model="selectedMissionName">
+          <md-option ng-value="missionName" ng-repeat="missionName in dropdownMissionNames">{{::missionName}}</md-option>
+        </md-select>
+      </div>
     </div>
   </div>
 </div>

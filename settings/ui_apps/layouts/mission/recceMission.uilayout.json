@@ -113,16 +113,16 @@
       }
     },
     {
-      "appName":"rallySteering",
+      "appName":"aiPacenotesRecce",
       "placement":{
         "bottom":"0px",
-        "height":"210px",
-        "left":0,
+        "height":"330px",
+        "left":"",
         "margin":"auto",
         "position":"absolute",
-        "right":0,
+        "right":"",
         "top":"",
-        "width":"360px"
+        "width":"600px"
       }
     }
   ],
