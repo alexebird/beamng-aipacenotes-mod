@@ -11,21 +11,23 @@ local C = {}
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
+  self.default_transcript_fname = "/settings/aipacenotes/transcripts.json"
+  self.transcripts_path = nil
+  self.notebook_create_dir = nil
 
-  self.default_transcript = "/settings/aipacenotes/transcript.json"
-  self.transcript = nil
-  self.default_notebooks_dir = "/gameplay/aipacenotes"
+  -- self:reloadTranscriptFile()
 end
 
 function C:windowDescription()
-  return 'Voice Import'
+  return 'Voice'
 end
 
 function C:setPath(path)
   self.path = path
+  self:reloadTranscriptFile()
 end
 
-function C:convertTranscriptToNotebook(transcript_data, importIdent)
+function C:convertTranscriptToNotebook(importIdent)
   local ts = os.time()
   local fname_out = 'transcript_'..ts..'.notebook.json'
   local notebook = {
@@ -50,8 +52,8 @@ function C:convertTranscriptToNotebook(transcript_data, importIdent)
   local i = 1
   local oldId = 2
 
-  for _,transcript in ipairs(transcript_data['transcript']) do
-    local note = transcript.transcript or ""
+  for _,transcript in ipairs(self.transcripts_path.transcripts.sorted) do
+    local note = transcript.text or ""
     note = normalizer.replaceDigits(note)
 
     if transcript.vehicle_pos then
@@ -75,7 +77,6 @@ function C:convertTranscriptToNotebook(transcript_data, importIdent)
         notes = { english = {note = note}},
         metadata = metadata,
         oldId = oldId,
-        -- segment = -1,  -- Replace with actual value if available
         pacenoteWaypoints = {
         --   {
         --     name = "curr",
@@ -132,20 +133,21 @@ function C:unselect()
 end
 
 function C:reloadTranscriptFile()
-  self.default_notebooks_dir = self.path._dir
+  if not self.path then return end
 
-  local json = jsonReadFile(self.default_transcript)
-  if not json then
-    log('E', logTag, 'unable to find transcript file: ' .. tostring(self.default_transcript))
-  else
-    self.transcript = json
+  self.notebook_create_dir = self.path._dir
+  self.transcripts_path = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(self.default_transcript_fname)
+
+  if not self.transcripts_path:load() then
+    log('E', logTag, 'couldnt load transcripts file from '..self.default_transcript_fname)
+    self.transcripts_path = nil
   end
 end
 
 function C:importTranscriptToNewNotebook()
   self:reloadTranscriptFile()
-  local notebook_data, fname_out = self:convertTranscriptToNotebook(self.transcript, nil)
-  fname_out = self.default_notebooks_dir..fname_out
+  local notebook_data, fname_out = self:convertTranscriptToNotebook(nil)
+  fname_out = self.notebook_create_dir..fname_out
   jsonWriteFile(fname_out, notebook_data, true)
   self.rallyEditor.loadNotebook(fname_out)
   self.rallyEditor.showPacenotesTab()
@@ -154,7 +156,7 @@ end
 function C:importTranscriptToCurrentNotebook()
   self:reloadTranscriptFile()
   local importIdent = self.path:nextImportIdent()
-  local notebook_data, _ = self:convertTranscriptToNotebook(self.transcript, importIdent)
+  local notebook_data, _ = self:convertTranscriptToNotebook(importIdent)
 
   editor.history:commitAction("Import transcript to current notebook",
     {
@@ -179,13 +181,11 @@ function C:importTranscriptToCurrentNotebook()
   )
 end
 
-function C:draw(mouseInfo)
-  if not self.path then return end
+function C:drawSectionImportTranscript()
+  im.HeaderText("Import Transcript")
 
-  im.HeaderText("Import from Voice Transcript")
-
-  im.Text("Importing from: " .. self.default_transcript)
-  im.Text("Importing to: " .. self.default_notebooks_dir)
+  im.Text("Importing from: " .. self.default_transcript_fname)
+  im.Text("Importing to: " .. self.notebook_create_dir)
   for i = 1,5 do im.Spacing() end
   im.Separator()
   for i = 1,5 do im.Spacing() end
@@ -204,6 +204,37 @@ function C:draw(mouseInfo)
   im.Text("The imported notes will be added to the end of the currently loaded notebook.")
   for i = 1,5 do im.Spacing() end
   im.Separator()
+end
+
+function C:drawSectionTranscriptData()
+  im.HeaderText("Transcript Data")
+
+  im.Columns(2, "transcript_columns")
+  im.Separator()
+
+  im.Text("Text")
+  im.SetColumnWidth(0, 400)
+  im.NextColumn()
+
+  im.Text("Success")
+  im.SetColumnWidth(1, 100)
+  im.NextColumn()
+
+  im.Separator()
+
+  for _,transcript in ipairs(self.transcripts_path.transcripts.sorted) do
+    im.Text(transcript.text)
+    im.NextColumn()
+    im.Text(tostring(transcript.success))
+    im.NextColumn()
+  end
+end
+
+function C:draw(mouseInfo)
+  if not self.path then return end
+
+  self:drawSectionImportTranscript()
+  self:drawSectionTranscriptData()
 end
 
 return function(...)

@@ -1,35 +1,51 @@
 <div class="bngApp md-padding" style="width: 100%; height: 100%; font-size: 1.4em;" layout="column" layout-align="center center">
   <link type="text/css" rel="stylesheet" href="/ui/modules/apps/AiPacenotesRecce/app.css" />
   <div class="ai-pacenotes-recce">
+
     <div class="steering-angle">
       <span id="cornerCall"></span>
     </div>
 
     <div class="transcripts">
-      <div class="transcripts-error" ng-if="transcriptsError" ng-bind-html="transcriptsError"></div>
-      <ul ng-if="!transcriptsError">
-        <li ng-repeat="transcriptObj in transcripts">
-          <span>{{transcriptObj.transcript}}</span>
-        </li>
-      </ul>
+      <div class="transcript-notes-area">
+        <div class="transcripts-error" ng-if="transcriptsError" ng-bind-html="transcriptsError"></div>
+        <ul class="recent-transcripts-list" ng-if="!transcriptsError">
+          <li ng-repeat="transcriptObj in transcripts">
+            <span>{{transcriptObj.text}}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="indicators">
+        <span class="indicator" id="wheelDegrees">0 &deg;</span>
+        <span class="indicator clickable-indicator" ng-click="btnRetryNetwork()">
+          <span class="dot-indicator" ng-class="{'network-indicator-on': network_ok}"></span>
+          <span class="dot-indicator-label">net</span>
+        </span>
+        <span class="indicator">
+          <span class="dot-indicator" ng-class="{'recording-indicator-on': is_recording}"></span>
+          <span class="dot-indicator-label">rec</span>
+        </span>
+      </div>
     </div>
 
     <div class="recce-controls">
       <div class="recce-control">
         <button ng-click="btnRefreshCornerAngles()">refresh angles</button>
-        <span id="wheelDegrees">0 &deg;</span>
-        <md-select ng-model="selectedStyleName">
+        <md-select class="md-select-dropdown" ng-model="selectedStyleName">
           <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
         </md-select>
       </div>
+
       <div class="recce-control">
         <button ng-click="btnRefreshMissions()">refresh missions</button>
         <button ng-click="btnLoadMission()">load mission</button>
         <button ng-click="btnUnloadMission()">unload</button>
-        <md-select ng-model="selectedMissionName">
+        <md-select class="md-select-dropdown" ng-model="selectedMissionName">
           <md-option ng-value="missionName" ng-repeat="missionName in dropdownMissionNames">{{::missionName}}</md-option>
         </md-select>
       </div>
     </div>
+
   </div>
 </div>

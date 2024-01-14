@@ -6,8 +6,6 @@ local rallyManager = nil
 local flag_NoteSearch = false
 
 local function loadCornerAnglesFile()
-  extensions.gameplay_rally_client.clear_timeout()
-
   local filename = '/settings/aipacenotes/cornerAngles.json'
   local json = jsonReadFile(filename)
   if not json then
@@ -18,17 +16,20 @@ local function loadCornerAnglesFile()
   guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
 end
 
+local function clearTimeout()
+  extensions.gameplay_aipacenotes_client.clear_network_issue()
+end
+
 local function desktopGetTranscripts()
-  local transcripts = extensions.gameplay_rally_client.transcribe_transcripts_get(2)
-  guihooks.trigger('aiPacenotesTranscriptsLoaded', transcripts)
+  local resp = extensions.gameplay_aipacenotes_client.transcribe_transcripts_get(2)
+  if resp.ok then
+    guihooks.trigger('aiPacenotesTranscriptsLoaded', resp)
+  else
+    guihooks.trigger('aiPacenotesDesktopCallNotOk', resp.client_msg)
+  end
 end
 
 local function listMissionsForLevel()
-  -- local transcripts = extensions.gameplay_rally_client.transcribe_transcripts_get(2)
-
-  -- log('D', 'wtf', dumps(getCurrentLevelIdentifier()))
-  -- log('D', 'wtf', dumps(getMissionFilename()))
-
   local filterFn = function (mission)
     return mission.startTrigger.level == getCurrentLevelIdentifier() and mission.missionType == 'rallyStage'
   end
@@ -133,6 +134,7 @@ M.listMissionsForLevel = listMissionsForLevel
 M.desktopGetTranscripts = desktopGetTranscripts
 M.initRallyManager = initRallyManager
 M.clearRallyManager = clearRallyManager
+M.clearTimeout = clearTimeout
 M.onUpdate = onUpdate
 -- M.onFirstUpdate = onFirstUpdate
 

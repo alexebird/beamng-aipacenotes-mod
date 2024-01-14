@@ -9,25 +9,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       var streamsList = ['electrics']
       StreamsManager.add(streamsList)
 
-      bngApi.engineLua('extensions.load("ui_aiPacenotes_recceApp")')
-
-      function refreshCornerAngles() {
-        bngApi.engineLua('extensions.ui_aiPacenotes_recceApp.loadCornerAnglesFile()')
-      }
-
-      function refreshMissions() {
-        bngApi.engineLua('extensions.ui_aiPacenotes_recceApp.listMissionsForLevel()')
-      }
-
-      function initRallyManager() {
-        let missionId = $scope.selectedMission.missionId
-        let missionDir = $scope.selectedMission.missionDir
-        bngApi.engineLua('extensions.ui_aiPacenotes_recceApp.initRallyManager("'+missionId+'", "'+missionDir+'")')
-      }
-
-      function clearRallyManager() {
-        bngApi.engineLua('extensions.ui_aiPacenotes_recceApp.clearRallyManager()')
-      }
+      bngApi.engineLua('extensions.load("ui_aipacenotes_recceApp")')
 
       function updateCornerCall() {
         var textElement = document.getElementById('cornerCall')
@@ -40,6 +22,8 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       let defaultCornerCall = 'c'
 
       $scope.transcripts = []
+      $scope.is_recording = false
+      $scope.network_ok = false
 
       $scope.cornerCall = defaultCornerCall
       $scope.wheelDegrees =  0
@@ -51,15 +35,16 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.selectedStyleName = null
 
       var transcriptInterval = $interval(() => {
-        bngApi.engineLua('extensions.ui_aiPacenotes_recceApp.desktopGetTranscripts()')
-      }, 1000)
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      }, 500)
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
 
       $scope.$on('$destroy', function () {
         if (angular.isDefined(transcriptInterval)) {
           $interval.cancel(transcriptInterval);
         }
         StreamsManager.remove(streamsList)
-        bngApi.engineLua('extensions.unload("ui_aiPacenotes_recceApp")')
+        bngApi.engineLua('extensions.unload("ui_aipacenotes_recceApp")')
       })
 
       $scope.$on('aiPacenotesMissionsLoaded', function (event, response) {
@@ -73,12 +58,20 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$on('aiPacenotesTranscriptsLoaded', function (event, response) {
         // console.log(JSON.stringify(response))
         if (response.ok) {
+          $scope.network_ok = true
+          $scope.is_recording = response.is_recording
           $scope.transcripts = response.transcripts
           $scope.transcriptsError = null
         } else {
+          $scope.network_ok = false
           $scope.transcripts = []
           $scope.transcriptsError = $sce.trustAsHtml(response.error)
         }
+      })
+
+      $scope.$on('aiPacenotesDesktopCallNotOk', function (event, errMsg) {
+          $scope.network_ok = false
+          $scope.transcriptsError = $sce.trustAsHtml(errMsg)
       })
 
       $scope.$on('aiPacenotesCornerAnglesLoaded', function (event, cornerAnglesData, errMsg) {
@@ -100,32 +93,39 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.btnRefreshCornerAngles = function() {
-        refreshCornerAngles()
-        // bngApi.engineLua('extensions.ui_aiPacenotes_recceApp.loadCornerAnglesFile()', (response) => {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadCornerAnglesFile()')
+        // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadCornerAnglesFile()', (response) => {
         // $scope.pacenoteStyles = response
         // $scope.cornerCall = '-'
         // })
       }
 
       $scope.btnRefreshMissions = function() {
-        refreshMissions()
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.listMissionsForLevel()')
       }
 
       $scope.btnLoadMission = function() {
-        initRallyManager()
+        let missionId = $scope.selectedMission.missionId
+        let missionDir = $scope.selectedMission.missionDir
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.initRallyManager("'+missionId+'", "'+missionDir+'")')
       }
 
       $scope.btnUnloadMission = function() {
-        clearRallyManager()
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearRallyManager()')
       }
 
-      refreshCornerAngles()
-      refreshMissions()
+      $scope.btnRetryNetwork = function() {
+        $scope.transcriptsError = $sce.trustAsHtml('connecting to desktop app...')
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearTimeout()')
+      }
+
+      $scope.btnRefreshCornerAngles()
+      $scope.btnRefreshMissions()
 
       // Use vehicle reset to trigger a reload of the cornerAngles.json file.
       $scope.$on('VehicleReset', function (event, data) {
         $scope.$evalAsync(function () {
-          refreshCornerAngles()
+          $scope.btnRefreshCornerAngles()
         })
       })
 
@@ -153,7 +153,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
         let steeringVal = steering
         let absSteeringVal = Math.abs(steeringVal)
-        $scope.wheelDegrees = Math.round(steeringVal)
+        $scope.wheelDegrees = Math.round(steeringVal) + ''
 
         for (let item of $scope.selectedStyle.angles) {
           if (absSteeringVal >= item.fromAngleDegrees && absSteeringVal < item.toAngleDegrees) {

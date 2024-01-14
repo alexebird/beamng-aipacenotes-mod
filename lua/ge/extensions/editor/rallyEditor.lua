@@ -17,7 +17,7 @@ currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
-local notebookInfoWindow, pacenotesWindow, importWindow, raceSettingsWindow, staticPacenotesWindow
+local notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, voiceWindow, missionSettingsWindow
 local mouseInfo = {}
 
 local function setNotebookRedo(data)
@@ -386,10 +386,10 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/import')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/race_settings')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/voice')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/mission_settings')(M))
 
-  notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, importWindow, raceSettingsWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
+  notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, voiceWindow, missionSettingsWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)

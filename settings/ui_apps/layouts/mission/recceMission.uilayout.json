@@ -115,14 +115,14 @@
     {
       "appName":"aiPacenotesRecce",
       "placement":{
-        "bottom":"0px",
-        "height":"330px",
-        "left":"",
+        "bottom":"5px",
+        "height":"420px",
+        "left":0,
         "margin":"auto",
         "position":"absolute",
-        "right":"",
+        "right":0,
         "top":"",
-        "width":"600px"
+        "width":"580px"
       }
     }
   ],

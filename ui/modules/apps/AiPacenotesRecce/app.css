@@ -1,39 +1,71 @@
 .ai-pacenotes-recce {
+    display: flex;
+    flex-direction: column;
+
     font-family: monospace;
-    overflow: hidden;
-    margin: 0;
+
+    margin: 0.25em;
     padding: 0;
-    width:100%;
+    width: 100%;
     height: 100%;
-    position: relative;
-    /* background-color: rgba(0.7, 0.7, 0.7, 0.2); */
+
+    /* overflow: hidden; */
+    /* position: relative; */
 }
 
 .steering-angle {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 136px;
+
+    line-height: 0.75;
     font-size: 10em;
     font-weight: bold;
     text-transform: uppercase;
     color: #ff0f59;
-    margin-top: -40px;
-    margin-bottom: -40px;
+
+    /* text-align: center; */
+    /* margin-top: -40px; */
+    /* margin-bottom: -40px; */
+}
+
+.transcripts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 97px;
+}
+
+.transcript-notes-area {
+    display: block;
+    height: 4em;
+    width: 100%
 }
 
 .transcripts-error {
-    text-align: center;
     font-style: italic;
     color: #ff9191;
 }
 
-.transcripts ul {
+.recent-transcripts-list {
     list-style-type: none;
-    padding: 0;
+}
+
+.transcripts-error, .recent-transcripts-list {
     text-align: center;
+    padding: 0px;
+    margin: 0 0.25em;
 }
 
 .transcripts li {
     color: #CCC;
     font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0.25em;
 }
 
 .transcripts li:nth-child(1) {
@@ -41,23 +73,17 @@
     font-style: normal;
     font-size: 1.5em;
     font-weight: bold;
-    padding-bottom: 0.5em;
 }
-/* .transcripts li:nth-child(2) { color: #EEE; } */
-/* .transcripts li:nth-child(3) { color: #DDD; } */
-/* .transcripts li:nth-child(4) { color: #CCC; } */
-/* .transcripts li:nth-child(5) { color: #BBB; } */
 
-/* .recce-controls { */
-    /* margin: 1em; */
-    /* padding-top: 1em; */
-/* } */
+.recce-controls {
+    display: flex;
+    flex-direction: column;
+}
 
 .recce-control {
-    margin-bottom: 0.5em;
     border-top: 1px solid white;
-    margin: 1em;
-    padding-top: 1em;
+    margin: 0.5em 1em 0em 1em;
+    padding: 0.5em 0em 0em 0em;
 }
 
 .recce-controls button {
@@ -77,12 +103,65 @@
     color: rgba(0, 0, 0, 0.43);
 }
 
-/* .recce-controls .corner-angles-select { */
-    /* display: block; */
-    /* font-family: monospace; */
-    /* border: 1px solid rgba(255, 255, 255, 0.8); */
-    /* color: rgba(255, 255, 255, 0.8); */
-    /* background-color: rgba(0, 0, 0, 0.43); */
-    /* margin: 0.1em; */
-    /* width: 20em; */
-/* } */
+.indicators {
+    display: flex;
+    text-align: center;
+}
+
+.dot-indicator {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #CCC;
+}
+
+.dot-indicator-label {
+    margin-left: -8px;
+}
+
+.recording-indicator-on {
+    background-color: #ff2c00 !important;
+}
+
+.network-indicator-on {
+    background-color: #00ff34 !important;
+}
+
+.indicator {
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-left: 1px;
+    padding-right: 1px;
+    margin-top: 1px;
+}
+
+.clickable-indicator {
+    margin-top: 0px;
+    border: 1px solid #ffffff00;
+}
+
+.clickable-indicator:focus {
+    box-shadow: none;
+}
+
+.clickable-indicator:hover {
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.clickable-indicator:active {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.43);
+}
+
+#wheelDegrees {
+    display: inline-block;
+    width: 40px;
+}
+
+.md-select-dropdown {
+    width: 350px;
+}
