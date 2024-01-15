@@ -49,10 +49,17 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.$on('aiPacenotesMissionsLoaded', function (event, response) {
         // console.log(JSON.stringify(response))
-          $scope.missions = response
+        $scope.missions = response
+        if ($scope.missions) {
           $scope.selectedMission = $scope.missions[0]
           $scope.dropdownMissionNames = $scope.missions.map((mission) => mission.missionName)
           $scope.selectedMissionName = $scope.dropdownMissionNames[0]
+        } else {
+          $scope.missions = []
+          $scope.selectedMission = null
+          $scope.dropdownMissionNames = []
+          $scope.selectedMissionName = null
+        }
       })
 
       $scope.$on('aiPacenotesTranscriptsLoaded', function (event, response) {

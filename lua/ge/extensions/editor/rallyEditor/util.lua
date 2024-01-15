@@ -62,6 +62,20 @@ local function normalize_name(name)
   return name
 end
 
+-- in gelua:
+-- Engine.Audio.playOnce('AudioMusic', '/art/test.ogg', {volume=2})
+-- Engine.Audio.playOnce('AudioGUI', '/art/test.ogg', {volume=1, position = vec3(0, 0, 0)})
+--
+-- in vlua:
+-- fname = 'art/test.ogg'
+-- profile = "AudioMusicLoop2D"
+-- profile = "AudioMusicLoop2D"
+-- speaker = v.data.refNodes[0].ref or v.data.refNodes[0].leftCorner
+-- sfx = obj:createSFXSource(fname, profile, "test", speaker)
+-- obj:playSFX(sfx)
+-- obj:cutSFX(sfx)
+-- obj:setVolume(sfx, 1)
+
 -- assumes that the file exists.
 local function playPacenote(audioObj)
   local opts = { volume=audioObj.volume }

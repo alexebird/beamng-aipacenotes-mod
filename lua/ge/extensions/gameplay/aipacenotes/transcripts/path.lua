@@ -49,7 +49,7 @@ function C:onDeserialized(data)
   local oldIdMap = {}
 
   self.transcripts:clear()
-  log('D', logTag, dumps(data.transcripts))
+  -- log('D', logTag, dumps(data.transcripts))
   self.transcripts:onDeserialized(data.transcripts, oldIdMap)
 end
 
