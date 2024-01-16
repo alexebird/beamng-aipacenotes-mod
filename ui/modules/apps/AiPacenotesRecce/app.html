@@ -31,16 +31,19 @@
 
     <div class="recce-controls">
       <div class="recce-control">
-        <button ng-click="btnRefreshCornerAngles()">refresh angles</button>
+        <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button>
         <md-select class="md-select-dropdown" ng-model="selectedStyleName">
           <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
         </md-select>
       </div>
 
       <div class="recce-control">
-        <button ng-click="btnRefreshMissions()">refresh missions</button>
-        <button ng-click="btnLoadMission()">load mission</button>
-        <button ng-click="btnUnloadMission()">unload</button>
+        <button ng-click="btnRefreshMissions()" class="recce-controls-btn">refresh missions</button>
+        <button ng-click="btnLoadMission()" class="recce-controls-btn">load</button>
+        <button ng-click="btnUnloadMission()" class="recce-controls-btn">unload</button>
+        <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-class="{'debug-on': drawDebug, 'debug-off': !drawDebug}">
+         {{ drawDebug ? 'hide notes' : 'show notes' }}
+        </button>
         <md-select class="md-select-dropdown" ng-model="selectedMissionName">
           <md-option ng-value="missionName" ng-repeat="missionName in dropdownMissionNames">{{::missionName}}</md-option>
         </md-select>

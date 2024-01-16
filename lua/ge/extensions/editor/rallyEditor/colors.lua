@@ -7,6 +7,7 @@ M.clr_white       = {1.0, 1.0, 1.0}
 M.clr_black       = {0.0, 0.0, 0.0}
 M.clr_green       = {0.0, 1.0, 0.0}
 M.clr_red         = {1.0, 0.0, 0.0}
+M.clr_yellow      = {1.0, 1.0, 0.0}
 M.clr_blue        = {0.0, 0.0, 1.0}
 M.clr_orange      = {1.0, 0.64, 0.0}
 M.clr_pink        = {1.0, 0.0, 1.0}
@@ -56,6 +57,7 @@ M.pacenote_base_alpha_prev   = 0.5
 M.pacenote_base_alpha_next   = 0.5
 M.pacenote_base_alpha_selected = 1.0
 
+M.pacenote_alpha_recce = 0.1
 
 M.pacenote_linkHeightRadiusShinkFactor = 0.5
 M.pacenote_linkFromWidth = 1.5
@@ -84,9 +86,9 @@ M.waypoint_clr_sphere_selected = M.clr_white
 
 M.waypoint_shapeAlpha_hover = 1.0
 M.waypoint_textAlpha_hover = 1.0
-M.waypoint_sphereAlphaReducionForArrowFactor = 0.6
+M.waypoint_sphereAlphaReducionFactor = 0.6
 -- M.waypoint_shapeAlpha_arrowAdjustFactor = 1.25
-M.waypoint_shapeAlpha_arrowPlaneAdjustFactor = 0.66
+M.waypoint_intersectPlaneAlphaReductionFactor = 0.66
 
 --
 -- rallyEditor/pacenotes.lua

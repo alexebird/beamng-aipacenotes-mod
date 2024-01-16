@@ -86,7 +86,7 @@
     padding: 0.5em 0em 0em 0em;
 }
 
-.recce-controls button {
+.recce-controls-btn {
     font-family: monospace;
     border: 1px solid rgba(255, 255, 255, 1.0);
     color: rgba(255, 255, 255, 1.0);
@@ -94,11 +94,17 @@
     margin: 0.1em;
 }
 
-.recce-controls button:focus {
+.debug-on {
+    background-color: rgba(255, 255, 255, 1.0) !important;
+    color: rgba(0, 0, 0, 0.43) !important;
+    font-weight: bold;
+}
+
+.recce-controls-btn:focus {
     box-shadow: none;
 }
 
-.recce-controls button:active {
+.recce-controls-btn:active {
     background-color: rgba(255, 255, 255, 1.0);
     color: rgba(0, 0, 0, 0.43);
 }

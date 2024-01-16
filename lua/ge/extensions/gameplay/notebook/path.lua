@@ -604,14 +604,10 @@ function C:getCodriverByName(codriver_name)
   return codriver
 end
 
-function C:getFlowgraphPacenotes(missionSettings, codriver)
-  local fgPacenotes = {}
+function C:cachePacenoteFgData(missionSettings, codriver)
   for _,pn in ipairs(self.pacenotes.sorted) do
-    local fgNote = pn:asFlowgraphData(missionSettings, codriver)
-    table.insert(fgPacenotes, fgNote)
+    pn:asFlowgraphData(missionSettings, codriver)
   end
-
-  return fgPacenotes
 end
 
 function C:findNClosestPacenotes(pos, n)

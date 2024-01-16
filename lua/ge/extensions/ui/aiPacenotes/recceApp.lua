@@ -1,9 +1,16 @@
--- extension name: gameplay_rally_ui_recce
+-- extension name: ui_aipacenotes_recceApp
+
+local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 
 local M = {}
 
 local rallyManager = nil
 local flag_NoteSearch = false
+local flag_drawDebug = false
+
+local sphereColor = ColorF(1, 0, 0, 1)
+local textColor = ColorF(1, 1, 1, 0.9)
+local textBackgroundColor = ColorI(0, 0, 0, 128)
 
 local function loadCornerAnglesFile()
   local filename = '/settings/aipacenotes/cornerAngles.json'
@@ -71,6 +78,27 @@ local function updateRallyManager(dtSim)
   end
 end
 
+local function drawDebug()
+  -- TODO: convert into stream
+  local veh = be:getPlayerVehicle(0)
+  if not veh then
+    return
+  end
+
+  -- local vehPos = veh:getPosition()
+  -- local camPos = core_camera.getPosition()
+
+  if not rallyManager then return end
+
+  local pacenotes = rallyManager:getNextPacenotes()
+  local multiple_notes = #pacenotes > 1
+
+  for i,pacenote in ipairs(pacenotes) do
+    local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+    wp_audio_trigger:drawDebugRecce(i == 1, multiple_notes, pacenote._cached_fgData.note_text)
+  end
+end
+
 local function onUpdate(dtReal, dtSim, dtRaw)
   -- local veh = be:getPlayerVehicle(0)
   -- if not veh then
@@ -82,6 +110,9 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   -- log('D', 'wtf', 'onUpdate vehPos='..dumps(vehPos))
 
   updateRallyManager(dtSim)
+  if flag_drawDebug then
+    drawDebug()
+  end
 end
 
 local function initRallyManager(missionId, missionDir)
@@ -98,6 +129,10 @@ end
 
 local function clearRallyManager()
   rallyManager = nil
+end
+
+local function setDrawDebug(val)
+  flag_drawDebug = val
 end
 
 local function onVehicleResetted()
@@ -135,38 +170,8 @@ M.desktopGetTranscripts = desktopGetTranscripts
 M.initRallyManager = initRallyManager
 M.clearRallyManager = clearRallyManager
 M.clearTimeout = clearTimeout
+M.setDrawDebug = setDrawDebug
 M.onUpdate = onUpdate
 -- M.onFirstUpdate = onFirstUpdate
 
 return M
-
-
--- local M = {}
---
--- local sphereColor = ColorF(1, 0, 0, 1)
--- local textColor = ColorF(1, 1, 1, 0.9)
--- local textBackgroundColor = ColorI(0, 0, 0, 128)
---
--- local function onUpdate(dtReal, dtSim, dtRaw)
---   -- TODO: convert into stream
---   local veh = be:getPlayerVehicle(0)
---   if not veh then
---     guihooks.trigger('aiPacenotesRecce', -1, "no vehicle")
---     return
---   end
---
---   local vehPos = veh:getPosition()
---   local camPos = core_camera.getPosition()
---
---   debugDrawer:drawSphere(vehPos, 0.5, sphereColor)
---   debugDrawer:drawTextAdvanced(vehPos, "camera distance target", textColor, true, false, textBackgroundColor)
---
---   local distance = vehPos:distance(camPos)
---
---   guihooks.trigger('aiPacenotesRecce', distance)
--- end
---
--- -- public interface
--- M.onUpdate = onUpdate
---
--- return M

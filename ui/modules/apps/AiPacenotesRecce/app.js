@@ -6,24 +6,19 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
     controller: ['$log', '$scope', function ($log, $scope) {
       'use strict'
 
+      // load the lua extension backing this UI app.
+      bngApi.engineLua('extensions.load("ui_aipacenotes_recceApp")')
+
       var streamsList = ['electrics']
       StreamsManager.add(streamsList)
 
-      bngApi.engineLua('extensions.load("ui_aipacenotes_recceApp")')
-
-      function updateCornerCall() {
-        var textElement = document.getElementById('cornerCall')
-        textElement.textContent = $scope.cornerCall
-
-        textElement = document.getElementById('wheelDegrees')
-        textElement.textContent =  '' + $scope.wheelDegrees + '°'
-      }
-
       let defaultCornerCall = 'c'
+      let transcriptRefreshIntervalMs = 500
 
       $scope.transcripts = []
       $scope.is_recording = false
       $scope.network_ok = false
+      $scope.drawDebug = false
 
       $scope.cornerCall = defaultCornerCall
       $scope.wheelDegrees =  0
@@ -36,8 +31,18 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       var transcriptInterval = $interval(() => {
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
-      }, 500)
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      }, transcriptRefreshIntervalMs)
+
+      // dont wait for the first interval to get transcripts.
+      bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+
+      function updateCornerCall() {
+        var textElement = document.getElementById('cornerCall')
+        textElement.textContent = $scope.cornerCall
+
+        textElement = document.getElementById('wheelDegrees')
+        textElement.textContent =  '' + $scope.wheelDegrees + '°'
+      }
 
       $scope.$on('$destroy', function () {
         if (angular.isDefined(transcriptInterval)) {
@@ -48,9 +53,15 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.$on('aiPacenotesMissionsLoaded', function (event, response) {
-        // console.log(JSON.stringify(response))
-        $scope.missions = response
-        if ($scope.missions) {
+        console.log(JSON.stringify(response))
+
+        if (typeof response === 'object' && Object.keys(response).length === 0 && !Array.isArray(response)) {
+          $scope.missions = []
+        } else {
+          $scope.missions = response
+        }
+
+        if ($scope.missions && $scope.missions.length > 0) {
           $scope.selectedMission = $scope.missions[0]
           $scope.dropdownMissionNames = $scope.missions.map((mission) => mission.missionName)
           $scope.selectedMissionName = $scope.dropdownMissionNames[0]
@@ -79,6 +90,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$on('aiPacenotesDesktopCallNotOk', function (event, errMsg) {
           $scope.network_ok = false
           $scope.transcriptsError = $sce.trustAsHtml(errMsg)
+      })
+
+      $scope.$on('aiPacenotesToggleDrawDebug', function (event) {
+          $scope.btnToggleDrawDebug()
       })
 
       $scope.$on('aiPacenotesCornerAnglesLoaded', function (event, cornerAnglesData, errMsg) {
@@ -124,6 +139,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.btnRetryNetwork = function() {
         $scope.transcriptsError = $sce.trustAsHtml('connecting to desktop app...')
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearTimeout()')
+      }
+
+      $scope.btnToggleDrawDebug = function() {
+        $scope.drawDebug = !$scope.drawDebug
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')
       }
 
       $scope.btnRefreshCornerAngles()

@@ -125,7 +125,7 @@ function C:colorForWpType()
   end
 end
 
-function C:shouldDrawArrow()
+function C:shouldDrawIntersectPlane()
   if self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
     return true
   elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
@@ -147,9 +147,10 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 
   local shapeAlpha_sphere = shapeAlpha
 
-  if self:shouldDrawArrow() then
+  if self:shouldDrawIntersectPlane() then
     -- make the arrow a little easier to see
-    shapeAlpha_sphere = shapeAlpha * cc.waypoint_sphereAlphaReducionForArrowFactor
+    shapeAlpha_sphere = shapeAlpha * cc.waypoint_sphereAlphaReducionFactor
+    -- self:drawDebugIntersectPlane(clr, shapeAlpha * cc.waypoint_intersectPlaneAlphaReductionFactor)
   end
 
   debugDrawer:drawSphere(
@@ -171,14 +172,20 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     ColorI(clr_text_bg[1], clr_text_bg[2], clr_text_bg[3], textAlpha*255)
   )
 
-  if self:shouldDrawArrow() then
-    local midWidth = self.radius*2
-    local side = self.normal:cross(vec3(0,0,1)) * (self.radius - midWidth / 2)
+  if self:shouldDrawIntersectPlane() then
+    local midWidth = self.radius * 2
+    local side = self.normal:cross(vec3(0,0,1)) * (self.radius - (midWidth / 2))
 
-    -- local shapeAlpha_arrow = shapeAlpha * cc.waypoint_shapeAlpha_arrowAdjustFactor
-    local shapeAlpha_arrowPlane = shapeAlpha * cc.waypoint_shapeAlpha_arrowPlaneAdjustFactor
+    -- this square prism is the intersection "plane" of the pacenote.
+    debugDrawer:drawSquarePrism(
+      (self.pos + side),
+      (self.pos + 0.25 * self.normal + side),
+      Point2F(5, midWidth),
+      Point2F(0, 0),
+      ColorF(clr[1], clr[2], clr[3], shapeAlpha)
+    )
 
-    -- this square prism is the "arrow" of the pacenote.
+    -- the "arrow"
     -- debugDrawer:drawSquarePrism(
     --   self.pos,
     --   (self.pos + self.radius * self.normal),
@@ -186,20 +193,80 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
     --   Point2F(0, 0),
     --   ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrow)
     -- )
-    -- this square prism is the "plane" of the pacenote.
-    debugDrawer:drawSquarePrism(
-      (self.pos + side),
-      (self.pos + 0.25 * self.normal + side),
-      Point2F(5, midWidth),
-      Point2F(0, 0),
-      ColorF(clr[1], clr[2], clr[3], shapeAlpha_arrowPlane)
-    )
 
     -- draws a tiny red line indicating the forward normal.
     -- local from = (self.pos)
     -- local to = (self.pos + self.normal)
     -- debugDrawer:drawLine(from, to, ColorF(1.0, 0.0, 0.0, 1.0))
   end
+end
+
+function C:drawDebugRecce(is_next_note, multiple_notes, note_text)
+  -- self:drawDebugIntersectPlane(cc.clr_red, cc.pacenote_alpha_recce)
+  local clr = cc.clr_white
+  local shapeAlpha = 0.09
+  -- local textAlpha = (is_next_note and 1.0) or 0.5
+  local textAlpha = (multiple_notes and 0.65) or 1.0
+
+  local height = 6
+  local width = self.radius * 2
+  local side = self.normal:cross(vec3(0,0,1)) * (self.radius - (width / 2))
+
+  -- this square prism is the intersection "plane" of the pacenote.
+  debugDrawer:drawSquarePrism(
+    (self.pos + side),
+    (self.pos + 0.01 * self.normal + side),
+    Point2F(height, width), -- by itself, forms the lower triangle
+    Point2F(height, width), -- forms the upper triangle
+    ColorF(clr[1], clr[2], clr[3], shapeAlpha)
+  )
+
+  -- if is_next_note then
+    local clr_text_fg = cc.waypoint_clr_txt_fg
+    local clr_text_bg = cc.waypoint_clr_txt_bg
+
+    debugDrawer:drawTextAdvanced(
+      self.pos + (vec3(0,0,height/2)),
+      String(note_text),
+      ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
+      true,
+      false,
+      ColorI(clr_text_bg[1], clr_text_bg[2], clr_text_bg[3], textAlpha*255)
+    )
+  -- end
+
+  local clr_cyl = cc.clr_red
+  local cyl_alpha = 0.5
+  local radius_cyl = 0.1
+
+  if multiple_notes then
+    clr_cyl = cc.clr_yellow
+  end
+
+  -- if not is_next_note then
+  --   cyl_alpha = 0.2
+  -- end
+
+  debugDrawer:drawCylinder(
+    self.pos + (self.normal:cross(vec3(0,0,1)) * self.radius) + vec3(0,0,-1),
+    self.pos + (self.normal:cross(vec3(0,0,1)) * self.radius) + (side + vec3(0, 0, (height/2)-radius_cyl)),
+    radius_cyl,
+    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
+  )
+
+  debugDrawer:drawCylinder(
+    self.pos + (-self.normal:cross(vec3(0,0,1)) * self.radius) + vec3(0,0,-1), -- adjust down through the ground in case the ground is uneven
+    self.pos + (-self.normal:cross(vec3(0,0,1)) * self.radius) + (side + vec3(0, 0, (height/2)-radius_cyl)),
+    radius_cyl,
+    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
+  )
+
+  debugDrawer:drawCylinder(
+    self.pos + (self.normal:cross(vec3(0,0,1)) * (self.radius+radius_cyl)) + (side + vec3(0, 0, height/2)),
+    self.pos + (-self.normal:cross(vec3(0,0,1)) * (self.radius+radius_cyl)) + (side + vec3(0, 0, height/2)),
+    radius_cyl,
+    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
+  )
 end
 
 function C:posForVehiclePlacement()

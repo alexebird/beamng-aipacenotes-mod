@@ -6,7 +6,7 @@
     "title": "Stop Recording (AIPacenotes)",
     "desc": "Tells the desktop app to stop recording. Does not create a new transcript. Requires AI-Pacenotes desktop app.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_transcribe_recording_stop()"
-  }
+  },
   "cut_voice_transcription": {
     "cat": "gameplay",
     "ctx": "tlua",
@@ -14,7 +14,15 @@
     "title": "Cut Voice Transcription (AIPacenotes)",
     "desc": "If a recording is running, this stops it and immediately starts another. Requires AI-Pacenotes desktop app.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_transcribe_recording_cut()"
-  }
+  },
+  "toggle_recce_drawDebug": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 1,
+    "title": "Toggle Recce Pacenotes Visualization (AIPacenotes)",
+    "desc": "Toggle the drawing of visual markers for pacenotes.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
+  },
 
 
   //----------------------------------------------------

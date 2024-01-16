@@ -40,6 +40,7 @@ function C:init(notebook, name, forceId)
   self.sortOrder = 999999
   self.validation_issues = {}
   self.draw_debug_lang = nil
+  self._cached_fgData = nil
 end
 
 -- used by pacenoteWaypoints.lua
@@ -168,6 +169,9 @@ end
 
 function C:asFlowgraphData(missionSettings, codriver)
   -- TODO reuse validations here.
+  if self._cached_fgData then
+    return self._cached_fgData
+  end
 
   local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir..'/')
   if not FS:fileExists(fname) then

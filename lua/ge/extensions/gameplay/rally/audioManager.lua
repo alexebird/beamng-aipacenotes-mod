@@ -34,9 +34,8 @@ function C:enqueueDamageSfx()
   if not self.damageAudioPlayedAt or now - self.damageAudioPlayedAt > self.damageTimeoutSecs then
     self.damageAudioPlayedAt = now
     local goNote = self.rallyManager.notebook:getStaticPacenoteByName('damage_1')
-    local fgNote = goNote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
     self:enqueuePauseSecs(0.5)
-    self:enqueuePacenote(fgNote)
+    self:enqueuePacenote(goNote)
   end
 end
 
@@ -46,7 +45,8 @@ function C:enqueuePauseSecs(secs)
   self.queue:push_right(audioObj)
 end
 
-function C:enqueuePacenote(pacenoteFgData)
+function C:enqueuePacenote(pacenote)
+    local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
   log('I', logTag, "pacenote='" .. pacenoteFgData.note_text .. "', filename=" .. pacenoteFgData.audioFname)
   self:enqueueFile(pacenoteFgData.audioFname)
 end
@@ -54,8 +54,7 @@ end
 function C:enqueueStaticPacenoteByName(pacenote_name)
   local pacenote = self.rallyManager.notebook:getStaticPacenoteByName(pacenote_name)
   if pacenote then
-    local fgNote = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
-    self:enqueuePacenote(fgNote)
+    self:enqueuePacenote(pacenote)
   end
 end
 

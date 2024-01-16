@@ -24,8 +24,10 @@ function C:init()
   self.codriver = nil
 
   self.nextId = nil -- this is the id of the pacenote we are looking for every dt.
-  self.fgPacenotes = nil
   self.closestPacenotes = nil
+
+  -- use this for debug drawing in the recce app
+  self.nextPacenotes = nil
 
   self.currLap = -1
   self.maxLap = -1
@@ -79,7 +81,8 @@ function C:setup(vehId, damageThresh, closestPacenotes_n)
     error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
   end
 
-  self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
+  -- self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
+  self.notebook:cachePacenoteFgData(self.missionSettings, self.codriver)
 
   self:reset()
   self.setup_complete = true
@@ -178,15 +181,16 @@ function C:update(dtSim, raceData)
   elseif self.closestPacenotes then
     -- In this case, there is a vehicle position reset and we need to find where
     -- in the pacenotes list we are.
-    for _,pacenote in ipairs(self.closestPacenotes) do
-      if self:intersectCorners(pacenote) then
-        if self:shouldPlay(pacenote) then
-          self.audioManager:enqueuePacenote(pacenote._cached_fgData)
+    for _,closePacenote in ipairs(self.closestPacenotes) do
+      if self:intersectCorners(closePacenote) then
+        if self:shouldPlay(closePacenote) then
+          self.audioManager:enqueuePacenote(closePacenote)
         end
-        -- nextId is not the pacenote.id, its the index in the ordered list of fgPacenotes.
-        for i,pnData in ipairs(self.fgPacenotes) do
-          if pnData.id == pacenote.id then
+        -- nextId is not the pacenote.id, its the index in the ordered list of pacenotes.
+        for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
+          if pacenote.id == closePacenote.id then
             self.nextId = i+1
+            self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
             break
           end
         end
@@ -195,19 +199,32 @@ function C:update(dtSim, raceData)
       end
     end
   else
-    -- In this case, we assume the next pacenote is nextId+1
-    local fgPacenote = self.fgPacenotes[self.nextId]
-    if fgPacenote and self:intersectCorners(fgPacenote.pacenote) then
-      if self:shouldPlay(fgPacenote.pacenote) then
-        self.audioManager:enqueuePacenote(fgPacenote)
+    -- in the normal case, we assume the next pacenote is nextId+1.
+    -- yes, this won't support skipping pacenotes, but I don't think
+    -- that should be expected.
+    local pacenote = self.notebook.pacenotes.sorted[self.nextId]
+    if pacenote and self:intersectCorners(pacenote) then
+      if self:shouldPlay(pacenote) then
+        self.audioManager:enqueuePacenote(pacenote)
       end
+      -- advance the pacenote even if we dont play the audio.
       self.nextId = self.nextId + 1
+      self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
     end
   end
 end
 
 function C:handleNoteSearch()
   self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
+  self.nextPacenotes = self.closestPacenotes
+end
+
+function C:getNextPacenotes()
+  if self.nextPacenotes then
+    return self.nextPacenotes
+  else
+    return {}
+  end
 end
 
 return function(...)

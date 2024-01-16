@@ -42,8 +42,16 @@ local function action_transcribe_recording_cut()
   end
 end
 
+local function action_toggle_recce_drawDebug()
+  log('I', logTag, 'action_toggle_recce_drawDebug')
+  if not is_recceApp_loaded() then return end
+
+  guihooks.trigger('aiPacenotesToggleDrawDebug')
+end
+
 -- M.action_transcribe_recording_start = action_transcribe_recording_start
 M.action_transcribe_recording_stop = action_transcribe_recording_stop
 M.action_transcribe_recording_cut = action_transcribe_recording_cut
+M.action_toggle_recce_drawDebug = action_toggle_recce_drawDebug
 
 return M
