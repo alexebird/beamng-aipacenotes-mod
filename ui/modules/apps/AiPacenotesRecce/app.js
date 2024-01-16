@@ -19,6 +19,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.is_recording = false
       $scope.network_ok = false
       $scope.drawDebug = false
+      $scope.drawDebugSnaproads = false
 
       $scope.cornerCall = defaultCornerCall
       $scope.wheelDegrees =  0
@@ -87,13 +88,21 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         }
       })
 
-      $scope.$on('aiPacenotesDesktopCallNotOk', function (event, errMsg) {
+      $scope.$on('aiPacenotesInputActionDesktopCallNotOk', function (event, errMsg) {
           $scope.network_ok = false
           $scope.transcriptsError = $sce.trustAsHtml(errMsg)
       })
 
-      $scope.$on('aiPacenotesToggleDrawDebug', function (event) {
+      $scope.$on('aiPacenotesInputActionToggleDrawDebug', function (event) {
           $scope.btnToggleDrawDebug()
+      })
+
+      $scope.$on('aiPacenotesInputActionRecceMoveFarther', function (event) {
+          $scope.btnMovePacenoteFarther()
+      })
+
+      $scope.$on('aiPacenotesInputActionRecceMoveCloser', function (event) {
+          $scope.btnMovePacenoteCloser()
       })
 
       $scope.$on('aiPacenotesCornerAnglesLoaded', function (event, cornerAnglesData, errMsg) {
@@ -144,6 +153,22 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.btnToggleDrawDebug = function() {
         $scope.drawDebug = !$scope.drawDebug
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')
+      }
+
+      $scope.btnToggleSnaproadsDrawDebug = function() {
+        $scope.drawDebugSnaproads = !$scope.drawDebugSnaproads
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
+      }
+
+      // these are proxying a lua call through the recce app in order to stay on one pattern.
+      // ie: inputAction(lua) -> JS(js) -> engineLua(lua)
+      // this pattern is good in case some frontend state needs to be updated.
+      $scope.btnMovePacenoteFarther = function() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteFarther()')
+      }
+
+      $scope.btnMovePacenoteCloser = function() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteCloser()')
       }
 
       $scope.btnRefreshCornerAngles()

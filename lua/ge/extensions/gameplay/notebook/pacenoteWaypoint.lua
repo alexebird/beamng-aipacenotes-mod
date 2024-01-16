@@ -55,6 +55,10 @@ function C:setManual(pos, radius, normal)
   self:setNormal(normal)
 end
 
+function C:setPos(newpos)
+  self.pos = newpos
+end
+
 function C:setNormal(normal)
   if not normal then
     self.normal = vec3(0,1,0)
@@ -201,12 +205,17 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
   end
 end
 
-function C:drawDebugRecce(is_next_note, multiple_notes, note_text)
+function C:drawDebugRecce(i, nextPacenotes, note_text)
+  local is_next_note = i == 1
+  local multiple_notes = #nextPacenotes > 1
+
   -- self:drawDebugIntersectPlane(cc.clr_red, cc.pacenote_alpha_recce)
   local clr = cc.clr_white
   local shapeAlpha = 0.09
+
   -- local textAlpha = (is_next_note and 1.0) or 0.5
-  local textAlpha = (multiple_notes and 0.65) or 1.0
+  -- local textAlpha = (multiple_notes and 0.65) or 1.0
+  local textAlpha = (#nextPacenotes - (i-1)) / #nextPacenotes -- scale the alpha by distance.
 
   local height = 6
   local width = self.radius * 2
@@ -236,7 +245,8 @@ function C:drawDebugRecce(is_next_note, multiple_notes, note_text)
   -- end
 
   local clr_cyl = cc.clr_red
-  local cyl_alpha = 0.5
+  -- local cyl_alpha = 0.5
+  local cyl_alpha = 0.5 * ((#nextPacenotes - (i-1)) / #nextPacenotes) -- scale the alpha by distance.
   local radius_cyl = 0.1
 
   if multiple_notes then

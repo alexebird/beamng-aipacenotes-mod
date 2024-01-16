@@ -1,12 +1,15 @@
 -- extension name: ui_aipacenotes_recceApp
 
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local M = {}
 
 local rallyManager = nil
+local snaproads = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
+local flag_drawDebugSnaproads = false
 
 local sphereColor = ColorF(1, 0, 0, 1)
 local textColor = ColorF(1, 1, 1, 0.9)
@@ -32,7 +35,7 @@ local function desktopGetTranscripts()
   if resp.ok then
     guihooks.trigger('aiPacenotesTranscriptsLoaded', resp)
   else
-    guihooks.trigger('aiPacenotesDesktopCallNotOk', resp.client_msg)
+    guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
   end
 end
 
@@ -79,23 +82,110 @@ local function updateRallyManager(dtSim)
 end
 
 local function drawDebug()
-  -- TODO: convert into stream
-  local veh = be:getPlayerVehicle(0)
-  if not veh then
-    return
-  end
-
-  -- local vehPos = veh:getPosition()
-  -- local camPos = core_camera.getPosition()
-
   if not rallyManager then return end
 
-  local pacenotes = rallyManager:getNextPacenotes()
-  local multiple_notes = #pacenotes > 1
+  local nextPacenotes = rallyManager:getNextPacenotes()
 
-  for i,pacenote in ipairs(pacenotes) do
+  for i,pacenote in ipairs(nextPacenotes) do
     local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-    wp_audio_trigger:drawDebugRecce(i == 1, multiple_notes, pacenote._cached_fgData.note_text)
+    wp_audio_trigger:drawDebugRecce(i, nextPacenotes, pacenote._cached_fgData.note_text)
+  end
+
+  if snaproads and flag_drawDebugSnaproads then
+    snaproads:drawSnapRoads(nil, cc.clr_orange)
+    if #nextPacenotes > 0 then
+      local rad = 0.5
+      local alpha = 0.5
+
+      local nextNote = nextPacenotes[1]
+      local wp_audio_trigger = nextNote:getActiveFwdAudioTrigger()
+      local pos = wp_audio_trigger.pos
+      debugDrawer:drawSphere(
+        (pos),
+        rad,
+        ColorF(1,1,1,alpha)
+      )
+
+      local cs = nextNote:getCornerStartWaypoint()
+      debugDrawer:drawSphere(
+        (cs.pos),
+        rad,
+        ColorF(0,1,0,alpha)
+      )
+
+      local ce = nextNote:getCornerEndWaypoint()
+      debugDrawer:drawSphere(
+        (ce.pos),
+        rad,
+        ColorF(1,0,0,alpha)
+      )
+
+      local wp_cs = nextNote:getCornerStartWaypoint()
+      if wp_cs then
+        local nextSnapPos,_ = snaproads:nextSnapPos(pos, wp_cs.pos)
+        debugDrawer:drawSphere(
+          (nextSnapPos),
+          rad,
+          ColorF(1,0,1,alpha)
+        )
+      end
+
+      local veh = be:getPlayerVehicle(0)
+      if not veh then
+        guihooks.trigger('aiPacenotesRecce', -1, "no vehicle")
+        return
+      end
+      local vehPos = veh:getPosition()
+      local nextSnapPos,_ = snaproads:nextSnapPos(pos, vehPos)
+      debugDrawer:drawSphere(
+        (nextSnapPos),
+        rad,
+        ColorF(0,1,1,alpha)
+      )
+    end
+  end
+end
+
+local function movePacenoteTowards(pacenote, directionPos)
+  local nextWp = pacenote:getActiveFwdAudioTrigger()
+
+  local nextSnapPos, normalAlignPos = snaproads:nextSnapPos(nextWp.pos, directionPos)
+  if nextSnapPos then
+    local newNormal = re_util.calculateForwardNormal(nextSnapPos, normalAlignPos)
+    nextWp:setPos(nextSnapPos)
+    nextWp:setNormal(newNormal)
+  end
+end
+
+local function moveNextPacenoteFarther()
+  if not rallyManager then return end
+  if not snaproads then return end
+
+  local nextPacenotes = rallyManager:getNextPacenotes()
+  if nextPacenotes and #nextPacenotes > 0 then
+    local nextNote = nextPacenotes[1]
+    if not nextNote then
+      return
+    end
+    movePacenoteTowards(nextPacenotes[1], nextNote:getCornerStartWaypoint().pos)
+    rallyManager:saveNotebook()
+  end
+end
+
+local function moveNextPacenoteCloser()
+  if not rallyManager then return end
+  if not snaproads then return end
+
+  local nextPacenotes = rallyManager:getNextPacenotes()
+  if nextPacenotes and #nextPacenotes > 0 then
+    local nextNote = nextPacenotes[1]
+    local veh = be:getPlayerVehicle(0)
+    if not nextNote or not veh then
+      return
+    end
+    local vehPos = veh:getPosition()
+    movePacenoteTowards(nextPacenotes[1], vehPos)
+    rallyManager:saveNotebook()
   end
 end
 
@@ -110,9 +200,14 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   -- log('D', 'wtf', 'onUpdate vehPos='..dumps(vehPos))
 
   updateRallyManager(dtSim)
-  if flag_drawDebug then
+  if flag_drawDebug and not (editor and editor.isEditorActive()) then
     drawDebug()
   end
+end
+
+local function initSnapRoads()
+  snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads2')()
+  snaproads:loadSnapRoads()
 end
 
 local function initRallyManager(missionId, missionDir)
@@ -120,11 +215,14 @@ local function initRallyManager(missionId, missionDir)
   rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
   rallyManager:setOverrideMission(missionId, missionDir)
   local vehObjId = be:getPlayerVehicleID(0)
+
   -- log('D', 'wtf', dumps(veh.id))
   -- log('D', 'wtf', dumps(veh.objectId))
 
   rallyManager:setup(vehObjId, 1000, 5)
   rallyManager:handleNoteSearch()
+
+  initSnapRoads()
 end
 
 local function clearRallyManager()
@@ -133,6 +231,10 @@ end
 
 local function setDrawDebug(val)
   flag_drawDebug = val
+end
+
+local function setDrawDebugSnaproads(val)
+  flag_drawDebugSnaproads = val
 end
 
 local function onVehicleResetted()
@@ -171,6 +273,9 @@ M.initRallyManager = initRallyManager
 M.clearRallyManager = clearRallyManager
 M.clearTimeout = clearTimeout
 M.setDrawDebug = setDrawDebug
+M.setDrawDebugSnaproads = setDrawDebugSnaproads
+M.moveNextPacenoteCloser = moveNextPacenoteCloser
+M.moveNextPacenoteFarther = moveNextPacenoteFarther
 M.onUpdate = onUpdate
 -- M.onFirstUpdate = onFirstUpdate
 

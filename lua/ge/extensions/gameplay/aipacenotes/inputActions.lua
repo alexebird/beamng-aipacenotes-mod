@@ -28,7 +28,7 @@ local function action_transcribe_recording_stop()
 
   local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_stop()
   if not resp.ok then
-    guihooks.trigger('aiPacenotesDesktopCallNotOk', resp.client_msg)
+    guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
   end
 end
 
@@ -38,7 +38,7 @@ local function action_transcribe_recording_cut()
 
   local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_cut()
   if not resp.ok then
-    guihooks.trigger('aiPacenotesDesktopCallNotOk', resp.client_msg)
+    guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
   end
 end
 
@@ -46,12 +46,28 @@ local function action_toggle_recce_drawDebug()
   log('I', logTag, 'action_toggle_recce_drawDebug')
   if not is_recceApp_loaded() then return end
 
-  guihooks.trigger('aiPacenotesToggleDrawDebug')
+  guihooks.trigger('aiPacenotesInputActionToggleDrawDebug')
+end
+
+local function action_recce_move_farther()
+  log('I', logTag, 'action_recce_move_farther')
+  if not is_recceApp_loaded() then return end
+
+  guihooks.trigger('aiPacenotesInputActionRecceMoveFarther')
+end
+
+local function action_recce_move_closer()
+  log('I', logTag, 'action_recce_move_closer')
+  if not is_recceApp_loaded() then return end
+
+  guihooks.trigger('aiPacenotesInputActionRecceMoveCloser')
 end
 
 -- M.action_transcribe_recording_start = action_transcribe_recording_start
 M.action_transcribe_recording_stop = action_transcribe_recording_stop
 M.action_transcribe_recording_cut = action_transcribe_recording_cut
 M.action_toggle_recce_drawDebug = action_toggle_recce_drawDebug
+M.action_recce_move_farther = action_recce_move_farther
+M.action_recce_move_closer = action_recce_move_closer
 
 return M

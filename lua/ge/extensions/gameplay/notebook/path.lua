@@ -2,6 +2,7 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
+local logTag = 'aipacenotes'
 local C = {}
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
@@ -46,8 +47,27 @@ function C:init(name)
 
   self._hover_waypoint_id = nil
   self._default_note_lang = 'english'
+  self.fname = nil
 
   self.validation_issues = {}
+end
+
+function C:setFname(newFname)
+  self.fname = newFname
+end
+
+function C:save()
+  if not self.fname then
+    log('W', logTag, 'couldnt save notebook because no filename was set')
+    return
+  end
+
+  local json = self:onSerialize()
+  local saveOk = jsonWriteFile(self.fname, json, true)
+  if not saveOk then
+    log('E', logTag, 'error saving notebook')
+  end
+  return saveOk
 end
 
 function C:validate()

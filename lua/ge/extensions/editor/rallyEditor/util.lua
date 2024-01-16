@@ -202,9 +202,31 @@ local function getNotebookHelper(missionDir, missionSettings)
   end
 
   local notebook = require('/lua/ge/extensions/gameplay/notebook/path')("New Path")
+  notebook:setFname(notebookFname)
   notebook:onDeserialized(json)
 
   return notebook, nil
+end
+
+-- args are both vec3's representing a position.
+local function calculateForwardNormal(snap_pos, next_pos)
+  local flip = false
+  local dx = next_pos.x - snap_pos.x
+  local dy = next_pos.y - snap_pos.y
+  local dz = next_pos.z - snap_pos.z
+
+  local magnitude = math.sqrt(dx*dx + dy*dy + dz*dz)
+  if magnitude == 0 then
+    error("The two positions must not be identical.")
+  end
+
+  local normal = vec3(dx / magnitude, dy / magnitude, dz / magnitude)
+
+  if flip then
+    normal = -normal
+  end
+
+  return normal
 end
 
 
@@ -222,6 +244,7 @@ M.detectMissionEditorMissionId = detectMissionEditorMissionId
 M.detectMissionIdHelper = detectMissionIdHelper
 M.getMissionSettingsHelper = getMissionSettingsHelper
 M.getNotebookHelper = getNotebookHelper
+M.calculateForwardNormal = calculateForwardNormal
 
 M.autofill_blocker = autofill_blocker
 M.unknown_transcript_str = unknown_transcript_str

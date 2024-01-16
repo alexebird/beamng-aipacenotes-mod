@@ -307,27 +307,6 @@ function C:drawDebugNotebookEntrypoint()
   end
 end
 
--- args are both vec3's representing a position.
-local function calculateForwardNormal(snap_pos, next_pos)
-  local flip = false
-  local dx = next_pos.x - snap_pos.x
-  local dy = next_pos.y - snap_pos.y
-  local dz = next_pos.z - snap_pos.z
-
-  local magnitude = math.sqrt(dx*dx + dy*dy + dz*dz)
-  if magnitude == 0 then
-    error("The two positions must not be identical.")
-  end
-
-  local normal = vec3(dx / magnitude, dy / magnitude, dz / magnitude)
-
-  if flip then
-    normal = -normal
-  end
-
-  return normal
-end
-
 function C:handleMouseDown(hoveredWp)
   if hoveredWp then
     local selectedPn = hoveredWp.pacenote
@@ -370,17 +349,17 @@ function C:handleMouseHold()
         if new_pos then
           wp_sel.pos = new_pos
           if normal_align_pos then
-            local rv = calculateForwardNormal(new_pos, normal_align_pos)
+            local rv = re_util.calculateForwardNormal(new_pos, normal_align_pos)
             wp_sel.normal = vec3(rv.x, rv.y, rv.z)
           elseif wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
             local note = wp_sel.pacenote
             -- local at = note:getActiveFwdAudioTrigger()
             for _,at in ipairs(note:getAudioTriggerWaypoints()) do
-              local rv = calculateForwardNormal(at.pos, wp_sel.pos)
+              local rv = re_util.calculateForwardNormal(at.pos, wp_sel.pos)
               at.normal = vec3(rv.x, rv.y, rv.z)
             end
             -- if at then
-            --   local rv = calculateForwardNormal(at.pos, wp_sel.pos)
+            --   local rv = re_util.calculateForwardNormal(at.pos, wp_sel.pos)
             --   at.normal = vec3(rv.x, rv.y, rv.z)
             -- end
           end
@@ -631,7 +610,7 @@ function C:addMouseWaypointToPacenote()
         if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
           local cs = note:getCornerStartWaypoint()
           if cs then
-            local rv = calculateForwardNormal(data.pos, cs.pos)
+            local rv = re_util.calculateForwardNormal(data.pos, cs.pos)
             waypoint.normal = vec3(rv.x, rv.y, rv.z)
           end
         end
@@ -1459,7 +1438,7 @@ function C:snapAllHelper()
     local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
     wp.pos = newPos
     if normalAlignPos then
-      local rv = calculateForwardNormal(newPos, normalAlignPos)
+      local rv = re_util.calculateForwardNormal(newPos, normalAlignPos)
       wp.normal = vec3(rv.x, rv.y, rv.z)
     end
   end

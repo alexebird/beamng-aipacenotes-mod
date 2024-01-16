@@ -69,7 +69,7 @@ function C:setup(vehId, damageThresh, closestPacenotes_n)
     return
   end
 
-  self:getNotebook()
+  self:loadNotebook()
   if not self.notebook then
     return
   end
@@ -125,7 +125,7 @@ function C:getMissionSettings()
   self.missionSettings = settings
 end
 
-function C:getNotebook()
+function C:loadNotebook()
   local notebook, err = re_util.getNotebookHelper(self.missionDir, self.missionSettings)
 
   if err then
@@ -133,6 +133,12 @@ function C:getNotebook()
   end
 
   self.notebook = notebook
+end
+
+function C:saveNotebook()
+  if self.notebook then
+    return self.notebook:save()
+  end
 end
 
 function C:handleLapChange(currLap, maxLap)

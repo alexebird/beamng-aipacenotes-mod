@@ -76,8 +76,11 @@ end
 
 local function saveNotebook(notebook, savePath)
   if not notebook then notebook = currentPath end
-  local json = notebook:onSerialize()
-  jsonWriteFile(savePath, json, true)
+  -- local json = notebook:onSerialize()
+  -- jsonWriteFile(savePath, json, true)
+  if not notebook:save() then
+    return
+  end
   local dir, filename, ext = path.split(savePath)
   previousFilepath = dir
   previousFilename = filename
