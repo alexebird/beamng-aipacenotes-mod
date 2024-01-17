@@ -172,7 +172,7 @@
             290,
             78
           ],
-          "type":"gameplay/aiPacenotes/enqueuePacenotes"
+          "type":"gameplay/aipacenotes/enqueuePacenotes"
         },
         "10":{
           "data":{},
@@ -205,7 +205,7 @@
             -206,
             -62
           ],
-          "type":"gameplay/aiPacenotes/loader"
+          "type":"gameplay/aipacenotes/loader"
         },
         "13":{
           "data":{},
@@ -247,7 +247,7 @@
             836,
             162
           ],
-          "type":"gameplay/aiPacenotes/finish"
+          "type":"gameplay/aipacenotes/finish"
         },
         "21":{
           "data":{},
@@ -264,7 +264,7 @@
             304,
             -76
           ],
-          "type":"gameplay/aiPacenotes/audioPlayer"
+          "type":"gameplay/aipacenotes/audioPlayer"
         },
         "22":{
           "data":{
@@ -309,7 +309,7 @@
             318,
             302
           ],
-          "type":"gameplay/aiPacenotes/countdown"
+          "type":"gameplay/aipacenotes/countdown"
         },
         "23":{
           "data":{},

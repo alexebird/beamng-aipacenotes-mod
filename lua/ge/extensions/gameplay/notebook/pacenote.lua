@@ -176,7 +176,7 @@ function C:asFlowgraphData(missionSettings, codriver)
   local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir..'/')
   if not FS:fileExists(fname) then
     log('E', logTag, "pacenote audio file not found: "..fname)
-    return
+    return nil
   end
 
   local wp_trigger = self:getActiveFwdAudioTrigger()

@@ -86,14 +86,16 @@ end
 
 function C:enqueueStaticPacenoteByName(pacenote_name)
   if self.data.playSounds then
-    self.rallyManager.audioManager:enqueueStaticPacenoteByName(pacenote_name)
+    return self.rallyManager.audioManager:enqueueStaticPacenoteByName(pacenote_name)
+  else
+    return nil
   end
 end
 
-function C:show(msg, big, duration)
+function C:show(msg, big, duration, force)
   --ui_message(msg, 1, "")
   duration = duration or (big and 1.4 or 0.95)
-  if self.data.visualCountdown then
+  if force or self.data.visualCountdown then
     guihooks.trigger('ScenarioFlashMessage', {{msg, duration , "", big}})
     if self.data.useMessages then
       guihooks.trigger('Message', {
@@ -112,8 +114,12 @@ function C:countdown()
   local old = math.floor(self.timer)
   self.timer = self.timer - self.mgr.dtSim
   if self.timer <= 0 then
-    self:show(self.msg, self.data.bigFinishMsg, self.pinIn.finishMsgDuration.value)
-    self:enqueueStaticPacenoteByName('go_1')
+    local forceVisual = false
+    if self:enqueueStaticPacenoteByName('go_1') == false then
+      forceVisual = true
+    end
+    self:show(self.msg, self.data.bigFinishMsg, self.pinIn.finishMsgDuration.value, forceVisual)
+
     self.flags.finished = true
     self.running = false
     self.pinOut.flow.value = true
@@ -123,8 +129,12 @@ function C:countdown()
       self.countdownMsg = self.pinIn.countdownMsg.value or "%d"
       local countdownMsg = string.format(self.countdownMsg, old)
       local bigMsg = self.countdownMsg == "%d"
-      self:show(countdownMsg, bigMsg, 0.95)
-      self:enqueueStaticPacenoteByName('countdown_'..countdownMsg)
+
+      local forceVisual = false
+      if self:enqueueStaticPacenoteByName('countdown_'..countdownMsg) == false then
+        forceVisual = true
+      end
+      self:show(countdownMsg, bigMsg, 0.95, forceVisual)
     end
     if self.data.useImgui then
       local avail = im.GetContentRegionAvail()

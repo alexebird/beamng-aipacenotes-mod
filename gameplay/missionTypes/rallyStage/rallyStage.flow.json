@@ -2623,7 +2623,7 @@
             654,
             148
           ],
-          "type":"gameplay/aiPacenotes/loader"
+          "type":"gameplay/aipacenotes/loader"
         },
         "279":{
           "data":{},
@@ -4908,7 +4908,7 @@
             200,
             64
           ],
-          "type":"gameplay/aiPacenotes/countdown"
+          "type":"gameplay/aipacenotes/countdown"
         },
         "171":{
           "alpha":0.75000000000000000000,
@@ -5509,7 +5509,7 @@
             -4,
             -76
           ],
-          "type":"gameplay/aiPacenotes/audioPlayer"
+          "type":"gameplay/aipacenotes/audioPlayer"
         },
         "4325160":{
           "data":{},
@@ -5531,7 +5531,7 @@
             1536,
             106
           ],
-          "type":"gameplay/aiPacenotes/enqueuePacenotes"
+          "type":"gameplay/aipacenotes/enqueuePacenotes"
         }
       },
       "showTab":true,
@@ -8207,7 +8207,7 @@
             626,
             -440
           ],
-          "type":"gameplay/aiPacenotes/finish"
+          "type":"gameplay/aipacenotes/finish"
         },
         "153":{
           "customColor":[
@@ -8365,7 +8365,7 @@
             612,
             -636
           ],
-          "type":"gameplay/aiPacenotes/audioPlayer"
+          "type":"gameplay/aipacenotes/audioPlayer"
         },
         "163":{
           "data":{},

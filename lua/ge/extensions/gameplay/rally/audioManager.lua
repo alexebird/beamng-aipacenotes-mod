@@ -33,28 +33,45 @@ function C:enqueueDamageSfx()
   local now = re_util.getTime()
   if not self.damageAudioPlayedAt or now - self.damageAudioPlayedAt > self.damageTimeoutSecs then
     self.damageAudioPlayedAt = now
-    local goNote = self.rallyManager.notebook:getStaticPacenoteByName('damage_1')
-    self:enqueuePauseSecs(0.5)
-    self:enqueuePacenote(goNote)
+    local staticNoteName = 'damage_1'
+    local pacenote = self.rallyManager.notebook:getStaticPacenoteByName(staticNoteName)
+    if pacenote then
+      self:enqueuePauseSecs(0.5)
+      self:enqueuePacenote(pacenote)
+    else
+      log('E', logTag, "couldnt find damage static pacenote '"..staticNoteName.."'")
+    end
   end
 end
 
 function C:enqueuePauseSecs(secs)
   log('I', logTag, 'pause='..secs..'s')
   local audioObj = re_util.buildAudioObjPause(secs)
-  self.queue:push_right(audioObj)
+  if audioObj then
+    self.queue:push_right(audioObj)
+  else
+    log('E', logTag, "nil audioObj enqueuePauseSecs")
+  end
 end
 
 function C:enqueuePacenote(pacenote)
-    local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
-  log('I', logTag, "pacenote='" .. pacenoteFgData.note_text .. "', filename=" .. pacenoteFgData.audioFname)
-  self:enqueueFile(pacenoteFgData.audioFname)
+  local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
+  if pacenoteFgData then
+    log('I', logTag, "pacenote='" .. pacenoteFgData.note_text .. "', filename=" .. pacenoteFgData.audioFname)
+    return self:enqueueFile(pacenoteFgData.audioFname)
+  else
+    log('E', logTag, "couldnt enqueuePacenote due to missing FGdata")
+    return false
+  end
 end
 
 function C:enqueueStaticPacenoteByName(pacenote_name)
   local pacenote = self.rallyManager.notebook:getStaticPacenoteByName(pacenote_name)
   if pacenote then
-    self:enqueuePacenote(pacenote)
+    return self:enqueuePacenote(pacenote)
+  else
+    log('E', logTag, "couldnt enqueuePacenote for static pacenote '"..pacenote_name.."'")
+    return false
   end
 end
 
@@ -62,8 +79,10 @@ function C:enqueueFile(fname)
   local audioObj = re_util.buildAudioObjPacenote(fname)
   if re_util.fileExists(fname) then
     self.queue:push_right(audioObj)
+    return true
   else
     log('E', logTag, "audio file does not exist: " .. fname)
+    return false
   end
 end
 
