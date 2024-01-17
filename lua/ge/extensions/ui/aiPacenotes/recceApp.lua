@@ -14,30 +14,33 @@ local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
 local ui_selectedCornerAnglesStyle = ""
 
-local sphereColor = ColorF(1, 0, 0, 1)
-local textColor = ColorF(1, 1, 1, 0.9)
-local textBackgroundColor = ColorI(0, 0, 0, 128)
+
+local function isFreeroam()
+  return core_gamestate.state and core_gamestate.state.state == "freeroam"
+end
 
 local function initVehicleCapture()
   local veh = be:getPlayerVehicle(0)
-  vehicleCapture = require('/lua/ge/extensions/gameplay/aipacenotes/vehicleCapture')(
-    veh,
-    cornerAngles,
-    ui_selectedCornerAnglesStyle
-  )
+  if isFreeroam() then
+    vehicleCapture = require('/lua/ge/extensions/gameplay/aipacenotes/vehicleCapture')(
+      veh,
+      cornerAngles,
+      ui_selectedCornerAnglesStyle
+    )
+  end
 end
 
 local function loadCornerAnglesFile()
   local filename = '/settings/aipacenotes/cornerAngles.json'
   local json = jsonReadFile(filename)
-  if not json then
+  if json then
+    cornerAngles = json
+    -- initVehicleCapture()
+    guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
+  else
     local err = 'unable to find cornerAngles file: ' .. tostring(filename)
     log('E', 'aipacenotes', err)
     guihooks.trigger('aiPacenotesCornerAnglesLoaded', nil, err)
-  else
-    cornerAngles = json
-    initVehicleCapture()
-    guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
   end
 end
 
@@ -211,15 +214,6 @@ local function moveNextPacenoteCloser()
 end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
-  -- local veh = be:getPlayerVehicle(0)
-  -- if not veh then
-    -- guihooks.trigger('aiPacenotesRecce', -1, "no vehicle")
-    -- return
-  -- end
-
-  -- local vehPos = veh:getPosition()
-  -- log('D', 'wtf', 'onUpdate vehPos='..dumps(vehPos))
-
   updateRallyManager(dtSim)
   updateVehicleCapture()
   if flag_drawDebug and not (editor and editor.isEditorActive()) then
@@ -237,13 +231,8 @@ local function initRallyManager(missionId, missionDir)
   rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
   rallyManager:setOverrideMission(missionId, missionDir)
   local vehObjId = be:getPlayerVehicleID(0)
-
-  -- log('D', 'wtf', dumps(veh.id))
-  -- log('D', 'wtf', dumps(veh.objectId))
-
   rallyManager:setup(vehObjId, 1000, 5)
   rallyManager:handleNoteSearch()
-
   initSnapRoads()
 end
 
@@ -260,20 +249,13 @@ local function setDrawDebugSnaproads(val)
 end
 
 local function onVehicleResetted()
-  -- log('D', 'aipacenotes', 'onVehicleResetted')
+  log('I', 'aipacenotes', 'recceApp detected vehicle reset')
 
   if rallyManager then
     flag_NoteSearch = true
     rallyManager.audioManager:resetAudioQueue()
+    -- self.rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
   end
-
-  -- if self.pinIn.reset.value then
-  -- self.rallyManager:reset()
-  -- end
-  -- if resetAudioQueue then
-  --   resetAudioQueue = false
-  --   rallyManager.audioManager:resetAudioQueue()
-  -- end
 end
 
 local function setCornerAnglesStyleName(name)

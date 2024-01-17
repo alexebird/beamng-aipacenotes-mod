@@ -173,9 +173,10 @@
 
 #wheelDegrees {
     display: inline-block;
-    width: 40px;
+    width: 50px;
+    text-align: right;
 }
 
 .md-select-dropdown {
-    width: 350px;
+    width: 450px;
 }

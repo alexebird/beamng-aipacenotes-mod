@@ -10,7 +10,8 @@ local M = {}
 local logTag = 'aip-client'
 local base_url = 'http://localhost:27872'
 local network_issue_msg = nil
-local timeout_msg = 'network activity disabled due to timeout.<br>is the desktop app running?<br>click net to retry.'
+-- local timeout_msg = 'network activity disabled due to timeout.<br>is the desktop app running?<br>click net to retry.'
+local timeout_msg = 'is the desktop app running?<br>click net to retry.'
 local recording_disabled_msg = 'please enable recording in the desktop app.<br>click net to retry.'
 local network_issue_occurred = false
 

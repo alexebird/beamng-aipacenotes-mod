@@ -177,9 +177,9 @@ function C:closestSnapPos(source_pos)
   return closestPos, posAfter
 end
 
-function C:nextSnapPos(srcPos, directionPos)
-  -- use a snap point for src
-  srcPos, _ = self:closestSnapPos(srcPos)
+function C:nextSnapPos(srcPosIn, directionPos)
+  -- make sure that srcPosIn is aligned to a snaproad node.
+  local srcPos, _ = self:closestSnapPos(srcPosIn)
 
   local direction = directionPos - srcPos
   local nextPoint = nil

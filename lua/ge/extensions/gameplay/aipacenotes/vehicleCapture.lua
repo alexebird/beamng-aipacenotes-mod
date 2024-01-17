@@ -1,3 +1,4 @@
+local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
@@ -5,6 +6,7 @@ local C = {}
 local steeringKey = 'steering'
 
 function C:init(vehicle, cornerAngles, selectedCornerAnglesName)
+  log('I', logTag, 'initializing vehicleCapture for vehicle='..vehicle:getId())
   self.vehicle = vehicle
   self.cornerAngles = cornerAngles
   self.selectedCornerAnglesName = selectedCornerAnglesName

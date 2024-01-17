@@ -117,6 +117,9 @@ function C:countdown()
     local forceVisual = false
     if self:enqueueStaticPacenoteByName('go_1') == false then
       forceVisual = true
+      if self.data.playSounds then
+        Engine.Audio.playOnce('AudioGui', 'event:UI_CountdownGo')
+      end
     end
     self:show(self.msg, self.data.bigFinishMsg, self.pinIn.finishMsgDuration.value, forceVisual)
 
@@ -133,6 +136,9 @@ function C:countdown()
       local forceVisual = false
       if self:enqueueStaticPacenoteByName('countdown_'..countdownMsg) == false then
         forceVisual = true
+        if self.data.playSounds then
+          Engine.Audio.playOnce('AudioGui', 'event:UI_Countdown1')
+        end
       end
       self:show(countdownMsg, bigMsg, 0.95, forceVisual)
     end
