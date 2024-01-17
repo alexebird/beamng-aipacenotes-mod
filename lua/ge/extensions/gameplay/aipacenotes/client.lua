@@ -108,7 +108,7 @@ end
 -- end
 
 local function transcribe_recording_stop()
-  log('I', logTag, 'transcribe_recording_stop')
+  log('I', logTag, 'client.transcribe_recording_stop')
   local url = base_url..'/recordings/actions/stop'
   local resp = jsonRequestPost(url, getVehiclePosForRequest())
   -- guihooks.trigger('MenuHide') -- why did i keep this around?
@@ -124,7 +124,7 @@ end
 
   -- if extensions.isExtensionLoaded(name) then
 local function transcribe_recording_cut()
-  log('I', logTag, 'transcribe_recording_cut')
+  log('I', logTag, 'client.transcribe_recording_cut')
 
   -- local t_now = re_util.getTime()
   -- local diff = t_now - last_transcript_cut_ts
