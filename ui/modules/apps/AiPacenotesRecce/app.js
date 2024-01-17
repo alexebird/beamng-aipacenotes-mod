@@ -119,6 +119,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
         $scope.dropdownStyleNames = $scope.cornerAnglesData.pacenoteStyles.map((style) => style.name)
         $scope.selectedStyleName = $scope.dropdownStyleNames[0]
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setCornerAnglesStyleName("'+$scope.selectedStyleName+'")')
 
         // $scope.$digest()
       })
@@ -184,6 +185,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$watch('selectedStyleName', function(newValue, oldValue) {
         if (newValue !== oldValue) {
           $scope.selectedStyle = $scope.cornerAnglesData.pacenoteStyles.find(style => style.name === $scope.selectedStyleName)
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setCornerAnglesStyleName("'+$scope.selectedStyleName+'")')
         }
       });
 

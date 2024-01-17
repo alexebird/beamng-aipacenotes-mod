@@ -3,6 +3,7 @@
     "globals": [
       "spawn",
       "intersectsRay_Plane",
+      "core_vehicleBridge",
       "jsonEncode",
       "jsonDecode",
       "ltn12",

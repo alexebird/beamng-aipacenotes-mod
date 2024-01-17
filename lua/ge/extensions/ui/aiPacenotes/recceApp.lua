@@ -6,14 +6,26 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local M = {}
 
 local rallyManager = nil
+local vehicleCapture = nil
 local snaproads = nil
+local cornerAngles = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
+local ui_selectedCornerAnglesStyle = ""
 
 local sphereColor = ColorF(1, 0, 0, 1)
 local textColor = ColorF(1, 1, 1, 0.9)
 local textBackgroundColor = ColorI(0, 0, 0, 128)
+
+local function initVehicleCapture()
+  local veh = be:getPlayerVehicle(0)
+  vehicleCapture = require('/lua/ge/extensions/gameplay/aipacenotes/vehicleCapture')(
+    veh,
+    cornerAngles,
+    ui_selectedCornerAnglesStyle
+  )
+end
 
 local function loadCornerAnglesFile()
   local filename = '/settings/aipacenotes/cornerAngles.json'
@@ -22,8 +34,11 @@ local function loadCornerAnglesFile()
     local err = 'unable to find cornerAngles file: ' .. tostring(filename)
     log('E', 'aipacenotes', err)
     guihooks.trigger('aiPacenotesCornerAnglesLoaded', nil, err)
+  else
+    cornerAngles = json
+    initVehicleCapture()
+    guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
   end
-  guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
 end
 
 local function clearTimeout()
@@ -65,6 +80,12 @@ end
 -- local function onFirstUpdate()
   -- loadCornerAnglesFile()
 -- end
+
+local function updateVehicleCapture()
+  if not vehicleCapture then return end
+
+  vehicleCapture:capture()
+end
 
 local function updateRallyManager(dtSim)
   if not rallyManager then return end
@@ -200,6 +221,7 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   -- log('D', 'wtf', 'onUpdate vehPos='..dumps(vehPos))
 
   updateRallyManager(dtSim)
+  updateVehicleCapture()
   if flag_drawDebug and not (editor and editor.isEditorActive()) then
     drawDebug()
   end
@@ -254,6 +276,11 @@ local function onVehicleResetted()
   -- end
 end
 
+local function setCornerAnglesStyleName(name)
+  ui_selectedCornerAnglesStyle = name
+  initVehicleCapture()
+end
+
 -- local function onVehicleSwitched()
 --   log('D', 'aipacenotes', 'onVehicleSwitched')
 -- end
@@ -274,6 +301,7 @@ M.clearRallyManager = clearRallyManager
 M.clearTimeout = clearTimeout
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
+M.setCornerAnglesStyleName = setCornerAnglesStyleName
 M.moveNextPacenoteCloser = moveNextPacenoteCloser
 M.moveNextPacenoteFarther = moveNextPacenoteFarther
 M.onUpdate = onUpdate

@@ -8,19 +8,18 @@ function C:init(path, name, forceId)
   self.name = name or ('t_'..self.id)
   self.sortOrder = 999999
 
-  self.text = nil
-  self.success = false
-  self.src = nil
-  self.file = nil
-  self.beamng_file = nil
+  self.pos = nil
+  self.quat = nil-- or rot ?
+  self.steering = nil-- or rot ?
   self.timestamp = nil
-  self.vehicle_pos = nil
+  self.cornerCall = nil
 end
 
 function C:onSerialize()
   local ret = {
     oldId = self.id,
     name = self.name,
+
     text = self.text,
   }
 
@@ -28,13 +27,13 @@ function C:onSerialize()
 end
 
 function C:onDeserialized(data, oldIdMap)
-  self.text = data.text or ''
-  self.success = data.success or false
-  self.src = data.src or ''
-  self.file = data.file or ''
-  self.beamng_file = data.beamng_file or ''
-  self.timestamp = data.timestamp or 0.0
-  self.vehicle_pos = data.vehicle_pos or {}
+  -- self.text = data.text or ''
+  -- self.success = data.success or false
+  -- self.src = data.src or ''
+  -- self.file = data.file or ''
+  -- self.beamng_file = data.beamng_file or ''
+  -- self.timestamp = data.timestamp or 0.0
+  -- self.vehicle_pos = data.vehicle_pos or {}
 end
 
 return function(...)
