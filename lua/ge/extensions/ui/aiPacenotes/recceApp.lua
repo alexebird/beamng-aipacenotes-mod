@@ -260,17 +260,37 @@ end
 
 local function setCornerAnglesStyleName(name)
   ui_selectedCornerAnglesStyle = name
-  initVehicleCapture()
+  -- initVehicleCapture()
+end
+
+local function getVehiclePosForRequest()
+  local vehicle = be:getPlayerVehicle(0)
+  local vehiclePos = vehicle:getPosition()
+  local vRot = quatFromDir(vehicle:getDirectionVector(), vehicle:getDirectionVectorUp())
+  -- local x,y,z = vRot * vec3(1,0,0),vRot * vec3(0,1,0),vRot * vec3(0,0,1)
+  local vehicle_position = { pos=vehiclePos, quat={x=vRot.x,y=vRot.y,z=vRot.z,w=vRot.w} }
+  return vehicle_position
 end
 
 local function trascribe_recording_cut()
-  local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_cut()
+  local request = {
+    vehicle_data = getVehiclePosForRequest(),
+  }
+  if vehicleCapture then
+    request.capture_data = vehicleCapture:asJson()
+    vehicleCapture:reset()
+  else
+    initVehicleCapture()
+  end
+
+  local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_cut(request)
   if not resp.ok then
     guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
   end
 end
 
 local function trascribe_recording_stop()
+  vehicleCapture = nil
   local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_stop()
   if not resp.ok then
     guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)

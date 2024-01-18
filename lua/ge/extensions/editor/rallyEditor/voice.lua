@@ -15,7 +15,7 @@ function C:init(rallyEditor)
   self.transcripts_path = nil
   self.notebook_create_dir = nil
 
-  -- self:reloadTranscriptFile()
+  self.render_transcripts = true
 end
 
 function C:windowDescription()
@@ -56,8 +56,8 @@ function C:convertTranscriptToNotebook(importIdent)
     local note = transcript.text or ""
     note = normalizer.replaceDigits(note)
 
-    if transcript.vehicle_pos then
-      local pos = transcript.vehicle_pos.pos or {}
+    if transcript.vehicle_data then
+      local pos = transcript.vehicle_data.vehicle_data.pos or {}
       -- local rot = transcript.vehicle_pos.rot or {}
       local radius = self.rallyEditor.getPrefDefaultRadius()
 
@@ -209,22 +209,37 @@ end
 function C:drawSectionTranscriptData()
   im.HeaderText("Transcript Data")
 
-  im.Columns(2, "transcript_columns")
+  if im.Checkbox("Show transcripts##show_tscs", im.BoolPtr(self.render_transcripts)) then
+    self.render_transcripts = not self.render_transcripts
+  end
+
+  im.Columns(3, "transcript_columns")
   im.Separator()
 
+  im.Text("Show?")
+  im.SetColumnWidth(0, 50)
+  im.NextColumn()
+
   im.Text("Text")
-  im.SetColumnWidth(0, 400)
+  im.SetColumnWidth(1, 400)
   im.NextColumn()
 
   im.Text("Success")
-  im.SetColumnWidth(1, 100)
+  im.SetColumnWidth(2, 100)
   im.NextColumn()
 
   im.Separator()
 
   for _,transcript in ipairs(self.transcripts_path.transcripts.sorted) do
+    if im.Checkbox("##show_tsc_"..transcript.id, im.BoolPtr(self.transcripts_path:shouldShow(transcript))) then
+      self.transcripts_path:toggleShow(transcript)
+      self.transcripts_path:save()
+    end
+    im.NextColumn()
+
     im.Text(transcript.text)
     im.NextColumn()
+
     im.Text(tostring(transcript.success))
     im.NextColumn()
   end
@@ -236,6 +251,12 @@ function C:draw(mouseInfo)
   self:drawSectionImportTranscript()
   self:drawSectionTranscriptData()
 end
+
+-- function C:drawDebugEntrypoint()
+--   if not self.transcripts_path then return end
+--
+--   self.transcripts_path:drawDebug()
+-- end
 
 return function(...)
   local o = {}

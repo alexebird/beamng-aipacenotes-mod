@@ -56,14 +56,15 @@ function C:setFname(newFname)
   self.fname = newFname
 end
 
-function C:save()
-  if not self.fname then
+function C:save(fname)
+  fname = fname or self.fname
+  if not fname then
     log('W', logTag, 'couldnt save notebook because no filename was set')
     return
   end
 
   local json = self:onSerialize()
-  local saveOk = jsonWriteFile(self.fname, json, true)
+  local saveOk = jsonWriteFile(fname, json, true)
   if not saveOk then
     log('E', logTag, 'error saving notebook')
   end

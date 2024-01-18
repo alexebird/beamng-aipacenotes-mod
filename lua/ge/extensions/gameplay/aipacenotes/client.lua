@@ -65,6 +65,8 @@ local function jsonRequestPost(uri, data)
     return {ok = false, error = network_issue_msg}
   end
 
+  data = data or {}
+
   local respbody = {}
   local reqbody = jsonEncode(data)
   local body, code, headers, status = httpClient.request {
@@ -91,15 +93,6 @@ local function jsonRequestPost(uri, data)
   end
 end
 
-local function getVehiclePosForRequest()
-  local vehicle = be:getPlayerVehicle(0)
-  local vehiclePos = vehicle:getPosition()
-  local vRot = quatFromDir(vehicle:getDirectionVector(), vehicle:getDirectionVectorUp())
-  local x,y,z = vRot * vec3(1,0,0),vRot * vec3(0,1,0),vRot * vec3(0,0,1)
-  local vehicle_position = { pos = vehiclePos, rot = {x, y, z} }
-  return vehicle_position
-end
-
 -- local function transcribe_recording_start()
 --   log('I', logTag, 'transcribe_recording_start')
 --   local url = base_url..'/recordings/actions/start'
@@ -110,7 +103,7 @@ end
 local function transcribe_recording_stop()
   log('I', logTag, 'client.transcribe_recording_stop')
   local url = base_url..'/recordings/actions/stop'
-  local resp = jsonRequestPost(url, getVehiclePosForRequest())
+  local resp = jsonRequestPost(url)
   -- guihooks.trigger('MenuHide') -- why did i keep this around?
   if not resp.ok then
     if not network_issue_occurred then
@@ -123,7 +116,7 @@ local function transcribe_recording_stop()
 end
 
   -- if extensions.isExtensionLoaded(name) then
-local function transcribe_recording_cut()
+local function transcribe_recording_cut(requestBody)
   log('I', logTag, 'client.transcribe_recording_cut')
 
   -- local t_now = re_util.getTime()
@@ -139,7 +132,7 @@ local function transcribe_recording_cut()
   -- last_transcript_cut_ts = t_now
 
   local url = base_url..'/recordings/actions/cut'
-  local resp = jsonRequestPost(url, getVehiclePosForRequest())
+  local resp = jsonRequestPost(url, requestBody)
   if not resp.ok then
     if not network_issue_occurred then
       network_issue_occurred = true

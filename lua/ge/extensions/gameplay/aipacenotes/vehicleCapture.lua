@@ -1,6 +1,36 @@
 local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
+local function createRotatingTable(maxSize)
+  local t = {}
+  local size = 0
+
+  local function add(element)
+    if size >= maxSize then
+      -- Remove the first element
+      table.remove(t, 1)
+    else
+      size = size + 1
+    end
+    -- Add the new element at the end
+    table.insert(t, element)
+  end
+
+  local function getTable()
+    return t
+  end
+
+  local function clear()
+    t = {}
+  end
+
+  return {
+    add = add,
+    getTable = getTable,
+    clear = clear,
+  }
+end
+
 local C = {}
 
 local steeringKey = 'steering'
@@ -31,6 +61,8 @@ function C:init(vehicle, cornerAngles, selectedCornerAnglesName)
   self.interval_m = 2
   -- self.last_capture_ts = re_util.getTime()
   self.last_dist_pos = nil
+
+  self.captures = createRotatingTable(100)
 end
 
 function C:getCornerCall(steering)
@@ -47,6 +79,17 @@ function C:getCornerCall(steering)
       return string.upper(cornerCallWithDirection)
     end
   end
+end
+
+function C:reset()
+  self.captures.clear()
+end
+
+function C:asJson()
+  return {
+    cornerAnglesStyle = self.selectedCornerAnglesName,
+    captures = self.captures.getTable(),
+  }
 end
 
 function C:capture()
@@ -89,6 +132,7 @@ function C:capture()
         vInfo.cornerCall = self:getCornerCall(steering)
       end
       -- log('D', 'wtf', dumps(vInfo))
+      self.captures.add(vInfo)
     end
   else
     self.last_dist_pos = vehPos

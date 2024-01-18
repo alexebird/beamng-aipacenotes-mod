@@ -15,6 +15,8 @@ M.clr_light_green = {0.5, 1.0, 0.5}
 M.clr_light_red   = {1.0, 0.5, 0.5}
 M.clr_lime_green  = {0.66, 1.0, 0.0}
 M.clr_aqua        = {0.0, 0.8, 0.8}
+M.clr_teal        = {0.0, 0.76, 0.55}
+M.clr_teal_2      = {0.0,  1.0, 0.58}
 
 M.clr_grey        = {0.5, 0.5, 0.5}
 M.clr_grey_light  = {0.75, 0.75, 0.75}

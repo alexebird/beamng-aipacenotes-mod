@@ -78,7 +78,7 @@ local function saveNotebook(notebook, savePath)
   if not notebook then notebook = currentPath end
   -- local json = notebook:onSerialize()
   -- jsonWriteFile(savePath, json, true)
-  if not notebook:save() then
+  if not notebook:save(savePath) then
     return
   end
   local dir, filename, ext = path.split(savePath)
@@ -316,7 +316,8 @@ local function drawEditorGui()
     local paused = simTimeAuthority.getPause()
 
     if not (mgr and mgr.runningState ~= 'stopped' and not paused) then
-      pacenotesWindow:drawDebugNotebookEntrypoint()
+      pacenotesWindow:drawDebugEntrypoint()
+      -- voiceWindow:drawDebugEntrypoint()
     end
   end
 
@@ -628,7 +629,7 @@ M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
 
 M.onEditorInitialized = onEditorInitialized
--- M.getToolsWindow = function() return toolsWindow end
+M.getVoiceWindow = function() return voiceWindow end
 M.getMissionDir = getMissionDir
 
 M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers

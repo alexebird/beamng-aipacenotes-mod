@@ -301,14 +301,31 @@ function C:endDragging()
   )
 end
 
-function C:drawDebugNotebookEntrypoint()
-  if self.path then
-    self.path:drawDebugNotebook(self.pacenote_index, self.waypoint_index)
+function C:getTranscripts()
+  if not self.rallyEditor then return nil end
+  local transcripts_path = self.rallyEditor.getVoiceWindow().transcripts_path
+
+  if self.rallyEditor.getVoiceWindow().render_transcripts and transcripts_path then
+    return transcripts_path
+  else
+    return nil
   end
 end
 
-function C:handleMouseDown(hoveredWp)
-  if hoveredWp then
+function C:drawDebugEntrypoint()
+  if self.path then
+    self.path:drawDebugNotebook(self.pacenote_index, self.waypoint_index)
+  end
+
+  if self:getTranscripts() then
+    self:getTranscripts():drawDebug()
+  end
+end
+
+function C:handleMouseDown(hoveredWp, hoveredTsc)
+  if hoveredTsc then
+    im.SetClipboardText(hoveredTsc.text)
+  elseif hoveredWp then
     local selectedPn = hoveredWp.pacenote
     if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
       -- if a pacenote is already selected and the clicked waypoint is in that pacenote.
@@ -400,23 +417,28 @@ function C:handleMouseUp()
   end
 end
 
-function C:setHover(wp)
-  if wp then
+function C:setHover(wp, tsc)
+  if self:getTranscripts() then
+    self:getTranscripts()._draw_debug_hover_tsc_id = nil
+  end
+  self.path._hover_waypoint_id = nil
+
+  if self:getTranscripts() and tsc then
+    self:getTranscripts()._draw_debug_hover_tsc_id = tsc.id
+  elseif wp then
     self.path._hover_waypoint_id = wp.id
-  else
-    self.path._hover_waypoint_id = nil
   end
 end
 
-function C:handleUnmodifiedMouseInteraction(hoveredWp)
+function C:handleUnmodifiedMouseInteraction(hoveredWp, hoveredTsc)
   if self.mouseInfo.down then
-    self:handleMouseDown(hoveredWp)
+    self:handleMouseDown(hoveredWp, hoveredTsc)
   elseif self.mouseInfo.hold then
     self:handleMouseHold()
   elseif self.mouseInfo.up then
     self:handleMouseUp()
   else
-    self:setHover(hoveredWp)
+    self:setHover(hoveredWp, hoveredTsc)
   end
 end
 
@@ -454,6 +476,7 @@ function C:handleMouseInput()
   -- after a cold world editor start. Well, since I'm not using the gizmo for
   -- this tool, I'm just going to comment it and hope for the best.
 
+  local hoveredTsc = self:detectMouseHoverTranscript()
   local hoveredWp = self:detectMouseHoverWaypoint()
 
   if editor.keyModifiers.shift then
@@ -461,7 +484,7 @@ function C:handleMouseInput()
   elseif editor.keyModifiers.ctrl then
     self:createMouseDragPacenote()
   else
-    self:handleUnmodifiedMouseInteraction(hoveredWp)
+    self:handleUnmodifiedMouseInteraction(hoveredWp, hoveredTsc)
   end
 end
 
@@ -626,6 +649,31 @@ function C:addMouseWaypointToPacenote()
       end
     )
   end
+end
+
+function C:detectMouseHoverTranscript()
+  local transcripts = self:getTranscripts()
+  if not transcripts then return end
+
+  local min_dist = 4294967295
+  local hover_tsc = nil
+
+  for _,tsc in ipairs(transcripts.transcripts.sorted) do
+    local vpos = tsc:vehiclePos()
+    local show = transcripts:shouldShow(tsc)
+    if vpos and show then
+      local distNoteToCam = (vpos - self.mouseInfo.camPos):length()
+      local noteRayDistance = (vpos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
+      if noteRayDistance <= transcripts.selection_sphere_r then
+        if distNoteToCam < min_dist then
+          min_dist = distNoteToCam
+          hover_tsc = tsc
+        end
+      end
+    end
+  end
+
+  return hover_tsc
 end
 
 -- figures out which pacenote to select with the mouse in the 3D scene.
@@ -1195,7 +1243,8 @@ Any lua code is allowed, so be careful. Examples:
         end
         self._insertMode = false
       end
-      editor.uiInputTextMultiline('##'..language..'_note', fields.note, nil, im.ImVec2(300, 2 * im.GetTextLineHeightWithSpacing()), nil, nil, nil, editEnded)
+      -- editor.uiInputTextMultiline('##'..language..'_note', fields.note, nil, im.ImVec2(300, 2 * im.GetTextLineHeightWithSpacing()), nil, nil, nil, editEnded)
+      editor.uiInputText('##'..language..'_note', fields.note, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         self:handleNoteFieldEdit(note, language, 'note', fields.note)
       end
