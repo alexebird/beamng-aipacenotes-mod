@@ -229,6 +229,34 @@ local function calculateForwardNormal(snap_pos, next_pos)
   return normal
 end
 
+local function loadCornerAnglesFile()
+  local filename = '/settings/aipacenotes/cornerAngles.json'
+  local json = jsonReadFile(filename)
+  if json then
+    return json, nil
+  else
+    local err = 'unable to find cornerAngles file: ' .. tostring(filename)
+    log('E', 'aipacenotes', err)
+    return nil, err
+  end
+end
+
+local function determineCornerCall(angles, steering)
+  local absSteeringVal = math.abs(steering)
+  for i,angle in ipairs(angles) do
+    if absSteeringVal >= angle.fromAngleDegrees and absSteeringVal < angle.toAngleDegrees then
+      local direction = steering >= 0 and "L" or "R"
+      local cornerCallWithDirection = angle.cornerCall..direction
+      if angle.cornerCall == '_deadzone' then
+        cornerCallWithDirection = 'c'
+      end
+
+    local range = angle.toAngleDegrees - angle.fromAngleDegrees
+    local pct = (absSteeringVal - angle.fromAngleDegrees) / range
+      return angle, string.upper(cornerCallWithDirection), pct
+    end
+  end
+end
 
 M.pacenote_hash = pacenote_hash
 M.fileExists = fileExists
@@ -245,6 +273,8 @@ M.detectMissionIdHelper = detectMissionIdHelper
 M.getMissionSettingsHelper = getMissionSettingsHelper
 M.getNotebookHelper = getNotebookHelper
 M.calculateForwardNormal = calculateForwardNormal
+M.loadCornerAnglesFile = loadCornerAnglesFile
+M.determineCornerCall = determineCornerCall
 
 M.autofill_blocker = autofill_blocker
 M.unknown_transcript_str = unknown_transcript_str

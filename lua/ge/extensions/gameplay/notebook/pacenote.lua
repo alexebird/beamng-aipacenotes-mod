@@ -457,6 +457,11 @@ local function drawWaypoint(wp, wp_drawMode,
   elseif wp_drawMode == 'selected_pn' then
     cs_prefix = true
     clr = wp:colorForWpType()
+  elseif wp_drawMode == 'background' then
+    cs_prefix = false
+    clr = cc.clr_grey_light_2
+    textAlpha = textAlpha * 0.5
+    shapeAlpha = shapeAlpha * 0.5
   elseif wp_drawMode == 'normal' then
     cs_prefix = false
     clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
@@ -750,6 +755,8 @@ function C:drawDebugPacenote(drawMode, hover_wp_id, selected_wp_id, pacenote_pre
       base_alpha = cc.pacenote_base_alpha_next,
     }
     self:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pacenote_prev, pacenote_next)
+  elseif drawMode == 'background' then
+    drawWaypoint(self:getCornerStartWaypoint(), 'background', self:noteTextForDrawDebug(), nil, hover_wp_id, nil, cc.pacenote_base_alpha_normal)
   elseif drawMode == 'normal' then
     drawWaypoint(self:getCornerStartWaypoint(), 'normal', self:noteTextForDrawDebug(), nil, hover_wp_id, nil, cc.pacenote_base_alpha_normal)
   end

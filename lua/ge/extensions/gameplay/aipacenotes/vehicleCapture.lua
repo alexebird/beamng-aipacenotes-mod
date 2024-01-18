@@ -67,18 +67,8 @@ end
 
 function C:getCornerCall(steering)
   if not self.style then return nil end
-
-  local absSteeringVal = math.abs(steering)
-  for _,item in ipairs(self.style.angles) do
-    if absSteeringVal >= item.fromAngleDegrees and absSteeringVal < item.toAngleDegrees then
-      local direction = steering >= 0 and "L" or "R"
-      local cornerCallWithDirection = item.cornerCall..direction
-      if item.cornerCall == '_deadzone' then
-        cornerCallWithDirection = 'c'
-      end
-      return string.upper(cornerCallWithDirection)
-    end
-  end
+  local angle_data, cornerCallStr, pct = re_util.determineCornerCall(self.style.angles, steering)
+  return cornerCallStr
 end
 
 function C:reset()

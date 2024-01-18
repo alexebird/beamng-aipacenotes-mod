@@ -312,10 +312,11 @@ local function drawEditorGui()
 
     currentWindow:draw(mouseInfo)
 
-    local mgr = editor_flowgraphEditor.getManager()
+    local fg_mgr = editor_flowgraphEditor.getManager()
     local paused = simTimeAuthority.getPause()
+    local is_path_cam = core_camera.getActiveCamName() == "path"
 
-    if not (mgr and mgr.runningState ~= 'stopped' and not paused) then
+    if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
       pacenotesWindow:drawDebugEntrypoint()
       -- voiceWindow:drawDebugEntrypoint()
     end
@@ -399,8 +400,10 @@ local function onEditorInitialized()
     win:setPath(currentPath)
   end
 
+  pacenotesWindow:attemptToFixMapEdgeIssue()
+
   currentWindow = notebookInfoWindow
-  currentWindow:setPath(currentPath)
+  -- currentWindow:setPath(currentPath) -- redundant?
   currentWindow:selected()
 end
 

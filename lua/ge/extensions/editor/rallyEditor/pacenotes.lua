@@ -194,12 +194,18 @@ function C:selectWaypoint(id)
   end
 end
 
+function C:attemptToFixMapEdgeIssue()
+  self:resetGizmoTransformToOrigin()
+end
+
 function C:resetGizmoTransformToOrigin()
   local rotation = QuatF(0,0,0,1)
   local transform = rotation:getMatrix()
-  local pos = {0, 0, 0}
+  local pos = {0, 0, -1000} -- stick gizmo far away down the Z axis to hide it.
   transform:setPosition(pos)
   editor.setAxisGizmoTransform(transform)
+  worldEditorCppApi.setAxisGizmoSelectedElement(-1)
+  -- editor.drawAxisGizmo()
 end
 
 function C:updateGizmoTransform(index)
@@ -660,8 +666,7 @@ function C:detectMouseHoverTranscript()
 
   for _,tsc in ipairs(transcripts.transcripts.sorted) do
     local vpos = tsc:vehiclePos()
-    local show = transcripts:shouldShow(tsc)
-    if vpos and show then
+    if vpos and tsc.show then
       local distNoteToCam = (vpos - self.mouseInfo.camPos):length()
       local noteRayDistance = (vpos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
       if noteRayDistance <= transcripts.selection_sphere_r then

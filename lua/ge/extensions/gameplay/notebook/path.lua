@@ -239,6 +239,14 @@ function C:drawPacenotesAsRainbow(skip_pn)
   end
 end
 
+function C:drawPacenotesAsBackground(skip_pn)
+  for _,pacenote in ipairs(self.pacenotes.sorted) do
+    if not skip_pn or (skip_pn and pacenote.id ~= skip_pn.id) then
+      pacenote:drawDebugPacenote('background', self._hover_waypoint_id, nil, nil, nil)
+    end
+  end
+end
+
 function C:getAdjacentPacenoteSet(pacenoteId)
   local function getOrNullify(i)
     local pn = self.pacenotes.sorted[i]
@@ -275,7 +283,8 @@ function C:drawDebugNotebook(selected_pacenote_id, selected_waypoint_id)
     end
   elseif pn_sel then
     pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, nil, pn_prev, pn_next)
-    self:drawPacenotesAsRainbow(pn_sel)
+    -- self:drawPacenotesAsRainbow(pn_sel)
+    self:drawPacenotesAsBackground(pn_sel)
   else
     self:drawPacenotesAsRainbow(nil)
   end

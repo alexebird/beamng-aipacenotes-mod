@@ -16,10 +16,28 @@ function C:init(rallyEditor)
   self.notebook_create_dir = nil
 
   self.render_transcripts = true
+
+  self.corner_angles_data = nil
 end
 
 function C:windowDescription()
-  return 'Voice'
+  return 'Transcripts'
+end
+
+function C:getCornerAngles(reload)
+  if reload then
+    self.corner_angles_data = nil
+  end
+
+  if self.corner_angles_data then return self.corner_angles_data end
+
+  local json, err = re_util.loadCornerAnglesFile()
+  if json then
+    self.corner_angles_data = json
+    return self.corner_angles_data
+  else
+    return nil
+  end
 end
 
 function C:setPath(path)
@@ -213,34 +231,65 @@ function C:drawSectionTranscriptData()
     self.render_transcripts = not self.render_transcripts
   end
 
-  im.Columns(3, "transcript_columns")
+  im.Columns(4, "transcript_columns")
   im.Separator()
 
   im.Text("Show?")
-  im.SetColumnWidth(0, 50)
-  im.NextColumn()
-
-  im.Text("Text")
-  im.SetColumnWidth(1, 400)
+  im.SetColumnWidth(0, 48)
   im.NextColumn()
 
   im.Text("Success")
-  im.SetColumnWidth(2, 100)
+  im.SetColumnWidth(1, 57)
+  im.NextColumn()
+
+  im.Text("Text")
+  im.SetColumnWidth(2, 400)
+  im.NextColumn()
+
+  im.Text("Vehicle Data")
+  im.SetColumnWidth(3, 400)
   im.NextColumn()
 
   im.Separator()
 
   for _,transcript in ipairs(self.transcripts_path.transcripts.sorted) do
-    if im.Checkbox("##show_tsc_"..transcript.id, im.BoolPtr(self.transcripts_path:shouldShow(transcript))) then
-      self.transcripts_path:toggleShow(transcript)
+    if im.Checkbox("##show_tsc_"..transcript.id, im.BoolPtr(transcript.show)) then
+      transcript:toggleShow()
       self.transcripts_path:save()
     end
     im.NextColumn()
 
+    im.Text(tostring(transcript.success))
+    im.NextColumn()
+
+    if editor.uiIconImageButton(editor.icons.content_copy, im.ImVec2(20, 20)) then
+      im.SetClipboardText(transcript.text)
+    end
+    im.tooltip('Copy to clipboard')
+    im.SameLine()
     im.Text(transcript.text)
     im.NextColumn()
 
-    im.Text(tostring(transcript.success))
+    local notes_txt = 'No position data.'
+    local pos = transcript:vehiclePos()
+    if pos then
+      notes_txt = "x="..round(pos.x).." y="..round(pos.y).." z="..round(pos.z)
+
+
+      if core_camera.getActiveCamName() == "path" then
+        if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(20, 20)) then
+          core_paths.stopCurrentPath()
+        end
+      else
+        if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(20, 20)) then
+          transcript:playCameraPath()
+        end
+      end
+
+      im.SameLine()
+    end
+
+    im.Text(notes_txt)
     im.NextColumn()
   end
 end

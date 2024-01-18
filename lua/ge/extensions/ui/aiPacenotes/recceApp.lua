@@ -31,14 +31,12 @@ local function initVehicleCapture()
 end
 
 local function loadCornerAnglesFile()
-  local filename = '/settings/aipacenotes/cornerAngles.json'
-  local json = jsonReadFile(filename)
+  local json, err = re_util.loadCornerAnglesFile()
+
   if json then
     cornerAngles = json
-    -- initVehicleCapture()
     guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
   else
-    local err = 'unable to find cornerAngles file: ' .. tostring(filename)
     log('E', 'aipacenotes', err)
     guihooks.trigger('aiPacenotesCornerAnglesLoaded', nil, err)
   end

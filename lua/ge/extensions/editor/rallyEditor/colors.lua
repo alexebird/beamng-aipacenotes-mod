@@ -5,21 +5,26 @@ local M = {}
 --
 M.clr_white       = {1.0, 1.0, 1.0}
 M.clr_black       = {0.0, 0.0, 0.0}
+
 M.clr_green       = {0.0, 1.0, 0.0}
+M.clr_light_green = {0.5, 1.0, 0.5}
+M.clr_lime_green  = {0.66, 1.0, 0.0}
+
 M.clr_red         = {1.0, 0.0, 0.0}
+M.clr_light_red   = {1.0, 0.5, 0.5}
+
+M.clr_teal        = {0.0, 0.76, 0.55}
+M.clr_teal_2      = {0.0,  1.0, 0.58}
+
 M.clr_yellow      = {1.0, 1.0, 0.0}
 M.clr_blue        = {0.0, 0.0, 1.0}
 M.clr_orange      = {1.0, 0.64, 0.0}
 M.clr_pink        = {1.0, 0.0, 1.0}
-M.clr_light_green = {0.5, 1.0, 0.5}
-M.clr_light_red   = {1.0, 0.5, 0.5}
-M.clr_lime_green  = {0.66, 1.0, 0.0}
 M.clr_aqua        = {0.0, 0.8, 0.8}
-M.clr_teal        = {0.0, 0.76, 0.55}
-M.clr_teal_2      = {0.0,  1.0, 0.58}
 
-M.clr_grey        = {0.5, 0.5, 0.5}
-M.clr_grey_light  = {0.75, 0.75, 0.75}
+M.clr_grey         = {0.5, 0.5, 0.5}
+M.clr_grey_light   = {0.75, 0.75, 0.75}
+M.clr_grey_light_2 = {0.8, 0.8, 0.8}
 
 
 ------------------------------------------------------------------------------
