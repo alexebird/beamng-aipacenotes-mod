@@ -30,7 +30,7 @@ function C:work()
 
   if self.rallyManager and not self.finished then
     self.rallyManager.audioManager:enqueuePauseSecs(0.75)
-    self.rallyManager.audioManager:enqueueStaticPacenoteByName('finish_1')
+    self.rallyManager.audioManager:enqueueStaticPacenoteByName('finish_1/c')
     self.finished = true
   end
 end

@@ -1,1518 +1,1640 @@
 {
-  "authors": "birdman",
-  "version": "2",
-  "description": "",
-  "codrivers": [
+  "authors":"birdman",
+  "codrivers":[
     {
-      "language": "english",
-      "oldId": 35,
-      "voice": "british_female",
-      "name": "Sophia"
+      "language":"english",
+      "name":"Sophia",
+      "oldId":8,
+      "voice":"british_female"
     }
   ],
-  "updated_at": 1699324421,
-  "name": "primary",
-  "created_at": 1699324421,
-  "pacenotes": [
+  "created_at":1699324421,
+  "description":"",
+  "name":"primary",
+  "pacenotes":[
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 37",
+      "notes":{
+        "english":{
+          "note":"start 50 over crest?"
+        }
+      },
+      "oldId":9,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.498440508,
             0.8669215821,
             -0.002007604357
           ],
-          "radius": 4.301881449,
-          "name": "curr",
-          "oldId": 2,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":10,
+          "pos":[
             513.1069336,
             -455.6046143,
             128.2488098
-          ]
+          ],
+          "radius":4.301881449,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 3",
+          "normal":[
             -0.498440508,
             0.8669215821,
             -0.002007604357
           ],
-          "radius": 4.301881449,
-          "name": "Waypoint 3",
-          "oldId": 3,
-          "waypointType": "cornerStart",
-          "pos": [
-            521.710696498,
+          "oldId":11,
+          "pos":[
+            521.7106965,
             -455.6046143,
             128.2488098
-          ]
+          ],
+          "radius":4.301881449,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 4",
+          "normal":[
             -0.498440508,
             0.8669215821,
             -0.002007604357
           ],
-          "radius": 4.301881449,
-          "name": "Waypoint 4",
-          "oldId": 4,
-          "waypointType": "cornerEnd",
-          "pos": [
-            530.314459396,
+          "oldId":12,
+          "pos":[
+            530.3144594,
             -455.6046143,
             128.2488098
-          ]
+          ],
+          "radius":4.301881449,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 37",
-      "oldId": 1,
-      "notes": {
-        "english": {
-          "note": "start 50 over crest?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 38",
+      "notes":{
+        "english":{
+          "note":"6 left? into 5 left up hill over crest?"
+        }
+      },
+      "oldId":13,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.515397819,
             0.8569307425,
             0.00589837033
           ],
-          "radius": 4.27101795,
-          "name": "curr",
-          "oldId": 3,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":14,
+          "pos":[
             490.6315002,
             -415.9785461,
             128.2132263
-          ]
+          ],
+          "radius":4.27101795,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 4",
+          "normal":[
             -0.515397819,
             0.8569307425,
             0.00589837033
           ],
-          "radius": 4.27101795,
-          "name": "Waypoint 4",
-          "oldId": 4,
-          "waypointType": "cornerStart",
-          "pos": [
+          "oldId":15,
+          "pos":[
             499.1735361,
             -415.9785461,
             128.2132263
-          ]
+          ],
+          "radius":4.27101795,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 5",
+          "normal":[
             -0.515397819,
             0.8569307425,
             0.00589837033
           ],
-          "radius": 4.27101795,
-          "name": "Waypoint 5",
-          "oldId": 5,
-          "waypointType": "cornerEnd",
-          "pos": [
+          "oldId":16,
+          "pos":[
             507.715572,
             -415.9785461,
             128.2132263
-          ]
+          ],
+          "radius":4.27101795,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 38",
-      "oldId": 2,
-      "notes": {
-        "english": {
-          "note": "6 left? into 5 left up hill over crest?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 39",
+      "notes":{
+        "english":{
+          "note":"into 5 right plus?"
+        }
+      },
+      "oldId":17,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.6075602473,
             0.7941833333,
             -0.01197409288
           ],
-          "radius": 10.1085656,
-          "name": "curr",
-          "oldId": 4,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":18,
+          "pos":[
             419.6330566,
             -307.0632019,
             127.1589966
-          ]
+          ],
+          "radius":10.1085656,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 5",
+          "normal":[
             -0.6075602473,
             0.7941833333,
             -0.01197409288
           ],
-          "radius": 10.1085656,
-          "name": "Waypoint 5",
-          "oldId": 5,
-          "waypointType": "cornerStart",
-          "pos": [
+          "oldId":19,
+          "pos":[
             439.8501878,
             -307.0632019,
             127.1589966
-          ]
+          ],
+          "radius":10.1085656,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 6",
+          "normal":[
             -0.6075602473,
             0.7941833333,
             -0.01197409288
           ],
-          "radius": 10.1085656,
-          "name": "Waypoint 6",
-          "oldId": 6,
-          "waypointType": "cornerEnd",
-          "pos": [
+          "oldId":20,
+          "pos":[
             460.067319,
             -307.0632019,
             127.1589966
-          ]
+          ],
+          "radius":10.1085656,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 39",
-      "oldId": 3,
-      "notes": {
-        "english": {
-          "note": "into 5 right plus?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 41",
+      "notes":{
+        "english":{
+          "note":"and 5 left over bridge wall exit? into 5 left care dip?"
+        }
+      },
+      "oldId":21,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.9426524535,
             -0.329496103,
             -0.05327917115
           ],
-          "radius": 9.154270291,
-          "name": "curr",
-          "oldId": 5,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":22,
+          "pos":[
             91.21907806,
             -356.4431763,
             133.5291748
-          ]
+          ],
+          "radius":9.154270291,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 6",
+          "normal":[
             -0.9426524535,
             -0.329496103,
             -0.05327917115
           ],
-          "radius": 9.154270291,
-          "name": "Waypoint 6",
-          "oldId": 6,
-          "waypointType": "cornerStart",
-          "pos": [
-            109.527618642,
+          "oldId":23,
+          "pos":[
+            109.5276186,
             -356.4431763,
             133.5291748
-          ]
+          ],
+          "radius":9.154270291,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 7",
+          "normal":[
             -0.9426524535,
             -0.329496103,
             -0.05327917115
           ],
-          "radius": 9.154270291,
-          "name": "Waypoint 7",
-          "oldId": 7,
-          "waypointType": "cornerEnd",
-          "pos": [
-            127.836159224,
+          "oldId":24,
+          "pos":[
+            127.8361592,
             -356.4431763,
             133.5291748
-          ]
+          ],
+          "radius":9.154270291,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 41",
-      "oldId": 4,
-      "notes": {
-        "english": {
-          "note": "and 5 left over bridge wall exit? into 5 left care dip?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 42",
+      "notes":{
+        "english":{
+          "note":"and 5 right tightens extra long through tunnel?"
+        }
+      },
+      "oldId":25,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.6255239583,
             0.7801987118,
             0.00312213566
           ],
-          "radius": 10.28774995,
-          "name": "curr",
-          "oldId": 6,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":26,
+          "pos":[
             -98.7230835,
             -327.2094727,
             132.7462769
-          ]
+          ],
+          "radius":10.28774995,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 7",
+          "normal":[
             -0.6255239583,
             0.7801987118,
             0.00312213566
           ],
-          "radius": 10.28774995,
-          "name": "Waypoint 7",
-          "oldId": 7,
-          "waypointType": "cornerStart",
-          "pos": [
+          "oldId":27,
+          "pos":[
             -78.1475836,
             -327.2094727,
             132.7462769
-          ]
+          ],
+          "radius":10.28774995,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 8",
+          "normal":[
             -0.6255239583,
             0.7801987118,
             0.00312213566
           ],
-          "radius": 10.28774995,
-          "name": "Waypoint 8",
-          "oldId": 8,
-          "waypointType": "cornerEnd",
-          "pos": [
+          "oldId":28,
+          "pos":[
             -57.5720837,
             -327.2094727,
             132.7462769
-          ]
+          ],
+          "radius":10.28774995,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 42",
-      "oldId": 5,
-      "notes": {
-        "english": {
-          "note": "and 5 right tightens extra long through tunnel?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 43",
+      "notes":{
+        "english":{
+          "note":"into 6 left? 100."
+        }
+      },
+      "oldId":29,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.5970104101,
             0.8021365419,
             0.01247149999
           ],
-          "radius": 14.69292671,
-          "name": "curr",
-          "oldId": 7,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":30,
+          "pos":[
             -480.0103149,
             -217.8428345,
             134.960968
-          ]
+          ],
+          "radius":14.69292671,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 8",
+          "normal":[
             -0.5970104101,
             0.8021365419,
             0.01247149999
           ],
-          "radius": 14.69292671,
-          "name": "Waypoint 8",
-          "oldId": 8,
-          "waypointType": "cornerStart",
-          "pos": [
-            -450.62446148,
+          "oldId":31,
+          "pos":[
+            -450.6244615,
             -217.8428345,
             134.960968
-          ]
+          ],
+          "radius":14.69292671,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 9",
+          "normal":[
             -0.5970104101,
             0.8021365419,
             0.01247149999
           ],
-          "radius": 14.69292671,
-          "name": "Waypoint 9",
-          "oldId": 9,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -421.23860806,
+          "oldId":32,
+          "pos":[
+            -421.2386081,
             -217.8428345,
             134.960968
-          ]
+          ],
+          "radius":14.69292671,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 43",
-      "oldId": 6,
-      "notes": {
-        "english": {
-          "note": "into 6 left? 100."
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 44",
+      "notes":{
+        "english":{
+          "note":"6 right, into 5 left care bumps?"
+        }
+      },
+      "oldId":33,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.05297770874,
             0.9985112405,
             -0.01298710688
           ],
-          "radius": 9.072391168,
-          "name": "curr",
-          "oldId": 8,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":34,
+          "pos":[
             -452.555481,
             61.89098358,
             135.5736084
-          ]
+          ],
+          "radius":9.072391168,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 9",
+          "normal":[
             -0.05297770874,
             0.9985112405,
             -0.01298710688
           ],
-          "radius": 9.072391168,
-          "name": "Waypoint 9",
-          "oldId": 9,
-          "waypointType": "cornerStart",
-          "pos": [
-            -434.410698664,
+          "oldId":35,
+          "pos":[
+            -434.4106987,
             61.89098358,
             135.5736084
-          ]
+          ],
+          "radius":9.072391168,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 10",
+          "normal":[
             -0.05297770874,
             0.9985112405,
             -0.01298710688
           ],
-          "radius": 9.072391168,
-          "name": "Waypoint 10",
-          "oldId": 10,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -416.265916328,
+          "oldId":36,
+          "pos":[
+            -416.2659163,
             61.89098358,
             135.5736084
-          ]
+          ],
+          "radius":9.072391168,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 44",
-      "oldId": 7,
-      "notes": {
-        "english": {
-          "note": "6 right, into 5 left care bumps?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 45",
+      "notes":{
+        "english":{
+          "note":"and 5 right into 4 left long?"
+        }
+      },
+      "oldId":37,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.2546739133,
             0.966143167,
             0.04133495873
           ],
-          "radius": 10.66990394,
-          "name": "curr",
-          "oldId": 9,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":38,
+          "pos":[
             -501.6998901,
             304.696106,
             143.4769592
-          ]
+          ],
+          "radius":10.66990394,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 10",
+          "normal":[
             -0.2546739133,
             0.966143167,
             0.04133495873
           ],
-          "radius": 10.66990394,
-          "name": "Waypoint 10",
-          "oldId": 10,
-          "waypointType": "cornerStart",
-          "pos": [
-            -480.36008222,
+          "oldId":39,
+          "pos":[
+            -480.3600822,
             304.696106,
             143.4769592
-          ]
+          ],
+          "radius":10.66990394,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 11",
+          "normal":[
             -0.2546739133,
             0.966143167,
             0.04133495873
           ],
-          "radius": 10.66990394,
-          "name": "Waypoint 11",
-          "oldId": 11,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -459.02027434,
+          "oldId":40,
+          "pos":[
+            -459.0202743,
             304.696106,
             143.4769592
-          ]
+          ],
+          "radius":10.66990394,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 45",
-      "oldId": 8,
-      "notes": {
-        "english": {
-          "note": "and 5 right into 4 left long?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 46",
+      "notes":{
+        "english":{
+          "note":"into 3 right long?"
+        }
+      },
+      "oldId":41,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.3822482188,
             0.9239212639,
             0.01599366426
           ],
-          "radius": 12.81959814,
-          "name": "curr",
-          "oldId": 10,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":42,
+          "pos":[
             -643.7139282,
             654.0643921,
             150.6569519
-          ]
+          ],
+          "radius":12.81959814,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 11",
+          "normal":[
             -0.3822482188,
             0.9239212639,
             0.01599366426
           ],
-          "radius": 12.81959814,
-          "name": "Waypoint 11",
-          "oldId": 11,
-          "waypointType": "cornerStart",
-          "pos": [
-            -618.07473192,
+          "oldId":43,
+          "pos":[
+            -618.0747319,
             654.0643921,
             150.6569519
-          ]
+          ],
+          "radius":12.81959814,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 12",
+          "normal":[
             -0.3822482188,
             0.9239212639,
             0.01599366426
           ],
-          "radius": 12.81959814,
-          "name": "Waypoint 12",
-          "oldId": 12,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -592.43553564,
+          "oldId":44,
+          "pos":[
+            -592.4355356,
             654.0643921,
             150.6569519
-          ]
+          ],
+          "radius":12.81959814,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 46",
-      "oldId": 9,
-      "notes": {
-        "english": {
-          "note": "into 3 right long?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 47",
+      "notes":{
+        "english":{
+          "note":"into 3 right hook, care rock entry? and 3 right through tunnel?"
+        }
+      },
+      "oldId":45,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.7950515878,
             0.6045112629,
             -0.04958937142
           ],
-          "radius": 10.31507691,
-          "name": "curr",
-          "oldId": 11,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":46,
+          "pos":[
             -859.5232544,
             713.0892334,
             135.3446045
-          ]
+          ],
+          "radius":10.31507691,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 12",
+          "normal":[
             -0.7950515878,
             0.6045112629,
             -0.04958937142
           ],
-          "radius": 10.31507691,
-          "name": "Waypoint 12",
-          "oldId": 12,
-          "waypointType": "cornerStart",
-          "pos": [
-            -838.89310058,
+          "oldId":47,
+          "pos":[
+            -838.8931006,
             713.0892334,
             135.3446045
-          ]
+          ],
+          "radius":10.31507691,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 13",
+          "normal":[
             -0.7950515878,
             0.6045112629,
             -0.04958937142
           ],
-          "radius": 10.31507691,
-          "name": "Waypoint 13",
-          "oldId": 13,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -818.26294676,
+          "oldId":48,
+          "pos":[
+            -818.2629468,
             713.0892334,
             135.3446045
-          ]
+          ],
+          "radius":10.31507691,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 47",
-      "oldId": 10,
-      "notes": {
-        "english": {
-          "note": "into 3 right hook, care rock entry? and 3 right through tunnel?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 48",
+      "notes":{
+        "english":{
+          "note":"into care 4 left tightens 3 down hill? 50."
+        }
+      },
+      "oldId":49,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.576446223,
             0.8169555369,
             0.01712900291
           ],
-          "radius": 12.06342965,
-          "name": "curr",
-          "oldId": 12,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":50,
+          "pos":[
             -928.2000732,
             880.7026978,
             140.7043457
-          ]
+          ],
+          "radius":12.06342965,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 13",
+          "normal":[
             0.576446223,
             0.8169555369,
             0.01712900291
           ],
-          "radius": 12.06342965,
-          "name": "Waypoint 13",
-          "oldId": 13,
-          "waypointType": "cornerStart",
-          "pos": [
+          "oldId":51,
+          "pos":[
             -904.0732139,
             880.7026978,
             140.7043457
-          ]
+          ],
+          "radius":12.06342965,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 14",
+          "normal":[
             0.576446223,
             0.8169555369,
             0.01712900291
           ],
-          "radius": 12.06342965,
-          "name": "Waypoint 14",
-          "oldId": 14,
-          "waypointType": "cornerEnd",
-          "pos": [
+          "oldId":52,
+          "pos":[
             -879.9463546,
             880.7026978,
             140.7043457
-          ]
+          ],
+          "radius":12.06342965,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 48",
-      "oldId": 11,
-      "notes": {
-        "english": {
-          "note": "into care 4 left tightens 3 down hill? 50."
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 49",
+      "notes":{
+        "english":{
+          "note":"6 right? 50."
+        }
+      },
+      "oldId":53,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.7532069719,
             -0.6575082926,
             -0.01902899583
           ],
-          "radius": 8.896096817,
-          "name": "curr",
-          "oldId": 13,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":54,
+          "pos":[
             -731.1004639,
             811.0828857,
             146.5868225
-          ]
+          ],
+          "radius":8.896096817,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 14",
+          "normal":[
             0.7532069719,
             -0.6575082926,
             -0.01902899583
           ],
-          "radius": 8.896096817,
-          "name": "Waypoint 14",
-          "oldId": 14,
-          "waypointType": "cornerStart",
-          "pos": [
-            -713.308270266,
+          "oldId":55,
+          "pos":[
+            -713.3082703,
             811.0828857,
             146.5868225
-          ]
+          ],
+          "radius":8.896096817,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 15",
+          "normal":[
             0.7532069719,
             -0.6575082926,
             -0.01902899583
           ],
-          "radius": 8.896096817,
-          "name": "Waypoint 15",
-          "oldId": 15,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -695.516076632,
+          "oldId":56,
+          "pos":[
+            -695.5160766,
             811.0828857,
             146.5868225
-          ]
+          ],
+          "radius":8.896096817,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 49",
-      "oldId": 12,
-      "notes": {
-        "english": {
-          "note": "6 right? 50."
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 50",
+      "notes":{
+        "english":{
+          "note":"into flat left?"
+        }
+      },
+      "oldId":57,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.9505401152,
             0.3105941176,
             -0.002187126005
           ],
-          "radius": 15.10442391,
-          "name": "curr",
-          "oldId": 14,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":58,
+          "pos":[
             -318.7126465,
             850.7932739,
             132.124527
-          ]
+          ],
+          "radius":15.10442391,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 15",
+          "normal":[
             0.9505401152,
             0.3105941176,
             -0.002187126005
           ],
-          "radius": 15.10442391,
-          "name": "Waypoint 15",
-          "oldId": 15,
-          "waypointType": "cornerStart",
-          "pos": [
-            -288.50379868,
+          "oldId":59,
+          "pos":[
+            -288.5037987,
             850.7932739,
             132.124527
-          ]
+          ],
+          "radius":15.10442391,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 16",
+          "normal":[
             0.9505401152,
             0.3105941176,
             -0.002187126005
           ],
-          "radius": 15.10442391,
-          "name": "Waypoint 16",
-          "oldId": 16,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -258.29495086,
+          "oldId":60,
+          "pos":[
+            -258.2949509,
             850.7932739,
             132.124527
-          ]
+          ],
+          "radius":15.10442391,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 50",
-      "oldId": 13,
-      "notes": {
-        "english": {
-          "note": "into flat left?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 51",
+      "notes":{
+        "english":{
+          "note":"into care 5 left hook?"
+        }
+      },
+      "oldId":61,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.8933146413,
             -0.4494318098,
             0
           ],
-          "radius": 12.05528774,
-          "name": "curr",
-          "oldId": 15,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":62,
+          "pos":[
             -197.9591064,
             842.4453125,
             131.9946289
-          ]
+          ],
+          "radius":12.05528774,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 16",
+          "normal":[
             0.8933146413,
             -0.4494318098,
             0
           ],
-          "radius": 12.05528774,
-          "name": "Waypoint 16",
-          "oldId": 16,
-          "waypointType": "cornerStart",
-          "pos": [
-            -173.84853092,
+          "oldId":63,
+          "pos":[
+            -173.8485309,
             842.4453125,
             131.9946289
-          ]
+          ],
+          "radius":12.05528774,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 17",
+          "normal":[
             0.8933146413,
             -0.4494318098,
             0
           ],
-          "radius": 12.05528774,
-          "name": "Waypoint 17",
-          "oldId": 17,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -149.73795544,
+          "oldId":64,
+          "pos":[
+            -149.7379554,
             842.4453125,
             131.9946289
-          ]
+          ],
+          "radius":12.05528774,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 51",
-      "oldId": 14,
-      "notes": {
-        "english": {
-          "note": "into care 5 left hook?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 52",
+      "notes":{
+        "english":{
+          "note":"and 6 left?"
+        }
+      },
+      "oldId":65,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.9918138931,
             -0.1276180036,
             0.004341277138
           ],
-          "radius": 10.99434352,
-          "name": "curr",
-          "oldId": 16,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":66,
+          "pos":[
             184.2818604,
             715.1777344,
             132.6365662
-          ]
+          ],
+          "radius":10.99434352,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 17",
+          "normal":[
             0.9918138931,
             -0.1276180036,
             0.004341277138
           ],
-          "radius": 10.99434352,
-          "name": "Waypoint 17",
-          "oldId": 17,
-          "waypointType": "cornerStart",
-          "pos": [
-            206.27054744,
+          "oldId":67,
+          "pos":[
+            206.2705474,
             715.1777344,
             132.6365662
-          ]
+          ],
+          "radius":10.99434352,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 18",
+          "normal":[
             0.9918138931,
             -0.1276180036,
             0.004341277138
           ],
-          "radius": 10.99434352,
-          "name": "Waypoint 18",
-          "oldId": 18,
-          "waypointType": "cornerEnd",
-          "pos": [
-            228.25923448,
+          "oldId":68,
+          "pos":[
+            228.2592345,
             715.1777344,
             132.6365662
-          ]
+          ],
+          "radius":10.99434352,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 52",
-      "oldId": 15,
-      "notes": {
-        "english": {
-          "note": "and 6 left?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 53",
+      "notes":{
+        "english":{
+          "note":"into brake 5 right down hill? 30."
+        }
+      },
+      "oldId":69,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.8904082677,
             -0.4490152641,
             0.07455474134
           ],
-          "radius": 9.661033839,
-          "name": "curr",
-          "oldId": 17,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":70,
+          "pos":[
             361.0053101,
             710.6811523,
             138.1700592
-          ]
+          ],
+          "radius":9.661033839,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 18",
+          "normal":[
             0.8904082677,
             -0.4490152641,
             0.07455474134
           ],
-          "radius": 9.661033839,
-          "name": "Waypoint 18",
-          "oldId": 18,
-          "waypointType": "cornerStart",
-          "pos": [
-            380.327377778,
+          "oldId":71,
+          "pos":[
+            380.3273778,
             710.6811523,
             138.1700592
-          ]
+          ],
+          "radius":9.661033839,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 19",
+          "normal":[
             0.8904082677,
             -0.4490152641,
             0.07455474134
           ],
-          "radius": 9.661033839,
-          "name": "Waypoint 19",
-          "oldId": 19,
-          "waypointType": "cornerEnd",
-          "pos": [
-            399.649445456,
+          "oldId":72,
+          "pos":[
+            399.6494455,
             710.6811523,
             138.1700592
-          ]
+          ],
+          "radius":9.661033839,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 53",
-      "oldId": 16,
-      "notes": {
-        "english": {
-          "note": "into brake 5 right down hill? 30."
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 54",
+      "notes":{
+        "english":{
+          "note":"6 right into 5 left long?"
+        }
+      },
+      "oldId":73,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.8017621789,
             -0.5845255754,
             -0.1245281499
           ],
-          "radius": 11.27780094,
-          "name": "curr",
-          "oldId": 18,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":74,
+          "pos":[
             647.307373,
             535.5308228,
             151.6869202
-          ]
+          ],
+          "radius":11.27780094,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 19",
+          "normal":[
             0.8017621789,
             -0.5845255754,
             -0.1245281499
           ],
-          "radius": 11.27780094,
-          "name": "Waypoint 19",
-          "oldId": 19,
-          "waypointType": "cornerStart",
-          "pos": [
-            669.86297488,
+          "oldId":75,
+          "pos":[
+            669.8629749,
             535.5308228,
             151.6869202
-          ]
+          ],
+          "radius":11.27780094,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 20",
+          "normal":[
             0.8017621789,
             -0.5845255754,
             -0.1245281499
           ],
-          "radius": 11.27780094,
-          "name": "Waypoint 20",
-          "oldId": 20,
-          "waypointType": "cornerEnd",
-          "pos": [
-            692.41857676,
+          "oldId":76,
+          "pos":[
+            692.4185768,
             535.5308228,
             151.6869202
-          ]
+          ],
+          "radius":11.27780094,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 54",
-      "oldId": 17,
-      "notes": {
-        "english": {
-          "note": "6 right into 5 left long?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 55",
+      "notes":{
+        "english":{
+          "note":"into 5 right into 6 left?"
+        }
+      },
+      "oldId":77,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.1368273755,
             -0.9892916751,
             0.05079616926
           ],
-          "radius": 8.570219768,
-          "name": "curr",
-          "oldId": 19,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":78,
+          "pos":[
             586.5464478,
             25.13908386,
             133.4690094
-          ]
+          ],
+          "radius":8.570219768,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 20",
+          "normal":[
             -0.1368273755,
             -0.9892916751,
             0.05079616926
           ],
-          "radius": 8.570219768,
-          "name": "Waypoint 20",
-          "oldId": 20,
-          "waypointType": "cornerStart",
-          "pos": [
-            603.686887336,
+          "oldId":79,
+          "pos":[
+            603.6868873,
             25.13908386,
             133.4690094
-          ]
+          ],
+          "radius":8.570219768,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 21",
+          "normal":[
             -0.1368273755,
             -0.9892916751,
             0.05079616926
           ],
-          "radius": 8.570219768,
-          "name": "Waypoint 21",
-          "oldId": 21,
-          "waypointType": "cornerEnd",
-          "pos": [
-            620.827326872,
+          "oldId":80,
+          "pos":[
+            620.8273269,
             25.13908386,
             133.4690094
-          ]
+          ],
+          "radius":8.570219768,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 55",
-      "oldId": 18,
-      "notes": {
-        "english": {
-          "note": "into 5 right into 6 left?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 56",
+      "notes":{
+        "english":{
+          "note":"into 5 right? 20."
+        }
+      },
+      "oldId":81,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.2274846072,
             -0.9735527745,
             0.0211127621
           ],
-          "radius": 14.39933287,
-          "name": "curr",
-          "oldId": 20,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":82,
+          "pos":[
             759.4095459,
             -220.7518616,
             132.1221771
-          ]
+          ],
+          "radius":14.39933287,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 21",
+          "normal":[
             0.2274846072,
             -0.9735527745,
             0.0211127621
           ],
-          "radius": 14.39933287,
-          "name": "Waypoint 21",
-          "oldId": 21,
-          "waypointType": "cornerStart",
-          "pos": [
-            788.20821164,
+          "oldId":83,
+          "pos":[
+            788.2082116,
             -220.7518616,
             132.1221771
-          ]
+          ],
+          "radius":14.39933287,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 22",
+          "normal":[
             0.2274846072,
             -0.9735527745,
             0.0211127621
           ],
-          "radius": 14.39933287,
-          "name": "Waypoint 22",
-          "oldId": 22,
-          "waypointType": "cornerEnd",
-          "pos": [
-            817.00687738,
+          "oldId":84,
+          "pos":[
+            817.0068774,
             -220.7518616,
             132.1221771
-          ]
+          ],
+          "radius":14.39933287,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 56",
-      "oldId": 19,
-      "notes": {
-        "english": {
-          "note": "into 5 right? 20."
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 57",
+      "notes":{
+        "english":{
+          "note":"and 4 right long? 20."
+        }
+      },
+      "oldId":85,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.6550950246,
             -0.7543919371,
             0.04175301051
           ],
-          "radius": 12.56415113,
-          "name": "curr",
-          "oldId": 21,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":86,
+          "pos":[
             839.6387329,
             -379.7092896,
             136.0986633
-          ]
+          ],
+          "radius":12.56415113,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 22",
+          "normal":[
             0.6550950246,
             -0.7543919371,
             0.04175301051
           ],
-          "radius": 12.56415113,
-          "name": "Waypoint 22",
-          "oldId": 22,
-          "waypointType": "cornerStart",
-          "pos": [
-            864.76703516,
+          "oldId":87,
+          "pos":[
+            864.7670352,
             -379.7092896,
             136.0986633
-          ]
+          ],
+          "radius":12.56415113,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 23",
+          "normal":[
             0.6550950246,
             -0.7543919371,
             0.04175301051
           ],
-          "radius": 12.56415113,
-          "name": "Waypoint 23",
-          "oldId": 23,
-          "waypointType": "cornerEnd",
-          "pos": [
-            889.89533742,
+          "oldId":88,
+          "pos":[
+            889.8953374,
             -379.7092896,
             136.0986633
-          ]
+          ],
+          "radius":12.56415113,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 57",
-      "oldId": 20,
-      "notes": {
-        "english": {
-          "note": "and 4 right long? 20."
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 58",
+      "notes":{
+        "english":{
+          "note":"and 4 right?"
+        }
+      },
+      "oldId":89,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.1979387413,
             -0.9790758945,
             0.04722973195
           ],
-          "radius": 13.75011112,
-          "name": "curr",
-          "oldId": 22,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":90,
+          "pos":[
             909.6889648,
             -591.2165527,
             144.6072693
-          ]
+          ],
+          "radius":13.75011112,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 23",
+          "normal":[
             0.1979387413,
             -0.9790758945,
             0.04722973195
           ],
-          "radius": 13.75011112,
-          "name": "Waypoint 23",
-          "oldId": 23,
-          "waypointType": "cornerStart",
-          "pos": [
-            937.18918704,
+          "oldId":91,
+          "pos":[
+            937.189187,
             -591.2165527,
             144.6072693
-          ]
+          ],
+          "radius":13.75011112,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 24",
+          "normal":[
             0.1979387413,
             -0.9790758945,
             0.04722973195
           ],
-          "radius": 13.75011112,
-          "name": "Waypoint 24",
-          "oldId": 24,
-          "waypointType": "cornerEnd",
-          "pos": [
-            964.68940928,
+          "oldId":92,
+          "pos":[
+            964.6894093,
             -591.2165527,
             144.6072693
-          ]
+          ],
+          "radius":13.75011112,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 58",
-      "oldId": 21,
-      "notes": {
-        "english": {
-          "note": "and 4 right?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 59",
+      "notes":{
+        "english":{
+          "note":"into 4 right wall exit?"
+        }
+      },
+      "oldId":93,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.9832920409,
             0.122289084,
             0.1348411742
           ],
-          "radius": 9.272881362,
-          "name": "curr",
-          "oldId": 23,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":94,
+          "pos":[
             267.2799683,
             -239.2953491,
             132.1490173
-          ]
+          ],
+          "radius":9.272881362,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 24",
+          "normal":[
             -0.9832920409,
             0.122289084,
             0.1348411742
           ],
-          "radius": 9.272881362,
-          "name": "Waypoint 24",
-          "oldId": 24,
-          "waypointType": "cornerStart",
-          "pos": [
-            285.825731024,
+          "oldId":95,
+          "pos":[
+            285.825731,
             -239.2953491,
             132.1490173
-          ]
+          ],
+          "radius":9.272881362,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 25",
+          "normal":[
             -0.9832920409,
             0.122289084,
             0.1348411742
           ],
-          "radius": 9.272881362,
-          "name": "Waypoint 25",
-          "oldId": 25,
-          "waypointType": "cornerEnd",
-          "pos": [
-            304.371493748,
+          "oldId":96,
+          "pos":[
+            304.3714937,
             -239.2953491,
             132.1490173
-          ]
+          ],
+          "radius":9.272881362,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 59",
-      "oldId": 22,
-      "notes": {
-        "english": {
-          "note": "into 4 right wall exit?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 60",
+      "notes":{
+        "english":{
+          "note":"6 right minus?"
+        }
+      },
+      "oldId":97,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.9955153544,
             -0.08516543013,
             -0.04118286949
           ],
-          "radius": 12.54080372,
-          "name": "curr",
-          "oldId": 24,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":98,
+          "pos":[
             -524.5326538,
             817.7275391,
             129.7076721
-          ]
+          ],
+          "radius":12.54080372,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 25",
+          "normal":[
             0.9955153544,
             -0.08516543013,
             -0.04118286949
           ],
-          "radius": 12.54080372,
-          "name": "Waypoint 25",
-          "oldId": 25,
-          "waypointType": "cornerStart",
-          "pos": [
-            -499.45104636,
+          "oldId":99,
+          "pos":[
+            -499.4510464,
             817.7275391,
             129.7076721
-          ]
+          ],
+          "radius":12.54080372,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 26",
+          "normal":[
             0.9955153544,
             -0.08516543013,
             -0.04118286949
           ],
-          "radius": 12.54080372,
-          "name": "Waypoint 26",
-          "oldId": 26,
-          "waypointType": "cornerEnd",
-          "pos": [
-            -474.36943892,
+          "oldId":100,
+          "pos":[
+            -474.3694389,
             817.7275391,
             129.7076721
-          ]
+          ],
+          "radius":12.54080372,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 60",
-      "oldId": 23,
-      "notes": {
-        "english": {
-          "note": "6 right minus?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 61",
+      "notes":{
+        "english":{
+          "note":"into 6 right?"
+        }
+      },
+      "oldId":101,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             0.889743225,
             -0.4564389139,
             -0.004528955465
           ],
-          "radius": 12.84998758,
-          "name": "curr",
-          "oldId": 25,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":102,
+          "pos":[
             -78.79679108,
             778.4182129,
             131.9549255
-          ]
+          ],
+          "radius":12.84998758,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 26",
+          "normal":[
             0.889743225,
             -0.4564389139,
             -0.004528955465
           ],
-          "radius": 12.84998758,
-          "name": "Waypoint 26",
-          "oldId": 26,
-          "waypointType": "cornerStart",
-          "pos": [
+          "oldId":103,
+          "pos":[
             -53.09681592,
             778.4182129,
             131.9549255
-          ]
+          ],
+          "radius":12.84998758,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 27",
+          "normal":[
             0.889743225,
             -0.4564389139,
             -0.004528955465
           ],
-          "radius": 12.84998758,
-          "name": "Waypoint 27",
-          "oldId": 27,
-          "waypointType": "cornerEnd",
-          "pos": [
+          "oldId":104,
+          "pos":[
             -27.39684076,
             778.4182129,
             131.9549255
-          ]
+          ],
+          "radius":12.84998758,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 61",
-      "oldId": 24,
-      "notes": {
-        "english": {
-          "note": "into 6 right?"
-        }
-      }
+      "segment":-1
     },
     {
-      "segment": -1,
-      "pacenoteWaypoints": [
+      "metadata":{},
+      "name":"Pacenote 62",
+      "notes":{
+        "english":{
+          "note":"into 5 left right opens over finish."
+        }
+      },
+      "oldId":105,
+      "pacenoteWaypoints":[
         {
-          "normal": [
+          "name":"curr",
+          "normal":[
             -0.984198223,
             0.1364929997,
             -0.112798577
           ],
-          "radius": 12.46298963,
-          "name": "curr",
-          "oldId": 26,
-          "waypointType": "fwdAudioTrigger",
-          "pos": [
+          "oldId":106,
+          "pos":[
             756.2879639,
             -718.1591187,
             145.9160461
-          ]
+          ],
+          "radius":12.46298963,
+          "waypointType":"fwdAudioTrigger"
         },
         {
-          "normal": [
+          "name":"Waypoint 27",
+          "normal":[
             -0.984198223,
             0.1364929997,
             -0.112798577
           ],
-          "radius": 12.46298963,
-          "name": "Waypoint 27",
-          "oldId": 27,
-          "waypointType": "cornerStart",
-          "pos": [
-            781.21394316,
+          "oldId":107,
+          "pos":[
+            781.2139432,
             -718.1591187,
             145.9160461
-          ]
+          ],
+          "radius":12.46298963,
+          "waypointType":"cornerStart"
         },
         {
-          "normal": [
+          "name":"Waypoint 28",
+          "normal":[
             -0.984198223,
             0.1364929997,
             -0.112798577
           ],
-          "radius": 12.46298963,
-          "name": "Waypoint 28",
-          "oldId": 28,
-          "waypointType": "cornerEnd",
-          "pos": [
-            806.13992242,
+          "oldId":108,
+          "pos":[
+            806.1399224,
             -718.1591187,
             145.9160461
-          ]
+          ],
+          "radius":12.46298963,
+          "waypointType":"cornerEnd"
         }
       ],
-      "name": "Pacenote 62",
-      "oldId": 25,
-      "notes": {
-        "english": {
-          "note": "into 5 left right opens over finish."
-        }
-      }
+      "segment":-1
     }
-  ]
+  ],
+  "static_pacenotes":[
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"damage_1",
+      "notes":{
+        "english":{
+          "after":"",
+          "before":"",
+          "note":"We just took some damage!"
+        }
+      },
+      "oldId":109,
+      "pacenoteWaypoints":{},
+      "segment":-1
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"go_1/c",
+      "notes":{
+        "english":{
+          "after":"",
+          "before":"",
+          "note":"Go!"
+        }
+      },
+      "oldId":110,
+      "pacenoteWaypoints":{},
+      "segment":-1
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_1/c",
+      "notes":{
+        "english":{
+          "after":"",
+          "before":"",
+          "note":"one"
+        }
+      },
+      "oldId":111,
+      "pacenoteWaypoints":{},
+      "segment":-1
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_2/c",
+      "notes":{
+        "english":{
+          "after":"",
+          "before":"",
+          "note":"two"
+        }
+      },
+      "oldId":112,
+      "pacenoteWaypoints":{},
+      "segment":-1
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_3/c",
+      "notes":{
+        "english":{
+          "after":"",
+          "before":"",
+          "note":"three"
+        }
+      },
+      "oldId":113,
+      "pacenoteWaypoints":{},
+      "segment":-1
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"finish_1/c",
+      "notes":{
+        "english":{
+          "after":"",
+          "before":"",
+          "note":"Thats it, bring the car to a stop."
+        }
+      },
+      "oldId":114,
+      "pacenoteWaypoints":{},
+      "segment":-1
+    }
+  ],
+  "updated_at":1699324421
 }
