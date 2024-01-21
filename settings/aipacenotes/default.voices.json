@@ -1,22 +1,64 @@
 {
     "australian_female": {
-        "gcp_language_code": "en-AU",
-        "gcp_voice_name": "en-AU-Neural2-C"
-    },
-    "australian_male": {
-        "gcp_language_code": "en-AU",
-        "gcp_voice_name": "en-AU-Neural2-D"
+        "text_to_speech": {
+            "type": "gcp",
+            "language_code": "en-AU",
+            "voice_name": "en-AU-Neural2-C",
+            "_emphasis_level": "strong",
+            "_prosody_rate": "slow",
+            "_prosody_volume": "default",
+            "prosody_pitch": "high"
+        },
+        "audio_effects": {
+             "_normalize_target_peak": 0.8,
+
+             "_disable_trim": true,
+             "_trim_top_db": 30.0,
+
+             "_disable_eq": true,
+             "_eq_highpass_freq_hz": 300,
+             "_eq_highshelf_freq_hz": 3000,
+             "_eq_highshelf_gain": 10,
+             "_eq_band_freq_hz": 2500,
+             "_eq_band_width_hz": 500,
+             "_eq_band_gain": -40,
+
+             "_disable_noise": true,
+             "_noise_level": 0.001,
+
+             "_disable_distortion": true,
+             "_distortion_level": 0.2
+        }
     },
     "british_female": {
-        "gcp_language_code": "en-GB",
-        "gcp_voice_name": "en-GB-Neural2-A"
-    },
-    "british_male": {
-        "gcp_language_code": "en-GB",
-        "gcp_voice_name": "en-GB-Neural2-D"
-    },
-    "spanish_male": {
-        "gcp_language_code": "es-ES",
-        "gcp_voice_name": "es-ES-Neural2-B"
+        "text_to_speech": {
+            "type": "gcp",
+            "language_code": "en-GB",
+            "voice_name": "en-GB-Neural2-A",
+            "_emphasis_level": "strong",
+            "_prosody_rate": "slow",
+            "_prosody_volume": "default",
+            "prosody_pitch": "high"
+        },
+        "audio_effects": {
+             "_normalize_target_peak": 0.8,
+
+             "_disable_trim": true,
+             "_trim_top_db": 30.0,
+
+             "_disable_eq": true,
+             "_eq_highpass_freq_hz": 300,
+             "_eq_highshelf_freq_hz": 3000,
+             "_eq_highshelf_gain": 10,
+             "_eq_band_freq_hz": 2500,
+             "_eq_band_width_hz": 500,
+             "_eq_band_gain": -40,
+
+             "_disable_noise": true,
+             "_noise_level": 0.001,
+
+             "_disable_distortion": true,
+             "_distortion_level": 0.2
+        }
     }
 }
