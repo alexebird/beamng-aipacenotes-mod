@@ -4,10 +4,16 @@
             "type": "gcp",
             "language_code": "en-AU",
             "voice_name": "en-AU-Neural2-C",
-            "_emphasis_level": "strong",
-            "_prosody_rate": "slow",
+            "_emphasis_level": "moderate",
             "_prosody_volume": "default",
-            "prosody_pitch": "high"
+            "prosody_pitch": "high",
+            "_prosody_rate": "default",
+            "dynamic_rate": {
+                "lowest_rate": 0.85,
+                "shortest_phrase": 1,
+                "highest_rate": 1.35,
+                "longest_phrase": 6
+            }
         },
         "audio_effects": {
              "_normalize_target_peak": 0.8,
@@ -35,10 +41,16 @@
             "type": "gcp",
             "language_code": "en-GB",
             "voice_name": "en-GB-Neural2-A",
-            "_emphasis_level": "strong",
-            "_prosody_rate": "slow",
+            "_emphasis_level": "moderate",
             "_prosody_volume": "default",
-            "prosody_pitch": "high"
+            "prosody_pitch": "high",
+            "_prosody_rate": "default",
+            "dynamic_rate": {
+                "_lowest_rate": 0.8,
+                "_shortest_phrase": 1,
+                "_highest_rate": 1.35,
+                "_longest_phrase": 10
+            }
         },
         "audio_effects": {
              "_normalize_target_peak": 0.8,

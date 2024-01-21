@@ -353,7 +353,7 @@ function C:generateStaticPacenotesData()
 
   local go_time_1 = {
     oldId = oldId,
-    name = 'go_1',
+    name = 'go_1/c',
     notes = {
       english = {
         before = '',
@@ -371,7 +371,7 @@ function C:generateStaticPacenotesData()
   for i,num in ipairs(numbers) do
     local countdown = {
       oldId = oldId,
-      name = 'countdown_'..i,
+      name = 'countdown_'..i..'/c',
       notes = {
         english = {
           before = '',
@@ -388,7 +388,7 @@ function C:generateStaticPacenotesData()
 
   local finish_1 = {
     oldId = oldId,
-    name = 'finish_1',
+    name = 'finish_1/c',
     notes = {
       english = {
         before = '',
