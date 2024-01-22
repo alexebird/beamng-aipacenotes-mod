@@ -55,7 +55,7 @@ function C:onUpdate(dt, raceData)
 end
 
 function C:updateVehicleCorners(raceData)
-  if raceData then
+  if raceData and raceData.states[self.vehId] then
     self.currentCorners = raceData.states[self.vehId].currentCorners
     self.previousCorners = raceData.states[self.vehId].previousCorners
   else
