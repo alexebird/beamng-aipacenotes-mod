@@ -111,6 +111,7 @@ function C:doPause(audioObj)
 end
 
 function C:playNextInQueue()
+  -- log('D', logTag, 'AudioManager.playNextInQueue len='..self.queue:length())
   if self:previousAudioIsDone() then
     self.currAudioObj = self.queue:pop_left()
     if self.currAudioObj.audioType == 'pacenote' then

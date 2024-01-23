@@ -19,6 +19,14 @@
     {
       "action":"rallyEditorInsertMode",
       "control":"i"
+    },
+    {
+      "action":"rallyEditorPacenoteSelectNext",
+      "control":"2"
+    },
+    {
+      "action":"rallyEditorPacenoteSelectPrev",
+      "control":"1"
     }
   ],
   "devicetype":"keyboard",

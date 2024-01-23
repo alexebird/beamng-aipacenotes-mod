@@ -9,8 +9,6 @@ function C:init()
   self.overrideMissionId = nil
   self.overrideMissionDir = nil
 
-  self.vehId = nil
-
   self.damageThresh = nil
   self.closestPacenotes_n = nil
 
@@ -24,6 +22,7 @@ function C:init()
   self.codriver = nil
 
   self.nextId = nil -- this is the id of the pacenote we are looking for every dt.
+  log('D', 'wtf', 'nextId init: hardcoded to nil')
   self.closestPacenotes = nil
 
   -- use this for debug drawing in the recce app
@@ -51,10 +50,12 @@ end
 -- 3. get notebook from settings
 -- 4. get codriver from notebook+settings
 -- 5. generate list of flowgraph data from the notebook's pacenotes
-function C:setup(vehId, damageThresh, closestPacenotes_n)
-  log('I', logTag, 'RallyManager setup')
+function C:setup(damageThresh, closestPacenotes_n)
+  log('I', logTag, 'RallyManager setup starting')
 
-  self.vehId = vehId
+  -- self.vehId = vehId
+
+  -- local vehObjId = be:getPlayerVehicleID(0)
 
   self.damageThresh = damageThresh
   self.closestPacenotes_n = closestPacenotes_n
@@ -66,11 +67,13 @@ function C:setup(vehId, damageThresh, closestPacenotes_n)
 
   self:getMissionSettings()
   if not self.missionSettings then
+    log('I', logTag, 'RallyManager setup no missionSettings')
     return
   end
 
   self:loadNotebook()
   if not self.notebook then
+    log('I', logTag, 'RallyManager setup no notebook')
     return
   end
 
@@ -78,6 +81,7 @@ function C:setup(vehId, damageThresh, closestPacenotes_n)
 
   self.codriver = self.notebook:getCodriverByName(self.missionSettings.notebook.codriver)
   if not self.codriver then
+    log('I', logTag, 'RallyManager setup no codriver')
     error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
   end
 
@@ -86,16 +90,18 @@ function C:setup(vehId, damageThresh, closestPacenotes_n)
 
   self:reset()
   self.setup_complete = true
+  log('I', logTag, 'RallyManager setup complete nextId='..self.nextId)
 end
 
 function C:reset()
+  log('I', logTag, 'RallyManager reset')
   self.vehicleTracker = require('/lua/ge/extensions/gameplay/rally/vehicleTracker')(
-    self,
-    self.vehId,
     self.damageThresh
   )
 
+  self.closestPacenotes = nil
   self.nextId = 1
+  log('D', 'wtf', 'nextId reset: hardcoded to 1')
   self.currLap = -1
   self.maxLap = -1
 end
@@ -148,11 +154,14 @@ function C:handleLapChange(currLap, maxLap)
     self.currLap = currLap
     log('D', logTag, 'handleLapChange curr='..self.currLap..' max='..self.maxLap)
     self.nextId = 1
+    log('D', 'wtf', 'nextId handleLapChange: hardcoded to 1 ')
   end
 end
 
 function C:intersectCorners(pacenote)
   if not pacenote then return false end
+
+
   local prevCorners = self.vehicleTracker:getPreviousCorners()
   local currCorners = self.vehicleTracker:getCurrentCorners()
   if prevCorners and currCorners then
@@ -174,6 +183,13 @@ end
 function C:update(dtSim, raceData)
   if not self.setup_complete then return end
 
+  if self.nextPacenotes then
+    for i,pacenote in ipairs(self.nextPacenotes) do
+      local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      wp_audio_trigger:drawDebugRecce(i, self.nextPacenotes, pacenote._cached_fgData.note_text)
+    end
+  end
+
   if self.vehicleTracker then
     self.vehicleTracker:onUpdate(dtSim, raceData)
   end
@@ -181,10 +197,11 @@ function C:update(dtSim, raceData)
   if self.vehicleTracker:didJustHaveDamage() then
     -- First, check if the last tick had an increase in damage.
     self.audioManager:resetAudioQueue()
-    self.audioManager:enqueueDamageSfx()
+    -- self.audioManager:enqueueDamageSfx()
   -- else
     -- self.audioManager:playNextInQueue()
   elseif self.closestPacenotes then
+    -- log('D', 'wtf', 'has closestPacenotes ('..#self.closestPacenotes..')')
     -- In this case, there is a vehicle position reset and we need to find where
     -- in the pacenotes list we are.
     for _,closePacenote in ipairs(self.closestPacenotes) do
@@ -195,7 +212,9 @@ function C:update(dtSim, raceData)
         -- nextId is not the pacenote.id, its the index in the ordered list of pacenotes.
         for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
           if pacenote.id == closePacenote.id then
+            -- log('D', 'wtf', 'found pn match at i='..tostring(i))
             self.nextId = i+1
+            -- log('D', 'wtf', 'nextId update,closestPacenotes: incremented to '..tostring(self.nextId))
             self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
             break
           end
@@ -208,6 +227,7 @@ function C:update(dtSim, raceData)
     -- in the normal case, we assume the next pacenote is nextId+1.
     -- yes, this won't support skipping pacenotes, but I don't think
     -- that should be expected.
+    -- log('D', 'wtf', 'nextId='..tostring(self.nextId))
     local pacenote = self.notebook.pacenotes.sorted[self.nextId]
     if pacenote and self:intersectCorners(pacenote) then
       if self:shouldPlay(pacenote) then
@@ -215,6 +235,7 @@ function C:update(dtSim, raceData)
       end
       -- advance the pacenote even if we dont play the audio.
       self.nextId = self.nextId + 1
+      -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
       self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
     end
   end
@@ -231,6 +252,9 @@ function C:getNextPacenotes()
   else
     return {}
   end
+end
+
+function C:updateRaceData(raceData)
 end
 
 return function(...)

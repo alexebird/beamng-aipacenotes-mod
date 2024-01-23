@@ -16,7 +16,6 @@ C.color = re_util.aip_fg_color
 C.pinSchema = {
   { dir = 'in', type = 'flow', name = 'flow', description = 'Inflow for this node.' },
   { dir = 'in', type = 'flow', name = 'reset', description = 'Reset the countdown.', impulse = true },
-  { dir = 'in', type = 'table',  name = 'rallyManager', tableType = 'rallyManager', description = 'The RallyManager' },
   { dir = 'in', type = 'number', name = 'duration', default = 5, description = 'Duration of countdown.' },
   { dir = 'in', type = 'string', name = 'countdownMsg', hardcoded = true, hidden = true, default = '%d', description = 'Message to show before the countdown message; %d is the number.' },
   { dir = 'in', type = 'string', name = 'finishMsg', default = 'Go!', description = 'Message to flash at the end of countdown; leave blank to use default translation string.' },
@@ -43,10 +42,6 @@ function C:init(mgr, ...)
   self.flags = {
     finished = false
   }
-
-  self.rallyManager = nil
-  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')()
-  -- self.audioManager:resetAudioQueue()
 end
 
 function C:onExecutionStarted()
@@ -64,6 +59,7 @@ function C:reset()
   self.pinOut.flow.value = false
   self.pinOut.finished.value = false
   self.pinOut.ongoing.value = false
+  extensions.gameplay_aipacenotes.getRallyManager().audioManager:resetAudioQueue()
 end
 
 function C:stopTimer()
@@ -86,7 +82,7 @@ end
 
 function C:enqueueStaticPacenoteByName(pacenote_name)
   if self.data.playSounds then
-    return self.rallyManager.audioManager:enqueueStaticPacenoteByName(pacenote_name)
+    return extensions.gameplay_aipacenotes.getRallyManager().audioManager:enqueueStaticPacenoteByName(pacenote_name)
   else
     return nil
   end
@@ -139,8 +135,8 @@ function C:countdown()
         if self.data.playSounds and tonumber(countdownMsg) <= 3 then
           Engine.Audio.playOnce('AudioGui', 'event:UI_Countdown1')
         end
+        self:show(countdownMsg, bigMsg, 0.95, forceVisual)
       end
-      self:show(countdownMsg, bigMsg, 0.95, forceVisual)
     end
     if self.data.useImgui then
       local avail = im.GetContentRegionAvail()
@@ -170,25 +166,19 @@ function C:drawMiddle(builder, style)
 end
 
 function C:work(args)
-  if not self.rallyManager then
-    self.rallyManager = self.pinIn.rallyManager.value
+  if self.pinIn.reset.value then
+    self:reset()
   end
-
-  if self.rallyManager then
-    if self.pinIn.reset.value then
-      self:reset()
-    end
-    if self.pinIn.flow.value and not self.running and not self.done then
-      self:startTimer()
-    end
-    self:countdown()
-    self.pinOut.flow.value = self.done
-    self.pinOut.ongoing.value = self.running
-    -- set out pins according to flags and reset flags
-    for pName, val in pairs(self.flags) do
-      self.pinOut[pName].value = val
-      self.flags[pName] = false
-    end
+  if self.pinIn.flow.value and not self.running and not self.done then
+    self:startTimer()
+  end
+  self:countdown()
+  self.pinOut.flow.value = self.done
+  self.pinOut.ongoing.value = self.running
+  -- set out pins according to flags and reset flags
+  for pName, val in pairs(self.flags) do
+    self.pinOut[pName].value = val
+    self.flags[pName] = false
   end
 end
 

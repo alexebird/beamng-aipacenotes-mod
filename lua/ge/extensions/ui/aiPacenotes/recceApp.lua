@@ -229,7 +229,7 @@ local function initRallyManager(missionId, missionDir)
   rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
   rallyManager:setOverrideMission(missionId, missionDir)
   local vehObjId = be:getPlayerVehicleID(0)
-  rallyManager:setup(vehObjId, 1000, 5)
+  rallyManager:setup(vehObjId, 100, 5)
   rallyManager:handleNoteSearch()
   initSnapRoads()
 end

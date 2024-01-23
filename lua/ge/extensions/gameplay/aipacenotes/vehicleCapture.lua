@@ -17,7 +17,7 @@ local function createRotatingTable(maxSize)
   end
 
   local function getTable()
-    return t
+    return deepcopy(t)
   end
 
   local function clear()
@@ -59,10 +59,12 @@ function C:init(vehicle, cornerAngles, selectedCornerAnglesName)
 
   -- distance-based
   self.interval_m = 2
+  self.capture_limit = 200
   -- self.last_capture_ts = re_util.getTime()
   self.last_dist_pos = nil
 
-  self.captures = createRotatingTable(100)
+  -- self.captures = createRotatingTable(100)
+  self.captures = {}
 end
 
 function C:getCornerCall(steering)
@@ -72,13 +74,15 @@ function C:getCornerCall(steering)
 end
 
 function C:reset()
-  self.captures.clear()
+  -- self.captures.clear()
+  self.captures = {}
 end
 
 function C:asJson()
   return {
     cornerAnglesStyle = self.selectedCornerAnglesName,
-    captures = self.captures.getTable(),
+    -- captures = self.captures.getTable(),
+    captures = deepcopy(self.captures),
   }
 end
 
@@ -122,7 +126,11 @@ function C:capture()
         vInfo.cornerCall = self:getCornerCall(steering)
       end
       -- log('D', 'wtf', dumps(vInfo))
-      self.captures.add(vInfo)
+      -- self.captures.add(vInfo)
+
+      if #self.captures < self.capture_limit then
+        table.insert(self.captures, vInfo)
+      end
     end
   else
     self.last_dist_pos = vehPos

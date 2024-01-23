@@ -14,7 +14,7 @@ C.pinSchema = {
   -- { dir = 'in', type = 'flow',   name = 'flow',  description = 'Inflow for this node.' },
   -- { dir = 'in', type = 'flow',   name = 'reset', description = 'Resets this node.', impulse = true },
   { dir = 'in', type = 'number', name = 'vehId', description = 'Vehicle id.'},
-  { dir = 'in', type = 'number', name = 'damageThresh', description = 'Damage threshold to play damage audio.', default = 1000},
+  { dir = 'in', type = 'number', name = 'damageThresh', description = 'Damage threshold to play damage audio.', default = 500},
   { dir = 'in', type = 'number', name = 'searchN', description = 'Number of closest pacenotes to search when vehicle position is reset.', default = 5},
 
   -- { dir = 'out', type = 'flow', name = 'flow', description = 'Outflow from this node.' },

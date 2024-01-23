@@ -173,7 +173,7 @@ function C:asFlowgraphData(missionSettings, codriver)
     return self._cached_fgData
   end
 
-  local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir..'/')
+  local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir)
   if not FS:fileExists(fname) then
     log('E', logTag, "pacenote audio file not found: "..fname)
     return nil

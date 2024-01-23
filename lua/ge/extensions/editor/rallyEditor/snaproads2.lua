@@ -16,7 +16,7 @@ function C:getAllAiRoads()
   local roads = {}
 
   for _,objId in ipairs(objNames) do
-    local road = scenetree.findObjectById(objId)
+    local road = scenetree.findObjectById(tonumber(objId))
     if road and not road:isHidden() and road.drivability > 0 then
       table.insert(roads, road)
     end

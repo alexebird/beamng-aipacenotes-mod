@@ -23,23 +23,23 @@
     "desc": "Toggle the drawing of visual markers for pacenotes.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
   },
-  "recce_move_pacenote_farther": {
-    "cat": "gameplay",
-    "ctx": "tlua",
-    "order": 1,
-    "title": "Move Pacenote Farther in Recce (AIPacenotes)",
-    "desc": "Move the next pacenote toward CornerStart along snaproad and save notebook.",
-    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_farther()"
-  },
-  "recce_move_pacenote_closer": {
-    "cat": "gameplay",
-    "ctx": "tlua",
-    "order": 1,
-    "title": "Move Pacenote Closer in Recce (AIPacenotes)",
-    "desc": "Move the next pacenote towards vehicle along snaproad and save notebook.",
-    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_closer()"
-  },
 
+//  "recce_move_pacenote_farther": {
+//    "cat": "gameplay",
+//    "ctx": "tlua",
+//    "order": 1,
+//    "title": "Move Pacenote Farther in Recce (AIPacenotes)",
+//    "desc": "Move the next pacenote toward CornerStart along snaproad and save notebook.",
+//    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_farther()"
+//  },
+//  "recce_move_pacenote_closer": {
+//    "cat": "gameplay",
+//    "ctx": "tlua",
+//    "order": 1,
+//    "title": "Move Pacenote Closer in Recce (AIPacenotes)",
+//    "desc": "Move the next pacenote towards vehicle along snaproad and save notebook.",
+//    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_closer()"
+//  },
 
   "rallyEditorSave": {
     "cat": "editor",

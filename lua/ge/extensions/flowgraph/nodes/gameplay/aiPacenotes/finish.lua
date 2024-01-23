@@ -9,29 +9,18 @@ C.color = re_util.aip_fg_color
 C.tags = {'aipacenotes'}
 
 C.pinSchema = {
-  { dir = 'in', type = 'flow',   name = 'flow', description = 'Inflow for this node.' },
-  { dir = 'in', type = 'flow',   name = 'reset', description = 'Reset for this node.', impulse = true },
-  { dir = 'in', type = 'table',  name = 'rallyManager', tableType = 'rallyManager', description = 'The RallyManager' },
+  -- { dir = 'in', type = 'flow',   name = 'flow', description = 'Inflow for this node.' },
+  -- { dir = 'in', type = 'flow',   name = 'reset', description = 'Reset for this node.', impulse = true },
+  { dir = 'in', type = 'flow',   name = 'onFinish', description = 'When finish happens', impulse = true },
 }
 
-function C:init()
-  self.rallyManager = nil
-  self.finished = false
-end
+-- function C:init()
+-- end
 
 function C:work()
-  if self.rallyManager == nil then
-    self.rallyManager = self.pinIn.rallyManager.value
-  end
-
-  if self.pinIn.reset.value then
-    self.finished = false
-  end
-
-  if self.rallyManager and not self.finished then
-    self.rallyManager.audioManager:enqueuePauseSecs(0.75)
-    self.rallyManager.audioManager:enqueueStaticPacenoteByName('finish_1/c')
-    self.finished = true
+  if self.pinIn.onFinish.value then
+    extensions.gameplay_aipacenotes.getRallyManager().audioManager:enqueuePauseSecs(0.75)
+    extensions.gameplay_aipacenotes.getRallyManager().audioManager:enqueueStaticPacenoteByName('finish_1/c')
   end
 end
 
