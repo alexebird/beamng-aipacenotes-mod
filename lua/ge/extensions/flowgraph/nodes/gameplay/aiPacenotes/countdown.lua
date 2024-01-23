@@ -136,7 +136,7 @@ function C:countdown()
       local forceVisual = false
       if self:enqueueStaticPacenoteByName('countdown_'..countdownMsg..'/c') == false then
         forceVisual = true
-        if self.data.playSounds then
+        if self.data.playSounds and tonumber(countdownMsg) <= 3 then
           Engine.Audio.playOnce('AudioGui', 'event:UI_Countdown1')
         end
       end

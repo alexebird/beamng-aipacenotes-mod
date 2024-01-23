@@ -637,10 +637,14 @@ function C:addMouseWaypointToPacenote()
         local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
 
         if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-          local cs = note:getCornerStartWaypoint()
-          if cs then
-            local rv = re_util.calculateForwardNormal(data.pos, cs.pos)
-            waypoint.normal = vec3(rv.x, rv.y, rv.z)
+          if self.dragMode == dragModes.simple_road_snap then
+            self:snapOneHelper(waypoint)
+          elseif self.dragMode == dragModes.simple then
+            local cs = note:getCornerStartWaypoint()
+            if cs then
+              local rv = re_util.calculateForwardNormal(data.pos, cs.pos)
+              waypoint.normal = vec3(rv.x, rv.y, rv.z)
+            end
           end
         end
 
@@ -654,6 +658,25 @@ function C:addMouseWaypointToPacenote()
         self:selectWaypoint(waypoint.id)
       end
     )
+
+  elseif self.mouseInfo.hold then
+    -- local note = self.path.pacenotes.objects[data.pacenote_index]
+    -- local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
+    local note = self:selectedPacenote()
+    local waypoint = self:selectedWaypoint()
+
+    if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+      if self.dragMode == dragModes.simple_road_snap then
+        self:snapOneHelper(waypoint)
+      elseif self.dragMode == dragModes.simple then
+        local cs = note:getCornerStartWaypoint()
+        if cs then
+          local rv = re_util.calculateForwardNormal(waypoint.pos, cs.pos)
+          waypoint.normal = vec3(rv.x, rv.y, rv.z)
+        end
+      end
+    end
+  elseif self.mouseInfo.up then
   end
 end
 
@@ -775,7 +798,8 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
   elseif self.dragMode == dragModes.simple_road_snap then
     -- if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
       if self.mouseInfo.rayCast then
-        return snaproads.closestSnapPos(self.mouseInfo.rayCast.pos)
+        local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
+        return snaproads.closestSnapPos(newPos)
       else
         local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
         return newPos, nil
@@ -1487,14 +1511,18 @@ function C:snapAll()
   )
 end
 
+function C:snapOneHelper(wp)
+  local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
+  wp.pos = newPos
+  if normalAlignPos then
+    local rv = re_util.calculateForwardNormal(newPos, normalAlignPos)
+    wp.normal = vec3(rv.x, rv.y, rv.z)
+  end
+end
+
 function C:snapAllHelper()
   for i,wp in pairs(self.path:allWaypoints()) do
-    local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
-    wp.pos = newPos
-    if normalAlignPos then
-      local rv = re_util.calculateForwardNormal(newPos, normalAlignPos)
-      wp.normal = vec3(rv.x, rv.y, rv.z)
-    end
+    self:snapOneHelper(wp)
   end
 end
 

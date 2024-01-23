@@ -63,12 +63,16 @@ end
 
 local function getMissionDir()
   if not currentPath then return nil end
+  -- log('D', 'wtf', 'has currentPath')
 
   -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
   local notebooksDir = currentPath._dir
+  -- log('D', 'wtf', 'notebooksDir: '..notebooksDir)
   local aipDir = strip_basename(notebooksDir)
+  -- log('D', 'wtf', 'aipDir: '..aipDir)
   -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
   local missionDir = strip_basename(aipDir)
+  -- log('D', 'wtf', 'missionDir: '..missionDir)
   -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
 
   return missionDir
@@ -88,6 +92,9 @@ local function saveNotebook(notebook, savePath)
   local a, fn2, b = path.splitWithoutExt(previousFilename, true)
   notebook._fnWithoutExt = fn2
 
+  -- log('D', 'wtf', 'getMD: '..getMissionDir())
+  -- log('D', 'wtf', 'aipPath: '..re_util.aipPath)
+  -- log('D', 'wtf', 'missionSettigsFname: '..re_util.missionSettingsFname)
   local settingsFname = getMissionDir()..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
   if not FS:fileExists(settingsFname) then
     log('I', logTag, 'creating mission.settings.json at '..settingsFname)
@@ -559,25 +566,28 @@ local function listNotebooks(folder)
 end
 
 local function detectNotebookToLoad(folder)
+  log('D', 'wtf', 'detectNotebookToLoad folder param: '..tostring(folder))
   if not folder then
     folder = getMissionDir()
   end
+  log('D', 'wtf', 'detectNotebookToLoad folder: '..folder)
   local settings = loadMissionSettings(folder)
 
   -- step 1: detect the notebook name from settings file
   -- if mission.settings.json exists, then read it and use the specified notebook fname.
   local notebooksFullPath = folder..'/'..re_util.notebooksPath
+  log('D', 'wtf', 'detectNotebookToLoad notebooksfullpath: '..notebooksFullPath)
   local notebookFname = nil
 
   if settings and settings.notebook and settings.notebook.filename then
     local settingsAbsName = notebooksFullPath..'/'..settings.notebook.filename
-    -- log('D', logTag, 'step 1: '..tostring(settingsAbsName))
+    log('D', logTag, 'step 1: '..tostring(settingsAbsName))
     if FS:fileExists(settingsAbsName) then
       notebookFname = settingsAbsName
     end
   end
 
-  -- log('D', logTag, 'step 1: '..tostring(notebookFname))
+  log('D', logTag, 'step 1: '..tostring(notebookFname))
 
   -- step 2: if cant detect from settings file, or it doesnt exist, detect from listing the dir
   if not notebookFname then
@@ -591,13 +601,13 @@ local function detectNotebookToLoad(folder)
     notebookFname = paths[#paths]
   end
 
-  -- log('D', logTag, 'step 2: '..tostring(notebookFname))
+  log('D', logTag, 'step 2: '..tostring(notebookFname))
 
   -- step 3: if mission settings file doesnt exist, then use the dir-listed name and create the settings file, including reading the first co-driver name.
   -- although, that should be done after the notebook file is read, so maybe this should be done in the rally editor.
   if not notebookFname then
     local defaultNotebookBasename = settings:defaultSettings().notebook.filename
-    notebookFname = notebooksFullPath..defaultNotebookBasename
+    notebookFname = notebooksFullPath..'/'..defaultNotebookBasename
   end
 
   log('D', logTag, 'detected notebook: '..notebookFname)

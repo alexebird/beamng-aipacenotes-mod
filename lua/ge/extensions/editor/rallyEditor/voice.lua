@@ -45,7 +45,7 @@ function C:setPath(path)
   self:reloadTranscriptFile()
 end
 
-function C:convertTranscriptToNotebook(importIdent)
+function C:convertTranscriptToNotebook(importIdent, start_i)
   local ts = os.time()
   local fname_out = 'transcript_'..ts..'.notebook.json'
   local notebook = {
@@ -67,8 +67,8 @@ function C:convertTranscriptToNotebook(importIdent)
     pacenotes = {},
   }
 
-  local i = 1
-  local oldId = 2
+  -- local i = start_i or 1
+  -- local oldId = self.path:getNextUniqueIdentifier()
 
   for _,transcript in ipairs(self.transcripts_path.transcripts.sorted) do
     local note = transcript.text or ""
@@ -79,9 +79,10 @@ function C:convertTranscriptToNotebook(importIdent)
       -- local rot = transcript.vehicle_pos.rot or {}
       local radius = self.rallyEditor.getPrefDefaultRadius()
 
-      local name = "Pacenote "..i
+      local pacenoteNewId = self.path:getNextUniqueIdentifier()
+      local name = "Pacenote "..pacenoteNewId
       if importIdent then
-        name = "Import_"..importIdent.." " .. i
+        name = "Import_"..importIdent.." " .. pacenoteNewId
       end
 
       local metadata = {}
@@ -94,12 +95,12 @@ function C:convertTranscriptToNotebook(importIdent)
         name = name,
         notes = { english = {note = note}},
         metadata = metadata,
-        oldId = oldId,
+        oldId = pacenoteNewId,
         pacenoteWaypoints = {
         --   {
         --     name = "curr",
         --     normal = {rot[1].x or 0, rot[1].y or 0, rot[1].z or 0},
-        --     oldId = oldId + 1,
+        --     oldId = self.path:getNextUniqueIdentifier(),
         --     pos = {pos.x or 0, pos.y or 0, pos.z or 0},
         --     radius = 8,  -- Replace with actual value if available
         --     waypointType = "fwdAudioTrigger"
@@ -107,7 +108,7 @@ function C:convertTranscriptToNotebook(importIdent)
           {
             name = "corner start",
             normal = {0.0, 1.0, 0.0},
-            oldId = oldId + 1,
+            oldId = self.path:getNextUniqueIdentifier(),
             pos = {(pos.x or 0) + radius, pos.y or 0, pos.z or 0},
             radius = radius,
             waypointType = "cornerStart"
@@ -116,7 +117,7 @@ function C:convertTranscriptToNotebook(importIdent)
             name = "corner end",
             -- normal = {rot[1].x or 0, rot[1].y or 0, rot[1].z or 0},
             normal = {0.0, 1.0, 0.0},
-            oldId = oldId + 1,
+            oldId = self.path:getNextUniqueIdentifier(),
             pos = {pos.x or 0, pos.y or 0, pos.z or 0},
             radius = radius,
             waypointType = "cornerEnd"
@@ -125,8 +126,8 @@ function C:convertTranscriptToNotebook(importIdent)
       }
 
       table.insert(notebook.pacenotes, pn)
-      i = i + 1
-      oldId = oldId + 2
+      -- i = i + 1
+      -- oldId = oldId + 2
     end
   end
 
@@ -174,6 +175,8 @@ end
 function C:importTranscriptToCurrentNotebook()
   self:reloadTranscriptFile()
   local importIdent = self.path:nextImportIdent()
+  local last_note = self.path.pacenotes.sorted[#self.path.pacenotes.sorted]
+  local last_id = self.path.pacenotes.sorted[#self.path.pacenotes.sorted]
   local notebook_data, _ = self:convertTranscriptToNotebook(importIdent)
 
   editor.history:commitAction("Import transcript to current notebook",

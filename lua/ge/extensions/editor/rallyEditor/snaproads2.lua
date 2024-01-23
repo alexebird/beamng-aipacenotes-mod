@@ -181,6 +181,10 @@ function C:nextSnapPos(srcPosIn, directionPos)
   -- make sure that srcPosIn is aligned to a snaproad node.
   local srcPos, _ = self:closestSnapPos(srcPosIn)
 
+  if not directionPos or not srcPos then
+    return nil, nil
+  end
+
   local direction = directionPos - srcPos
   local nextPoint = nil
   local minDistance = 4294967295

@@ -115,13 +115,25 @@ function C:intersectCorners(fromCorners, toCorners)
   return minT <= 1, minT
 end
 
-function C:colorForWpType()
+function C:colorForWpType(pn_drawMode)
   if self.waypointType == waypointTypes.wpTypeCornerStart then
-    return cc.waypoint_clr_cs
+    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then 
+      return cc.waypoint_clr_cs_adjacent
+    else
+      return cc.waypoint_clr_cs
+    end
   elseif self.waypointType == waypointTypes.wpTypeCornerEnd then
-    return cc.waypoint_clr_ce
+    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then 
+      return cc.waypoint_clr_ce_adjacent
+    else
+      return cc.waypoint_clr_ce
+    end
   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-    return cc.waypoint_clr_at
+    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then 
+      return cc.waypoint_clr_at_adjacent
+    else
+      return cc.waypoint_clr_at
+    end
   elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
     return cc.waypoint_clr_at
   elseif self.waypointType == waypointTypes.wpTypeDistanceMarker then
