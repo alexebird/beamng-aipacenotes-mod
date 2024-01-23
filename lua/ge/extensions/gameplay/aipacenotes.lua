@@ -7,7 +7,6 @@ local logTag = 'aipacenotes'
 
 local M = {}
 
-local updateCount = 0
 local rallyManager = nil
 -- local vehicleCapture = nil
 -- local snaproads = nil
@@ -141,8 +140,9 @@ end
 -- end
 
 local function onUpdate(dtReal, dtSim, dtRaw)
-  if updateCount == 0 then
-    log('I', logTag, 'aipacenotes onUpdate')
+  if isFreeroam() then
+    clearRallyManager()
+    return
   end
 
   updateRallyManager(dtSim)
@@ -151,8 +151,6 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   -- if flag_drawDebug and not (editor and editor.isEditorActive()) then
     -- drawDebug()
   -- end
-
-  updateCount = updateCount + 1
 end
 
 local function onVehicleResetted(vehicleID)
