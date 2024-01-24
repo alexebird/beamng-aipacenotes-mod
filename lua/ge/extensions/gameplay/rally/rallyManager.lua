@@ -6,6 +6,9 @@ local logTag = 'aipacenotes'
 function C:init()
   self.setup_complete = false
 
+  self.buddyMode = false
+  -- self.buddyMode = true
+
   self.overrideMissionId = nil
   self.overrideMissionDir = nil
 
@@ -216,6 +219,7 @@ function C:update(dtSim, raceData)
             self.nextId = i+1
             -- log('D', 'wtf', 'nextId update,closestPacenotes: incremented to '..tostring(self.nextId))
             self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+            self:nextPacenotesUpdated()
             break
           end
         end
@@ -237,13 +241,44 @@ function C:update(dtSim, raceData)
       self.nextId = self.nextId + 1
       -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
       self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+    self:nextPacenotesUpdated()
     end
   end
+end
+
+function C:nextPacenotesUpdated()
+
+  if not self.buddyMode then return end
+
+
+  local requestBody = {}
+
+  local pacenotes = {}
+
+  if #self.nextPacenotes > 1 then
+    for i,pn in ipairs(self.nextPacenotes) do
+      table.insert(pacenotes, pn)
+    end
+  else
+    table.insert(pacenotes, self.nextPacenotes[1])
+    local nextNextPn = self.notebook.pacenotes.sorted[self.nextId+1]
+    table.insert(pacenotes, nextNextPn)
+  end
+
+  for i,pacenote in ipairs(pacenotes) do
+    local entry = {
+      pacenote = pacenote._cached_fgData.note_text
+    }
+    table.insert(requestBody, entry)
+  end
+
+  local resp = extensions.gameplay_aipacenotes_client.update_next_pacenotes({ pacenotes = requestBody })
 end
 
 function C:handleNoteSearch()
   self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
   self.nextPacenotes = self.closestPacenotes
+  self:nextPacenotesUpdated()
 end
 
 function C:getNextPacenotes()

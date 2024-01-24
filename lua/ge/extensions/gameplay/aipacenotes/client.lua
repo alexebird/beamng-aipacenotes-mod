@@ -156,11 +156,34 @@ local function transcribe_transcripts_get(count)
   return resp
 end
 
+local function update_next_pacenotes(data)
+  -- log('D', 'wtf', dumps(data))
+  --
+  --
+  local req = {
+    created_at = tostring(re_util.getTime()),
+    method= 'POST',
+    path= '/api/v1/update_next_pacenotes',
+    body= data,
+  }
+  local url = base_url..'/proxy'
+  local resp = jsonRequestPost(url, req)
+  if not resp.ok then
+    if not network_issue_occurred then
+      network_issue_occurred = true
+      network_issue_msg = recording_disabled_msg
+    end
+    resp.client_msg = network_issue_msg or resp.error
+  end
+  return resp
+end
+
 -- M.transcribe_recording_start = transcribe_recording_start
 M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_transcripts_get = transcribe_transcripts_get
 M.clear_network_issue = clear_network_issue
 M.has_network_issue = has_network_issue
+M.update_next_pacenotes = update_next_pacenotes
 
 return M
