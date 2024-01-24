@@ -16,7 +16,8 @@ C.color = re_util.aip_fg_color
 C.pinSchema = {
   { dir = 'in', type = 'flow', name = 'flow', description = 'Inflow for this node.' },
   { dir = 'in', type = 'flow', name = 'reset', description = 'Reset the countdown.', impulse = true },
-  { dir = 'in', type = 'number', name = 'duration', default = 5, description = 'Duration of countdown.' },
+  { dir = 'in', type = 'number', name = 'duration', default = 4, description = 'Duration of countdown.' },
+  { dir = 'in', type = 'number', name = 'maxAnnounced', default = 3, description = 'When to start speaking the count.' },
   { dir = 'in', type = 'string', name = 'countdownMsg', hardcoded = true, hidden = true, default = '%d', description = 'Message to show before the countdown message; %d is the number.' },
   { dir = 'in', type = 'string', name = 'finishMsg', default = 'Go!', description = 'Message to flash at the end of countdown; leave blank to use default translation string.' },
   { dir = 'in', type = 'number', name = 'finishMsgDuration', hardcoded = true, hidden = true, default = 1, description = 'Duration of finish message.' },
@@ -35,6 +36,7 @@ function C:init(mgr, ...)
   self.data.visualCountdown = true
 
   self.duration = 1
+  self.maxAnnounced = 1
   self.timer = 1
   self.msg = "Go!"
   self.done = false
@@ -56,10 +58,10 @@ end
 
 function C:reset()
   self:stopTimer()
+  extensions.gameplay_aipacenotes.getRallyManager().audioManager:resetAudioQueue()
   self.pinOut.flow.value = false
   self.pinOut.finished.value = false
   self.pinOut.ongoing.value = false
-  extensions.gameplay_aipacenotes.getRallyManager().audioManager:resetAudioQueue()
 end
 
 function C:stopTimer()
@@ -72,6 +74,7 @@ end
 
 function C:startTimer()
   self.duration = self.pinIn.duration.value or 3
+  self.maxAnnounced = self.pinIn.maxAnnounced.value or 3
   self.timer = self.duration
   self.running = true
   self.msg = self.pinIn.finishMsg.value or "ui.scenarios.go"
@@ -124,7 +127,7 @@ function C:countdown()
     self.pinOut.flow.value = true
     self.done = true
   else
-    if old ~= math.floor(self.timer) then
+    if old ~= math.floor(self.timer) and old <= self.maxAnnounced then
       self.countdownMsg = self.pinIn.countdownMsg.value or "%d"
       local countdownMsg = string.format(self.countdownMsg, old)
       local bigMsg = self.countdownMsg == "%d"
@@ -132,11 +135,11 @@ function C:countdown()
       local forceVisual = false
       if self:enqueueStaticPacenoteByName('countdown_'..countdownMsg..'/c') == false then
         forceVisual = true
-        if self.data.playSounds and tonumber(countdownMsg) <= 3 then
+        if self.data.playSounds  then
           Engine.Audio.playOnce('AudioGui', 'event:UI_Countdown1')
         end
-        self:show(countdownMsg, bigMsg, 0.95, forceVisual)
       end
+      self:show(countdownMsg, bigMsg, 0.95, forceVisual)
     end
     if self.data.useImgui then
       local avail = im.GetContentRegionAvail()

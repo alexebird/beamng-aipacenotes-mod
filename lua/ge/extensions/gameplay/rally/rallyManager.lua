@@ -183,12 +183,12 @@ end
 function C:update(dtSim, raceData)
   if not self.setup_complete then return end
 
-  if self.nextPacenotes then
-    for i,pacenote in ipairs(self.nextPacenotes) do
-      local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-      wp_audio_trigger:drawDebugRecce(i, self.nextPacenotes, pacenote._cached_fgData.note_text)
-    end
-  end
+  -- if self.nextPacenotes then
+  --   for i,pacenote in ipairs(self.nextPacenotes) do
+  --     local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+  --     wp_audio_trigger:drawDebugRecce(i, self.nextPacenotes, pacenote._cached_fgData.note_text)
+  --   end
+  -- end
 
   if self.vehicleTracker then
     self.vehicleTracker:onUpdate(dtSim, raceData)

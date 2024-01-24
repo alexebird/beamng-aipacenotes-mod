@@ -117,19 +117,19 @@ end
 
 function C:colorForWpType(pn_drawMode)
   if self.waypointType == waypointTypes.wpTypeCornerStart then
-    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then 
+    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then
       return cc.waypoint_clr_cs_adjacent
     else
       return cc.waypoint_clr_cs
     end
   elseif self.waypointType == waypointTypes.wpTypeCornerEnd then
-    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then 
+    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then
       return cc.waypoint_clr_ce_adjacent
     else
       return cc.waypoint_clr_ce
     end
   elseif self.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then 
+    if pn_drawMode and (pn_drawMode == 'previous' or pn_drawMode == 'next') then
       return cc.waypoint_clr_at_adjacent
     else
       return cc.waypoint_clr_at
@@ -289,28 +289,6 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
     radius_cyl,
     ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
   )
-end
-
-function C:posForVehiclePlacement()
-  local pos = (self.pos + (self.radius*2) * -self.normal)
-  return pos
-end
-
-function C:rotForVehiclePlacement(vehicle)
-  local pointA = self.pos
-  local pointB = (self.pos + self.radius * self.normal)
-
-  local dx = pointB.x - pointA.x
-  local dy = pointB.y - pointA.y
-  local dz = pointB.z - pointA.z
-
-  local fwd = {x = dx, y = dy, z = dz}
-  fwd = vec3(fwd)
-
-  local up = {x = 0, y = 0 , z = 1}
-  up = vec3(up)
-  local rot = quatFromDir(fwd, up):normalized()
-  return rot
 end
 
 return function(...)

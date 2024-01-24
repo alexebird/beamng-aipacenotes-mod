@@ -79,14 +79,17 @@ end
 function C:selectionString()
   local pn = self:selectedPacenote()
   local wp = self:selectedWaypoint()
+  local mode = ''
   if pn and not pn.missing then
+    mode = 'P'
     local txt = '"' .. pn:noteTextForDrawDebug() .. '" ('.. pn.name ..')'
     if wp and not wp.missing then
+      mode = 'PW'
       txt = txt .. ' > ' .. wp:selectionString()
     end
-    return txt
+    return txt, mode
   else
-    return "none"
+    return "none", mode
   end
 end
 
@@ -1026,6 +1029,8 @@ function C:validate()
     table.insert(self.validation_issues, tostring(invalid_notes_count)..' pacenote(s) have issues')
   end
 
+  local distance_call_issues = 0
+  local did_add_first_issue = false
   for _,lang_data in ipairs(self.path:getLanguages()) do
     local language = lang_data.language
     local prev = nil
@@ -1034,11 +1039,19 @@ function C:validate()
         local prev_after = prev:getNoteFieldAfter(language)
         local curr_before = curr:getNoteFieldBefore(language)
         if prev_after == '' and curr_before == '' then
-          table.insert(self.validation_issues, 'missing distance call for '..prev.name..' -> '..curr.name..'. Use "#" if you want none.')
+          if not did_add_first_issue then
+            table.insert(self.validation_issues, 'missing distance call for '..prev.name..' -> '..curr.name..'. Use "#" if you want none.')
+            did_add_first_issue = true
+          end
+          distance_call_issues = distance_call_issues + 1
         end
       end
       prev = curr
     end
+  end
+
+  if distance_call_issues >= 2 then
+    table.insert(self.validation_issues, 'missing distance calls for '..(distance_call_issues-1)..' more pacenotes.')
   end
 end
 
@@ -1145,7 +1158,7 @@ function C:drawPacenotesList()
     if im.Button("Place Vehicle") then
       self:placeVehicleAtPacenote()
     end
-    im.SameLine()
+    -- im.SameLine()
     if im.Button("Move Up") then
       editor.history:commitAction("Move Pacenote in List",
         {index = self.pacenote_index, self = self, dir = -1},
@@ -1160,6 +1173,10 @@ function C:drawPacenotesList()
     im.SameLine()
     if im.Button("Delete") then
       self:deleteSelectedPacenote()
+    end
+
+    if im.Button("Insert After") then
+      self:insertNewPacenoteAfter(note)
     end
 
     for _ = 1,5 do im.Spacing() end
@@ -1265,7 +1282,7 @@ Any lua code is allowed, so be careful. Examples:
         self:handleNoteFieldEdit(note, language, 'before', fields.before)
       end
       im.SameLine()
-      im.SetNextItemWidth(300)
+      -- im.SetNextItemWidth(300)
       if self._insertMode then
         if i == 1 then
           im.SetKeyboardFocusHere()
@@ -1548,6 +1565,7 @@ function C:cleanupPacenoteNames()
 
   editor.history:commitAction("Cleanup pacenote names",
     {
+      self = self,
       notebook = self.path,
       old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
     },
@@ -1555,6 +1573,7 @@ function C:cleanupPacenoteNames()
       data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
     end,
     function(data) -- redo
+      data.self:selectPacenote(nil)
       data.notebook:cleanupPacenoteNames()
     end
   )
@@ -1615,13 +1634,48 @@ end
 function C:placeVehicleAtPacenote()
   local playerVehicle = be:getPlayerVehicle(0)
   if playerVehicle then
-    local wp = self:selectedPacenote():getActiveFwdAudioTrigger()
+    -- local wp = self:selectedPacenote():getActiveFwdAudioTrigger()
     spawn.safeTeleport(
       playerVehicle,
-      wp:posForVehiclePlacement(),
-      wp:rotForVehiclePlacement(playerVehicle)
+      self:selectedPacenote():posForVehiclePlacement(),
+      self:selectedPacenote():rotForVehiclePlacement()
     )
   end
+end
+
+function C:insertNewPacenoteAfter(note)
+  if not self.path then return end
+
+  local pn_next = nil
+
+  for i,pn in ipairs(self.path.pacenotes.sorted) do
+    if pn.id == note.id then
+      pn_next = i+1
+    end
+  end
+
+  local _, numA = note:nameComponents()
+  numA = tonumber(numA)
+  local nextNum = numA
+
+  if pn_next <= #self.path.pacenotes.sorted then
+    local next_note = self.path.pacenotes.sorted[pn_next]
+    if next_note then
+      local _, numB = next_note:nameComponents()
+      numB = tonumber(numB)
+      nextNum = numA + ((numB - numA) / 2)
+    end
+  else
+    nextNum = numA+1
+  end
+
+  -- local currId = self:selectedPacenote().id
+  -- num = tonumber(num) + 0.01
+
+  local newPacenote = self.path.pacenotes:create("Pacenote "..tostring(nextNum))
+  self.path:sortPacenotesByName()
+  -- self:cleanupPacenoteNames()
+  -- self:selectPacenote(currId)
 end
 
 return function(...)

@@ -292,7 +292,8 @@ local function drawEditorGui()
     im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
     im.Text('DragMode: '..pacenotesWindow.dragMode)
     im.SameLine()
-    im.Text('| Selection: '..pacenotesWindow:selectionString())
+    local selStr, selMode = pacenotesWindow:selectionString()
+    im.Text('| Selection['..selMode..']: '..selStr)
     im.Separator()
 
     if im.BeginTabBar("modes") then

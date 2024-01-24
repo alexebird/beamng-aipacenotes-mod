@@ -26,8 +26,9 @@ C.pinSchema = {
 function C:work()
   if extensions.isExtensionLoaded('gameplay_aipacenotes') then
     extensions.unload('gameplay_aipacenotes')
-    self.pinOut.flow.value = true
   end
+
+  self.pinOut.flow.value = true
 end
 
 return _flowgraph_createNode(C)

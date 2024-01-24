@@ -5,7 +5,7 @@
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
-local logTag = 'aipacenotes_pacenote'
+local logTag = 'aipacenotes'
 
 function C:init(notebook, name, forceId)
   self.notebook = notebook
@@ -21,11 +21,6 @@ function C:init(notebook, name, forceId)
 
   self.sortOrder = 999999
 end
-
--- used by pacenoteWaypoints.lua
--- function C:getNextUniqueIdentifier()
-  -- return self.notebook:getNextUniqueIdentifier()
--- end
 
 function C:onSerialize()
   local ret = {

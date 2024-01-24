@@ -19,6 +19,8 @@ local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
 
+--
+-- html code: #00ffdebf
 local aip_fg_color = ui_imgui.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
 local function pacenote_hash(s)
@@ -96,7 +98,7 @@ local function buildAudioObjPacenote(pacenoteFname)
     audioLen = nil,
     timeout = nil,
     sourceId = nil,
-    breathSuffixTime = 0.15, -- add time to represent the co-driver taking a breath after reading a pacenote.
+    breathSuffixTime = 0.3, -- add time to represent the co-driver taking a breath after reading a pacenote.
   }
 
   return audioObj

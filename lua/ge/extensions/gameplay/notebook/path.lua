@@ -29,6 +29,8 @@ function C:init(name)
     require('/lua/ge/extensions/gameplay/notebook/codriver')
   )
 
+  self.codrivers:create() -- add default
+
   self.pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
     "pacenotes",
     self,
@@ -85,6 +87,8 @@ function C:validate()
   end
   if uniqueCount < #self.codrivers.sorted then
     table.insert(self.validation_issues, 'Duplicate codriver names')
+  elseif #self.codrivers.sorted == 0 then
+    table.insert(self.validation_issues, 'At least one Codriver is required')
   end
 end
 
@@ -164,7 +168,7 @@ function C:cleanupPacenoteNames()
 
   for i, v in ipairs(self.pacenotes.sorted) do
     -- Pattern to match a name ending with a number: capture the non-numeric part and the numeric part
-    local baseName, number = string.match(v.name, "(.-)%s*(%d+)$")
+    local baseName, number = string.match(v.name, "(.-)%s*([%d%.]+)$")
 
     if baseName and number then
       -- If the name has a number at the end, replace it with the new index

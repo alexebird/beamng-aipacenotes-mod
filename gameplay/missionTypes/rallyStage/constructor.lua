@@ -11,9 +11,9 @@ function C:init()
   self.latestVersion = version
 
   self.fgPath = "/gameplay/missionTypes/rallyStage/rallyStage.flow.json"
-  if self.missionTypeData.customFlowgraph then
-    self.fgPath = self.missionFolder.."/custom.flow.json"
-  end
+  -- if self.missionTypeData.customFlowgraph then
+  --   self.fgPath = self.missionFolder.."/custom.flow.json"
+  -- end
 
   self.fgVariables = deepcopy(self.missionTypeData)
   self.missionTypeLabel = "Rally Stage"
