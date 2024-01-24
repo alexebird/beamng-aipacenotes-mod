@@ -38,8 +38,7 @@
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
-      "enabled":true,
-      "time":0.1666666667
+      "enabled":false
     },
     "traffic":{
       "enabled":false
