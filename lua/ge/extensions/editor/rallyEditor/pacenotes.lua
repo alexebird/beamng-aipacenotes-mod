@@ -1090,6 +1090,11 @@ function C:drawPacenotesList()
   end
   im.tooltip("Snap all waypoints to nearest snaproad point.")
   im.SameLine()
+  if im.Button("All to Terrain") then
+    self:allToTerrain()
+  end
+  im.tooltip("Snap all waypoints to terrain.")
+  im.SameLine()
   if im.Button("Set All Radii") then
     self:setAllRadii()
   end
@@ -1541,6 +1546,23 @@ function C:snapAllHelper()
   for i,wp in pairs(self.path:allWaypoints()) do
     self:snapOneHelper(wp)
   end
+end
+
+function C:allToTerrain()
+  if not self.path then return end
+
+  editor.history:commitAction("Set radius of all waypoints",
+    {
+      notebook = self.path,
+      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+    },
+    function(data) -- undo
+      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+    end,
+    function(data) -- redo
+      data.notebook:allToTerrain()
+    end
+  )
 end
 
 function C:setAllRadii()

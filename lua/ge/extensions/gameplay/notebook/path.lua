@@ -476,6 +476,12 @@ function C:setAllRadii(newRadius, wpType)
   end
 end
 
+function C:allToTerrain()
+  for i, pacenote in pairs(self.pacenotes.objects) do
+    pacenote:allToTerrain()
+  end
+end
+
 local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end

@@ -78,6 +78,12 @@ function C:setAllRadii(newRadius, wpType)
   end
 end
 
+function C:allToTerrain()
+  for _,wp in ipairs(self.pacenoteWaypoints.sorted) do
+    wp.pos.z = core_terrain.getTerrainHeight(wp.pos)
+  end
+end
+
 function C:joinedNote(lang)
   local txt = ''
   local lang_data = self.notes[lang]
