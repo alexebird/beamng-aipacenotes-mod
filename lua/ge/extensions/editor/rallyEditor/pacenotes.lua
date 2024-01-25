@@ -58,6 +58,12 @@ function C:init(rallyEditor)
 
   self.notes_valid = true
   self.validation_issues = {}
+
+
+  self.transcript_tools_state = {
+    render_transcripts = true,
+    selected_id = nil,
+  }
 end
 
 function C:windowDescription()
@@ -79,18 +85,19 @@ end
 function C:selectionString()
   local pn = self:selectedPacenote()
   local wp = self:selectedWaypoint()
+  local text = {}
   local mode = '--'
   if pn and not pn.missing then
     mode = 'P-'
-    local txt = '"' .. pn:noteTextForDrawDebug() .. '" ('.. pn.name ..')'
+    local p_txt = '"' .. pn:noteTextForDrawDebug() .. '" ('.. pn.name ..')'
+    table.insert(text, p_txt)
     if wp and not wp.missing then
       mode = 'PW'
-      txt = txt .. ' > ' .. wp:selectionString()
+      local w_txt = wp:selectionString()
+      table.insert(text, w_txt)
     end
-    return txt, mode
-  else
-    return "none", mode
   end
+  return text, mode
 end
 
 function C:selectedPacenote()
@@ -106,6 +113,15 @@ function C:selectedWaypoint()
   if not self:selectedPacenote() then return nil end
   if self.waypoint_index then
     return self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
+  else
+    return nil
+  end
+end
+
+function C:selectedTranscript()
+  if not self:getTranscripts() then return nil end
+  if self.transcript_tools_state.selected_id then
+    return self:getTranscripts().transcripts.objects[self.transcript_tools_state.selected_id]
   else
     return nil
   end
@@ -195,6 +211,14 @@ function C:selectWaypoint(id)
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
     self:resetGizmoTransformToOrigin()
   end
+end
+
+function C:selectTranscript(id)
+  if not self:getTranscripts() then return end
+  self.transcript_tools_state.selected_id = id
+  -- if id then
+  -- else
+  -- end
 end
 
 function C:attemptToFixMapEdgeIssue()
@@ -312,10 +336,10 @@ end
 
 function C:getTranscripts()
   if not self.rallyEditor then return nil end
-  local transcripts_path = self.rallyEditor.getVoiceWindow().transcripts_path
+  local loaded_transcript = self.rallyEditor.getTranscriptsWindow().loaded_transcript
 
-  if self.rallyEditor.getVoiceWindow().render_transcripts and transcripts_path then
-    return transcripts_path
+  if  loaded_transcript and self.transcript_tools_state.render_transcripts then
+    return loaded_transcript
   else
     return nil
   end
@@ -327,13 +351,17 @@ function C:drawDebugEntrypoint()
   end
 
   if self:getTranscripts() then
-    self:getTranscripts():drawDebug()
+    self:getTranscripts():drawDebug(self.transcript_tools_state.selected_id)
   end
 end
 
 function C:handleMouseDown(hoveredWp, hoveredTsc)
   if hoveredTsc then
-    im.SetClipboardText(hoveredTsc.text)
+    if self:selectedTranscript() and self:selectedTranscript().id == hoveredTsc.id then
+      im.SetClipboardText(hoveredTsc.text)
+    else
+      self:selectTranscript(hoveredTsc.id)
+    end
   elseif hoveredWp then
     local selectedPn = hoveredWp.pacenote
     if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
@@ -497,14 +525,16 @@ function C:handleMouseInput()
   end
 end
 
-function C:draw(mouseInfo)
+function C:draw(mouseInfo, tabContentsHeight)
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
     self:handleMouseInput()
   end
 
   -- draw the non-viewport GUI
-  self:drawPacenotesList()
+
+  self:drawPacenotesList(tabContentsHeight * 0.7)
+  self:drawTranscriptsSection(tabContentsHeight * 0.12)
 
   -- visualize the snap road points with debugDraw.
   -- the same data is utilized separately -- this is just for visualizing.
@@ -1055,7 +1085,7 @@ function C:validate()
   end
 end
 
-function C:drawPacenotesList()
+function C:drawPacenotesList(height)
   if not self.path then return end
 
   local notebook = self.path
@@ -1113,7 +1143,7 @@ function C:drawPacenotesList()
   -- vertical space
   for i = 1,5 do im.Spacing() end
 
-  im.BeginChild1("pacenotes", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
+  im.BeginChild1("pacenotes", im.ImVec2(125*im.uiscale[0],height), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1( note:nameForSelect(), note.id == self.pacenote_index) then
       editor.history:commitAction("Select Pacenote",
@@ -1135,7 +1165,7 @@ function C:drawPacenotesList()
   im.EndChild() -- pacenotes child window
 
   im.SameLine()
-  im.BeginChild1("currentPacenote", im.ImVec2(0,0), im.WindowFlags_ChildWindow)
+  im.BeginChild1("currentPacenote", im.ImVec2(0,height), im.WindowFlags_ChildWindow)
 
   if self.pacenote_index then
     local note = notebook.pacenotes.objects[self.pacenote_index]
@@ -1314,6 +1344,34 @@ Any lua code is allowed, so be careful. Examples:
 
   im.EndChild() -- currentPacenote child window
   -- for i = 1,3 do im.Spacing() end
+end
+
+function C:drawTranscriptsSection(height)
+  im.BeginChild1("transcriptsSection", im.ImVec2(0, height*im.uiscale[0]), im.WindowFlags_ChildWindow)
+
+  local tscs = self:getTranscripts()
+  im.BeginChild1("transcriptsList", im.ImVec2(200*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
+  if tscs then
+    for _,tsc in ipairs(tscs.transcripts.sorted) do
+      if tsc:isUsable() then
+        if im.Selectable1((tsc.text)..'##'..(tsc.id), tsc.id == self.transcript_tools_state.selected_id) then
+          self.transcript_tools_state.selected_id = tsc.id
+        end
+      end
+    end
+  end
+  im.EndChild() -- transcripts section child window
+
+  im.SameLine()
+
+  im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+  im.HeaderText('Transcript Tools')
+  if not tscs then
+    im.Text('Select a transcript in the Transcripts tab.')
+  end
+  im.EndChild() -- transcripts section child window
+
+  im.EndChild() -- transcripts section child window
 end
 
 function C:handleNoteFieldEdit(note, language, subfield, buf)

@@ -13,6 +13,9 @@ local autofill_blocker = '#'
 local unknown_transcript_str = '[unknown]'
 local aipPath = 'aipacenotes'
 local notebooksPath = aipPath..'/notebooks'
+local transcriptsPath = aipPath..'/transcripts'
+local desktopTranscriptFname = "/settings/aipacenotes/desktop.transcripts.json"
+local transcriptsExt = "transcripts.json"
 local missionSettingsFname = 'mission.settings.json'
 local default_notebook_name = 'primary'
 local default_codriver_name = 'Sophia'
@@ -210,6 +213,14 @@ local function getNotebookHelper(missionDir, missionSettings)
   return notebook, nil
 end
 
+local function missionTranscriptsDir(missionDir)
+  return missionDir..'/'..transcriptsPath
+end
+
+local function missionTranscriptPath(missionDir, basename)
+  return missionTranscriptsDir(missionDir)..'/'..basename..'.'..transcriptsExt
+end
+
 -- args are both vec3's representing a position.
 local function calculateForwardNormal(snap_pos, next_pos)
   local flip = false
@@ -260,6 +271,10 @@ local function determineCornerCall(angles, steering)
   end
 end
 
+local function trimString(txt)
+  return txt:gsub("^%s*(.-)%s*$", "%1")
+end
+
 M.pacenote_hash = pacenote_hash
 M.fileExists = fileExists
 M.getTime = getTime
@@ -277,11 +292,18 @@ M.getNotebookHelper = getNotebookHelper
 M.calculateForwardNormal = calculateForwardNormal
 M.loadCornerAnglesFile = loadCornerAnglesFile
 M.determineCornerCall = determineCornerCall
+M.missionTranscriptPath = missionTranscriptPath
+M.missionTranscriptsDir = missionTranscriptsDir
+
+M.trimString = trimString
 
 M.autofill_blocker = autofill_blocker
 M.unknown_transcript_str = unknown_transcript_str
 M.aipPath = aipPath
 M.notebooksPath = notebooksPath
+M.transcriptsPath = transcriptsPath
+M.transcriptsExt = transcriptsExt
+M.desktopTranscriptFname = desktopTranscriptFname
 M.missionSettingsFname = missionSettingsFname
 M.default_notebook_name = default_notebook_name
 M.default_codriver_name = default_codriver_name

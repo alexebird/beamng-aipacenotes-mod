@@ -8,7 +8,8 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
 
-local filenamesNamesSorted = {}
+local notebookFilenamesSorted = {}
+local transcriptFilenamesSorted = {}
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
@@ -28,7 +29,8 @@ function C:selected()
   if not self.path then return end
 
   self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
-  filenamesNamesSorted = self.rallyEditor.listNotebooks()
+  notebookFilenamesSorted = self.rallyEditor.listNotebooks()
+  transcriptFilenamesSorted = self:loadTranscripts()
 
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
@@ -45,10 +47,48 @@ end
 function C:draw(_mouseInfo)
   if not self.path then return end
 
-  im.HeaderText("Race Settings")
+  im.HeaderText("Mission Settings")
 
+  im.Text("Notebook Settings")
   self:notebookFilenameSelector()
   self:codriverSelector()
+
+  for i = 1,5 do im.Spacing() end
+  im.Separator()
+  for i = 1,5 do im.Spacing() end
+
+  im.Text("Transcript Settings")
+  self:transcriptSettingsSection('Full Course', 'full_course')
+  -- self:transcriptSettingsSection('Current', 'curr')
+end
+
+function C:loadTranscripts()
+  local tscPath = re_util.missionTranscriptsDir(self.rallyEditor.getMissionDir())
+  log('D', logTag, 'refreshing transcript files: '..tscPath)
+  local files = FS:findFiles(tscPath, '*.'..re_util.transcriptsExt, -1, true, false)
+  local basenames = {}
+  for i,fname in ipairs(files) do
+    local dir, filename, ext = path.splitWithoutExt(fname, true)
+    fname = filename..'.'..ext
+    table.insert(basenames, fname)
+  end
+  table.sort(basenames)
+  return basenames
+end
+
+function C:transcriptSettingsSection(name, fieldName)
+  if im.BeginCombo(name..'##filename', self.settings.transcripts[fieldName] or '') then
+
+    for _, fname in ipairs(transcriptFilenamesSorted) do
+      local current = self.settings.transcripts[fieldName] == fname
+      if im.Selectable1(((current and '[current] ') or '')..fname, current) then
+        self.settings.transcripts[fieldName] = fname
+        self.settings:write()
+      end
+    end
+
+    im.EndCombo()
+  end
 end
 
 function C:loadCodrivers()
@@ -76,7 +116,7 @@ function C:notebookFilenameSelector()
 
   local basenames = {}
 
-  for _,thepath in ipairs(filenamesNamesSorted) do
+  for _,thepath in ipairs(notebookFilenamesSorted) do
     local _, fname, _ = path.split(thepath)
     table.insert(basenames, fname)
   end

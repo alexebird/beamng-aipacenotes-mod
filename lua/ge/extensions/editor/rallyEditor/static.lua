@@ -72,19 +72,19 @@ function C:draw(mouseInfo)
   im.Separator()
 
   im.Text("Name")
-  im.SetColumnWidth(0, 100)
+  im.SetColumnWidth(0, 130*im.uiscale[0])
   im.NextColumn()
 
   im.Text("Note Text")
-  im.SetColumnWidth(1, 400)
+  im.SetColumnWidth(1, 400*im.uiscale[0])
   im.NextColumn()
 
   im.Text("Language")
-  im.SetColumnWidth(2, 100)
+  im.SetColumnWidth(2, 100*im.uiscale[0])
   im.NextColumn()
 
   im.Text("Files")
-  im.SetColumnWidth(3, 400)
+  im.SetColumnWidth(3, 400*im.uiscale[0])
   im.NextColumn()
 
   im.Separator()

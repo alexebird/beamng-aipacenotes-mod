@@ -18,7 +18,7 @@ currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
-local notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, voiceWindow, missionSettingsWindow
+local notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow
 local mouseInfo = {}
 
 local function setNotebookRedo(data)
@@ -240,7 +240,7 @@ end
 
 local function drawEditorGui()
 
-  local topToolbarHeight = 100 * im.uiscale[0]
+  local topToolbarHeight = 132 * im.uiscale[0]
   local bottomToolbarHeight = 200 * im.uiscale[0]
   local minMiddleHeight = 500 * im.uiscale[0]
   local heightAdditional = 110-- * im.uiscale[0]
@@ -307,16 +307,20 @@ local function drawEditorGui()
     -- im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
 
     -- im.Text("Currently Loaded Notebook:")
-    im.Text("Loaded: "..previousFilepath .. previousFilename)
+    im.Text("Notebook: "..previousFilepath .. previousFilename)
     -- im.Separator()
 
     im.Text('DragMode: '..pacenotesWindow.dragMode)
     -- im.SameLine()
-    local selStr, selMode = pacenotesWindow:selectionString()
+    local selParts, selMode = pacenotesWindow:selectionString()
 
     local clr = im.ImVec4(1, 0.6, 1, 1)
     im.PushFont3('robotomono_regular')
-    im.TextColored(clr, 'Selection ['..selMode..']: '..selStr)
+    -- im.TextColored(clr, 'Selection ['..selMode..']: '..selStr)
+    -- im.TextColored(clr, 'Selection ['..selMode..']')
+    im.TextColored(clr, 'Selection')
+    im.TextColored(clr, '  P: '..(selParts[1] or '-'))
+    im.TextColored(clr, '  W: '..(selParts[2] or '-'))
     im.PopFont()
     -- im.Separator()
     im.EndChild() -- end top-toolbar
@@ -340,7 +344,7 @@ local function drawEditorGui()
         if window.isValid then
           hasError = not window:isValid()
         end
-        local tabName = (hasError and '[!] ' or '')..window:windowDescription()..'###'..window:windowDescription()
+        local tabName = (hasError and '[!] ' or '')..' '..window:windowDescription()..' '..'###'..window:windowDescription()
         if im.BeginTabItem(tabName, nil, flags) then
           if currentWindow:windowDescription() ~= window:windowDescription() then
             select(window)
@@ -370,8 +374,8 @@ local function drawEditorGui()
     if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
       if currentWindow == pacenotesWindow then
         pacenotesWindow:drawDebugEntrypoint()
-      elseif currentWindow == voiceWindow then
-        voiceWindow:drawDebugEntrypoint()
+      elseif currentWindow == transcriptsWindow then
+        transcriptsWindow:drawDebugEntrypoint()
       end
     end
   end
@@ -444,13 +448,13 @@ local function onEditorInitialized()
 
   prefsCopy.setupCopy()
 
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebookInfo')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/transcripts')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/missionSettings')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/voice')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/mission_settings')(M))
 
-  notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, voiceWindow, missionSettingsWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
+  notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)
@@ -691,7 +695,7 @@ M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
 
 M.onEditorInitialized = onEditorInitialized
-M.getVoiceWindow = function() return voiceWindow end
+M.getTranscriptsWindow = function() return transcriptsWindow end
 M.getMissionDir = getMissionDir
 
 M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers

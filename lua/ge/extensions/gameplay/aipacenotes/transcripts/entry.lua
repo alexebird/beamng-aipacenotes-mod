@@ -28,6 +28,14 @@ function C:toggleShow()
   self.show = not self.show
 end
 
+function C:setShow(val)
+  self.show = val
+end
+
+function C:isUsable()
+  return self.vehicle_data and self.vehicle_data.vehicle_data and self.show
+end
+
 function C:debugDrawText(hovered)
   local txt = self.text
   if hovered then
@@ -144,7 +152,7 @@ function C:get_grouped_captures()
 
   if editor_rallyEditor then
     local cornerAnglesStyle = capture_data.cornerAnglesStyle
-    local corner_angles_data = editor_rallyEditor.getVoiceWindow():getCornerAngles(force_reload)
+    local corner_angles_data = editor_rallyEditor.getTranscriptsWindow():getCornerAngles(force_reload)
     local style_data = nil
     for _,style in ipairs(corner_angles_data.pacenoteStyles) do
       if style.name == cornerAnglesStyle then
@@ -282,12 +290,12 @@ function C:onDeserialized(data, oldIdMap)
   end
 end
 
-function C:drawDebug(is_hovered)
-  self:drawDebugVehicleData(is_hovered)
-  self:drawDebugCaptureData(is_hovered)
+function C:drawDebug(is_hovered, is_selected)
+  self:drawDebugVehicleData(is_hovered, is_selected)
+  self:drawDebugCaptureData(is_hovered, is_selected)
 end
 
-function C:drawDebugVehicleData(is_hovered)
+function C:drawDebugVehicleData(is_hovered, is_selected)
   local pos = self:vehiclePos()
   local rot = self:vehicleQuat()
 
@@ -336,6 +344,10 @@ function C:drawDebugVehicleData(is_hovered)
     local clr_text_bg = cc.clr_teal
 
     if is_hovered then
+      clr = cc.clr_white
+      clr_text_bg = cc.clr_teal_2
+      textAlpha = 1.0
+    elseif is_selected then
       clr = cc.clr_teal_2
       clr_text_bg = cc.clr_teal_2
       textAlpha = 1.0
@@ -360,8 +372,10 @@ function C:drawDebugVehicleData(is_hovered)
   end
 end
 
-function C:drawDebugCaptureData(is_hovered)
-  if not is_hovered then return end
+function C:drawDebugCaptureData(is_hovered, is_selected)
+  if not is_hovered and not is_selected then
+    return
+  end
 
   local capture_data = self:capture_data()
   if not capture_data then return end

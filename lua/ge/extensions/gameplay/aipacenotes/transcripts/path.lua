@@ -19,7 +19,7 @@ end
 function C:init(fname)
   self.fname = fname
 
-  self.selection_sphere_r = 4.5/2
+  self.selection_sphere_r = 4
   self._draw_debug_hover_tsc_id = nil
 
   self.transcripts = require('/lua/ge/extensions/gameplay/util/sortedList')(
@@ -62,8 +62,8 @@ function C:onDeserialized(data)
   self.transcripts:onDeserialized(data.transcripts, oldIdMap)
 end
 
-function C:drawDebug()
-  self:drawDebugTranscripts()
+function C:drawDebug(selected_id)
+  self:drawDebugTranscripts(selected_id)
 end
 
 -- helped me figure out quat rotation
@@ -105,10 +105,12 @@ end
 -- debugDrawer:drawSphere(testP, 1, ColorF(0,1,0,shapeAlpha)) -- green
 -- debugDrawer:drawSphere(topOfCar, 1, ColorF(0,0,1,shapeAlpha)) -- blue
 -- debugDrawer:drawSphere(frontOfCar, 1, ColorF(0,1,1,shapeAlpha)) -- aqua
-function C:drawDebugTranscripts()
+--
+function C:drawDebugTranscripts(selected_id)
   for i,tsc in ipairs(self.transcripts.sorted) do
     local is_hovered = self._draw_debug_hover_tsc_id == tsc.id
-    tsc:drawDebug(is_hovered)
+    local is_selected = selected_id == tsc.id
+    tsc:drawDebug(is_hovered, is_selected)
   end
 end
 
