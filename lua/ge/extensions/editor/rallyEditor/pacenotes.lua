@@ -1135,7 +1135,7 @@ function C:drawPacenotesList()
   im.EndChild() -- pacenotes child window
 
   im.SameLine()
-  im.BeginChild1("currentPacenote", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
+  im.BeginChild1("currentPacenote", im.ImVec2(0,0), im.WindowFlags_ChildWindow)
 
   if self.pacenote_index then
     local note = notebook.pacenotes.objects[self.pacenote_index]
@@ -1309,10 +1309,11 @@ Any lua code is allowed, so be careful. Examples:
 
     self:drawWaypointList(note)
 
-    im.EndChild() -- currentPacenote child window
-
     end -- / if not note.missing then
   end -- / if pacenote_index
+
+  im.EndChild() -- currentPacenote child window
+  -- for i = 1,3 do im.Spacing() end
 end
 
 function C:handleNoteFieldEdit(note, language, subfield, buf)

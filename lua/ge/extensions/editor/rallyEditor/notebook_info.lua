@@ -106,14 +106,14 @@ end
 -- function C:onEditModeActivate()
 -- end
 
-function C:draw()
+function C:draw(mouseInfo, vHeight)
   -- self.mouseInfo = mouseInfo
   -- if self.rallyEditor.allowGizmo() then
     -- editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
     -- self:input()
   -- end
   -- self:drawNotebookList()
-  self:drawNotebook()
+  self:drawNotebook(vHeight)
 end
 
 local function setNotebookFieldUndo(data)
@@ -129,7 +129,7 @@ local function setCodriverFieldRedo(data)
   data.self.path.codrivers.objects[data.index][data.field] = data.new
 end
 
-function C:drawNotebook()
+function C:drawNotebook(vHeight)
   if not self.path then return end
 
   self:validate()
@@ -174,13 +174,16 @@ function C:drawNotebook()
       setNotebookFieldUndo, setNotebookFieldRedo)
   end
 
-  self:drawCodriversList()
+  -- im.BeginChild1("codrivers-wrapper", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+  self:drawCodriversList(vHeight-260)
+  -- im.EndChild()
 end
 
-function C:drawCodriversList()
+function C:drawCodriversList(vHeight)
   im.HeaderText("Co-Drivers")
 
-  im.BeginChild1("codrivers", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
+  vHeight = 0
+  im.BeginChild1("codrivers", im.ImVec2(125 * im.uiscale[0], vHeight), im.WindowFlags_ChildWindow)
   for i, codriver in ipairs(self.path.codrivers.sorted) do
     if im.Selectable1(codriver.name, codriver.id == self.codriver_index) then
       editor.history:commitAction("Select Codriver",
@@ -193,14 +196,14 @@ function C:drawCodriversList()
     local codriver = self.path.codrivers:create(nil, nil)
     self:selectCodriver(codriver.id)
   end
-  im.EndChild() -- pacenotes child window
+  im.EndChild() -- codrivers list child window
 
   im.SameLine()
-  im.BeginChild1("currentCodriver", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
+  im.BeginChild1("currentCodriver", im.ImVec2(0,vHeight), im.WindowFlags_ChildWindow)
 
   self:drawCodriverForm(self:selectedCodriver())
 
-  im.EndChild() -- pacenotes child window
+  im.EndChild() -- codriver form child window
 end
 
 function C:drawCodriverForm(codriver)

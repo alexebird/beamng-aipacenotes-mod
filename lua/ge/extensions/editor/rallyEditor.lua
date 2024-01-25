@@ -238,6 +238,12 @@ local function newEmptyNotebook()
 end
 
 local function drawEditorGui()
+
+  local topToolbarHeight = 100 * im.uiscale[0]
+  local bottomToolbarHeight = 200 * im.uiscale[0]
+  local minMiddleHeight = 500 * im.uiscale[0]
+  local heightAdditional = 110-- * im.uiscale[0]
+
   if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
     if im.BeginMenuBar() then
       if im.BeginMenu("File") then
@@ -268,34 +274,54 @@ local function drawEditorGui()
       im.EndMenuBar()
     end
 
-    if not editor.editMode or editor.editMode.displayName ~= editModeName then
-      if im.Button("Switch to Notebook Editor Editmode", im.ImVec2(im.GetContentRegionAvailWidth(),0)) then
-        editor.selectEditMode(editor.editModes.notebookEditMode)
-      end
-    end
-
-    im.Text(previousFilepath .. previousFilename)
-    im.Separator()
+    im.BeginChild1("##top-toolbar", im.ImVec2(0,topToolbarHeight), im.WindowFlags_ChildWindow)
 
     if im.Button("Save") then
       saveNotebook(currentPath, previousFilepath .. previousFilename)
     end
-    im.SameLine()
-    if im.Button("Reset Camera") then
-      resetCameraFix()
-    end
-    im.tooltip("There is a bug where the camera rotation can get weird. Fix the camera with this button.")
-    im.SameLine()
-    if im.Button("Reload Snap Roads") then
-      snaproads.loadSnapRoads()
-    end
-    im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
-    im.Text('DragMode: '..pacenotesWindow.dragMode)
-    im.SameLine()
-    local selStr, selMode = pacenotesWindow:selectionString()
-    im.Text('| Selection['..selMode..']: '..selStr)
-    im.Separator()
 
+    if not editor.editMode or editor.editMode.displayName ~= editModeName then
+      im.SameLine()
+      im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(255,0,0,255).Value)
+      if im.Button("Switch to Notebook Editor Editmode", im.ImVec2(im.GetContentRegionAvailWidth(),0)) then
+        editor.selectEditMode(editor.editModes.notebookEditMode)
+      end
+      im.PopStyleColor(1)
+    end
+
+    -- for i = 1,3 do im.Spacing() end
+
+    -- im.SameLine()
+    -- if im.Button("Reset Camera") then
+      -- resetCameraFix()
+    -- end
+    -- im.tooltip("There is a bug where the camera rotation can get weird. Fix the camera with this button.")
+
+    -- im.SameLine()
+    -- if im.Button("Reload Snap Roads") then
+    --   snaproads.loadSnapRoads()
+    -- end
+    -- im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
+
+    -- im.Text("Currently Loaded Notebook:")
+    im.Text("Loaded: "..previousFilepath .. previousFilename)
+    -- im.Separator()
+
+    im.Text('DragMode: '..pacenotesWindow.dragMode)
+    -- im.SameLine()
+    local selStr, selMode = pacenotesWindow:selectionString()
+    im.Text('Selection['..selMode..']: '..selStr)
+    -- im.Separator()
+    im.EndChild() -- end top-toolbar
+
+    for i = 1,3 do im.Spacing() end
+
+    local windowSize = im.GetWindowSize()
+    local windowHeight = windowSize.y
+    local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
+    middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
+
+    im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
         local flags = nil
@@ -318,15 +344,29 @@ local function drawEditorGui()
       im.EndTabBar()
     end
 
-    currentWindow:draw(mouseInfo)
+    local tabsHeight = 25 * im.uiscale[0]
+    local tabContentsHeight = middleChildHeight - tabsHeight
+    im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+    currentWindow:draw(mouseInfo, tabContentsHeight)
+    im.EndChild() -- end top-toolbar
+
+    im.EndChild() -- end tabs-child
+
+    -- for i = 1,3 do im.Spacing() end
+
+    im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
+    im.Text('da bottom')
+    im.EndChild() -- end bottom-toolbar
 
     local fg_mgr = editor_flowgraphEditor.getManager()
     local paused = simTimeAuthority.getPause()
     local is_path_cam = core_camera.getActiveCamName() == "path"
 
     if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
-      pacenotesWindow:drawDebugEntrypoint()
-      -- voiceWindow:drawDebugEntrypoint()
+      if currentWindow == pacenotesWindow then
+        pacenotesWindow:drawDebugEntrypoint()
+        -- voiceWindow:drawDebugEntrypoint()
+      end
     end
   end
 
