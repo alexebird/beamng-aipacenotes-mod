@@ -843,23 +843,8 @@ end
 --   return hitPoint
 -- end
 
-function C:setCamTarget(target)
-  if target then
-    target = vec3(target)
-    -- local cam_pos = core_camera.getPosition()
-    local cam_rot = core_camera.getForward()
-
-    -- local camLookAtPoint = getRayCastHit({
-      -- pos = cam_pos,
-      -- dir = cam_rot,
-    -- })
-    -- debugDrawer:drawSphere(camLookAtPoint, 3, ColorF(1,0,0,1.0))
-
-    local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
-    local newCamPos = target + (-cam_rot:normalized() * elevation)
-    core_camera.setPosition(0, newCamPos)
-  end
-end
+-- function C:setCamTarget(target)
+-- end
 
 -- -- Example usage
 -- local targetPos = {x = 10, y = 10, z = 0}
@@ -886,7 +871,7 @@ function C:setCameraToWaypoints()
   local centroid = calculateWaypointsCentroid(waypoints)
   -- setTopDownCamera(waypoints, cs, ce)
   -- setCameraPositionOnly(waypoints, cs)
-  self:setCamTarget(centroid)
+  re_util.setCameraTarget(centroid)
 end
 
 function C:audioFname(codriver, missionDir)

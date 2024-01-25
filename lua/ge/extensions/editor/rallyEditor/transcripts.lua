@@ -499,29 +499,12 @@ function C:drawTranscriptFileForm()
       im.Text(tostring(transcript.success))
       im.NextColumn()
 
-      -- if editor.uiIconImageButton(editor.icons.content_copy, im.ImVec2(20, 20)) then
-      --   im.SetClipboardText(transcript.text)
-      -- end
-      -- im.tooltip('Copy to clipboard')
-      -- im.SameLine()
       im.Text(transcript.text)
       im.NextColumn()
 
       local notes_txt = 'No position data.'
       if pos then
         notes_txt = "x="..round(pos.x).." y="..round(pos.y).." z="..round(pos.z)
-
-        -- if core_camera.getActiveCamName() == "path" then
-        --   if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(20, 20)) then
-        --     core_paths.stopCurrentPath()
-        --   end
-        -- else
-        --   if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(20, 20)) then
-        --     transcript:playCameraPath()
-        --   end
-        -- end
-
-        -- im.SameLine()
       end
 
       im.Text(notes_txt)

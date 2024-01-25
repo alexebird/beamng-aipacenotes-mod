@@ -275,40 +275,51 @@ local function trimString(txt)
   return txt:gsub("^%s*(.-)%s*$", "%1")
 end
 
-M.pacenote_hash = pacenote_hash
-M.fileExists = fileExists
-M.getTime = getTime
-M.normalize_name = normalize_name
-M.playPacenote = playPacenote
-M.buildAudioObjPacenote = buildAudioObjPacenote
-M.buildAudioObjPause = buildAudioObjPause
-M.hasPunctuation = hasPunctuation
+local function setCameraTarget(pos)
+  if pos then
+    pos = vec3(pos)
+    local cam_rot = core_camera.getForward()
+    local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
+    local newCamPos = pos + (-cam_rot:normalized() * elevation)
+    core_camera.setPosition(0, newCamPos)
+  end
+end
 
-M.detectMissionManagerMissionId = detectMissionManagerMissionId
-M.detectMissionEditorMissionId = detectMissionEditorMissionId
-M.detectMissionIdHelper = detectMissionIdHelper
-M.getMissionSettingsHelper = getMissionSettingsHelper
-M.getNotebookHelper = getNotebookHelper
-M.calculateForwardNormal = calculateForwardNormal
-M.loadCornerAnglesFile = loadCornerAnglesFile
-M.determineCornerCall = determineCornerCall
-M.missionTranscriptPath = missionTranscriptPath
-M.missionTranscriptsDir = missionTranscriptsDir
-
-M.trimString = trimString
-
-M.autofill_blocker = autofill_blocker
-M.unknown_transcript_str = unknown_transcript_str
+-- vars
 M.aipPath = aipPath
-M.notebooksPath = notebooksPath
-M.transcriptsPath = transcriptsPath
-M.transcriptsExt = transcriptsExt
-M.desktopTranscriptFname = desktopTranscriptFname
-M.missionSettingsFname = missionSettingsFname
-M.default_notebook_name = default_notebook_name
+M.aip_fg_color = aip_fg_color
+M.autofill_blocker = autofill_blocker
+M.default_codriver_language = default_codriver_language
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
-M.default_codriver_language = default_codriver_language
-M.aip_fg_color = aip_fg_color
+M.default_notebook_name = default_notebook_name
+M.desktopTranscriptFname = desktopTranscriptFname
+M.missionSettingsFname = missionSettingsFname
+M.notebooksPath = notebooksPath
+M.transcriptsExt = transcriptsExt
+M.transcriptsPath = transcriptsPath
+M.unknown_transcript_str = unknown_transcript_str
+
+-- funcs
+M.buildAudioObjPacenote = buildAudioObjPacenote
+M.buildAudioObjPause = buildAudioObjPause
+M.calculateForwardNormal = calculateForwardNormal
+M.detectMissionEditorMissionId = detectMissionEditorMissionId
+M.detectMissionIdHelper = detectMissionIdHelper
+M.detectMissionManagerMissionId = detectMissionManagerMissionId
+M.determineCornerCall = determineCornerCall
+M.fileExists = fileExists
+M.getMissionSettingsHelper = getMissionSettingsHelper
+M.getNotebookHelper = getNotebookHelper
+M.getTime = getTime
+M.hasPunctuation = hasPunctuation
+M.loadCornerAnglesFile = loadCornerAnglesFile
+M.missionTranscriptPath = missionTranscriptPath
+M.missionTranscriptsDir = missionTranscriptsDir
+M.normalize_name = normalize_name
+M.pacenote_hash = pacenote_hash
+M.playPacenote = playPacenote
+M.setCameraTarget = setCameraTarget
+M.trimString = trimString
 
 return M
