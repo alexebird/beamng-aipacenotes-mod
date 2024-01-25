@@ -79,9 +79,9 @@ end
 function C:selectionString()
   local pn = self:selectedPacenote()
   local wp = self:selectedWaypoint()
-  local mode = ''
+  local mode = '--'
   if pn and not pn.missing then
-    mode = 'P'
+    mode = 'P-'
     local txt = '"' .. pn:noteTextForDrawDebug() .. '" ('.. pn.name ..')'
     if wp and not wp.missing then
       mode = 'PW'

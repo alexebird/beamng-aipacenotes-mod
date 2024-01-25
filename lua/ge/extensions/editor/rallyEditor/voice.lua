@@ -304,11 +304,11 @@ function C:draw(mouseInfo)
   self:drawSectionTranscriptData()
 end
 
--- function C:drawDebugEntrypoint()
---   if not self.transcripts_path then return end
---
---   self.transcripts_path:drawDebug()
--- end
+function C:drawDebugEntrypoint()
+  if not self.transcripts_path then return end
+
+  self.transcripts_path:drawDebug()
+end
 
 return function(...)
   local o = {}

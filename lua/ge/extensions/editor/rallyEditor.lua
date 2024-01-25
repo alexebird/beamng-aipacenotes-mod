@@ -17,6 +17,7 @@ currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
 local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
 local notebookInfoWindow, pacenotesWindow, staticPacenotesWindow, voiceWindow, missionSettingsWindow
 local mouseInfo = {}
 
@@ -276,9 +277,11 @@ local function drawEditorGui()
 
     im.BeginChild1("##top-toolbar", im.ImVec2(0,topToolbarHeight), im.WindowFlags_ChildWindow)
 
+    im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(0,100,0,255).Value)
     if im.Button("Save") then
       saveNotebook(currentPath, previousFilepath .. previousFilename)
     end
+    im.PopStyleColor(1)
 
     if not editor.editMode or editor.editMode.displayName ~= editModeName then
       im.SameLine()
@@ -310,7 +313,11 @@ local function drawEditorGui()
     im.Text('DragMode: '..pacenotesWindow.dragMode)
     -- im.SameLine()
     local selStr, selMode = pacenotesWindow:selectionString()
-    im.Text('Selection['..selMode..']: '..selStr)
+
+    local clr = im.ImVec4(1, 0.6, 1, 1)
+    im.PushFont3('robotomono_regular')
+    im.TextColored(clr, 'Selection ['..selMode..']: '..selStr)
+    im.PopFont()
     -- im.Separator()
     im.EndChild() -- end top-toolbar
 
@@ -352,10 +359,8 @@ local function drawEditorGui()
 
     im.EndChild() -- end tabs-child
 
-    -- for i = 1,3 do im.Spacing() end
-
     im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
-    im.Text('da bottom')
+    prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
     im.EndChild() -- end bottom-toolbar
 
     local fg_mgr = editor_flowgraphEditor.getManager()
@@ -365,7 +370,8 @@ local function drawEditorGui()
     if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
       if currentWindow == pacenotesWindow then
         pacenotesWindow:drawDebugEntrypoint()
-        -- voiceWindow:drawDebugEntrypoint()
+      elseif currentWindow == voiceWindow then
+        voiceWindow:drawDebugEntrypoint()
       end
     end
   end
@@ -435,6 +441,8 @@ local function onEditorInitialized()
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_LMB] = "Select"
   editor.registerWindow(toolWindowName, im.ImVec2(500, 500))
   editor.addWindowMenuItem("Rally Editor", function() show() end,{groupMenuName="Gameplay"})
+
+  prefsCopy.setupCopy()
 
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebook_info')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
