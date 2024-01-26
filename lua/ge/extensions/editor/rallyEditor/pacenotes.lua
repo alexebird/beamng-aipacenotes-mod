@@ -20,6 +20,7 @@ local waypointNormal = im.ArrayFloat(3)
 local waypointRadius = im.FloatPtr(0)
 
 local transcriptsSearchText = im.ArrayChar(1024, "")
+local pacenotesSearchText = im.ArrayChar(1024, "")
 
 
 local C = {}
@@ -61,6 +62,9 @@ function C:init(rallyEditor)
   self.notes_valid = true
   self.validation_issues = {}
 
+  self.pacenote_tools_state = {
+    search = nil,
+  }
 
   self.transcript_tools_state = {
     show = true,
@@ -1011,18 +1015,42 @@ function C:deleteSelectedPacenote()
 end
 
 function C:selectPrevPacenote()
-  local notebook = self.path
-  local curr = notebook.pacenotes.objects[self.pacenote_index]
+  if not self.path then return end
+
+  local curr = self.path.pacenotes.objects[self.pacenote_index]
+  local sorted = self.path.pacenotes.sorted
+
   if curr and not curr.missing then
-    local prev = notebook.pacenotes.sorted[curr.sortOrder-1]
+    local prev = nil
+    for i = curr.sortOrder-1,1,-1 do
+      local pacenote = sorted[i]
+      if self:searchPacenoteMatchFn(pacenote) then
+        prev = pacenote
+        break
+      end
+    end
+
+    if not prev then
+      for i = #sorted,1,-1 do
+        local pacenote = sorted[i]
+        if self:searchPacenoteMatchFn(pacenote) then
+          prev = pacenote
+          break
+        end
+      end
+    end
+
     if prev then
       self:selectPacenote(prev.id)
     end
   else
-    -- if no curr, that means no pacenote was selected, so then select the first one.
-    local prev = notebook.pacenotes.sorted[1]
-    if prev then
-      self:selectPacenote(prev.id)
+    -- if no curr, that means no pacenote was selected, so then select the last one.
+    for i = 1,#sorted do
+      local pacenote = sorted[i]
+      if self:searchPacenoteMatchFn(pacenote) then
+        self:selectPacenote(pacenote.id)
+        break
+      end
     end
   end
 
@@ -1032,18 +1060,43 @@ function C:selectPrevPacenote()
 end
 
 function C:selectNextPacenote()
-  local notebook = self.path
-  local curr = notebook.pacenotes.objects[self.pacenote_index]
+  if not self.path then return end
+
+  local curr = self.path.pacenotes.objects[self.pacenote_index]
+  local sorted = self.path.pacenotes.sorted
+
   if curr and not curr.missing then
-    local next = notebook.pacenotes.sorted[curr.sortOrder+1]
+    local next = nil
+    for i = curr.sortOrder+1,#sorted do
+      local pacenote = sorted[i]
+      if self:searchPacenoteMatchFn(pacenote) then
+        next = pacenote
+        break
+      end
+    end
+
+    -- wrap around: find the first usable one
+    if not next then
+      for i = 1,#sorted do
+        local pacenote = sorted[i]
+        if self:searchPacenoteMatchFn(pacenote) then
+          next = pacenote
+          break
+        end
+      end
+    end
+
     if next then
       self:selectPacenote(next.id)
     end
   else
     -- if no curr, that means no pacenote was selected, so then select the last one.
-    local next = notebook.pacenotes.sorted[#notebook.pacenotes.sorted]
-    if next then
-      self:selectPacenote(next.id)
+    for i = #sorted,1,-1 do
+      local pacenote = sorted[i]
+      if self:searchPacenoteMatchFn(pacenote) then
+        self:selectPacenote(pacenote.id)
+        break
+      end
     end
   end
 
@@ -1196,6 +1249,40 @@ function C:drawPacenotesList(height)
     self:autoFillDistanceCalls()
   end
   im.tooltip("Autofill distance calls.")
+
+
+  if im.Button("Prev") then
+      self:selectPrevPacenote()
+  end
+  im.SameLine()
+  if im.Button("Next") then
+      self:selectNextPacenote()
+  end
+  im.SameLine()
+  local editEnded = im.BoolPtr(false)
+  editor.uiInputText("##Search", pacenotesSearchText, nil, nil, nil, nil, editEnded)
+  if editEnded[0] then
+    self.pacenote_tools_state.search = ffi.string(pacenotesSearchText)
+
+    if re_util.trimString(self.pacenote_tools_state.search) == '' then
+      self.pacenote_tools_state.search = nil
+    end
+
+    if self.pacenote_tools_state.search then
+      local pn = self:selectedPacenote()
+      if pn then
+        if not self:pacenoteSearchMatches(pn) then
+          self:selectNextPacenote()
+        end
+      end
+    end
+  end
+  im.SameLine()
+  if im.Button("X") then
+    self.pacenote_tools_state.search = nil
+    pacenotesSearchText = im.ArrayChar(1024, "")
+  end
+
 
   -- vertical space
   for i = 1,5 do im.Spacing() end
@@ -1561,6 +1648,11 @@ function C:searchTranscriptMatchFn(tsc)
   return tsc and not tsc.missing and tsc:isUsable() and self:transcriptSearchMatches(tsc.text)
 end
 
+function C:searchPacenoteMatchFn(pacenote)
+  -- return pacenote and not pacenote.missing and pacenote:isUsable()
+  return pacenote and not pacenote.missing and self:pacenoteSearchMatches(pacenote)
+end
+
 function C:selectPrevTranscript()
   local transcripts_path = self:getTranscripts()
   if not transcripts_path then return end
@@ -1613,69 +1705,22 @@ function C:transcriptSearchMatches(stringToMatch)
   local searchPattern = re_util.trimString(self.transcript_tools_state.search)
   if searchPattern == '' then return true end
 
+  return re_util.matchSearchPattern(searchPattern, stringToMatch) ~= nil
+end
+
+function C:pacenoteSearchMatches(pacenote)
+  if not self.pacenote_tools_state.search then return true end
+
+  local searchPattern = re_util.trimString(self.pacenote_tools_state.search)
+  if searchPattern == '' then return true end
+
   -- Escape special characters in Lua patterns except '*'
   searchPattern = searchPattern:gsub("([%^%$%(%)%%%.%[%]%+%-%?])", "%%%1")
   -- Replace '*' with Lua's '.*' to act as a wildcard
   searchPattern = searchPattern:gsub("%*", ".*")
 
-  return stringToMatch:match(searchPattern) ~= nil
+  return pacenote:matchesSearchPattern(searchPattern)
 end
-
--- function C:searchForTranscript()
---   local transcripts_path = self:getTranscripts()
---   if not transcripts_path then return end
---
---   local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
---   local sorted = transcripts_path.transcripts.sorted
---
---   local self:searchTranscriptMatchFn = function (tsc)
---     return tsc and not tsc.missing and tsc:isUsable() and self:transcriptSearchMatches(tsc.text)
---   end
---
---   if curr and not curr.missing then
---     local next = nil
---
---     if self:transcriptSearchMatches(curr.text) then
---       next = curr
---     else
---       for i = curr.sortOrder+1,#sorted do
---         local tsc = sorted[i]
---         if self:searchTranscriptMatchFn(tsc) then
---           next = tsc
---           break
---         end
---       end
---     end
---
---     -- wrap around: find the first usable one
---     if not next then
---       for i = 1,#sorted do
---         local tsc = sorted[i]
---         if self:searchTranscriptMatchFn(tsc) then
---           next = tsc
---           break
---         end
---       end
---     end
---
---     if next then
---       self:selectTranscript(next.id)
---     end
---   else
---     -- if no curr, that means no pacenote was selected, so then select the last one.
---     for i = #sorted,1,-1 do
---       local tsc = sorted[i]
---       if self:searchTranscriptMatchFn(tsc) then
---         self:selectTranscript(tsc.id)
---         break
---       end
---     end
---   end
---
---   if self.rallyEditor.getPrefTopDownCameraFollow() then
---     self:setCameraToTranscript()
---   end
--- end
 
 function C:selectNextTranscript()
   local transcripts_path = self:getTranscripts()
@@ -2114,9 +2159,6 @@ function C:insertNewPacenoteAfter(note)
   self.path:sortPacenotesByName()
   -- self:cleanupPacenoteNames()
   -- self:selectPacenote(currId)
-end
-
-function C:updateTranscriptSearch()
 end
 
 return function(...)

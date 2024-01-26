@@ -291,6 +291,15 @@ local function setCameraTarget(pos)
   end
 end
 
+local function matchSearchPattern(searchPattern, stringToMatch)
+  -- Escape special characters in Lua patterns except '*'
+  searchPattern = searchPattern:gsub("([%^%$%(%)%%%.%[%]%+%-%?])", "%%%1")
+  -- Replace '*' with Lua's '.*' to act as a wildcard
+  searchPattern = searchPattern:gsub("%*", ".*")
+
+  return stringToMatch:match(searchPattern) ~= nil
+end
+
 -- vars
 M.aipPath = aipPath
 M.aip_fg_color = aip_fg_color
@@ -327,5 +336,6 @@ M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
 M.setCameraTarget = setCameraTarget
 M.trimString = trimString
+M.matchSearchPattern = matchSearchPattern
 
 return M

@@ -859,6 +859,19 @@ function C:nameComponents()
   return baseName, number
 end
 
+function C:matchesSearchPattern(searchPattern)
+  for lang,note in pairs(self.notes) do
+    local fullNote = self:joinedNote(lang)
+    log('D', 'wtf', 'matching "'..fullNote..'" against "'..searchPattern..'"')
+
+    if re_util.matchSearchPattern(searchPattern, fullNote) then
+      return true
+    end
+  end
+
+  return false
+end
+
 return function(...)
   local o = {}
   setmetatable(o, C)
