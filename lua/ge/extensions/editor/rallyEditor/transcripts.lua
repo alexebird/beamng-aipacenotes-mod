@@ -342,6 +342,11 @@ function C:selectTranscriptFile(fname)
   self:loadTranscript(fname)
 end
 
+function C:clearSelection()
+  self.selected_fname = nil
+  self.loaded_transcript = nil
+end
+
 function C:renameSelectedFile(newName)
   newName = re_util.trimString(newName)
 

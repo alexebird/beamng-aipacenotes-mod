@@ -189,7 +189,7 @@ local function getMissionSettingsHelper(missionDir)
     return nil, 'unable to read settings file at: ' .. tostring(settingsFname)
   end
 
-  local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
+  local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
   settings:onDeserialized(json)
   return settings, nil
 end

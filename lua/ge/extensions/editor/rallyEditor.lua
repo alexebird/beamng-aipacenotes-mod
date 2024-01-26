@@ -99,7 +99,7 @@ local function saveNotebook(notebook, savePath)
   local settingsFname = getMissionDir()..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
   if not FS:fileExists(settingsFname) then
     log('I', logTag, 'creating mission.settings.json at '..settingsFname)
-    local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
+    local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
     settings.notebook.filename = filename
     local assumedCodriverName = notebook.codrivers.sorted[1].name
     settings.notebook.codriver = assumedCodriverName
@@ -240,7 +240,7 @@ end
 
 local function drawEditorGui()
 
-  local topToolbarHeight = 132 * im.uiscale[0]
+  local topToolbarHeight = 135 * im.uiscale[0]
   local bottomToolbarHeight = 200 * im.uiscale[0]
   local minMiddleHeight = 500 * im.uiscale[0]
   local heightAdditional = 110-- * im.uiscale[0]
@@ -583,7 +583,7 @@ end
 
 local function loadMissionSettings(folder)
   local settingsFname = folder..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
-  local settings = require('/lua/ge/extensions/gameplay/notebook/path_mission_settings')(settingsFname)
+  local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
 
   if FS:fileExists(settingsFname) then
     local json = jsonReadFile(settingsFname)

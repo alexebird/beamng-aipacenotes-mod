@@ -583,6 +583,10 @@ function C:draw(mouseInfo, tabContentsHeight)
   end
 
   -- draw the non-viewport GUI
+  -- local availableHeight = tabContentsHeight - 120*im.uiscale[0]
+  -- local ratio = 0.88
+  -- self:drawPacenotesList(availableHeight * ratio)
+  -- self:drawTranscriptsSection(availableHeight * (1.0 - ratio))
 
   self:drawPacenotesList(tabContentsHeight * 0.7)
   self:drawTranscriptsSection(tabContentsHeight * 0.12)
@@ -1417,6 +1421,11 @@ function C:drawTranscriptsSection(height)
 
   im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
   im.HeaderText('Transcript Tools')
+  im.SameLine()
+  if im.Button("Clear") then
+    self.rallyEditor.getTranscriptsWindow():clearSelection()
+  end
+
   if not tscs then
     im.Text('Select a transcript in the Transcripts tab.')
   else
