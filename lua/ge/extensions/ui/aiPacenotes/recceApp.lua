@@ -262,15 +262,18 @@ local function moveVehicleBackward()
         nearestPacenote = nil
       end
     end
-  end
 
-  local playerVehicle = be:getPlayerVehicle(0)
-  if playerVehicle and nearestPacenote then
-    spawn.safeTeleport(
-      playerVehicle,
-      nearestPacenote:posForVehiclePlacement(),
-      nearestPacenote:rotForVehiclePlacement()
-    )
+    if nearestPacenote then
+      local pos = nearestPacenote:posForVehiclePlacement()
+      local rot = nearestPacenote:rotForVehiclePlacement()
+
+      if pos and rot then
+        local playerVehicle = be:getPlayerVehicle(0)
+        if playerVehicle and nearestPacenote then
+          spawn.safeTeleport(playerVehicle, pos, rot)
+        end
+      end
+    end
   end
 end
 
@@ -317,15 +320,18 @@ local function moveVehicleForward()
         nearestPacenote = nil
       end
     end
-  end
 
-  local playerVehicle = be:getPlayerVehicle(0)
-  if playerVehicle and nearestPacenote then
-    spawn.safeTeleport(
-      playerVehicle,
-      nearestPacenote:posForVehiclePlacement(),
-      nearestPacenote:rotForVehiclePlacement()
-    )
+    if nearestPacenote then
+      local pos = nearestPacenote:posForVehiclePlacement()
+      local rot = nearestPacenote:rotForVehiclePlacement()
+
+      if pos and rot then
+        local playerVehicle = be:getPlayerVehicle(0)
+        if playerVehicle and nearestPacenote then
+          spawn.safeTeleport(playerVehicle, pos, rot)
+        end
+      end
+    end
   end
 end
 

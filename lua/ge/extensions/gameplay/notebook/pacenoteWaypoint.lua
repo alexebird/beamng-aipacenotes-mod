@@ -152,7 +152,7 @@ function C:shouldDrawIntersectPlane()
   end
 end
 
-function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
+function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha, clr_text_fg, clr_text_bg)
   if hover then
     clr = cc.waypoint_clr_sphere_hover
     shapeAlpha = cc.waypoint_shapeAlpha_hover
@@ -171,22 +171,22 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
   end
 
   debugDrawer:drawSphere(
-    (self.pos),
+    self.pos,
     self.radius,
     ColorF(clr[1], clr[2], clr[3], shapeAlpha_sphere),
     clipArg1
   )
 
-  local clr_text_fg = cc.waypoint_clr_txt_fg
-  local clr_text_bg = cc.waypoint_clr_txt_bg
+  clr_text_fg = clr_text_fg or cc.waypoint_clr_txt_fg
+  clr_text_bg = clr_text_bg or cc.waypoint_clr_txt_bg
 
   debugDrawer:drawTextAdvanced(
-    (self.pos),
+    self.pos,
     String(text),
     ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
     true,
     false,
-    ColorI(clr_text_bg[1], clr_text_bg[2], clr_text_bg[3], textAlpha*255)
+    ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, textAlpha*255)
   )
 
   if self:shouldDrawIntersectPlane() then
@@ -195,8 +195,8 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
 
     -- this square prism is the intersection "plane" of the pacenote.
     debugDrawer:drawSquarePrism(
-      (self.pos + side),
-      (self.pos + 0.25 * self.normal + side),
+      self.pos + side,
+      self.pos + 0.25 * self.normal + side,
       Point2F(5, midWidth),
       Point2F(0, 0),
       ColorF(clr[1], clr[2], clr[3], shapeAlpha)
@@ -253,7 +253,7 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
       ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
       true,
       false,
-      ColorI(clr_text_bg[1], clr_text_bg[2], clr_text_bg[3], textAlpha*255)
+      ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, textAlpha*255)
     )
   -- end
 

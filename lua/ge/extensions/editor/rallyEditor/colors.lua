@@ -12,6 +12,7 @@ M.clr_lime_green  = {0.66, 1.0, 0.0}
 M.clr_green_pastel = {0.718, 1, 0.455}
 
 M.clr_red         = {1.0, 0.0, 0.0}
+M.clr_red_dark    = {0.5, 0.0, 0.0}
 M.clr_light_red   = {1.0, 0.5, 0.5}
 M.clr_red_pastel = {1, 0.494, 0.635}
 

@@ -450,6 +450,8 @@ local function drawWaypoint(wp, wp_drawMode, pn_drawMode,
 
   local shapeAlpha = alpha * cc.pacenote_shapeAlpha_factor
   local textAlpha = alpha
+  local clrTextFg = nil
+  local clrTextBg = nil
 
   -- determine if the waypoint is selected
   if selected_wp_id and selected_wp_id == wp.id then
@@ -464,17 +466,25 @@ local function drawWaypoint(wp, wp_drawMode, pn_drawMode,
     cs_prefix = true
     clr = wp:colorForWpType(pn_drawMode)
   elseif wp_drawMode == 'background' then
+    local pn = wp.pacenote
+    local valid = pn:is_valid()
     cs_prefix = false
-    clr = cc.clr_black
     textAlpha = textAlpha * 0.9
     shapeAlpha = shapeAlpha * 0.9
+    if valid then
+      clr = cc.clr_black
+    else
+      clr = cc.clr_red_dark
+      clrTextFg = cc.clr_white
+      clrTextBg = cc.clr_red_dark
+    end
   elseif wp_drawMode == 'normal' then
     cs_prefix = false
     clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
   end
 
   local text = textForDrawDebug(wp, cs_prefix, note_text, dist_text)
-  wp:drawDebug(hover, text, clr, shapeAlpha, textAlpha)
+  wp:drawDebug(hover, text, clr, shapeAlpha, textAlpha, clrTextFg, clrTextBg)
 end
 
 local function drawLink(from, to, clr, alpha)
@@ -833,25 +843,33 @@ function C:posForVehiclePlacement()
   local wp1 = self:getCornerStartWaypoint()
   local wp2 = self:getActiveFwdAudioTrigger()
 
-  local direction = wp2.pos - wp1.pos
-  direction = vec3(direction):normalized()
+  if wp1 and wp2 then
+    local direction = wp2.pos - wp1.pos
+    direction = vec3(direction):normalized()
 
-  local newPos = wp2.pos + direction * (wp2.radius * 2)
-  return newPos
+    local newPos = wp2.pos + direction * (wp2.radius * 2)
+    return newPos
+  else
+    return nil
+  end
 end
 
 function C:rotForVehiclePlacement(wp2)
   local wp1 = self:getCornerStartWaypoint()
   local wp2 = self:getActiveFwdAudioTrigger()
 
-  local fwd = wp1.pos - wp2.pos
-  fwd = vec3(fwd):normalized()
+  if wp1 and wp2 then
+    local fwd = wp1.pos - wp2.pos
+    fwd = vec3(fwd):normalized()
 
-  local up = {x = 0, y = 0, z = 1}
-  up = vec3(up)
+    local up = {x = 0, y = 0, z = 1}
+    up = vec3(up)
 
-  local rot = quatFromDir(fwd, up):normalized()
-  return rot
+    local rot = quatFromDir(fwd, up):normalized()
+    return rot
+  else
+    return nil
+  end
 end
 
 function C:nameComponents()

@@ -367,10 +367,7 @@ function C:drawDebugEntrypoint()
 end
 
 function C:handleMouseDown(hoveredWp, hoveredTsc)
-  if hoveredTsc and not self:selectedWaypoint() then
-    im.SetClipboardText(hoveredTsc.text)
-    self:selectTranscript(hoveredTsc.id)
-  elseif hoveredWp then
+  if hoveredWp then
     local selectedPn = hoveredWp.pacenote
     if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
       -- if a pacenote is already selected and the clicked waypoint is in that pacenote.
@@ -387,6 +384,9 @@ function C:handleMouseDown(hoveredWp, hoveredTsc)
       self:selectPacenote(selectedPn.id)
       self:selectWaypoint(nil)
     end
+  elseif hoveredTsc and not self:selectedWaypoint() then
+    im.SetClipboardText(hoveredTsc.text)
+    self:selectTranscript(hoveredTsc.id)
   else
     -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
     -- you must click twice to deselect everything.
@@ -2115,14 +2115,14 @@ function C:autoFillDistanceCalls()
 end
 
 function C:placeVehicleAtPacenote()
-  local playerVehicle = be:getPlayerVehicle(0)
-  if playerVehicle then
-    -- local wp = self:selectedPacenote():getActiveFwdAudioTrigger()
-    spawn.safeTeleport(
-      playerVehicle,
-      self:selectedPacenote():posForVehiclePlacement(),
-      self:selectedPacenote():rotForVehiclePlacement()
-    )
+  local pos = self:selectedPacenote():posForVehiclePlacement()
+  local rot = self:selectedPacenote():rotForVehiclePlacement()
+
+  if pos and rot then
+    local playerVehicle = be:getPlayerVehicle(0)
+    if playerVehicle then
+      spawn.safeTeleport(playerVehicle, pos, rot)
+    end
   end
 end
 

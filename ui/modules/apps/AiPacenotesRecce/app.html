@@ -35,15 +35,18 @@
         <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-class="{'debug-on': drawDebug}">
          {{ drawDebug ? 'hide notes' : 'show notes' }}
         </button>
-        <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn" ng-class="{'debug-on': drawDebugSnaproads}">
-         {{ drawDebugSnaproads ? 'road off' : 'road on' }}
+        <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn" ng-disabled="!drawDebug" ng-class="{'debug-on': drawDebugSnaproads}">
+         {{ drawDebugSnaproads ? 'hide road' : 'show road' }}
         </button>
-        <button ng-click="btnMovePacenoteForward()" class="recce-controls-btn pacenote-forward">&uarr;</button>
+
+        <button ng-click="btnMovePacenoteForward()" class="recce-controls-btn pacenote-forward" ng-disabled="!drawDebug">&uarr;</button>
         <span class="middle-label">P</span>
-        <button ng-click="btnMovePacenoteBackward()" class="recce-controls-btn pacenote-backward">&darr;</button>
+        <button ng-click="btnMovePacenoteBackward()" class="recce-controls-btn pacenote-backward" ng-disabled="!drawDebug">&darr;</button>
+
         <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn vehicle-forward">&uarr;</button>
         <span class="middle-label">V</span>
         <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn vehicle-backward">&darr;</button>
+
         <md-select class="md-select-dropdown" ng-model="selectedStyleName">
           <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
         </md-select>

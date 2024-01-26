@@ -73,9 +73,6 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
     pacenotes = {},
   }
 
-  -- local i = start_i or 1
-  -- local oldId = self.path:getNextUniqueIdentifier()
-
   for _,transcript in ipairs(self.loaded_transcript.transcripts.sorted) do
     local note = transcript.text or ""
     note = normalizer.replaceDigits(note)
@@ -97,34 +94,37 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
         metadata['beamng_file'] = transcript.beamng_file
       end
 
+      local posCe = pos
+      local posCs = posCe + (vec3(1,1,0) * (radius * 2))
+
+      local lastPacenote = notebook.pacenotes[#notebook.pacenotes]
+      if lastPacenote then
+        local lastPnCe = lastPacenote.pacenoteWaypoints[2]
+        local lastCePos = vec3(lastPnCe.pos)
+        local directionVec = lastCePos - posCe
+        directionVec = vec3(directionVec):normalized()
+        posCs = posCe + (directionVec * (radius * 4))
+      end
+
       local pn = {
         name = name,
         notes = { english = {note = note}},
         metadata = metadata,
         oldId = pacenoteNewId,
         pacenoteWaypoints = {
-        --   {
-        --     name = "curr",
-        --     normal = {rot[1].x or 0, rot[1].y or 0, rot[1].z or 0},
-        --     oldId = self.path:getNextUniqueIdentifier(),
-        --     pos = {pos.x or 0, pos.y or 0, pos.z or 0},
-        --     radius = 8,  -- Replace with actual value if available
-        --     waypointType = "fwdAudioTrigger"
-        --   },
           {
             name = "corner start",
             normal = {0.0, 1.0, 0.0},
             oldId = self.path:getNextUniqueIdentifier(),
-            pos = {(pos.x or 0) + radius, pos.y or 0, pos.z or 0},
+            pos = posCs,
             radius = radius,
             waypointType = "cornerStart"
           },
           {
             name = "corner end",
-            -- normal = {rot[1].x or 0, rot[1].y or 0, rot[1].z or 0},
             normal = {0.0, 1.0, 0.0},
             oldId = self.path:getNextUniqueIdentifier(),
-            pos = {pos.x or 0, pos.y or 0, pos.z or 0},
+            pos = posCe,
             radius = radius,
             waypointType = "cornerEnd"
           }
