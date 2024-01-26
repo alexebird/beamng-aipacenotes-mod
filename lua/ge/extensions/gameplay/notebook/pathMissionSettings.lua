@@ -82,18 +82,19 @@ end
 --   end
 -- end
 
-function C:getCurrTranscriptAbsPath()
-  return self:getTranscriptAbsPath('curr')
+function C:getCurrTranscriptAbsPath(missionDir)
+  return self:getTranscriptAbsPath(missionDir, 'curr')
 end
 
-function C:getFullCourseTranscriptAbsPath()
-  return self:getTranscriptAbsPath('full_course')
+function C:getFullCourseTranscriptAbsPath(missionDir)
+  return self:getTranscriptAbsPath(missionDir, 'full_course')
 end
 
-function C:getTranscriptAbsPath(settingName)
+function C:getTranscriptAbsPath(missionDir, settingName)
   if self.transcripts and self.transcripts[settingName] then
     local basenameWithExt = self.transcripts[settingName]
-    local absPath = re_util.missionTranscriptPath(editor_rallyEditor.getMissionDir(), basenameWithExt)
+    missionDir =  missionDir or editor_rallyEditor.getMissionDir()
+    local absPath = re_util.missionTranscriptPath(missionDir, basenameWithExt)
     if not FS:fileExists(absPath) then
       log('E', logTag, 'transcripts file doesnt exist: '..absPath)
       return nil

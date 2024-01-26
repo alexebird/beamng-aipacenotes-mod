@@ -149,3 +149,13 @@ M.drawSnapRoads = drawSnapRoads
 M.closestSnapPos = closestSnapPos
 
 return M
+
+
+
+
+
+
+
+
+
+

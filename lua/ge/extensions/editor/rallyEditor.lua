@@ -582,22 +582,21 @@ local function getPrefTopDownCameraFollow()
 end
 
 local function loadMissionSettings(folder)
-  local settingsFname = folder..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
-  local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
-
-  if FS:fileExists(settingsFname) then
-    local json = jsonReadFile(settingsFname)
-    if not json then
-      log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
-      return nil
-    else
-      settings:onDeserialized(json)
-    end
-  end
-
-  -- log("D", logTag, dumps(settings))
-
-  return settings
+  -- local settingsFname = folder..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
+  -- local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
+  --
+  -- if FS:fileExists(settingsFname) then
+  --   local json = jsonReadFile(settingsFname)
+  --   if not json then
+  --     log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
+  --     return nil
+  --   else
+  --     settings:onDeserialized(json)
+  --   end
+  -- end
+  --
+  -- return settings
+  return re_util.loadMissionSettings(folder)
 end
 
 local function listNotebooks(folder)

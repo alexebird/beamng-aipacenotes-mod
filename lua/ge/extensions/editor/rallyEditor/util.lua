@@ -300,6 +300,25 @@ local function matchSearchPattern(searchPattern, stringToMatch)
   return stringToMatch:match(searchPattern) ~= nil
 end
 
+local function loadMissionSettings(folder)
+  local settingsFname = folder..'/'..aipPath..'/'..missionSettingsFname
+  local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
+
+  if FS:fileExists(settingsFname) then
+    local json = jsonReadFile(settingsFname)
+    if not json then
+      log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
+      return nil
+    else
+      settings:onDeserialized(json)
+    end
+  end
+
+  -- log("D", logTag, dumps(settings))
+
+  return settings
+end
+
 -- vars
 M.aipPath = aipPath
 M.aip_fg_color = aip_fg_color
@@ -337,5 +356,6 @@ M.playPacenote = playPacenote
 M.setCameraTarget = setCameraTarget
 M.trimString = trimString
 M.matchSearchPattern = matchSearchPattern
+M.loadMissionSettings = loadMissionSettings
 
 return M

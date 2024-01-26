@@ -2,6 +2,7 @@
 
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local logTag = 'aipacenotes-recce'
 
 local M = {}
 
@@ -13,6 +14,8 @@ local flag_NoteSearch = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
 local ui_selectedCornerAnglesStyle = ""
+local missionDir = nil
+local missionId = nil
 
 
 local function isFreeroam()
@@ -142,9 +145,8 @@ local function drawDebug()
         ColorF(1,0,0,alpha)
       )
 
-      local wp_cs = nextNote:getCornerStartWaypoint()
-      if wp_cs then
-        local nextSnapPos,_ = snaproads:nextSnapPos(pos, wp_cs.pos)
+      local nextSnapPos,_ = snaproads:nextSnapPos(pos)
+      if nextSnapPos then
         debugDrawer:drawSphere(
           (nextSnapPos),
           rad,
@@ -152,34 +154,40 @@ local function drawDebug()
         )
       end
 
-      local veh = be:getPlayerVehicle(0)
-      if not veh then
-        guihooks.trigger('aiPacenotesRecce', -1, "no vehicle")
-        return
+      local prevSnapPos,_ = snaproads:prevSnapPos(pos)
+      if prevSnapPos then
+        debugDrawer:drawSphere(
+          (prevSnapPos),
+          rad,
+          ColorF(0,1,1,alpha)
+        )
       end
-      local vehPos = veh:getPosition()
-      local nextSnapPos,_ = snaproads:nextSnapPos(pos, vehPos)
-      debugDrawer:drawSphere(
-        (nextSnapPos),
-        rad,
-        ColorF(0,1,1,alpha)
-      )
     end
   end
 end
 
-local function movePacenoteTowards(pacenote, directionPos)
+local function moveWaypointTowards(pacenote, fwd)
   local nextWp = pacenote:getActiveFwdAudioTrigger()
+  local cs = pacenote:getCornerStartWaypoint()
+  local newSnapPos, normalAlignPos = nil, nil
 
-  local nextSnapPos, normalAlignPos = snaproads:nextSnapPos(nextWp.pos, directionPos)
-  if nextSnapPos then
-    local newNormal = re_util.calculateForwardNormal(nextSnapPos, normalAlignPos)
-    nextWp:setPos(nextSnapPos)
-    nextWp:setNormal(newNormal)
+  if fwd then
+    newSnapPos, normalAlignPos = snaproads:nextSnapPos(nextWp.pos, cs and cs.pos)
+  else
+    newSnapPos, normalAlignPos = snaproads:prevSnapPos(nextWp.pos)
+  end
+
+  if newSnapPos then
+    nextWp:setPos(newSnapPos)
+    if normalAlignPos then
+      local newNormal = re_util.calculateForwardNormal(newSnapPos, normalAlignPos)
+      nextWp:setNormal(newNormal)
+    end
   end
 end
 
 local function moveNextPacenoteForward()
+  log('D', 'wtf', 'moveNextPacenoteForward')
   if not rallyManager then return end
   if not snaproads then return end
 
@@ -189,12 +197,13 @@ local function moveNextPacenoteForward()
     if not nextNote then
       return
     end
-    movePacenoteTowards(nextPacenotes[1], nextNote:getCornerStartWaypoint().pos)
+    moveWaypointTowards(nextNote, true)
     rallyManager:saveNotebook()
   end
 end
 
 local function moveNextPacenoteBackward()
+  log('D', 'wtf', 'moveNextPacenoteBackward')
   if not rallyManager then return end
   if not snaproads then return end
 
@@ -205,8 +214,7 @@ local function moveNextPacenoteBackward()
     if not nextNote or not veh then
       return
     end
-    local vehPos = veh:getPosition()
-    movePacenoteTowards(nextPacenotes[1], vehPos)
+    moveWaypointTowards(nextNote, false)
     rallyManager:saveNotebook()
   end
 end
@@ -329,19 +337,32 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   end
 end
 
-local function initSnapRoads()
-  snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads2')()
-  snaproads:loadSnapRoads()
+-- local function initSnapRoads()
+--   snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads2')()
+--   snaproads:loadSnapRoads()
+-- end
+
+-- VC = vehicle capture
+local function initSnapVC()
+  log('D', logTag, 'initSnapVC')
+  snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(missionDir)
+  snaproads:load()
 end
 
-local function initRallyManager(missionId, missionDir)
+local function initRallyManager(newMissionId, newMissionDir)
+  missionDir = newMissionDir
+  missionId = newMissionId
   flag_NoteSearch = false
   rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
   rallyManager:setOverrideMission(missionId, missionDir)
   local vehObjId = be:getPlayerVehicleID(0)
   rallyManager:setup(vehObjId, 100, 5)
   rallyManager:handleNoteSearch()
-  initSnapRoads()
+
+  if missionDir then
+    -- initSnapRoads()
+    initSnapVC()
+  end
 end
 
 local function clearRallyManager()
