@@ -58,6 +58,7 @@ function C:init(rallyEditor)
   self.dragMode = dragModes.simple
 
   self._insertMode = false
+  self.wasWPSelected = false
 
   self.notes_valid = true
   self.validation_issues = {}
@@ -374,11 +375,17 @@ function C:handleMouseDown(hoveredWp, hoveredTsc)
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
       self.beginSimpleDragNoteData = hoveredWp:onSerialize()
       self:selectWaypoint(hoveredWp.id)
-    elseif self:selectedPacenote() and self:selectedPacenote().id ~= selectedPn.id then
+    elseif self:selectedPacenote() and self:selectedWaypoint() and self:selectedPacenote().id ~= selectedPn.id then
       -- if the selected pacenote is different than clicked waypoint
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
       self:selectPacenote(selectedPn.id)
       self:selectWaypoint(hoveredWp.id)
+    elseif self:selectedPacenote() and self:selectedPacenote().id ~= selectedPn.id then
+      -- if the selected pacenote is different than clicked waypoint
+      self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
+      self:selectPacenote(selectedPn.id)
+      -- self:selectWaypoint(hoveredWp.id)
+      self:selectWaypoint(nil)
     elseif not self:selectedPacenote() then
       -- if no pacenote is selected
       self:selectPacenote(selectedPn.id)
@@ -442,20 +449,29 @@ function C:handleMouseUp()
           wp_index = self.waypoint_index,
           old = self.beginSimpleDragNoteData,
           new = wp_sel:onSerialize(),
+          wasPWselection = self.wasWPSelected,
         },
         function(data) -- undo
           local notebook = data.self.path
           local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
           local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
           wp:onDeserialized(data.old)
-          data.self:selectWaypoint(data.wp_index)
+          -- if data.wasWPSelected then
+            data.self:selectWaypoint(data.wp_index)
+          -- else
+            -- data.self:selectWaypoint(nil)
+          -- end
         end,
         function(data) --redo
           local notebook = data.self.path
           local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
           local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
           wp:onDeserialized(data.new)
-          data.self:selectWaypoint(data.wp_index)
+          -- if data.wasWPSelected then
+            data.self:selectWaypoint(data.wp_index)
+          -- else
+            -- data.self:selectWaypoint(nil)
+          -- end
         end
       )
     end
@@ -542,7 +558,10 @@ function C:handleMouseInput()
         self:selectTranscript(nil)
       end
     else
-      self:addMouseWaypointToPacenote()
+      -- if self.mouseInfo.down then
+        self:addMouseWaypointToPacenote()
+      -- elseif self.mouseInfo.hold then
+        -- self:handleMouseHold()
     end
   elseif editor.keyModifiers.ctrl then
     self:createMouseDragPacenote()
@@ -712,6 +731,8 @@ function C:addMouseWaypointToPacenote()
   )
 
   if self.mouseInfo.down then
+    self.wasWPSelected = not not self:selectedWaypoint()
+
     editor.history:commitAction("Add waypoint to pacenote '".. pacenote.name .."'",
       {
         self = self,
@@ -770,6 +791,9 @@ function C:addMouseWaypointToPacenote()
       end
     end
   elseif self.mouseInfo.up then
+    if not self.wasWPSelected then
+      self:selectWaypoint(nil)
+    end
   end
 end
 

@@ -458,6 +458,9 @@ local function drawWaypoint(wp, wp_drawMode, pn_drawMode,
     wp_drawMode = 'selected_wp'
   end
 
+  local pn = wp.pacenote
+  local valid = pn:is_valid()
+
   -- enumerate all wp_drawModes
   if wp_drawMode == 'selected_wp' then
     cs_prefix = true
@@ -466,8 +469,6 @@ local function drawWaypoint(wp, wp_drawMode, pn_drawMode,
     cs_prefix = true
     clr = wp:colorForWpType(pn_drawMode)
   elseif wp_drawMode == 'background' then
-    local pn = wp.pacenote
-    local valid = pn:is_valid()
     cs_prefix = false
     textAlpha = textAlpha * 0.9
     shapeAlpha = shapeAlpha * 0.9
@@ -480,7 +481,13 @@ local function drawWaypoint(wp, wp_drawMode, pn_drawMode,
     end
   elseif wp_drawMode == 'normal' then
     cs_prefix = false
-    clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
+    if valid then
+      clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
+    else
+      clr = cc.clr_red_dark
+      clrTextFg = cc.clr_white
+      clrTextBg = cc.clr_red_dark
+    end
   end
 
   local text = textForDrawDebug(wp, cs_prefix, note_text, dist_text)
