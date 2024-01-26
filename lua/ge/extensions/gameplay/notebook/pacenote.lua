@@ -761,117 +761,15 @@ local function calculateWaypointsCentroid(waypoints)
   return {sumX / count, sumY / count, sumZ / count}
 end
 
--- local function calculateWaypointExtents(waypoints)
---   local minX, maxX, minZ, maxZ = math.huge, -math.huge, math.huge, -math.huge
---
---   for _, waypoint in ipairs(waypoints) do
---     minX = math.min(minX, waypoint.pos.x)
---     maxX = math.max(maxX, waypoint.pos.x)
---     minZ = math.min(minZ, waypoint.pos.z)
---     maxZ = math.max(maxZ, waypoint.pos.z)
---   end
---
---   return minX, maxX, minZ, maxZ
--- end
-
--- local function calculateRotationDirection(waypoint1, waypoint2)
---   return vec3(
---     waypoint2.pos.x - waypoint1.pos.x,
---     waypoint2.pos.y - waypoint1.pos.y,
---     0 -- Keep Z component as 0 to maintain top-down view
---   )
--- end
---
--- local function calculateWaypointElevation(waypoints, fovRad, aspectRatio)
---   local minX, maxX, minZ, maxZ = calculateWaypointExtents(waypoints)
---   local width = maxX - minX
---   local depth = maxZ - minZ
---
---   local horizontalFovRad = 2 * math.atan(math.tan(fovRad / 2) * aspectRatio)
---
---   -- Use the larger of the width or depth in relation to the FOV
---   local maxDimension = math.max(width, depth)
---   local elevation = (maxDimension / 2) / math.tan(horizontalFovRad / 2)
---
---   return elevation
--- end
---
--- local function setTopDownCamera(waypoints, wp1, wp2)
---   local centroid = calculateWaypointsCentroid(waypoints)
---
---   -- Get the window aspect ratio
---   -- local vm = GFXDevice.getVideoMode()
---   -- local windowAspectRatio = vm.width / vm.height
---   -- local fovRad = core_camera.getFovRad()
---   -- local elevation = calculateWaypointElevation(waypoints, fovRad, windowAspectRatio)
---   -- just hardcode elevation for now.
---   local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
---
---   local cameraPosition = {centroid[1], centroid[2], centroid[3] + elevation}
---   core_camera.setPosition(0, vec3(cameraPosition))
---
---   local downFacingRotation = quatFromDir(vec3(0, 0, -1), vec3(0, 1, 0))
---
---   local rotationDir = calculateRotationDirection(wp1, wp2)
---   local angleRad = math.atan2(rotationDir.y, rotationDir.x)
---   angleRad = (math.pi*0.5) - angleRad -- why???
---   local waypointRotation = quatFromAxisAngle(vec3(0, 0, 1), angleRad)
---   -- core_camera.setRotation(0, waypointRotation)
---
---   local combinedRotation = downFacingRotation * waypointRotation -- operand order matters here!
---   -- quaternion multiplication is not commutative.
---   core_camera.setRotation(0, combinedRotation)
--- end
---
--- local function setCameraPositionOnly(waypoints, wp)
---   local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
---   if wp and wp.pos then
---     local wp_pos = wp.pos
---     -- log('D', 'wtf', dumps(wp_pos))
---     -- local cameraPosition = {wp_pos.x, wp_pos.y, wp_pos.z + elevation}
---     local cameraPosition = wp_pos + vec3(0,0,elevation)
---     core_camera.setPosition(0, cameraPosition)
---   end
--- end
-
--- local function getRayCastHit(ray, relativeToCam)
---   local dist = intersectsRay_Plane(ray.pos, ray.dir, core_terrain.getTerrain() and core_terrain.getTerrain():getWorldBox().minExtents or vec3(0,0,0), vec3(0,0,1))
---   local hitPoint = ray.pos + ray.dir * dist
---   if relativeToCam then
---     hitPoint = hitPoint - core_camera.getPosition()
---   end
---   return hitPoint
--- end
-
--- function C:setCamTarget(target)
--- end
-
--- -- Example usage
--- local targetPos = {x = 10, y = 10, z = 0}
--- local cameraQuat = -- Your camera quaternion here
--- local currentCameraPos = {x = 5, y = 5, z = 20}
--- local newCameraX, newCameraY, newCameraZ = moveCameraToTarget(targetPos.x, targetPos.y, targetPos.z, cameraQuat, currentCameraPos)
---
--- print("New Camera Position: ", newCameraX, newCameraY, newCameraZ)
-
-function C:getRotationWaypoints()
-  local wpAudioTrigger = self:getActiveFwdAudioTrigger()
-
-  if wpAudioTrigger then
-    return wpAudioTrigger, self:getCornerStartWaypoint()
-  else
-    return self:getCornerStartWaypoint(), self:getCornerEndWaypoint()
-  end
-end
-
 function C:setCameraToWaypoints()
-  local waypoints = self.pacenoteWaypoints.sorted
-  -- local cs, ce = self:getRotationWaypoints()
-  -- local cs = self:getCornerStartWaypoint()
-  local centroid = calculateWaypointsCentroid(waypoints)
-  -- setTopDownCamera(waypoints, cs, ce)
-  -- setCameraPositionOnly(waypoints, cs)
-  re_util.setCameraTarget(centroid)
+  local cs = self:getCornerStartWaypoint()
+  if cs then
+    cs:lookAtMe()
+  end
+
+  -- local waypoints = self.pacenoteWaypoints.sorted
+  -- local centroid = calculateWaypointsCentroid(waypoints)
+  -- re_util.setCameraTarget(centroid)
 end
 
 function C:audioFname(codriver, missionDir)

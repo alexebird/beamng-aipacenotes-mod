@@ -210,106 +210,11 @@ function C:importTranscriptToCurrentNotebook()
   )
 end
 
--- function C:drawSectionImportTranscript()
---   im.HeaderText("Import Transcript")
---
---   im.Text("Importing from: " .. self.default_transcript_fname)
---   im.Text("Importing to: " .. self.notebook_create_dir)
---   for i = 1,5 do im.Spacing() end
---   im.Separator()
---   for i = 1,5 do im.Spacing() end
---
---   if im.Button("Import to New Notebook") then
---     self:importTranscriptToNewNotebook()
---   end
---   im.Text("A new notebook will be created.")
---   for i = 1,5 do im.Spacing() end
---   im.Separator()
---   for i = 1,5 do im.Spacing() end
---
---   if im.Button("Import to Current Notebook") then
---     self:importTranscriptToCurrentNotebook()
---   end
---   im.Text("The imported notes will be added to the end of the currently loaded notebook.")
---   for i = 1,5 do im.Spacing() end
---   im.Separator()
--- end
-
--- function C:drawSectionTranscriptData()
---   im.HeaderText("Transcript Data")
---
---   if im.Checkbox("Show transcripts##show_tscs", im.BoolPtr(self.render_transcripts)) then
---     self.render_transcripts = not self.render_transcripts
---   end
---
---   im.Columns(4, "transcript_columns")
---   im.Separator()
---
---   im.Text("Show?")
---   im.SetColumnWidth(0, 48)
---   im.NextColumn()
---
---   im.Text("Success")
---   im.SetColumnWidth(1, 57)
---   im.NextColumn()
---
---   im.Text("Text")
---   im.SetColumnWidth(2, 400)
---   im.NextColumn()
---
---   im.Text("Vehicle Data")
---   im.SetColumnWidth(3, 400)
---   im.NextColumn()
---
---   im.Separator()
---
---   for _,transcript in ipairs(self.transcripts_path.transcripts.sorted) do
---     if im.Checkbox("##show_tsc_"..transcript.id, im.BoolPtr(transcript.show)) then
---       transcript:toggleShow()
---       self.transcripts_path:save()
---     end
---     im.NextColumn()
---
---     im.Text(tostring(transcript.success))
---     im.NextColumn()
---
---     if editor.uiIconImageButton(editor.icons.content_copy, im.ImVec2(20, 20)) then
---       im.SetClipboardText(transcript.text)
---     end
---     im.tooltip('Copy to clipboard')
---     im.SameLine()
---     im.Text(transcript.text)
---     im.NextColumn()
---
---     local notes_txt = 'No position data.'
---     local pos = transcript:vehiclePos()
---     if pos then
---       notes_txt = "x="..round(pos.x).." y="..round(pos.y).." z="..round(pos.z)
---
---
---       if core_camera.getActiveCamName() == "path" then
---         if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(20, 20)) then
---           core_paths.stopCurrentPath()
---         end
---       else
---         if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(20, 20)) then
---           transcript:playCameraPath()
---         end
---       end
---
---       im.SameLine()
---     end
---
---     im.Text(notes_txt)
---     im.NextColumn()
---   end
--- end
-
 function C:copyDesktopTranscriptsToMission()
   local fromFname = self.default_transcript_fname
   local ts = os.time()
   local basename = 'imported_'..ts
-  local toFname = re_util.missionTranscriptPath(self.rallyEditor.getMissionDir(), basename)
+  local toFname = re_util.missionTranscriptPath(self.rallyEditor.getMissionDir(), basename, true)
 
   log('D', logTag, 'copy from '..fromFname..' to '..toFname)
 
@@ -437,6 +342,17 @@ function C:drawTranscriptFileForm()
       im.CloseCurrentPopup()
     end
     im.EndPopup()
+  end
+
+  im.SameLine()
+  if im.Button("Set as Curr") then
+    local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+    settings:setCurrTranscript(self.selected_fname)
+  end
+  im.SameLine()
+  if im.Button("Set as Full Course") then
+    local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+    settings:setFullCourseTranscript(self.selected_fname)
   end
 
 

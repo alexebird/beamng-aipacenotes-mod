@@ -563,6 +563,10 @@ function C:playCameraPath()
   core_paths.playPath(cam_path)
 end
 
+function C:lookAtMe()
+  re_util.setCameraTarget(self:vehiclePos())
+end
+
 return function(...)
   local o = {}
   setmetatable(o, C)

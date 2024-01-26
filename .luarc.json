@@ -13,6 +13,7 @@
       "cameraMouseRayCast",
       "clockhp",
       "core_camera",
+      "core_paths",
       "core_forest",
       "core_terrain",
       "core_vehicleBridge",

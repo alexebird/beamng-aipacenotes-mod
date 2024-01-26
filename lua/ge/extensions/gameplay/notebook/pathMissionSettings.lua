@@ -2,7 +2,9 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local C = {}
+local logTag = 'aipacenotes'
 
 local default_settings = {
   notebook = {
@@ -11,7 +13,7 @@ local default_settings = {
   },
   transcripts = {
     full_course = "full_course.transcripts.json",
-    -- curr = "curr.transcripts.json",
+    curr = "curr.transcripts.json",
   }
 }
 
@@ -52,6 +54,77 @@ end
 function C:write()
   local json = self:onSerialize()
   jsonWriteFile(self.fname, json, true)
+end
+--
+-- function C:getCurrTranscript()
+--   return self:getTranscript('curr')
+-- end
+--
+-- function C:getFullCourseTranscript()
+--   return self:getTranscript('full_course')
+-- end
+--
+-- function C:getTranscript(settingName)
+--   if self.transcripts and self.transcripts[settingName] then
+--     local basenameWithExt = self.transcripts[settingName]
+--     local absPath = re_util.missionTranscriptPath(self.rallyEditor.getMissionDir(), basenameWithExt)
+--     if FS:fileExists(absPath) then
+--       local loaded_transcript = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(absPath)
+--       if not loaded_transcript:load() then
+--         log('E', logTag, 'couldnt load transcripts file from '..absPath)
+--         return nil
+--       else
+--         return loaded_transcript
+--       end
+--     end
+--   else
+--     return nil
+--   end
+-- end
+
+function C:getCurrTranscriptAbsPath()
+  return self:getTranscriptAbsPath('curr')
+end
+
+function C:getFullCourseTranscriptAbsPath()
+  return self:getTranscriptAbsPath('full_course')
+end
+
+function C:getTranscriptAbsPath(settingName)
+  if self.transcripts and self.transcripts[settingName] then
+    local basenameWithExt = self.transcripts[settingName]
+    local absPath = re_util.missionTranscriptPath(editor_rallyEditor.getMissionDir(), basenameWithExt)
+    if not FS:fileExists(absPath) then
+      log('E', logTag, 'transcripts file doesnt exist: '..absPath)
+      return nil
+    else
+      return absPath
+    end
+  else
+    return nil
+  end
+end
+
+function C:setCurrTranscript(newAbsPath)
+  self:setTranscriptAbsPath('curr', newAbsPath)
+end
+
+function C:setFullCourseTranscript(newAbsPath)
+  self:setTranscriptAbsPath('full_course', newAbsPath)
+end
+
+function C:setTranscriptAbsPath(settingName, newAbsPath)
+  if not newAbsPath then return end
+
+  if self.transcripts and self.transcripts[settingName] then
+    if FS:fileExists(newAbsPath) then
+      local dir, filename, ext = path.splitWithoutExt(newAbsPath, true)
+      self.transcripts[settingName] = filename..'.'..ext
+      self:write()
+    else
+      log('E', logTag, 'set transcripts file doesnt exist: '..newAbsPath)
+    end
+  end
 end
 
 return function(...)

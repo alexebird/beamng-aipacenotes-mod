@@ -6,6 +6,7 @@
 
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
 
@@ -289,6 +290,10 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
     radius_cyl,
     ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
   )
+end
+
+function C:lookAtMe()
+  re_util.setCameraTarget(self.pos)
 end
 
 return function(...)

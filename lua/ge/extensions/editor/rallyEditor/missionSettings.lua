@@ -59,7 +59,7 @@ function C:draw(_mouseInfo)
 
   im.Text("Transcript Settings")
   self:transcriptSettingsSection('Full Course', 'full_course')
-  -- self:transcriptSettingsSection('Current', 'curr')
+  self:transcriptSettingsSection('Current', 'curr')
 end
 
 function C:loadTranscripts()

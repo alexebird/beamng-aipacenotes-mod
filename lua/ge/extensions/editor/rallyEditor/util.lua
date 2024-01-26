@@ -217,8 +217,13 @@ local function missionTranscriptsDir(missionDir)
   return missionDir..'/'..transcriptsPath
 end
 
-local function missionTranscriptPath(missionDir, basename)
-  return missionTranscriptsDir(missionDir)..'/'..basename..'.'..transcriptsExt
+local function missionTranscriptPath(missionDir, basename, addExt)
+  addExt = addExt or false
+  local rv = missionTranscriptsDir(missionDir)..'/'..basename
+  if addExt then
+    rv = rv..'.'..transcriptsExt
+  end
+  return rv
 end
 
 -- args are both vec3's representing a position.
@@ -272,6 +277,7 @@ local function determineCornerCall(angles, steering)
 end
 
 local function trimString(txt)
+  if not txt then return txt end
   return txt:gsub("^%s*(.-)%s*$", "%1")
 end
 
