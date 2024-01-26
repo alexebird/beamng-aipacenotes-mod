@@ -179,7 +179,7 @@ local function movePacenoteTowards(pacenote, directionPos)
   end
 end
 
-local function moveNextPacenoteFarther()
+local function moveNextPacenoteForward()
   if not rallyManager then return end
   if not snaproads then return end
 
@@ -194,7 +194,7 @@ local function moveNextPacenoteFarther()
   end
 end
 
-local function moveNextPacenoteCloser()
+local function moveNextPacenoteBackward()
   if not rallyManager then return end
   if not snaproads then return end
 
@@ -208,6 +208,116 @@ local function moveNextPacenoteCloser()
     local vehPos = veh:getPosition()
     movePacenoteTowards(nextPacenotes[1], vehPos)
     rallyManager:saveNotebook()
+  end
+end
+
+local function moveVehicleBackward()
+  log('D', 'wtf', 'moveVehicleBackward')
+
+  if not rallyManager then return end
+  if not rallyManager.notebook then return end
+  if not rallyManager.vehicleTracker then return end
+
+  log('D', 'wtf', 'moveVehicleBackward proceeding')
+  -- 1. find closest AT
+  -- 2. if car is not within 10m of vehicle placement point for the chosen AT, then place at that AT
+  -- 3. else place at prev pacenote AT
+
+  local vPos = rallyManager.vehicleTracker:pos()
+  local nearestPacenoteDist = 100000000
+  local nearestPacenote = nil
+  local i_nearest = nil
+  local col = rallyManager.notebook.pacenotes.sorted
+
+  for i,pn in ipairs(col) do
+    local at = pn:getActiveFwdAudioTrigger()
+    if at then
+      local dist = vPos:distance(pn:posForVehiclePlacement())
+      if dist < nearestPacenoteDist then
+        nearestPacenoteDist = dist
+        nearestPacenote = pn
+        i_nearest = i
+      end
+    end
+  end
+
+  if nearestPacenote then
+    local vdist = vPos:distance(nearestPacenote:posForVehiclePlacement())
+    log('D', 'wtf', 'vdist='..tostring(vdist))
+    if vdist < 10 then
+      -- go to the next one after closest
+
+      if i_nearest >= 2 then
+        nearestPacenote = col[i_nearest-1]
+      else
+        -- dont wrap around if at end
+        nearestPacenote = nil
+      end
+    end
+  end
+
+  local playerVehicle = be:getPlayerVehicle(0)
+  if playerVehicle and nearestPacenote then
+    spawn.safeTeleport(
+      playerVehicle,
+      nearestPacenote:posForVehiclePlacement(),
+      nearestPacenote:rotForVehiclePlacement()
+    )
+  end
+end
+
+local function moveVehicleForward()
+  log('D', 'wtf', 'moveVehicleBackward')
+
+  if not rallyManager then return end
+  if not rallyManager.notebook then return end
+  if not rallyManager.vehicleTracker then return end
+
+  log('D', 'wtf', 'moveVehicleForward proceeding')
+  -- 1. find closest AT
+  -- 2. if car is not within 10m of vehicle placement point for the chosen AT, then place at that AT
+  -- 3. else place at next pacenote AT
+
+  local vPos = rallyManager.vehicleTracker:pos()
+  local nearestPacenoteDist = 100000000
+  local nearestPacenote = nil
+  local i_nearest = nil
+  local col = rallyManager.notebook.pacenotes.sorted
+
+  for i,pn in ipairs(col) do
+    local at = pn:getActiveFwdAudioTrigger()
+    if at then
+      local dist = vPos:distance(pn:posForVehiclePlacement())
+      if dist < nearestPacenoteDist then
+        nearestPacenoteDist = dist
+        nearestPacenote = pn
+        i_nearest = i
+      end
+    end
+  end
+
+  if nearestPacenote then
+    local vdist = vPos:distance(nearestPacenote:posForVehiclePlacement())
+    log('D', 'wtf', 'vdist='..tostring(vdist))
+    if vdist < 10 then
+      -- go to the next one after closest
+
+      if i_nearest <= #col-1 then
+        nearestPacenote = col[i_nearest+1]
+      else
+        -- dont wrap around if at end
+        nearestPacenote = nil
+      end
+    end
+  end
+
+  local playerVehicle = be:getPlayerVehicle(0)
+  if playerVehicle and nearestPacenote then
+    spawn.safeTeleport(
+      playerVehicle,
+      nearestPacenote:posForVehiclePlacement(),
+      nearestPacenote:rotForVehiclePlacement()
+    )
   end
 end
 
@@ -316,8 +426,10 @@ M.clearTimeout = clearTimeout
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setCornerAnglesStyleName = setCornerAnglesStyleName
-M.moveNextPacenoteCloser = moveNextPacenoteCloser
-M.moveNextPacenoteFarther = moveNextPacenoteFarther
+M.moveNextPacenoteBackward = moveNextPacenoteBackward
+M.moveNextPacenoteForward = moveNextPacenoteForward
+M.moveVehicleBackward = moveVehicleBackward
+M.moveVehicleForward = moveVehicleForward
 M.onUpdate = onUpdate
 -- M.onFirstUpdate = onFirstUpdate
 

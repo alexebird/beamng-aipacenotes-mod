@@ -100,11 +100,13 @@
     font-weight: bold;
 }
 
-.debug-up-arr {
+/* .debug-up-arr { */
+.pacenote-forward {
     background-color: rgba(255, 0, 255, 1.0) !important;
 }
 
-.debug-down-arr {
+/* .debug-down-arr { */
+.pacenote-backward {
     background-color: rgba(0, 255, 255, 1.0) !important;
 }
 
@@ -179,4 +181,9 @@
 
 .md-select-dropdown {
     width: 450px;
+}
+
+.middle-label {
+    margin-left: -10px;
+    margin-right: -10px;
 }

@@ -40,23 +40,40 @@ local function action_toggle_recce_drawDebug()
   guihooks.trigger('aiPacenotesInputActionToggleDrawDebug')
 end
 
-local function action_recce_move_farther()
-  log('I', logTag, 'action_recce_move_farther')
+local function action_recce_move_pacenote_forward()
+  log('I', logTag, 'action_recce_move_pacenote_forward')
   if not is_recceApp_loaded() then return end
-  guihooks.trigger('aiPacenotesInputActionRecceMoveFarther')
+  -- NOTE re: gui hooks that simply proxy back to lua
+  -- were going back to the frontend because the keybinding is meant to perform
+  -- a frontend interaction. therefore take the same codepath.
+  guihooks.trigger('aiPacenotesInputActionRecceMovePacenoteForward')
 end
 
-local function action_recce_move_closer()
-  log('I', logTag, 'action_recce_move_closer')
+local function action_recce_move_pacenote_backward()
+  log('I', logTag, 'action_recce_move_pacenote_backward')
   if not is_recceApp_loaded() then return end
-  guihooks.trigger('aiPacenotesInputActionRecceMoveCloser')
+  guihooks.trigger('aiPacenotesInputActionRecceMovePacenoteBackward')
+end
+
+local function action_recce_move_vehicle_forward()
+  log('I', logTag, 'action_recce_move_vehicle_forward')
+  if not is_recceApp_loaded() then return end
+  guihooks.trigger('aiPacenotesInputActionRecceMoveVehicleForward')
+end
+
+local function action_recce_move_vehicle_backward()
+  log('I', logTag, 'action_recce_move_vehicle_backward')
+  if not is_recceApp_loaded() then return end
+  guihooks.trigger('aiPacenotesInputActionRecceMoveVehicleBackward')
 end
 
 -- M.action_transcribe_recording_start = action_transcribe_recording_start
 M.action_transcribe_recording_stop = action_transcribe_recording_stop
 M.action_transcribe_recording_cut = action_transcribe_recording_cut
 M.action_toggle_recce_drawDebug = action_toggle_recce_drawDebug
-M.action_recce_move_farther = action_recce_move_farther
-M.action_recce_move_closer = action_recce_move_closer
+M.action_recce_move_pacenote_forward = action_recce_move_pacenote_forward
+M.action_recce_move_pacenote_backward = action_recce_move_pacenote_backward
+M.action_recce_move_vehicle_forward = action_recce_move_vehicle_forward
+M.action_recce_move_vehicle_backward = action_recce_move_vehicle_backward
 
 return M

@@ -24,22 +24,39 @@
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
   },
 
-//  "recce_move_pacenote_farther": {
-//    "cat": "gameplay",
-//    "ctx": "tlua",
-//    "order": 1,
-//    "title": "Move Pacenote Farther in Recce (AIPacenotes)",
-//    "desc": "Move the next pacenote toward CornerStart along snaproad and save notebook.",
-//    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_farther()"
-//  },
-//  "recce_move_pacenote_closer": {
-//    "cat": "gameplay",
-//    "ctx": "tlua",
-//    "order": 1,
-//    "title": "Move Pacenote Closer in Recce (AIPacenotes)",
-//    "desc": "Move the next pacenote towards vehicle along snaproad and save notebook.",
-//    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_closer()"
-//  },
+  "recce_move_pacenote_forward": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 1,
+    "title": "Move Pacenote Forward in Recce (AIPacenotes)",
+    "desc": "Move the next pacenote toward CornerStart along snaproad and save notebook.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_pacenote_forward()"
+  },
+  "recce_move_pacenote_backward": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 1,
+    "title": "Move Pacenote Backward in Recce (AIPacenotes)",
+    "desc": "Move the next pacenote towards vehicle along snaproad and save notebook.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_pacenote_backward()"
+  },
+
+  "recce_move_vehicle_forward": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 1,
+    "title": "Move Vehicle Forward in Recce (AIPacenotes)",
+    "desc": "Move the next vehicle toward CornerStart along snaproad and save notebook.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_forward()"
+  },
+  "recce_move_vehicle_backward": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 1,
+    "title": "Move Vehicle Backward in Recce (AIPacenotes)",
+    "desc": "Move the next vehicle towards vehicle along snaproad and save notebook.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_backward()"
+  },
 
   "rallyEditorSave": {
     "cat": "editor",
