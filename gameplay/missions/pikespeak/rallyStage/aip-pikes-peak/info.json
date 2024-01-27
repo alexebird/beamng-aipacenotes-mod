@@ -59,8 +59,8 @@
       "enabled":true,
       "isCustomConfig":false,
       "mode":"choice",
-      "playerConfig":"hillclimb_SQ",
-      "playerConfigPath":"vehicles/sbr/hillclimb_SQ.pc",
+      "playerConfig":"Pikes Peak - SBR (aipacenotes)",
+      "playerConfigPath":"vehicles/sbr/Pikes Peak - SBR (aipacenotes).pc",
       "playerModel":"sbr",
       "playerPaintName":"Carbon",
       "usePresetVehicle":true
