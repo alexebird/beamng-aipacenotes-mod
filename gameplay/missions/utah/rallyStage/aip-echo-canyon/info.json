@@ -41,7 +41,7 @@
     "silverTime":120,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Echo Canyon (AIPacenotes)",
+  "name":"Echo Canyon (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -56,8 +56,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"echo-canyon - vivace rally",
-          "configPath":"vehicles/vivace/echo-canyon - vivace rally.pc",
+          "config":"Echo Canyon - Vivace (aipacenotes)",
+          "configPath":"vehicles/vivace/Echo Canyon - Vivace (aipacenotes).pc",
           "model":"vivace",
           "useCustomConfig":false
         }

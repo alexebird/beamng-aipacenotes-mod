@@ -37,7 +37,7 @@
     "silverTime":120,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Jungle Island Loop (AIPacenotes)",
+  "name":"Jungle Island Loop (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -53,8 +53,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"rally car - road - jri island loop",
-          "configPath":"vehicles/vivace/rally car - road - jri island loop.pc",
+          "config":"Jungle Island Loop - Vivace (aipacenotes)",
+          "configPath":"vehicles/vivace/Jungle Island Loop - Vivace (aipacenotes).pc",
           "model":"vivace"
         }
       ]

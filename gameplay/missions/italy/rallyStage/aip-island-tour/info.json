@@ -34,7 +34,7 @@
     "silverTime":120,
     "startScreenText":""
   },
-  "name":"Italy Island Tour (AIPacenotes)",
+  "name":"Italy Island Tour (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -49,8 +49,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"rally car - road - italy island tour",
-          "configPath":"vehicles/vivace/rally car - road - italy island tour.pc",
+          "config":"Italy Island Tour - Vivace (aipacenotes)",
+          "configPath":"vehicles/vivace/Italy Island Tour - Vivace (aipacenotes).pc",
           "model":"vivace",
           "useCustomConfig":false
         }

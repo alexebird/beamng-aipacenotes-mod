@@ -3,7 +3,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Stop Recording (AIPacenotes)",
+    "title": "Stop Recording (aipacenotes)",
     "desc": "Tells the desktop app to stop recording. Does not create a new transcript. Requires AI-Pacenotes desktop app.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_transcribe_recording_stop()"
   },
@@ -11,7 +11,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Cut Voice Transcription (AIPacenotes)",
+    "title": "Cut Voice Transcription (aipacenotes)",
     "desc": "If a recording is running, this stops it and immediately starts another. Requires AI-Pacenotes desktop app.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_transcribe_recording_cut()"
   },
@@ -19,7 +19,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Toggle Recce Pacenotes Visualization (AIPacenotes)",
+    "title": "Toggle Recce Pacenotes Visualization (aipacenotes)",
     "desc": "Toggle the drawing of visual markers for pacenotes.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
   },
@@ -28,7 +28,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Move Pacenote Forward in Recce (AIPacenotes)",
+    "title": "Move Pacenote Forward in Recce (aipacenotes)",
     "desc": "Move the next pacenote toward CornerStart along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_pacenote_forward()"
   },
@@ -36,7 +36,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Move Pacenote Backward in Recce (AIPacenotes)",
+    "title": "Move Pacenote Backward in Recce (aipacenotes)",
     "desc": "Move the next pacenote towards vehicle along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_pacenote_backward()"
   },
@@ -45,7 +45,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Move Vehicle Forward in Recce (AIPacenotes)",
+    "title": "Move Vehicle Forward in Recce (aipacenotes)",
     "desc": "Move the next vehicle toward CornerStart along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_forward()"
   },
@@ -53,7 +53,7 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Move Vehicle Backward in Recce (AIPacenotes)",
+    "title": "Move Vehicle Backward in Recce (aipacenotes)",
     "desc": "Move the next vehicle towards vehicle along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_backward()"
   },
@@ -63,7 +63,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Save (AIPacenotes)",
+    "title": "Rally Editor - Save (aipacenotes)",
     "desc": "Save the current notebook.",
     "onDown": "editor_rallyEditor.saveCurrent()"
   },
@@ -72,7 +72,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Select Previous Pacenote (AIPacenotes)",
+    "title": "Rally Editor - Select Previous Pacenote (aipacenotes)",
     "desc": "Select the previous pacenote.",
     "onDown": "editor_rallyEditor.selectPrevPacenote()"
   },
@@ -81,7 +81,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Select Next Pacenote (AIPacenotes)",
+    "title": "Rally Editor - Select Next Pacenote (aipacenotes)",
     "desc": "Select the next pacenote.",
     "onDown": "editor_rallyEditor.selectNextPacenote()"
   },
@@ -90,7 +90,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Cycle Drag Mode (AIPacenotes)",
+    "title": "Rally Editor - Cycle Drag Mode (aipacenotes)",
     "desc": "Cycle between drag modes (simple, simple+road snap, free edit w/gizmo)",
     "onDown": "editor_rallyEditor.cycleDragMode()"
   },
@@ -99,7 +99,7 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Focus Note Edit Field (AIPacenotes)",
+    "title": "Rally Editor - Focus Note Edit Field (aipacenotes)",
     "desc": "Shortcut to focus the cursor on editing the currently selected note text.",
     "onDown": "editor_rallyEditor.insertMode()"
   }

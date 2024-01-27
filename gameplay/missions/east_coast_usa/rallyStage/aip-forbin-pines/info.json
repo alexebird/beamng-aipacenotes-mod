@@ -42,7 +42,7 @@
     "silverTime":600,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Forbin Pines (AIPacenotes)",
+  "name":"Forbin Pines (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -57,8 +57,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"rally car - off road",
-          "configPath":"vehicles/vivace/rally car - off road.pc",
+          "config":"Forbin Pines - Vivace (aipacenotes)",
+          "configPath":"vehicles/vivace/Forbin Pines - Vivace (aipacenotes).pc",
           "model":"vivace"
         }
       ]

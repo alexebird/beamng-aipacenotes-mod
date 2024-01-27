@@ -41,7 +41,7 @@
     "silverTime":162.5,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Nordic Sprint (AIPacenotes)",
+  "name":"Nordic Sprint (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -58,8 +58,8 @@
       "usePlayerVehicle":true,
       "vehicles":[
         {
-          "config":"rally car - off road",
-          "configPath":"vehicles/vivace/rally car - off road.pc",
+          "config":"Nordic Sprint - Vivace (aipacenotes)",
+          "configPath":"vehicles/vivace/Nordic Sprint - Vivace (aipacenotes).pc",
           "model":"vivace"
         }
       ]

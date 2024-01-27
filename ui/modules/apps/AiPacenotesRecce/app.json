@@ -1,6 +1,6 @@
 {
   "domElement": "<ai-pacenotes-recce></ai-pacenotes-recce>",
-  "name": "Recce (AIPacenotes)",
+  "name": "Recce (aipacenotes)",
   "types": ["ui.apps.categories.racing"],
   "description": "Helps you do recce.",
   "css": {
