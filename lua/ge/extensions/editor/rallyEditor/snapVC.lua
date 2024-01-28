@@ -30,23 +30,25 @@ function C:load()
     self.transcript_path = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(abspath)
 
     if not self.transcript_path:load() then
-      log('E', logTag, 'couldnt load transcripts file from '..abspath)
+      log('E', logTag, 'couldnt load transcripts file from '..tostring(abspath))
       self.transcript_path = nil
+      return false
     end
+  else
+    return false
   end
 
   self.spline_points = {}
-  for i,tsc in ipairs(self.transcript_path.transcripts.sorted) do
+  for _,tsc in ipairs(self.transcript_path.transcripts.sorted) do
     if tsc:capture_data() then
-      -- log('D', 'wtf', dumps(tsc:capture_data()))
-      for i,cap in ipairs(tsc:capture_data().captures) do
-        -- log('D', 'wtf')
+      for _,cap in ipairs(tsc:capture_data().captures) do
         table.insert(self.spline_points, vec3(cap.pos))
       end
     end
   end
 
   log('I', logTag, 'snapVC loaded '..tostring(#self.spline_points)..' points')
+  return true
 end
 
 function C:mouseOverSnapRoad(mouseInfo)

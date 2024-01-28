@@ -806,9 +806,13 @@ function C:audioFname(codriver, missionDir)
 end
 
 function C:playbackAllowed(currLap, maxLap)
-  local context = { currLap = currLap, maxLap = maxLap }
+  -- local context = { currLap = currLap, maxLap = maxLap }
   local condition = self.playback_rules
-  log('D', logTag, "playbackAllowed name='"..self.name.."' condition='"..tostring(condition).."' context="..dumps(context))
+  log('D', logTag,
+    "playbackAllowed name='"..self.name..
+    "' condition='"..tostring(condition)..
+    "' currLap="..tostring(currLap..
+    " maxLap="..tostring(maxLap)))
 
   -- If condition is nil or empty/whitespace string, return true
   if condition == nil or condition:match("^%s*$") then
@@ -846,36 +850,31 @@ function C:playbackAllowed(currLap, maxLap)
   end
 end
 
-function C:posForVehiclePlacement()
-  local wp1 = self:getCornerStartWaypoint()
-  local wp2 = self:getActiveFwdAudioTrigger()
+function C:vehiclePlacementPosAndRot()
+  local cs = self:getCornerStartWaypoint()
+  local at = self:getActiveFwdAudioTrigger()
 
-  if wp1 and wp2 then
-    local direction = wp2.pos - wp1.pos
-    direction = vec3(direction):normalized()
+  if cs and at then
+    -- local distAway = wp2.radius * 2
+    local distAway = 7
 
-    local newPos = wp2.pos + direction * (wp2.radius * 2)
-    return newPos
-  else
-    return nil
-  end
-end
+    local pos1 = at.pos + (at.normal * distAway)
+    local pos2 = at.pos + (-at.normal * distAway)
+    local pos = nil
 
-function C:rotForVehiclePlacement(wp2)
-  local wp1 = self:getCornerStartWaypoint()
-  local wp2 = self:getActiveFwdAudioTrigger()
+    if cs.pos:distance(pos1) > cs.pos:distance(pos2) then
+      pos = pos1
+    else
+      pos = pos2
+    end
 
-  if wp1 and wp2 then
-    local fwd = wp1.pos - wp2.pos
-    fwd = vec3(fwd):normalized()
-
-    local up = {x = 0, y = 0, z = 1}
-    up = vec3(up)
-
+    local fwd = at.pos - pos
+    local up = vec3(0,0,1)
     local rot = quatFromDir(fwd, up):normalized()
-    return rot
+
+    return pos, rot
   else
-    return nil
+    return nil, nil
   end
 end
 

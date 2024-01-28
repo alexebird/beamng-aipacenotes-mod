@@ -30,6 +30,16 @@ function C:init(fname)
 end
 
 function C:load()
+  if not self.fname  then
+    log('W', logTag, 'load: transcript fname is nil')
+    return false
+  end
+
+  if not FS:fileExists(self.fname) then
+    log('W', logTag, 'load: transcript fname doesnt exist')
+    return false
+  end
+
   local json = jsonReadFile(self.fname)
   if not json then
     log('E', logTag, 'couldnt find notebook file')

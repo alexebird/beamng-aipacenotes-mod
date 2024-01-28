@@ -122,10 +122,10 @@
         "position":"absolute",
         "right":0,
         "top":"",
-        "width":"580px"
+        "width":"600px"
       }
     }
   ],
   "description":"Layout used for Rally Recce mode.",
-  "title":"Rally - Recce"
+  "title":"[aipacenotes] Recce"
 }

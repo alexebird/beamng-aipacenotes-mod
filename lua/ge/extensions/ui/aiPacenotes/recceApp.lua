@@ -17,7 +17,6 @@ local ui_selectedCornerAnglesStyle = ""
 local missionDir = nil
 local missionId = nil
 
-
 local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
 end
@@ -240,7 +239,8 @@ local function moveVehicleBackward()
   for i,pn in ipairs(col) do
     local at = pn:getActiveFwdAudioTrigger()
     if at then
-      local dist = vPos:distance(pn:posForVehiclePlacement())
+      local placementPos, _ = pn:vehiclePlacementPosAndRot()
+      local dist = vPos:distance(placementPos)
       if dist < nearestPacenoteDist then
         nearestPacenoteDist = dist
         nearestPacenote = pn
@@ -250,7 +250,8 @@ local function moveVehicleBackward()
   end
 
   if nearestPacenote then
-    local vdist = vPos:distance(nearestPacenote:posForVehiclePlacement())
+    local placementPos, _ = nearestPacenote:vehiclePlacementPosAndRot()
+    local vdist = vPos:distance(placementPos)
     log('D', 'wtf', 'vdist='..tostring(vdist))
     if vdist < 10 then
       -- go to the next one after closest
@@ -264,8 +265,7 @@ local function moveVehicleBackward()
     end
 
     if nearestPacenote then
-      local pos = nearestPacenote:posForVehiclePlacement()
-      local rot = nearestPacenote:rotForVehiclePlacement()
+      local pos, rot = nearestPacenote:vehiclePlacementPosAndRot()
 
       if pos and rot then
         local playerVehicle = be:getPlayerVehicle(0)
@@ -298,7 +298,8 @@ local function moveVehicleForward()
   for i,pn in ipairs(col) do
     local at = pn:getActiveFwdAudioTrigger()
     if at then
-      local dist = vPos:distance(pn:posForVehiclePlacement())
+      local placementPos, _ = pn:vehiclePlacementPosAndRot()
+      local dist = vPos:distance(placementPos)
       if dist < nearestPacenoteDist then
         nearestPacenoteDist = dist
         nearestPacenote = pn
@@ -308,7 +309,8 @@ local function moveVehicleForward()
   end
 
   if nearestPacenote then
-    local vdist = vPos:distance(nearestPacenote:posForVehiclePlacement())
+    local placementPos, _ = nearestPacenote:vehiclePlacementPosAndRot()
+    local vdist = vPos:distance(placementPos)
     log('D', 'wtf', 'vdist='..tostring(vdist))
     if vdist < 10 then
       -- go to the next one after closest
@@ -322,8 +324,7 @@ local function moveVehicleForward()
     end
 
     if nearestPacenote then
-      local pos = nearestPacenote:posForVehiclePlacement()
-      local rot = nearestPacenote:rotForVehiclePlacement()
+      local pos, rot = nearestPacenote:vehiclePlacementPosAndRot()
 
       if pos and rot then
         local playerVehicle = be:getPlayerVehicle(0)
@@ -352,7 +353,9 @@ end
 local function initSnapVC()
   log('D', logTag, 'initSnapVC')
   snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(missionDir)
-  snaproads:load()
+  if not snaproads:load() then
+    snaproads = nil
+  end
 end
 
 local function initRallyManager(newMissionId, newMissionDir)
@@ -361,8 +364,7 @@ local function initRallyManager(newMissionId, newMissionDir)
   flag_NoteSearch = false
   rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
   rallyManager:setOverrideMission(missionId, missionDir)
-  local vehObjId = be:getPlayerVehicleID(0)
-  rallyManager:setup(vehObjId, 100, 5)
+  rallyManager:setup(100, 10)
   rallyManager:handleNoteSearch()
 
   if missionDir then

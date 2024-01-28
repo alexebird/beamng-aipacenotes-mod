@@ -56,10 +56,6 @@ end
 function C:setup(damageThresh, closestPacenotes_n)
   log('I', logTag, 'RallyManager setup starting')
 
-  -- self.vehId = vehId
-
-  -- local vehObjId = be:getPlayerVehicleID(0)
-
   self.damageThresh = damageThresh
   self.closestPacenotes_n = closestPacenotes_n
 
@@ -199,8 +195,7 @@ function C:update(dtSim, raceData)
 
   if self.vehicleTracker:didJustHaveDamage() then
     -- First, check if the last tick had an increase in damage.
-    self.audioManager:resetAudioQueue()
-    -- self.audioManager:enqueueDamageSfx()
+    self.audioManager:handleDamage()
   -- else
     -- self.audioManager:playNextInQueue()
   elseif self.closestPacenotes then

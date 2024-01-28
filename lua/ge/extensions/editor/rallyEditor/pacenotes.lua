@@ -2139,8 +2139,7 @@ function C:autoFillDistanceCalls()
 end
 
 function C:placeVehicleAtPacenote()
-  local pos = self:selectedPacenote():posForVehiclePlacement()
-  local rot = self:selectedPacenote():rotForVehiclePlacement()
+  local pos, rot = self:selectedPacenote():vehiclePlacementPosAndRot()
 
   if pos and rot then
     local playerVehicle = be:getPlayerVehicle(0)

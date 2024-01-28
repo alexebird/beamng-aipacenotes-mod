@@ -70,6 +70,7 @@ end
 -- assumes that the file exists.
 local function playPacenote(audioObj)
   local opts = { volume=audioObj.volume }
+  audioObj.time = getTime()
 
   local ch = 'AudioGUI' -- volume is controlled by OTHER
   -- local ch = 'AudioMusic' -- volume is controlled by MUSIC
@@ -77,19 +78,20 @@ local function playPacenote(audioObj)
   local res = Engine.Audio.playOnce(ch, audioObj.pacenoteFname, opts)
   -- printFields(res)
 
-  local sfxSource = scenetree.findObjectById(res.sourceId)
+  if not res then
+    log('E', logTag, 'error playing audio')
+    return
+  end
+
+  -- local sfxSource = scenetree.findObjectById(res.sourceId)
   -- log('D', logTag, dumps(sfxSource))
   -- printFields(sfxSource)
-
-  if res == nil then
-    log('E', logTag, 'error playing audio')
-  end
 
   -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
   audioObj.audioLen = res.len
   audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
   audioObj.sourceId = res.sourceId
-  log('D', logTag, 'audioObj audioLen='..tostring(audioObj.audioLen) .. ' timeout='..tostring(audioObj.timeout))
+  log('D', logTag, 'playPacenote channel='..ch..' '..dumps(audioObj))
 end
 
 local function buildAudioObjPacenote(pacenoteFname)
@@ -97,7 +99,8 @@ local function buildAudioObjPacenote(pacenoteFname)
     audioType = 'pacenote',
     pacenoteFname = pacenoteFname,
     volume = 2,
-    time = getTime(),
+    created_at = getTime(),
+    time = nil,
     audioLen = nil,
     timeout = nil,
     sourceId = nil,
@@ -110,7 +113,8 @@ end
 local function buildAudioObjPause(pauseSecs)
   local audioObj = {
     audioType = 'pause',
-    time = getTime(),
+    created_at = getTime(),
+    time = nil,
     audioLen = nil,
     timeout = nil,
     pauseTime = pauseSecs,

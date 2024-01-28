@@ -173,12 +173,12 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // ie: inputAction(lua) -> JS(js) -> engineLua(lua)
       // this pattern is good in case some frontend state needs to be updated.
       $scope.btnMovePacenoteForward = function() {
-        if (drawDebug) {
+        if ($scope.drawDebug) {
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteForward()')
         }
       }
       $scope.btnMovePacenoteBackward = function() {
-        if (drawDebug) {
+        if ($scope.drawDebug) {
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteBackward()')
         }
       }
