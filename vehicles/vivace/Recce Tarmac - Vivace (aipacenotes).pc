@@ -1,6 +1,6 @@
 {
   "format":2,
-  "licenseName":"alexebird",
+  "licenseName":"RECCE-T",
   "mainPartName":"vivace",
   "model":"vivace",
   "paints":[
@@ -45,7 +45,7 @@
     "brakepad_F":"brakepad_F_sport",
     "brakepad_R":"brakepad_R_sport",
     "gps":"",
-    "licenseplate_design_2_1":"",
+    "licenseplate_design_2_1":"license_plate_germany_2_1",
     "n2o_system":"",
     "paint_design":"",
     "skin_interior":"vivace_skin_interior_arc",

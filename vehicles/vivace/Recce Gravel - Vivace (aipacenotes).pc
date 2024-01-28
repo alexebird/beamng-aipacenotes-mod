@@ -1,6 +1,6 @@
 {
   "format":2,
-  "licenseName":"alexebird",
+  "licenseName":"RECCE-G",
   "mainPartName":"vivace",
   "model":"vivace",
   "paints":[
@@ -45,13 +45,13 @@
     "brakepad_F":"brakepad_F_sport",
     "brakepad_R":"brakepad_R_sport",
     "gps":"",
-    "licenseplate_design_2_1":"",
+    "licenseplate_design_2_1":"license_plate_germany_2_1",
     "n2o_system":"",
     "paint_design":"",
     "skin_interior":"vivace_skin_interior_arc",
     "soundscape_horn":"soundscape_horn_7",
-    "tire_F_18x8":"tire_F_235_40_18_tarmac",
-    "tire_R_18x8":"tire_R_235_40_18_tarmac",
+    "tire_F_15x7":"tire_F_205_65_15_rally",
+    "tire_R_15x7":"tire_R_205_65_15_rally",
     "vivace_DSE":"vivace_DSE",
     "vivace_DSE_ABS":"vivace_DSE_ABS",
     "vivace_DSE_ESC":"vivace_DSE_ESC",
@@ -162,8 +162,8 @@
     "vivace_undertray":"vivace_undertray",
     "vivace_wheeldata_F":"vivace_wheeldata_F",
     "vivace_wheeldata_R_wide":"vivace_wheeldata_R_wide",
-    "wheel_F_5":"wheel_11b_18x8_F",
-    "wheel_R_5":"wheel_11b_18x8_R"
+    "wheel_F_5":"wheel_17c_15x7_F_alt",
+    "wheel_R_5":"wheel_17c_15x7_R_alt"
   },
   "vars":{}
 }
