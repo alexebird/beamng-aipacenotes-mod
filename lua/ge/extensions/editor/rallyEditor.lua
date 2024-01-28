@@ -15,7 +15,7 @@ local currentWindow = {}
 local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
-local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
+-- local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
 local notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow
@@ -409,7 +409,7 @@ local function onActivate()
       win:onEditModeActivate()
     end
   end
-  snaproads.loadSnapRoads()
+  -- snaproads.loadSnapRoads()
 end
 local function onDeactivate()
   for _, win in ipairs(windows) do

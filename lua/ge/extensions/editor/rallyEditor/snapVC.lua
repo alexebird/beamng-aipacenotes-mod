@@ -2,7 +2,6 @@
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
-local im  = ui_imgui
 local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
@@ -51,7 +50,7 @@ function C:load()
   return true
 end
 
-function C:mouseOverSnapRoad(mouseInfo)
+function C:_mouseOverSnapRoad(mouseInfo)
   if not mouseInfo then return nil end
 
   local minNoteDist = self.startingMinDist
@@ -74,7 +73,9 @@ function C:mouseOverSnapRoad(mouseInfo)
 end
 
 function C:drawSnapRoads(mouseInfo, clr_override)
-  local closest_snap_for_hover = self:mouseOverSnapRoad(mouseInfo)
+  if not self.transcript_path then return end
+
+  local closest_snap_for_hover = self:_mouseOverSnapRoad(mouseInfo)
   local clr = nil
   local alpha = nil
 
@@ -136,6 +137,8 @@ local function findPosForNormal(snaps, closest_i)
 end
 
 function C:closestSnapPos(source_pos)
+  if not self.transcript_path then return end
+
   -- local snaps = self.handle_points
   local snaps = self.spline_points
 
@@ -159,6 +162,8 @@ function C:closestSnapPos(source_pos)
 end
 
 function C:prevSnapPos(srcPosIn)
+  if not self.transcript_path then return end
+
   srcPosIn = vec3(srcPosIn)
 
   -- make sure that srcPosIn is aligned to a snaproad node.
@@ -182,6 +187,8 @@ function C:prevSnapPos(srcPosIn)
 end
 
 function C:nextSnapPos(srcPos, limitPos)
+  if not self.transcript_path then return end
+
   srcPos = vec3(srcPos)
   limitPos = vec3(limitPos)
 

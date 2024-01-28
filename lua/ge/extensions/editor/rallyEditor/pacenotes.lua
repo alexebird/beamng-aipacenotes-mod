@@ -5,7 +5,7 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
-local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
+-- local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
@@ -56,6 +56,8 @@ function C:init(rallyEditor)
   self.waypoint_index = nil
   self.mouseInfo = {}
   self.dragMode = dragModes.simple
+
+  self.snaproads = nil
 
   self._insertMode = false
   self.wasWPSelected = false
@@ -617,8 +619,8 @@ function C:draw(mouseInfo, tabContentsHeight)
 
   -- visualize the snap road points with debugDraw.
   -- the same data is utilized separately -- this is just for visualizing.
-  if self.dragMode == dragModes.simple_road_snap then
-    snaproads.drawSnapRoads(self.mouseInfo)
+  if self.snaproads and self.dragMode == dragModes.simple_road_snap then
+    self.snaproads:drawSnapRoads(self.mouseInfo)
   end
 end
 
@@ -654,18 +656,18 @@ function C:createMouseDragPacenote()
   local txt = "Create new pacenote (Drag to place corner start and end)"
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
-  if self.dragMode == dragModes.simple_road_snap then
-    pos_rayCast = snaproads.closestSnapPos(pos_rayCast)
+  if self.snaproads and self.dragMode == dragModes.simple_road_snap then
+    pos_rayCast = self.snaproads:closestSnapPos(pos_rayCast)
   end
 
   local pos_cs = self.mouseInfo._downPos
-  if self.dragMode == dragModes.simple_road_snap and pos_cs then
-    pos_cs = snaproads.closestSnapPos(pos_cs)
+  if self.snaproads and self.dragMode == dragModes.simple_road_snap and pos_cs then
+    pos_cs = self.snaproads:closestSnapPos(pos_cs)
   end
 
   local pos_ce = self.mouseInfo._holdPos
-  if self.dragMode == dragModes.simple_road_snap and pos_ce then
-    pos_ce = snaproads.closestSnapPos(pos_ce)
+  if self.snaproads and self.dragMode == dragModes.simple_road_snap and pos_ce then
+    pos_ce = self.snaproads:closestSnapPos(pos_ce)
   end
 
   -- draw the cursor text
@@ -716,8 +718,8 @@ function C:addMouseWaypointToPacenote()
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
 
-  if self.dragMode == dragModes.simple_road_snap then
-    pos_rayCast = snaproads.closestSnapPos(pos_rayCast)
+  if self.snaproads and self.dragMode == dragModes.simple_road_snap then
+    pos_rayCast = self.snaproads:closestSnapPos(pos_rayCast)
   end
 
   -- draw the cursor text
@@ -752,7 +754,7 @@ function C:addMouseWaypointToPacenote()
 
         if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
           if self.dragMode == dragModes.simple_road_snap then
-            self:snapOneHelper(waypoint)
+            self:_snapOneHelper(waypoint)
           elseif self.dragMode == dragModes.simple then
             local cs = note:getCornerStartWaypoint()
             if cs then
@@ -781,7 +783,7 @@ function C:addMouseWaypointToPacenote()
 
     if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
       if self.dragMode == dragModes.simple_road_snap then
-        self:snapOneHelper(waypoint)
+        self:_snapOneHelper(waypoint)
       elseif self.dragMode == dragModes.simple then
         local cs = note:getCornerStartWaypoint()
         if cs then
@@ -913,11 +915,11 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
       local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
       return newPos, nil
     end
-  elseif self.dragMode == dragModes.simple_road_snap then
+  elseif self.snaproads and self.dragMode == dragModes.simple_road_snap then
     -- if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
       if self.mouseInfo.rayCast then
         local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-        return snaproads.closestSnapPos(newPos)
+        return self.snaproads:closestSnapPos(newPos)
       else
         local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
         return newPos, nil
@@ -1250,7 +1252,7 @@ function C:drawPacenotesList(height)
   -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
   im.SameLine()
   if im.Button("Snap All") then
-    self:snapAll()
+    self:_snapAll()
   end
   im.tooltip("Snap all waypoints to nearest snaproad point.")
   im.SameLine()
@@ -1558,6 +1560,13 @@ function C:drawTranscriptsSection(height)
       local abspath = settings:getFullCourseTranscriptAbsPath()
       self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
       self:selectFirstTranscript()
+
+      self.snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(self.rallyEditor.getMissionDir())
+      self.snaproads.radius = 0.5
+      if not self.snaproads:load() then
+        self.snaproads = nil
+      end
+
     end
   end
   im.SameLine()
@@ -2001,8 +2010,9 @@ function C:setCameraToPacenote()
   pacenote:setCameraToWaypoints()
 end
 
-function C:snapAll()
+function C:_snapAll()
   if not self.path then return end
+  if not self.snaproads then return end
 
   editor.history:commitAction("Snap all waypoints",
     {
@@ -2013,13 +2023,13 @@ function C:snapAll()
       data.self.path.pacenotes:onDeserialized(data.old_pacenotes, {})
     end,
     function(data) -- redo
-      data.self:snapAllHelper()
+      data.self:_snapAllHelper()
     end
   )
 end
 
-function C:snapOneHelper(wp)
-  local newPos, normalAlignPos = snaproads.closestSnapPos(wp.pos)
+function C:_snapOneHelper(wp)
+  local newPos, normalAlignPos = self.snaproads:closestSnapPos(wp.pos)
   wp.pos = newPos
   if normalAlignPos then
     local rv = re_util.calculateForwardNormal(newPos, normalAlignPos)
@@ -2027,9 +2037,9 @@ function C:snapOneHelper(wp)
   end
 end
 
-function C:snapAllHelper()
+function C:_snapAllHelper()
   for i,wp in pairs(self.path:allWaypoints()) do
-    self:snapOneHelper(wp)
+    self:_snapOneHelper(wp)
   end
 end
 
