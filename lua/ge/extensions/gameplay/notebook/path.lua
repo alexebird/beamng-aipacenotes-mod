@@ -619,10 +619,9 @@ function C:autofillDistanceCalls()
       dist_str = normalize_distance(dist_str) .. '.'
 
       -- Decide what to do based on the distance
-      if dist <= 20 then
-        next_prepend = "into"
-      elseif dist <= 40 then
-        next_prepend = "and"
+      local shorthand = re_util.getDistanceCallShorthand(dist)
+      if shorthand then
+        next_prepend = shorthand
       else
         if pacenote:getNoteFieldAfter(lang) ~= re_util.autofill_blocker then
           pacenote:setNoteFieldAfter(lang, dist_str)

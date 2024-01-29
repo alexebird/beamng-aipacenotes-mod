@@ -92,18 +92,25 @@ function C:joinedNote(lang)
     return txt
   end
 
+  local useNote = function(text)
+    return text and
+      text ~= '' and
+      text ~= re_util.autofill_blocker and
+      text ~= re_util.autodist_internal_level1
+  end
+
   local before = lang_data[self.noteFields.before]
-  if before and before ~= '' and before ~= re_util.autofill_blocker then
+  if useNote(before) then
     txt = txt .. before
   end
 
   local note = lang_data[self.noteFields.note]
-  if note and note ~= '' and note ~= re_util.autofill_blocker then
+  if useNote(note) then
     txt = txt .. ' ' .. note
   end
 
   local after = lang_data[self.noteFields.after]
-  if after and after ~= '' and after ~= re_util.autofill_blocker then
+  if useNote(after) then
     txt = txt .. ' ' .. after
   end
 
@@ -512,6 +519,15 @@ local function formatDistanceStringMeters(dist)
   return tostring(round(dist))..'m'
 end
 
+local function formatDistanceStringMetersWithShorthand(dist)
+  local shorthand = re_util.getDistanceCallShorthand(dist)
+  if shorthand then
+    return shorthand
+  else
+    return formatDistanceStringMeters(dist)
+  end
+end
+
 local function prettyDistanceStringMeters(from, to)
   if not (from and to) then return "?m" end
   local d = from.pos:distance(to.pos)
@@ -576,7 +592,7 @@ function C:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pace
   if drawConfig.cs then
     if pacenote_prev then
       -- distance is from prev CS to this CE, including all after and before distance markers
-      dist_text = formatDistanceStringMeters(pacenote_prev:distanceCornerEndToCornerStart(self))
+      dist_text = formatDistanceStringMetersWithShorthand(pacenote_prev:distanceCornerEndToCornerStart(self))
     end
     drawWaypoint(self:getCornerStartWaypoint(), wp_drawMode, pacenote_draw_mode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
   end
@@ -602,8 +618,7 @@ function C:drawDebugPacenoteHelper(drawConfig, hover_wp_id, selected_wp_id, pace
   if drawConfig.ce then
     if pacenote_next then
       -- distance is from CE to next CS, including all after and before distance markers
-      dist_text = formatDistanceStringMeters(self:distanceCornerEndToCornerStart(pacenote_next))
-      -- dist_text = prettyDistanceStringMeters(self:getCornerEndWaypoint(), pacenote_next:waypointForBeforeLink())
+      dist_text = formatDistanceStringMetersWithShorthand(self:distanceCornerEndToCornerStart(pacenote_next))
     end
     drawWaypoint(self:getCornerEndWaypoint(), wp_drawMode, pacenote_draw_mode, note_text, dist_text, hover_wp_id, selected_wp_id, base_alpha)
   end

@@ -503,82 +503,94 @@ end
 
 local function onEditorRegisterPreferences(prefsRegistry)
   prefsRegistry:registerCategory("rallyEditor")
-  prefsRegistry:registerSubCategory("rallyEditor", "general", nil,
-  {
+  prefsRegistry:registerSubCategory("rallyEditor", "editing", nil, {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
-    {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
-    {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
+    {lockWaypoints = {"bool", false, "Lock position of non-AudioTrigger waypoints."}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
+    {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
+    {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     -- {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference.\nRequires race to be loaded in the Race Tool."}},
-    {defaultWaypointRadius = {"int", 10, "The default radius for waypoints.", nil, 1, 50}},
-    {topDownCameraElevation = {"int", 150, "Elevation for the top-down camera view.", nil, 1, 1000}},
-    {topDownCameraFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
+  })
+  prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
+    {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
+    {level2Thresh = {"int", 20, "Threshold for level 2", nil, 0, 100}},
+    {level3Thresh = {"int", 40, "Threshold for level 3", nil, 0, 100}},
+
+    {level1Text = {"string", re_util.autodist_internal_level1, "Text for level 1."}},
+    {level2Text = {"string", "into", "Text for level 2."}},
+    {level3Text = {"string", "and", "Text for level 3."}},
+  })
+  prefsRegistry:registerSubCategory("rallyEditor", "topDownCamera", nil, {
+    {elevation = {"int", 200, "Elevation for the top-down camera view.", nil, 1, 1000}},
+    {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
+  })
+  prefsRegistry:registerSubCategory("rallyEditor", "waypoints", nil, {
+    {defaultRadius = {"int", 8, "The default radius for waypoints.", nil, 1, 50}},
   })
 end
 
-local function getPrefShowDistanceMarkers()
+local function getPreference(key, default)
   if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.showDistanceMarkers')
+    return editor.getPreference(key)
   else
-    return true
+    return default
   end
+end
+
+local function getPrefShowDistanceMarkers()
+  return getPreference('rallyEditor.editing.showDistanceMarkers', true)
 end
 
 local function getPrefShowAudioTriggers()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.showAudioTriggers')
-  else
-    return true
-  end
+  return getPreference('rallyEditor.editing.showAudioTriggers', true)
 end
 
 local function getPrefShowPreviousPacenote()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.showPreviousPacenote')
-  else
-    return true
-  end
+  return getPreference('rallyEditor.editing.showPreviousPacenote', true)
 end
 
 local function getPrefShowNextPacenote()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.showNextPacenote')
-  else
-    return true
-  end
+  return getPreference('rallyEditor.editing.showNextPacenote', true)
 end
 
 -- local function getPrefShowRaceSegments()
---   if editor and editor.getPreference then
---     return editor.getPreference('rallyEditor.general.showRaceSegments')
---   else
---     return false
---   end
+--     return getPreference('rallyEditor.general.showRaceSegments', false)
 -- end
 
 local function getPrefDefaultRadius()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.defaultWaypointRadius')
-  else
-    return 10
-  end
+  return getPreference('rallyEditor.waypoints.defaultRadius', 8)
 end
 
 local function getPrefTopDownCameraElevation()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.topDownCameraElevation')
-  else
-    return 150
-  end
+  return getPreference('rallyEditor.topDownCamera.elevation', 200)
 end
 
 local function getPrefTopDownCameraFollow()
-  if editor and editor.getPreference then
-    return editor.getPreference('rallyEditor.general.topDownCameraFollow')
-  else
-    return true
-  end
+  return getPreference('rallyEditor.topDownCamera.shouldFollow', true)
+end
+
+local function getPrefLockWaypoints()
+  return getPreference('rallyEditor.editing.lockWaypoints', false)
+end
+
+local function getPrefLevel1Thresh()
+  return getPreference('rallyEditor.distanceCalls.level1Thresh', 10)
+end
+local function getPrefLevel2Thresh()
+  return getPreference('rallyEditor.distanceCalls.level2Thresh', 20)
+end
+local function getPrefLevel3Thresh()
+  return getPreference('rallyEditor.distanceCalls.level3Thresh', 40)
+end
+local function getPrefLevel1Text()
+  return getPreference('rallyEditor.distanceCalls.level1Text', re_util.autodist_internal_level1)
+end
+local function getPrefLevel2Text()
+  return getPreference('rallyEditor.distanceCalls.level2Text', 'into')
+end
+local function getPrefLevel3Text()
+  return getPreference('rallyEditor.distanceCalls.level3Text', 'and')
 end
 
 local function loadMissionSettings(folder)
@@ -705,6 +717,13 @@ M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
+M.getPrefLockWaypoints = getPrefLockWaypoints
+M.getPrefLevel1Thresh = getPrefLevel1Thresh
+M.getPrefLevel2Thresh = getPrefLevel2Thresh
+M.getPrefLevel3Thresh = getPrefLevel3Thresh
+M.getPrefLevel1Text = getPrefLevel1Text
+M.getPrefLevel2Text = getPrefLevel2Text
+M.getPrefLevel3Text = getPrefLevel3Text
 
 M.listNotebooks = listNotebooks
 

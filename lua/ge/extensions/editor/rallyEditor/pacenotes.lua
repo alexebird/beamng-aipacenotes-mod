@@ -414,7 +414,7 @@ function C:handleMouseHold()
     -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
 
     local wp_sel = self:selectedWaypoint()
-    if wp_sel then
+    if wp_sel and not wp_sel:isLocked() then
       if self.mouseInfo.rayCast then
         local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
         if new_pos then
@@ -1003,6 +1003,14 @@ end
 function C:deleteSelectedWaypoint()
   if not self.path then return end
 
+  local wp_sel = self:selectedWaypoint()
+
+  if wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
+    return
+  elseif wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerEnd then
+    return
+  end
+
   editor.history:commitAction(
     "RallyEditor DeleteSelectedWaypoint",
     {index = self.waypoint_index, self = self},
@@ -1482,7 +1490,7 @@ Any lua code is allowed, so be careful. Examples:
       im.tooltip(tooltipStr)
       im.SameLine()
 
-      im.SetNextItemWidth(50)
+      im.SetNextItemWidth(90)
       editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         self:handleNoteFieldEdit(note, language, 'before', fields.before)

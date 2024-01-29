@@ -10,6 +10,7 @@ local M = {}
 
 
 local autofill_blocker = '#'
+local autodist_internal_level1 = '<none>'
 local unknown_transcript_str = '[unknown]'
 local aipPath = 'aipacenotes'
 local notebooksPath = aipPath..'/notebooks'
@@ -323,10 +324,23 @@ local function loadMissionSettings(folder)
   return settings
 end
 
+local function getDistanceCallShorthand(dist)
+  if dist <= editor_rallyEditor.getPrefLevel1Thresh() then
+    return editor_rallyEditor.getPrefLevel1Text()
+  elseif dist <= editor_rallyEditor.getPrefLevel2Thresh() then
+    return editor_rallyEditor.getPrefLevel2Text()
+  elseif dist <= editor_rallyEditor.getPrefLevel3Thresh() then
+    return editor_rallyEditor.getPrefLevel3Text()
+  else
+    return nil
+  end
+end
+
 -- vars
 M.aipPath = aipPath
 M.aip_fg_color = aip_fg_color
 M.autofill_blocker = autofill_blocker
+M.autodist_internal_level1 = autodist_internal_level1
 M.default_codriver_language = default_codriver_language
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
@@ -361,5 +375,6 @@ M.setCameraTarget = setCameraTarget
 M.trimString = trimString
 M.matchSearchPattern = matchSearchPattern
 M.loadMissionSettings = loadMissionSettings
+M.getDistanceCallShorthand = getDistanceCallShorthand
 
 return M

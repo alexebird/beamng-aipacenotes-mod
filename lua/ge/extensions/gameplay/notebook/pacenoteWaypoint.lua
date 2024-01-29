@@ -177,8 +177,13 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha, clr_text_fg, clr_t
     clipArg1
   )
 
-  clr_text_fg = clr_text_fg or cc.waypoint_clr_txt_fg
-  clr_text_bg = clr_text_bg or cc.waypoint_clr_txt_bg
+  if self.waypointType == waypointTypes.wpTypeDistanceMarker then
+    clr_text_fg = cc.pacenote_clr_di_txt
+    clr_text_bg = cc.pacenote_clr_di
+  else
+    clr_text_fg = clr_text_fg or cc.waypoint_clr_txt_fg
+    clr_text_bg = clr_text_bg or cc.waypoint_clr_txt_bg
+  end
 
   debugDrawer:drawTextAdvanced(
     self.pos,
@@ -294,6 +299,21 @@ end
 
 function C:lookAtMe()
   re_util.setCameraTarget(self.pos)
+end
+
+function C:isLockable()
+  return self.waypointType == waypointTypes.wpTypeCornerStart or
+    self.waypointType == waypointTypes.wpTypeCornerEnd or
+    self.waypointType == waypointTypes.wpTypeDistanceMarker
+end
+
+function C:isLocked()
+  if self:isLockable() then
+    if editor_rallyEditor then
+      return editor_rallyEditor.getPrefLockWaypoints()
+    end
+  end
+  return false
 end
 
 return function(...)
