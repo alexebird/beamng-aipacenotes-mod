@@ -696,6 +696,7 @@ M.saveCurrent = saveCurrent
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
+M.select = select
 
 M.loadMissionSettings = loadMissionSettings
 M.detectNotebookToLoad = detectNotebookToLoad
@@ -707,6 +708,7 @@ M.insertMode = insertMode
 
 M.onEditorInitialized = onEditorInitialized
 M.getTranscriptsWindow = function() return transcriptsWindow end
+M.getPacenotesWindow = function() return pacenotesWindow end
 M.getMissionDir = getMissionDir
 
 M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers

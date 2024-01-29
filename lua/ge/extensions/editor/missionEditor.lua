@@ -111,6 +111,7 @@ local function openRallyEditor(shownMission)
     local notebookFname = editor_rallyEditor.detectNotebookToLoad(shownMission.missionFolder)
     log('I', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
     editor_rallyEditor.loadNotebook(notebookFname)
+    editor_rallyEditor.select(editor_rallyEditor.getPacenotesWindow())
   end
 end
 

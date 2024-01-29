@@ -72,6 +72,7 @@ function C:init(rallyEditor)
   self.transcript_tools_state = {
     show = true,
     selected_id = nil,
+    playbackLastCameraPos = nil,
     last_camera = {
       pos = nil,
       quat = nil
@@ -366,6 +367,12 @@ function C:drawDebugEntrypoint()
   local tscs = self:getTranscripts()
   if tscs and self.transcript_tools_state.show then
     tscs:drawDebug(self.transcript_tools_state.selected_id)
+
+    if self.transcript_tools_state.playbackLastCameraPos then
+      local clr = cc.clr_purple
+      local radius = self.snaproads and (self.snaproads.radius * 2.0) or 1
+      debugDrawer:drawSphere(self.transcript_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],0.9))
+    end
   end
 end
 
@@ -1620,6 +1627,7 @@ function C:drawTranscriptsSection(height)
   im.SameLine()
   if im.Button("X") then
     self.transcript_tools_state.search = nil
+    self.transcript_tools_state.playbackLastCameraPos = nil
     transcriptsSearchText = im.ArrayChar(1024, "")
   end
 
@@ -1638,6 +1646,7 @@ function C:drawTranscriptsSection(height)
       if core_camera.getActiveCamName() == "path" then
         if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(24, 24)) then
           core_paths.stopCurrentPath()
+          self.transcript_tools_state.playbackLastCameraPos = core_camera.getPosition()
           core_camera.setPosition(0, self.transcript_tools_state.last_camera.pos)
           core_camera.setRotation(0, self.transcript_tools_state.last_camera.quat)
         end
