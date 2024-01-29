@@ -614,7 +614,7 @@ function C:draw(mouseInfo, tabContentsHeight)
   -- self:drawPacenotesList(availableHeight * ratio)
   -- self:drawTranscriptsSection(availableHeight * (1.0 - ratio))
 
-  self:drawPacenotesList(tabContentsHeight * 0.67)
+  self:drawPacenotesList(tabContentsHeight * 0.65)
   self:drawTranscriptsSection(tabContentsHeight * 0.15)
 
   -- visualize the snap road points with debugDraw.
@@ -1286,7 +1286,7 @@ function C:drawPacenotesList(height)
   end
   im.SameLine()
   local editEnded = im.BoolPtr(false)
-  editor.uiInputText("##Search", pacenotesSearchText, nil, nil, nil, nil, editEnded)
+  editor.uiInputText("##SearchPn", pacenotesSearchText, nil, nil, nil, nil, editEnded)
   if editEnded[0] then
     self.pacenote_tools_state.search = ffi.string(pacenotesSearchText)
 
@@ -1295,6 +1295,7 @@ function C:drawPacenotesList(height)
     end
 
     if self.pacenote_tools_state.search then
+      log('D', logTag, 'searching pacenotes: '..self.transcript_tools_state.search)
       local pn = self:selectedPacenote()
       if pn then
         if not self:pacenoteSearchMatches(pn) then
@@ -1591,7 +1592,7 @@ function C:drawTranscriptsSection(height)
   end
   im.SameLine()
   local editEnded = im.BoolPtr(false)
-  editor.uiInputText("##Search", transcriptsSearchText, nil, nil, nil, nil, editEnded)
+  editor.uiInputText("##SearchTsc", transcriptsSearchText, nil, nil, nil, nil, editEnded)
   if editEnded[0] then
     self.transcript_tools_state.search = ffi.string(transcriptsSearchText)
     if re_util.trimString(self.transcript_tools_state.search) == '' then
@@ -1599,6 +1600,7 @@ function C:drawTranscriptsSection(height)
     end
 
     if self.transcript_tools_state.search then
+      log('D', logTag, 'searching transcripts: '..self.transcript_tools_state.search)
       local tsc = self:selectedTranscript()
       if tsc then
         if not self:transcriptSearchMatches(tsc.text) then
@@ -1737,8 +1739,9 @@ function C:transcriptSearchMatches(stringToMatch)
 
   local searchPattern = re_util.trimString(self.transcript_tools_state.search)
   if searchPattern == '' then return true end
+  log('D', logTag, 'transcriptSearchMatches: search="'..searchPattern..'" input="'..stringToMatch..'"')
 
-  return re_util.matchSearchPattern(searchPattern, stringToMatch) ~= nil
+  return re_util.matchSearchPattern(searchPattern, stringToMatch)
 end
 
 function C:pacenoteSearchMatches(pacenote)
@@ -1748,9 +1751,9 @@ function C:pacenoteSearchMatches(pacenote)
   if searchPattern == '' then return true end
 
   -- Escape special characters in Lua patterns except '*'
-  searchPattern = searchPattern:gsub("([%^%$%(%)%%%.%[%]%+%-%?])", "%%%1")
+  -- searchPattern = searchPattern:gsub("([%^%$%(%)%%%.%[%]%+%-%?])", "%%%1")
   -- Replace '*' with Lua's '.*' to act as a wildcard
-  searchPattern = searchPattern:gsub("%*", ".*")
+  -- searchPattern = searchPattern:gsub("%*", ".*")
 
   return pacenote:matchesSearchPattern(searchPattern)
 end
