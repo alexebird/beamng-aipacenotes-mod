@@ -37,13 +37,14 @@ function C:init(name)
     require('/lua/ge/extensions/gameplay/notebook/pacenote')
   )
 
-  self.static_pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
-    "static_pacenotes",
-    self,
-    require('/lua/ge/extensions/gameplay/notebook/pacenote')
-  )
-  local static_pn_data = self:generateStaticPacenotesData()
-  self.static_pacenotes:onDeserialized(static_pn_data, {})
+  -- self.static_pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
+  --   "static_pacenotes",
+  --   self,
+  --   require('/lua/ge/extensions/gameplay/notebook/pacenote')
+  -- )
+  -- local static_pn_data = self:generateStaticPacenotesData()
+  -- self.static_pacenotes:onDeserialized(static_pn_data, {})
+  self:loadStaticPacenotes()
 
   self.id = self:getNextUniqueIdentifier()
 
@@ -327,11 +328,37 @@ function C:onDeserialized(data)
   self.pacenotes:clear()
   self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
 
-  self.static_pacenotes:clear()
-  -- local static_pn_data = data.static_pacenotes or self:generateStaticPacenotesData()
-  local static_pn_data = self:generateStaticPacenotesData()
-  -- log('D', 'wtf', dumps(static_pn_data))
-  self.static_pacenotes:onDeserialized(static_pn_data, oldIdMap)
+  self:loadStaticPacenotes()
+  -- self.static_pacenotes:clear()
+  -- local static_pn_data = self:generateStaticPacenotesData()
+  -- -- log('D', 'wtf', dumps(static_pn_data))
+  -- self.static_pacenotes:onDeserialized(static_pn_data, oldIdMap)
+end
+
+function C:loadStaticPacenotes()
+  -- self.static_pacenotes:clear()
+  self.static_pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
+    "static_pacenotes",
+    self,
+    require('/lua/ge/extensions/gameplay/notebook/pacenote')
+  )
+
+  -- local static_pn_data = self:generateStaticPacenotesData()
+  local static_pn_data = {static_pacenotes = {}}
+
+  local fname = re_util.staticPacenotesFname
+
+  log('I', logTag, 'reading static_pacenotes file: ' .. tostring(fname))
+  local json = jsonReadFile(fname)
+  if json then
+    static_pn_data = json
+  else
+    log('E', logTag, 'unable to read static_pacenotes file at: ' .. tostring(fname))
+  end
+
+  log('D', 'wtf', dumps(static_pn_data))
+
+  self.static_pacenotes:onDeserialized(static_pn_data.static_pacenotes, {})
 end
 
 -- static notes are hardcoded and set on onDeserialized only.

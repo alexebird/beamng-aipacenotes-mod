@@ -107,11 +107,10 @@ local function openRallyEditor(shownMission)
     if not editor.active then
       editor.setEditorActive(true)
     end
-    editor_rallyEditor.show()
     local notebookFname = editor_rallyEditor.detectNotebookToLoad(shownMission.missionFolder)
     log('I', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
     editor_rallyEditor.loadNotebook(notebookFname)
-    editor_rallyEditor.select(editor_rallyEditor.getPacenotesWindow())
+    editor_rallyEditor.showRallyTool()
   end
 end
 

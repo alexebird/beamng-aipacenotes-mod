@@ -1,6 +1,6 @@
 {
   "format":2,
-  "licenseName":"RECCE-T",
+  "licenseName":"ZS.786WC",
   "mainPartName":"vivace",
   "model":"vivace",
   "paints":[
@@ -45,10 +45,10 @@
     "brakepad_F":"brakepad_F_sport",
     "brakepad_R":"brakepad_R_sport",
     "gps":"",
-    "licenseplate_design_2_1":"license_plate_germany_2_1",
+    "licenseplate_design_2_1":"",
     "n2o_system":"",
     "paint_design":"",
-    "skin_interior":"vivace_skin_interior_arc",
+    "skin_interior":"vivace_skin_interior",
     "soundscape_horn":"soundscape_horn_7",
     "tire_F_18x8":"tire_F_235_40_18_tarmac",
     "tire_R_18x8":"tire_R_235_40_18_tarmac",

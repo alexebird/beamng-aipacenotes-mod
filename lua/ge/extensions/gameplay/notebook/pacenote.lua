@@ -29,7 +29,6 @@ function C:init(notebook, name, forceId)
       self.notes[lang][val] = ''
     end
   end
-  self.segment = -1
   self.pacenoteWaypoints = require('/lua/ge/extensions/gameplay/util/sortedList')(
     "pacenoteWaypoints",
     self,
@@ -225,10 +224,6 @@ function C:validate()
     table.insert(self.validation_issues, 'missing AudioTrigger waypoint')
   end
 
-  -- if not self.segment or self.segment == -1 then
-  --   table.insert(self.validation_issues, 'need to set segment. (use Assign Segments button?)')
-  -- end
-
   if self.name == '' then
     table.insert(self.validation_issues, 'missing pacenote name')
   end
@@ -361,7 +356,6 @@ function C:onSerialize()
     playback_rules = self.playback_rules,
     notes = self.notes,
     metadata = self.metadata,
-    segment = self.segment,
     pacenoteWaypoints = self.pacenoteWaypoints:onSerialize(),
   }
 
@@ -373,7 +367,6 @@ function C:onDeserialized(data, oldIdMap)
   self.playback_rules = data.playback_rules
   self.notes = data.notes
   self.metadata = data.metadata or {}
-  self.segment = oldIdMap and oldIdMap[data.segment] or data.segment or -1
   self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
 end
 

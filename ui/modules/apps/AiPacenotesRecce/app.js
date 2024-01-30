@@ -193,7 +193,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.btnRefreshCornerAngles()
       $scope.btnRefreshMissions()
 
-      // Use vehicle reset to trigger a reload of the cornerAngles.json file.
+      // Use vehicle reset to trigger a reload of the corner_angles.json file.
       $scope.$on('VehicleReset', function (event, data) {
         $scope.$evalAsync(function () {
           $scope.btnRefreshCornerAngles()

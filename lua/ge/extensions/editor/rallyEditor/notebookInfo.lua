@@ -21,6 +21,7 @@ local codriverLanguageText = im.ArrayChar(1024, "")
 local voiceNamesSorted = {}
 
 local C = {}
+C.windowDescription = 'Notebook'
 
 local function selectCodriverUndo(data)
   data.self:selectCodriver(data.old)
@@ -44,10 +45,6 @@ function C:init(rallyEditor)
   self.codriver_index = nil
   -- self.mouseInfo = {}
   self.valid = true
-end
-
-function C:windowDescription()
-  return 'Notebook'
 end
 
 function C:isValid()

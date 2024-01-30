@@ -48,7 +48,7 @@
     "licenseplate_design_2_1":"license_plate_germany_2_1",
     "n2o_system":"",
     "paint_design":"",
-    "skin_interior":"vivace_skin_interior_arc",
+    "skin_interior":"vivace_skin_interior",
     "soundscape_horn":"soundscape_horn_7",
     "tire_F_15x7":"tire_F_205_65_15_rally",
     "tire_R_15x7":"tire_R_205_65_15_rally",

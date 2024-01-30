@@ -8,7 +8,6 @@ local logTag = 'aipacenotes'
 
 local M = {}
 
-
 local autofill_blocker = '#'
 local autodist_internal_level1 = '<none>'
 local unknown_transcript_str = '[unknown]'
@@ -16,6 +15,8 @@ local aipPath = 'aipacenotes'
 local notebooksPath = aipPath..'/notebooks'
 local transcriptsPath = aipPath..'/transcripts'
 local desktopTranscriptFname = "/settings/aipacenotes/desktop.transcripts.json"
+local staticPacenotesFname = "/settings/aipacenotes/static_pacenotes.json"
+local cornerAnglesFname = '/settings/aipacenotes/corner_angles.json'
 local transcriptsExt = "transcripts.json"
 local missionSettingsFname = 'mission.settings.json'
 local default_notebook_name = 'primary'
@@ -253,12 +254,12 @@ local function calculateForwardNormal(snap_pos, next_pos)
 end
 
 local function loadCornerAnglesFile()
-  local filename = '/settings/aipacenotes/cornerAngles.json'
+  local filename = cornerAnglesFname
   local json = jsonReadFile(filename)
   if json then
     return json, nil
   else
-    local err = 'unable to find cornerAngles file: ' .. tostring(filename)
+    local err = 'unable to find corner_angles file: ' .. tostring(filename)
     log('E', 'aipacenotes', err)
     return nil, err
   end
@@ -339,8 +340,8 @@ end
 -- vars
 M.aipPath = aipPath
 M.aip_fg_color = aip_fg_color
-M.autofill_blocker = autofill_blocker
 M.autodist_internal_level1 = autodist_internal_level1
+M.autofill_blocker = autofill_blocker
 M.default_codriver_language = default_codriver_language
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
@@ -348,6 +349,7 @@ M.default_notebook_name = default_notebook_name
 M.desktopTranscriptFname = desktopTranscriptFname
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath
+M.staticPacenotesFname = staticPacenotesFname
 M.transcriptsExt = transcriptsExt
 M.transcriptsPath = transcriptsPath
 M.unknown_transcript_str = unknown_transcript_str
@@ -361,11 +363,14 @@ M.detectMissionIdHelper = detectMissionIdHelper
 M.detectMissionManagerMissionId = detectMissionManagerMissionId
 M.determineCornerCall = determineCornerCall
 M.fileExists = fileExists
+M.getDistanceCallShorthand = getDistanceCallShorthand
 M.getMissionSettingsHelper = getMissionSettingsHelper
 M.getNotebookHelper = getNotebookHelper
 M.getTime = getTime
 M.hasPunctuation = hasPunctuation
 M.loadCornerAnglesFile = loadCornerAnglesFile
+M.loadMissionSettings = loadMissionSettings
+M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
 M.missionTranscriptsDir = missionTranscriptsDir
 M.normalize_name = normalize_name
@@ -373,8 +378,5 @@ M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
 M.setCameraTarget = setCameraTarget
 M.trimString = trimString
-M.matchSearchPattern = matchSearchPattern
-M.loadMissionSettings = loadMissionSettings
-M.getDistanceCallShorthand = getDistanceCallShorthand
 
 return M

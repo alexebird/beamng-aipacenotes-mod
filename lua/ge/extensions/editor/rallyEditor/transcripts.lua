@@ -8,6 +8,7 @@ local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
+C.windowDescription = 'Transcripts'
 
 local fileRenameText = im.ArrayChar(1024, "")
 
@@ -24,10 +25,6 @@ function C:init(rallyEditor)
   self.selected_fname = nil
   self.transcript_files = {}
   self.loaded_transcript = nil
-end
-
-function C:windowDescription()
-  return 'Transcripts'
 end
 
 function C:getCornerAngles(reload)

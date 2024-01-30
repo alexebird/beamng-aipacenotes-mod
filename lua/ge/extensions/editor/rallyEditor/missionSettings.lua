@@ -7,6 +7,7 @@ local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
+C.windowDescription = 'Mission Settings'
 
 local notebookFilenamesSorted = {}
 local transcriptFilenamesSorted = {}
@@ -14,10 +15,6 @@ local transcriptFilenamesSorted = {}
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.settings = nil
-end
-
-function C:windowDescription()
-  return 'Mission Settings'
 end
 
 function C:setPath(path)

@@ -24,6 +24,7 @@ local pacenotesSearchText = im.ArrayChar(1024, "")
 
 
 local C = {}
+C.windowDescription = 'Pacenotes'
 
 local function selectPacenoteUndo(data)
   data.self:selectPacenote(data.old)
@@ -78,10 +79,6 @@ function C:init(rallyEditor)
       quat = nil
     }
   }
-end
-
-function C:windowDescription()
-  return 'Pacenotes'
 end
 
 function C:isValid()

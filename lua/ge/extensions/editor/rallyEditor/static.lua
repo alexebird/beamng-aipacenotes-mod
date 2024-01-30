@@ -8,16 +8,13 @@ local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local C = {}
+C.windowDescription = 'Static Pacenotes'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
 
   -- self.columnsBasic = {}
   -- self.columnsBasic.selected = im.IntPtr(-1)
-end
-
-function C:windowDescription()
-  return 'Static Pacenotes'
 end
 
 -- this is the notebook. why am I still calling it a path???

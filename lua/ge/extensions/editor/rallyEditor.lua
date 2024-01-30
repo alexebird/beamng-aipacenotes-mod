@@ -1,25 +1,39 @@
-  -- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
+-- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
 -- If a copy of the bCDDL was not distributed with this
 -- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
 
-local M = {}
+local im = ui_imgui
+local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
+-- local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 
+local M = {}
 local logTag = 'rally_editor'
+
 local toolWindowName = "rallyEditor"
 local editModeName = "Edit Notebook"
-local im = ui_imgui
+local focusWindow = false
+local mouseInfo = {}
+
 local previousFilepath = "/gameplay/missions/"
 local previousFilename = "NewNotebook.notebook.json"
-local windows = {}
-local currentWindow = {}
 local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
 currentPath._fnWithoutExt = 'NewNotebook'
 currentPath._dir = previousFilepath
--- local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
-local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
-local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
+
+local windows = {}
 local notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow
-local mouseInfo = {}
+local currentWindow = {}
+local changedWindow = false
+local programmaticTabSelect = false
+
+local function select(window)
+  currentWindow:unselect()
+  currentWindow = window
+  currentWindow:setPath(currentPath)
+  currentWindow:selected()
+  changedWindow = true
+end
 
 local function setNotebookRedo(data)
   data.previous = currentPath
@@ -33,10 +47,11 @@ local function setNotebookRedo(data)
   local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
   currentPath._fnWithoutExt = filename
   for _, window in ipairs(windows) do
-    currentWindow:setPath(currentPath)
-    currentWindow:unselect()
+    window:setPath(currentPath)
+    -- window:unselect()
   end
-  currentWindow:selected()
+  -- currentWindow:selected()
+  -- select(notebookInfoWindow)
 end
 
 local function setNotebookUndo(data)
@@ -44,10 +59,11 @@ local function setNotebookUndo(data)
   previousFilename = data.previousFilename
   previousFilepath = data.previousFilepath
   for _, window in ipairs(windows) do
-    currentWindow:setPath(currentPath)
-    currentWindow:unselect()
+    window:setPath(currentPath)
+    -- window:unselect()
   end
-  currentWindow:selected()
+  -- currentWindow:selected()
+  -- select(notebookInfoWindow)
 end
 
 local function strip_basename(thepath)
@@ -153,8 +169,10 @@ local function loadNotebook(full_filename)
   p._fnWithoutExt = fn2
 
   editor.history:commitAction("Set path to " .. p.name,
-  {path = p, filepath = dir, filename = filename},
-   setNotebookUndo, setNotebookRedo)
+    { path = p, filepath = dir, filename = filename },
+    setNotebookUndo,
+    setNotebookRedo
+  )
 
   return currentPath
 end
@@ -189,45 +207,6 @@ local function updateMouseInfo()
   end
 end
 
-local changedWindow = false
-local function select(window)
-  currentWindow:unselect()
-  currentWindow = window
-  currentWindow:setPath(currentPath)
-  currentWindow:selected()
-  changedWindow = true
-end
-
-local function findIssues()
-  local issues = {}
-  -- if not editor.getPreference("raceEditor.general.directionalNodes") then
-  --   table.insert(issues, {"Directional nodes disabled. Enable for best-quality races.", nop})
-  -- end
-  -- local missingNormals = 0
-  -- for _, pn in ipairs(currentPath.pathnodes.sorted) do
-  --   if not pn.hasNormal then
-  --     missingNormals = missingNormals + 1
-  --   end
-  -- end
-  -- if missingNormals > 0 then
-  --   table.insert(issues, {missingNormals.." Pathnodes are missing normals.", nop})
-  -- end
-
-  -- if currentPath.startPositions.objects[currentPath.defaultStartPosition].missing then
-  --   table.insert(issues, {"Default Start Position is missing!", function() select(tlWindow) end })
-  -- end
-  -- if currentPath.pathnodes.objects[currentPath.startNode].missing then
-  --   table.insert(issues, {"Start Pathnode is missing!", function() select(tlWindow) end })
-  -- end
-  -- for _, seg in ipairs(currentPath.segments.sorted) do
-  --   if not seg:isValid() then
-  --     table.insert(issues, {seg.name .. " is invalid!", function() select(segWindow) segWindow:selectSegment(seg.id) end})
-  --   end
-  -- end
-
-  return issues
-end
-
 local function newEmptyNotebook()
     local path = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
     editor.history:commitAction(
@@ -239,6 +218,10 @@ local function newEmptyNotebook()
 end
 
 local function drawEditorGui()
+  if focusWindow == true then
+    im.SetNextWindowFocus()
+    focusWindow = false
+  end
 
   local topToolbarHeight = 135 * im.uiscale[0]
   local bottomToolbarHeight = 200 * im.uiscale[0]
@@ -335,25 +318,34 @@ local function drawEditorGui()
     im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
     if im.BeginTabBar("modes") then
       for _, window in ipairs(windows) do
+
         local flags = nil
-        if changedWindow and currentWindow:windowDescription() == window:windowDescription() then
+        if changedWindow and currentWindow.windowDescription == window.windowDescription then
+          -- log('D', 'wtf', 'currentWindow: '..tostring(currentWindow.windowDescription))
+          -- log('D', 'wtf', 'changedWindow')
           flags = im.TabItemFlags_SetSelected
           changedWindow = false
         end
+
         local hasError = false
         if window.isValid then
           hasError = not window:isValid()
         end
-        local tabName = (hasError and '[!] ' or '')..' '..window:windowDescription()..' '..'###'..window:windowDescription()
+
+        local tabName = (hasError and '[!] ' or '')..' '..window.windowDescription..' '..'###'..window.windowDescription
+
         if im.BeginTabItem(tabName, nil, flags) then
-          if currentWindow:windowDescription() ~= window:windowDescription() then
+          if not programmaticTabSelect and currentWindow.windowDescription ~= window.windowDescription then
+            -- log('D', 'wtf', 'clicked on: '..tostring(window.windowDescription))
             select(window)
           end
           im.EndTabItem()
         end
-      end
+
+      end -- for loop
+      programmaticTabSelect = false
       im.EndTabBar()
-    end
+    end -- tab bar
 
     local tabsHeight = 25 * im.uiscale[0]
     local tabContentsHeight = middleChildHeight - tabsHeight
@@ -392,14 +384,27 @@ local function onEditorGui()
   drawEditorGui()
 end
 
+local function showPacenotesTab()
+  programmaticTabSelect = true
+  select(pacenotesWindow)
+end
+
+local function showRallyTool()
+  if editor.isWindowVisible(toolWindowName) == false then
+    editor.showWindow(toolWindowName)
+    showPacenotesTab()
+    editor.selectEditMode(editor.editModes.notebookEditMode)
+  else
+    focusWindow = true
+    showPacenotesTab()
+    editor.selectEditMode(editor.editModes.notebookEditMode)
+  end
+end
+
 local function show()
   editor.clearObjectSelection()
   editor.showWindow(toolWindowName)
   editor.selectEditMode(editor.editModes.notebookEditMode)
-end
-
-local function showPacenotesTab()
-  select(pacenotesWindow)
 end
 
 local function onActivate()
@@ -462,7 +467,7 @@ local function onEditorInitialized()
 
   pacenotesWindow:attemptToFixMapEdgeIssue()
 
-  currentWindow = notebookInfoWindow
+  currentWindow = pacenotesWindow
   -- currentWindow:setPath(currentPath) -- redundant?
   currentWindow:selected()
 end
@@ -687,8 +692,9 @@ M.allowGizmo = function() return editor.editMode and editor.editMode.displayName
 M.getCurrentFilename = function() return previousFilepath..previousFilename end
 M.getCurrentPath = function() return currentPath end
 M.isVisible = function() return editor.isWindowVisible(toolWindowName) end
-M.changedFromExternal = function() currentWindow:setPath(currentPath) end
+-- M.changedFromExternal = function() currentWindow:setPath(currentPath) end
 M.show = show
+M.showRallyTool = showRallyTool
 M.showPacenotesTab = showPacenotesTab
 M.loadNotebook = loadNotebook
 M.saveNotebook = saveNotebook
@@ -696,7 +702,7 @@ M.saveCurrent = saveCurrent
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
-M.select = select
+-- M.select = select
 
 M.loadMissionSettings = loadMissionSettings
 M.detectNotebookToLoad = detectNotebookToLoad
