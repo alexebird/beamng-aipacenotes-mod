@@ -1,7 +1,3 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
 local logTag = 'aipacenotes'
 local C = {}
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
@@ -52,7 +48,30 @@ function C:init(name)
   self._default_note_lang = 'english'
   self.fname = nil
 
+  -- set by rallyEditor
+  -- self._fnWithoutExt = nil
+  -- self._dir = nil
+
   self.validation_issues = {}
+end
+
+function C:dir()
+  if not self.fname then return nil end
+  local dir, filename, ext = path.split(self.fname)
+  return dir
+end
+
+function C:basename()
+  if not self.fname then return nil end
+  local dir, filename, ext = path.split(self.fname)
+  return filename
+end
+
+function C:basenameNoExt()
+  if not self.fname then return nil end
+  local _, filename, _ = path.splitWithoutExt(self.fname)
+  _, filename, _ = path.splitWithoutExt(filename)
+  return filename
 end
 
 function C:setFname(newFname)
@@ -71,6 +90,7 @@ function C:save(fname)
   if not saveOk then
     log('E', logTag, 'error saving notebook')
   end
+  log('I', logTag, 'saved notebook')
   return saveOk
 end
 
@@ -356,8 +376,6 @@ function C:loadStaticPacenotes()
     log('E', logTag, 'unable to read static_pacenotes file at: ' .. tostring(fname))
   end
 
-  log('D', 'wtf', dumps(static_pn_data))
-
   self.static_pacenotes:onDeserialized(static_pn_data.static_pacenotes, {})
 end
 
@@ -436,11 +454,11 @@ function C:generateStaticPacenotesData()
   return notes
 end
 
-function C:copy()
-  local cpy = require('/lua/ge/extensions/gameplay/notebook/path')('Copy of ' .. self.name)
-  cpy.onDeserialized(self.onSerialize())
-  return cpy
-end
+-- function C:copy()
+--   local cpy = require('/lua/ge/extensions/gameplay/notebook/path')('Copy of ' .. self.name)
+--   cpy.onDeserialized(self.onSerialize())
+--   return cpy
+-- end
 
 -- switches start/endNode, all segments and direction of pathnodes. startPositions are not changed.
 -- function C:reverse()

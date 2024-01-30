@@ -10,6 +10,11 @@
           "after":"",
           "before":"",
           "note":"We just took some damage!"
+        },
+        "spanish":{
+          "after":"",
+          "before":"",
+          "note":"¡Nos acabamos de golpear!"
         }
       },
       "oldId":1
@@ -24,6 +29,11 @@
           "after":"",
           "before":"",
           "note":"Go!"
+        },
+        "spanish":{
+          "after":"",
+          "before":"",
+          "note":"¡Vamos!"
         }
       },
       "oldId":2
@@ -38,6 +48,11 @@
           "after":"",
           "before":"",
           "note":"one"
+        },
+        "spanish":{
+          "after":"",
+          "before":"",
+          "note":"uno"
         }
       },
       "oldId":3
@@ -52,6 +67,11 @@
           "after":"",
           "before":"",
           "note":"two"
+        },
+        "spanish":{
+          "after":"",
+          "before":"",
+          "note":"dos"
         }
       },
       "oldId":4
@@ -66,6 +86,11 @@
           "after":"",
           "before":"",
           "note":"three"
+        },
+        "spanish":{
+          "after":"",
+          "before":"",
+          "note":"tres"
         }
       },
       "oldId":5
@@ -80,6 +105,11 @@
           "after":"",
           "before":"",
           "note":"Thats it, bring the car to a stop."
+        },
+        "spanish":{
+          "after":"",
+          "before":"",
+          "note":"Listo, detén el coche."
         }
       },
       "oldId":6

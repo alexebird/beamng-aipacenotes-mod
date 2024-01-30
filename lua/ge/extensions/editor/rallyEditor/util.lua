@@ -212,7 +212,7 @@ local function getNotebookHelper(missionDir, missionSettings)
     return nil, 'unable to read notebook file at: ' .. notebookFname
   end
 
-  local notebook = require('/lua/ge/extensions/gameplay/notebook/path')("New Path")
+  local notebook = require('/lua/ge/extensions/gameplay/notebook/path')()
   notebook:setFname(notebookFname)
   notebook:onDeserialized(json)
 

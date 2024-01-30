@@ -1,7 +1,3 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
@@ -92,7 +88,7 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
       end
 
       local posCe = pos
-      local posCs = posCe + (vec3(1,1,0) * (radius * 2))
+      local posCs = posCe + (vec3(1,0,0) * (radius * 2))
 
       local lastPacenote = notebook.pacenotes[#notebook.pacenotes]
       if lastPacenote then
@@ -100,7 +96,7 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
         local lastCePos = vec3(lastPnCe.pos)
         local directionVec = lastCePos - posCe
         directionVec = vec3(directionVec):normalized()
-        posCs = posCe + (directionVec * (radius * 4))
+        posCs = posCe + (directionVec * (radius * 2))
       end
 
       local pn = {
@@ -170,7 +166,7 @@ end
 function C:importTranscriptToNewNotebook()
   -- self:reloadTranscriptFile()
   local notebook_data, fname_out = self:convertTranscriptToNotebook(nil)
-  local notebook_create_dir = self.path._dir
+  local notebook_create_dir = self.path:dir()
   fname_out = notebook_create_dir..fname_out
   jsonWriteFile(fname_out, notebook_data, true)
   self.rallyEditor.loadNotebook(fname_out)

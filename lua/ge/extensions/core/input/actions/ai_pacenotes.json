@@ -65,7 +65,7 @@
     "actionMap": "rallyEditor",
     "title": "Rally Editor - Save (aipacenotes)",
     "desc": "Save the current notebook.",
-    "onDown": "editor_rallyEditor.saveCurrent()"
+    "onDown": "editor_rallyEditor.saveNotebook()"
   },
   "rallyEditorPacenoteSelectPrev": {
     "cat": "editor",

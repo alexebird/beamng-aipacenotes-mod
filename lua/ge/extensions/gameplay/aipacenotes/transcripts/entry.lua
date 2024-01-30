@@ -560,6 +560,8 @@ end
 
 function C:playCameraPath()
   local cam_path = loadPath(self:capture_data().captures)
+  log('D', logTag, dumps(cam_path))
+  log('D', logTag, 'playing camPath')
   core_paths.playPath(cam_path)
 end
 

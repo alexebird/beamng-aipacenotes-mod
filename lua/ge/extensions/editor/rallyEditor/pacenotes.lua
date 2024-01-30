@@ -1,7 +1,3 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
@@ -1307,7 +1303,7 @@ function C:drawPacenotesList(height)
     end
 
     if self.pacenote_tools_state.search then
-      log('D', logTag, 'searching pacenotes: '..self.transcript_tools_state.search)
+      log('D', logTag, 'searching pacenotes: '..self.pacenote_tools_state.search)
       local pn = self:selectedPacenote()
       if pn then
         if not self:pacenoteSearchMatches(pn) then
@@ -1552,6 +1548,11 @@ function C:drawTranscriptsSection(height)
   im.SameLine()
   if im.Button("Clear") then
     self.rallyEditor.getTranscriptsWindow():clearSelection()
+    self.snaproads = nil
+    self.transcript_tools_state.search = nil
+    self.transcript_tools_state.show = true
+    transcriptsSearchText = im.ArrayChar(1024, "")
+    self.dragMode = dragModes.simple
   end
   im.SameLine()
   if im.Button("Load Curr") then
@@ -1569,10 +1570,11 @@ function C:drawTranscriptsSection(height)
     local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
     if settings then
       self.transcript_tools_state.search = nil
+      self.transcript_tools_state.show = true
       transcriptsSearchText = im.ArrayChar(1024, "")
       local abspath = settings:getFullCourseTranscriptAbsPath()
       self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
-      self:selectFirstTranscript()
+      -- self:selectFirstTranscript()
 
       self.snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(self.rallyEditor.getMissionDir())
       self.snaproads.radius = 0.5
@@ -1580,6 +1582,7 @@ function C:drawTranscriptsSection(height)
         self.snaproads = nil
       end
 
+      self.dragMode = dragModes.simple_road_snap
     end
   end
   im.SameLine()
@@ -1656,7 +1659,8 @@ function C:drawTranscriptsSection(height)
           tsc:playCameraPath()
         end
         im.SameLine()
-        im.Text('Play Camera Path')
+        local paused = simTimeAuthority.getPause()
+        im.Text('Play Camera Path'..((paused and ' (must unpause game!)') or ''))
       end
 
       if editor.uiIconImageButton(editor.icons.location_searching, im.ImVec2(24, 24)) then

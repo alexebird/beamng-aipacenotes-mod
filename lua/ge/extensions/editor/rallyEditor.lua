@@ -1,7 +1,3 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
 local im = ui_imgui
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
@@ -15,11 +11,13 @@ local editModeName = "Edit Notebook"
 local focusWindow = false
 local mouseInfo = {}
 
-local previousFilepath = "/gameplay/missions/"
-local previousFilename = "NewNotebook.notebook.json"
-local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
-currentPath._fnWithoutExt = 'NewNotebook'
-currentPath._dir = previousFilepath
+-- local previousFilepath = "/gameplay/missions/"
+-- local previousFilename = "NewNotebook.notebook.json"
+-- local currentPathFname = "/gameplay/missions/NewNotebook.notebook.json"
+-- local currentPath = require('/lua/ge/extensions/gameplay/notebook/path')()
+local currentPath = nil
+-- currentPath._fnWithoutExt = 'NewNotebook'
+-- currentPath._dir = previousFilepath
 
 local windows = {}
 local notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow
@@ -37,15 +35,15 @@ end
 
 local function setNotebookRedo(data)
   data.previous = currentPath
-  data.previousFilepath = previousFilepath
-  data.previousFilename = previousFilename
+  -- data.previousFilepath = previousFilepath
+  -- data.previousFilename = previousFilename
 
-  previousFilename = data.filename
-  previousFilepath = data.filepath
+  -- previousFilename = data.filename
+  -- previousFilepath = data.filepath
   currentPath = data.path
-  currentPath._dir = previousFilepath
-  local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
-  currentPath._fnWithoutExt = filename
+  -- currentPath._dir = previousFilepath
+  -- local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
+  -- currentPath._fnWithoutExt = filename
   for _, window in ipairs(windows) do
     window:setPath(currentPath)
     -- window:unselect()
@@ -56,8 +54,8 @@ end
 
 local function setNotebookUndo(data)
   currentPath = data.previous
-  previousFilename = data.previousFilename
-  previousFilepath = data.previousFilepath
+  -- previousFilename = data.previousFilename
+  -- previousFilepath = data.previousFilepath
   for _, window in ipairs(windows) do
     window:setPath(currentPath)
     -- window:unselect()
@@ -83,7 +81,7 @@ local function getMissionDir()
   -- log('D', 'wtf', 'has currentPath')
 
   -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
-  local notebooksDir = currentPath._dir
+  local notebooksDir = currentPath:dir()
   -- log('D', 'wtf', 'notebooksDir: '..notebooksDir)
   local aipDir = strip_basename(notebooksDir)
   -- log('D', 'wtf', 'aipDir: '..aipDir)
@@ -95,43 +93,46 @@ local function getMissionDir()
   return missionDir
 end
 
-local function saveNotebook(notebook, savePath)
-  if not notebook then notebook = currentPath end
-  -- local json = notebook:onSerialize()
-  -- jsonWriteFile(savePath, json, true)
-  if not notebook:save(savePath) then
+-- local function saveNotebook(savePath)
+local function saveNotebook()
+  -- local notebook = currentPath
+
+  -- if not savePath then
+    -- savePath = previousFilepath..previousFilename
+    -- savePath = currentPath.fname
+  -- end
+
+  if not currentPath then
+    log('W', logTag, 'cant save; no notebook loaded.')
     return
   end
-  local dir, filename, ext = path.split(savePath)
-  previousFilepath = dir
-  previousFilename = filename
-  notebook._dir = dir
-  local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  notebook._fnWithoutExt = fn2
+
+  if not currentPath:save() then
+    return
+  end
+
+  -- local dir, filename, ext = path.split(savePath)
+  -- previousFilepath = dir
+  -- previousFilename = filename
+  -- notebook._dir = dir
+  -- local a, fn2, b = path.splitWithoutExt(previousFilename, true)
+  -- notebook._fnWithoutExt = fn2
 
   -- log('D', 'wtf', 'getMD: '..getMissionDir())
   -- log('D', 'wtf', 'aipPath: '..re_util.aipPath)
   -- log('D', 'wtf', 'missionSettigsFname: '..re_util.missionSettingsFname)
-  local settingsFname = getMissionDir()..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
-  if not FS:fileExists(settingsFname) then
-    log('I', logTag, 'creating mission.settings.json at '..settingsFname)
-    local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
-    settings.notebook.filename = filename
-    local assumedCodriverName = notebook.codrivers.sorted[1].name
-    settings.notebook.codriver = assumedCodriverName
-    jsonWriteFile(settingsFname, settings:onSerialize(), true)
+  local md = getMissionDir()
+  if md then
+    local settingsFname = md..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
+    if not FS:fileExists(settingsFname) then
+      log('I', logTag, 'creating mission.settings.json at '..settingsFname)
+      local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
+      settings.notebook.filename = currentPath:basename()
+      local assumedCodriverName = currentPath.codrivers.sorted[1].name
+      settings.notebook.codriver = assumedCodriverName
+      jsonWriteFile(settingsFname, settings:onSerialize(), true)
+    end
   end
-end
-
-local function resetCameraFix()
-  -- make the camera facing straight out towards the horizon.
-  local rot = quatFromAxisAngle(vec3(0, 0, 1), 0.0)
-  core_camera.setRotation(0, rot)
-end
-
-local function saveCurrent()
-  log('I', logTag, 'saving notebook')
-  saveNotebook(currentPath, previousFilepath .. previousFilename)
 end
 
 local function selectPrevPacenote()
@@ -154,27 +155,27 @@ local function loadNotebook(full_filename)
   if not full_filename then
     return
   end
-  local dir, filename, ext = path.split(full_filename)
+  -- local dir, filename, ext = path.split(full_filename)
   -- log('I', logTag, 'creating empty notebook file at ' .. tostring(dir))
   local json = jsonReadFile(full_filename)
   if not json then
     log('E', logTag, 'couldnt find notebook file')
   end
-  previousFilepath = dir
-  previousFilename = filename
-  local p = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
-  p:onDeserialized(json)
-  p._dir = dir
-  local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  p._fnWithoutExt = fn2
+  -- previousFilepath = dir
+  -- previousFilename = filename
+  local newPath = require('/lua/ge/extensions/gameplay/notebook/path')()
+  newPath:setFname(full_filename)
+  newPath:onDeserialized(json)
+  -- p._dir = dir
+  -- local a, fn2, b = path.splitWithoutExt(previousFilename, true)
+  -- p._fnWithoutExt = fn2
 
-  editor.history:commitAction("Set path to " .. p.name,
-    { path = p, filepath = dir, filename = filename },
+  editor.history:commitAction("Set path to " .. newPath.fname,
+    -- { path = p, filepath = dir, filename = filename },
+    { path = newPath },
     setNotebookUndo,
     setNotebookRedo
   )
-
-  return currentPath
 end
 
 local function updateMouseInfo()
@@ -208,10 +209,11 @@ local function updateMouseInfo()
 end
 
 local function newEmptyNotebook()
-    local path = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
+    local path = require('/lua/ge/extensions/gameplay/notebook/path')()
     editor.history:commitAction(
       "Set path to new path.",
-      {path = path, filepath = previousFilepath, filename = "new.notebook.json"},
+      -- {path = path, filepath = previousFilepath, filename = "new.notebook.json"},
+      {path = path},
       setNotebookUndo,
       setNotebookRedo
     )
@@ -236,21 +238,34 @@ local function drawEditorGui()
         if im.MenuItem1("New Notebook") then
           newEmptyNotebook()
         end
+        local defaultFileDialogPath = '/gameplay/missions'
         if im.MenuItem1("Load...") then
-          editor_fileDialog.openFile(function(data) loadNotebook(data.filepath) end, {{"Notebook files",".notebook.json"}}, false, previousFilepath)
+          editor_fileDialog.openFile(
+            function(data)
+              loadNotebook(data.filepath)
+            end,
+            {{"Notebook files",".notebook.json"}},
+            false,
+            (currentPath and currentPath:dir()) or defaultFileDialogPath
+          )
         end
-        local canSave = currentPath and previousFilepath
+        -- local canSave = currentPath and previousFilepath
         if im.MenuItem1("Save") then
-          saveNotebook(currentPath, previousFilepath .. previousFilename)
+          saveNotebook()
         end
         if im.MenuItem1("Save as...") then
           extensions.editor_fileDialog.saveFile(
             function(data)
-              saveNotebook(currentPath, data.filepath)
+              if currentPath then
+                currentPath:setFname(data.filepath)
+                saveNotebook()
+              else
+                log('W', logTag, 'cant Save As; no notebook loaded.')
+              end
             end,
             {{"Notebook files",".notebook.json"}},
             false,
-            previousFilepath
+            (currentPath and currentPath:dir()) or defaultFileDialogPath
           )
         end
         im.EndMenu()
@@ -258,116 +273,95 @@ local function drawEditorGui()
       im.EndMenuBar()
     end
 
-    im.BeginChild1("##top-toolbar", im.ImVec2(0,topToolbarHeight), im.WindowFlags_ChildWindow)
+    if currentPath then
+      im.BeginChild1("##top-toolbar", im.ImVec2(0,topToolbarHeight), im.WindowFlags_ChildWindow)
 
-    im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(0,100,0,255).Value)
-    if im.Button("Save") then
-      saveNotebook(currentPath, previousFilepath .. previousFilename)
-    end
-    im.PopStyleColor(1)
-
-    if not editor.editMode or editor.editMode.displayName ~= editModeName then
-      im.SameLine()
-      im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(255,0,0,255).Value)
-      if im.Button("Switch to Notebook Editor Editmode", im.ImVec2(im.GetContentRegionAvailWidth(),0)) then
-        editor.selectEditMode(editor.editModes.notebookEditMode)
+      im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(0,100,0,255).Value)
+      if im.Button("Save") then
+        saveNotebook()
       end
       im.PopStyleColor(1)
-    end
 
-    -- for i = 1,3 do im.Spacing() end
-
-    -- im.SameLine()
-    -- if im.Button("Reset Camera") then
-      -- resetCameraFix()
-    -- end
-    -- im.tooltip("There is a bug where the camera rotation can get weird. Fix the camera with this button.")
-
-    -- im.SameLine()
-    -- if im.Button("Reload Snap Roads") then
-    --   snaproads.loadSnapRoads()
-    -- end
-    -- im.tooltip("Reload AI roads for snapping.\nHappens automatically when you enter Notebook edit mode.")
-
-    -- im.Text("Currently Loaded Notebook:")
-    im.Text("Notebook: "..previousFilepath .. previousFilename)
-    -- im.Separator()
-
-    im.Text('DragMode: '..pacenotesWindow.dragMode)
-    -- im.SameLine()
-    local selParts, selMode = pacenotesWindow:selectionString()
-
-    local clr = im.ImVec4(1, 0.6, 1, 1)
-    im.PushFont3('robotomono_regular')
-    -- im.TextColored(clr, 'Selection ['..selMode..']: '..selStr)
-    -- im.TextColored(clr, 'Selection ['..selMode..']')
-    im.TextColored(clr, 'Selection')
-    im.TextColored(clr, '  P: '..(selParts[1] or '-'))
-    im.TextColored(clr, '  W: '..(selParts[2] or '-'))
-    im.PopFont()
-    -- im.Separator()
-    im.EndChild() -- end top-toolbar
-
-    for i = 1,3 do im.Spacing() end
-
-    local windowSize = im.GetWindowSize()
-    local windowHeight = windowSize.y
-    local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
-    middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
-
-    im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
-    if im.BeginTabBar("modes") then
-      for _, window in ipairs(windows) do
-
-        local flags = nil
-        if changedWindow and currentWindow.windowDescription == window.windowDescription then
-          -- log('D', 'wtf', 'currentWindow: '..tostring(currentWindow.windowDescription))
-          -- log('D', 'wtf', 'changedWindow')
-          flags = im.TabItemFlags_SetSelected
-          changedWindow = false
+      if not editor.editMode or editor.editMode.displayName ~= editModeName then
+        im.SameLine()
+        im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(255,0,0,255).Value)
+        if im.Button("Switch to Notebook Editor Editmode", im.ImVec2(im.GetContentRegionAvailWidth(),0)) then
+          editor.selectEditMode(editor.editModes.notebookEditMode)
         end
+        im.PopStyleColor(1)
+      end
 
-        local hasError = false
-        if window.isValid then
-          hasError = not window:isValid()
-        end
+      im.Text("Notebook: "..tostring(currentPath.fname))
 
-        local tabName = (hasError and '[!] ' or '')..' '..window.windowDescription..' '..'###'..window.windowDescription
+      im.Text('DragMode: '..pacenotesWindow.dragMode)
+      local selParts, selMode = pacenotesWindow:selectionString()
 
-        if im.BeginTabItem(tabName, nil, flags) then
-          if not programmaticTabSelect and currentWindow.windowDescription ~= window.windowDescription then
-            -- log('D', 'wtf', 'clicked on: '..tostring(window.windowDescription))
-            select(window)
+      local clr = im.ImVec4(1, 0.6, 1, 1)
+      im.PushFont3('robotomono_regular')
+      im.TextColored(clr, 'Selection')
+      im.TextColored(clr, '  P: '..(selParts[1] or '-'))
+      im.TextColored(clr, '  W: '..(selParts[2] or '-'))
+      im.PopFont()
+      im.EndChild() -- end top-toolbar
+
+      for i = 1,3 do im.Spacing() end
+
+      local windowSize = im.GetWindowSize()
+      local windowHeight = windowSize.y
+      local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
+      middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
+
+      im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
+      if im.BeginTabBar("modes") then
+        for _, window in ipairs(windows) do
+
+          local flags = nil
+          if changedWindow and currentWindow.windowDescription == window.windowDescription then
+            flags = im.TabItemFlags_SetSelected
+            changedWindow = false
           end
-          im.EndTabItem()
+
+          local hasError = false
+          if window.isValid then
+            hasError = not window:isValid()
+          end
+
+          local tabName = (hasError and '[!] ' or '')..' '..window.windowDescription..' '..'###'..window.windowDescription
+
+          if im.BeginTabItem(tabName, nil, flags) then
+            if not programmaticTabSelect and currentWindow.windowDescription ~= window.windowDescription then
+              select(window)
+            end
+            im.EndTabItem()
+          end
+
+        end -- for loop
+        programmaticTabSelect = false
+        im.EndTabBar()
+      end -- tab bar
+
+      local tabsHeight = 25 * im.uiscale[0]
+      local tabContentsHeight = middleChildHeight - tabsHeight
+      im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+      currentWindow:draw(mouseInfo, tabContentsHeight)
+      im.EndChild() -- end top-toolbar
+
+      im.EndChild() -- end tabs-child
+
+      im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
+      prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
+      im.EndChild() -- end bottom-toolbar
+
+      local fg_mgr = editor_flowgraphEditor.getManager()
+      local paused = simTimeAuthority.getPause()
+      local is_path_cam = core_camera.getActiveCamName() == "path"
+
+      if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
+        if currentWindow == pacenotesWindow then
+          pacenotesWindow:drawDebugEntrypoint()
+        elseif currentWindow == transcriptsWindow then
+          transcriptsWindow:drawDebugEntrypoint()
         end
-
-      end -- for loop
-      programmaticTabSelect = false
-      im.EndTabBar()
-    end -- tab bar
-
-    local tabsHeight = 25 * im.uiscale[0]
-    local tabContentsHeight = middleChildHeight - tabsHeight
-    im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
-    currentWindow:draw(mouseInfo, tabContentsHeight)
-    im.EndChild() -- end top-toolbar
-
-    im.EndChild() -- end tabs-child
-
-    im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
-    prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
-    im.EndChild() -- end bottom-toolbar
-
-    local fg_mgr = editor_flowgraphEditor.getManager()
-    local paused = simTimeAuthority.getPause()
-    local is_path_cam = core_camera.getActiveCamName() == "path"
-
-    if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
-      if currentWindow == pacenotesWindow then
-        pacenotesWindow:drawDebugEntrypoint()
-      elseif currentWindow == transcriptsWindow then
-        transcriptsWindow:drawDebugEntrypoint()
       end
     end
   end
@@ -414,7 +408,6 @@ local function onActivate()
       win:onEditModeActivate()
     end
   end
-  -- snaproads.loadSnapRoads()
 end
 local function onDeactivate()
   for _, win in ipairs(windows) do
@@ -487,8 +480,9 @@ end
 local function onSerialize()
   local data = {
     path = currentPath:onSerialize(),
-    previousFilepath = previousFilepath,
-    previousFilename = previousFilename
+    currentPathFname = (currentPath and currentPath.fname) or nil
+    -- previousFilepath = previousFilepath,
+    -- previousFilename = previousFilename
   }
   return data
 end
@@ -496,13 +490,15 @@ end
 local function onDeserialized(data)
   if data then
     if data.path then
+      currentPath = require('/lua/ge/extensions/gameplay/notebook/path')()
       currentPath:onDeserialized(data.path)
+      currentPath:setFname(data.currentPathFname)
     end
-    previousFilename = data.previousFilename  or "NewNotebook.notebook.json"
-    previousFilepath = data.previousFilepath or "/gameplay/missions/"
-    currentPath._dir = previousFilepath
-    local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
-    currentPath._fnWithoutExt = filename
+    -- previousFilename = data.previousFilename  or "NewNotebook.notebook.json"
+    -- previousFilepath = data.previousFilepath or "/gameplay/missions/"
+    -- currentPath._dir = previousFilepath
+    -- local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
+    -- currentPath._fnWithoutExt = filename
   end
 end
 
@@ -515,7 +511,6 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
-    -- {showRaceSegments = {"bool", false, "When a pacenote is selected, also render the race segments for reference.\nRequires race to be loaded in the Race Tool."}},
   })
   prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
     {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
@@ -559,10 +554,6 @@ local function getPrefShowNextPacenote()
   return getPreference('rallyEditor.editing.showNextPacenote', true)
 end
 
--- local function getPrefShowRaceSegments()
---     return getPreference('rallyEditor.general.showRaceSegments', false)
--- end
-
 local function getPrefDefaultRadius()
   return getPreference('rallyEditor.waypoints.defaultRadius', 8)
 end
@@ -599,20 +590,6 @@ local function getPrefLevel3Text()
 end
 
 local function loadMissionSettings(folder)
-  -- local settingsFname = folder..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
-  -- local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
-  --
-  -- if FS:fileExists(settingsFname) then
-  --   local json = jsonReadFile(settingsFname)
-  --   if not json then
-  --     log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
-  --     return nil
-  --   else
-  --     settings:onDeserialized(json)
-  --   end
-  -- end
-  --
-  -- return settings
   return re_util.loadMissionSettings(folder)
 end
 
@@ -660,12 +637,6 @@ local function detectNotebookToLoad(folder)
 
   -- step 2: if cant detect from settings file, or it doesnt exist, detect from listing the dir
   if not notebookFname then
-    -- local paths = {}
-    -- local files = FS:findFiles(notebooksFullPath, '*.notebook.json', -1, true, false)
-    -- for _,fname in pairs(files) do
-    --   table.insert(paths, fname)
-    -- end
-    -- table.sort(paths)
     local paths = listNotebooks(folder)
     notebookFname = paths[#paths]
   end
@@ -684,28 +655,36 @@ local function detectNotebookToLoad(folder)
   return notebookFname
 end
 
+local function getCurrentFilename()
+  if currentPath then
+    return currentPath.fname
+  else
+    return nil
+  end
+end
+
 M.onEditorRegisterPreferences = onEditorRegisterPreferences
 M.onSerialize = onSerialize
 M.onDeserialized = onDeserialized
 
 M.allowGizmo = function() return editor.editMode and editor.editMode.displayName == editModeName or false end
-M.getCurrentFilename = function() return previousFilepath..previousFilename end
+-- M.getCurrentFilename = function() return previousFilepath..previousFilename end
+M.getCurrentFilename = getCurrentFilename
 M.getCurrentPath = function() return currentPath end
 M.isVisible = function() return editor.isWindowVisible(toolWindowName) end
--- M.changedFromExternal = function() currentWindow:setPath(currentPath) end
+
 M.show = show
 M.showRallyTool = showRallyTool
 M.showPacenotesTab = showPacenotesTab
 M.loadNotebook = loadNotebook
 M.saveNotebook = saveNotebook
-M.saveCurrent = saveCurrent
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
--- M.select = select
 
 M.loadMissionSettings = loadMissionSettings
 M.detectNotebookToLoad = detectNotebookToLoad
+M.listNotebooks = listNotebooks
 
 M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
@@ -717,22 +696,19 @@ M.getTranscriptsWindow = function() return transcriptsWindow end
 M.getPacenotesWindow = function() return pacenotesWindow end
 M.getMissionDir = getMissionDir
 
-M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
-M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
-M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
-M.getPrefShowNextPacenote = getPrefShowNextPacenote
--- M.getPrefShowRaceSegments = getPrefShowRaceSegments
 M.getPrefDefaultRadius = getPrefDefaultRadius
+M.getPrefLevel1Text = getPrefLevel1Text
+M.getPrefLevel1Thresh = getPrefLevel1Thresh
+M.getPrefLevel2Text = getPrefLevel2Text
+M.getPrefLevel2Thresh = getPrefLevel2Thresh
+M.getPrefLevel3Text = getPrefLevel3Text
+M.getPrefLevel3Thresh = getPrefLevel3Thresh
+M.getPrefLockWaypoints = getPrefLockWaypoints
+M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
+M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
+M.getPrefShowNextPacenote = getPrefShowNextPacenote
+M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
-M.getPrefLockWaypoints = getPrefLockWaypoints
-M.getPrefLevel1Thresh = getPrefLevel1Thresh
-M.getPrefLevel2Thresh = getPrefLevel2Thresh
-M.getPrefLevel3Thresh = getPrefLevel3Thresh
-M.getPrefLevel1Text = getPrefLevel1Text
-M.getPrefLevel2Text = getPrefLevel2Text
-M.getPrefLevel3Text = getPrefLevel3Text
-
-M.listNotebooks = listNotebooks
 
 return M

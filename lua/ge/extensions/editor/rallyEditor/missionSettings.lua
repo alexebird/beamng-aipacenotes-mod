@@ -1,7 +1,3 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
@@ -95,7 +91,7 @@ function C:loadCodrivers()
   if not json then
     log('E', logTag, 'couldnt find notebook file')
   end
-  local notebook = require('/lua/ge/extensions/gameplay/notebook/path')("New Notebook")
+  local notebook = require('/lua/ge/extensions/gameplay/notebook/path')()
   notebook:onDeserialized(json)
 
   local codrivers = {}

@@ -1,7 +1,3 @@
--- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
--- If a copy of the bCDDL was not distributed with this
--- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
-
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
@@ -20,12 +16,11 @@ function C:init(notebook, name, forceId)
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or ("Pacenote " .. self.id)
   self.playback_rules = nil
-  -- self.note = nil -- used for interfacing with existing flowgraph race code
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
     lang = lang.language
     self.notes[lang] = {}
-    for field,val in pairs(self.noteFields) do
+    for _,val in pairs(self.noteFields) do
       self.notes[lang][val] = ''
     end
   end
@@ -772,35 +767,31 @@ function C:drawDebugPacenote(drawMode, hover_wp_id, selected_wp_id, pacenote_pre
   end
 end
 
-local function calculateWaypointsCentroid(waypoints)
-  local sumX, sumY, sumZ = 0, 0, 0
-  local count = 0
-
-  for _,waypoint in ipairs(waypoints) do
-    sumX = sumX + waypoint.pos.x
-    sumY = sumY + waypoint.pos.y
-    sumZ = sumZ + waypoint.pos.z
-    count = count + 1
-  end
-
-  return {sumX / count, sumY / count, sumZ / count}
-end
+-- local function calculateWaypointsCentroid(waypoints)
+--   local sumX, sumY, sumZ = 0, 0, 0
+--   local count = 0
+--
+--   for _,waypoint in ipairs(waypoints) do
+--     sumX = sumX + waypoint.pos.x
+--     sumY = sumY + waypoint.pos.y
+--     sumZ = sumZ + waypoint.pos.z
+--     count = count + 1
+--   end
+--
+--   return {sumX / count, sumY / count, sumZ / count}
+-- end
 
 function C:setCameraToWaypoints()
   local cs = self:getCornerStartWaypoint()
   if cs then
     cs:lookAtMe()
   end
-
-  -- local waypoints = self.pacenoteWaypoints.sorted
-  -- local centroid = calculateWaypointsCentroid(waypoints)
-  -- re_util.setCameraTarget(centroid)
 end
 
 function C:audioFname(codriver, missionDir)
   missionDir =  missionDir or editor_rallyEditor.getMissionDir()
 
-  local notebookName = re_util.normalize_name(self.notebook.name)
+  local notebookBasename = re_util.normalize_name(self.notebook:basenameNoExt())
   local codriverName = codriver.name
   local codriverLang = codriver.language
   local codriverVoice = codriver.voice
@@ -808,7 +799,7 @@ function C:audioFname(codriver, missionDir)
   local noteStr = self:joinedNote(codriverLang)
   local pacenoteHash = re_util.pacenote_hash(noteStr)
 
-  local fname = missionDir..'/'..re_util.notebooksPath..'/generated_pacenotes/'..notebookName..'/'..codriverStr..'/pacenote_'..pacenoteHash..'.ogg'
+  local fname = missionDir..'/'..re_util.notebooksPath..'/generated_pacenotes/'..notebookBasename..'/'..codriverStr..'/pacenote_'..pacenoteHash..'.ogg'
 
   return fname
 end
