@@ -70,8 +70,7 @@
           "radius":4.023752557,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -131,8 +130,7 @@
           "radius":3.606075244,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -192,8 +190,7 @@
           "radius":5.545084612,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -253,8 +250,7 @@
           "radius":3.92486727,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -314,8 +310,7 @@
           "radius":4.602647689,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -375,8 +370,7 @@
           "radius":4.617426737,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -436,8 +430,7 @@
           "radius":7.05970498,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -497,8 +490,7 @@
           "radius":5.496740332,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -558,8 +550,7 @@
           "radius":5.663277123,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -619,8 +610,7 @@
           "radius":6.780828888,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -680,8 +670,7 @@
           "radius":6.633343166,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -741,8 +730,7 @@
           "radius":5.806833073,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -802,8 +790,7 @@
           "radius":5.274198272,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -863,8 +850,7 @@
           "radius":4.12914697,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -924,8 +910,7 @@
           "radius":4.535760572,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -985,8 +970,7 @@
           "radius":4.959416888,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1046,8 +1030,7 @@
           "radius":4.814446851,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1107,8 +1090,7 @@
           "radius":5.756614007,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1168,8 +1150,7 @@
           "radius":4.078781954,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1229,8 +1210,7 @@
           "radius":5.164917244,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1290,8 +1270,7 @@
           "radius":5.896251352,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1351,8 +1330,7 @@
           "radius":5.408240031,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1412,8 +1390,7 @@
           "radius":4.82824725,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1473,8 +1450,7 @@
           "radius":7.571325501,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1534,8 +1510,7 @@
           "radius":7.010829156,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1595,8 +1570,7 @@
           "radius":5.801985256,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1656,8 +1630,7 @@
           "radius":5.290113571,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
+      ]
     },
     {
       "metadata":{},
@@ -1717,106 +1690,7 @@
           "radius":5.821712842,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":-1
-    }
-  ],
-  "static_pacenotes":[
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"damage_1",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"We just took some damage!"
-        }
-      },
-      "oldId":122,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"go_1/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"Go!"
-        }
-      },
-      "oldId":123,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"countdown_1/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"one"
-        }
-      },
-      "oldId":124,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"countdown_2/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"two"
-        }
-      },
-      "oldId":125,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"countdown_3/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"three"
-        }
-      },
-      "oldId":126,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"finish_1/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"Thats it, bring the car to a stop."
-        }
-      },
-      "oldId":127,
-      "pacenoteWaypoints":{},
-      "segment":-1
+      ]
     }
   ],
   "updated_at":1699324421

@@ -74,8 +74,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":17
+      ]
     },
     {
       "metadata":{},
@@ -168,8 +167,7 @@
           "radius":10,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":17
+      ]
     },
     {
       "metadata":{},
@@ -229,8 +227,7 @@
           "radius":10,
           "waypointType":"cornerEnd"
         }
-      ],
-      "segment":18
+      ]
     },
     {
       "metadata":{},
@@ -290,8 +287,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -351,8 +347,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -412,8 +407,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -473,8 +467,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -534,8 +527,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -595,8 +587,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -656,8 +647,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -717,8 +707,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -778,8 +767,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -839,8 +827,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -900,8 +887,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -961,8 +947,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":22
+      ]
     },
     {
       "metadata":{},
@@ -1022,8 +1007,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":23
+      ]
     },
     {
       "metadata":{},
@@ -1083,8 +1067,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":23
+      ]
     },
     {
       "metadata":{},
@@ -1144,8 +1127,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":23
+      ]
     },
     {
       "metadata":{},
@@ -1205,8 +1187,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":23
+      ]
     },
     {
       "metadata":{},
@@ -1266,8 +1247,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":23
+      ]
     },
     {
       "metadata":{},
@@ -1327,8 +1307,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":23
+      ]
     },
     {
       "metadata":{},
@@ -1388,8 +1367,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":24
+      ]
     },
     {
       "metadata":{},
@@ -1449,8 +1427,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":24
+      ]
     },
     {
       "metadata":{},
@@ -1510,8 +1487,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":24
+      ]
     },
     {
       "metadata":{},
@@ -1571,8 +1547,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":24
+      ]
     },
     {
       "metadata":{},
@@ -1632,8 +1607,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -1693,8 +1667,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -1754,8 +1727,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -1815,8 +1787,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -1876,8 +1847,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -1937,8 +1907,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -1998,8 +1967,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -2059,8 +2027,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -2120,8 +2087,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -2181,8 +2147,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -2242,8 +2207,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":25
+      ]
     },
     {
       "metadata":{},
@@ -2303,8 +2267,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2364,8 +2327,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2425,8 +2387,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2486,8 +2447,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2547,8 +2507,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2608,8 +2567,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2669,8 +2627,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2730,8 +2687,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2791,8 +2747,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2852,8 +2807,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2913,8 +2867,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":26
+      ]
     },
     {
       "metadata":{},
@@ -2974,8 +2927,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3035,8 +2987,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3096,8 +3047,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3157,8 +3107,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3218,8 +3167,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3279,8 +3227,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3340,8 +3287,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3401,8 +3347,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3462,8 +3407,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3523,8 +3467,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3584,8 +3527,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3645,8 +3587,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":27
+      ]
     },
     {
       "metadata":{},
@@ -3706,8 +3647,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":28
+      ]
     },
     {
       "metadata":{},
@@ -3767,8 +3707,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":28
+      ]
     },
     {
       "metadata":{},
@@ -3828,8 +3767,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":28
+      ]
     },
     {
       "metadata":{},
@@ -3937,8 +3875,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":28
+      ]
     },
     {
       "metadata":{},
@@ -3998,8 +3935,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":28
+      ]
     },
     {
       "metadata":{},
@@ -4059,8 +3995,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4120,8 +4055,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4181,8 +4115,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4242,8 +4175,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4303,8 +4235,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4364,8 +4295,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4425,8 +4355,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4486,8 +4415,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4547,8 +4475,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -4608,8 +4535,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4669,8 +4595,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":29
+      ]
     },
     {
       "metadata":{},
@@ -4730,8 +4655,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -4791,8 +4715,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -4852,8 +4775,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -4913,8 +4835,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -4974,8 +4895,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -5035,8 +4955,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -5096,8 +5015,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":30
+      ]
     },
     {
       "metadata":{},
@@ -5157,8 +5075,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5218,8 +5135,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5279,8 +5195,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5340,8 +5255,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5401,8 +5315,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5462,8 +5375,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5523,8 +5435,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5584,8 +5495,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":31
+      ]
     },
     {
       "metadata":{},
@@ -5645,8 +5555,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -5706,8 +5615,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -5767,8 +5675,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -5828,8 +5735,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -5889,8 +5795,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -5950,8 +5855,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -6011,8 +5915,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -6072,8 +5975,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":32
+      ]
     },
     {
       "metadata":{},
@@ -6133,8 +6035,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6194,8 +6095,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6255,8 +6155,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6316,8 +6215,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6377,8 +6275,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6438,8 +6335,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6499,8 +6395,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":33
+      ]
     },
     {
       "metadata":{},
@@ -6560,8 +6455,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":34
+      ]
     },
     {
       "metadata":{},
@@ -6621,8 +6515,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":34
+      ]
     },
     {
       "metadata":{},
@@ -6682,8 +6575,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":34
+      ]
     },
     {
       "metadata":{},
@@ -6743,8 +6635,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":34
+      ]
     },
     {
       "metadata":{},
@@ -6804,8 +6695,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":34
+      ]
     },
     {
       "metadata":{},
@@ -6865,106 +6755,7 @@
           "radius":10,
           "waypointType":"fwdAudioTrigger"
         }
-      ],
-      "segment":34
-    }
-  ],
-  "static_pacenotes":[
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"damage_1",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"We just took some damage!"
-        }
-      },
-      "oldId":459,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"go_1/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"Go!"
-        }
-      },
-      "oldId":460,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"countdown_1/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"one"
-        }
-      },
-      "oldId":461,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"countdown_2/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"two"
-        }
-      },
-      "oldId":462,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"countdown_3/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"three"
-        }
-      },
-      "oldId":463,
-      "pacenoteWaypoints":{},
-      "segment":-1
-    },
-    {
-      "metadata":{
-        "static":true
-      },
-      "name":"finish_1/c",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"Thats it, bring the car to a stop."
-        }
-      },
-      "oldId":464,
-      "pacenoteWaypoints":{},
-      "segment":-1
+      ]
     }
   ],
   "updated_at":1697525376
