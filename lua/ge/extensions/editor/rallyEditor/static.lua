@@ -68,12 +68,12 @@ function C:draw(mouseInfo)
   im.SetColumnWidth(0, 130*im.uiscale[0])
   im.NextColumn()
 
-  im.Text("Note Text")
-  im.SetColumnWidth(1, 400*im.uiscale[0])
+  im.Text("Language")
+  im.SetColumnWidth(1, 100*im.uiscale[0])
   im.NextColumn()
 
-  im.Text("Language")
-  im.SetColumnWidth(2, 100*im.uiscale[0])
+  im.Text("Note Text")
+  im.SetColumnWidth(2, 400*im.uiscale[0])
   im.NextColumn()
 
   im.Text("Files")
@@ -82,50 +82,63 @@ function C:draw(mouseInfo)
 
   im.Separator()
 
-  local lang = self.path._default_note_lang
+  -- local lang = self.path._default_note_lang
+  -- local langs = self.path:getLanguages()
+  --
+  local lang_set = {}
+  for i,langData in ipairs(self.path:getLanguages()) do
+    lang_set[langData.language] = langData.codrivers
+  end
 
   for _,spn in ipairs(self.path.static_pacenotes.sorted) do
-    im.Text(spn.name)
-    im.NextColumn()
-    im.Text(spn:joinedNote(lang))
-    im.NextColumn()
-    im.Text(lang)
-    im.NextColumn()
+    for lang,langData in pairs(spn.notes) do
+      im.Text(spn.name)
+      im.NextColumn()
 
-    for _,codriver in ipairs(self.path.codrivers.sorted) do
-      local fname = ''
-      local tooltipStr = ''
-      local voicePlayClr = nil
-      local file_exists = false
+      im.Text(lang)
+      im.NextColumn()
 
-      fname = spn:audioFname(codriver)
-      if re_util.fileExists(fname) then
-        file_exists = true
-        tooltipStr = "Codriver: "..codriver.name.."\nPlay pacenote audio file:\n"..fname
-      else
-        voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
-        tooltipStr = "Codriver: "..codriver.name.."\nPacenote audio file not found:\n"..fname
-      end
+      -- im.Text(spn:joinedNote(lang))
+      im.Text(langData.note)
+      im.NextColumn()
 
-      im.Text('[')
-      im.SameLine()
-      if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
-        if file_exists then
-          local audioObj = re_util.buildAudioObjPacenote(fname)
-          re_util.playPacenote(audioObj)
+      local codrivers = lang_set[lang]
+
+      for _,codriver in ipairs(codrivers or {}) do
+        local fname = ''
+        local tooltipStr = ''
+        local voicePlayClr = nil
+        local file_exists = false
+
+        fname = spn:audioFname(codriver)
+        if re_util.fileExists(fname) then
+          file_exists = true
+          tooltipStr = "Codriver: "..codriver.name.."\nPlay pacenote audio file:\n"..fname
+        else
+          voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
+          tooltipStr = "Codriver: "..codriver.name.."\nPacenote audio file not found:\n"..fname
         end
-      end
-      im.tooltip(tooltipStr)
-      im.SameLine()
-      im.Text(codriver.name)
-      im.SameLine()
-      im.Text(']')
-      im.SameLine()
-    end
 
-    -- im.Text(fname)
-    im.NextColumn()
-    -- im.tooltip(fname)
+        im.Text('[')
+        im.SameLine()
+        if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
+          if file_exists then
+            local audioObj = re_util.buildAudioObjPacenote(fname)
+            re_util.playPacenote(audioObj)
+          end
+        end
+        im.tooltip(tooltipStr)
+        im.SameLine()
+        im.Text(codriver.name)
+        im.SameLine()
+        im.Text(']')
+        im.SameLine()
+      end
+
+      -- im.Text(fname)
+      im.NextColumn()
+      -- im.tooltip(fname)
+    end
   end
 
   im.Columns(1)

@@ -136,19 +136,27 @@ local function saveNotebook()
 end
 
 local function selectPrevPacenote()
-  pacenotesWindow:selectPrevPacenote()
+  if currentWindow == pacenotesWindow then
+    pacenotesWindow:selectPrevPacenote()
+  end
 end
 
 local function selectNextPacenote()
-  pacenotesWindow:selectNextPacenote()
+  if currentWindow == pacenotesWindow then
+    pacenotesWindow:selectNextPacenote()
+  end
 end
 
 local function cycleDragMode()
-  pacenotesWindow:cycleDragMode()
+  if currentWindow == pacenotesWindow then
+    pacenotesWindow:cycleDragMode()
+  end
 end
 
 local function insertMode()
-  pacenotesWindow:insertMode()
+  if currentWindow == pacenotesWindow then
+    pacenotesWindow:insertMode()
+  end
 end
 
 local function loadNotebook(full_filename)

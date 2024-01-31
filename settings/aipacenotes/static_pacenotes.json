@@ -6,16 +6,9 @@
       },
       "name":"damage_1",
       "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"We just took some damage!"
-        },
-        "spanish":{
-          "after":"",
-          "before":"",
-          "note":"¡Nos acabamos de golpear!"
-        }
+        "english": { "note": "We just took some damage!" },
+        "spanish": { "note": "¡Nos acabamos de golpear!" },
+        "german":  { "note": "Wir haben gerade Schaden genommen!" }
       },
       "oldId":1
     },
@@ -25,16 +18,9 @@
       },
       "name":"go_1/c",
       "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"Go!"
-        },
-        "spanish":{
-          "after":"",
-          "before":"",
-          "note":"¡Vamos!"
-        }
+        "english": { "note": "Go!" },
+        "spanish": { "note": "¡Vamos!" },
+        "german":  { "note": "Los!" }
       },
       "oldId":2
     },
@@ -44,16 +30,9 @@
       },
       "name":"countdown_1/c",
       "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"one"
-        },
-        "spanish":{
-          "after":"",
-          "before":"",
-          "note":"uno"
-        }
+        "english": { "note": "one" },
+        "spanish": { "note": "uno" },
+        "german":  { "note": "eins" }
       },
       "oldId":3
     },
@@ -63,16 +42,9 @@
       },
       "name":"countdown_2/c",
       "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"two"
-        },
-        "spanish":{
-          "after":"",
-          "before":"",
-          "note":"dos"
-        }
+        "english": { "note": "two" },
+        "spanish": { "note": "dos" },
+        "german":  { "note": "zwei" }
       },
       "oldId":4
     },
@@ -82,16 +54,9 @@
       },
       "name":"countdown_3/c",
       "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"three"
-        },
-        "spanish":{
-          "after":"",
-          "before":"",
-          "note":"tres"
-        }
+        "english": { "note": "three" },
+        "spanish": { "note": "tres" },
+        "german":  { "note": "drei" }
       },
       "oldId":5
     },
@@ -101,16 +66,9 @@
       },
       "name":"finish_1/c",
       "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"Thats it, bring the car to a stop."
-        },
-        "spanish":{
-          "after":"",
-          "before":"",
-          "note":"Listo, detén el coche."
-        }
+        "english": { "note": "Thats it, bring the car to a stop." },
+        "spanish": { "note": "Listo, detén el coche." },
+        "german":  { "note": "Das war's, bring das Auto zum Stehen." }
       },
       "oldId":6
     }

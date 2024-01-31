@@ -29,11 +29,17 @@ local default_codriver_language = 'english'
 local aip_fg_color = ui_imgui.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
 local function pacenote_hash(s)
-  local hash_value = 0
-  for i = 1, #s do
-    hash_value = (hash_value * 33 + string.byte(s, i)) % 2147483647
-  end
-  return hash_value
+    local hex_string = ""
+    for i = 1, #s do
+        local byte = string.byte(s, i)
+        hex_string = hex_string .. string.format("%02x", byte)
+    end
+
+    local hash_value = 0
+    for i = 1, #hex_string do
+        hash_value = (hash_value * 33 + string.byte(hex_string, i)) % 2147483647
+    end
+    return hash_value
 end
 
 local function fileExists(filename)
