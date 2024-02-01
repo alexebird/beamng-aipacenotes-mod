@@ -24,24 +24,6 @@ function C:selected()
 
   self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
 
-  -- local names = {}
-  -- local notes = {}
-  -- local fnames = {}
-  -- self.codriver = self.path:getCodriverByName(self.settings.notebook.codriver)
-  -- for i,spn in ipairs(self.path.static_pacenotes.sorted) do
-  --   table.insert(names, spn.name)
-  --   table.insert(notes, spn:joinedNote(self.path._default_note_lang))
-  --   if self.codriver then
-  --     table.insert(fnames, spn:audioFname(self.codriver))
-  --   else
-  --     table.insert(fnames, '')
-  --   end
-  -- end
-
-  -- self.columnsBasic.names = im.ArrayCharPtrByTbl(names)
-  -- self.columnsBasic.notes = im.ArrayCharPtrByTbl(notes)
-  -- self.columnsBasic.paths = im.ArrayCharPtrByTbl(fnames)
-
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
@@ -82,9 +64,6 @@ function C:draw(mouseInfo)
 
   im.Separator()
 
-  -- local lang = self.path._default_note_lang
-  -- local langs = self.path:getLanguages()
-  --
   local lang_set = {}
   for i,langData in ipairs(self.path:getLanguages()) do
     lang_set[langData.language] = langData.codrivers

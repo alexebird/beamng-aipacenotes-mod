@@ -45,7 +45,6 @@ function C:init(name)
   self.id = self:getNextUniqueIdentifier()
 
   self._hover_waypoint_id = nil
-  self._default_note_lang = 'english'
   self.fname = nil
 
   -- set by rallyEditor
@@ -298,12 +297,12 @@ function C:drawDebugNotebook(selected_pacenote_id, selected_waypoint_id)
     pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, selected_waypoint_id, pn_prev, pn_next)
 
     if editor_rallyEditor.getPrefShowPreviousPacenote() and pn_prev and pn_prev.id ~= pn_sel.id then
-      pn_prev:drawDebugPacenote('previous', self._default_note_lang, self._hover_waypoint_id, nil, nil, nil)
+      pn_prev:drawDebugPacenote('previous', self._hover_waypoint_id, nil, nil, nil)
       pn_prev:drawLinkToPacenote(pn_sel)
     end
 
     if editor_rallyEditor.getPrefShowNextPacenote() and pn_next and pn_next.id ~= pn_sel.id then
-      pn_next:drawDebugPacenote('next', self._default_note_lang, self._hover_waypoint_id, nil, nil, nil)
+      pn_next:drawDebugPacenote('next', self._hover_waypoint_id, nil, nil, nil)
       pn_sel:drawLinkToPacenote(pn_next)
     end
   elseif pn_sel then
@@ -380,79 +379,79 @@ function C:loadStaticPacenotes()
 end
 
 -- static notes are hardcoded and set on onDeserialized only.
-function C:generateStaticPacenotesData()
-  local notes = {}
-  local oldId = 1
-
-  local damage_1 = {
-    oldId = oldId,
-    name = 'damage_1',
-    notes = {
-      english = {
-        before = '',
-        note = 'We just took some damage!',
-        after = '',
-      }
-    },
-    metadata = {static=true},
-    pacenoteWaypoints = {}
-  }
-  table.insert(notes, damage_1)
-  oldId = oldId+1
-
-  local go_time_1 = {
-    oldId = oldId,
-    name = 'go_1/c',
-    notes = {
-      english = {
-        before = '',
-        note = 'Go!',
-        after = '',
-      }
-    },
-    metadata = {static=true},
-    pacenoteWaypoints = {}
-  }
-  table.insert(notes, go_time_1)
-  oldId = oldId+1
-
-  local numbers = {'one', 'two', 'three'}
-  for i,num in ipairs(numbers) do
-    local countdown = {
-      oldId = oldId,
-      name = 'countdown_'..i..'/c',
-      notes = {
-        english = {
-          before = '',
-          note = num,
-          after = '',
-        }
-      },
-      metadata = {static=true},
-      pacenoteWaypoints = {}
-    }
-    table.insert(notes, countdown)
-    oldId = oldId+1
-  end
-
-  local finish_1 = {
-    oldId = oldId,
-    name = 'finish_1/c',
-    notes = {
-      english = {
-        before = '',
-        note = 'Thats it, bring the car to a stop.',
-        after = '',
-      }
-    },
-    metadata = {static=true},
-    pacenoteWaypoints = {}
-  }
-  table.insert(notes, finish_1)
-  oldId = oldId+1
-
-  return notes
-end
+-- function C:generateStaticPacenotesData()
+--   local notes = {}
+--   local oldId = 1
+--
+--   local damage_1 = {
+--     oldId = oldId,
+--     name = 'damage_1',
+--     notes = {
+--       english = {
+--         before = '',
+--         note = 'We just took some damage!',
+--         after = '',
+--       }
+--     },
+--     metadata = {static=true},
+--     pacenoteWaypoints = {}
+--   }
+--   table.insert(notes, damage_1)
+--   oldId = oldId+1
+--
+--   local go_time_1 = {
+--     oldId = oldId,
+--     name = 'go_1/c',
+--     notes = {
+--       english = {
+--         before = '',
+--         note = 'Go!',
+--         after = '',
+--       }
+--     },
+--     metadata = {static=true},
+--     pacenoteWaypoints = {}
+--   }
+--   table.insert(notes, go_time_1)
+--   oldId = oldId+1
+--
+--   local numbers = {'one', 'two', 'three'}
+--   for i,num in ipairs(numbers) do
+--     local countdown = {
+--       oldId = oldId,
+--       name = 'countdown_'..i..'/c',
+--       notes = {
+--         english = {
+--           before = '',
+--           note = num,
+--           after = '',
+--         }
+--       },
+--       metadata = {static=true},
+--       pacenoteWaypoints = {}
+--     }
+--     table.insert(notes, countdown)
+--     oldId = oldId+1
+--   end
+--
+--   local finish_1 = {
+--     oldId = oldId,
+--     name = 'finish_1/c',
+--     notes = {
+--       english = {
+--         before = '',
+--         note = 'Thats it, bring the car to a stop.',
+--         after = '',
+--       }
+--     },
+--     metadata = {static=true},
+--     pacenoteWaypoints = {}
+--   }
+--   table.insert(notes, finish_1)
+--   oldId = oldId+1
+--
+--   return notes
+-- end
 
 -- function C:copy()
 --   local cpy = require('/lua/ge/extensions/gameplay/notebook/path')('Copy of ' .. self.name)
@@ -527,12 +526,16 @@ function C:allToTerrain()
   end
 end
 
+function C:editingLanguage()
+  return editor_rallyEditor.getPrefEditingLanguage()
+end
+
 local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
 function C:normalizeNotes(lang)
-  lang = lang or self._default_note_lang
+  lang = lang or self:editingLanguage()
 
   for _,pacenote in ipairs(self.pacenotes.sorted) do
     local note = pacenote:getNoteFieldNote(lang)
@@ -552,19 +555,6 @@ function C:normalizeNotes(lang)
     end
   end
 end
-
--- function C:replaceDigits(lang)
---   lang = lang or self._default_note_lang
---
---   for _,pacenote in ipairs(self.pacenotes.sorted) do
---     local note = pacenote:getNoteFieldNote(lang)
---
---     if note ~= '' then
---       note = normalizer.replaceDigits(note)
---       pacenote:setNoteFieldNote(lang, note)
---     end
---   end
--- end
 
 -- Generalized rounding function
 local function custom_round(dist, round_to)
@@ -634,7 +624,7 @@ local function normalize_distance(dist)
 end
 
 function C:autofillDistanceCalls()
-  local lang = self._default_note_lang
+  local lang = self:editingLanguage()
 
   -- first clear everything
   for _,pacenote in ipairs(self.pacenotes.sorted) do

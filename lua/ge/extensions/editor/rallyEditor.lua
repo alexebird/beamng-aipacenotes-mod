@@ -519,6 +519,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
+    {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
   })
   prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
     {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
@@ -560,6 +561,10 @@ end
 
 local function getPrefShowNextPacenote()
   return getPreference('rallyEditor.editing.showNextPacenote', true)
+end
+
+local function getPrefEditingLanguage()
+  return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
 end
 
 local function getPrefDefaultRadius()
@@ -705,6 +710,7 @@ M.getPacenotesWindow = function() return pacenotesWindow end
 M.getMissionDir = getMissionDir
 
 M.getPrefDefaultRadius = getPrefDefaultRadius
+M.getPrefEditingLanguage = getPrefEditingLanguage
 M.getPrefLevel1Text = getPrefLevel1Text
 M.getPrefLevel1Thresh = getPrefLevel1Thresh
 M.getPrefLevel2Text = getPrefLevel2Text

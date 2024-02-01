@@ -386,19 +386,6 @@ function C:getActiveFwdAudioTrigger()
   return nil
 end
 
-function C:getDefaultNoteLang()
-  return self.notebook._default_note_lang
-end
-
-local function reverseList(list)
-  local reversed = {}
-  local count = #list
-  for i = count, 1, -1 do
-      table.insert(reversed, list[i])
-  end
-  return reversed
-end
-
 function C:setAdjacentNotes(prevNote, nextNote)
   self.prevNote = prevNote
   self.nextNote = nextNote
@@ -711,7 +698,7 @@ function C:drawLinkToPacenote(to_pacenote)
 end
 
 function C:noteTextForDrawDebug()
-  local noteData = self.notes[self:getDefaultNoteLang()]
+  local noteData = self.notes[self.notebook:editingLanguage()]
   local txt = '<empty note>'
   if noteData then
     local nd = noteData[self.noteFields.note]

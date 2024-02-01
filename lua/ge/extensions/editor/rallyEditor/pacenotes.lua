@@ -361,6 +361,10 @@ function C:drawDebugEntrypoint()
   if tscs and self.transcript_tools_state.show then
     tscs:drawDebug(self.transcript_tools_state.selected_id)
 
+    if self.snaproads and self.dragMode == dragModes.simple_road_snap then
+      self.snaproads:drawSnapRoads(self.mouseInfo)
+    end
+
     if self.transcript_tools_state.playbackLastCameraPos then
       local clr = cc.clr_purple
       local radius = self.snaproads and (self.snaproads.radius * 2.0) or 1
@@ -616,12 +620,6 @@ function C:draw(mouseInfo, tabContentsHeight)
 
   self:drawPacenotesList(tabContentsHeight * 0.65)
   self:drawTranscriptsSection(tabContentsHeight * 0.15)
-
-  -- visualize the snap road points with debugDraw.
-  -- the same data is utilized separately -- this is just for visualizing.
-  if self.snaproads and self.dragMode == dragModes.simple_road_snap then
-    self.snaproads:drawSnapRoads(self.mouseInfo)
-  end
 end
 
 function C:debugDrawNewPacenote(pos_cs, pos_ce)
@@ -1671,7 +1669,7 @@ function C:drawTranscriptsSection(height)
       im.Text('Look at')
     end
   end
-  im.EndChild() -- transcripts section child window
+  im.EndChild() -- transcript detail section child window
 
   im.EndChild() -- transcripts section child window
 end

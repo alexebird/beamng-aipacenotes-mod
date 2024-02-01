@@ -47,6 +47,7 @@ end
 function C:convertTranscriptToNotebook(importIdent, start_i)
   local ts = os.time()
   local fname_out = 'transcript_'..ts..'.notebook.json'
+  local import_language = re_util.default_codriver_language
   local notebook = {
     authors = "aipacenotes",
     description = "created using aipacenotes voice transcription.",
@@ -58,7 +59,7 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
     codrivers = {
       {
         voice = re_util.default_codriver_voice,
-        language = re_util.default_codriver_language,
+        language = import_language,
         name = re_util.default_codriver_name,
         oldId = 2,
       }
@@ -101,7 +102,7 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
 
       local pn = {
         name = name,
-        notes = { english = {note = note}},
+        notes = { [import_language] = {note = note}},
         metadata = metadata,
         oldId = pacenoteNewId,
         pacenoteWaypoints = {

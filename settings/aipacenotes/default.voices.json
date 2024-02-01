@@ -118,5 +118,14 @@
             "prosody_pitch": "high",
             "dynamic_rate": {}
         }
+    },
+    "russian_female": {
+        "text_to_speech": {
+            "type": "gcp",
+            "language_code": "ru-RU",
+            "voice_name": "ru-RU-Wavenet-A",
+            "prosody_pitch": "high",
+            "dynamic_rate": {}
+        }
     }
 }
