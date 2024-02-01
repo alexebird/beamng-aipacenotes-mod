@@ -127,5 +127,14 @@
             "prosody_pitch": "high",
             "dynamic_rate": {}
         }
+    },
+    "french_female": {
+        "text_to_speech": {
+            "type": "gcp",
+            "language_code": "fr-FR",
+            "voice_name": "fr-FR-Neural2-A",
+            "prosody_pitch": "high",
+            "dynamic_rate": {}
+        }
     }
 }

@@ -547,7 +547,7 @@ function C:normalizeNotes(lang)
         -- add punction if not present
         local last_char = note:sub(-1)
         if  not re_util.hasPunctuation(last_char) then
-          note = note .. "?"
+          note = note..editor_rallyEditor.getPrefDefaultPunctuation()
         end
 
         pacenote:setNoteFieldNote(lang, note)

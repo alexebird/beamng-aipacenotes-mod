@@ -520,6 +520,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
+    {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
   })
   prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
     {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
@@ -565,6 +566,10 @@ end
 
 local function getPrefEditingLanguage()
   return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
+end
+
+local function getPrefDefaultPunctuation()
+  return getPreference('rallyEditor.editing.punctuation', re_util.default_punctuation)
 end
 
 local function getPrefDefaultRadius()
@@ -711,6 +716,7 @@ M.getMissionDir = getMissionDir
 
 M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefEditingLanguage = getPrefEditingLanguage
+M.getPrefDefaultPunctuation = getPrefDefaultPunctuation
 M.getPrefLevel1Text = getPrefLevel1Text
 M.getPrefLevel1Thresh = getPrefLevel1Thresh
 M.getPrefLevel2Text = getPrefLevel2Text

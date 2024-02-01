@@ -23,6 +23,7 @@ local default_notebook_name = 'primary'
 local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
+local default_punctuation = '?'
 
 --
 -- html code: #00ffdebf
@@ -326,8 +327,6 @@ local function loadMissionSettings(folder)
     end
   end
 
-  -- log("D", logTag, dumps(settings))
-
   return settings
 end
 
@@ -352,6 +351,7 @@ M.default_codriver_language = default_codriver_language
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
 M.default_notebook_name = default_notebook_name
+M.default_punctuation = default_punctuation
 M.desktopTranscriptFname = desktopTranscriptFname
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath

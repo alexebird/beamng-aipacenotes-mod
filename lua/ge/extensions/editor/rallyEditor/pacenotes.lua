@@ -1766,11 +1766,6 @@ function C:pacenoteSearchMatches(pacenote)
   local searchPattern = re_util.trimString(self.pacenote_tools_state.search)
   if searchPattern == '' then return true end
 
-  -- Escape special characters in Lua patterns except '*'
-  -- searchPattern = searchPattern:gsub("([%^%$%(%)%%%.%[%]%+%-%?])", "%%%1")
-  -- Replace '*' with Lua's '.*' to act as a wildcard
-  -- searchPattern = searchPattern:gsub("%*", ".*")
-
   return pacenote:matchesSearchPattern(searchPattern)
 end
 
