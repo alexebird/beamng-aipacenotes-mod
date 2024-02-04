@@ -44,7 +44,6 @@ function C:init(name)
 
   self.id = self:getNextUniqueIdentifier()
 
-  self._hover_waypoint_id = nil
   self.fname = nil
 
   -- set by rallyEditor
@@ -255,25 +254,23 @@ end
 --   end
 -- end
 
-function C:drawPacenotesAsRainbow(skip_pn)
-  for _,pacenote in ipairs(self.pacenotes.sorted) do
-    if not skip_pn or (skip_pn and pacenote.id ~= skip_pn.id) then
-      pacenote:drawDebugPacenote('normal', self._hover_waypoint_id, nil, nil, nil)
+local function drawPacenotesAsRainbow(pacenotes, selection_state)
+  for _,pacenote in ipairs(pacenotes) do
+    pacenote:drawDebugPacenoteNoSelection(selection_state)
+  end
+end
+
+local function drawPacenotesAsBackground(pacenotes, skip_pn, selection_state)
+  for _,pacenote in ipairs(pacenotes) do
+    if pacenote.id ~= skip_pn.id then
+      pacenote:drawDebugPacenoteBackground(selection_state)
     end
   end
 end
 
-function C:drawPacenotesAsBackground(skip_pn)
-  for _,pacenote in ipairs(self.pacenotes.sorted) do
-    if not skip_pn or (skip_pn and pacenote.id ~= skip_pn.id) then
-      pacenote:drawDebugPacenote('background', self._hover_waypoint_id, nil, nil, nil)
-    end
-  end
-end
-
-function C:getAdjacentPacenoteSet(pacenoteId)
+local function getAdjacentPacenoteSet(pacenotes, selected_pn_id)
   local function getOrNullify(i)
-    local pn = self.pacenotes.sorted[i]
+    local pn = pacenotes[i]
     if pn and not pn.missing then
       return pn
     else
@@ -281,8 +278,8 @@ function C:getAdjacentPacenoteSet(pacenoteId)
     end
   end
 
-  for i,pacenote in ipairs(self.pacenotes.sorted) do
-    if pacenote.id == pacenoteId then
+  for i,pacenote in ipairs(pacenotes) do
+    if pacenote.id == selected_pn_id then
       return getOrNullify(i-1), pacenote, getOrNullify(i+1)
     end
   end
@@ -290,27 +287,27 @@ function C:getAdjacentPacenoteSet(pacenoteId)
   return nil, nil, nil
 end
 
-function C:drawDebugNotebook(selected_pacenote_id, selected_waypoint_id)
-  local pn_prev, pn_sel, pn_next = self:getAdjacentPacenoteSet(selected_pacenote_id)
+function C:drawDebugNotebook(selection_state)
+  local pacenotes = self.pacenotes.sorted
+  local pn_prev, pn_sel, pn_next = getAdjacentPacenoteSet(pacenotes, selection_state.selected_pn_id)
 
-  if pn_sel and selected_waypoint_id then
-    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, selected_waypoint_id, pn_prev, pn_next)
+  if pn_sel and selection_state.selected_wp_id then
+    pn_sel:drawDebugPacenoteSelected(selection_state, pn_prev, pn_next)
 
     if editor_rallyEditor.getPrefShowPreviousPacenote() and pn_prev and pn_prev.id ~= pn_sel.id then
-      pn_prev:drawDebugPacenote('previous', self._hover_waypoint_id, nil, nil, nil)
+      pn_prev:drawDebugPacenotePrev(selection_state)
       pn_prev:drawLinkToPacenote(pn_sel)
     end
 
     if editor_rallyEditor.getPrefShowNextPacenote() and pn_next and pn_next.id ~= pn_sel.id then
-      pn_next:drawDebugPacenote('next', self._hover_waypoint_id, nil, nil, nil)
+      pn_next:drawDebugPacenoteNext(selection_state)
       pn_sel:drawLinkToPacenote(pn_next)
     end
   elseif pn_sel then
-    pn_sel:drawDebugPacenote('selected', self._hover_waypoint_id, nil, pn_prev, pn_next)
-    -- self:drawPacenotesAsRainbow(pn_sel)
-    self:drawPacenotesAsBackground(pn_sel)
+    pn_sel:drawDebugPacenoteSelected(selection_state, pn_prev, pn_next)
+    drawPacenotesAsBackground(pacenotes, pn_sel, selection_state)
   else
-    self:drawPacenotesAsRainbow(nil)
+    drawPacenotesAsRainbow(pacenotes, selection_state)
   end
 end
 

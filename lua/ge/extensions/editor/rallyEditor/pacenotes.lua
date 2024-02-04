@@ -49,8 +49,6 @@ language_form_fields.after = im.ArrayChar(256)
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
-  self.pacenote_index = nil
-  self.waypoint_index = nil
   self.mouseInfo = {}
   self.dragMode = dragModes.simple
 
@@ -64,6 +62,9 @@ function C:init(rallyEditor)
 
   self.pacenote_tools_state = {
     search = nil,
+    hover_wp_id = nil,
+    selected_pn_id = nil,
+    selected_wp_id = nil,
   }
 
   self.transcript_tools_state = {
@@ -109,8 +110,8 @@ end
 
 function C:selectedPacenote()
   if not self.path then return nil end
-  if self.pacenote_index then
-    return self.path.pacenotes.objects[self.pacenote_index]
+  if self.pacenote_tools_state.selected_pn_id then
+    return self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
   else
     return nil
   end
@@ -118,8 +119,8 @@ end
 
 function C:selectedWaypoint()
   if not self:selectedPacenote() then return nil end
-  if self.waypoint_index then
-    return self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
+  if self.pacenote_tools_state.selected_wp_id then
+    return self:selectedPacenote().pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
   else
     return nil
   end
@@ -138,8 +139,8 @@ end
 function C:selected()
   if not self.path then return end
 
-  -- self.pacenote_index = nil
-  -- self.waypoint_index = nil
+  -- self.pacenote_tools_state.selected_pn_id = nil
+  -- self.pacenote_tools_state.selected_wp_id = nil
 
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add waypoint to current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Create new pacenote"
@@ -170,16 +171,16 @@ function C:selectPacenote(id)
   if not self.path.pacenotes then return end
 
   -- deselect waypoint if we are changing pacenotes.
-  if self.pacenote_index ~= id then
-    self.waypoint_index = nil
+  if self.pacenote_tools_state.selected_pn_id ~= id then
+    self.pacenote_tools_state.selected_wp_id = nil
   end
 
-  self.pacenote_index = id
+  self.pacenote_tools_state.selected_pn_id = id
 
   -- find the pacenotes before and after the selected one.
   local pacenotesSorted = self.path.pacenotes.sorted
   for i, note in ipairs(pacenotesSorted) do
-    if self.pacenote_index == note.id then
+    if self.pacenote_tools_state.selected_pn_id == note.id then
       local prevNote = pacenotesSorted[i-1]
       local nextNote = pacenotesSorted[i+1]
       note:setAdjacentNotes(prevNote, nextNote)
@@ -201,7 +202,7 @@ end
 
 function C:selectWaypoint(id)
   if not self.path then return end
-  self.waypoint_index = id
+  self.pacenote_tools_state.selected_wp_id = id
 
   if id then
     local waypoint = self.path:getWaypoint(id)
@@ -264,7 +265,7 @@ end
 
 function C:beginDrag()
   if not self:selectedPacenote() then return end
-  local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
+  local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
   if not wp or wp.missing then return end
 
   self.beginDragNoteData = wp:onSerialize()
@@ -282,7 +283,7 @@ end
 
 function C:dragging()
   if not self:selectedPacenote() then return end
-  local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
+  local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
   if not wp or wp.missing then return end
 
   -- update/save our gizmo matrix
@@ -321,13 +322,13 @@ end
 function C:endDragging()
   if not self:selectedPacenote() then return end
   -- log('D', 'wtf', 'endDragging')
-  local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.waypoint_index]
+  local wp = self:selectedPacenote().pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
   if not wp or wp.missing then return end
 
   editor.history:commitAction("Manipulated Note Waypoint via Gizmo",
     {old = self.beginDragNoteData,
      new = wp:onSerialize(),
-     index = self.waypoint_index, self = self},
+     index = self.pacenote_tools_state.selected_wp_id, self = self},
     function(data) -- undo
       local wp = self:selectedPacenote().pacenoteWaypoints.objects[data.index]
       wp:onDeserialized(data.old)
@@ -354,7 +355,7 @@ end
 
 function C:drawDebugEntrypoint()
   if self.path then
-    self.path:drawDebugNotebook(self.pacenote_index, self.waypoint_index)
+    self.path:drawDebugNotebook(self.pacenote_tools_state)
   end
 
   if self.snaproads and self.dragMode == dragModes.simple_road_snap then
@@ -451,8 +452,8 @@ function C:handleMouseUp()
       editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
         {
           self = self, -- the rallyEditor pacenotes tab
-          pacenote_idx = self.pacenote_index,
-          wp_index = self.waypoint_index,
+          pacenote_idx = self.pacenote_tools_state.selected_pn_id,
+          wp_id = self.pacenote_tools_state.selected_wp_id,
           old = self.beginSimpleDragNoteData,
           new = wp_sel:onSerialize(),
           wasPWselection = self.wasWPSelected,
@@ -460,10 +461,10 @@ function C:handleMouseUp()
         function(data) -- undo
           local notebook = data.self.path
           local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-          local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+          local wp = pacenote.pacenoteWaypoints.objects[data.wp_id]
           wp:onDeserialized(data.old)
           -- if data.wasWPSelected then
-            data.self:selectWaypoint(data.wp_index)
+            data.self:selectWaypoint(data.wp_id)
           -- else
             -- data.self:selectWaypoint(nil)
           -- end
@@ -471,10 +472,10 @@ function C:handleMouseUp()
         function(data) --redo
           local notebook = data.self.path
           local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-          local wp = pacenote.pacenoteWaypoints.objects[data.wp_index]
+          local wp = pacenote.pacenoteWaypoints.objects[data.wp_id]
           wp:onDeserialized(data.new)
           -- if data.wasWPSelected then
-            data.self:selectWaypoint(data.wp_index)
+            data.self:selectWaypoint(data.wp_id)
           -- else
             -- data.self:selectWaypoint(nil)
           -- end
@@ -489,12 +490,12 @@ function C:setHover(wp, tsc)
   if tscs and self.transcript_tools_state.show then
     tscs._draw_debug_hover_tsc_id = nil
   end
-  self.path._hover_waypoint_id = nil
+  self.pacenote_tools_state.hover_wp_id = nil
 
   if tscs and self.transcript_tools_state.show and tsc then
     tscs._draw_debug_hover_tsc_id = tsc.id
   elseif wp then
-    self.path._hover_waypoint_id = wp.id
+    self.pacenote_tools_state.hover_wp_id = wp.id
   end
 end
 
@@ -515,14 +516,14 @@ function C:handleMouseInput()
 
   -- handle positioning and drawing of the gizmo
   if self.dragMode == dragModes.gizmo then
-    self:updateGizmoTransform(self.waypoint_index)
+    self:updateGizmoTransform(self.pacenote_tools_state.selected_wp_id)
     editor.drawAxisGizmo()
   else
     self:resetGizmoTransformToOrigin()
   end
   editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
 
-  self.path._hover_waypoint_id = nil -- clear hover state
+  self.pacenote_tools_state.hover_wp_id = nil -- clear hover state
 
   -- There is a bug (in race tool as well) where if you start the game, open
   -- the world editor, and try to use the tool without having selected anything
@@ -689,16 +690,16 @@ function C:createMouseDragPacenote()
       {
         self = self,
         pacenote_data = newPacenote:onSerialize(),
-        pacenote_index = newPacenote.id,
+        pacenote_id = newPacenote.id,
       },
       function(data) -- undo
-        self.path.pacenotes:remove(data.pacenote_index)
+        self.path.pacenotes:remove(data.pacenote_id)
         self:selectPacenote(nil)
       end,
       function(data) -- redo
         local note = self.path.pacenotes:create(nil, data.pacenote_data.oldId)
         note:onDeserialized(data.pacenote_data, {})
-        self:selectPacenote(data.pacenote_index)
+        self:selectPacenote(data.pacenote_id)
       end
     )
   end
@@ -738,16 +739,16 @@ function C:addMouseWaypointToPacenote()
         self = self,
         pos = pos_rayCast,
         wp_data = nil,
-        wp_index = nil,
-        pacenote_index = pacenote.id,
+        wp_id = nil,
+        pacenote_id = pacenote.id,
       },
       function(data) -- undo
-        local note = self.path.pacenotes.objects[data.pacenote_index]
-        note.pacenoteWaypoints:remove(data.wp_index)
-        self:selectPacenote(data.pacenote_index)
+        local note = self.path.pacenotes.objects[data.pacenote_id]
+        note.pacenoteWaypoints:remove(data.wp_id)
+        self:selectPacenote(data.pacenote_id)
       end,
       function(data) -- redo
-        local note = self.path.pacenotes.objects[data.pacenote_index]
+        local note = self.path.pacenotes.objects[data.pacenote_id]
         local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
 
         if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
@@ -768,13 +769,13 @@ function C:addMouseWaypointToPacenote()
           waypoint:onDeserialized(data.wp_data)
         end
 
-        data.wp_index = waypoint.id
+        data.wp_id = waypoint.id
         self:selectWaypoint(waypoint.id)
       end
     )
 
   elseif self.mouseInfo.hold then
-    -- local note = self.path.pacenotes.objects[data.pacenote_index]
+    -- local note = self.path.pacenotes.objects[data.pacenote_id]
     -- local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
     local note = self:selectedPacenote()
     local waypoint = self:selectedWaypoint()
@@ -1014,7 +1015,7 @@ function C:deleteSelectedWaypoint()
 
   editor.history:commitAction(
     "RallyEditor DeleteSelectedWaypoint",
-    {index = self.waypoint_index, self = self},
+    {index = self.pacenote_tools_state.selected_wp_id, self = self},
     function(data) -- undo
       local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, nil, data.wpData.oldId)
       wp:onDeserialized(data.wpData)
@@ -1035,7 +1036,7 @@ function C:deleteSelectedPacenote()
 
   editor.history:commitAction(
     "RallyEditor DeleteSelectedPacenote",
-    {index = self.pacenote_index, self = self},
+    {index = self.pacenote_tools_state.selected_pn_id, self = self},
     function(data) -- undo
       local note = notebook.pacenotes:create(nil, data.noteData.oldId)
       note:onDeserialized(data.noteData, {})
@@ -1052,7 +1053,7 @@ end
 function C:selectPrevPacenote()
   if not self.path then return end
 
-  local curr = self.path.pacenotes.objects[self.pacenote_index]
+  local curr = self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
   local sorted = self.path.pacenotes.sorted
 
   if curr and not curr.missing then
@@ -1097,7 +1098,7 @@ end
 function C:selectNextPacenote()
   if not self.path then return end
 
-  local curr = self.path.pacenotes.objects[self.pacenote_index]
+  local curr = self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
   local sorted = self.path.pacenotes.sorted
 
   if curr and not curr.missing then
@@ -1324,9 +1325,9 @@ function C:drawPacenotesList(height)
 
   im.BeginChild1("pacenotes", im.ImVec2(125*im.uiscale[0],height), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
-    if im.Selectable1( note:nameForSelect(), note.id == self.pacenote_index) then
+    if im.Selectable1( note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then
       editor.history:commitAction("Select Pacenote",
-        {old = self.pacenote_index, new = note.id, self = self},
+        {old = self.pacenote_tools_state.selected_pn_id, new = note.id, self = self},
         selectPacenoteUndo, selectPacenoteRedo)
     end
     if note:is_valid() then
@@ -1336,7 +1337,7 @@ function C:drawPacenotesList(height)
     end
   end
   im.Separator()
-  if im.Selectable1('New...', self.pacenote_index == nil) then
+  if im.Selectable1('New...', self.pacenote_tools_state.selected_pn_id == nil) then
     local pacenote = notebook.pacenotes:create(nil, nil)
     self:selectPacenote(pacenote.id)
   end
@@ -1346,8 +1347,8 @@ function C:drawPacenotesList(height)
   im.SameLine()
   im.BeginChild1("currentPacenote", im.ImVec2(0,height), im.WindowFlags_ChildWindow)
 
-  if self.pacenote_index then
-    local note = notebook.pacenotes.objects[self.pacenote_index]
+  if self.pacenote_tools_state.selected_pn_id then
+    local note = notebook.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
 
     if not note.missing then
 
@@ -1363,7 +1364,7 @@ function C:drawPacenotesList(height)
       im.Separator()
     end
 
-    im.Text("Current Pacenote: #" .. self.pacenote_index)
+    im.Text("Current Pacenote: #" .. self.pacenote_tools_state.selected_pn_id)
 
     if im.Button("Focus Camera") then
       self:setCameraToPacenote()
@@ -1375,13 +1376,13 @@ function C:drawPacenotesList(height)
     -- im.SameLine()
     if im.Button("Move Up") then
       editor.history:commitAction("Move Pacenote in List",
-        {index = self.pacenote_index, self = self, dir = -1},
+        {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = -1},
         movePacenoteUndo, movePacenoteRedo)
     end
     im.SameLine()
     if im.Button("Move Down") then
       editor.history:commitAction("Move Pacenote in List",
-        {index = self.pacenote_index, self = self, dir = 1},
+        {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = 1},
         movePacenoteUndo, movePacenoteRedo)
     end
     im.SameLine()
@@ -1399,14 +1400,14 @@ function C:drawPacenotesList(height)
     editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
       editor.history:commitAction("Change Name of Note",
-        {index = self.pacenote_index, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
+        {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
 
     editor.uiInputText("Playback Rules", playbackRulesText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
       editor.history:commitAction("Change the playback rules",
-        {index = self.pacenote_index, self = self, old = note.playback_rules, new = ffi.string(playbackRulesText), field = 'playback_rules'},
+        {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.playback_rules, new = ffi.string(playbackRulesText), field = 'playback_rules'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
     im.tooltip([[Playback Rules
@@ -1520,7 +1521,7 @@ Any lua code is allowed, so be careful. Examples:
     self:drawWaypointList(note)
 
     end -- / if not note.missing then
-  end -- / if pacenote_index
+  end -- / if pacenote_id
 
   im.EndChild() -- currentPacenote child window
   -- for i = 1,3 do im.Spacing() end
@@ -1825,7 +1826,7 @@ function C:handleNoteFieldEdit(note, language, subfield, buf)
   lang_data[subfield] = re_util.trimString(ffi.string(buf))
   newVal[language] = lang_data
   editor.history:commitAction("Change Notes of Pacenote",
-    {index = self.pacenote_index, self = self, old = note.notes, new = newVal, field = 'notes'},
+    {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.notes, new = newVal, field = 'notes'},
     setPacenoteFieldUndo, setPacenoteFieldRedo)
 end
 
@@ -1834,16 +1835,16 @@ function C:drawWaypointList(note)
   im.BeginChild1("waypoints", im.ImVec2(125 * im.uiscale[0], 0 ), im.WindowFlags_ChildWindow)
 
   for i,waypoint in ipairs(note.pacenoteWaypoints.sorted) do
-    if im.Selectable1('['..waypointTypes.shortenWaypointType(waypoint.waypointType)..'] '..waypoint.name, waypoint.id == self.waypoint_index) then
+    if im.Selectable1('['..waypointTypes.shortenWaypointType(waypoint.waypointType)..'] '..waypoint.name, waypoint.id == self.pacenote_tools_state.selected_wp_id) then
       editor.history:commitAction("Select Waypoint",
-        {old = self.waypoint_index, new = waypoint.id, self = self},
+        {old = self.pacenote_tools_state.selected_wp_id, new = waypoint.id, self = self},
         selectWaypointUndo, selectWaypointRedo)
     end
   end
 
   im.Separator()
 
-  if im.Selectable1('New...', self.waypoint_index == nil) then
+  if im.Selectable1('New...', self.pacenote_tools_state.selected_wp_id == nil) then
     self:selectWaypoint(nil)
   end
 
@@ -1853,11 +1854,11 @@ function C:drawWaypointList(note)
   im.SameLine()
   im.BeginChild1("currentWaypoint", im.ImVec2(0, 0 ), im.WindowFlags_ChildWindow)
 
-  if self.waypoint_index then
-    local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
+  if self.pacenote_tools_state.selected_wp_id then
+    local waypoint = note.pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
     if not waypoint.missing then
       im.HeaderText("Waypoint Info")
-      im.Text("Current Waypoint: #" .. self.waypoint_index)
+      im.Text("Current Waypoint: #" .. self.pacenote_tools_state.selected_wp_id)
       im.SameLine()
       if im.Button("Delete") then
         self:deleteSelectedWaypoint()
@@ -1865,13 +1866,13 @@ function C:drawWaypointList(note)
       im.SameLine()
       if im.Button("Move Up") then
         editor.history:commitAction("Move Pacenote Waypoint in List",
-          {index = self.waypoint_index, self = self, dir = -1},
+          {index = self.pacenote_tools_state.selected_wp_id, self = self, dir = -1},
           moveWaypointUndo, moveWaypointRedo)
       end
       im.SameLine()
       if im.Button("Move Down") then
         editor.history:commitAction("Move Pacenote Waypoint in List",
-          {index = self.waypoint_index, self = self, dir = 1},
+          {index = self.pacenote_tools_state.selected_wp_id, self = self, dir = 1},
           moveWaypointUndo, moveWaypointRedo)
       end
 
@@ -1881,7 +1882,7 @@ function C:drawWaypointList(note)
       editor.uiInputText("Name", waypointNameText, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         editor.history:commitAction("Change Name of Waypoint",
-          {index = self.waypoint_index, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'name'},
+          {index = self.pacenote_tools_state.selected_wp_id, self = self, old = waypoint.name, new = ffi.string(waypointNameText), field = 'name'},
           setWaypointFieldUndo, setWaypointFieldRedo)
       end
 
@@ -1892,12 +1893,12 @@ function C:drawWaypointList(note)
       waypointPosition[2] = waypoint.pos.z
       if im.InputFloat3("Position", waypointPosition, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
         editor.history:commitAction("Change note Position",
-          {index = self.waypoint_index, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
+          {index = self.pacenote_tools_state.selected_wp_id, old = waypoint.pos, new = vec3(waypointPosition[0], waypointPosition[1], waypointPosition[2]), field = 'pos', self = self},
           setWaypointFieldUndo, setWaypointFieldRedo)
       end
       -- if scenetree.findClassObjects("TerrainBlock") and im.Button("Down to Terrain") then
       --   editor.history:commitAction("Drop Note to Ground",
-      --     {index = self.waypoint_index, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
+      --     {index = self.pacenote_tools_state.selected_wp_id, old = waypoint.pos,self = self, new = vec3(waypointPosition[0], waypointPosition[1], core_terrain.getTerrainHeight(waypoint.pos)), field = 'pos'},
       --     setWaypointFieldUndo, setWaypointFieldRedo)
       -- end
       waypointRadius[0] = waypoint.radius
@@ -1906,7 +1907,7 @@ function C:drawWaypointList(note)
           waypointRadius[0] = 0
         end
         editor.history:commitAction("Change Note Size",
-          {index = self.waypoint_index, old = waypoint.radius, new = waypointRadius[0], self = self, field = 'radius'},
+          {index = self.pacenote_tools_state.selected_wp_id, old = waypoint.radius, new = waypointRadius[0], self = self, field = 'radius'},
           setWaypointFieldUndo, setWaypointFieldRedo)
       end
 
@@ -1915,19 +1916,19 @@ function C:drawWaypointList(note)
       waypointNormal[2] = waypoint.normal.z
       if im.InputFloat3("Normal", waypointNormal, "%0." .. editor.getPreference("ui.general.floatDigitCount") .. "f", im.InputTextFlags_EnterReturnsTrue) then
         editor.history:commitAction("Change Normal",
-          {index = self.waypoint_index, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
+          {index = self.pacenote_tools_state.selected_wp_id, old = waypoint.normal, self = self, new = vec3(waypointNormal[0], waypointNormal[1], waypointNormal[2])},
           setWaypointNormalUndo, setWaypointNormalRedo)
       end
       -- if scenetree.findClassObjects("TerrainBlock") and im.Button("Align Normal with Terrain") then
       --   local normalTip = waypoint.pos + waypoint.normal*waypoint.radius
       --   normalTip = vec3(normalTip.x, normalTip.y, core_terrain.getTerrainHeight(normalTip))
       --   editor.history:commitAction("Align Normal with Terrain",
-      --     {index = self.waypoint_index, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
+      --     {index = self.pacenote_tools_state.selected_wp_id, old = waypoint.normal, self = self, new = normalTip - waypoint.pos},
       --     setWaypointNormalUndo, setWaypointNormalRedo)
       -- end
 
     end -- / if not waypoint.missing
-  end -- / if waypoint_index
+  end -- / if waypoint_id
   im.EndChild() -- currentWaypoint child window
 end
 
@@ -1939,19 +1940,19 @@ end
 --   end
 --
 --   local racePath = self:getRacePath()
---   local selected_pacenote = self.path.pacenotes.objects[self.pacenote_index]
+--   local selected_pacenote = self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
 --   local segments = racePath.segments.objects
 --
 --   if im.BeginCombo(name..'##'..fieldName, _seg_name(segments[selected_pacenote[fieldName]])) then
 --     if im.Selectable1('#'..0 .. " - None", selected_pacenote[fieldName] == -1) then
 --       editor.history:commitAction("Removed Segment for pacenote",
---         {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = -1, field = fieldName},
+--         {index = self.pacenote_tools_state.selected_pn_id, self = self, old = selected_pacenote[fieldName], new = -1, field = fieldName},
 --         setPacenoteFieldUndo, setPacenoteFieldRedo)
 --     end
 --     for i, sp in ipairs(racePath.segments.sorted) do
 --       if im.Selectable1(_seg_name(sp), selected_pacenote[fieldName] == sp.id) then
 --               editor.history:commitAction("Changed Segment for pacenote",
---         {index = self.pacenote_index, self = self, old = selected_pacenote[fieldName], new = sp.id, field = fieldName},
+--         {index = self.pacenote_tools_state.selected_pn_id, self = self, old = selected_pacenote[fieldName], new = sp.id, field = fieldName},
 --         setPacenoteFieldUndo, setPacenoteFieldRedo)
 --       end
 --     end
@@ -1964,7 +1965,7 @@ end
 function C:waypointTypeSelector(note)
   if not self:selectedWaypoint() then return end
 
-  local waypoint = note.pacenoteWaypoints.objects[self.waypoint_index]
+  local waypoint = note.pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
   local wpTypesList = {
     waypointTypes.wpTypeFwdAudioTrigger,
     waypointTypes.wpTypeRevAudioTrigger,
@@ -1983,7 +1984,7 @@ function C:waypointTypeSelector(note)
       -- log('D', 'wtf', 'i='..i..' type='..wt)
       if im.Selectable1(wt, waypoint[fieldName] == wt) then
         editor.history:commitAction("Changed waypointType for waypoint",
-          {index = self.waypoint_index, self = self, old = waypoint[fieldName], new = wt, field = fieldName},
+          {index = self.pacenote_tools_state.selected_wp_id, self = self, old = waypoint[fieldName], new = wt, field = fieldName},
           setWaypointFieldUndo, setWaypointFieldRedo)
       end
     end
