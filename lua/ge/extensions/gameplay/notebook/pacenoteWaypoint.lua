@@ -221,17 +221,44 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
   local is_next_note = i == 1
   local multiple_notes = #nextPacenotes > 1
 
-  -- self:drawDebugIntersectPlane(cc.clr_red, cc.pacenote_alpha_recce)
-  local clr = cc.clr_white
-  local shapeAlpha = 0.09
-
-  -- local textAlpha = (is_next_note and 1.0) or 0.5
-  -- local textAlpha = (multiple_notes and 0.65) or 1.0
-  local textAlpha = (#nextPacenotes - (i-1)) / #nextPacenotes -- scale the alpha by distance.
-
+  local radius_cyl = 0.1
   local height = 6
   local width = self.radius * 2
   local side = self.normal:cross(vec3(0,0,1)) * (self.radius - (width / 2))
+
+  -- self:drawDebugIntersectPlane(cc.clr_red, cc.pacenote_alpha_recce)
+  local clr_driveThru = cc.clr_white
+  local alpha_driveThru = 0.09
+
+  local clr_text_fg = cc.waypoint_clr_txt_fg
+  local clr_text_bg = cc.waypoint_clr_txt_bg
+
+  -- local textAlpha = (is_next_note and 1.0) or 0.5
+  -- local textAlpha = (multiple_notes and 0.65) or 1.0
+  -- local textAlpha = (#nextPacenotes - (i-1)) / #nextPacenotes -- scale the alpha by distance.
+  local alpha_text = 0.5
+
+  local clr_cyl = cc.clr_red
+  local alpha_cyl = 0.2
+  -- local cyl_alpha = 0.5 * ((#nextPacenotes - (i-1)) / #nextPacenotes) -- scale the alpha by distance.
+
+  if is_next_note then
+    alpha_text = 1.0
+    alpha_cyl = 0.5
+  end
+
+  if multiple_notes then
+    clr_cyl = cc.clr_yellow
+  end
+
+  debugDrawer:drawTextAdvanced(
+    self.pos + (vec3(0,0,height/2)),
+    String(note_text),
+    ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
+    true,
+    false,
+    ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
+  )
 
   -- this square prism is the intersection "plane" of the pacenote.
   debugDrawer:drawSquarePrism(
@@ -239,55 +266,28 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
     (self.pos + 0.01 * self.normal + side),
     Point2F(height, width), -- by itself, forms the lower triangle
     Point2F(height, width), -- forms the upper triangle
-    ColorF(clr[1], clr[2], clr[3], shapeAlpha)
+    ColorF(clr_driveThru[1], clr_driveThru[2], clr_driveThru[3], alpha_driveThru)
   )
-
-  -- if is_next_note then
-    local clr_text_fg = cc.waypoint_clr_txt_fg
-    local clr_text_bg = cc.waypoint_clr_txt_bg
-
-    debugDrawer:drawTextAdvanced(
-      self.pos + (vec3(0,0,height/2)),
-      String(note_text),
-      ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
-      true,
-      false,
-      ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, textAlpha*255)
-    )
-  -- end
-
-  local clr_cyl = cc.clr_red
-  -- local cyl_alpha = 0.5
-  local cyl_alpha = 0.5 * ((#nextPacenotes - (i-1)) / #nextPacenotes) -- scale the alpha by distance.
-  local radius_cyl = 0.1
-
-  if multiple_notes then
-    clr_cyl = cc.clr_yellow
-  end
-
-  -- if not is_next_note then
-  --   cyl_alpha = 0.2
-  -- end
 
   debugDrawer:drawCylinder(
     self.pos + (self.normal:cross(vec3(0,0,1)) * self.radius) + vec3(0,0,-1),
     self.pos + (self.normal:cross(vec3(0,0,1)) * self.radius) + (side + vec3(0, 0, (height/2)-radius_cyl)),
     radius_cyl,
-    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
+    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], alpha_cyl)
   )
 
   debugDrawer:drawCylinder(
     self.pos + (-self.normal:cross(vec3(0,0,1)) * self.radius) + vec3(0,0,-1), -- adjust down through the ground in case the ground is uneven
     self.pos + (-self.normal:cross(vec3(0,0,1)) * self.radius) + (side + vec3(0, 0, (height/2)-radius_cyl)),
     radius_cyl,
-    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
+    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], alpha_cyl)
   )
 
   debugDrawer:drawCylinder(
     self.pos + (self.normal:cross(vec3(0,0,1)) * (self.radius+radius_cyl)) + (side + vec3(0, 0, height/2)),
     self.pos + (-self.normal:cross(vec3(0,0,1)) * (self.radius+radius_cyl)) + (side + vec3(0, 0, height/2)),
     radius_cyl,
-    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], cyl_alpha)
+    ColorF(clr_cyl[1], clr_cyl[2], clr_cyl[3], alpha_cyl)
   )
 end
 

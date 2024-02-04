@@ -357,13 +357,13 @@ function C:drawDebugEntrypoint()
     self.path:drawDebugNotebook(self.pacenote_index, self.waypoint_index)
   end
 
+  if self.snaproads and self.dragMode == dragModes.simple_road_snap then
+    self.snaproads:drawSnapRoads(self.mouseInfo)
+  end
+
   local tscs = self:getTranscripts()
   if tscs and self.transcript_tools_state.show then
     tscs:drawDebug(self.transcript_tools_state.selected_id)
-
-    if self.snaproads and self.dragMode == dragModes.simple_road_snap then
-      self.snaproads:drawSnapRoads(self.mouseInfo)
-    end
 
     if self.transcript_tools_state.playbackLastCameraPos then
       local clr = cc.clr_purple
@@ -894,7 +894,10 @@ end
 
 local function offsetMousePosWithTerrainZSnap(pos, offset)
   local newPos = pos - offset
-  newPos.z = core_terrain.getTerrainHeight(pos)
+  local rv = core_terrain.getTerrainHeight(pos)
+  if rv then
+    newPos.z = core_terrain.getTerrainHeight(pos)
+  end
   return newPos
 end
 
@@ -1233,7 +1236,6 @@ function C:drawPacenotesList(height)
   local notebook = self.path
   self:validate()
 
-
   if self:isValid() then
     im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
   else
@@ -1494,13 +1496,14 @@ Any lua code is allowed, so be careful. Examples:
         self:handleNoteFieldEdit(note, language, 'before', fields.before)
       end
       im.SameLine()
-      -- im.SetNextItemWidth(300)
+
       if self._insertMode then
         if i == 1 then
           im.SetKeyboardFocusHere()
         end
         self._insertMode = false
       end
+      im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       -- editor.uiInputTextMultiline('##'..language..'_note', fields.note, nil, im.ImVec2(300, 2 * im.GetTextLineHeightWithSpacing()), nil, nil, nil, editEnded)
       editor.uiInputText('##'..language..'_note', fields.note, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
@@ -1819,7 +1822,7 @@ end
 function C:handleNoteFieldEdit(note, language, subfield, buf)
   local newVal = note.notes
   local lang_data = newVal[language] or {}
-  lang_data[subfield] = ffi.string(buf)
+  lang_data[subfield] = re_util.trimString(ffi.string(buf))
   newVal[language] = lang_data
   editor.history:commitAction("Change Notes of Pacenote",
     {index = self.pacenote_index, self = self, old = note.notes, new = newVal, field = 'notes'},

@@ -776,9 +776,9 @@ function C:setCameraToWaypoints()
 end
 
 function C:audioFname(codriver, missionDir)
-  missionDir =  missionDir or editor_rallyEditor.getMissionDir()
+  missionDir =  missionDir or editor_rallyEditor.getMissionDir() or 'no_mission'
 
-  local notebookBasename = re_util.normalize_name(self.notebook:basenameNoExt())
+  local notebookBasename = re_util.normalize_name(self.notebook:basenameNoExt()) or 'none'
   local codriverName = codriver.name
   local codriverLang = codriver.language
   local codriverVoice = codriver.voice
@@ -872,8 +872,7 @@ end
 function C:matchesSearchPattern(searchPattern)
   for lang,note in pairs(self.notes) do
     local fullNote = self:joinedNote(lang)
-    log('D', 'wtf', 'matching "'..fullNote..'" against "'..searchPattern..'"')
-
+    -- log('D', 'wtf', 'matching "'..fullNote..'" against "'..searchPattern..'"')
     if re_util.matchSearchPattern(searchPattern, fullNote) then
       return true
     end

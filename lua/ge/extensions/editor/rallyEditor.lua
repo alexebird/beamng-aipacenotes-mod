@@ -65,6 +65,8 @@ local function setNotebookUndo(data)
 end
 
 local function strip_basename(thepath)
+  if not thepath then return nil end
+
   if thepath:sub(-1) == "/" then
     thepath = thepath:sub(1, -2)
   end
@@ -156,6 +158,40 @@ end
 local function insertMode()
   if currentWindow == pacenotesWindow then
     pacenotesWindow:insertMode()
+  end
+end
+
+local cameraOrbitState = {
+  up = 0,
+  down = 0,
+  right = 0,
+  left = 0,
+}
+local function cameraOrbitRight(v)
+  if pacenotesWindow:selectedPacenote() then
+    -- log('D', 'wtf', 'right '..tostring(v))
+    cameraOrbitState.right = v
+  end
+end
+
+local function cameraOrbitLeft(v)
+  if pacenotesWindow:selectedPacenote() then
+    -- log('D', 'wtf', 'left '..tostring(v))
+    cameraOrbitState.left = v
+  end
+end
+
+local function cameraOrbitUp(v)
+  if pacenotesWindow:selectedPacenote() then
+    -- log('D', 'wtf', 'up '..tostring(v))
+    cameraOrbitState.up = v
+  end
+end
+
+local function cameraOrbitDown(v)
+  if pacenotesWindow:selectedPacenote() then
+    -- log('D', 'wtf', 'down '..tostring(v))
+    cameraOrbitState.down = v
   end
 end
 
@@ -434,12 +470,117 @@ local function onDeleteSelection()
   end
 end
 
+-- local u = cameraOrbitState.up == 1 and 'U' or '-'
+-- local d = cameraOrbitState.down == 1 and 'D' or '-'
+-- local r = cameraOrbitState.right == 1 and 'R' or '-'
+-- local l = cameraOrbitState.left == 1 and 'L' or '-'
+-- local o = u..d..r..l
+-- if o ~= '----' then
+--   log('D', 'wtf', 'edit mode on update: '..o)
+-- end
+
+-- Function to convert Cartesian coordinates to Spherical coordinates
+local function cartesianToSpherical(x, y, z)
+  local radius = math.sqrt(x*x + y*y + z*z)
+  local theta = math.atan2(y, x)
+  local phi = math.acos(z / radius)
+  return radius, theta, phi
+end
+
+-- Function to convert Spherical coordinates back to Cartesian
+local function sphericalToCartesian(radius, theta, phi)
+  local x = radius * math.sin(phi) * math.cos(theta)
+  local y = radius * math.sin(phi) * math.sin(theta)
+  local z = radius * math.cos(phi)
+  return x, y, z
+end
+
+local function onUpdate()
+  local u = cameraOrbitState.up == 1
+  local d = cameraOrbitState.down == 1
+  local r = cameraOrbitState.right == 1
+  local l = cameraOrbitState.left == 1
+  local changed = u or d or r or l
+
+  if changed then
+    local cameraPosition = core_camera.getPosition()
+    local pn = pacenotesWindow:selectedPacenote()
+    local wp = pn:getCornerStartWaypoint()
+    local targetPosition = wp.pos
+
+    -- Convert to Spherical Coordinates
+    local radius, theta, phi = cartesianToSpherical(cameraPosition.x - targetPosition.x, cameraPosition.y - targetPosition.y, cameraPosition.z - targetPosition.z)
+
+    local orbitSpeed = 0.02 -- Adjust as needed
+
+    if editor.keyModifiers.shift then
+      orbitSpeed = 0.05
+    end
+
+    -- Update theta and phi based on input
+    if r then theta = theta + orbitSpeed end
+    if l then theta = theta - orbitSpeed end
+    if u then phi = phi - orbitSpeed end
+    if d then phi = phi + orbitSpeed end
+
+    -- Ensure phi stays within bounds
+    phi = math.max(0.1, math.min(math.pi - 0.1, phi))
+
+    -- Convert back to Cartesian Coordinates
+    local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
+    local newPos = vec3(newX + targetPosition.x, newY + targetPosition.y, newZ + targetPosition.z)
+
+    -- Set the new camera position and rotation
+    core_camera.setPosition(0, newPos)
+    -- make the camera look at the center point.
+    core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
+  end
+end
+
+-- works, kinda.
+-- local function onUpdate()
+--   local u = cameraOrbitState.up == 1
+--   local d = cameraOrbitState.down == 1
+--   local r = cameraOrbitState.right == 1
+--   local l = cameraOrbitState.left == 1
+--   local changed = u or d or r or l
+--
+--   if changed then
+--     local cameraPosition = core_camera.getPosition()
+--     local pn = pacenotesWindow:selectedPacenote()
+--     local wp = pn:getCornerStartWaypoint()
+--     local targetPosition = wp.pos
+--
+--     -- Convert to Spherical Coordinates
+--     local radius, theta, phi = cartesianToSpherical(cameraPosition.x, cameraPosition.y, cameraPosition.z)
+--
+--     local orbitSpeed = 0.01 -- Adjust as needed
+--
+--     -- Update theta and phi based on input
+--     if r then theta = theta + orbitSpeed end
+--     if l then theta = theta - orbitSpeed end
+--     if u then phi = phi + orbitSpeed end
+--     if d then phi = phi - orbitSpeed end
+--
+--     -- Ensure phi stays within bounds to prevent camera flip
+--     phi = math.max(0.1, math.min(math.pi - 0.1, phi))
+--
+--     -- Convert back to Cartesian Coordinates
+--     local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
+--     local newPos = vec3(newX,newY,newZ)
+--
+--     -- Set the new camera position
+--     core_camera.setPosition(0, newPos)
+--     core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
+--   end
+-- end
+--
 -- this is called after you Ctrl+L to reload lua.
 local function onEditorInitialized()
   editor.editModes.notebookEditMode =
   {
     displayName = editModeName,
-    onUpdate = nop,
+    onUpdate = onUpdate,
     onActivate = onActivate,
     onDeactivate = onDeactivate,
     onDeleteSelection = onDeleteSelection,
@@ -512,9 +653,10 @@ end
 
 local function onEditorRegisterPreferences(prefsRegistry)
   prefsRegistry:registerCategory("rallyEditor")
+
   prefsRegistry:registerSubCategory("rallyEditor", "editing", nil, {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
-    {lockWaypoints = {"bool", false, "Lock position of non-AudioTrigger waypoints."}},
+    {lockWaypoints = {"bool", false, "Lock position of non-AudioTrigger waypoints.", "Lock non-AudioTrigger waypoints"}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
@@ -522,21 +664,27 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
     {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
   })
+
   prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
     {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
     {level2Thresh = {"int", 20, "Threshold for level 2", nil, 0, 100}},
     {level3Thresh = {"int", 40, "Threshold for level 3", nil, 0, 100}},
-
     {level1Text = {"string", re_util.autodist_internal_level1, "Text for level 1."}},
     {level2Text = {"string", "into", "Text for level 2."}},
     {level3Text = {"string", "and", "Text for level 3."}},
   })
+
   prefsRegistry:registerSubCategory("rallyEditor", "topDownCamera", nil, {
     {elevation = {"int", 200, "Elevation for the top-down camera view.", nil, 1, 1000}},
     {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
   })
+
   prefsRegistry:registerSubCategory("rallyEditor", "waypoints", nil, {
     {defaultRadius = {"int", 8, "The default radius for waypoints.", nil, 1, 50}},
+  })
+
+  prefsRegistry:registerSubCategory("rallyEditor", "ui", nil, {
+    {pacenoteNoteFieldWidth = {"int", 300, "Width of pacenote notes.note field.", nil, 1, 1000}},
   })
 end
 
@@ -574,6 +722,10 @@ end
 
 local function getPrefDefaultRadius()
   return getPreference('rallyEditor.waypoints.defaultRadius', 8)
+end
+
+local function getPrefUiPacenoteNoteFieldWidth()
+  return getPreference('rallyEditor.ui.pacenoteNoteFieldWidth', 300)
 end
 
 local function getPrefTopDownCameraElevation()
@@ -708,6 +860,10 @@ M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
 M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
+M.cameraOrbitRight = cameraOrbitRight
+M.cameraOrbitLeft = cameraOrbitLeft
+M.cameraOrbitUp = cameraOrbitUp
+M.cameraOrbitDown = cameraOrbitDown
 
 M.onEditorInitialized = onEditorInitialized
 M.getTranscriptsWindow = function() return transcriptsWindow end
@@ -730,5 +886,6 @@ M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
+M.getPrefUiPacenoteNoteFieldWidth = getPrefUiPacenoteNoteFieldWidth
 
 return M

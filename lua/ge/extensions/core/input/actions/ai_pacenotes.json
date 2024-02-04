@@ -102,5 +102,41 @@
     "title": "Rally Editor - Focus Note Edit Field (aipacenotes)",
     "desc": "Shortcut to focus the cursor on editing the currently selected note text.",
     "onDown": "editor_rallyEditor.insertMode()"
+  },
+  "rallyEditorCameraOrbitRight": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor - Orbit camera right",
+    "desc": "Orbit camera right.",
+    "onChange": "editor_rallyEditor.cameraOrbitRight(VALUE)"
+  },
+  "rallyEditorCameraOrbitLeft": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor - Orbit camera left",
+    "desc": "Orbit camera left.",
+    "onChange": "editor_rallyEditor.cameraOrbitLeft(VALUE)"
+  },
+  "rallyEditorCameraOrbitUp": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor - Orbit camera up",
+    "desc": "Orbit camera up.",
+    "onChange": "editor_rallyEditor.cameraOrbitUp(VALUE)"
+  },
+  "rallyEditorCameraOrbitDown": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor - Orbit camera down",
+    "desc": "Orbit camera down.",
+    "onChange": "editor_rallyEditor.cameraOrbitDown(VALUE)"
   }
 }

@@ -67,6 +67,8 @@ end
 -- end
 
 local function normalize_name(name)
+  if not name then return nil end
+
   -- Replace everything but letters and numbers with '_'
   name = string.gsub(name, "[^a-zA-Z0-9]", "_")
 
