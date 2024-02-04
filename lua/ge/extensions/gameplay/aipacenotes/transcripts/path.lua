@@ -48,7 +48,7 @@ end
 
 function C:save()
   local json = self:onSerialize()
-  jsonWriteFile(self.fname, json, true)
+  jsonWriteFile(self.fname, json, false)
   log('I', logTag, 'saved transcripts file '..self.fname)
 end
 
