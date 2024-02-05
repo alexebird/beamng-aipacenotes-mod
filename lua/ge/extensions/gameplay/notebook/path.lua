@@ -300,7 +300,9 @@ local function drawPacenotesAsBackground(pacenotes, skip_pn, selection_state)
   end
 end
 
-local function getAdjacentPacenoteSet(pacenotes, selected_pn_id)
+function C:getAdjacentPacenoteSet(selected_pn_id)
+  local pacenotes = self.pacenotes.sorted
+
   local function getOrNullify(i)
     local pn = pacenotes[i]
     if pn and not pn.missing then
@@ -321,7 +323,7 @@ end
 
 function C:drawDebugNotebook(selection_state)
   local pacenotes = self.pacenotes.sorted
-  local pn_prev, pn_sel, pn_next = getAdjacentPacenoteSet(pacenotes, selection_state.selected_pn_id)
+  local pn_prev, pn_sel, pn_next = self:getAdjacentPacenoteSet(selection_state.selected_pn_id)
 
   if pn_sel and selection_state.selected_wp_id then
     pn_sel:drawDebugPacenoteSelected(selection_state)

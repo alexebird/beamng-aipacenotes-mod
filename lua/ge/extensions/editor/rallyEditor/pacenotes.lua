@@ -61,6 +61,7 @@ function C:init(rallyEditor)
     hover_wp_id = nil,
     selected_pn_id = nil,
     selected_wp_id = nil,
+    recent_selected_pn_id = nil,
   }
 
   self.transcript_tools_state = {
@@ -171,6 +172,11 @@ function C:selectPacenote(id)
   -- deselect waypoint if we are changing pacenotes.
   if self.pacenote_tools_state.selected_pn_id ~= id then
     self.pacenote_tools_state.selected_wp_id = nil
+    self.pacenote_tools_state.snaproads:setFilter(nil)
+  end
+
+  if not id then
+    self.pacenote_tools_state.recent_selected_pn_id = self.pacenote_tools_state.selected_pn_id
   end
 
   self.pacenote_tools_state.selected_pn_id = id
@@ -209,16 +215,28 @@ function C:selectWaypoint(id)
       waypointNameText = im.ArrayChar(1024, waypoint.name)
       self:updateGizmoTransform(id)
       if self.pacenote_tools_state.snaproads then
-        self.pacenote_tools_state.snaproads:setSelectionState(self.pacenote_tools_state)
+        self.pacenote_tools_state.snaproads:setFilter(waypoint)
       end
     else
       log('E', logTag, 'expected to find waypoint with id='..id)
+      self.pacenote_tools_state.snaproads:setFilter(nil)
     end
   else
     waypointNameText = im.ArrayChar(1024, "")
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
     self:resetGizmoTransformToOrigin()
+    self.pacenote_tools_state.snaproads:setFilter(nil)
+  end
+end
+
+function C:deselect()
+  -- since there are two levels of selection (waypoint+pacenote, pacenote),
+  -- you must deselect twice to deselect everything.
+  if self:selectedWaypoint() then
+    self:selectWaypoint(nil)
+  else
+    self:selectPacenote(nil)
   end
 end
 
@@ -403,13 +421,8 @@ function C:handleMouseDown(hoveredWp, hoveredTsc)
     im.SetClipboardText(hoveredTsc.text)
     self:selectTranscript(hoveredTsc.id)
   else
-    -- clear selection by clicking off waypoint. since there are two levels of selection (waypoint+pacenote, pacenote),
-    -- you must click twice to deselect everything.
-    if self:selectedWaypoint() then
-      self:selectWaypoint(nil)
-    else
-      self:selectPacenote(nil)
-    end
+    -- clear selection by clicking off waypoint.
+    self:deselect()
   end
 end
 
@@ -425,6 +438,7 @@ function C:handleMouseHold()
         local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
         if new_pos then
           wp_sel.pos = new_pos
+          self:autoFillDistanceCalls()
           if normal_align_pos then
             local rv = re_util.calculateForwardNormal(new_pos, normal_align_pos)
             wp_sel.normal = vec3(rv.x, rv.y, rv.z)
@@ -549,8 +563,9 @@ function C:handleMouseInput()
   local hoveredTsc = self:detectMouseHoverTranscript()
   local hoveredWp = self:detectMouseHoverWaypoint()
 
+  local states = self:getSelectionLayerStates()
+
   if editor.keyModifiers.shift then
-    local states = self:getSelectionLayerStates()
     if states.pacenotesLayer == 'none' then
       local pos_rayCast = self.mouseInfo.rayCast.pos
       debugDrawer:drawTextAdvanced(
@@ -565,14 +580,16 @@ function C:handleMouseInput()
       if self.mouseInfo.down then
         self:selectTranscript(nil)
       end
-    else
+    elseif states.pacenotesLayer == 'pacenote' then
       -- if self.mouseInfo.down then
         self:addMouseWaypointToPacenote()
       -- elseif self.mouseInfo.hold then
         -- self:handleMouseHold()
     end
   elseif editor.keyModifiers.ctrl then
-    self:createMouseDragPacenote()
+    if states.pacenotesLayer == 'none' then
+      self:createMouseDragPacenote()
+    end
   else
     self:handleUnmodifiedMouseInteraction(hoveredWp, hoveredTsc)
   end
@@ -2220,6 +2237,66 @@ function C:insertNewPacenoteAfter(note)
   self.path:sortPacenotesByName()
   -- self:cleanupPacenoteNames()
   -- self:selectPacenote(currId)
+end
+
+function C:selectNextWaypoint()
+  -- if there's no selected PN, select the recent one.
+  local pn = self:selectedPacenote()
+  if not pn then
+    if self.pacenote_tools_state.recent_selected_pn_id then
+      self:selectPacenote(self.pacenote_tools_state.recent_selected_pn_id)
+    end
+    return
+  end
+
+  local wp_sel = self:selectedWaypoint()
+
+  if wp_sel then
+    local wp_new = nil
+    if wp_sel:isAt() then
+      wp_new = pn:getCornerStartWaypoint()
+    elseif wp_sel:isCs() then
+      wp_new = pn:getCornerEndWaypoint()
+    elseif wp_sel:isCe() then
+      wp_new = pn:getActiveFwdAudioTrigger()
+    end
+
+    if wp_new then
+      self:selectWaypoint(wp_new.id)
+    end
+  else
+    local wp = pn:getActiveFwdAudioTrigger()
+    if not wp then
+      wp = pn:getCornerStartWaypoint()
+    end
+    self:selectWaypoint(wp.id)
+  end
+end
+
+function C:_moveSelectedWaypointHelper(fwd, steps)
+  local wp = self:selectedWaypoint()
+  if not wp then return end
+
+  if self.pacenote_tools_state.snaproads then
+    local pn = self:selectedPacenote()
+    pn:moveWaypointTowards(self.pacenote_tools_state.snaproads, wp, fwd, steps)
+  end
+end
+
+function C:moveSelectedWaypointForward()
+  self:_moveSelectedWaypointHelper(true, 1)
+end
+
+function C:moveSelectedWaypointBackward()
+  self:_moveSelectedWaypointHelper(false, 1)
+end
+
+function C:moveSelectedWaypointForwardFast()
+  self:_moveSelectedWaypointHelper(true, 5)
+end
+
+function C:moveSelectedWaypointBackwardFast()
+  self:_moveSelectedWaypointHelper(false, 5)
 end
 
 return function(...)

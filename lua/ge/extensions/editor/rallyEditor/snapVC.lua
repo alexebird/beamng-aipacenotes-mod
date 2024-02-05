@@ -14,7 +14,7 @@ function C:init(missionDir)
   self.startingMinDist = 4294967295
   self.radius = 0.25
   self.spline_points = {}
-  self._filtered_spline_points = {}
+  self._filtered_spline_points = nil
   self.selection_state = nil
 end
 
@@ -36,7 +36,7 @@ function C:load()
   end
 
   self.spline_points = {}
-  self._filtered_spline_points = {}
+  self._filtered_spline_points = nil
 
   for _,tsc in ipairs(self.transcript_path.transcripts.sorted) do
     if tsc:capture_data() then
@@ -75,20 +75,20 @@ end
 function C:drawSnapRoads(mouseInfo, clr_override)
   if not self.transcript_path then return end
 
-  local closest_snap_for_hover = self:_mouseOverSnapRoad(mouseInfo)
+  -- local closest_snap_for_hover = self:_mouseOverSnapRoad(mouseInfo)
   local clr = nil
   local alpha = nil
 
   for _,pos in pairs(self:_filteredSnapPoints()) do
-    if pos == closest_snap_for_hover then
-      clr = clr_override or cc.snaproads_clr_hover
-      alpha = cc.snaproads_alpha_hover
+    -- if pos == closest_snap_for_hover then
+      -- clr = clr_override or cc.snaproads_clr_hover
+      -- alpha = cc.snaproads_alpha_hover
     -- elseif pos == snap_pos then
     --   clr = clr_blue
-    else
+    -- else
       clr = clr_override or cc.snaproads_clr
       alpha = cc.snaproads_alpha
-    end
+    -- end
     debugDrawer:drawSphere(
       (pos),
       self.radius,
@@ -137,7 +137,7 @@ local function findPosForNormal(snaps, closest_i)
 end
 
 function C:_filteredSnapPoints()
-  return self.spline_points
+  return self._filtered_spline_points or self.spline_points
 end
 
 function C:closestSnapPos(source_pos)
@@ -228,19 +228,84 @@ function C:nextSnapPos(srcPos, limitPos)
   end
 end
 
-function C:setSelectionState(selection_state)
-  self.selection_state = selection_state
-  self._filtered_spline_points = {}
+function C:setFilter(wp)
+  self._filtered_spline_points = nil
+  if not wp then return end
 
   -- filtering modes:
   -- * AT is selected
-  --   ->  cant go past other ATs
+  --   ->  back: cant go past prev AT
+  --   ->  fwd:  cant go past self CS
   -- * CS is selected
-  --   -> cant go past previous CE
-  --   -> cant go past self CE
+  --   -> back: cant go past self AT
+  --   -> fwd:  cant go past self CE
   -- * CE is selected
-  --   -> cant go past self CS
-  --   -> cant go past next CS
+  --   -> back: cant go past self CS
+  --   -> fwd:  cant go past next CS
+
+  local notebook = wp.pacenote.notebook
+  local pn_prev, pn_sel, pn_next = notebook:getAdjacentPacenoteSet(wp.pacenote.id)
+
+  local limitBackPos = nil
+  local limitFwdPos = nil
+
+  if wp:isAt() then
+    if pn_prev then
+      local wp_at_prev = pn_prev:getActiveFwdAudioTrigger()
+      if wp_at_prev then
+        local pos, _ = self:closestSnapPos(wp_at_prev.pos)
+        limitBackPos = pos
+      end
+    end
+    local wp_cs = pn_sel:getCornerStartWaypoint()
+    if wp_cs then
+      local pos, _ = self:closestSnapPos(wp_cs.pos)
+      limitFwdPos = pos
+    end
+  elseif wp:isCs() then
+    local wp_at = pn_sel:getActiveFwdAudioTrigger()
+    if wp_at then
+      local pos, _ = self:closestSnapPos(wp_at.pos)
+      limitBackPos = pos
+    end
+    local wp_ce = pn_sel:getCornerEndWaypoint()
+    if wp_ce then
+      local pos, _ = self:closestSnapPos(wp_ce.pos)
+      limitFwdPos = pos
+    end
+  elseif wp:isCe() then
+    local wp_cs = pn_sel:getCornerStartWaypoint()
+    if wp_cs then
+      local pos, _ = self:closestSnapPos(wp_cs.pos)
+      limitBackPos = pos
+    end
+    if pn_next then
+      local wp_cs_next = pn_next:getCornerStartWaypoint()
+      if wp_cs_next then
+        local pos, _ = self:closestSnapPos(wp_cs_next.pos)
+        limitFwdPos = pos
+      end
+    end
+  end
+
+  limitBackPos = limitBackPos or self.spline_points[1]
+  local hitBackPos = false
+  limitFwdPos = limitFwdPos or self.spline_points[#self.spline_points]
+
+  self._filtered_spline_points = {}
+
+  for _,point in ipairs(self.spline_points) do
+    if not hitBackPos then
+      if point == limitBackPos then
+        hitBackPos = true
+        -- table.insert(self._filtered_spline_points, point)
+      end
+    elseif point == limitFwdPos then
+      break
+    else
+      table.insert(self._filtered_spline_points, point)
+    end
+  end
 end
 
 return function(...)

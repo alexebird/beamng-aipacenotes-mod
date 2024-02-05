@@ -165,25 +165,25 @@ local function drawDebug()
   end
 end
 
-local function moveWaypointTowards(pacenote, fwd)
-  local nextWp = pacenote:getActiveFwdAudioTrigger()
-  local cs = pacenote:getCornerStartWaypoint()
-  local newSnapPos, normalAlignPos = nil, nil
-
-  if fwd then
-    newSnapPos, normalAlignPos = snaproads:nextSnapPos(nextWp.pos, cs and cs.pos)
-  else
-    newSnapPos, normalAlignPos = snaproads:prevSnapPos(nextWp.pos)
-  end
-
-  if newSnapPos then
-    nextWp:setPos(newSnapPos)
-    if normalAlignPos then
-      local newNormal = re_util.calculateForwardNormal(newSnapPos, normalAlignPos)
-      nextWp:setNormal(newNormal)
-    end
-  end
-end
+-- local function moveWaypointTowards(pacenote, fwd)
+--   local nextWp = pacenote:getActiveFwdAudioTrigger()
+--   local cs = pacenote:getCornerStartWaypoint()
+--   local newSnapPos, normalAlignPos = nil, nil
+--
+--   if fwd then
+--     newSnapPos, normalAlignPos = snaproads:nextSnapPos(nextWp.pos, cs and cs.pos)
+--   else
+--     newSnapPos, normalAlignPos = snaproads:prevSnapPos(nextWp.pos)
+--   end
+--
+--   if newSnapPos then
+--     nextWp:setPos(newSnapPos)
+--     if normalAlignPos then
+--       local newNormal = re_util.calculateForwardNormal(newSnapPos, normalAlignPos)
+--       nextWp:setNormal(newNormal)
+--     end
+--   end
+-- end
 
 local function moveNextPacenoteForward()
   log('D', 'wtf', 'moveNextPacenoteForward')
@@ -196,7 +196,8 @@ local function moveNextPacenoteForward()
     if not nextNote then
       return
     end
-    moveWaypointTowards(nextNote, true)
+    local wp = nextNote:getActiveFwdAudioTrigger()
+    nextNote:moveWaypointTowards(snaproads, wp, true)
     rallyManager:saveNotebook()
   end
 end
@@ -213,7 +214,8 @@ local function moveNextPacenoteBackward()
     if not nextNote or not veh then
       return
     end
-    moveWaypointTowards(nextNote, false)
+    local wp = nextNote:getActiveFwdAudioTrigger()
+    nextNote:moveWaypointTowards(snaproads, wp, false)
     rallyManager:saveNotebook()
   end
 end

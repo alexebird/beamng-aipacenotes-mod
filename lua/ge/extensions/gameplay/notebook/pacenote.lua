@@ -406,15 +406,18 @@ local function textForDrawDebug(drawConfig, selection_state, wp, dist_text)
   local txt = nil
 
   if drawConfig.cs_text and wp:isCs() then
-    if selection_state.selected_wp_id and selection_state.selected_pn_id == wp.pacenote.id then
-      txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
-      if dist_text then
-        txt = txt..','..dist_text
-      end
-      txt = txt..'] '..note_text
-    else
-      txt = note_text
+    -- if selection_state.selected_wp_id and selection_state.selected_pn_id == wp.pacenote.id then
+    --   txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
+    --   if dist_text then
+    --     txt = txt..','..dist_text
+    --   end
+    --   txt = txt..'] '..note_text
+    -- else
+    txt = note_text
+    if not txt or txt == '' then
+      txt = '<empty pacenote>'
     end
+    -- end
   elseif drawConfig.ce_text and wp:isCe() then
     txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
     if dist_text then
@@ -422,15 +425,19 @@ local function textForDrawDebug(drawConfig, selection_state, wp, dist_text)
     end
     txt = txt..']'
   elseif drawConfig.at_text and wp:isAt() then
-    if drawConfig.pn_drawMode == pn_drawMode_previous or drawConfig.pn_drawMode == pn_drawMode_next then
+    if selection_state.selected_wp_id and selection_state.selected_wp_id == wp.id then
+      if dist_text then
+        txt = '['..dist_text..']'
+      end
+    elseif drawConfig.pn_drawMode == pn_drawMode_previous or drawConfig.pn_drawMode == pn_drawMode_next then
       txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
       txt = txt..'] '..note_text
-    else
-      txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
-      if dist_text then
-        txt = txt..','..dist_text
-      end
-      txt = txt..']'
+    -- else
+    --   txt = '['..waypointTypes.shortenWaypointType(wp.waypointType)
+    --   if dist_text then
+    --     txt = txt..','..dist_text
+    --   end
+    --   txt = txt..']'
     end
   elseif drawConfig.di_text and wp:isDi() then
     txt = '['..waypointTypes.shortenWaypointType(wp.waypointType) ..']'
@@ -449,35 +456,21 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
 
   local pn_drawMode = drawConfig.pn_drawMode
 
-  local alpha = drawConfig.base_alpha
-  local shapeAlpha = alpha * cc.pacenote_shapeAlpha_factor
-  local textAlpha = alpha
-  local clrTextFg = nil
-  local clrTextBg = nil
-  local radius_factor = 1.0
+  local alpha_shape = drawConfig.base_alpha
+  local alpha_text = drawConfig.base_alpha
+  local clr_textFg = nil
+  local clr_textBg = nil
+  local radius_factor = nil
 
   local pn = wp.pacenote
   local valid = pn:is_valid()
-  --
-  -- if wp_drawMode == 'selected_wp' then
-  --   clr = cc.waypoint_clr_sphere_selected
-  -- elseif wp_drawMode == 'selected_pn' then
-  --   clr = wp:colorForWpType(pn_drawMode)
-
-
-  -- log('D', 'wtf', 'pn_drawMode='..pn_drawMode..' wp_drawMode='..wp_drawMode)
 
   if pn_drawMode == pn_drawMode_selected then
-    -- local wp_drawMode = 'selected_pn'
-    -- determine if the waypoint is selected
-    -- if selected_wp_id and selected_wp_id == wp.id then
-    --   wp_drawMode = 'selected_wp'
-    -- end
-
-    -- if wp_drawMode == 'selected_wp' then
+    alpha_text = cc.pacenote_alpha_text_selected
     if selected_wp_id and selected_wp_id == wp.id then
-      clr = cc.waypoint_clr_sphere_selected
-    -- elseif wp_drawMode == 'selected_pn' then
+      clr = wp:colorForWpType(pn_drawMode)
+      alpha_shape = cc.waypoint_alpha_selected
+      -- clr = cc.waypoint_clr_sphere_selected
     else
       clr = wp:colorForWpType(pn_drawMode)
     end
@@ -487,6 +480,8 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
       radius_factor = drawConfig.cs_radius
     elseif wp:isCe() then
       radius_factor = drawConfig.ce_radius
+    elseif wp:isAt() then
+      radius_factor = drawConfig.at_radius
     end
   elseif pn_drawMode == pn_drawMode_next then
     clr = wp:colorForWpType(pn_drawMode)
@@ -494,29 +489,29 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
       radius_factor = drawConfig.cs_radius
     elseif wp:isCe() then
       radius_factor = drawConfig.ce_radius
+    elseif wp:isAt() then
+      radius_factor = drawConfig.at_radius
     end
   elseif pn_drawMode == pn_drawMode_background then
-    textAlpha = textAlpha * 0.9
-    shapeAlpha = shapeAlpha * 0.9
     if valid then
-      clr = cc.clr_black
+      clr = cc.waypoint_clr_background
     else
       clr = cc.clr_red_dark
-      clrTextFg = cc.clr_white
-      clrTextBg = cc.clr_red_dark
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_red_dark
     end
   elseif pn_drawMode == pn_drawMode_noSelection then
     if valid then
       clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
     else
       clr = cc.clr_red_dark
-      clrTextFg = cc.clr_white
-      clrTextBg = cc.clr_red_dark
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_red_dark
     end
   end
 
   local text = textForDrawDebug(drawConfig, selection_state, wp, dist_text)
-  wp:drawDebug(hover, text, clr, shapeAlpha, textAlpha, clrTextFg, clrTextBg, radius_factor)
+  wp:drawDebug(hover, text, clr, alpha_shape, alpha_text, clr_textFg, clr_textBg, radius_factor)
 end
 
 local function colorForLinkType(drawConfig, wp_from, wp_to)
@@ -839,7 +834,7 @@ function C:drawDebugPacenoteNoSelection(selection_state)
     di_middle = false,
     ce = false,
     di_after = false,
-    base_alpha = cc.pacenote_base_alpha_normal,
+    base_alpha = cc.pacenote_base_alpha_no_sel,
     at_text = false,
     cs_text = true,
     ce_text = false,
@@ -870,7 +865,7 @@ function C:drawDebugPacenoteBackground(selection_state)
     di_middle = false,
     ce = false,
     di_after = false,
-    base_alpha = cc.pacenote_base_alpha_normal,
+    base_alpha = cc.pacenote_base_alpha_background,
     at_text = false,
     cs_text = true,
     ce_text = false,
@@ -896,6 +891,7 @@ function C:drawDebugPacenoteNext(selection_state, pn_sel)
     di_text = false,
     cs_radius = 0.5,
     ce_radius = 0.5,
+    at_radius = 0.5,
   }
   adjustFromPrefs(drawConfig)
   self:drawDebugPacenoteHelper(drawConfig, selection_state)
@@ -918,6 +914,7 @@ function C:drawDebugPacenotePrev(selection_state, pn_sel)
     di_text = false,
     cs_radius = 0.5,
     ce_radius = 0.5,
+    at_radius = 0.5,
   }
   adjustFromPrefs(drawConfig)
   self:drawDebugPacenoteHelper(drawConfig, selection_state)
@@ -934,7 +931,7 @@ function C:drawDebugPacenoteSelected(selection_state)
     ce = true,
     di_after = true,
     base_alpha = cc.pacenote_base_alpha_selected,
-    at_text = false,
+    at_text = true,
     cs_text = true,
     ce_text = false,
     di_text = false,
@@ -1054,6 +1051,32 @@ function C:matchesSearchPattern(searchPattern)
   end
 
   return false
+end
+
+function C:_moveWaypointTowardsStepper(snaproads, wp, fwd)
+  local newSnapPos, normalAlignPos = nil, nil
+
+  if fwd then
+    newSnapPos, normalAlignPos = snaproads:nextSnapPos(wp.pos)
+  else
+    newSnapPos, normalAlignPos = snaproads:prevSnapPos(wp.pos)
+  end
+
+  if newSnapPos then
+    wp:setPos(newSnapPos)
+    wp.pacenote.notebook:autofillDistanceCalls()
+    if normalAlignPos then
+      local newNormal = re_util.calculateForwardNormal(newSnapPos, normalAlignPos)
+      wp:setNormal(newNormal)
+    end
+  end
+end
+
+function C:moveWaypointTowards(snaproads, wp, fwd, step)
+  step = step or 1
+  for _ = 1,step do
+    self:_moveWaypointTowardsStepper(snaproads, wp, fwd)
+  end
 end
 
 return function(...)

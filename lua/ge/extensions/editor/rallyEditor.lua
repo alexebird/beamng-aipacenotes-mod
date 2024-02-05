@@ -168,30 +168,50 @@ local cameraOrbitState = {
 }
 local function cameraOrbitRight(v)
   if pacenotesWindow:selectedPacenote() then
-    -- log('D', 'wtf', 'right '..tostring(v))
     cameraOrbitState.right = v
   end
 end
 
 local function cameraOrbitLeft(v)
   if pacenotesWindow:selectedPacenote() then
-    -- log('D', 'wtf', 'left '..tostring(v))
     cameraOrbitState.left = v
   end
 end
 
 local function cameraOrbitUp(v)
   if pacenotesWindow:selectedPacenote() then
-    -- log('D', 'wtf', 'up '..tostring(v))
     cameraOrbitState.up = v
   end
 end
 
 local function cameraOrbitDown(v)
   if pacenotesWindow:selectedPacenote() then
-    -- log('D', 'wtf', 'down '..tostring(v))
     cameraOrbitState.down = v
   end
+end
+
+local function deselect()
+  pacenotesWindow:deselect()
+end
+
+local function selectNextWaypoint()
+  pacenotesWindow:selectNextWaypoint()
+end
+
+local function moveSelectedWaypointForward()
+  pacenotesWindow:moveSelectedWaypointForward()
+end
+
+local function moveSelectedWaypointBackward()
+  pacenotesWindow:moveSelectedWaypointBackward()
+end
+
+local function moveSelectedWaypointForwardFast()
+  pacenotesWindow:moveSelectedWaypointForwardFast()
+end
+
+local function moveSelectedWaypointBackwardFast()
+  pacenotesWindow:moveSelectedWaypointBackwardFast()
 end
 
 local function loadNotebook(full_filename)
@@ -863,6 +883,12 @@ M.cameraOrbitRight = cameraOrbitRight
 M.cameraOrbitLeft = cameraOrbitLeft
 M.cameraOrbitUp = cameraOrbitUp
 M.cameraOrbitDown = cameraOrbitDown
+M.deselect = deselect
+M.selectNextWaypoint = selectNextWaypoint
+M.moveSelectedWaypointForward = moveSelectedWaypointForward
+M.moveSelectedWaypointBackward = moveSelectedWaypointBackward
+M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
+M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
 
 M.onEditorInitialized = onEditorInitialized
 M.getTranscriptsWindow = function() return transcriptsWindow end

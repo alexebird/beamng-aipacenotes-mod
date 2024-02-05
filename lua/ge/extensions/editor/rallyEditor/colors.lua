@@ -30,6 +30,7 @@ M.clr_aqua        = {0.0, 0.8, 0.8}
 M.clr_grey         = {0.5, 0.5, 0.5}
 M.clr_grey_light   = {0.75, 0.75, 0.75}
 M.clr_grey_light_2 = {0.8, 0.8, 0.8}
+M.clr_grey_dark    = {0.2, 0.2, 0.2}
 
 M.clr_purple       = {0.73, 0, 1}
 
@@ -67,10 +68,14 @@ M.pacenote_alpha_interlink = 0.5
 
 M.pacenote_shapeAlpha_factor = 0.8
 
-M.pacenote_base_alpha_normal = 0.5
+M.pacenote_base_alpha_background = 0.5
+M.pacenote_base_alpha_no_sel = 0.5
+
 M.pacenote_base_alpha_prev   = 0.5
 M.pacenote_base_alpha_next   = 0.5
-M.pacenote_base_alpha_selected = 0.9
+M.pacenote_base_alpha_selected = 0.5
+
+M.pacenote_alpha_text_selected = 1.0
 
 M.pacenote_alpha_recce = 0.1
 
@@ -100,13 +105,18 @@ M.waypoint_clr_txt_fg = clr_label_fg
 M.waypoint_clr_txt_bg = clr_label_bg
 M.waypoint_clr_sphere_hover = M.clr_white
 M.waypoint_clr_sphere_selected = M.clr_white
+M.waypoint_clr_background = M.clr_grey_dark
+
+M.waypoint_alpha_text_background = 0.3
+M.waypoint_alpha_shape_background = 0.3
+M.waypoint_alpha_selected = 0.9
 
 M.waypoint_shapeAlpha_hover = 0.95
 M.waypoint_textAlpha_hover = 1.0
-M.waypoint_sphereAlphaReducionFactor = 0.6
+-- M.waypoint_sphereAlphaReducionFactor = 0.6
 M.waypoint_planeAlphaFactor = 1.2
 -- M.waypoint_shapeAlpha_arrowAdjustFactor = 1.25
-M.waypoint_intersectPlaneAlphaReductionFactor = 0.66
+-- M.waypoint_intersectPlaneAlphaReductionFactor = 0.66
 
 --
 -- rallyEditor/pacenotes.lua

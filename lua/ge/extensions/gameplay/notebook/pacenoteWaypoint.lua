@@ -148,7 +148,7 @@ end
 
 function C:drawDebug(hover, text, clr_shape, alpha_shape, alpha_text, clr_text_fg, clr_text_bg, radius_factor)
   if hover then
-    clr_shape = cc.waypoint_clr_sphere_hover
+    -- clr_shape = cc.waypoint_clr_sphere_hover
     alpha_shape = cc.waypoint_shapeAlpha_hover
     alpha_text = cc.waypoint_textAlpha_hover
   end
@@ -158,12 +158,12 @@ function C:drawDebug(hover, text, clr_shape, alpha_shape, alpha_text, clr_text_f
 
   local shapeAlpha_sphere = alpha_shape
   local shapeAlpha_plane = alpha_shape
-  local radius = self.radius * radius_factor
+  local radius = (radius_factor and self.radius*radius_factor) or self.radius
 
   if self:shouldDrawIntersectPlane() then
     -- make the arrow a little easier to see
-    -- shapeAlpha_sphere = alpha_shape * cc.waypoint_sphereAlphaReducionFactor
-    shapeAlpha_plane = alpha_shape * cc.waypoint_planeAlphaFactor
+    -- shapeAlpha_plane = alpha_shape * cc.waypoint_planeAlphaFactor
+    shapeAlpha_plane = 0.97
     -- self:drawDebugIntersectPlane(clr, shapeAlpha * cc.waypoint_intersectPlaneAlphaReductionFactor)
   end
 
@@ -194,8 +194,9 @@ function C:drawDebug(hover, text, clr_shape, alpha_shape, alpha_text, clr_text_f
   end
 
   if self:shouldDrawIntersectPlane() then
-    local midWidth = radius * 2
-    local side = self.normal:cross(vec3(0,0,1)) * (radius - (midWidth / 2))
+    local plane_radius = self.radius
+    local midWidth = plane_radius * 2
+    local side = self.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
 
     -- this square prism is the intersection "plane" of the pacenote.
     debugDrawer:drawSquarePrism(
