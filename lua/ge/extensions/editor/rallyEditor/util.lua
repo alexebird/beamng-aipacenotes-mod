@@ -25,6 +25,13 @@ local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
 local default_punctuation = '?'
 
+
+local dragModes = {
+  simple = 'simple',
+  simple_road_snap = 'simple_road_snap',
+  gizmo = 'gizmo',
+}
+
 --
 -- html code: #00ffdebf
 local aip_fg_color = ui_imgui.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
@@ -354,6 +361,7 @@ M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
 M.default_notebook_name = default_notebook_name
 M.default_punctuation = default_punctuation
+M.dragModes = dragModes
 M.desktopTranscriptFname = desktopTranscriptFname
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath

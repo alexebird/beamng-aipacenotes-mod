@@ -14,6 +14,8 @@ function C:init(missionDir)
   self.startingMinDist = 4294967295
   self.radius = 0.25
   self.spline_points = {}
+  self._filtered_spline_points = {}
+  self.selection_state = nil
 end
 
 function C:load()
@@ -34,6 +36,8 @@ function C:load()
   end
 
   self.spline_points = {}
+  self._filtered_spline_points = {}
+
   for _,tsc in ipairs(self.transcript_path.transcripts.sorted) do
     if tsc:capture_data() then
       for _,cap in ipairs(tsc:capture_data().captures) do
@@ -53,7 +57,7 @@ function C:_mouseOverSnapRoad(mouseInfo)
   local closestWp = nil
   local sphereRadius = self.radius
 
-  for _,node in ipairs(self.spline_points) do
+  for _,node in ipairs(self:_filteredSnapPoints()) do
     local pos = node
     local distNoteToCam = (pos - mouseInfo.camPos):length()
     local noteRayDistance = (pos - mouseInfo.camPos):cross(mouseInfo.rayDir):length() / mouseInfo.rayDir:length()
@@ -75,7 +79,7 @@ function C:drawSnapRoads(mouseInfo, clr_override)
   local clr = nil
   local alpha = nil
 
-  for _,pos in pairs(self.spline_points) do
+  for _,pos in pairs(self:_filteredSnapPoints()) do
     if pos == closest_snap_for_hover then
       clr = clr_override or cc.snaproads_clr_hover
       alpha = cc.snaproads_alpha_hover
@@ -132,11 +136,15 @@ local function findPosForNormal(snaps, closest_i)
   return posAfter
 end
 
+function C:_filteredSnapPoints()
+  return self.spline_points
+end
+
 function C:closestSnapPos(source_pos)
   if not self.transcript_path then return end
 
   -- local snaps = self.handle_points
-  local snaps = self.spline_points
+  local snaps = self:_filteredSnapPoints()
 
   local minDist = self.startingMinDist
   local closestPos = nil
@@ -169,16 +177,18 @@ function C:prevSnapPos(srcPosIn)
     return nil, nil
   end
 
+  local points = self:_filteredSnapPoints()
+
   -- find current snaproad point
   local i_curr = nil
-  for i,point in ipairs(self.spline_points) do
+  for i,point in ipairs(points) do
     if srcPos == point then
       i_curr = i
     end
   end
 
   if i_curr then
-    return self.spline_points[i_curr-1], self.spline_points[i_curr]
+    return points[i_curr-1], points[i_curr]
   end
 end
 
@@ -196,54 +206,42 @@ function C:nextSnapPos(srcPos, limitPos)
     return nil, nil
   end
 
+  local points = self:_filteredSnapPoints()
+
   -- find current snaproad point
   local i_curr = nil
-  for i,point in ipairs(self.spline_points) do
+  for i,point in ipairs(points) do
     if srcPos == point then
       i_curr = i
     end
   end
 
-  -- if i_curr and i_curr < #self.spline_points then
   if i_curr then
-    local currPos = self.spline_points[i_curr+1]
+    local currPos = points[i_curr+1]
     if currPos == limitPos then -- dont go path the limit
       return nil, nil
     else
       local newPos = currPos
-      local normalPos = self.spline_points[i_curr+2]
+      local normalPos = points[i_curr+2]
       return newPos, normalPos
     end
   end
-
-  -- the old code:
-  -- local direction = directionPos - srcPos
-  -- local nextPoint = nil
-  -- local minDistance = 4294967295
-  --
-  -- for _, point in ipairs(self.spline_points) do
-  --   if point ~= srcPos then
-  --     local relativePoint = point - srcPos
-  --     local projection = relativePoint:dot(direction)
-  --
-  --     if projection > 0 then
-  --       local distance = srcPos:distance(point)
-  --       if distance < minDistance then
-  --         minDistance = distance
-  --         nextPoint = point
-  --       end
-  --     end
-  --   end
-  -- end
-
-  -- if nextPoint then
-  --   local _, posAfter = self:closestSnapPos(nextPoint)
-  --   return nextPoint, posAfter
-  -- else
-  --   return nil, nil
-  -- end
 end
 
+function C:setSelectionState(selection_state)
+  self.selection_state = selection_state
+  self._filtered_spline_points = {}
+
+  -- filtering modes:
+  -- * AT is selected
+  --   ->  cant go past other ATs
+  -- * CS is selected
+  --   -> cant go past previous CE
+  --   -> cant go past self CE
+  -- * CE is selected
+  --   -> cant go past self CS
+  --   -> cant go past next CS
+end
 
 return function(...)
   local o = {}

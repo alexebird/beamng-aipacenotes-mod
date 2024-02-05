@@ -261,9 +261,41 @@ local function drawPacenotesAsRainbow(pacenotes, selection_state)
 end
 
 local function drawPacenotesAsBackground(pacenotes, skip_pn, selection_state)
-  for _,pacenote in ipairs(pacenotes) do
-    if pacenote.id ~= skip_pn.id then
-      pacenote:drawDebugPacenoteBackground(selection_state)
+  -- old style
+  -- for _,pacenote in ipairs(pacenotes) do
+  --   if pacenote.id ~= skip_pn.id then
+  --     pacenote:drawDebugPacenoteBackground(selection_state)
+  --   end
+  -- end
+
+  -- new style
+  local skip_i = nil
+  for i,pacenote in ipairs(pacenotes) do
+    if pacenote.id == skip_pn.id then
+      skip_i = i
+      break
+    end
+  end
+
+  if skip_i then
+    local show_after_count = 1
+    local start_i = skip_i+1
+    local end_i = start_i+show_after_count-1
+    for i = start_i,end_i do
+      local pacenote = pacenotes[i]
+      if pacenote then
+        pacenote:drawDebugPacenoteBackground(selection_state)
+      end
+    end
+
+    local show_before_count = 1
+    start_i = skip_i-show_before_count
+    end_i = skip_i-1
+    for i = start_i,end_i do
+      local pacenote = pacenotes[i]
+      if pacenote then
+        pacenote:drawDebugPacenoteBackground(selection_state)
+      end
     end
   end
 end
@@ -292,19 +324,17 @@ function C:drawDebugNotebook(selection_state)
   local pn_prev, pn_sel, pn_next = getAdjacentPacenoteSet(pacenotes, selection_state.selected_pn_id)
 
   if pn_sel and selection_state.selected_wp_id then
-    pn_sel:drawDebugPacenoteSelected(selection_state, pn_prev, pn_next)
+    pn_sel:drawDebugPacenoteSelected(selection_state)
 
     if editor_rallyEditor.getPrefShowPreviousPacenote() and pn_prev and pn_prev.id ~= pn_sel.id then
-      pn_prev:drawDebugPacenotePrev(selection_state)
-      pn_prev:drawLinkToPacenote(pn_sel)
+      pn_prev:drawDebugPacenotePrev(selection_state, pn_sel)
     end
 
     if editor_rallyEditor.getPrefShowNextPacenote() and pn_next and pn_next.id ~= pn_sel.id then
-      pn_next:drawDebugPacenoteNext(selection_state)
-      pn_sel:drawLinkToPacenote(pn_next)
+      pn_next:drawDebugPacenoteNext(selection_state, pn_sel)
     end
   elseif pn_sel then
-    pn_sel:drawDebugPacenoteSelected(selection_state, pn_prev, pn_next)
+    pn_sel:drawDebugPacenoteSelected(selection_state)
     drawPacenotesAsBackground(pacenotes, pn_sel, selection_state)
   else
     drawPacenotesAsRainbow(pacenotes, selection_state)

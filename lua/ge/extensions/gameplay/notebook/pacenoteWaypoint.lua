@@ -146,51 +146,56 @@ function C:shouldDrawIntersectPlane()
   end
 end
 
-function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha, clr_text_fg, clr_text_bg)
+function C:drawDebug(hover, text, clr_shape, alpha_shape, alpha_text, clr_text_fg, clr_text_bg, radius_factor)
   if hover then
-    clr = cc.waypoint_clr_sphere_hover
-    shapeAlpha = cc.waypoint_shapeAlpha_hover
-    textAlpha = cc.waypoint_textAlpha_hover
+    clr_shape = cc.waypoint_clr_sphere_hover
+    alpha_shape = cc.waypoint_shapeAlpha_hover
+    alpha_text = cc.waypoint_textAlpha_hover
   end
 
   -- if false, no other 3d objects seem to cause clipping, such as the terrain.
   local clipArg1 = true
 
-  local shapeAlpha_sphere = shapeAlpha
+  local shapeAlpha_sphere = alpha_shape
+  local shapeAlpha_plane = alpha_shape
+  local radius = self.radius * radius_factor
 
   if self:shouldDrawIntersectPlane() then
     -- make the arrow a little easier to see
-    shapeAlpha_sphere = shapeAlpha * cc.waypoint_sphereAlphaReducionFactor
+    -- shapeAlpha_sphere = alpha_shape * cc.waypoint_sphereAlphaReducionFactor
+    shapeAlpha_plane = alpha_shape * cc.waypoint_planeAlphaFactor
     -- self:drawDebugIntersectPlane(clr, shapeAlpha * cc.waypoint_intersectPlaneAlphaReductionFactor)
   end
 
   debugDrawer:drawSphere(
     self.pos,
-    self.radius,
-    ColorF(clr[1], clr[2], clr[3], shapeAlpha_sphere),
+    radius,
+    ColorF(clr_shape[1], clr_shape[2], clr_shape[3], shapeAlpha_sphere),
     clipArg1
   )
 
-  if self.waypointType == waypointTypes.wpTypeDistanceMarker then
-    clr_text_fg = cc.pacenote_clr_di_txt
-    clr_text_bg = cc.pacenote_clr_di
-  else
-    clr_text_fg = clr_text_fg or cc.waypoint_clr_txt_fg
-    clr_text_bg = clr_text_bg or cc.waypoint_clr_txt_bg
+  if text then
+    if self.waypointType == waypointTypes.wpTypeDistanceMarker then
+      clr_text_fg = cc.pacenote_clr_di_txt
+      clr_text_bg = cc.pacenote_clr_di
+    else
+      clr_text_fg = clr_text_fg or cc.waypoint_clr_txt_fg
+      clr_text_bg = clr_text_bg or cc.waypoint_clr_txt_bg
+    end
+
+    debugDrawer:drawTextAdvanced(
+      self.pos,
+      String(text),
+      ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
+      true,
+      false,
+      ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
+    )
   end
 
-  debugDrawer:drawTextAdvanced(
-    self.pos,
-    String(text),
-    ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
-    true,
-    false,
-    ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, textAlpha*255)
-  )
-
   if self:shouldDrawIntersectPlane() then
-    local midWidth = self.radius * 2
-    local side = self.normal:cross(vec3(0,0,1)) * (self.radius - (midWidth / 2))
+    local midWidth = radius * 2
+    local side = self.normal:cross(vec3(0,0,1)) * (radius - (midWidth / 2))
 
     -- this square prism is the intersection "plane" of the pacenote.
     debugDrawer:drawSquarePrism(
@@ -198,7 +203,7 @@ function C:drawDebug(hover, text, clr, shapeAlpha, textAlpha, clr_text_fg, clr_t
       self.pos + 0.25 * self.normal + side,
       Point2F(5, midWidth),
       Point2F(0, 0),
-      ColorF(clr[1], clr[2], clr[3], shapeAlpha)
+      ColorF(clr_shape[1], clr_shape[2], clr_shape[3], shapeAlpha_plane)
     )
 
     -- the "arrow"
@@ -308,6 +313,22 @@ function C:isLocked()
     end
   end
   return false
+end
+
+function C:isCs()
+  return self.waypointType == waypointTypes.wpTypeCornerStart
+end
+
+function C:isCe()
+  return self.waypointType == waypointTypes.wpTypeCornerEnd
+end
+
+function C:isAt()
+  return self.waypointType == waypointTypes.wpTypeFwdAudioTrigger
+end
+
+function C:isDi()
+  return self.waypointType == waypointTypes.wpTypeDistanceMarker
 end
 
 return function(...)

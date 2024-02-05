@@ -1,7 +1,6 @@
 local im = ui_imgui
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
--- local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 
 local M = {}
 local logTag = 'rally_editor'
@@ -337,7 +336,7 @@ local function drawEditorGui()
 
       im.Text("Notebook: "..tostring(currentPath.fname))
 
-      im.Text('DragMode: '..pacenotesWindow.dragMode)
+      im.Text('DragMode: '..pacenotesWindow.pacenote_tools_state.drag_mode)
       local selParts, selMode = pacenotesWindow:selectionString()
 
       local clr = im.ImVec4(1, 0.6, 1, 1)
