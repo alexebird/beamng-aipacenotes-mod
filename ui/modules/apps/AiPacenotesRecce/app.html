@@ -43,9 +43,9 @@
         <span class="middle-label">P</span>
         <button ng-click="btnMovePacenoteBackward()" class="recce-controls-btn pacenote-backward" ng-disabled="!drawDebug">&darr;</button>
 
-        <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn vehicle-forward">&uarr;</button>
+        <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn vehicle-forward" ng-disabled="!drawDebug">&uarr;</button>
         <span class="middle-label">V</span>
-        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn vehicle-backward">&darr;</button>
+        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn vehicle-backward" ng-disabled="!drawDebug">&darr;</button>
 
         <md-select class="md-select-dropdown" ng-model="selectedStyleName">
           <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>

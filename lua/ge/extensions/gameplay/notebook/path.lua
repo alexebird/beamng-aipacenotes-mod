@@ -53,6 +53,13 @@ function C:init(name)
   self.validation_issues = {}
 end
 
+function C:missionId()
+  if not self.fname then return nil end
+  local pattern = "/gameplay/missions/(.-)/"..re_util.aipPath
+  local segment = self.fname:match(pattern)
+  return segment
+end
+
 function C:dir()
   if not self.fname then return nil end
   local dir, filename, ext = path.split(self.fname)

@@ -4,7 +4,7 @@
     {
       "language":"english",
       "name":"Sophia",
-      "oldId":8,
+      "oldId":9,
       "voice":"british_female"
     }
   ],
@@ -25,7 +25,7 @@
           "note":"start into big bumps down hill?"
         }
       },
-      "oldId":9,
+      "oldId":10,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -34,7 +34,7 @@
             0.03994558989,
             0.01524390456
           ],
-          "oldId":10,
+          "oldId":11,
           "pos":[
             466.5963745,
             1416.51123,
@@ -50,7 +50,7 @@
             -0.005653876098,
             0.06281234831
           ],
-          "oldId":11,
+          "oldId":12,
           "pos":[
             505.6315308,
             1416.325562,
@@ -66,7 +66,7 @@
             -0.01524572612,
             -0.01734681918
           ],
-          "oldId":12,
+          "oldId":13,
           "pos":[
             450.6969299,
             1416.143677,
@@ -90,7 +90,7 @@
           "note":"five right into six left?"
         }
       },
-      "oldId":13,
+      "oldId":14,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -99,7 +99,7 @@
             0.03158016321,
             0.009266112233
           ],
-          "oldId":14,
+          "oldId":15,
           "pos":[
             561.9112549,
             1415.922363,
@@ -115,7 +115,7 @@
             0.05409740493,
             0.008762642176
           ],
-          "oldId":15,
+          "oldId":16,
           "pos":[
             644.1904297,
             1380.355225,
@@ -131,7 +131,7 @@
             -0.004054194387,
             -0.04692168295
           ],
-          "oldId":16,
+          "oldId":17,
           "pos":[
             474.6300659,
             1416.276611,
@@ -155,7 +155,7 @@
           "note":"small crest into five right?"
         }
       },
-      "oldId":17,
+      "oldId":18,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -164,7 +164,7 @@
             0.05944548844,
             -0.04928667908
           ],
-          "oldId":18,
+          "oldId":19,
           "pos":[
             679.4528809,
             1379.585083,
@@ -180,7 +180,7 @@
             1,
             0
           ],
-          "oldId":19,
+          "oldId":20,
           "pos":[
             736.8733521,
             1353.528931,
@@ -196,7 +196,7 @@
             -0.3033252583,
             -0.03689263155
           ],
-          "oldId":20,
+          "oldId":21,
           "pos":[
             578.6471558,
             1411.697876,
@@ -215,12 +215,12 @@
       "name":"Import_A 4",
       "notes":{
         "english":{
-          "after":"two hundred.",
+          "after":"three hundred.",
           "before":"and",
-          "note":"five left keep right exit narrows?"
+          "note":"five left keep right narrow exit?"
         }
       },
-      "oldId":21,
+      "oldId":22,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -229,7 +229,7 @@
             0.7145137972,
             0.01474725084
           ],
-          "oldId":22,
+          "oldId":23,
           "pos":[
             754.6947632,
             1336.373657,
@@ -245,7 +245,7 @@
             0.02106240761,
             0.02506023597
           ],
-          "oldId":23,
+          "oldId":24,
           "pos":[
             802.2585449,
             1317.208252,
@@ -261,7 +261,7 @@
             0.05409740493,
             0.008762642176
           ],
-          "oldId":24,
+          "oldId":25,
           "pos":[
             644.1904297,
             1380.355225,
@@ -274,75 +274,10 @@
     },
     {
       "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_n9rvlo3l.wav",
-        "success":false
-      },
-      "name":"Import_A 5",
-      "notes":{
-        "english":{
-          "after":"seventy.",
-          "before":"",
-          "note":"keep goin straight?"
-        }
-      },
-      "oldId":25,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            0.9999970807,
-            0.002416334156,
-            0
-          ],
-          "oldId":26,
-          "pos":[
-            984.5686035,
-            1312.739624,
-            144.0063477
-          ],
-          "radius":10,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0,
-            1,
-            0
-          ],
-          "oldId":27,
-          "pos":[
-            1019.134277,
-            1312.391479,
-            144.2460938
-          ],
-          "radius":10,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            -0.9152067247,
-            0.4029732849,
-            0.003030298873
-          ],
-          "oldId":28,
-          "pos":[
-            776.4072266,
-            1321.289185,
-            144.9883423
-          ],
-          "radius":10,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
         "beamng_file":"/temp/aipacenotes/out_f9qe4vwz.wav",
         "success":true
       },
-      "name":"Import_A 6",
+      "name":"Import_A 5",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -350,7 +285,7 @@
           "note":"big bump into six right?"
         }
       },
-      "oldId":29,
+      "oldId":30,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -359,7 +294,7 @@
             -0.02543960444,
             -0.002180298848
           ],
-          "oldId":30,
+          "oldId":31,
           "pos":[
             1090.716675,
             1312.740723,
@@ -375,7 +310,7 @@
             -0.008686562903,
             0.009204460963
           ],
-          "oldId":31,
+          "oldId":32,
           "pos":[
             1164.37146,
             1307.14209,
@@ -387,15 +322,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9994809724,
-            0.01780871038,
-            0.02684465703
+            0.9999486596,
+            -0.009048058718,
+            -0.004561885282
           ],
-          "oldId":32,
+          "oldId":33,
           "pos":[
-            810.5114746,
-            1317.040649,
-            144.456131
+            875.878418,
+            1314.684692,
+            143.9989624
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -407,7 +342,7 @@
         "beamng_file":"/temp/aipacenotes/out_kztxidh2.wav",
         "success":true
       },
-      "name":"Import_A 7",
+      "name":"Import_A 6",
       "notes":{
         "english":{
           "after":"",
@@ -415,7 +350,7 @@
           "note":"six left over big bump, twisty?"
         }
       },
-      "oldId":33,
+      "oldId":34,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -424,7 +359,7 @@
             0.01112598077,
             -0.00687117381
           ],
-          "oldId":34,
+          "oldId":35,
           "pos":[
             1214.627563,
             1305.424072,
@@ -440,7 +375,7 @@
             0.1307794968,
             0.03290360526
           ],
-          "oldId":35,
+          "oldId":36,
           "pos":[
             1314.873901,
             1311.998779,
@@ -456,7 +391,7 @@
             -0.03816814653,
             -0.009573127504
           ],
-          "oldId":36,
+          "oldId":37,
           "pos":[
             1008.172668,
             1313.310181,
@@ -472,7 +407,7 @@
         "beamng_file":"/temp/aipacenotes/out_19g_sqb2.wav",
         "success":true
       },
-      "name":"Import_A 8",
+      "name":"Import_A 7",
       "notes":{
         "english":{
           "after":"eighty.",
@@ -480,7 +415,7 @@
           "note":"six left?"
         }
       },
-      "oldId":37,
+      "oldId":38,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -489,7 +424,7 @@
             0.05402853162,
             0.00232763434
           ],
-          "oldId":38,
+          "oldId":39,
           "pos":[
             1341.233765,
             1314.590942,
@@ -505,7 +440,7 @@
             -0.1190484779,
             -0.01730729283
           ],
-          "oldId":39,
+          "oldId":40,
           "pos":[
             1386.003296,
             1323.172485,
@@ -521,7 +456,7 @@
             0.04027585424,
             0.006087591066
           ],
-          "oldId":40,
+          "oldId":41,
           "pos":[
             1199.734863,
             1305.429199,
@@ -537,7 +472,7 @@
         "beamng_file":"/temp/aipacenotes/out_w18qsodi.wav",
         "success":true
       },
-      "name":"Import_A 9",
+      "name":"Import_A 8",
       "notes":{
         "english":{
           "after":"",
@@ -545,7 +480,7 @@
           "note":"one right plus opens late?"
         }
       },
-      "oldId":41,
+      "oldId":42,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -554,7 +489,7 @@
             -0.08445111714,
             -0.04216307298
           ],
-          "oldId":42,
+          "oldId":43,
           "pos":[
             1466.150024,
             1340.136963,
@@ -570,7 +505,7 @@
             1,
             0
           ],
-          "oldId":43,
+          "oldId":44,
           "pos":[
             1476.010254,
             1261.655151,
@@ -586,7 +521,7 @@
             0.1132311423,
             0.0318582981
           ],
-          "oldId":44,
+          "oldId":45,
           "pos":[
             1244.497192,
             1306.682739,
@@ -602,7 +537,7 @@
         "beamng_file":"/temp/aipacenotes/out_jjmzzpir.wav",
         "success":true
       },
-      "name":"Import_A 10",
+      "name":"Import_A 9",
       "notes":{
         "english":{
           "after":"",
@@ -610,7 +545,7 @@
           "note":"three left?"
         }
       },
-      "oldId":45,
+      "oldId":46,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -619,7 +554,7 @@
             0.1254380232,
             -0.1215172543
           ],
-          "oldId":46,
+          "oldId":47,
           "pos":[
             1449.282349,
             1255.326538,
@@ -635,7 +570,7 @@
             1,
             0
           ],
-          "oldId":47,
+          "oldId":48,
           "pos":[
             1415.236816,
             1233.171875,
@@ -651,7 +586,7 @@
             0.7667137873,
             -0.05858434295
           ],
-          "oldId":48,
+          "oldId":49,
           "pos":[
             1504.828125,
             1327.990234,
@@ -667,7 +602,7 @@
         "beamng_file":"/temp/aipacenotes/out_zts7l6p3.wav",
         "success":true
       },
-      "name":"Import_A 11",
+      "name":"Import_A 10",
       "notes":{
         "english":{
           "after":"one fifty.",
@@ -675,7 +610,7 @@
           "note":"crest?"
         }
       },
-      "oldId":49,
+      "oldId":50,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -684,7 +619,7 @@
             0.7113873661,
             -0.05954609772
           ],
-          "oldId":50,
+          "oldId":51,
           "pos":[
             1403.919067,
             1221.467896,
@@ -700,7 +635,7 @@
             1,
             0
           ],
-          "oldId":51,
+          "oldId":52,
           "pos":[
             1385.067993,
             1207.289551,
@@ -716,7 +651,7 @@
             -0.4786162936,
             0.1017291223
           ],
-          "oldId":52,
+          "oldId":53,
           "pos":[
             1493.496948,
             1270.628418,
@@ -732,7 +667,7 @@
         "beamng_file":"/temp/aipacenotes/out_txtodope.wav",
         "success":false
       },
-      "name":"Import_A 12",
+      "name":"Import_A 11",
       "notes":{
         "english":{
           "after":"sixty.",
@@ -740,7 +675,7 @@
           "note":"3 left?"
         }
       },
-      "oldId":53,
+      "oldId":54,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -749,7 +684,7 @@
             0.6919144606,
             -0.03323926619
           ],
-          "oldId":54,
+          "oldId":55,
           "pos":[
             1284.131592,
             1126.044678,
@@ -765,7 +700,7 @@
             1,
             0
           ],
-          "oldId":55,
+          "oldId":56,
           "pos":[
             1268.910522,
             1003.427917,
@@ -781,7 +716,7 @@
             0.7774730971,
             -0.07695412301
           ],
-          "oldId":56,
+          "oldId":57,
           "pos":[
             1414.180298,
             1232.814941,
@@ -797,7 +732,7 @@
         "beamng_file":"/temp/aipacenotes/out_brd_q_u9.wav",
         "success":true
       },
-      "name":"Import_A 13",
+      "name":"Import_A 12",
       "notes":{
         "english":{
           "after":"",
@@ -805,7 +740,7 @@
           "note":"four right?"
         }
       },
-      "oldId":57,
+      "oldId":58,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -814,7 +749,7 @@
             0.9068816606,
             -0.04844309989
           ],
-          "oldId":58,
+          "oldId":59,
           "pos":[
             1294.318604,
             953.0810547,
@@ -830,7 +765,7 @@
             0.8685842398,
             -0.05247722639
           ],
-          "oldId":59,
+          "oldId":60,
           "pos":[
             1287.879761,
             895.0075684,
@@ -846,7 +781,7 @@
             -0.961935306,
             0.04300016324
           ],
-          "oldId":60,
+          "oldId":61,
           "pos":[
             1256.511597,
             1087.840332,
@@ -862,7 +797,7 @@
         "beamng_file":"/temp/aipacenotes/out_28paptn6.wav",
         "success":true
       },
-      "name":"Import_A 14",
+      "name":"Import_A 13",
       "notes":{
         "english":{
           "after":"",
@@ -870,7 +805,7 @@
           "note":"acute one left?"
         }
       },
-      "oldId":61,
+      "oldId":62,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -879,7 +814,7 @@
             0.7084290461,
             -0.0491414668
           ],
-          "oldId":62,
+          "oldId":63,
           "pos":[
             1261.50647,
             865.2750244,
@@ -895,7 +830,7 @@
             0.1805734058,
             -0.07825867015
           ],
-          "oldId":63,
+          "oldId":64,
           "pos":[
             1275.405029,
             843.2888184,
@@ -907,15 +842,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.464172808,
-            0.8845911018,
-            -0.04519056154
+            0.02777712487,
+            -0.9981497926,
+            0.05408717785
           ],
-          "oldId":64,
+          "oldId":65,
           "pos":[
-            1287.762573,
-            966.7478027,
-            176.5996857
+            1257.015991,
+            1026.636963,
+            173.8093109
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -927,15 +862,15 @@
         "beamng_file":"/temp/aipacenotes/out_8bif03jx.wav",
         "success":true
       },
-      "name":"Import_A 15",
+      "name":"Import_A 14",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"five left?"
+          "note":"five left cut, six right cut?"
         }
       },
-      "oldId":65,
+      "oldId":66,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -944,7 +879,7 @@
             0.01697129672,
             -0.1144591401
           ],
-          "oldId":66,
+          "oldId":67,
           "pos":[
             1305.160034,
             840.4031982,
@@ -960,11 +895,11 @@
             -0.6170205125,
             -0.08734928943
           ],
-          "oldId":67,
+          "oldId":68,
           "pos":[
-            1346.240601,
-            852.713501,
-            191.9151459
+            1384.298218,
+            885.2926636,
+            195.3476868
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -976,7 +911,7 @@
             0.4783491035,
             -0.04470766371
           ],
-          "oldId":68,
+          "oldId":69,
           "pos":[
             1260.947021,
             848.7629395,
@@ -989,15 +924,15 @@
     },
     {
       "metadata":{},
-      "name":"Pacenote 16",
+      "name":"Pacenote 15",
       "notes":{
         "english":{
           "after":"",
           "before":"into",
-          "note":"six right, into long five left, tightens?"
+          "note":"long five left, tightens?"
         }
       },
-      "oldId":69,
+      "oldId":70,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1006,11 +941,11 @@
             -0.7804955572,
             -0.05367862124
           ],
-          "oldId":70,
+          "oldId":71,
           "pos":[
-            1355.791626,
-            863.5666504,
-            192.8591919
+            1397.731079,
+            895.7030029,
+            197.1911621
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -1022,7 +957,7 @@
             -0.9433024471,
             -0.09439176062
           ],
-          "oldId":71,
+          "oldId":72,
           "pos":[
             1418.697388,
             966.1009521,
@@ -1034,11 +969,11 @@
         {
           "name":"curr",
           "normal":[
-            -0.990933924,
-            0.08179959581,
-            -0.1065775978
+            0.8751330273,
+            0.4739513893,
+            0.0975308423
           ],
-          "oldId":72,
+          "oldId":73,
           "pos":[
             1296.146729,
             840.6873169,
@@ -1054,15 +989,15 @@
         "beamng_file":"/temp/aipacenotes/out_g_oomw80.wav",
         "success":true
       },
-      "name":"Import_A 17",
+      "name":"Import_A 16",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"four right, into five left?"
+          "note":"care four right off camber? into five left?"
         }
       },
-      "oldId":73,
+      "oldId":74,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1071,7 +1006,7 @@
             -0.9114435744,
             -0.06341799322
           ],
-          "oldId":74,
+          "oldId":75,
           "pos":[
             1400.477051,
             1001.023315,
@@ -1087,7 +1022,7 @@
             1,
             0
           ],
-          "oldId":75,
+          "oldId":76,
           "pos":[
             1442.297729,
             1102.719971,
@@ -1103,7 +1038,7 @@
             -0.9578979313,
             -0.1041989764
           ],
-          "oldId":76,
+          "oldId":77,
           "pos":[
             1420.718384,
             931.6705933,
@@ -1119,15 +1054,15 @@
         "beamng_file":"/temp/aipacenotes/out_873pwctm.wav",
         "success":true
       },
-      "name":"Import_A 18",
+      "name":"Import_A 17",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"long four right?"
+          "note":"longish four right?"
         }
       },
-      "oldId":77,
+      "oldId":78,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1136,7 +1071,7 @@
             -0.9879573273,
             -0.0136208978
           ],
-          "oldId":78,
+          "oldId":79,
           "pos":[
             1448.055908,
             1138.962769,
@@ -1152,7 +1087,7 @@
             -0.3635847328,
             -0.02236210672
           ],
-          "oldId":79,
+          "oldId":80,
           "pos":[
             1493.307129,
             1187.678955,
@@ -1168,7 +1103,7 @@
             -0.7760441764,
             -0.05932341857
           ],
-          "oldId":80,
+          "oldId":81,
           "pos":[
             1430.110352,
             1064.288696,
@@ -1184,7 +1119,7 @@
         "beamng_file":"/temp/aipacenotes/out_p281au60.wav",
         "success":true
       },
-      "name":"Import_A 19",
+      "name":"Import_A 18",
       "notes":{
         "english":{
           "after":"seventy.",
@@ -1192,7 +1127,7 @@
           "note":"five left?"
         }
       },
-      "oldId":81,
+      "oldId":82,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1201,7 +1136,7 @@
             -0.3634904895,
             -0.01625656959
           ],
-          "oldId":82,
+          "oldId":83,
           "pos":[
             1516.494019,
             1195.976196,
@@ -1217,7 +1152,7 @@
             1,
             0
           ],
-          "oldId":83,
+          "oldId":84,
           "pos":[
             1571.678467,
             1243.596069,
@@ -1233,7 +1168,7 @@
             -0.9909021103,
             -0.02614976767
           ],
-          "oldId":84,
+          "oldId":85,
           "pos":[
             1444.875732,
             1106.888306,
@@ -1249,7 +1184,7 @@
         "beamng_file":"/temp/aipacenotes/out_kkkyybss.wav",
         "success":true
       },
-      "name":"Import_A 20",
+      "name":"Import_A 19",
       "notes":{
         "english":{
           "after":"",
@@ -1257,7 +1192,7 @@
           "note":"six left into long three right tightens late?"
         }
       },
-      "oldId":85,
+      "oldId":86,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1266,7 +1201,7 @@
             -0.8759181781,
             -0.000818860875
           ],
-          "oldId":86,
+          "oldId":87,
           "pos":[
             1607.255371,
             1301.372437,
@@ -1282,7 +1217,7 @@
             1,
             0
           ],
-          "oldId":87,
+          "oldId":88,
           "pos":[
             1730.236328,
             1310.591675,
@@ -1298,7 +1233,7 @@
             -0.3635847328,
             -0.02236210672
           ],
-          "oldId":88,
+          "oldId":89,
           "pos":[
             1493.307129,
             1187.678955,
@@ -1314,15 +1249,15 @@
         "beamng_file":"/temp/aipacenotes/out_xny6r6lj.wav",
         "success":true
       },
-      "name":"Import_A 21",
+      "name":"Import_A 20",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"six right tightens over crest, into six left?"
+          "note":"six right tightens over crest?"
         }
       },
-      "oldId":89,
+      "oldId":90,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1331,7 +1266,7 @@
             0.9965748914,
             0.001175687478
           ],
-          "oldId":90,
+          "oldId":91,
           "pos":[
             1730.628052,
             1286.479858,
@@ -1347,11 +1282,11 @@
             0.8608408423,
             0.02405009464
           ],
-          "oldId":91,
+          "oldId":92,
           "pos":[
-            1620.799805,
-            1088.236938,
-            223.1087341
+            1663.623047,
+            1145.637695,
+            223.5049438
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -1363,7 +1298,7 @@
             -0.4169039152,
             0.001144784681
           ],
-          "oldId":92,
+          "oldId":93,
           "pos":[
             1655.657715,
             1382.191772,
@@ -1379,15 +1314,15 @@
         "beamng_file":"/temp/aipacenotes/out_t4v3eh31.wav",
         "success":true
       },
-      "name":"Import_A 22",
+      "name":"Import_A 21",
       "notes":{
         "english":{
           "after":"fifty.",
-          "before":"and",
-          "note":"six right down hill?"
+          "before":"into",
+          "note":"six left? into flat six right down hill?"
         }
       },
-      "oldId":93,
+      "oldId":94,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1396,11 +1331,11 @@
             0.8711417124,
             0.04041766685
           ],
-          "oldId":94,
+          "oldId":95,
           "pos":[
-            1605.541016,
-            1060.415161,
-            221.9875793
+            1651.421875,
+            1133.566284,
+            223.4725037
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -1412,7 +1347,7 @@
             0.7428359359,
             0.06521559746
           ],
-          "oldId":95,
+          "oldId":96,
           "pos":[
             1561.135498,
             999.9991455,
@@ -1424,11 +1359,11 @@
         {
           "name":"curr",
           "normal":[
-            0.1577757301,
-            0.9874747421,
-            0.0006728066616
+            -0.4934464115,
+            -0.8685704064,
+            0.04578305489
           ],
-          "oldId":96,
+          "oldId":97,
           "pos":[
             1728.296997,
             1268.882813,
@@ -1444,15 +1379,15 @@
         "beamng_file":"/temp/aipacenotes/out_hd5kpmdo.wav",
         "success":true
       },
-      "name":"Import_A 23",
+      "name":"Import_A 22",
       "notes":{
         "english":{
-          "after":"",
+          "after":"seventy.",
           "before":"",
-          "note":"slight left?"
+          "note":"flat left?"
         }
       },
-      "oldId":97,
+      "oldId":98,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1461,7 +1396,7 @@
             0.7455261582,
             0.0581144633
           ],
-          "oldId":98,
+          "oldId":99,
           "pos":[
             1530.687866,
             966.8458252,
@@ -1477,11 +1412,11 @@
             0.8284332256,
             0.03699090495
           ],
-          "oldId":99,
+          "oldId":100,
           "pos":[
-            1481.650391,
-            902.0128784,
-            211.5466309
+            1511.706787,
+            943.4355469,
+            213.4754944
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -1493,7 +1428,7 @@
             0.6603415836,
             -0.01997725997
           ],
-          "oldId":100,
+          "oldId":101,
           "pos":[
             1669.97876,
             1148.377441,
@@ -1509,15 +1444,15 @@
         "beamng_file":"/temp/aipacenotes/out_x_r2thnm.wav",
         "success":true
       },
-      "name":"Import_A 24",
+      "name":"Import_A 23",
       "notes":{
         "english":{
           "after":"one fifty.",
-          "before":"into",
-          "note":"slight left?"
+          "before":"",
+          "note":"flat left?"
         }
       },
-      "oldId":101,
+      "oldId":102,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1526,7 +1461,7 @@
             0.803365668,
             0.03700262478
           ],
-          "oldId":102,
+          "oldId":103,
           "pos":[
             1470.755493,
             887.5599365,
@@ -1542,11 +1477,11 @@
             -0.998932636,
             -0.04580307558
           ],
-          "oldId":103,
+          "oldId":104,
           "pos":[
-            1435.044312,
-            832.7775879,
-            208.3753662
+            1444.726563,
+            849.8883057,
+            209.1344299
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -1558,7 +1493,7 @@
             0.8842710287,
             0.03574768683
           ],
-          "oldId":104,
+          "oldId":105,
           "pos":[
             1611.487671,
             1071.180176,
@@ -1574,15 +1509,15 @@
         "beamng_file":"/temp/aipacenotes/out_atb6zhye.wav",
         "success":true
       },
-      "name":"Import_A 25",
+      "name":"Import_A 24",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"caution, six right over crest?"
+          "note":"caution, six right over crest down hill?"
         }
       },
-      "oldId":105,
+      "oldId":106,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1591,7 +1526,7 @@
             0.7541813403,
             -0.00780748082
           ],
-          "oldId":106,
+          "oldId":107,
           "pos":[
             1360.144409,
             724.0516357,
@@ -1607,7 +1542,7 @@
             0.5664930731,
             0.06099905193
           ],
-          "oldId":107,
+          "oldId":108,
           "pos":[
             1304.833008,
             671.7250366,
@@ -1623,7 +1558,7 @@
             0.7326649507,
             0.0592881446
           ],
-          "oldId":108,
+          "oldId":109,
           "pos":[
             1534.454712,
             971.0755615,
@@ -1636,15 +1571,15 @@
     },
     {
       "metadata":{},
-      "name":"Pacenote 26",
+      "name":"Pacenote 25",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"five left minus?"
+          "note":"five left minus dont cut?"
         }
       },
-      "oldId":109,
+      "oldId":110,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1653,7 +1588,7 @@
             0.5898896809,
             0.06267973395
           ],
-          "oldId":110,
+          "oldId":111,
           "pos":[
             1287.044922,
             659.3138428,
@@ -1669,7 +1604,7 @@
             0.905973398,
             0.04356727221
           ],
-          "oldId":111,
+          "oldId":112,
           "pos":[
             1253.28772,
             615.2305298,
@@ -1685,7 +1620,7 @@
             0.8082664252,
             0.03643580249
           ],
-          "oldId":112,
+          "oldId":113,
           "pos":[
             1467.439087,
             882.9987793,
@@ -1701,7 +1636,7 @@
         "beamng_file":"/temp/aipacenotes/out_z5rc21eb.wav",
         "success":true
       },
-      "name":"Import_A 27",
+      "name":"Import_A 26",
       "notes":{
         "english":{
           "after":"one hundred.",
@@ -1709,7 +1644,7 @@
           "note":"six right, down hill?"
         }
       },
-      "oldId":113,
+      "oldId":114,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1718,7 +1653,7 @@
             0.9124715532,
             0.04152574729
           ],
-          "oldId":114,
+          "oldId":115,
           "pos":[
             1247.283203,
             601.8444824,
@@ -1734,7 +1669,7 @@
             0.8486795432,
             0.03200298374
           ],
-          "oldId":115,
+          "oldId":116,
           "pos":[
             1228.879517,
             567.9367065,
@@ -1750,7 +1685,7 @@
             0.7638950128,
             -0.01154382019
           ],
-          "oldId":116,
+          "oldId":117,
           "pos":[
             1363.436035,
             727.8323364,
@@ -1766,15 +1701,15 @@
         "beamng_file":"/temp/aipacenotes/out_ni0p5g0p.wav",
         "success":false
       },
-      "name":"Import_A 28",
+      "name":"Import_A 27",
       "notes":{
         "english":{
-          "after":"",
+          "after":"fifty.",
           "before":"",
           "note":"five right?"
         }
       },
-      "oldId":117,
+      "oldId":118,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1783,7 +1718,7 @@
             0.7540694938,
             0.05313541557
           ],
-          "oldId":118,
+          "oldId":119,
           "pos":[
             1170.149902,
             490.7290344,
@@ -1799,11 +1734,11 @@
             0.3947844111,
             0.07288858457
           ],
-          "oldId":119,
+          "oldId":120,
           "pos":[
-            1118.457642,
-            454.2668152,
-            191.4406433
+            1121.597657,
+            454.3708191,
+            191.2998657
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -1815,7 +1750,7 @@
             -0.837909259,
             -0.03745348729
           ],
-          "oldId":120,
+          "oldId":121,
           "pos":[
             1267.05188,
             639.8413086,
@@ -1831,15 +1766,15 @@
         "beamng_file":"/temp/aipacenotes/out_k26t7ycx.wav",
         "success":true
       },
-      "name":"Import_B 29",
+      "name":"Import_B 28",
       "notes":{
         "english":{
-          "after":"",
-          "before":"into",
+          "after":"sixty.",
+          "before":"",
           "note":"six right minus?"
         }
       },
-      "oldId":121,
+      "oldId":122,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1848,11 +1783,11 @@
             0.3207626959,
             0.06487853761
           ],
-          "oldId":122,
+          "oldId":123,
           "pos":[
-            1102.020264,
-            448.2594604,
-            190.2493591
+            1076.717285,
+            441.6375122,
+            189.0309143
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -1864,11 +1799,11 @@
             -0.1216157128,
             0.0545972604
           ],
-          "oldId":123,
+          "oldId":124,
           "pos":[
-            984.6446533,
-            436.7128601,
-            184.0809631
+            1044.378235,
+            433.0426941,
+            187.5835571
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -1876,11 +1811,11 @@
         {
           "name":"curr",
           "normal":[
-            0.5174061811,
-            0.8550944339,
-            0.03323180623
+            -0.7595573315,
+            -0.6483256204,
+            -0.0524075385
           ],
-          "oldId":124,
+          "oldId":125,
           "pos":[
             1233.620972,
             575.5637817,
@@ -1896,15 +1831,15 @@
         "beamng_file":"/temp/aipacenotes/out_jxsgmmol.wav",
         "success":true
       },
-      "name":"Import_B 30",
+      "name":"Import_B 29",
       "notes":{
         "english":{
           "after":"one hundred.",
-          "before":"and",
+          "before":"",
           "note":"six right opens?"
         }
       },
-      "oldId":125,
+      "oldId":126,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1913,11 +1848,11 @@
             -0.2025114375,
             0.05297286168
           ],
-          "oldId":126,
+          "oldId":127,
           "pos":[
-            957.8649902,
-            441.2704773,
-            182.6154022
+            981.265686,
+            436.1129456,
+            184.0016022
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -1929,7 +1864,7 @@
             1,
             0
           ],
-          "oldId":127,
+          "oldId":128,
           "pos":[
             946.9845581,
             443.7823792,
@@ -1941,11 +1876,11 @@
         {
           "name":"curr",
           "normal":[
-            0.865204224,
-            0.4956492028,
-            0.07585195156
+            -0.9850613676,
+            -0.1627250617,
+            -0.05634408868
           ],
-          "oldId":128,
+          "oldId":129,
           "pos":[
             1133.807007,
             461.311676,
@@ -1961,15 +1896,15 @@
         "beamng_file":"/temp/aipacenotes/out_xxkg6kyj.wav",
         "success":true
       },
-      "name":"Import_B 31",
+      "name":"Import_B 30",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"caution five right plus don't?"
+          "note":"caution five right plus don't over crest?"
         }
       },
-      "oldId":129,
+      "oldId":130,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1978,7 +1913,7 @@
             -0.3875685896,
             0.004114897183
           ],
-          "oldId":130,
+          "oldId":131,
           "pos":[
             844.899292,
             473.4651489,
@@ -1994,7 +1929,7 @@
             -0.68179176,
             -0.004897426701
           ],
-          "oldId":131,
+          "oldId":132,
           "pos":[
             796.8426514,
             504.8998413,
@@ -2010,7 +1945,7 @@
             -0.07976953576,
             0.05488666463
           ],
-          "oldId":132,
+          "oldId":133,
           "pos":[
             1001.075745,
             434.7632141,
@@ -2023,15 +1958,15 @@
     },
     {
       "metadata":{},
-      "name":"Pacenote 32",
+      "name":"Pacenote 31",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"six right into six left?"
+          "note":"twisty, slowing, narrows?"
         }
       },
-      "oldId":133,
+      "oldId":134,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2040,7 +1975,7 @@
             -0.7021982416,
             0.003957877619
           ],
-          "oldId":134,
+          "oldId":135,
           "pos":[
             774.1334839,
             527.0553589,
@@ -2056,11 +1991,11 @@
             -0.6215312709,
             0.01758315924
           ],
-          "oldId":135,
+          "oldId":136,
           "pos":[
-            688.9956055,
-            599.2440186,
-            173.9173737
+            682.4437256,
+            601.2779541,
+            173.8148041
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -2072,7 +2007,7 @@
             -0.2766501653,
             0.04531447903
           ],
-          "oldId":136,
+          "oldId":137,
           "pos":[
             918.4595947,
             451.4377747,
@@ -2085,99 +2020,18 @@
     },
     {
       "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_i5lrcc79.wav",
-        "success":true
-      },
-      "name":"Import_B 33",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"and",
-          "note":"slowing, narrows."
-        }
-      },
-      "oldId":137,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            -0.2910694736,
-            -0.9489986233,
-            0.1211617701
-          ],
-          "oldId":138,
-          "pos":[
-            664.8731689,
-            614.1691895,
-            173.7861328
-          ],
-          "radius":10,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            -0.8984332434,
-            0.4314932536,
-            0.08143266681
-          ],
-          "oldId":139,
-          "pos":[
-            647.0540161,
-            625.1338501,
-            173.9735565
-          ],
-          "radius":10,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            0.9674366269,
-            -0.2527075466,
-            0.0143272071
-          ],
-          "oldId":140,
-          "pos":[
-            891.1117554,
-            458.5186157,
-            179.9261017
-          ],
-          "radius":10,
-          "waypointType":"fwdAudioTrigger"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0,
-            1,
-            0
-          ],
-          "oldId":141,
-          "pos":[
-            630.8231201,
-            630.0681763,
-            175.7113953
-          ],
-          "radius":10,
-          "waypointType":"cornerEnd"
-        }
-      ]
-    },
-    {
-      "metadata":{
         "beamng_file":"/temp/aipacenotes/out_m1socwa3.wav",
         "success":true
       },
-      "name":"Import_B 34",
+      "name":"Import_B 32",
       "notes":{
         "english":{
           "after":"one fifty.",
-          "before":"into",
-          "note":"four left?"
+          "before":"and",
+          "note":"four left over crest?"
         }
       },
-      "oldId":142,
+      "oldId":143,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2186,11 +2040,11 @@
             0.2745524778,
             0.09705317282
           ],
-          "oldId":143,
+          "oldId":144,
           "pos":[
-            637.7111816,
-            629.4292603,
-            174.8598938
+            662.321228,
+            616.9707642,
+            173.7728882
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -2202,7 +2056,7 @@
             1,
             0
           ],
-          "oldId":144,
+          "oldId":145,
           "pos":[
             602.1715088,
             627.7860718,
@@ -2214,11 +2068,11 @@
         {
           "name":"curr",
           "normal":[
-            0.7110496323,
-            -0.7031406826,
-            0.001265212869
+            -0.7765354579,
+            0.6288647638,
+            -0.03901014693
           ],
-          "oldId":145,
+          "oldId":146,
           "pos":[
             777.7265015,
             523.5116577,
@@ -2234,7 +2088,7 @@
         "beamng_file":"/temp/aipacenotes/out_2tpekns8.wav",
         "success":true
       },
-      "name":"Import_B 35",
+      "name":"Import_B 33",
       "notes":{
         "english":{
           "after":"",
@@ -2242,7 +2096,7 @@
           "note":"caution, big dip, over narrow bridge?"
         }
       },
-      "oldId":146,
+      "oldId":147,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2251,11 +2105,11 @@
             -0.2330941027,
             -0.1094802958
           ],
-          "oldId":147,
+          "oldId":148,
           "pos":[
             478.8470764,
             599.065979,
-            177.4333801
+            177.5266724
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -2267,7 +2121,7 @@
             -0.2445751558,
             0.01905851641
           ],
-          "oldId":148,
+          "oldId":149,
           "pos":[
             403.3391418,
             581.6743164,
@@ -2279,15 +2133,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9704302331,
-            -0.2412400517,
-            0.008270441955
+            -0.975969937,
+            -0.2178730527,
+            0.003743662896
           ],
-          "oldId":149,
+          "oldId":150,
           "pos":[
-            588.2027588,
-            625.0838623,
-            178.0188904
+            616.2655029,
+            629.7429199,
+            176.9995575
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2299,15 +2153,15 @@
         "beamng_file":"/temp/aipacenotes/out_6qikwlpo.wav",
         "success":true
       },
-      "name":"Import_B 36",
+      "name":"Import_B 34",
       "notes":{
         "english":{
           "after":"eighty.",
           "before":"and",
-          "note":"over bumps jump maybe?"
+          "note":"over bumps and jump maybe?"
         }
       },
-      "oldId":150,
+      "oldId":151,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2316,7 +2170,7 @@
             -0.2258203102,
             4.572980507e-05
           ],
-          "oldId":151,
+          "oldId":152,
           "pos":[
             377.0897217,
             575.1469116,
@@ -2332,7 +2186,7 @@
             -0.2388374245,
             -0.001800752696
           ],
-          "oldId":152,
+          "oldId":153,
           "pos":[
             339.7631226,
             566.4893188,
@@ -2344,15 +2198,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9634391239,
-            -0.2198489315,
-            -0.1531388318
+            -0.9708129909,
+            -0.2374549771,
+            -0.03372344358
           ],
-          "oldId":153,
+          "oldId":154,
           "pos":[
-            462.5897827,
-            595.1442261,
-            175.5914001
+            501.3165588,
+            605.5320435,
+            178.1079102
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2364,15 +2218,15 @@
         "beamng_file":"/temp/aipacenotes/out_85_d0ipu.wav",
         "success":true
       },
-      "name":"Import_B 37",
+      "name":"Import_B 35",
       "notes":{
         "english":{
           "after":"sixty.",
           "before":"",
-          "note":"over big jump caution?"
+          "note":"slowing over big jump caution?"
         }
       },
-      "oldId":154,
+      "oldId":155,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2381,7 +2235,7 @@
             -0.2248132228,
             0.09162551384
           ],
-          "oldId":155,
+          "oldId":156,
           "pos":[
             265.7172852,
             548.729126,
@@ -2397,7 +2251,7 @@
             -0.2224020549,
             0.01045090682
           ],
-          "oldId":156,
+          "oldId":157,
           "pos":[
             209.8809662,
             536.1369629,
@@ -2409,15 +2263,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9704013982,
-            -0.2388587226,
-            0.03560388928
+            -0.9710924672,
+            -0.2379783907,
+            0.01859316359
           ],
-          "oldId":157,
+          "oldId":158,
           "pos":[
-            392.5473633,
-            578.9517212,
-            173.2254639
+            438.0682068,
+            590.9658814,
+            172.7157745
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2429,15 +2283,15 @@
         "beamng_file":"/temp/aipacenotes/out_lv2rnyjx.wav",
         "success":true
       },
-      "name":"Import_B 38",
+      "name":"Import_B 36",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"slowing. five right plus?"
+          "note":"five right plus?"
         }
       },
-      "oldId":158,
+      "oldId":159,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2446,11 +2300,11 @@
             -0.1703898218,
             0.002765804597
           ],
-          "oldId":159,
+          "oldId":160,
           "pos":[
             151.0182648,
             522.0021362,
-            178.6434937
+            178.5689087
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -2462,7 +2316,7 @@
             1,
             0
           ],
-          "oldId":160,
+          "oldId":161,
           "pos":[
             106.7281036,
             519.7507935,
@@ -2474,15 +2328,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.972087308,
-            -0.2297854037,
-            0.04738073378
+            -0.9748362833,
+            -0.2215702189,
+            0.02451242435
           ],
-          "oldId":161,
+          "oldId":162,
           "pos":[
-            306.1490173,
-            558.2138062,
-            173.8408203
+            350.4874267,
+            567.3394166,
+            173.5532227
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2494,7 +2348,7 @@
         "beamng_file":"/temp/aipacenotes/out_r11v0af_.wav",
         "success":true
       },
-      "name":"Import_B 39",
+      "name":"Import_B 37",
       "notes":{
         "english":{
           "after":"forty.",
@@ -2502,7 +2356,7 @@
           "note":"five left?"
         }
       },
-      "oldId":162,
+      "oldId":163,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2511,11 +2365,11 @@
             0.04113942787,
             0.0008087985289
           ],
-          "oldId":163,
+          "oldId":164,
           "pos":[
             95.54130554,
             518.5075073,
-            178.9914856
+            178.950119
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -2527,7 +2381,7 @@
             1,
             0
           ],
-          "oldId":164,
+          "oldId":165,
           "pos":[
             47.78601074,
             499.2395935,
@@ -2539,15 +2393,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9759338115,
-            -0.217985127,
-            -0.005973278565
+            -0.9873379125,
+            -0.1583747276,
+            0.009016223903
           ],
-          "oldId":165,
+          "oldId":166,
           "pos":[
             221.1793823,
             538.6605835,
-            177.8456116
+            177.8028107
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2559,7 +2413,7 @@
         "beamng_file":"/temp/aipacenotes/out_70he5azy.wav",
         "success":true
       },
-      "name":"Import_B 40",
+      "name":"Import_B 38",
       "notes":{
         "english":{
           "after":"",
@@ -2567,7 +2421,7 @@
           "note":"six left?"
         }
       },
-      "oldId":166,
+      "oldId":167,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2576,7 +2430,7 @@
             -0.6335542434,
             0.002348650127
           ],
-          "oldId":167,
+          "oldId":168,
           "pos":[
             12.7850132,
             475.2990723,
@@ -2592,7 +2446,7 @@
             -0.7781659897,
             -0.001850007447
           ],
-          "oldId":168,
+          "oldId":169,
           "pos":[
             -21.94678688,
             443.1126404,
@@ -2604,15 +2458,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9926219628,
-            0.1201352818,
-            -0.01640588449
+            -0.9428235052,
+            -0.3332832219,
+            0.002476315253
           ],
-          "oldId":169,
+          "oldId":170,
           "pos":[
-            118.0248871,
-            516.4942017,
-            179.173996
+            133.9437332,
+            518.1280518,
+            178.6663971
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2624,15 +2478,15 @@
         "beamng_file":"/temp/aipacenotes/out_o7eyno45.wav",
         "success":true
       },
-      "name":"Import_B 41",
+      "name":"Import_B 39",
       "notes":{
         "english":{
           "after":"seventy.",
           "before":"and",
-          "note":"four right?"
+          "note":"three right plus?"
         }
       },
-      "oldId":170,
+      "oldId":171,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2641,7 +2495,7 @@
             -0.7678290599,
             -0.00176809112
           ],
-          "oldId":171,
+          "oldId":172,
           "pos":[
             -41.37705231,
             417.2529602,
@@ -2657,7 +2511,7 @@
             -0.05984262616,
             -0.00207418153
           ],
-          "oldId":172,
+          "oldId":173,
           "pos":[
             -89.79112244,
             387.7644043,
@@ -2669,15 +2523,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.8531915986,
-            -0.5215947651,
-            0.001731210934
+            -0.7756299761,
+            -0.63118788,
+            -1.595280811e-05
           ],
-          "oldId":173,
+          "oldId":174,
           "pos":[
-            41.70025635,
-            495.3450012,
-            178.9921265
+            81.77705002,
+            517.4726257,
+            178.9992676
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2689,7 +2543,7 @@
         "beamng_file":"/temp/aipacenotes/out_t9tjkb2y.wav",
         "success":true
       },
-      "name":"Import_B 42",
+      "name":"Import_B 40",
       "notes":{
         "english":{
           "after":"",
@@ -2697,7 +2551,7 @@
           "note":"slight left?"
         }
       },
-      "oldId":174,
+      "oldId":175,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2706,7 +2560,7 @@
             0.1835500794,
             0.002210641122
           ],
-          "oldId":175,
+          "oldId":176,
           "pos":[
             -155.4126892,
             393.4852905,
@@ -2722,7 +2576,7 @@
             0.1266093106,
             0.0008148726043
           ],
-          "oldId":176,
+          "oldId":177,
           "pos":[
             -202.7479553,
             401.7408142,
@@ -2738,7 +2592,7 @@
             -0.6868948362,
             0.0006919156601
           ],
-          "oldId":177,
+          "oldId":178,
           "pos":[
             -55.88618088,
             401.3260803,
@@ -2754,7 +2608,7 @@
         "beamng_file":"/temp/aipacenotes/out_vc0vrdgu.wav",
         "success":true
       },
-      "name":"Import_B 43",
+      "name":"Import_B 41",
       "notes":{
         "english":{
           "after":"two hundred.",
@@ -2762,7 +2616,7 @@
           "note":"square left?"
         }
       },
-      "oldId":178,
+      "oldId":179,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2771,7 +2625,7 @@
             0.07588451275,
             -0.00187063744
           ],
-          "oldId":179,
+          "oldId":180,
           "pos":[
             -242.0780029,
             405.6644897,
@@ -2787,7 +2641,7 @@
             0.9999204045,
             -0.01121708673
           ],
-          "oldId":180,
+          "oldId":181,
           "pos":[
             -260.1965637,
             395.1943054,
@@ -2799,15 +2653,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9999157661,
-            0.0129310478,
-            0.001117497958
+            -0.9929952131,
+            0.1181442422,
+            0.001563567789
           ],
-          "oldId":181,
+          "oldId":182,
           "pos":[
-            -104.615242,
-            387.5507813,
-            178.9824219
+            -93.93786621,
+            388.0391236,
+            178.7430725
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2819,7 +2673,7 @@
         "beamng_file":"/temp/aipacenotes/out_q2i_ymbg.wav",
         "success":false
       },
-      "name":"Import_B 44",
+      "name":"Import_B 42",
       "notes":{
         "english":{
           "after":"",
@@ -2827,7 +2681,7 @@
           "note":"5 left?"
         }
       },
-      "oldId":182,
+      "oldId":183,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2836,7 +2690,7 @@
             0.9983464525,
             -0.05698904071
           ],
-          "oldId":183,
+          "oldId":184,
           "pos":[
             -259.4056396,
             213.0871277,
@@ -2852,7 +2706,7 @@
             1,
             0
           ],
-          "oldId":184,
+          "oldId":185,
           "pos":[
             -253.5784302,
             189.2192688,
@@ -2868,7 +2722,7 @@
             -0.9999642508,
             0.005877228332
           ],
-          "oldId":185,
+          "oldId":186,
           "pos":[
             -260.3145447,
             362.5949707,
@@ -2884,7 +2738,7 @@
         "beamng_file":"/temp/aipacenotes/out_tdej4hn8.wav",
         "success":true
       },
-      "name":"Import_B 45",
+      "name":"Import_B 43",
       "notes":{
         "english":{
           "after":"",
@@ -2892,7 +2746,7 @@
           "note":"three right minus over crest?"
         }
       },
-      "oldId":186,
+      "oldId":187,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2901,11 +2755,11 @@
             0.9309336016,
             -0.1931112718
           ],
-          "oldId":187,
+          "oldId":188,
           "pos":[
             -248.5080872,
             176.1029816,
-            185.5856476
+            184.6968994
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -2917,7 +2771,7 @@
             1,
             0
           ],
-          "oldId":188,
+          "oldId":189,
           "pos":[
             -269.8266296,
             134.1899719,
@@ -2929,15 +2783,15 @@
         {
           "name":"curr",
           "normal":[
-            0.1179758751,
-            -0.9885021704,
-            0.09457881341
+            0.09919085352,
+            -0.9927085536,
+            0.06849016173
           ],
-          "oldId":189,
+          "oldId":190,
           "pos":[
-            -260.1352539,
-            273.5252686,
-            176.264389
+            -260.9585571,
+            300.7080994,
+            176.0999908
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -2949,15 +2803,15 @@
         "beamng_file":"/temp/aipacenotes/out_01vb9d7c.wav",
         "success":true
       },
-      "name":"Import_B 46",
+      "name":"Import_B 44",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"long five right, late, tightens?"
+          "note":"long five right, late tightens?"
         }
       },
-      "oldId":190,
+      "oldId":191,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2966,11 +2820,11 @@
             0.5041937684,
             -0.01671629652
           ],
-          "oldId":191,
+          "oldId":192,
           "pos":[
             -287.2353516,
             121.3736343,
-            189.8084106
+            190.5853271
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -2982,11 +2836,11 @@
             1,
             0
           ],
-          "oldId":192,
+          "oldId":193,
           "pos":[
-            -371.6373596,
-            112.3897705,
-            191.2497406
+            -376.5354919,
+            116.5873947,
+            191.053772
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -2994,15 +2848,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.2961933971,
-            0.9435725796,
-            -0.1481224441
+            -0.2484219772,
+            -0.9629444416,
+            0.104997732
           ],
-          "oldId":193,
+          "oldId":194,
           "pos":[
-            -257.4674683,
-            199.2234955,
-            181.1334534
+            -257.5107727,
+            236.5933838,
+            178.0219727
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -3014,15 +2868,15 @@
         "beamng_file":"/temp/aipacenotes/out_62_joi_e.wav",
         "success":true
       },
-      "name":"Import_B 47",
+      "name":"Import_B 45",
       "notes":{
         "english":{
           "after":"fifty.",
-          "before":"and",
+          "before":"into",
           "note":"four left downhill?"
         }
       },
-      "oldId":194,
+      "oldId":195,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3031,7 +2885,7 @@
             -0.3897859654,
             0.02193435718
           ],
-          "oldId":195,
+          "oldId":196,
           "pos":[
             -391.4311218,
             120.2527161,
@@ -3047,7 +2901,7 @@
             0.4866880334,
             0.06957412506
           ],
-          "oldId":196,
+          "oldId":197,
           "pos":[
             -433.1552124,
             115.1848297,
@@ -3059,15 +2913,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9423204472,
-            0.3342037279,
-            -0.01844025564
+            -0.9866139094,
+            -0.1627082108,
+            0.01091017507
           ],
-          "oldId":197,
+          "oldId":198,
           "pos":[
-            -309.8230896,
-            112.0859604,
-            190.2344971
+            -258.3351746,
+            142.2023392,
+            189.4344482
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -3079,7 +2933,7 @@
         "beamng_file":"/temp/aipacenotes/out_s_r6ej5v.wav",
         "success":true
       },
-      "name":"Import_B 48",
+      "name":"Import_B 46",
       "notes":{
         "english":{
           "after":"seventy.",
@@ -3087,7 +2941,7 @@
           "note":"six left opens?"
         }
       },
-      "oldId":198,
+      "oldId":199,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3096,7 +2950,7 @@
             0.5461808037,
             0.006756795067
           ],
-          "oldId":199,
+          "oldId":200,
           "pos":[
             -473.8606567,
             88.95973969,
@@ -3112,7 +2966,7 @@
             0.6991699141,
             -0.05649578117
           ],
-          "oldId":200,
+          "oldId":201,
           "pos":[
             -500.2672119,
             64.40700531,
@@ -3128,7 +2982,7 @@
             -0.3776008923,
             -0.01174765426
           ],
-          "oldId":201,
+          "oldId":202,
           "pos":[
             -373.5944824,
             111.7809753,
@@ -3144,15 +2998,15 @@
         "beamng_file":"/temp/aipacenotes/out_tcr0lmnn.wav",
         "success":true
       },
-      "name":"Import_B 49",
+      "name":"Import_B 47",
       "notes":{
         "english":{
           "after":"one fifty.",
           "before":"",
-          "note":"crest into tight hairpin left?"
+          "note":"small crest into left hairpin?"
         }
       },
-      "oldId":202,
+      "oldId":203,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3161,7 +3015,7 @@
             0.9459312041,
             -0.05984009543
           ],
-          "oldId":203,
+          "oldId":204,
           "pos":[
             -547.203064,
             11.94916344,
@@ -3177,7 +3031,7 @@
             -0.5956413654,
             0.00327579407
           ],
-          "oldId":204,
+          "oldId":205,
           "pos":[
             -575.8103027,
             -53.36411667,
@@ -3189,15 +3043,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9401980347,
-            -0.3395451722,
-            0.02714279791
+            -0.767086828,
+            -0.6408718922,
+            0.02934307616
           ],
-          "oldId":205,
+          "oldId":206,
           "pos":[
-            -394.0499878,
-            121.1985016,
-            190.8306427
+            -416.2740479,
+            121.3353806,
+            189.1840515
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -3209,7 +3063,7 @@
         "beamng_file":"/temp/aipacenotes/out_0xwpwg_7.wav",
         "success":true
       },
-      "name":"Import_B 50",
+      "name":"Import_B 48",
       "notes":{
         "english":{
           "after":"sixty.",
@@ -3217,7 +3071,7 @@
           "note":"crest into six right crest tightens?"
         }
       },
-      "oldId":206,
+      "oldId":207,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3226,7 +3080,7 @@
             -0.6157463262,
             -0.04283964163
           ],
-          "oldId":207,
+          "oldId":208,
           "pos":[
             -453.711731,
             42.19225311,
@@ -3242,7 +3096,7 @@
             0.1615135885,
             -0.0675998165
           ],
-          "oldId":208,
+          "oldId":209,
           "pos":[
             -395.1380005,
             59.32582855,
@@ -3258,7 +3112,7 @@
             0.6208796714,
             0.0476306597
           ],
-          "oldId":209,
+          "oldId":210,
           "pos":[
             -552.8308105,
             -36.45869064,
@@ -3274,15 +3128,15 @@
         "beamng_file":"/temp/aipacenotes/out_socat12y.wav",
         "success":true
       },
-      "name":"Import_B 51",
+      "name":"Import_B 49",
       "notes":{
         "english":{
           "after":"one hundred.",
           "before":"",
-          "note":"five left into hairpin right very tight?"
+          "note":"five left into right hairpin?"
         }
       },
-      "oldId":210,
+      "oldId":211,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3291,7 +3145,7 @@
             1,
             0
           ],
-          "oldId":211,
+          "oldId":212,
           "pos":[
             -333.7420349,
             48.83209991,
@@ -3307,7 +3161,7 @@
             1,
             0
           ],
-          "oldId":212,
+          "oldId":213,
           "pos":[
             -298.4916687,
             29.24507141,
@@ -3323,7 +3177,7 @@
             -0.6169233694,
             -0.04279326422
           ],
-          "oldId":213,
+          "oldId":214,
           "pos":[
             -469.9483948,
             29.74072647,
@@ -3339,7 +3193,7 @@
         "beamng_file":"/temp/aipacenotes/out_rkb4qy8j.wav",
         "success":true
       },
-      "name":"Import_B 52",
+      "name":"Import_B 50",
       "notes":{
         "english":{
           "after":"",
@@ -3347,7 +3201,7 @@
           "note":"six left tightens into three?"
         }
       },
-      "oldId":214,
+      "oldId":215,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3356,7 +3210,7 @@
             0.08342223441,
             -0.06784010966
           ],
-          "oldId":215,
+          "oldId":216,
           "pos":[
             -399.2204285,
             35.85927963,
@@ -3372,7 +3226,7 @@
             1,
             0
           ],
-          "oldId":216,
+          "oldId":217,
           "pos":[
             -435.3093262,
             18.25909615,
@@ -3388,7 +3242,7 @@
             -0.1004225077,
             -0.06991236236
           ],
-          "oldId":217,
+          "oldId":218,
           "pos":[
             -322.5780029,
             32.94161224,
@@ -3404,15 +3258,15 @@
         "beamng_file":"/temp/aipacenotes/out_3wtsg366.wav",
         "success":true
       },
-      "name":"Import_B 53",
+      "name":"Import_B 51",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"six right?"
+          "note":"short six right?"
         }
       },
-      "oldId":218,
+      "oldId":219,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3421,7 +3275,7 @@
             0.809372835,
             -0.05164615766
           ],
-          "oldId":219,
+          "oldId":220,
           "pos":[
             -457.4110107,
             -14.0638504,
@@ -3437,7 +3291,7 @@
             0.7390602577,
             -0.0518841811
           ],
-          "oldId":220,
+          "oldId":221,
           "pos":[
             -468.3061829,
             -26.13887978,
@@ -3453,7 +3307,7 @@
             -0.02352931981,
             -0.0851677896
           ],
-          "oldId":221,
+          "oldId":222,
           "pos":[
             -370.2536926,
             37.10688782,
@@ -3469,15 +3323,15 @@
         "beamng_file":"/temp/aipacenotes/out_em5qwfyb.wav",
         "success":true
       },
-      "name":"Import_B 54",
+      "name":"Import_B 52",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"six left tightens?"
+          "note":"long six left tightens?"
         }
       },
-      "oldId":222,
+      "oldId":223,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3486,7 +3340,7 @@
             0.7668165786,
             -0.04875899542
           ],
-          "oldId":223,
+          "oldId":224,
           "pos":[
             -482.0834351,
             -41.2784462,
@@ -3502,7 +3356,7 @@
             1,
             0
           ],
-          "oldId":224,
+          "oldId":225,
           "pos":[
             -523.690918,
             -147.8613892,
@@ -3518,7 +3372,7 @@
             0.8149592003,
             -0.04497739616
           ],
-          "oldId":225,
+          "oldId":226,
           "pos":[
             -439.1814575,
             12.40045261,
@@ -3534,15 +3388,15 @@
         "beamng_file":"/temp/aipacenotes/out_25dlrwlj.wav",
         "success":true
       },
-      "name":"Import_B 55",
+      "name":"Import_B 53",
       "notes":{
         "english":{
           "after":"forty.",
           "before":"and",
-          "note":"very long three right?"
+          "note":"long three right?"
         }
       },
-      "oldId":226,
+      "oldId":227,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3551,7 +3405,7 @@
             0.9998273068,
             0.01332673904
           ],
-          "oldId":227,
+          "oldId":228,
           "pos":[
             -523.1127319,
             -181.3899841,
@@ -3567,7 +3421,7 @@
             0.05948828303,
             0.02034550888
           ],
-          "oldId":228,
+          "oldId":229,
           "pos":[
             -563.7154541,
             -229.630188,
@@ -3579,15 +3433,15 @@
         {
           "name":"curr",
           "normal":[
-            0.4250528267,
-            0.9042057075,
-            -0.04173886657
+            -0.1977812445,
+            -0.9798624972,
+            0.02742381879
           ],
-          "oldId":229,
+          "oldId":230,
           "pos":[
-            -509.8288574,
-            -85.31512451,
-            230.1784363
+            -499.3318481,
+            -63.57296753,
+            227.9484558
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -3599,15 +3453,15 @@
         "beamng_file":"/temp/aipacenotes/out_4ogbnbu7.wav",
         "success":true
       },
-      "name":"Import_B 56",
+      "name":"Import_B 54",
       "notes":{
         "english":{
-          "after":"",
+          "after":"fifty.",
           "before":"",
-          "note":"tight hairpin left?"
+          "note":"tight hairpin left? narrows."
         }
       },
-      "oldId":230,
+      "oldId":231,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3616,7 +3470,7 @@
             -0.132584424,
             0.003791019595
           ],
-          "oldId":231,
+          "oldId":232,
           "pos":[
             -604.9039307,
             -224.8141479,
@@ -3632,7 +3486,7 @@
             1,
             0
           ],
-          "oldId":232,
+          "oldId":233,
           "pos":[
             -596.1130371,
             -241.8903503,
@@ -3644,80 +3498,15 @@
         {
           "name":"curr",
           "normal":[
-            0.152420601,
-            0.9882573681,
-            -0.01073940427
+            -0.575907955,
+            -0.8174985011,
+            0.005121335928
           ],
-          "oldId":233,
+          "oldId":234,
           "pos":[
-            -524.5349731,
-            -135.8061829,
-            231.5749969
-          ],
-          "radius":10,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_t32pt10q.wav",
-        "success":true
-      },
-      "name":"Import_B 57",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"and",
-          "note":"narrows."
-        }
-      },
-      "oldId":234,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            0.9908761279,
-            -0.05088909768,
-            0.1247990341
-          ],
-          "oldId":235,
-          "pos":[
-            -559.2265625,
-            -246.7041016,
-            236.9728394
-          ],
-          "radius":10,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0.9794865143,
-            -0.1646140268,
-            0.1162256014
-          ],
-          "oldId":236,
-          "pos":[
-            -578.1716919,
-            -243.4767151,
-            234.7044373
-          ],
-          "radius":10,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            0.9762019436,
-            -0.1982985846,
-            0.08779200815
-          ],
-          "oldId":237,
-          "pos":[
-            -608.7102051,
-            -240.4177704,
-            231.3968201
+            -513.1277465,
+            -94.53830723,
+            230.3114929
           ],
           "radius":10,
           "waypointType":"fwdAudioTrigger"
@@ -3729,15 +3518,15 @@
         "beamng_file":"/temp/aipacenotes/out_5898zemv.wav",
         "success":true
       },
-      "name":"Import_B 58",
+      "name":"Import_B 56",
       "notes":{
         "english":{
           "after":"fifty.",
-          "before":"and",
+          "before":"",
           "note":"three left?"
         }
       },
-      "oldId":238,
+      "oldId":239,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3746,7 +3535,7 @@
             0.08827087622,
             0.1405448361
           ],
-          "oldId":239,
+          "oldId":240,
           "pos":[
             -543.6027832,
             -247.2926331,
@@ -3762,7 +3551,7 @@
             1,
             0
           ],
-          "oldId":240,
+          "oldId":241,
           "pos":[
             -509.7868347,
             -228.5433197,
@@ -3778,7 +3567,7 @@
             -0.1125261955,
             0.1133820023
           ],
-          "oldId":241,
+          "oldId":242,
           "pos":[
             -593.361145,
             -241.7452698,
@@ -3794,7 +3583,7 @@
         "beamng_file":"/temp/aipacenotes/out_p6j5cghm.wav",
         "success":true
       },
-      "name":"Import_B 59",
+      "name":"Import_B 57",
       "notes":{
         "english":{
           "after":"",
@@ -3802,7 +3591,7 @@
           "note":"long six left?"
         }
       },
-      "oldId":242,
+      "oldId":243,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3811,7 +3600,7 @@
             0.8967274289,
             0.1150873738
           ],
-          "oldId":243,
+          "oldId":244,
           "pos":[
             -481.0250854,
             -183.2643738,
@@ -3827,7 +3616,7 @@
             1,
             0
           ],
-          "oldId":244,
+          "oldId":245,
           "pos":[
             -458.7105408,
             -128.4523773,
@@ -3843,7 +3632,7 @@
             0.3343709613,
             0.1451844862
           ],
-          "oldId":245,
+          "oldId":246,
           "pos":[
             -530.5158691,
             -245.5457611,
@@ -3859,7 +3648,7 @@
         "beamng_file":"/temp/aipacenotes/out_laxnv6no.wav",
         "success":true
       },
-      "name":"Import_B 60",
+      "name":"Import_B 58",
       "notes":{
         "english":{
           "after":"",
@@ -3867,7 +3656,7 @@
           "note":"five right opens uphill?"
         }
       },
-      "oldId":246,
+      "oldId":247,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3876,7 +3665,7 @@
             0.5355362597,
             -0.06600261867
           ],
-          "oldId":247,
+          "oldId":248,
           "pos":[
             -449.7703247,
             -94.26990509,
@@ -3892,7 +3681,7 @@
             0.5034150171,
             0.1089164638
           ],
-          "oldId":248,
+          "oldId":249,
           "pos":[
             -423.8094788,
             -62.41740417,
@@ -3908,7 +3697,7 @@
             0.8486529564,
             0.1276433012
           ],
-          "oldId":249,
+          "oldId":250,
           "pos":[
             -493.8147278,
             -206.1408691,
@@ -3924,7 +3713,7 @@
         "beamng_file":"/temp/aipacenotes/out_strtnbxw.wav",
         "success":true
       },
-      "name":"Import_B 61",
+      "name":"Import_B 59",
       "notes":{
         "english":{
           "after":"",
@@ -3932,7 +3721,7 @@
           "note":"bumpy?"
         }
       },
-      "oldId":250,
+      "oldId":251,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3941,7 +3730,7 @@
             0.2625005572,
             0.09634346231
           ],
-          "oldId":251,
+          "oldId":252,
           "pos":[
             -399.8670654,
             -51.99126434,
@@ -3957,7 +3746,7 @@
             -0.4164687075,
             -0.07728833832
           ],
-          "oldId":252,
+          "oldId":253,
           "pos":[
             -368.5011597,
             -44.87930679,
@@ -3973,7 +3762,7 @@
             0.9710855392,
             0.07737094917
           ],
-          "oldId":253,
+          "oldId":254,
           "pos":[
             -453.5148315,
             -110.625946,
@@ -3989,7 +3778,7 @@
         "beamng_file":"/temp/aipacenotes/out_0guxm2da.wav",
         "success":true
       },
-      "name":"Import_B 62",
+      "name":"Import_B 60",
       "notes":{
         "english":{
           "after":"",
@@ -3997,7 +3786,7 @@
           "note":"six right?"
         }
       },
-      "oldId":254,
+      "oldId":255,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4006,7 +3795,7 @@
             0.791167862,
             0.04967527728
           ],
-          "oldId":255,
+          "oldId":256,
           "pos":[
             -350.8971252,
             -44.04843903,
@@ -4022,7 +3811,7 @@
             0.2045597768,
             -0.08209344797
           ],
-          "oldId":256,
+          "oldId":257,
           "pos":[
             -320.8293457,
             -48.31838989,
@@ -4038,7 +3827,7 @@
             0.6722592153,
             0.1039427511
           ],
-          "oldId":257,
+          "oldId":258,
           "pos":[
             -437.9745483,
             -73.1644516,
@@ -4054,7 +3843,7 @@
         "beamng_file":"/temp/aipacenotes/out_xtm9b0ug.wav",
         "success":true
       },
-      "name":"Import_B 63",
+      "name":"Import_B 61",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -4062,7 +3851,7 @@
           "note":"short early three right opens?"
         }
       },
-      "oldId":258,
+      "oldId":259,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4071,7 +3860,7 @@
             0.3411564269,
             -0.09007383525
           ],
-          "oldId":259,
+          "oldId":260,
           "pos":[
             -293.2866516,
             -56.9768219,
@@ -4087,7 +3876,7 @@
             0.7756816809,
             -0.07564000699
           ],
-          "oldId":260,
+          "oldId":261,
           "pos":[
             -275.7844849,
             -70.03262329,
@@ -4103,7 +3892,7 @@
             0.3123400282,
             0.1033077241
           ],
-          "oldId":261,
+          "oldId":262,
           "pos":[
             -405.6755981,
             -53.91244125,
@@ -4119,7 +3908,7 @@
         "beamng_file":"/temp/aipacenotes/out_fgfid669.wav",
         "success":true
       },
-      "name":"Import_B 64",
+      "name":"Import_B 62",
       "notes":{
         "english":{
           "after":"sixty.",
@@ -4127,7 +3916,7 @@
           "note":"five right?"
         }
       },
-      "oldId":262,
+      "oldId":263,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4136,7 +3925,7 @@
             0.9672154766,
             -0.06747921058
           ],
-          "oldId":263,
+          "oldId":264,
           "pos":[
             -255.8478394,
             -116.0238876,
@@ -4152,7 +3941,7 @@
             0.9924933717,
             -0.07183864755
           ],
-          "oldId":264,
+          "oldId":265,
           "pos":[
             -252.5016632,
             -158.33461,
@@ -4168,7 +3957,7 @@
             0.3018833793,
             -0.08025604339
           ],
-          "oldId":265,
+          "oldId":266,
           "pos":[
             -302.7883911,
             -53.74451828,
@@ -4184,7 +3973,7 @@
         "beamng_file":"/temp/aipacenotes/out_bo_dqee4.wav",
         "success":true
       },
-      "name":"Import_B 65",
+      "name":"Import_B 63",
       "notes":{
         "english":{
           "after":"seventy.",
@@ -4192,7 +3981,7 @@
           "note":"crest into five left?"
         }
       },
-      "oldId":266,
+      "oldId":267,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4201,7 +3990,7 @@
             0.9616718645,
             -0.09485360501
           ],
-          "oldId":267,
+          "oldId":268,
           "pos":[
             -263.9454346,
             -213.4213715,
@@ -4217,7 +4006,7 @@
             0.9978415091,
             -0.0635468367
           ],
-          "oldId":268,
+          "oldId":269,
           "pos":[
             -274.004364,
             -279.8768921,
@@ -4233,7 +4022,7 @@
             0.9388938357,
             -0.06420573141
           ],
-          "oldId":269,
+          "oldId":270,
           "pos":[
             -260.8021545,
             -99.88845825,
@@ -4249,7 +4038,7 @@
         "beamng_file":"/temp/aipacenotes/out__l14ub4_.wav",
         "success":true
       },
-      "name":"Import_B 66",
+      "name":"Import_B 64",
       "notes":{
         "english":{
           "after":"",
@@ -4257,7 +4046,7 @@
           "note":"three left?"
         }
       },
-      "oldId":270,
+      "oldId":271,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4266,7 +4055,7 @@
             0.9832986659,
             -0.06749036891
           ],
-          "oldId":271,
+          "oldId":272,
           "pos":[
             -263.2519226,
             -345.5205078,
@@ -4282,7 +4071,7 @@
             1,
             0
           ],
-          "oldId":272,
+          "oldId":273,
           "pos":[
             -237.8252411,
             -378.8110657,
@@ -4298,7 +4087,7 @@
             0.9826959565,
             -0.08121016776
           ],
-          "oldId":273,
+          "oldId":274,
           "pos":[
             -254.977417,
             -175.0023346,
@@ -4314,7 +4103,7 @@
         "beamng_file":"/temp/aipacenotes/out_xz6t7vp2.wav",
         "success":true
       },
-      "name":"Import_B 67",
+      "name":"Import_B 65",
       "notes":{
         "english":{
           "after":"",
@@ -4322,7 +4111,7 @@
           "note":"short six left?"
         }
       },
-      "oldId":274,
+      "oldId":275,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4331,7 +4120,7 @@
             0.4208102122,
             -0.05544108464
           ],
-          "oldId":275,
+          "oldId":276,
           "pos":[
             -213.1841888,
             -390.7412109,
@@ -4347,7 +4136,7 @@
             0.2778939975,
             -0.06079468182
           ],
-          "oldId":276,
+          "oldId":277,
           "pos":[
             -178.7347107,
             -402.9862671,
@@ -4363,7 +4152,7 @@
             0.6749791272,
             -0.07551076576
           ],
-          "oldId":277,
+          "oldId":278,
           "pos":[
             -251.3762665,
             -370.5927124,
@@ -4379,7 +4168,7 @@
         "beamng_file":"/temp/aipacenotes/out_xnzmtvcd.wav",
         "success":true
       },
-      "name":"Import_B 68",
+      "name":"Import_B 66",
       "notes":{
         "english":{
           "after":"seventy.",
@@ -4387,7 +4176,7 @@
           "note":"five right plus?"
         }
       },
-      "oldId":278,
+      "oldId":279,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4396,7 +4185,7 @@
             0.4272569606,
             0.005926826842
           ],
-          "oldId":279,
+          "oldId":280,
           "pos":[
             -148.1849823,
             -414.4499512,
@@ -4412,7 +4201,7 @@
             0.6720726267,
             -0.1239337702
           ],
-          "oldId":280,
+          "oldId":281,
           "pos":[
             -111.7877579,
             -440.0598755,
@@ -4428,7 +4217,7 @@
             0.4575283352,
             -0.05542763497
           ],
-          "oldId":281,
+          "oldId":282,
           "pos":[
             -227.7475433,
             -383.8321533,
@@ -4444,15 +4233,15 @@
         "beamng_file":"/temp/aipacenotes/out_da69hd9i.wav",
         "success":true
       },
-      "name":"Import_B 69",
+      "name":"Import_B 67",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"crest into six left jump?"
+          "note":"care jump into six left?"
         }
       },
-      "oldId":282,
+      "oldId":283,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4461,7 +4250,7 @@
             0.6975970942,
             -0.2074773683
           ],
-          "oldId":283,
+          "oldId":284,
           "pos":[
             -59.61014175,
             -491.5269775,
@@ -4477,7 +4266,7 @@
             0.6835047789,
             -0.0132903707
           ],
-          "oldId":284,
+          "oldId":285,
           "pos":[
             -16.88820648,
             -539.6699829,
@@ -4493,7 +4282,7 @@
             0.2778939975,
             -0.06079468182
           ],
-          "oldId":285,
+          "oldId":286,
           "pos":[
             -178.7347107,
             -402.9862671,
@@ -4509,15 +4298,15 @@
         "beamng_file":"/temp/aipacenotes/out_2lmvbidw.wav",
         "success":true
       },
-      "name":"Import_B 70",
+      "name":"Import_B 68",
       "notes":{
         "english":{
           "after":"",
           "before":"into",
-          "note":"six right into four left?"
+          "note":"slight right into four left?"
         }
       },
-      "oldId":286,
+      "oldId":287,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4526,7 +4315,7 @@
             0.5641217387,
             -0.02153961876
           ],
-          "oldId":287,
+          "oldId":288,
           "pos":[
             -1.653184891,
             -551.2732544,
@@ -4542,7 +4331,7 @@
             1,
             0
           ],
-          "oldId":288,
+          "oldId":289,
           "pos":[
             74.52200317,
             -587.942688,
@@ -4558,7 +4347,7 @@
             0.6873304637,
             -0.1807332767
           ],
-          "oldId":289,
+          "oldId":290,
           "pos":[
             -82.70854187,
             -468.3828735,
@@ -4574,7 +4363,7 @@
         "beamng_file":"/temp/aipacenotes/out_8qh214ls.wav",
         "success":true
       },
-      "name":"Import_B 71",
+      "name":"Import_B 69",
       "notes":{
         "english":{
           "after":"",
@@ -4582,7 +4371,7 @@
           "note":"four right?"
         }
       },
-      "oldId":290,
+      "oldId":291,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4591,7 +4380,7 @@
             -0.06894221446,
             -0.1246568426
           ],
-          "oldId":291,
+          "oldId":292,
           "pos":[
             97.97885132,
             -586.5418701,
@@ -4607,7 +4396,7 @@
             1,
             0
           ],
-          "oldId":292,
+          "oldId":293,
           "pos":[
             124.0823669,
             -589.454895,
@@ -4623,7 +4412,7 @@
             0.499708742,
             -0.005981340317
           ],
-          "oldId":293,
+          "oldId":294,
           "pos":[
             12.52744293,
             -559.7310791,
@@ -4639,7 +4428,7 @@
         "beamng_file":"/temp/aipacenotes/out_mqx8gp7y.wav",
         "success":true
       },
-      "name":"Import_B 72",
+      "name":"Import_B 70",
       "notes":{
         "english":{
           "after":"",
@@ -4647,7 +4436,7 @@
           "note":"five left?"
         }
       },
-      "oldId":294,
+      "oldId":295,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4656,7 +4445,7 @@
             0.2487392182,
             -0.1095120194
           ],
-          "oldId":295,
+          "oldId":296,
           "pos":[
             135.7724457,
             -592.9143677,
@@ -4672,7 +4461,7 @@
             -0.07999128124,
             -0.08368775493
           ],
-          "oldId":296,
+          "oldId":297,
           "pos":[
             153.9621277,
             -593.8625488,
@@ -4688,7 +4477,7 @@
             -0.02164146496,
             -0.1045884195
           ],
-          "oldId":297,
+          "oldId":298,
           "pos":[
             77.28278351,
             -587.3823242,
@@ -4704,7 +4493,7 @@
         "beamng_file":"/temp/aipacenotes/out_zxnb6e67.wav",
         "success":true
       },
-      "name":"Import_B 73",
+      "name":"Import_B 71",
       "notes":{
         "english":{
           "after":"",
@@ -4712,7 +4501,7 @@
           "note":"six right?"
         }
       },
-      "oldId":298,
+      "oldId":299,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4721,7 +4510,7 @@
             0.03873424219,
             -0.05898851623
           ],
-          "oldId":299,
+          "oldId":300,
           "pos":[
             169.5153198,
             -593.5714722,
@@ -4737,7 +4526,7 @@
             1,
             0
           ],
-          "oldId":300,
+          "oldId":301,
           "pos":[
             190.4776611,
             -596.1157837,
@@ -4753,7 +4542,7 @@
             0.2139116759,
             -0.1301775547
           ],
-          "oldId":301,
+          "oldId":302,
           "pos":[
             116.4556427,
             -587.3255615,
@@ -4769,7 +4558,7 @@
         "beamng_file":"/temp/aipacenotes/out_ioqz7k23.wav",
         "success":true
       },
-      "name":"Import_B 74",
+      "name":"Import_B 72",
       "notes":{
         "english":{
           "after":"",
@@ -4777,7 +4566,7 @@
           "note":"crest into four left?"
         }
       },
-      "oldId":302,
+      "oldId":303,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4786,7 +4575,7 @@
             0.1215373453,
             -0.04325216704
           ],
-          "oldId":303,
+          "oldId":304,
           "pos":[
             219.7586365,
             -599.9094238,
@@ -4802,7 +4591,7 @@
             -0.3403457916,
             -0.03555379162
           ],
-          "oldId":304,
+          "oldId":305,
           "pos":[
             248.7117157,
             -596.3499146,
@@ -4818,7 +4607,7 @@
             -0.07999128124,
             -0.08368775493
           ],
-          "oldId":305,
+          "oldId":306,
           "pos":[
             153.9621277,
             -593.8625488,
@@ -4834,7 +4623,7 @@
         "beamng_file":"/temp/aipacenotes/out_vy2cge7i.wav",
         "success":true
       },
-      "name":"Import_B 75",
+      "name":"Import_B 73",
       "notes":{
         "english":{
           "after":"",
@@ -4842,7 +4631,7 @@
           "note":"five right?"
         }
       },
-      "oldId":306,
+      "oldId":307,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4851,7 +4640,7 @@
             -0.4375278638,
             -0.06299929964
           ],
-          "oldId":307,
+          "oldId":308,
           "pos":[
             260.2688904,
             -591.1116333,
@@ -4867,7 +4656,7 @@
             -0.2299352667,
             -0.0175020226
           ],
-          "oldId":308,
+          "oldId":309,
           "pos":[
             289.2993164,
             -582.8352051,
@@ -4883,7 +4672,7 @@
             0.07522439044,
             -0.1182711207
           ],
-          "oldId":309,
+          "oldId":310,
           "pos":[
             188.0975342,
             -595.3189087,
@@ -4899,7 +4688,7 @@
         "beamng_file":"/temp/aipacenotes/out_1yxz2bf6.wav",
         "success":true
       },
-      "name":"Import_B 76",
+      "name":"Import_B 74",
       "notes":{
         "english":{
           "after":"",
@@ -4907,7 +4696,7 @@
           "note":"caution big dip?"
         }
       },
-      "oldId":310,
+      "oldId":311,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4916,7 +4705,7 @@
             -0.2278298986,
             0.001384436955
           ],
-          "oldId":311,
+          "oldId":312,
           "pos":[
             305.7567749,
             -579.0219116,
@@ -4932,7 +4721,7 @@
             1,
             0
           ],
-          "oldId":312,
+          "oldId":313,
           "pos":[
             365.5243835,
             -555.6340332,
@@ -4948,7 +4737,7 @@
             -0.04133951373,
             -0.04335161396
           ],
-          "oldId":313,
+          "oldId":314,
           "pos":[
             233.5317535,
             -599.9036255,
@@ -4964,7 +4753,7 @@
         "beamng_file":"/temp/aipacenotes/out_7_c1dp3e.wav",
         "success":true
       },
-      "name":"Import_B 77",
+      "name":"Import_B 75",
       "notes":{
         "english":{
           "after":"",
@@ -4972,7 +4761,7 @@
           "note":"caution crest?"
         }
       },
-      "oldId":314,
+      "oldId":315,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4981,7 +4770,7 @@
             -0.4714331695,
             -0.02617183806
           ],
-          "oldId":315,
+          "oldId":316,
           "pos":[
             395.7240295,
             -539.1130371,
@@ -4997,7 +4786,7 @@
             1,
             0
           ],
-          "oldId":316,
+          "oldId":317,
           "pos":[
             445.9703369,
             -513.9065552,
@@ -5013,7 +4802,7 @@
             -0.3550690247,
             -0.06302129755
           ],
-          "oldId":317,
+          "oldId":318,
           "pos":[
             263.4413452,
             -589.9039307,
@@ -5029,7 +4818,7 @@
         "beamng_file":"/temp/aipacenotes/out_4qp6ir36.wav",
         "success":true
       },
-      "name":"Import_B 78",
+      "name":"Import_B 76",
       "notes":{
         "english":{
           "after":"",
@@ -5037,7 +4826,7 @@
           "note":"six left?"
         }
       },
-      "oldId":318,
+      "oldId":319,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5046,7 +4835,7 @@
             -0.4901309399,
             0.1214191157
           ],
-          "oldId":319,
+          "oldId":320,
           "pos":[
             457.2378845,
             -507.4480896,
@@ -5062,11 +4851,11 @@
             1,
             0
           ],
-          "oldId":320,
+          "oldId":321,
           "pos":[
-            473.6722412,
-            -496.4656372,
-            336.227356
+            484.4325256,
+            -488.8859253,
+            336.5565491
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -5078,7 +4867,7 @@
             -0.2802901838,
             0.01619263924
           ],
-          "oldId":321,
+          "oldId":322,
           "pos":[
             318.4004822,
             -575.5808716,
@@ -5094,15 +4883,15 @@
         "beamng_file":"/temp/aipacenotes/out_01kxo2rf.wav",
         "success":true
       },
-      "name":"Import_B 79",
+      "name":"Import_B 77",
       "notes":{
         "english":{
           "after":"",
-          "before":"and",
-          "note":"jump?"
+          "before":"<none>",
+          "note":"care jump?"
         }
       },
-      "oldId":322,
+      "oldId":323,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5111,7 +4900,7 @@
             -0.6680903015,
             -0.06704264192
           ],
-          "oldId":323,
+          "oldId":324,
           "pos":[
             490.5558472,
             -481.8744507,
@@ -5127,7 +4916,7 @@
             1,
             0
           ],
-          "oldId":324,
+          "oldId":325,
           "pos":[
             538.1673584,
             -443.2144165,
@@ -5143,7 +4932,7 @@
             -0.4095649583,
             -0.2550524907
           ],
-          "oldId":325,
+          "oldId":326,
           "pos":[
             362.2983704,
             -556.3775635,
@@ -5159,15 +4948,15 @@
         "beamng_file":"/temp/aipacenotes/out_2wdlm4mo.wav",
         "success":true
       },
-      "name":"Import_B 80",
+      "name":"Import_B 78",
       "notes":{
         "english":{
-          "after":"seventy.",
-          "before":"and",
+          "after":"",
+          "before":"into",
           "note":"five right?"
         }
       },
-      "oldId":326,
+      "oldId":327,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5176,11 +4965,11 @@
             -0.6352710808,
             0.0649716144
           ],
-          "oldId":327,
+          "oldId":328,
           "pos":[
-            558.3544312,
-            -425.4075928,
-            335.8893433
+            549.1759034,
+            -431.0871887,
+            336.6958923
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -5192,11 +4981,11 @@
             -0.3788715937,
             0.08141975885
           ],
-          "oldId":328,
+          "oldId":329,
           "pos":[
-            582.1963501,
-            -411.5121155,
-            333.7405701
+            631.6320801,
+            -398.2892761,
+            329.442749
           ],
           "radius":10,
           "waypointType":"cornerEnd"
@@ -5204,11 +4993,11 @@
         {
           "name":"curr",
           "normal":[
-            -0.863150659,
-            -0.4901309399,
-            0.1214191157
+            0.7692563644,
+            0.6389207609,
+            -0.004990702683
           ],
-          "oldId":329,
+          "oldId":330,
           "pos":[
             457.2378845,
             -507.4480896,
@@ -5224,15 +5013,15 @@
         "beamng_file":"/temp/aipacenotes/out_pjb0d6bt.wav",
         "success":true
       },
-      "name":"Import_B 81",
+      "name":"Import_B 79",
       "notes":{
         "english":{
           "after":"",
-          "before":"",
+          "before":"and",
           "note":"four left?"
         }
       },
-      "oldId":330,
+      "oldId":331,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5241,7 +5030,7 @@
             -0.08228660345,
             0.07678466091
           ],
-          "oldId":331,
+          "oldId":332,
           "pos":[
             654.0297241,
             -397.0478516,
@@ -5257,7 +5046,7 @@
             -0.5988831539,
             0.1024851586
           ],
-          "oldId":332,
+          "oldId":333,
           "pos":[
             690.6479492,
             -381.4345703,
@@ -5273,7 +5062,7 @@
             -0.6695974772,
             0.09948138328
           ],
-          "oldId":333,
+          "oldId":334,
           "pos":[
             540.4593506,
             -441.0071411,
@@ -5289,15 +5078,15 @@
         "beamng_file":"/temp/aipacenotes/out_1lbzd6hz.wav",
         "success":true
       },
-      "name":"Import_B 82",
+      "name":"Import_B 80",
       "notes":{
         "english":{
           "after":"",
-          "before":"into",
+          "before":"<none>",
           "note":"crest into five right?"
         }
       },
-      "oldId":334,
+      "oldId":335,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5306,11 +5095,11 @@
             -0.6241583643,
             0.1250646312
           ],
-          "oldId":335,
+          "oldId":336,
           "pos":[
-            704.2282715,
-            -370.3866272,
-            322.4049072
+            693.6465454,
+            -377.0890808,
+            323.4547424
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -5322,7 +5111,7 @@
             1,
             0
           ],
-          "oldId":336,
+          "oldId":337,
           "pos":[
             729.1582031,
             -361.0754395,
@@ -5334,11 +5123,11 @@
         {
           "name":"curr",
           "normal":[
-            -0.9299749479,
-            -0.3562767315,
-            0.09062828976
+            0.9533233313,
+            0.2889646383,
+            -0.08760173401
           ],
-          "oldId":337,
+          "oldId":338,
           "pos":[
             590.2102661,
             -408.4419556,
@@ -5354,15 +5143,15 @@
         "beamng_file":"/temp/aipacenotes/out_tcc5ccjw.wav",
         "success":true
       },
-      "name":"Import_B 83",
+      "name":"Import_B 81",
       "notes":{
         "english":{
           "after":"fifty.",
-          "before":"into",
+          "before":"<none>",
           "note":"six left?"
         }
       },
-      "oldId":338,
+      "oldId":339,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5371,7 +5160,7 @@
             -0.3499901868,
             0.1737873105
           ],
-          "oldId":339,
+          "oldId":340,
           "pos":[
             735.8187866,
             -357.625885,
@@ -5387,7 +5176,7 @@
             1,
             0
           ],
-          "oldId":340,
+          "oldId":341,
           "pos":[
             757.2365112,
             -347.2141418,
@@ -5403,7 +5192,7 @@
             -0.08399430536,
             0.07472099002
           ],
-          "oldId":341,
+          "oldId":342,
           "pos":[
             647.2781982,
             -397.6069641,
@@ -5419,7 +5208,7 @@
         "beamng_file":"/temp/aipacenotes/out_4q1lrsv3.wav",
         "success":true
       },
-      "name":"Import_B 84",
+      "name":"Import_B 82",
       "notes":{
         "english":{
           "after":"",
@@ -5427,7 +5216,7 @@
           "note":"three left?"
         }
       },
-      "oldId":342,
+      "oldId":343,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5436,7 +5225,7 @@
             -0.5598046622,
             0.1227953116
           ],
-          "oldId":343,
+          "oldId":344,
           "pos":[
             800.3612061,
             -318.1638184,
@@ -5452,7 +5241,7 @@
             -0.8693290987,
             0.1108238908
           ],
-          "oldId":344,
+          "oldId":345,
           "pos":[
             818.2585449,
             -296.6487732,
@@ -5468,7 +5257,7 @@
             -0.6122430851,
             0.1038051027
           ],
-          "oldId":345,
+          "oldId":346,
           "pos":[
             696.4136963,
             -376.9309692,
@@ -5484,7 +5273,7 @@
         "beamng_file":"/temp/aipacenotes/out_zzdady5u.wav",
         "success":true
       },
-      "name":"Import_B 85",
+      "name":"Import_B 83",
       "notes":{
         "english":{
           "after":"",
@@ -5492,7 +5281,7 @@
           "note":"five right minus?"
         }
       },
-      "oldId":346,
+      "oldId":347,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5501,7 +5290,7 @@
             -0.728640998,
             0.1073653209
           ],
-          "oldId":347,
+          "oldId":348,
           "pos":[
             832.9397583,
             -272.3027039,
@@ -5517,7 +5306,7 @@
             1,
             0
           ],
-          "oldId":348,
+          "oldId":349,
           "pos":[
             858.2391357,
             -253.1680756,
@@ -5533,7 +5322,7 @@
             -0.5377169222,
             0.156790756
           ],
-          "oldId":349,
+          "oldId":350,
           "pos":[
             764.0637817,
             -342.2183838,
@@ -5549,7 +5338,7 @@
         "beamng_file":"/temp/aipacenotes/out_x8sa5tzv.wav",
         "success":true
       },
-      "name":"Import_B 86",
+      "name":"Import_B 84",
       "notes":{
         "english":{
           "after":"",
@@ -5557,7 +5346,7 @@
           "note":"four left?"
         }
       },
-      "oldId":350,
+      "oldId":351,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5566,7 +5355,7 @@
             -0.3190922624,
             0.1376885968
           ],
-          "oldId":351,
+          "oldId":352,
           "pos":[
             878.0698853,
             -243.0987549,
@@ -5582,7 +5371,7 @@
             -0.7934358129,
             0.1563450934
           ],
-          "oldId":352,
+          "oldId":353,
           "pos":[
             899.1650391,
             -226.837738,
@@ -5598,7 +5387,7 @@
             -0.8693290987,
             0.1108238908
           ],
-          "oldId":353,
+          "oldId":354,
           "pos":[
             818.2585449,
             -296.6487732,
@@ -5614,7 +5403,7 @@
         "beamng_file":"/temp/aipacenotes/out_4jn3_qt3.wav",
         "success":true
       },
-      "name":"Import_B 87",
+      "name":"Import_B 85",
       "notes":{
         "english":{
           "after":"",
@@ -5622,7 +5411,7 @@
           "note":"three right?"
         }
       },
-      "oldId":354,
+      "oldId":355,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5631,7 +5420,7 @@
             -0.8259339254,
             0.1557088296
           ],
-          "oldId":355,
+          "oldId":356,
           "pos":[
             907.7814331,
             -213.7200165,
@@ -5647,7 +5436,7 @@
             1,
             0
           ],
-          "oldId":356,
+          "oldId":357,
           "pos":[
             937.7368774,
             -200.1012878,
@@ -5663,7 +5452,7 @@
             -0.6164846881,
             0.0874451831
           ],
-          "oldId":357,
+          "oldId":358,
           "pos":[
             844.0689087,
             -262.7753296,
@@ -5679,7 +5468,7 @@
         "beamng_file":"/temp/aipacenotes/out_omzwuzoy.wav",
         "success":true
       },
-      "name":"Import_B 88",
+      "name":"Import_B 86",
       "notes":{
         "english":{
           "after":"",
@@ -5687,7 +5476,7 @@
           "note":"six left?"
         }
       },
-      "oldId":358,
+      "oldId":359,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5696,7 +5485,7 @@
             -0.2576422915,
             0.05729905123
           ],
-          "oldId":359,
+          "oldId":360,
           "pos":[
             956.1576538,
             -195.6720276,
@@ -5712,7 +5501,7 @@
             1,
             0
           ],
-          "oldId":360,
+          "oldId":361,
           "pos":[
             999.3991699,
             -179.6211243,
@@ -5728,7 +5517,7 @@
             -0.5652718511,
             0.1669581289
           ],
-          "oldId":361,
+          "oldId":362,
           "pos":[
             889.6210938,
             -237.381134,
@@ -5744,7 +5533,7 @@
         "beamng_file":"/temp/aipacenotes/out_wwaz40wu.wav",
         "success":true
       },
-      "name":"Import_B 89",
+      "name":"Import_B 87",
       "notes":{
         "english":{
           "after":"",
@@ -5752,7 +5541,7 @@
           "note":"three left?"
         }
       },
-      "oldId":362,
+      "oldId":363,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5761,7 +5550,7 @@
             -0.485639503,
             0.07830097804
           ],
-          "oldId":363,
+          "oldId":364,
           "pos":[
             1012.244141,
             -170.737381,
@@ -5777,7 +5566,7 @@
             1,
             0
           ],
-          "oldId":364,
+          "oldId":365,
           "pos":[
             1032.332397,
             -147.5881653,
@@ -5793,7 +5582,7 @@
             -0.4056480848,
             0.1703102276
           ],
-          "oldId":365,
+          "oldId":366,
           "pos":[
             920.2839355,
             -202.9809723,
@@ -5809,7 +5598,7 @@
         "beamng_file":"/temp/aipacenotes/out_v7ydtmio.wav",
         "success":true
       },
-      "name":"Import_B 90",
+      "name":"Import_B 88",
       "notes":{
         "english":{
           "after":"",
@@ -5817,7 +5606,7 @@
           "note":"crest into five right?"
         }
       },
-      "oldId":366,
+      "oldId":367,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5826,7 +5615,7 @@
             -0.9967576455,
             0.05627131687
           ],
-          "oldId":367,
+          "oldId":368,
           "pos":[
             1034.88147,
             -116.0582123,
@@ -5842,7 +5631,7 @@
             -0.9196414031,
             0.1406362973
           ],
-          "oldId":368,
+          "oldId":369,
           "pos":[
             1044.635742,
             -69.56276703,
@@ -5858,7 +5647,7 @@
             -0.5312637327,
             0.05860435147
           ],
-          "oldId":369,
+          "oldId":370,
           "pos":[
             999.5290527,
             -178.5366516,
@@ -5874,7 +5663,7 @@
         "beamng_file":"/temp/aipacenotes/out_gw2zr7s_.wav",
         "success":true
       },
-      "name":"Import_B 91",
+      "name":"Import_B 89",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -5882,7 +5671,7 @@
           "note":"six right?"
         }
       },
-      "oldId":370,
+      "oldId":371,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5891,7 +5680,7 @@
             -0.8761433947,
             0.1242513313
           ],
-          "oldId":371,
+          "oldId":372,
           "pos":[
             1051.296021,
             -56.45269775,
@@ -5907,7 +5696,7 @@
             1,
             0
           ],
-          "oldId":372,
+          "oldId":373,
           "pos":[
             1073.543091,
             -27.69766998,
@@ -5923,7 +5712,7 @@
             -0.9055008255,
             -0.013200762
           ],
-          "oldId":373,
+          "oldId":374,
           "pos":[
             1032.738159,
             -148.4296417,
@@ -5939,7 +5728,7 @@
         "beamng_file":"/temp/aipacenotes/out_bk0p29q1.wav",
         "success":true
       },
-      "name":"Import_B 92",
+      "name":"Import_B 90",
       "notes":{
         "english":{
           "after":"",
@@ -5947,7 +5736,7 @@
           "note":"five left into crest?"
         }
       },
-      "oldId":374,
+      "oldId":375,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -5956,7 +5745,7 @@
             -0.7452271846,
             -0.005769879292
           ],
-          "oldId":375,
+          "oldId":376,
           "pos":[
             1107.072632,
             8.793845177,
@@ -5972,7 +5761,7 @@
             1,
             0
           ],
-          "oldId":376,
+          "oldId":377,
           "pos":[
             1135.564575,
             67.12721252,
@@ -5988,7 +5777,7 @@
             -0.9969817907,
             0.07734168163
           ],
-          "oldId":377,
+          "oldId":378,
           "pos":[
             1034.838501,
             -109.7124329,
@@ -6004,7 +5793,7 @@
         "beamng_file":"/temp/aipacenotes/out_io1tv2yq.wav",
         "success":true
       },
-      "name":"Import_B 93",
+      "name":"Import_B 91",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -6012,7 +5801,7 @@
           "note":"three right?"
         }
       },
-      "oldId":378,
+      "oldId":379,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6021,7 +5810,7 @@
             -0.9251141873,
             0.08548708598
           ],
-          "oldId":379,
+          "oldId":380,
           "pos":[
             1145.834106,
             100.3188095,
@@ -6037,7 +5826,7 @@
             -0.1632978582,
             0.2662712383
           ],
-          "oldId":380,
+          "oldId":381,
           "pos":[
             1173.158325,
             125.9368057,
@@ -6053,7 +5842,7 @@
             -0.8761433947,
             0.1242513313
           ],
-          "oldId":381,
+          "oldId":382,
           "pos":[
             1051.296021,
             -56.45269775,
@@ -6069,7 +5858,7 @@
         "beamng_file":"/temp/aipacenotes/out_ikpvlp7_.wav",
         "success":true
       },
-      "name":"Import_B 94",
+      "name":"Import_B 92",
       "notes":{
         "english":{
           "after":"",
@@ -6077,7 +5866,7 @@
           "note":"one right? into three right?"
         }
       },
-      "oldId":382,
+      "oldId":383,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6086,7 +5875,7 @@
             0.2940643142,
             -0.04058681567
           ],
-          "oldId":383,
+          "oldId":384,
           "pos":[
             1224.944092,
             126.0689087,
@@ -6102,7 +5891,7 @@
             1,
             0
           ],
-          "oldId":384,
+          "oldId":385,
           "pos":[
             1219.56311,
             77.69259644,
@@ -6118,7 +5907,7 @@
             -0.6890751028,
             0.1597059245
           ],
-          "oldId":385,
+          "oldId":386,
           "pos":[
             1156.466309,
             117.3421707,
@@ -6134,7 +5923,7 @@
         "beamng_file":"/temp/aipacenotes/out_z09v9zfy.wav",
         "success":true
       },
-      "name":"Import_B 95",
+      "name":"Import_B 93",
       "notes":{
         "english":{
           "after":"",
@@ -6142,7 +5931,7 @@
           "note":"five left?"
         }
       },
-      "oldId":386,
+      "oldId":387,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6151,7 +5940,7 @@
             0.6653158246,
             -0.028296777
           ],
-          "oldId":387,
+          "oldId":388,
           "pos":[
             1202.641357,
             62.41861343,
@@ -6167,7 +5956,7 @@
             0.8929624067,
             -0.001889893526
           ],
-          "oldId":388,
+          "oldId":389,
           "pos":[
             1185.522095,
             39.05128479,
@@ -6183,7 +5972,7 @@
             0.9051866194,
             -0.07289833048
           ],
-          "oldId":389,
+          "oldId":390,
           "pos":[
             1236.73938,
             113.6587524,
@@ -6199,7 +5988,7 @@
         "beamng_file":"/temp/aipacenotes/out_xs23uw5o.wav",
         "success":true
       },
-      "name":"Import_B 96",
+      "name":"Import_B 94",
       "notes":{
         "english":{
           "after":"",
@@ -6207,7 +5996,7 @@
           "note":"six left?"
         }
       },
-      "oldId":390,
+      "oldId":391,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6216,7 +6005,7 @@
             0.9054741436,
             0.0006547449242
           ],
-          "oldId":391,
+          "oldId":392,
           "pos":[
             1173.952026,
             12.74293041,
@@ -6232,7 +6021,7 @@
             1,
             0
           ],
-          "oldId":392,
+          "oldId":393,
           "pos":[
             1164.091187,
             -17.72327423,
@@ -6248,7 +6037,7 @@
             0.6353390907,
             -0.04140571659
           ],
-          "oldId":393,
+          "oldId":394,
           "pos":[
             1225.620972,
             81.78898621,
@@ -6264,7 +6053,7 @@
         "beamng_file":"/temp/aipacenotes/out__j8vzh9x.wav",
         "success":true
       },
-      "name":"Import_B 97",
+      "name":"Import_B 95",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -6272,7 +6061,7 @@
           "note":"four right?"
         }
       },
-      "oldId":394,
+      "oldId":395,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6281,7 +6070,7 @@
             0.9573560613,
             0.001609168371
           ],
-          "oldId":395,
+          "oldId":396,
           "pos":[
             1160.993652,
             -29.09320641,
@@ -6297,7 +6086,7 @@
             0.6568357705,
             0
           ],
-          "oldId":396,
+          "oldId":397,
           "pos":[
             1148.480957,
             -48.26803589,
@@ -6313,7 +6102,7 @@
             0.7986911185,
             -0.01431995912
           ],
-          "oldId":397,
+          "oldId":398,
           "pos":[
             1191.380981,
             49.70441437,
@@ -6329,7 +6118,7 @@
         "beamng_file":"/temp/aipacenotes/out_xba7l075.wav",
         "success":true
       },
-      "name":"Import_B 98",
+      "name":"Import_B 96",
       "notes":{
         "english":{
           "after":"",
@@ -6337,7 +6126,7 @@
           "note":"four left?"
         }
       },
-      "oldId":398,
+      "oldId":399,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6346,7 +6135,7 @@
             0.521535989,
             -0.001031967884
           ],
-          "oldId":399,
+          "oldId":400,
           "pos":[
             1105.442993,
             -75.77833557,
@@ -6362,7 +6151,7 @@
             0.92206047,
             -0.0006515716518
           ],
-          "oldId":400,
+          "oldId":401,
           "pos":[
             1085.098267,
             -100.6926956,
@@ -6378,7 +6167,7 @@
             0.8638280414,
             0.004592858376
           ],
-          "oldId":401,
+          "oldId":402,
           "pos":[
             1156.132813,
             -40.09942245,
@@ -6394,7 +6183,7 @@
         "beamng_file":"/temp/aipacenotes/out_58v0vxvv.wav",
         "success":true
       },
-      "name":"Import_B 99",
+      "name":"Import_B 97",
       "notes":{
         "english":{
           "after":"",
@@ -6402,7 +6191,7 @@
           "note":"five left?"
         }
       },
-      "oldId":402,
+      "oldId":403,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6411,7 +6200,7 @@
             0.9912597748,
             -0.002464092634
           ],
-          "oldId":403,
+          "oldId":404,
           "pos":[
             1080.841919,
             -119.970192,
@@ -6427,7 +6216,7 @@
             0.9797333709,
             -0.009003458522
           ],
-          "oldId":404,
+          "oldId":405,
           "pos":[
             1082.869019,
             -149.7945099,
@@ -6443,7 +6232,7 @@
             0.5620126864,
             0.00124371335
           ],
-          "oldId":405,
+          "oldId":406,
           "pos":[
             1124.04187,
             -64.51500702,
@@ -6459,7 +6248,7 @@
         "beamng_file":"/temp/aipacenotes/out_h3vraywa.wav",
         "success":true
       },
-      "name":"Import_B 100",
+      "name":"Import_B 98",
       "notes":{
         "english":{
           "after":"",
@@ -6467,7 +6256,7 @@
           "note":"two right long?"
         }
       },
-      "oldId":406,
+      "oldId":407,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6476,7 +6265,7 @@
             0.9454119966,
             -0.009448491196
           ],
-          "oldId":407,
+          "oldId":408,
           "pos":[
             1086.438721,
             -160.5625153,
@@ -6492,7 +6281,7 @@
             0.6788138427,
             -0.002198579833
           ],
-          "oldId":408,
+          "oldId":409,
           "pos":[
             1077.061157,
             -194.0785065,
@@ -6508,7 +6297,7 @@
             0.7656132451,
             0.0001540988653
           ],
-          "oldId":409,
+          "oldId":410,
           "pos":[
             1092.987793,
             -86.61775208,
@@ -6524,7 +6313,7 @@
         "beamng_file":"/temp/aipacenotes/out_x4t8zkl0.wav",
         "success":true
       },
-      "name":"Import_B 101",
+      "name":"Import_B 99",
       "notes":{
         "english":{
           "after":"seventy.",
@@ -6532,7 +6321,7 @@
           "note":"four left?"
         }
       },
-      "oldId":410,
+      "oldId":411,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6541,7 +6330,7 @@
             0.2522627436,
             -0.007753427194
           ],
-          "oldId":411,
+          "oldId":412,
           "pos":[
             1057.27356,
             -201.8179626,
@@ -6557,7 +6346,7 @@
             0.8133665552,
             0.006070471792
           ],
-          "oldId":412,
+          "oldId":413,
           "pos":[
             1023.143127,
             -226.8618927,
@@ -6573,7 +6362,7 @@
             0.952542646,
             -0.003384830873
           ],
-          "oldId":413,
+          "oldId":414,
           "pos":[
             1084.663818,
             -155.4111328,
@@ -6589,7 +6378,7 @@
         "beamng_file":"/temp/aipacenotes/out_xix8ytoh.wav",
         "success":true
       },
-      "name":"Import_B 102",
+      "name":"Import_B 100",
       "notes":{
         "english":{
           "after":"",
@@ -6597,7 +6386,7 @@
           "note":"six right tightens?"
         }
       },
-      "oldId":414,
+      "oldId":415,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6606,7 +6395,7 @@
             0.8534490357,
             0.02082055283
           ],
-          "oldId":415,
+          "oldId":416,
           "pos":[
             987.4106445,
             -288.2268066,
@@ -6622,7 +6411,7 @@
             0.6836386174,
             0.01244349523
           ],
-          "oldId":416,
+          "oldId":417,
           "pos":[
             958.1001587,
             -324.8443909,
@@ -6638,7 +6427,7 @@
             0.3429937421,
             -0.007268489536
           ],
-          "oldId":417,
+          "oldId":418,
           "pos":[
             1046.770752,
             -205.7160492,
@@ -6654,7 +6443,7 @@
         "beamng_file":"/temp/aipacenotes/out_f20qabcz.wav",
         "success":true
       },
-      "name":"Import_B 103",
+      "name":"Import_B 101",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -6662,7 +6451,7 @@
           "note":"six right?"
         }
       },
-      "oldId":418,
+      "oldId":419,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6671,7 +6460,7 @@
             0.529165061,
             0.003654660039
           ],
-          "oldId":419,
+          "oldId":420,
           "pos":[
             946.0622559,
             -333.7615356,
@@ -6687,7 +6476,7 @@
             1,
             0
           ],
-          "oldId":420,
+          "oldId":421,
           "pos":[
             876.9661255,
             -362.7395325,
@@ -6703,7 +6492,7 @@
             0.8720937684,
             0.01932970164
           ],
-          "oldId":421,
+          "oldId":422,
           "pos":[
             1002.616699,
             -261.0881042,
@@ -6719,7 +6508,7 @@
         "beamng_file":"/temp/aipacenotes/out_tzgctwx3.wav",
         "success":true
       },
-      "name":"Import_B 104",
+      "name":"Import_B 102",
       "notes":{
         "english":{
           "after":"",
@@ -6727,7 +6516,7 @@
           "note":"slowing."
         }
       },
-      "oldId":422,
+      "oldId":423,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6736,7 +6525,7 @@
             0.30488945,
             0.005825777277
           ],
-          "oldId":423,
+          "oldId":424,
           "pos":[
             833.5480957,
             -377.2651367,
@@ -6752,7 +6541,7 @@
             1,
             0
           ],
-          "oldId":424,
+          "oldId":425,
           "pos":[
             785.1327515,
             -388.7810669,
@@ -6768,7 +6557,7 @@
             0.6546724667,
             0.0118185495
           ],
-          "oldId":425,
+          "oldId":426,
           "pos":[
             954.3568726,
             -328.086731,
@@ -6784,7 +6573,7 @@
         "beamng_file":"/temp/aipacenotes/out_cw509ei1.wav",
         "success":true
       },
-      "name":"Import_B 105",
+      "name":"Import_B 103",
       "notes":{
         "english":{
           "after":"seventy.",
@@ -6792,7 +6581,7 @@
           "note":"tight hairpin left?"
         }
       },
-      "oldId":426,
+      "oldId":427,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6801,7 +6590,7 @@
             0.2599222434,
             0.01150755689
           ],
-          "oldId":427,
+          "oldId":428,
           "pos":[
             756.09198,
             -392.8921814,
@@ -6817,7 +6606,7 @@
             1,
             0
           ],
-          "oldId":428,
+          "oldId":429,
           "pos":[
             757.4537354,
             -413.0136108,
@@ -6833,7 +6622,7 @@
             0.4264524559,
             0.006341421042
           ],
-          "oldId":429,
+          "oldId":430,
           "pos":[
             922.5328369,
             -344.9867554,
@@ -6849,7 +6638,7 @@
         "beamng_file":"/temp/aipacenotes/out_wxg2hlfn.wav",
         "success":true
       },
-      "name":"Import_B 106",
+      "name":"Import_B 104",
       "notes":{
         "english":{
           "after":"one fifty.",
@@ -6857,7 +6646,7 @@
           "note":"crest into six right?"
         }
       },
-      "oldId":430,
+      "oldId":431,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6866,7 +6655,7 @@
             -0.3065451138,
             0.1380075688
           ],
-          "oldId":431,
+          "oldId":432,
           "pos":[
             824.4321899,
             -391.3513489,
@@ -6882,7 +6671,7 @@
             -0.2122158908,
             0.07842001013
           ],
-          "oldId":432,
+          "oldId":433,
           "pos":[
             860.2532959,
             -382.6217651,
@@ -6898,7 +6687,7 @@
             0.393189418,
             0.0436244298
           ],
-          "oldId":433,
+          "oldId":434,
           "pos":[
             747.2989502,
             -413.3164673,
@@ -6914,7 +6703,7 @@
         "beamng_file":"/temp/aipacenotes/out_ipuqes6c.wav",
         "success":true
       },
-      "name":"Import_B 107",
+      "name":"Import_B 105",
       "notes":{
         "english":{
           "after":"",
@@ -6922,7 +6711,7 @@
           "note":"crest into six left long?"
         }
       },
-      "oldId":434,
+      "oldId":435,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6931,7 +6720,7 @@
             -0.2484301766,
             0.0917811166
           ],
-          "oldId":435,
+          "oldId":436,
           "pos":[
             984.5245361,
             -355.6288452,
@@ -6947,7 +6736,7 @@
             1,
             0
           ],
-          "oldId":436,
+          "oldId":437,
           "pos":[
             1042.693848,
             -324.5276794,
@@ -6963,7 +6752,7 @@
             -0.2280338723,
             0.1062641532
           ],
-          "oldId":437,
+          "oldId":438,
           "pos":[
             842.5650635,
             -386.5823059,
@@ -6979,7 +6768,7 @@
         "beamng_file":"/temp/aipacenotes/out_5ul20kht.wav",
         "success":true
       },
-      "name":"Import_B 108",
+      "name":"Import_B 106",
       "notes":{
         "english":{
           "after":"",
@@ -6987,7 +6776,7 @@
           "note":"four right?"
         }
       },
-      "oldId":438,
+      "oldId":439,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -6996,7 +6785,7 @@
             -0.8060333371,
             0.1013380603
           ],
-          "oldId":439,
+          "oldId":440,
           "pos":[
             1057.244019,
             -307.5417175,
@@ -7012,7 +6801,7 @@
             1,
             0
           ],
-          "oldId":440,
+          "oldId":441,
           "pos":[
             1092.828857,
             -279.0814209,
@@ -7028,7 +6817,7 @@
             -0.2006818993,
             0.06333260929
           ],
-          "oldId":441,
+          "oldId":442,
           "pos":[
             891.7277222,
             -376.1531982,
@@ -7044,7 +6833,7 @@
         "beamng_file":"/temp/aipacenotes/out_w10xmf55.wav",
         "success":true
       },
-      "name":"Import_B 109",
+      "name":"Import_B 107",
       "notes":{
         "english":{
           "after":"",
@@ -7052,7 +6841,7 @@
           "note":"crest?"
         }
       },
-      "oldId":442,
+      "oldId":443,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7061,7 +6850,7 @@
             -0.5536600344,
             -0.01517093104
           ],
-          "oldId":443,
+          "oldId":444,
           "pos":[
             1116.048218,
             -264.8641968,
@@ -7077,7 +6866,7 @@
             1,
             0
           ],
-          "oldId":444,
+          "oldId":445,
           "pos":[
             1135.796631,
             -251.2229462,
@@ -7093,7 +6882,7 @@
             0.6264137036,
             -0.08097759404
           ],
-          "oldId":445,
+          "oldId":446,
           "pos":[
             1024.266479,
             -339.0230103,
@@ -7109,7 +6898,7 @@
         "beamng_file":"/temp/aipacenotes/out_mk3jm6bi.wav",
         "success":true
       },
-      "name":"Import_B 110",
+      "name":"Import_B 108",
       "notes":{
         "english":{
           "after":"",
@@ -7117,7 +6906,7 @@
           "note":"six right?"
         }
       },
-      "oldId":446,
+      "oldId":447,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7126,7 +6915,7 @@
             -0.5656865524,
             0.06932284908
           ],
-          "oldId":447,
+          "oldId":448,
           "pos":[
             1145.362671,
             -244.3216095,
@@ -7142,7 +6931,7 @@
             1,
             0
           ],
-          "oldId":448,
+          "oldId":449,
           "pos":[
             1178.591797,
             -225.8804779,
@@ -7158,7 +6947,7 @@
             0.6150303444,
             -0.0692544448
           ],
-          "oldId":449,
+          "oldId":450,
           "pos":[
             1043.305054,
             -324.2350769,
@@ -7174,7 +6963,7 @@
         "beamng_file":"/temp/aipacenotes/out_2yj4s3_n.wav",
         "success":true
       },
-      "name":"Import_B 111",
+      "name":"Import_B 109",
       "notes":{
         "english":{
           "after":"fifty.",
@@ -7182,7 +6971,7 @@
           "note":"five left minus?"
         }
       },
-      "oldId":450,
+      "oldId":451,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7191,7 +6980,7 @@
             -0.4533343399,
             0.04384424858
           ],
-          "oldId":451,
+          "oldId":452,
           "pos":[
             1209.180542,
             -209.942688,
@@ -7207,7 +6996,7 @@
             -0.8203300456,
             0.10478011
           ],
-          "oldId":452,
+          "oldId":453,
           "pos":[
             1236.24939,
             -185.9857025,
@@ -7223,7 +7012,7 @@
             0.5299698155,
             -0.05188228349
           ],
-          "oldId":453,
+          "oldId":454,
           "pos":[
             1060.479248,
             -303.0483093,
@@ -7239,7 +7028,7 @@
         "beamng_file":"/temp/aipacenotes/out_j2v2cv1w.wav",
         "success":true
       },
-      "name":"Import_B 112",
+      "name":"Import_B 110",
       "notes":{
         "english":{
           "after":"",
@@ -7247,7 +7036,7 @@
           "note":"two right?"
         }
       },
-      "oldId":454,
+      "oldId":455,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7256,7 +7045,7 @@
             -0.8705623547,
             0.08858532013
           ],
-          "oldId":455,
+          "oldId":456,
           "pos":[
             1259.616943,
             -144.254837,
@@ -7272,7 +7061,7 @@
             -0.1489373183,
             0.09464673867
           ],
-          "oldId":456,
+          "oldId":457,
           "pos":[
             1284.154663,
             -128.7473755,
@@ -7288,7 +7077,7 @@
             -0.5717801439,
             0.07570758804
           ],
-          "oldId":457,
+          "oldId":458,
           "pos":[
             1139.934692,
             -248.0584106,
@@ -7304,7 +7093,7 @@
         "beamng_file":"/temp/aipacenotes/out_hx7dplt2.wav",
         "success":true
       },
-      "name":"Import_B 113",
+      "name":"Import_B 111",
       "notes":{
         "english":{
           "after":"",
@@ -7312,7 +7101,7 @@
           "note":"four left?"
         }
       },
-      "oldId":458,
+      "oldId":459,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7321,7 +7110,7 @@
             -0.1162654799,
             0.1056229628
           ],
-          "oldId":459,
+          "oldId":460,
           "pos":[
             1308.17749,
             -127.2677841,
@@ -7337,7 +7126,7 @@
             1,
             0
           ],
-          "oldId":460,
+          "oldId":461,
           "pos":[
             1342.703125,
             -96.66416931,
@@ -7353,7 +7142,7 @@
             -0.7293228463,
             0.09569086691
           ],
-          "oldId":461,
+          "oldId":462,
           "pos":[
             1265.828735,
             -136.2395782,
@@ -7369,7 +7158,7 @@
         "beamng_file":"/temp/aipacenotes/out_ue_4d3f5.wav",
         "success":true
       },
-      "name":"Import_B 114",
+      "name":"Import_B 112",
       "notes":{
         "english":{
           "after":"eighty.",
@@ -7377,7 +7166,7 @@
           "note":"jump?"
         }
       },
-      "oldId":462,
+      "oldId":463,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7386,7 +7175,7 @@
             -0.9390073105,
             0.1037108521
           ],
-          "oldId":463,
+          "oldId":464,
           "pos":[
             1347.886597,
             -84.1027298,
@@ -7402,7 +7191,7 @@
             1,
             0
           ],
-          "oldId":464,
+          "oldId":465,
           "pos":[
             1354.22876,
             -54.90264893,
@@ -7418,7 +7207,7 @@
             -0.5051531898,
             0.0951821465
           ],
-          "oldId":465,
+          "oldId":466,
           "pos":[
             1322.718506,
             -121.905014,
@@ -7434,15 +7223,15 @@
         "beamng_file":"/temp/aipacenotes/out_nztt0icu.wav",
         "success":false
       },
-      "name":"Import_B 115",
+      "name":"Import_B 113",
       "notes":{
         "english":{
-          "after":"seventy.",
+          "after":"eighty.",
           "before":"",
           "note":"tight hairpin right?"
         }
       },
-      "oldId":466,
+      "oldId":467,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7451,7 +7240,7 @@
             -0.9922940131,
             0.1094144788
           ],
-          "oldId":467,
+          "oldId":468,
           "pos":[
             1364.064575,
             20.76350403,
@@ -7467,7 +7256,7 @@
             0.9947747203,
             0.08197060517
           ],
-          "oldId":468,
+          "oldId":469,
           "pos":[
             1381.80542,
             21.91462135,
@@ -7483,7 +7272,7 @@
             -0.8829518618,
             0.1641652354
           ],
-          "oldId":469,
+          "oldId":470,
           "pos":[
             1341.878784,
             -99.37413025,
@@ -7499,7 +7288,7 @@
         "beamng_file":"/temp/aipacenotes/out_cx__zcx3.wav",
         "success":true
       },
-      "name":"Import_B 116",
+      "name":"Import_B 114",
       "notes":{
         "english":{
           "after":"",
@@ -7507,7 +7296,7 @@
           "note":"six left?"
         }
       },
-      "oldId":470,
+      "oldId":471,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7516,7 +7305,7 @@
             0.9986058221,
             0.04105402869
           ],
-          "oldId":471,
+          "oldId":472,
           "pos":[
             1379.751831,
             -51.67214584,
@@ -7532,7 +7321,7 @@
             1,
             0
           ],
-          "oldId":472,
+          "oldId":473,
           "pos":[
             1378.848511,
             -96.86541748,
@@ -7548,7 +7337,7 @@
             -0.9137039823,
             -0.4063476449
           ],
-          "oldId":473,
+          "oldId":474,
           "pos":[
             1380.227661,
             32.5872879,
@@ -7564,7 +7353,7 @@
         "beamng_file":"/temp/aipacenotes/out_qlrimv1v.wav",
         "success":true
       },
-      "name":"Import_B 117",
+      "name":"Import_B 115",
       "notes":{
         "english":{
           "after":"",
@@ -7572,7 +7361,7 @@
           "note":"five right tightens?"
         }
       },
-      "oldId":474,
+      "oldId":475,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7581,7 +7370,7 @@
             0.9998371071,
             0.01804492053
           ],
-          "oldId":475,
+          "oldId":476,
           "pos":[
             1380.372314,
             -134.8453979,
@@ -7597,7 +7386,7 @@
             1,
             0
           ],
-          "oldId":476,
+          "oldId":477,
           "pos":[
             1355.92041,
             -190.5168304,
@@ -7613,7 +7402,7 @@
             0.9983068772,
             0.04598948384
           ],
-          "oldId":477,
+          "oldId":478,
           "pos":[
             1381.025757,
             -14.61588573,
@@ -7629,7 +7418,7 @@
         "beamng_file":"/temp/aipacenotes/out_gpqgq3at.wav",
         "success":true
       },
-      "name":"Import_B 118",
+      "name":"Import_B 116",
       "notes":{
         "english":{
           "after":"",
@@ -7637,7 +7426,7 @@
           "note":"six left?"
         }
       },
-      "oldId":478,
+      "oldId":479,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7646,7 +7435,7 @@
             0.4928529054,
             -0.02922169019
           ],
-          "oldId":479,
+          "oldId":480,
           "pos":[
             1336.517456,
             -204.6186218,
@@ -7662,7 +7451,7 @@
             1,
             0
           ],
-          "oldId":480,
+          "oldId":481,
           "pos":[
             1308.170288,
             -223.9635468,
@@ -7678,7 +7467,7 @@
             0.9960733997,
             0.03664399997
           ],
-          "oldId":481,
+          "oldId":482,
           "pos":[
             1379.964478,
             -119.5690765,
@@ -7694,7 +7483,7 @@
         "beamng_file":"/temp/aipacenotes/out_srm8l62h.wav",
         "success":true
       },
-      "name":"Import_B 119",
+      "name":"Import_B 117",
       "notes":{
         "english":{
           "after":"forty.",
@@ -7702,7 +7491,7 @@
           "note":"five right minus?"
         }
       },
-      "oldId":482,
+      "oldId":483,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7711,7 +7500,7 @@
             0.6529056069,
             -0.05151571452
           ],
-          "oldId":483,
+          "oldId":484,
           "pos":[
             1294.383789,
             -235.9872742,
@@ -7727,7 +7516,7 @@
             1,
             0
           ],
-          "oldId":484,
+          "oldId":485,
           "pos":[
             1242.324219,
             -259.6147156,
@@ -7743,7 +7532,7 @@
             0.9066205845,
             -0.01670335091
           ],
-          "oldId":485,
+          "oldId":486,
           "pos":[
             1368.606079,
             -175.7097321,
@@ -7759,7 +7548,7 @@
         "beamng_file":"/temp/aipacenotes/out_1mis2omf.wav",
         "success":true
       },
-      "name":"Import_B 120",
+      "name":"Import_B 118",
       "notes":{
         "english":{
           "after":"forty.",
@@ -7767,7 +7556,7 @@
           "note":"six left tightens late?"
         }
       },
-      "oldId":486,
+      "oldId":487,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7776,7 +7565,7 @@
             0.3190235042,
             -0.02572950561
           ],
-          "oldId":487,
+          "oldId":488,
           "pos":[
             1203.561646,
             -270.721344,
@@ -7792,7 +7581,7 @@
             1,
             0
           ],
-          "oldId":488,
+          "oldId":489,
           "pos":[
             1134.619629,
             -317.4922791,
@@ -7808,7 +7597,7 @@
             0.6074326585,
             -0.03728382918
           ],
-          "oldId":489,
+          "oldId":490,
           "pos":[
             1311.981445,
             -220.8748779,
@@ -7824,7 +7613,7 @@
         "beamng_file":"/temp/aipacenotes/out_bxk9ts0x.wav",
         "success":true
       },
-      "name":"Import_B 121",
+      "name":"Import_B 119",
       "notes":{
         "english":{
           "after":"eighty.",
@@ -7832,7 +7621,7 @@
           "note":"slight right?"
         }
       },
-      "oldId":490,
+      "oldId":491,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7841,7 +7630,7 @@
             0.7176517594,
             -0.0002650760916
           ],
-          "oldId":491,
+          "oldId":492,
           "pos":[
             1107.008667,
             -346.7651672,
@@ -7857,7 +7646,7 @@
             1,
             0
           ],
-          "oldId":492,
+          "oldId":493,
           "pos":[
             1033.038086,
             -415.8483887,
@@ -7873,7 +7662,7 @@
             -0.6472767381,
             0.0009248140747
           ],
-          "oldId":493,
+          "oldId":494,
           "pos":[
             1191.297485,
             -275.1903992,
@@ -7889,7 +7678,7 @@
         "beamng_file":"/temp/aipacenotes/out_i92ol5on.wav",
         "success":true
       },
-      "name":"Import_B 122",
+      "name":"Import_B 120",
       "notes":{
         "english":{
           "after":"",
@@ -7897,7 +7686,7 @@
           "note":"six left?"
         }
       },
-      "oldId":494,
+      "oldId":495,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7906,7 +7695,7 @@
             0.5957608765,
             0.002518976938
           ],
-          "oldId":495,
+          "oldId":496,
           "pos":[
             971.5087891,
             -467.1705322,
@@ -7922,7 +7711,7 @@
             1,
             0
           ],
-          "oldId":496,
+          "oldId":497,
           "pos":[
             917.4737549,
             -510.245575,
@@ -7938,7 +7727,7 @@
             0.6939493122,
             -0.00833850976
           ],
-          "oldId":497,
+          "oldId":498,
           "pos":[
             1086.192749,
             -367.186554,
@@ -7954,7 +7743,7 @@
         "beamng_file":"/temp/aipacenotes/out_yl5ly1w5.wav",
         "success":true
       },
-      "name":"Import_B 123",
+      "name":"Import_B 121",
       "notes":{
         "english":{
           "after":"",
@@ -7962,7 +7751,7 @@
           "note":"six right minus?"
         }
       },
-      "oldId":498,
+      "oldId":499,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -7971,7 +7760,7 @@
             0.7188063925,
             -0.004815707362
           ],
-          "oldId":499,
+          "oldId":500,
           "pos":[
             902.6044922,
             -525.4493408,
@@ -7987,7 +7776,7 @@
             1,
             0
           ],
-          "oldId":500,
+          "oldId":501,
           "pos":[
             857.539978,
             -555.9037476,
@@ -8003,7 +7792,7 @@
             0.6798880024,
             -0.009111618101
           ],
-          "oldId":501,
+          "oldId":502,
           "pos":[
             1062.334839,
             -389.5551758,
@@ -8019,7 +7808,7 @@
         "beamng_file":"/temp/aipacenotes/out_y119_efv.wav",
         "success":true
       },
-      "name":"Import_B 124",
+      "name":"Import_B 122",
       "notes":{
         "english":{
           "after":"",
@@ -8027,7 +7816,7 @@
           "note":"slowing, acute one left?"
         }
       },
-      "oldId":502,
+      "oldId":503,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8036,7 +7825,7 @@
             0.42283722,
             -0.04620458629
           ],
-          "oldId":503,
+          "oldId":504,
           "pos":[
             834.7844849,
             -567.2459717,
@@ -8052,7 +7841,7 @@
             0.7418017097,
             0.08290210608
           ],
-          "oldId":504,
+          "oldId":505,
           "pos":[
             825.7640381,
             -588.3112183,
@@ -8068,7 +7857,7 @@
             0.6544586064,
             0.01021697128
           ],
-          "oldId":505,
+          "oldId":506,
           "pos":[
             1022.465454,
             -425.3541565,
@@ -8084,7 +7873,7 @@
         "beamng_file":"/temp/aipacenotes/out_i_x7uv23.wav",
         "success":true
       },
-      "name":"Import_B 125",
+      "name":"Import_B 123",
       "notes":{
         "english":{
           "after":"",
@@ -8092,7 +7881,7 @@
           "note":"six left?"
         }
       },
-      "oldId":506,
+      "oldId":507,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8101,7 +7890,7 @@
             0.3601007953,
             0.1279991485
           ],
-          "oldId":507,
+          "oldId":508,
           "pos":[
             849.569397,
             -599.9992065,
@@ -8117,7 +7906,7 @@
             0.2774934672,
             0.1404321367
           ],
-          "oldId":508,
+          "oldId":509,
           "pos":[
             896.6672363,
             -612.4801636,
@@ -8133,7 +7922,7 @@
             -0.518251787,
             -0.1090287144
           ],
-          "oldId":509,
+          "oldId":510,
           "pos":[
             825.4379883,
             -585.2557373,
@@ -8149,7 +7938,7 @@
         "beamng_file":"/temp/aipacenotes/out_yo1y6aow.wav",
         "success":true
       },
-      "name":"Import_B 126",
+      "name":"Import_B 124",
       "notes":{
         "english":{
           "after":"",
@@ -8157,7 +7946,7 @@
           "note":"five left minus tightens?"
         }
       },
-      "oldId":510,
+      "oldId":511,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8166,7 +7955,7 @@
             -0.1565320495,
             0.1445893757
           ],
-          "oldId":511,
+          "oldId":512,
           "pos":[
             934.6352539,
             -611.9835205,
@@ -8182,7 +7971,7 @@
             -0.8912311554,
             0.03586560837
           ],
-          "oldId":512,
+          "oldId":513,
           "pos":[
             974.0247192,
             -582.7290039,
@@ -8198,7 +7987,7 @@
             0.432116692,
             0.1179838686
           ],
-          "oldId":513,
+          "oldId":514,
           "pos":[
             838.867981,
             -595.6743774,
@@ -8214,7 +8003,7 @@
         "beamng_file":"/temp/aipacenotes/out_e9l1y6tm.wav",
         "success":true
       },
-      "name":"Import_B 127",
+      "name":"Import_B 125",
       "notes":{
         "english":{
           "after":"",
@@ -8222,7 +8011,7 @@
           "note":"very tight hairpin right?"
         }
       },
-      "oldId":514,
+      "oldId":515,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8231,7 +8020,7 @@
             -0.8992893247,
             -0.00341772232
           ],
-          "oldId":515,
+          "oldId":516,
           "pos":[
             977.630127,
             -572.3538208,
@@ -8247,7 +8036,7 @@
             0.9603631973,
             0.008683788498
           ],
-          "oldId":516,
+          "oldId":517,
           "pos":[
             991.1173096,
             -586.7301025,
@@ -8263,7 +8052,7 @@
             0.2980507846,
             0.1391864341
           ],
-          "oldId":517,
+          "oldId":518,
           "pos":[
             863.2189941,
             -604.5625,
@@ -8279,7 +8068,7 @@
         "beamng_file":"/temp/aipacenotes/out_asm1os8l.wav",
         "success":true
       },
-      "name":"Import_B 128",
+      "name":"Import_B 126",
       "notes":{
         "english":{
           "after":"",
@@ -8287,7 +8076,7 @@
           "note":"four left long over bumps?"
         }
       },
-      "oldId":518,
+      "oldId":519,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8296,7 +8085,7 @@
             0.9849300676,
             0.05093396288
           ],
-          "oldId":519,
+          "oldId":520,
           "pos":[
             988.7290649,
             -598.9815674,
@@ -8312,7 +8101,7 @@
             1,
             0
           ],
-          "oldId":520,
+          "oldId":521,
           "pos":[
             995.3305664,
             -632.3639526,
@@ -8328,7 +8117,7 @@
             0.6827013386,
             0.002496615097
           ],
-          "oldId":521,
+          "oldId":522,
           "pos":[
             991.5812378,
             -571.1679077,
@@ -8344,7 +8133,7 @@
         "beamng_file":"/temp/aipacenotes/out_tr54xbt5.wav",
         "success":true
       },
-      "name":"Import_B 129",
+      "name":"Import_B 127",
       "notes":{
         "english":{
           "after":"",
@@ -8352,7 +8141,7 @@
           "note":"caution drop, into two one left?"
         }
       },
-      "oldId":522,
+      "oldId":523,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8361,7 +8150,7 @@
             0.2941932074,
             0.2217237957
           ],
-          "oldId":523,
+          "oldId":524,
           "pos":[
             1022.26886,
             -652.092041,
@@ -8377,7 +8166,7 @@
             0.01629747192,
             -0.01917774171
           ],
-          "oldId":524,
+          "oldId":525,
           "pos":[
             1064.875977,
             -653.8955078,
@@ -8393,7 +8182,7 @@
             0.9939950153,
             0.08648838975
           ],
-          "oldId":525,
+          "oldId":526,
           "pos":[
             988.2640991,
             -605.8760986,
@@ -8409,7 +8198,7 @@
         "beamng_file":"/temp/aipacenotes/out_u6kjwy1i.wav",
         "success":true
       },
-      "name":"Import_B 130",
+      "name":"Import_B 128",
       "notes":{
         "english":{
           "after":"forty.",
@@ -8417,7 +8206,7 @@
           "note":"long one right?"
         }
       },
-      "oldId":526,
+      "oldId":527,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8426,7 +8215,7 @@
             -0.04819286795,
             -0.001755276368
           ],
-          "oldId":527,
+          "oldId":528,
           "pos":[
             1089.615845,
             -641.8798828,
@@ -8442,7 +8231,7 @@
             -0.9999726724,
             0
           ],
-          "oldId":528,
+          "oldId":529,
           "pos":[
             1098.192627,
             -659.7208252,
@@ -8458,7 +8247,7 @@
             -0.03912998548,
             -0.01765137314
           ],
-          "oldId":529,
+          "oldId":530,
           "pos":[
             1033.828735,
             -653.3374023,
@@ -8474,7 +8263,7 @@
         "beamng_file":"/temp/aipacenotes/out_1sg0430k.wav",
         "success":true
       },
-      "name":"Import_B 131",
+      "name":"Import_B 129",
       "notes":{
         "english":{
           "after":"",
@@ -8482,7 +8271,7 @@
           "note":"jump into three left?"
         }
       },
-      "oldId":530,
+      "oldId":531,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8491,7 +8280,7 @@
             0.9799485577,
             -0.03508116091
           ],
-          "oldId":531,
+          "oldId":532,
           "pos":[
             1099.853516,
             -702.1279297,
@@ -8507,7 +8296,7 @@
             -0.7108658305,
             0.03012972416
           ],
-          "oldId":532,
+          "oldId":533,
           "pos":[
             1106.145752,
             -739.3799438,
@@ -8523,7 +8312,7 @@
             -0.9997516058,
             0
           ],
-          "oldId":533,
+          "oldId":534,
           "pos":[
             1098.074097,
             -649.0665283,
@@ -8539,7 +8328,7 @@
         "beamng_file":"/temp/aipacenotes/out_8av4ldo9.wav",
         "success":true
       },
-      "name":"Import_B 132",
+      "name":"Import_B 130",
       "notes":{
         "english":{
           "after":"",
@@ -8547,7 +8336,7 @@
           "note":"over finish?"
         }
       },
-      "oldId":534,
+      "oldId":535,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8556,7 +8345,7 @@
             -0.6983117045,
             0.01580364445
           ],
-          "oldId":535,
+          "oldId":536,
           "pos":[
             1120.48938,
             -753.616394,
@@ -8572,7 +8361,7 @@
             1,
             0
           ],
-          "oldId":536,
+          "oldId":537,
           "pos":[
             1137.671875,
             -771.2156982,
@@ -8588,7 +8377,7 @@
             -0.9984433876,
             0
           ],
-          "oldId":537,
+          "oldId":538,
           "pos":[
             1099.980835,
             -720.0140381,
@@ -8604,7 +8393,7 @@
         "beamng_file":"/temp/aipacenotes/out_b25_o5b3.wav",
         "success":true
       },
-      "name":"Import_B 133",
+      "name":"Import_B 131",
       "notes":{
         "english":{
           "after":"",
@@ -8612,7 +8401,7 @@
           "note":"six left?"
         }
       },
-      "oldId":538,
+      "oldId":539,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -8621,7 +8410,7 @@
             -0.6947560061,
             -0.003851715755
           ],
-          "oldId":539,
+          "oldId":540,
           "pos":[
             1149.903809,
             -782.8384399,
@@ -8637,7 +8426,7 @@
             -0.1519204059,
             -0.009420152211
           ],
-          "oldId":540,
+          "oldId":541,
           "pos":[
             1170.182739,
             -796.7970581,
@@ -8653,7 +8442,7 @@
             -0.7009473679,
             0.02905499744
           ],
-          "oldId":541,
+          "oldId":542,
           "pos":[
             1110.705078,
             -743.9923706,
@@ -8663,6 +8452,122 @@
           "waypointType":"fwdAudioTrigger"
         }
       ]
+    }
+  ],
+  "static_pacenotes":[
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"damage_1",
+      "notes":{
+        "english":{
+          "note":"We just took some damage!"
+        },
+        "german":{
+          "note":"Wir haben gerade Schaden genommen!"
+        },
+        "spanish":{
+          "note":"¡Nos acabamos de golpear!"
+        }
+      },
+      "oldId":543,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"go_1/c",
+      "notes":{
+        "english":{
+          "note":"Go!"
+        },
+        "german":{
+          "note":"Los!"
+        },
+        "spanish":{
+          "note":"¡Vamos!"
+        }
+      },
+      "oldId":544,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_1/c",
+      "notes":{
+        "english":{
+          "note":"one"
+        },
+        "german":{
+          "note":"eins"
+        },
+        "spanish":{
+          "note":"uno"
+        }
+      },
+      "oldId":545,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_2/c",
+      "notes":{
+        "english":{
+          "note":"two"
+        },
+        "german":{
+          "note":"zwei"
+        },
+        "spanish":{
+          "note":"dos"
+        }
+      },
+      "oldId":546,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_3/c",
+      "notes":{
+        "english":{
+          "note":"three"
+        },
+        "german":{
+          "note":"drei"
+        },
+        "spanish":{
+          "note":"tres"
+        }
+      },
+      "oldId":547,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"finish_1/c",
+      "notes":{
+        "english":{
+          "note":"Thats it, bring the car to a stop."
+        },
+        "german":{
+          "note":"Das war's, bring das Auto zum Stehen."
+        },
+        "spanish":{
+          "note":"Listo, detén el coche."
+        }
+      },
+      "oldId":548,
+      "pacenoteWaypoints":{}
     }
   ],
   "updated_at":1705910416

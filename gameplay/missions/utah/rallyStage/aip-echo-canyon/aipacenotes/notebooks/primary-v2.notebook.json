@@ -31,7 +31,7 @@
           "name":"corner start",
           "normal":[
             -0.2262909102,
-            -0.9706257528,
+            -0.9706257529,
             -0.08171947049
           ],
           "oldId":11,
@@ -127,15 +127,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.1710646473,
-            -0.9822691492,
-            -0.0767085721
+            -0.1385361653,
+            -0.9881399138,
+            -0.06623625569
           ],
           "oldId":17,
           "pos":[
-            -763.5454712,
-            188.7927399,
-            262.8739319
+            -761.1026001,
+            205.1447906,
+            264.0331421
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -192,15 +192,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.7575732324,
-            -0.6465170718,
-            -0.08999151808
+            -0.3828991838,
+            -0.9195986842,
+            -0.08790037
           ],
           "oldId":21,
           "pos":[
-            -815.8857422,
-            72.17524719,
-            253.6338501
+            -789.562439,
+            116.9538498,
+            258.3964844
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -241,15 +241,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.420865983,
-            0.9057099001,
-            0.05061028715
+            -0.4253551973,
+            0.9049155146,
+            0.01417277318
           ],
           "oldId":24,
           "pos":[
-            -922.3884277,
-            246.6600189,
-            259.7381287
+            -928.6741943,
+            259.819397,
+            260.1167603
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -257,15 +257,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.4986600093,
-            0.8654715578,
-            0.04792888263
+            -0.6840459208,
+            0.7188275728,
+            0.1239681363
           ],
           "oldId":25,
           "pos":[
-            -912.1035156,
-            94.32473755,
-            254.1086578
+            -899.8502808,
+            78.05683136,
+            252.1508179
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -280,9 +280,9 @@
       "name":"Pacenote 5",
       "notes":{
         "english":{
-          "after":"forty.",
-          "before":"and",
-          "note":"five right over crest?"
+          "after":"",
+          "before":"into",
+          "note":"five right over crest keep in, bump?"
         }
       },
       "oldId":26,
@@ -306,15 +306,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.5388548695,
-            0.8422280635,
-            -0.01695047601
+            0.6565915378,
+            0.7506069213,
+            -0.07400541973
           ],
           "oldId":28,
           "pos":[
-            -927.0219727,
-            345.4271851,
-            258.8875122
+            -914.6767578,
+            361.4095459,
+            258.1320801
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -322,15 +322,15 @@
         {
           "name":"curr",
           "normal":[
-            0.1866021559,
-            0.9823648655,
-            0.01178586035
+            0.1929679883,
+            0.9812003776,
+            0.003028926912
           ],
           "oldId":29,
           "pos":[
-            -918.9946289,
-            181.7521515,
-            257.1659241
+            -921.0289917,
+            171.3328247,
+            257.1135559
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -346,8 +346,8 @@
       "notes":{
         "english":{
           "after":"",
-          "before":"",
-          "note":"five left minus tightens?"
+          "before":"into",
+          "note":"five left tightens cut?"
         }
       },
       "oldId":30,
@@ -355,15 +355,15 @@
         {
           "name":"corner start",
           "normal":[
-            0.5332328528,
-            0.843144543,
-            -0.0690652179
+            0.6008608344,
+            0.7956457601,
+            -0.07690306942
           ],
           "oldId":31,
           "pos":[
-            -900.8419189,
-            378.9079895,
-            256.4246216
+            -905.578186,
+            372.2229614,
+            257.0373535
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -387,15 +387,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.3964679583,
-            0.9174210153,
-            0.03393875041
+            -0.420865983,
+            0.9057099001,
+            0.05061028715
           ],
           "oldId":33,
           "pos":[
-            -931.3463745,
-            265.6296997,
-            260.257782
+            -922.3884277,
+            246.6600189,
+            259.7381287
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -412,7 +412,7 @@
         "english":{
           "after":"",
           "before":"and",
-          "note":"four right?"
+          "note":"four right cut?"
         }
       },
       "oldId":34,
@@ -452,15 +452,15 @@
         {
           "name":"curr",
           "normal":[
-            0.6516647096,
-            0.7555246555,
-            -0.06719822338
+            0.4936901401,
+            0.8683675266,
+            -0.04698812892
           ],
           "oldId":37,
           "pos":[
-            -917.3254395,
-            358.3539734,
-            258.4110718
+            -929.0825806,
+            341.912262,
+            259.0477905
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -477,7 +477,7 @@
         "english":{
           "after":"",
           "before":"into",
-          "note":"six left?"
+          "note":"six left cut?"
         }
       },
       "oldId":38,
@@ -517,15 +517,15 @@
         {
           "name":"curr",
           "normal":[
-            0.1377231237,
-            0.9904704154,
-            -0.000835054878
+            0.4243929363,
+            0.9040248801,
+            -0.0512801312
           ],
           "oldId":41,
           "pos":[
-            -889.3026123,
-            408.2242432,
-            255.199234
+            -895.5054932,
+            388.2966309,
+            255.7458649
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -542,7 +542,7 @@
         "english":{
           "after":"",
           "before":"into",
-          "note":"five right?"
+          "note":"five right cut?"
         }
       },
       "oldId":42,
@@ -607,7 +607,7 @@
         "english":{
           "after":"",
           "before":"into",
-          "note":"four left tightens?"
+          "note":"four left tightens cut?"
         }
       },
       "oldId":46,
@@ -632,7 +632,7 @@
           "name":"corner end",
           "normal":[
             -0.3230213559,
-            0.9463789226,
+            0.9463789225,
             -0.004913105663
           ],
           "oldId":48,
@@ -672,7 +672,7 @@
         "english":{
           "after":"",
           "before":"and",
-          "note":"two right long?"
+          "note":"two right long big cut?"
         }
       },
       "oldId":50,
@@ -712,15 +712,15 @@
         {
           "name":"curr",
           "normal":[
-            0.4397558336,
-            0.8970593089,
-            0.04358214329
+            0.27591611,
+            0.957626924,
+            0.08258919236
           ],
           "oldId":53,
           "pos":[
-            -874.7799683,
-            630.7525635,
-            265.7191162
+            -879.9095459,
+            617.4053955,
+            264.7746887
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -737,7 +737,7 @@
         "english":{
           "after":"eighty.",
           "before":"and",
-          "note":"three left?"
+          "note":"three left cut?"
         }
       },
       "oldId":54,
@@ -802,7 +802,7 @@
         "english":{
           "after":"",
           "before":"",
-          "note":"five left, slowing over crest, tightens?"
+          "note":"five left, brake over crest, tightens cut?"
         }
       },
       "oldId":58,
@@ -842,15 +842,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9896149877,
-            0.1413901605,
-            0.02590364201
+            0.996361781,
+            -0.0848730503,
+            0.00773089344
           ],
           "oldId":61,
           "pos":[
-            -789.2738037,
-            741.8425903,
-            265.5522766
+            -797.4778442,
+            741.9158936,
+            265.4398499
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -867,7 +867,7 @@
         "english":{
           "after":"",
           "before":"into",
-          "note":"two right?"
+          "note":"two right big cut?"
         }
       },
       "oldId":62,
@@ -875,15 +875,15 @@
         {
           "name":"corner start",
           "normal":[
-            0.6596942722,
-            0.7509513967,
-            -0.02958829333
+            0.5228310323,
+            0.8522542608,
+            -0.01761779276
           ],
           "oldId":63,
           "pos":[
-            -659.8720093,
-            863.2852783,
-            272.9621277
+            -664.4771729,
+            856.6446533,
+            273.1550293
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -907,15 +907,15 @@
         {
           "name":"curr",
           "normal":[
-            0.826000023,
-            0.5588262603,
-            0.07373718716
+            0.9095106577,
+            0.4138740491,
+            0.0387122072
           ],
           "oldId":65,
           "pos":[
-            -757.119873,
-            755.5739136,
-            266.9807434
+            -771.6655884,
+            747.5113525,
+            266.0895386
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -932,7 +932,7 @@
         "english":{
           "after":"forty.",
           "before":"into",
-          "note":"four left?"
+          "note":"four left cut?"
         }
       },
       "oldId":66,
@@ -972,15 +972,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9832208433,
-            0.1568408328,
-            -0.09315431503
+            0.765700663,
+            0.6415950475,
+            -0.04536837671
           ],
           "oldId":69,
           "pos":[
-            -639.5304565,
-            875.8991089,
-            271.4837952
+            -655.595459,
+            867.6987305,
+            272.7523499
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -997,7 +997,7 @@
         "english":{
           "after":"",
           "before":"",
-          "note":"crest into six left?"
+          "note":"crest into six left cut?"
         }
       },
       "oldId":70,
@@ -1037,15 +1037,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9632628684,
-            -0.267603538,
-            -0.02264934493
+            0.7927560549,
+            -0.6078792189,
+            -0.04495211575
           ],
           "oldId":73,
           "pos":[
-            -589.2043457,
-            855.3945923,
-            268.0977783
+            -609.3724976,
+            866.0975342,
+            268.8197327
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1060,9 +1060,9 @@
       "name":"Pacenote 17",
       "notes":{
         "english":{
-          "after":"",
+          "after":"fifty.",
           "before":"into",
-          "note":"four right?"
+          "note":"four right cut?"
         }
       },
       "oldId":74,
@@ -1070,15 +1070,15 @@
         {
           "name":"corner start",
           "normal":[
-            0.9447383505,
-            0.3203741324,
-            0.06949722611
+            0.924408855,
+            0.378051971,
+            0.05044775489
           ],
           "oldId":75,
           "pos":[
-            -471.4974976,
-            870.8822632,
-            264.9070129
+            -477.3237305,
+            868.6224976,
+            264.5484924
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -1102,80 +1102,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9975078138,
-            0.07054542098,
-            -0.001226754339
+            0.9922746752,
+            -0.1230259589,
+            -0.0159869432
           ],
           "oldId":77,
           "pos":[
-            -541.5275269,
-            851.7160034,
-            267.5887146
-          ],
-          "radius":8,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_4m_n7lu4.wav",
-        "success":true
-      },
-      "name":"Pacenote 18",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"and",
-          "note":"slight left?"
-        }
-      },
-      "oldId":78,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            0.9446253764,
-            -0.3267952326,
-            0.0297955396
-          ],
-          "oldId":79,
-          "pos":[
-            -400.3334656,
-            863.4943237,
-            268.9638672
-          ],
-          "radius":8,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0.9494705009,
-            -0.3092037551,
-            0.053840559
-          ],
-          "oldId":80,
-          "pos":[
-            -378.8874512,
-            856.4572754,
-            269.882019
-          ],
-          "radius":8,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            0.9228809635,
-            0.3849189492,
-            -0.01131944394
-          ],
-          "oldId":81,
-          "pos":[
-            -486.9791565,
-            864.5117188,
-            264.3666687
+            -574.963501,
+            852.4873657,
+            267.7928772
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1187,28 +1122,28 @@
         "beamng_file":"/temp/aipacenotes/out_hajdbaww.wav",
         "success":true
       },
-      "name":"Pacenote 19",
+      "name":"Pacenote 18",
       "notes":{
         "english":{
           "after":"",
-          "before":"into",
-          "note":"four right?"
+          "before":"",
+          "note":"slight left into four right cut?"
         }
       },
-      "oldId":82,
+      "oldId":78,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.8767816778,
-            -0.4771869648,
-            0.05955241441
+            0.9517037263,
+            -0.303078384,
+            0.04902561125
           ],
-          "oldId":83,
+          "oldId":79,
           "pos":[
-            -364.9615479,
-            851.0651855,
-            270.7344971
+            -382.706665,
+            857.6792603,
+            269.6796875
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -1220,7 +1155,7 @@
             -0.8373211764,
             0.002835052548
           ],
-          "oldId":84,
+          "oldId":80,
           "pos":[
             -346.0028381,
             832.8717651,
@@ -1232,15 +1167,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9957971821,
-            0.04857755363,
-            0.07764144167
+            0.9469666133,
+            0.3091154703,
+            -0.08776023759
           ],
-          "oldId":85,
+          "oldId":81,
           "pos":[
-            -453.0943604,
-            874.7840576,
-            266.3702087
+            -500.9382324,
+            859.4316406,
+            265.2745056
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1252,28 +1187,28 @@
         "beamng_file":"/temp/aipacenotes/out_oh_lcqof.wav",
         "success":true
       },
-      "name":"Pacenote 20",
+      "name":"Pacenote 19",
       "notes":{
         "english":{
           "after":"",
-          "before":"and",
-          "note":"four left?"
+          "before":"into",
+          "note":"long four left, slight tightens late?"
         }
       },
-      "oldId":86,
+      "oldId":82,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.7596821849,
-            -0.6474599336,
-            -0.06065156539
+            0.6418890621,
+            -0.7650130465,
+            -0.05228260332
           ],
-          "oldId":87,
+          "oldId":83,
           "pos":[
-            -333.2910156,
-            816.6056519,
-            271.4997864
+            -338.9648132,
+            822.56604,
+            272.0150757
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -1281,15 +1216,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.9979544303,
-            -0.06045569454,
-            -0.0207861519
+            0.1056087,
+            0.9944054361,
+            0.002152014329
           ],
-          "oldId":88,
+          "oldId":84,
           "pos":[
-            -298.9067383,
-            803.2941895,
-            270.1907043
+            -231.8826294,
+            863.4063721,
+            268.4075317
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -1297,80 +1232,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9519161019,
-            -0.3027000533,
-            0.04720606517
+            0.9921491787,
+            -0.1056057702,
+            0.06698827134
           ],
-          "oldId":89,
+          "oldId":85,
           "pos":[
-            -384.6260681,
-            858.2896118,
-            269.5845032
-          ],
-          "radius":8,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_o9hlv46o.wav",
-        "success":true
-      },
-      "name":"Pacenote 21",
-      "notes":{
-        "english":{
-          "after":"forty.",
-          "before":"and",
-          "note":"four left?"
-        }
-      },
-      "oldId":90,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            0.8952593846,
-            0.4432733501,
-            -0.04493741638
-          ],
-          "oldId":91,
-          "pos":[
-            -264.482605,
-            809.2282715,
-            269.3712769
-          ],
-          "radius":8,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0.3975953574,
-            0.9175333251,
-            -0.007108380819
-          ],
-          "oldId":92,
-          "pos":[
-            -238.9461365,
-            835.1488037,
-            268.5138855
-          ],
-          "radius":8,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            0.5442584694,
-            -0.838899331,
-            -0.005534531284
-          ],
-          "oldId":93,
-          "pos":[
-            -344.8258362,
-            831.0690918,
-            272.2674561
+            -440.8800354,
+            874.5769043,
+            267.3338013
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1382,15 +1252,15 @@
         "beamng_file":"/temp/aipacenotes/out_znp4a6ch.wav",
         "success":true
       },
-      "name":"Pacenote 22",
+      "name":"Pacenote 20",
       "notes":{
         "english":{
           "after":"sixty.",
-          "before":"",
-          "note":"three right?"
+          "before":"into",
+          "note":"early three right cut?"
         }
       },
-      "oldId":94,
+      "oldId":86,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1399,7 +1269,7 @@
             0.98280866,
             -0.01297721258
           ],
-          "oldId":95,
+          "oldId":87,
           "pos":[
             -230.2329865,
             875.6382446,
@@ -1415,7 +1285,7 @@
             0.3393050502,
             0.01312699272
           ],
-          "oldId":96,
+          "oldId":88,
           "pos":[
             -193.4553986,
             918.7261963,
@@ -1431,7 +1301,7 @@
             0.07755907079,
             -0.009724030573
           ],
-          "oldId":97,
+          "oldId":89,
           "pos":[
             -288.4673462,
             803.239502,
@@ -1447,15 +1317,15 @@
         "beamng_file":"/temp/aipacenotes/out_ii9zpfhk.wav",
         "success":true
       },
-      "name":"Pacenote 23",
+      "name":"Pacenote 21",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"five right?"
+          "note":"short five right nip?"
         }
       },
-      "oldId":98,
+      "oldId":90,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1464,7 +1334,7 @@
             -0.1546757403,
             -0.02102888964
           ],
-          "oldId":99,
+          "oldId":91,
           "pos":[
             -129.2823792,
             924.4716187,
@@ -1480,7 +1350,7 @@
             -0.6115135225,
             0.007611904281
           ],
-          "oldId":100,
+          "oldId":92,
           "pos":[
             -87.15407562,
             905.4779053,
@@ -1492,15 +1362,15 @@
         {
           "name":"curr",
           "normal":[
-            0.7846736433,
-            0.6195508471,
-            0.0210718143
+            0.3690615185,
+            0.9293808914,
+            -0.006689858394
           ],
-          "oldId":101,
+          "oldId":93,
           "pos":[
-            -214.9486847,
-            906.4677734,
-            268.603241
+            -226.6341553,
+            889.7664185,
+            268.1899109
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1512,15 +1382,15 @@
         "beamng_file":"/temp/aipacenotes/out_w9e3ency.wav",
         "success":true
       },
-      "name":"Pacenote 24",
+      "name":"Pacenote 22",
       "notes":{
         "english":{
           "after":"fifty.",
           "before":"and",
-          "note":"five left rock outside?"
+          "note":"five left cut, care rock exit?"
         }
       },
-      "oldId":102,
+      "oldId":94,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1529,7 +1399,7 @@
             -0.4843299676,
             -0.0001796902282
           ],
-          "oldId":103,
+          "oldId":95,
           "pos":[
             -65.59423828,
             889.9136963,
@@ -1545,7 +1415,7 @@
             -0.2381908679,
             0.0004231992221
           ],
-          "oldId":104,
+          "oldId":96,
           "pos":[
             -41.86375427,
             880.6860352,
@@ -1557,15 +1427,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9940298628,
-            0.1088784317,
-            -0.00707947884
+            0.9091408952,
+            0.4160425273,
+            0.0192729889
           ],
-          "oldId":105,
+          "oldId":97,
           "pos":[
-            -169.0643616,
-            924.277832,
-            269.0883484
+            -199.2631836,
+            916.267395,
+            268.8968201
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1577,15 +1447,15 @@
         "beamng_file":"/temp/aipacenotes/out_jgiqbzxm.wav",
         "success":true
       },
-      "name":"Pacenote 25",
+      "name":"Pacenote 23",
       "notes":{
         "english":{
           "after":"forty.",
           "before":"",
-          "note":"four left into two right?"
+          "note":"slowing, four left cut, into two right big cut?"
         }
       },
-      "oldId":106,
+      "oldId":98,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1594,7 +1464,7 @@
             0.04053335577,
             -0.001159748999
           ],
-          "oldId":107,
+          "oldId":99,
           "pos":[
             11.73097897,
             872.5941162,
@@ -1610,7 +1480,7 @@
             -0.7308562979,
             0.005963388239
           ],
-          "oldId":108,
+          "oldId":100,
           "pos":[
             68.12155151,
             867.9366455,
@@ -1624,9 +1494,9 @@
           "normal":[
             0.7970374659,
             -0.603876335,
-            0.008040513284
+            0.008040513306
           ],
-          "oldId":109,
+          "oldId":101,
           "pos":[
             -88.92378235,
             906.8187256,
@@ -1642,15 +1512,15 @@
         "beamng_file":"/temp/aipacenotes/out_5jt1rxdv.wav",
         "success":true
       },
-      "name":"Pacenote 26",
+      "name":"Pacenote 24",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"five right over crest?"
+          "note":"short five right over crest?"
         }
       },
-      "oldId":110,
+      "oldId":102,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1659,7 +1529,7 @@
             -0.94492866,
             -0.006776434325
           ],
-          "oldId":111,
+          "oldId":103,
           "pos":[
             90.61873627,
             830.6205444,
@@ -1675,7 +1545,7 @@
             -0.9551014555,
             -0.1261684481
           ],
-          "oldId":112,
+          "oldId":104,
           "pos":[
             92.20184326,
             745.7971802,
@@ -1687,15 +1557,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9380171366,
-            -0.3465707823,
-            -0.003541804709
+            0.9806287169,
+            -0.1958348289,
+            0.004004927703
           ],
-          "oldId":113,
+          "oldId":105,
           "pos":[
-            54.3753891,
-            876.8766479,
-            268.4559021
+            50.44865036,
+            877.8200073,
+            268.4459534
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1707,15 +1577,15 @@
         "beamng_file":"/temp/aipacenotes/out_3e40vng3.wav",
         "success":true
       },
-      "name":"Pacenote 27",
+      "name":"Pacenote 25",
       "notes":{
         "english":{
           "after":"",
           "before":"into",
-          "note":"six left?"
+          "note":"slight left, double caution cliff?"
         }
       },
-      "oldId":114,
+      "oldId":106,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1724,7 +1594,7 @@
             -0.9434433038,
             -0.09561825998
           ],
-          "oldId":115,
+          "oldId":107,
           "pos":[
             87.29730225,
             730.3121948,
@@ -1736,15 +1606,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.2245027336,
-            -0.9744692918,
-            0.002849896566
+            -0.1710632792,
+            -0.985260029,
+            0.0001727060714
           ],
-          "oldId":116,
+          "oldId":108,
           "pos":[
-            79.67601776,
-            704.6123657,
-            261.3011475
+            77.9691391,
+            696.5515137,
+            261.3215637
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -1752,15 +1622,15 @@
         {
           "name":"curr",
           "normal":[
-            0.1856403868,
-            -0.9825966531,
-            0.006439255658
+            0.5438414398,
+            -0.8391863789,
+            0.001646151268
           ],
-          "oldId":117,
+          "oldId":109,
           "pos":[
-            94.50482941,
-            816.4581909,
-            268.318573
+            78.1029892,
+            854.65979,
+            268.4426575
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1772,15 +1642,15 @@
         "beamng_file":"/temp/aipacenotes/out_6nt74qm0.wav",
         "success":true
       },
-      "name":"Pacenote 28",
+      "name":"Pacenote 26",
       "notes":{
         "english":{
           "after":"",
-          "before":"into",
+          "before":"<none>",
           "note":"one left?"
         }
       },
-      "oldId":118,
+      "oldId":110,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1789,7 +1659,7 @@
             -0.9999873495,
             -0.0047434364
           ],
-          "oldId":119,
+          "oldId":111,
           "pos":[
             76.97963715,
             688.3109741,
@@ -1801,15 +1671,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.90944738,
-            -0.415804907,
-            0.003426712
+            0.9626734784,
+            -0.2706652931,
+            -0.0002703868336
           ],
-          "oldId":120,
+          "oldId":112,
           "pos":[
-            91.24359131,
-            663.1035156,
-            261.2567139
+            98.89715576,
+            660.2064209,
+            261.2747192
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -1817,15 +1687,15 @@
         {
           "name":"curr",
           "normal":[
-            0.04103280992,
-            -0.9988799089,
-            -0.02356344892
+            0.2629021435,
+            -0.9647981929,
+            -0.006849079938
           ],
-          "oldId":121,
+          "oldId":113,
           "pos":[
-            97.11573029,
-            793.8499146,
-            268.6581726
+            92.57762146,
+            824.5213623,
+            268.3593445
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1837,15 +1707,15 @@
         "beamng_file":"/temp/aipacenotes/out_tj5y81fn.wav",
         "success":true
       },
-      "name":"Pacenote 29",
+      "name":"Pacenote 27",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"two left long?"
+          "note":"two left long, tightens cut?"
         }
       },
-      "oldId":122,
+      "oldId":114,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1854,7 +1724,7 @@
             -0.03494771599,
             0.001412792865
           ],
-          "oldId":123,
+          "oldId":115,
           "pos":[
             119.0452042,
             656.6994019,
@@ -1870,7 +1740,7 @@
             0.9818458897,
             0.08892044482
           ],
-          "oldId":124,
+          "oldId":116,
           "pos":[
             157.3961029,
             703.1807251,
@@ -1882,15 +1752,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.2245027336,
-            -0.9744692918,
-            0.002849896566
+            -0.2363381022,
+            -0.9716692157,
+            0.001799092589
           ],
-          "oldId":125,
+          "oldId":117,
           "pos":[
-            79.67601776,
-            704.6123657,
-            261.3011475
+            80.16110992,
+            706.6067505,
+            261.2974548
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -1902,15 +1772,15 @@
         "beamng_file":"/temp/aipacenotes/out_ckrc1g_y.wav",
         "success":true
       },
-      "name":"Pacenote 30",
+      "name":"Pacenote 28",
       "notes":{
         "english":{
           "after":"",
           "before":"into",
-          "note":"three right?"
+          "note":"three right big cut?"
         }
       },
-      "oldId":126,
+      "oldId":118,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1919,7 +1789,7 @@
             0.9946137668,
             0.1028840497
           ],
-          "oldId":127,
+          "oldId":119,
           "pos":[
             155.8663177,
             717.4325562,
@@ -1935,7 +1805,7 @@
             0.4390929347,
             -0.001246199666
           ],
-          "oldId":128,
+          "oldId":120,
           "pos":[
             179.7557068,
             763.4597778,
@@ -1951,7 +1821,7 @@
             0.3601413388,
             -0.007464738959
           ],
-          "oldId":129,
+          "oldId":121,
           "pos":[
             135.2472229,
             658.8126831,
@@ -1967,15 +1837,15 @@
         "beamng_file":"/temp/aipacenotes/out_vtjm28nc.wav",
         "success":true
       },
-      "name":"Pacenote 31",
+      "name":"Pacenote 29",
       "notes":{
         "english":{
-          "after":"sixty.",
+          "after":"forty.",
           "before":"into",
-          "note":"two left?"
+          "note":"two left cut?"
         }
       },
-      "oldId":130,
+      "oldId":122,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1984,7 +1854,7 @@
             0.6350922056,
             -0.003957772159
           ],
-          "oldId":131,
+          "oldId":123,
           "pos":[
             196.0897522,
             772.1270142,
@@ -2000,7 +1870,7 @@
             0.9580140885,
             0.002364111105
           ],
-          "oldId":132,
+          "oldId":124,
           "pos":[
             203.2329712,
             803.8398438,
@@ -2016,7 +1886,7 @@
             0.984052581,
             0.09546665881
           ],
-          "oldId":133,
+          "oldId":125,
           "pos":[
             157.0581055,
             705.161438,
@@ -2032,28 +1902,28 @@
         "beamng_file":"/temp/aipacenotes/out_y15p6vkc.wav",
         "success":true
       },
-      "name":"Pacenote 32",
+      "name":"Pacenote 30",
       "notes":{
         "english":{
-          "after":"ninety.",
+          "after":"seventy.",
           "before":"",
-          "note":"three right?"
+          "note":"three right long opens nip?"
         }
       },
-      "oldId":134,
+      "oldId":126,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            -0.2234078773,
-            0.9747249987,
-            0.0003120268667
+            -0.384087114,
+            0.9232957948,
+            -0.001401463349
           ],
-          "oldId":135,
+          "oldId":127,
           "pos":[
-            180.1424255,
-            857.0796509,
-            265.3017578
+            184.7576752,
+            843.2390747,
+            265.2998047
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2061,15 +1931,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.9820218077,
-            0.1887636526,
-            0.001205242655
+            0.9994213405,
+            -0.03401297296,
+            -0.0003192407168
           ],
-          "oldId":136,
+          "oldId":128,
           "pos":[
-            217.7582245,
-            918.6068726,
-            265.3113098
+            236.3583374,
+            920.0754395,
+            265.3241577
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2077,15 +1947,15 @@
         {
           "name":"curr",
           "normal":[
-            0.2287941578,
-            0.9734602006,
-            0.005335834462
+            0.6350600692,
+            0.7724617151,
+            0.001267777359
           ],
-          "oldId":137,
+          "oldId":129,
           "pos":[
-            203.9054413,
-            783.7237549,
-            265.2138977
+            199.1465149,
+            774.887085,
+            265.1727295
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2097,15 +1967,15 @@
         "beamng_file":"/temp/aipacenotes/out_mbb3tgbo.wav",
         "success":true
       },
-      "name":"Pacenote 33",
+      "name":"Pacenote 31",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"six left minus?"
+          "note":"six left nip?"
         }
       },
-      "oldId":138,
+      "oldId":130,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2114,7 +1984,7 @@
             0.0003276846658,
             -0.001087303989
           ],
-          "oldId":139,
+          "oldId":131,
           "pos":[
             302.7010498,
             914.0131836,
@@ -2130,7 +2000,7 @@
             0.3015700659,
             -0.002951535133
           ],
-          "oldId":140,
+          "oldId":132,
           "pos":[
             359.7225342,
             923.8311768,
@@ -2146,7 +2016,7 @@
             0.5398906366,
             0.000916510294
           ],
-          "oldId":141,
+          "oldId":133,
           "pos":[
             196.778595,
             910.0736694,
@@ -2162,28 +2032,28 @@
         "beamng_file":"/temp/aipacenotes/out_8gpf810v.wav",
         "success":true
       },
-      "name":"Pacenote 34",
+      "name":"Pacenote 32",
       "notes":{
         "english":{
-          "after":"forty.",
-          "before":"and",
-          "note":"six right?"
+          "after":"",
+          "before":"into",
+          "note":"six right cut?"
         }
       },
-      "oldId":142,
+      "oldId":134,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.9528689865,
-            0.3033811084,
-            -0.0007730144333
+            0.9403631777,
+            0.3401690281,
+            0.001458185898
           ],
-          "oldId":143,
+          "oldId":135,
           "pos":[
-            391.5942383,
-            934.90979,
-            265.233429
+            375.5431824,
+            929.177124,
+            265.223999
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2191,15 +2061,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.9979737848,
-            0.0636132339,
-            0.001296694301
+            0.9986664042,
+            0.04214288643,
+            0.02982264634
           ],
-          "oldId":144,
+          "oldId":136,
           "pos":[
-            430.6168213,
-            941.7393799,
-            265.3165894
+            441.061676,
+            942.3040161,
+            265.3888855
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2211,7 +2081,7 @@
             -0.1190148678,
             0.0001175259807
           ],
-          "oldId":145,
+          "oldId":137,
           "pos":[
             256.9662476,
             918.3348999,
@@ -2227,28 +2097,28 @@
         "beamng_file":"/temp/aipacenotes/out_abh0sc8n.wav",
         "success":true
       },
-      "name":"Pacenote 35",
+      "name":"Pacenote 33",
       "notes":{
         "english":{
           "after":"",
-          "before":"",
+          "before":"<none>",
           "note":"bump?"
         }
       },
-      "oldId":146,
+      "oldId":138,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.9996535515,
-            0.02625071328,
-            -0.001917538279
+            0.9989922133,
+            0.03069263354,
+            -0.03274935034
           ],
-          "oldId":147,
+          "oldId":139,
           "pos":[
-            470.6087341,
-            943.2695923,
-            265.107666
+            449.5610046,
+            942.6211548,
+            265.3710022
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2260,7 +2130,7 @@
             0.02296766068,
             -0.00567327615
           ],
-          "oldId":148,
+          "oldId":140,
           "pos":[
             495.5445251,
             943.7596436,
@@ -2272,15 +2142,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9511342327,
-            0.3087682494,
-            -0.002416493389
+            0.9706753745,
+            0.2403888876,
+            -0.00158114885
           ],
-          "oldId":149,
+          "oldId":141,
           "pos":[
-            361.7730103,
-            924.4797363,
-            265.2909546
+            341.5345764,
+            918.7351685,
+            265.3356934
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2292,15 +2162,15 @@
         "beamng_file":"/temp/aipacenotes/out_q4tb3qsu.wav",
         "success":true
       },
-      "name":"Pacenote 36",
+      "name":"Pacenote 34",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"small jump?"
+          "note":"small jump, send it?"
         }
       },
-      "oldId":150,
+      "oldId":142,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2309,7 +2179,7 @@
             0.01153052529,
             -0.07433198757
           ],
-          "oldId":151,
+          "oldId":143,
           "pos":[
             522.2766724,
             944.2924194,
@@ -2325,7 +2195,7 @@
             0.005976140968,
             -0.1439820835
           ],
-          "oldId":152,
+          "oldId":144,
           "pos":[
             553.7706299,
             944.5405884,
@@ -2337,15 +2207,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9875229497,
-            0.1574396024,
-            0.003345947393
+            0.970886884,
+            0.2395384264,
+            2.815481848e-05
           ],
-          "oldId":153,
+          "oldId":145,
           "pos":[
-            410.3543701,
-            939.5435181,
-            265.2256165
+            399.7948914,
+            937.3059692,
+            265.226532
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2357,15 +2227,15 @@
         "beamng_file":"/temp/aipacenotes/out_kxxr8v0w.wav",
         "success":true
       },
-      "name":"Pacenote 37",
+      "name":"Pacenote 35",
       "notes":{
         "english":{
           "after":"",
           "before":"and",
-          "note":"six right?"
+          "note":"slight right?"
         }
       },
-      "oldId":154,
+      "oldId":146,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2374,7 +2244,7 @@
             -0.01791170377,
             -0.07483889634
           ],
-          "oldId":155,
+          "oldId":147,
           "pos":[
             587.0839233,
             944.4411011,
@@ -2390,7 +2260,7 @@
             -0.1168954486,
             0.01341025599
           ],
-          "oldId":156,
+          "oldId":148,
           "pos":[
             630.4107666,
             941.4116211,
@@ -2402,15 +2272,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9998449208,
-            0.01654533039,
-            0.006032121312
+            0.9993921364,
+            0.03124682251,
+            -0.01545942171
           ],
-          "oldId":157,
+          "oldId":149,
           "pos":[
-            487.2776184,
-            943.6003418,
-            265.3070374
+            466.4970398,
+            943.1447144,
+            265.1601257
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2422,28 +2292,28 @@
         "beamng_file":"/temp/aipacenotes/out_8eh_wn0t.wav",
         "success":true
       },
-      "name":"Pacenote 38",
+      "name":"Pacenote 36",
       "notes":{
         "english":{
-          "after":"one hundred.",
-          "before":"into",
-          "note":"six left?"
+          "after":"seventy.",
+          "before":"and",
+          "note":"six left cut?"
         }
       },
-      "oldId":158,
+      "oldId":150,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.996619503,
-            -0.0796579514,
-            0.02010415224
+            0.9979882428,
+            -0.06052885891,
+            0.01886066046
           ],
-          "oldId":159,
+          "oldId":151,
           "pos":[
-            646.6017456,
-            939.6664429,
-            257.2815552
+            650.6251221,
+            939.3637085,
+            257.361908
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2451,15 +2321,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.9913129259,
-            0.131363572,
-            0.006503457552
+            0.9784689562,
+            0.2040434219,
+            0.03106096688
           ],
-          "oldId":160,
+          "oldId":152,
           "pos":[
-            699.7515259,
-            941.3895874,
-            257.8099365
+            731.5797729,
+            946.8567505,
+            258.3643188
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2467,15 +2337,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9959756477,
-            0.007677835783,
-            -0.08929479237
+            0.9983247691,
+            0.01747433767,
+            -0.05515707418
           ],
-          "oldId":161,
+          "oldId":153,
           "pos":[
-            534.8388672,
-            944.4098511,
-            263.244751
+            514.0184326,
+            944.1688232,
+            264.7836609
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2487,15 +2357,15 @@
         "beamng_file":"/temp/aipacenotes/out_v4n6euwe.wav",
         "success":true
       },
-      "name":"Pacenote 39",
+      "name":"Pacenote 37",
       "notes":{
         "english":{
-          "after":"seventy.",
+          "after":"",
           "before":"",
-          "note":"slowing over crest?"
+          "note":"brake over crest?"
         }
       },
-      "oldId":162,
+      "oldId":154,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2504,7 +2374,7 @@
             0.1535649676,
             0.01203939302
           ],
-          "oldId":163,
+          "oldId":155,
           "pos":[
             796.2228394,
             960.2564087,
@@ -2516,15 +2386,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.9994773734,
-            0.02997514277,
-            0.01210251371
+            0.9999116899,
+            -0.00312319745,
+            0.01291735706
           ],
-          "oldId":164,
+          "oldId":156,
           "pos":[
-            860.098877,
-            966.7901611,
-            261.1555176
+            870.2546997,
+            966.9671631,
+            261.2842407
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2532,15 +2402,15 @@
         {
           "name":"curr",
           "normal":[
-            0.9991161686,
-            0.04105996573,
-            0.008997830328
+            0.9952134151,
+            -0.09578319903,
+            0.01938652139
           ],
-          "oldId":165,
+          "oldId":157,
           "pos":[
-            672.9170532,
-            939.0634766,
-            257.6991882
+            642.5811768,
+            940.0377808,
+            257.2021179
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2552,28 +2422,28 @@
         "beamng_file":"/temp/aipacenotes/out_x9ql10eg.wav",
         "success":true
       },
-      "name":"Pacenote 40",
+      "name":"Pacenote 38",
       "notes":{
         "english":{
           "after":"fifty.",
-          "before":"",
-          "note":"tightens to three right?"
+          "before":"and",
+          "note":"very late three right cut?"
         }
       },
-      "oldId":166,
+      "oldId":158,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.8519524362,
-            -0.5236103149,
-            0.003047078533
+            0.9541312101,
+            -0.2992320652,
+            0.009685300828
           ],
-          "oldId":167,
+          "oldId":159,
           "pos":[
-            926.5320435,
-            953.9699097,
-            261.8816223
+            907.7358398,
+            962.3557739,
+            261.7555847
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2585,7 +2455,7 @@
             -0.9510869944,
             0.003132638579
           ],
-          "oldId":168,
+          "oldId":160,
           "pos":[
             952.9220581,
             905.7042236,
@@ -2601,7 +2471,7 @@
             0.2034008058,
             0.03862483546
           ],
-          "oldId":169,
+          "oldId":161,
           "pos":[
             771.8101196,
             955.6810913,
@@ -2617,15 +2487,15 @@
         "beamng_file":"/temp/aipacenotes/out_ptcx9k64.wav",
         "success":true
       },
-      "name":"Pacenote 41",
+      "name":"Pacenote 39",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"crest into five left downhill?"
+          "note":"crest into sudden five left down hill big cut?"
         }
       },
-      "oldId":170,
+      "oldId":162,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2634,7 +2504,7 @@
             -0.9508536734,
             -0.1748093677
           ],
-          "oldId":171,
+          "oldId":163,
           "pos":[
             935.9550781,
             861.8078613,
@@ -2646,15 +2516,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.3673411044,
-            -0.9081392722,
-            -0.2008571016
+            0.4409233333,
+            -0.8786782708,
+            -0.1830604015
           ],
-          "oldId":172,
+          "oldId":164,
           "pos":[
-            938.4476929,
-            798.1794434,
-            245.0596466
+            942.6842651,
+            788.6685791,
+            242.9941559
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2662,15 +2532,15 @@
         {
           "name":"curr",
           "normal":[
-            0.276551031,
-            -0.9609951527,
-            -0.002800655666
+            0.7087221523,
+            -0.705484484,
+            -0.002133931961
           ],
-          "oldId":173,
+          "oldId":165,
           "pos":[
-            952.9613037,
-            925.9038696,
-            261.7881775
+            941.4424438,
+            942.65625,
+            261.8970032
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2682,93 +2552,28 @@
         "beamng_file":"/temp/aipacenotes/out_hb1dhx5_.wav",
         "success":true
       },
-      "name":"Pacenote 42",
+      "name":"Pacenote 40",
       "notes":{
         "english":{
-          "after":"",
-          "before":"and",
-          "note":"five right?"
-        }
-      },
-      "oldId":174,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            0.4179325631,
-            -0.898906439,
-            -0.1315278929
-          ],
-          "oldId":175,
-          "pos":[
-            953.0519409,
-            768.5650635,
-            239.3013153
-          ],
-          "radius":8,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0.09577564374,
-            -0.9952200268,
-            -0.01908204003
-          ],
-          "oldId":176,
-          "pos":[
-            963.1381226,
-            733.1161499,
-            236.7568054
-          ],
-          "radius":8,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            -0.1008068009,
-            -0.9653119131,
-            -0.240854519
-          ],
-          "oldId":177,
-          "pos":[
-            932.4354248,
-            843.885437,
-            255.6581421
-          ],
-          "radius":8,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_kz9reoxb.wav",
-        "success":true
-      },
-      "name":"Pacenote 43",
-      "notes":{
-        "english":{
-          "after":"sixty.",
+          "after":"ninety.",
           "before":"into",
-          "note":"slowing?"
+          "note":"short five right cut? brake."
         }
       },
-      "oldId":178,
+      "oldId":166,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.01089350709,
-            -0.998657915,
-            -0.05063299546
+            0.457848584,
+            -0.8761059413,
+            -0.1510399077
           ],
-          "oldId":179,
+          "oldId":167,
           "pos":[
-            963.8265991,
-            720.7272949,
-            236.3102722
+            949.4733276,
+            775.6727905,
+            240.4597473
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2776,15 +2581,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.02658044883,
-            -0.9973768155,
-            -0.06732731773
+            -0.001706827457,
+            -0.9983712086,
+            -0.0570264557
           ],
-          "oldId":180,
+          "oldId":168,
           "pos":[
-            963.5719604,
-            693.6555786,
-            234.6858521
+            963.859375,
+            714.4248657,
+            235.976059
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2792,15 +2597,15 @@
         {
           "name":"curr",
           "normal":[
-            0.3150979039,
-            -0.9254666865,
-            -0.2102967502
+            -0.3968557358,
+            -0.9178808105,
+            0.0005853793743
           ],
-          "oldId":181,
+          "oldId":169,
           "pos":[
-            936.3499756,
-            803.9760742,
-            246.3663635
+            947.6784058,
+            892.3222046,
+            261.9329224
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2812,15 +2617,15 @@
         "beamng_file":"/temp/aipacenotes/out_em85j456.wav",
         "success":false
       },
-      "name":"Pacenote 44",
+      "name":"Pacenote 42",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"1 right?"
+          "note":"long 1 right slight cut, rocks inside?"
         }
       },
-      "oldId":182,
+      "oldId":170,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2829,7 +2634,7 @@
             -0.9225945031,
             -0.1405250549
           ],
-          "oldId":183,
+          "oldId":171,
           "pos":[
             956.725769,
             628.7006836,
@@ -2845,7 +2650,7 @@
             0.942774899,
             -0.1290311852
           ],
-          "oldId":184,
+          "oldId":172,
           "pos":[
             933.2875366,
             631.9005737,
@@ -2857,15 +2662,15 @@
         {
           "name":"curr",
           "normal":[
-            0.2055468964,
-            -0.9777493152,
-            -0.04191360232
+            0.4598561495,
+            -0.8713872093,
+            -0.1709287959
           ],
-          "oldId":185,
+          "oldId":173,
           "pos":[
-            961.1768799,
-            745.4555054,
-            236.9658966
+            945.5544434,
+            783.0604248,
+            241.8489227
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2877,28 +2682,28 @@
         "beamng_file":"/temp/aipacenotes/out_e036qcne.wav",
         "success":true
       },
-      "name":"Pacenote 45",
+      "name":"Pacenote 43",
       "notes":{
         "english":{
           "after":"",
-          "before":"into",
-          "note":"one left?"
+          "before":"<none>",
+          "note":"one left cut?"
         }
       },
-      "oldId":186,
+      "oldId":174,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.3402049922,
-            0.9324786589,
-            -0.1214253431
+            0.5130891291,
+            0.8490686117,
+            -0.1257856833
           ],
-          "oldId":187,
+          "oldId":175,
           "pos":[
-            939.7843018,
-            644.326355,
-            222.1599274
+            936.8197021,
+            639.1010742,
+            222.9022064
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -2906,15 +2711,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.6753588005,
-            0.716630753,
-            -0.1741575564
+            -0.7239929989,
+            0.6678942668,
+            -0.1724859006
           ],
-          "oldId":188,
+          "oldId":176,
           "pos":[
-            936.0158691,
-            662.975647,
-            219.069046
+            933.1765747,
+            665.8666382,
+            218.3539429
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -2922,15 +2727,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9179348784,
-            0.3897461636,
-            -0.07411806051
+            -0.8466356993,
+            -0.5046924101,
+            -0.1688003667
           ],
-          "oldId":189,
+          "oldId":177,
           "pos":[
-            940.5004883,
-            616.9998779,
-            225.9363556
+            950.131958,
+            618.7522583,
+            227.2443695
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -2942,15 +2747,15 @@
         "beamng_file":"/temp/aipacenotes/out_ceqi1uic.wav",
         "success":true
       },
-      "name":"Pacenote 46",
+      "name":"Pacenote 44",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "after":"forty.",
           "before":"and",
-          "note":"five right?"
+          "note":"short five right cut?"
         }
       },
-      "oldId":190,
+      "oldId":178,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2959,7 +2764,7 @@
             0.5693218123,
             -0.1735772676
           ],
-          "oldId":191,
+          "oldId":179,
           "pos":[
             908.7856445,
             683.921936,
@@ -2975,7 +2780,7 @@
             0.8164263942,
             -0.1586598554
           ],
-          "oldId":192,
+          "oldId":180,
           "pos":[
             881.5316162,
             710.6367798,
@@ -2987,15 +2792,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.4817376572,
-            0.8593254206,
-            -0.1717225995
+            -0.1537615993,
+            0.9767858012,
+            -0.1491538438
           ],
-          "oldId":193,
+          "oldId":181,
           "pos":[
-            939.4178467,
-            658.0670166,
-            220.117569
+            941.0800781,
+            652.2628784,
+            221.0869598
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3007,28 +2812,28 @@
         "beamng_file":"/temp/aipacenotes/out__em_vwm3.wav",
         "success":true
       },
-      "name":"Pacenote 47",
+      "name":"Pacenote 45",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"five right tightens?"
+          "note":"five right tightens cut?"
         }
       },
-      "oldId":194,
+      "oldId":182,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            -0.2695242225,
-            0.9596611685,
-            -0.08004458263
+            -0.3714229796,
+            0.9227539891,
+            -0.102810728
           ],
-          "oldId":195,
+          "oldId":183,
           "pos":[
-            858.0096436,
-            755.9266968,
-            199.7071075
+            861.4866333,
+            746.1116943,
+            200.6964874
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -3036,15 +2841,15 @@
         {
           "name":"corner end",
           "normal":[
-            0.5051735429,
-            0.8629032322,
-            -0.0140607074
+            0.4736298227,
+            0.8806442137,
+            -0.01185579405
           ],
-          "oldId":196,
+          "oldId":184,
           "pos":[
-            864.8238525,
-            809.729248,
-            198.2711182
+            862.8609009,
+            806.1679077,
+            198.3216095
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -3056,7 +2861,7 @@
             0.5577988671,
             -0.1713011101
           ],
-          "oldId":197,
+          "oldId":185,
           "pos":[
             920.5258789,
             675.8327637,
@@ -3072,15 +2877,15 @@
         "beamng_file":"/temp/aipacenotes/out_swuam474.wav",
         "success":true
       },
-      "name":"Pacenote 48",
+      "name":"Pacenote 46",
       "notes":{
         "english":{
           "after":"fifty.",
           "before":"and",
-          "note":"two left long, opens over crest?"
+          "note":"two left long cut? opens over crest?"
         }
       },
-      "oldId":198,
+      "oldId":186,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3089,7 +2894,7 @@
             0.9362585114,
             -0.02543736406
           ],
-          "oldId":199,
+          "oldId":187,
           "pos":[
             880.0810547,
             836.590332,
@@ -3105,7 +2910,7 @@
             -0.1846622555,
             -0.05643865103
           ],
-          "oldId":200,
+          "oldId":188,
           "pos":[
             839.899292,
             874.0575562,
@@ -3121,7 +2926,7 @@
             0.845837234,
             -0.1475164738
           ],
-          "oldId":201,
+          "oldId":189,
           "pos":[
             874.9346924,
             720.9003296,
@@ -3137,24 +2942,24 @@
         "beamng_file":"/temp/aipacenotes/out_rzl0zr__.wav",
         "success":true
       },
-      "name":"Pacenote 49",
+      "name":"Pacenote 47",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "after":"forty.",
           "before":"",
-          "note":"bump?"
+          "note":"send it over small jump? and bump?"
         }
       },
-      "oldId":202,
+      "oldId":190,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            -0.9224391981,
+            -0.922439198,
             -0.3607889216,
             -0.13761279
           ],
-          "oldId":203,
+          "oldId":191,
           "pos":[
             792.4581909,
             858.6599121,
@@ -3166,15 +2971,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.9172000798,
-            -0.3594935184,
-            -0.1717801611
+            -0.9266428664,
+            -0.3717818749,
+            -0.05577845206
           ],
-          "oldId":204,
+          "oldId":192,
           "pos":[
-            771.3162231,
-            850.3886108,
-            188.1049042
+            722.1630249,
+            830.5200195,
+            182.831131
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -3186,7 +2991,7 @@
             0.4882340101,
             0.0008279237688
           ],
-          "oldId":205,
+          "oldId":193,
           "pos":[
             870.1868286,
             870.6817627,
@@ -3199,83 +3004,18 @@
     },
     {
       "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_qc3xwi1y.wav",
-        "success":false
-      },
-      "name":"Pacenote 50",
-      "notes":{
-        "english":{
-          "after":"",
-          "before":"",
-          "note":"bump?"
-        }
-      },
-      "oldId":206,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            -0.924986065,
-            -0.3740711786,
-            -0.06686952153
-          ],
-          "oldId":207,
-          "pos":[
-            728.2695313,
-            832.9844971,
-            183.239212
-          ],
-          "radius":8,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            -0.9207218845,
-            -0.3741923643,
-            -0.1106855269
-          ],
-          "oldId":208,
-          "pos":[
-            699.9854736,
-            821.7761841,
-            180.7743683
-          ],
-          "radius":8,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            -0.9430559312,
-            -0.3136764482,
-            -0.1106914471
-          ],
-          "oldId":209,
-          "pos":[
-            819.8969727,
-            868.7301025,
-            194.9362793
-          ],
-          "radius":8,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kojn_hej.wav",
         "success":true
       },
-      "name":"Pacenote 51",
+      "name":"Pacenote 49",
       "notes":{
         "english":{
           "after":"ninety.",
-          "before":"into",
-          "note":"into five left over narrow bridge?"
+          "before":"",
+          "note":"into five left plus nip? narrows over bridge?"
         }
       },
-      "oldId":210,
+      "oldId":194,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3284,7 +3024,7 @@
             -0.4434797005,
             -0.1112085768
           ],
-          "oldId":211,
+          "oldId":195,
           "pos":[
             684.5056763,
             814.9467163,
@@ -3300,7 +3040,7 @@
             -0.7312800626,
             -0.01246432333
           ],
-          "oldId":212,
+          "oldId":196,
           "pos":[
             642.7652588,
             783.8387451,
@@ -3312,15 +3052,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9238931074,
-            -0.3558283046,
-            -0.1407399863
+            -0.9430559312,
+            -0.3136764482,
+            -0.1106914471
           ],
-          "oldId":213,
+          "oldId":197,
           "pos":[
-            800.2843628,
-            861.6998291,
-            192.1742706
+            819.8969727,
+            868.7301025,
+            194.9362793
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3332,15 +3072,15 @@
         "beamng_file":"/temp/aipacenotes/out_jpb7lt39.wav",
         "success":true
       },
-      "name":"Pacenote 52",
+      "name":"Pacenote 50",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"big crest into jump?"
+          "note":"send it over big jump, keep left?"
         }
       },
-      "oldId":214,
+      "oldId":198,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3349,7 +3089,7 @@
             -0.7460119628,
             0.1718089106
           ],
-          "oldId":215,
+          "oldId":199,
           "pos":[
             583.8359375,
             715.0765381,
@@ -3365,7 +3105,7 @@
             -0.74663536,
             -0.01304968088
           ],
-          "oldId":216,
+          "oldId":200,
           "pos":[
             521.6655273,
             643.9761963,
@@ -3377,15 +3117,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.823366344,
-            -0.5612917976,
-            -0.08378174881
+            -0.9262123038,
+            -0.3630112222,
+            -0.1017527436
           ],
-          "oldId":217,
+          "oldId":201,
           "pos":[
-            667.6022339,
-            805.2261963,
-            176.8659821
+            705.9242554,
+            824.1251831,
+            181.451767
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3397,28 +3137,28 @@
         "beamng_file":"/temp/aipacenotes/out_k7pebi9k.wav",
         "success":true
       },
-      "name":"Pacenote 53",
+      "name":"Pacenote 51",
       "notes":{
         "english":{
           "after":"ninety.",
-          "before":"and",
-          "note":"six left?"
+          "before":"into",
+          "note":"six left? slowing?"
         }
       },
-      "oldId":218,
+      "oldId":202,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            -0.6456224405,
-            -0.7617141878,
-            -0.0544349188
+            -0.6547680946,
+            -0.7543497741,
+            -0.04727748444
           ],
-          "oldId":219,
+          "oldId":203,
           "pos":[
-            506.2697144,
-            626.4473877,
-            192.4663391
+            510.4661865,
+            631.3193359,
+            192.7885132
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -3430,7 +3170,7 @@
             -0.9358963327,
             -0.1031631278
           ],
-          "oldId":220,
+          "oldId":204,
           "pos":[
             435.3870544,
             507.2260132,
@@ -3442,15 +3182,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.6398333998,
-            -0.7432446672,
-            0.1954496998
+            -0.8147620852,
+            -0.5742850945,
+            -0.0797456884
           ],
-          "oldId":221,
+          "oldId":205,
           "pos":[
-            572.9592896,
-            702.4511108,
-            183.526001
+            665.9312744,
+            804.0870972,
+            176.6959534
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3462,15 +3202,15 @@
         "beamng_file":"/temp/aipacenotes/out__09vffxz.wav",
         "success":true
       },
-      "name":"Pacenote 54",
+      "name":"Pacenote 52",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"five right over crest, slowing?"
+          "note":"brake five right down hill?"
         }
       },
-      "oldId":222,
+      "oldId":206,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3479,7 +3219,7 @@
             -0.9451069269,
             -0.1014459539
           ],
-          "oldId":223,
+          "oldId":207,
           "pos":[
             409.9387207,
             425.2902832,
@@ -3495,7 +3235,7 @@
             -0.7727173,
             -0.1702469064
           ],
-          "oldId":224,
+          "oldId":208,
           "pos":[
             378.5416565,
             364.8900146,
@@ -3511,7 +3251,7 @@
             -0.7864170655,
             -0.05326410744
           ],
-          "oldId":225,
+          "oldId":209,
           "pos":[
             492.6950989,
             609.8678589,
@@ -3527,15 +3267,15 @@
         "beamng_file":"/temp/aipacenotes/out_s0p462pj.wav",
         "success":true
       },
-      "name":"Pacenote 55",
+      "name":"Pacenote 53",
       "notes":{
         "english":{
           "after":"",
           "before":"into",
-          "note":"five left?"
+          "note":"four left cut?"
         }
       },
-      "oldId":226,
+      "oldId":210,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3544,7 +3284,7 @@
             -0.809084312,
             -0.08948018006
           ],
-          "oldId":227,
+          "oldId":211,
           "pos":[
             366.9919434,
             350.0455627,
@@ -3560,7 +3300,7 @@
             -0.9989303211,
             -0.04623370293
           ],
-          "oldId":228,
+          "oldId":212,
           "pos":[
             349.0349731,
             296.1187744,
@@ -3576,7 +3316,7 @@
             -0.9504551961,
             -0.08199095047
           ],
-          "oldId":229,
+          "oldId":213,
           "pos":[
             427.2709961,
             483.1615906,
@@ -3592,28 +3332,28 @@
         "beamng_file":"/temp/aipacenotes/out_qk12x93u.wav",
         "success":true
       },
-      "name":"Pacenote 56",
+      "name":"Pacenote 54",
       "notes":{
         "english":{
           "after":"",
-          "before":"and",
-          "note":"square right opens?"
+          "before":"into",
+          "note":"square right opens? nip stop sign?"
         }
       },
-      "oldId":230,
+      "oldId":214,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            0.03213279658,
-            -0.9984707051,
-            -0.04498593498
+            0.05817985585,
+            -0.9971817972,
+            -0.04736631487
           ],
-          "oldId":231,
+          "oldId":215,
           "pos":[
-            350.6434937,
-            265.1335449,
-            160.9361725
+            349.3086853,
+            285.7511292,
+            161.942215
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -3621,15 +3361,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.8015920181,
-            -0.5977581015,
-            -0.01163995654
+            -0.8244153361,
+            -0.5658343856,
+            -0.01306911128
           ],
-          "oldId":232,
+          "oldId":216,
           "pos":[
-            324.8574219,
-            231.7997437,
-            160.274826
+            333.2828674,
+            237.7172546,
+            160.3957367
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -3637,15 +3377,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.5950367719,
-            -0.78537063,
-            -0.1706581776
+            -0.3106148985,
+            -0.9451069269,
+            -0.1014459539
           ],
-          "oldId":233,
+          "oldId":217,
           "pos":[
-            382.3188171,
-            369.8052368,
-            168.8677673
+            409.9387207,
+            425.2902832,
+            177.3005371
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3657,15 +3397,15 @@
         "beamng_file":"/temp/aipacenotes/out_64rl56kx.wav",
         "success":false
       },
-      "name":"Pacenote 57",
+      "name":"Pacenote 55",
       "notes":{
         "english":{
           "after":"ninety.",
           "before":"and",
-          "note":"long six left?"
+          "note":"late six left long?"
         }
       },
-      "oldId":234,
+      "oldId":218,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3674,7 +3414,7 @@
             -0.7155108752,
             -0.0224580671
           ],
-          "oldId":235,
+          "oldId":219,
           "pos":[
             309.0676575,
             218.1669464,
@@ -3690,7 +3430,7 @@
             -0.9838913365,
             -0.02852613196
           ],
-          "oldId":236,
+          "oldId":220,
           "pos":[
             251.6164246,
             55.78138351,
@@ -3702,17 +3442,17 @@
         {
           "name":"curr",
           "normal":[
-            -0.6219048365,
-            -0.7830272321,
-            0.01013548512
+            -0.12132905,
+            -0.9924533377,
+            -0.01776609659
           ],
-          "oldId":237,
+          "oldId":221,
           "pos":[
-            347.2158813,
-            249.6732788,
-            160.7208099
+            350.6296997,
+            259.035614,
+            160.7171326
           ],
-          "radius":8,
+          "radius":15,
           "waypointType":"fwdAudioTrigger"
         }
       ]
@@ -3722,15 +3462,15 @@
         "beamng_file":"/temp/aipacenotes/out_1j60jesp.wav",
         "success":true
       },
-      "name":"Pacenote 58",
+      "name":"Pacenote 56",
       "notes":{
         "english":{
           "after":"one fifty.",
           "before":"",
-          "note":"long five right opens?"
+          "note":"long five right opens keep in?"
         }
       },
-      "oldId":238,
+      "oldId":222,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3739,7 +3479,7 @@
             -0.9981904692,
             -0.02371203335
           ],
-          "oldId":239,
+          "oldId":223,
           "pos":[
             275.3965454,
             -34.37569427,
@@ -3755,7 +3495,7 @@
             -0.2660000645,
             -0.0405972696
           ],
-          "oldId":240,
+          "oldId":224,
           "pos":[
             185.0680084,
             -135.1021729,
@@ -3767,15 +3507,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.4024240432,
-            -0.9140336156,
-            -0.05096507672
+            -0.5716416259,
+            -0.8193356207,
+            -0.04376062344
           ],
-          "oldId":241,
+          "oldId":225,
           "pos":[
-            265.2615662,
-            153.5080414,
-            156.7095032
+            286.1782227,
+            190.8099213,
+            158.7197418
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3787,15 +3527,15 @@
         "beamng_file":"/temp/aipacenotes/out_3gh9038n.wav",
         "success":true
       },
-      "name":"Pacenote 59",
+      "name":"Pacenote 57",
       "notes":{
         "english":{
-          "after":"three hundred.",
+          "after":"four hundred.",
           "before":"",
-          "note":"six left?"
+          "note":"six left plus?"
         }
       },
-      "oldId":242,
+      "oldId":226,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3804,7 +3544,7 @@
             -0.2043660488,
             -0.01212884195
           ],
-          "oldId":243,
+          "oldId":227,
           "pos":[
             48.12678528,
             -155.2237549,
@@ -3820,7 +3560,7 @@
             -0.531703748,
             -0.001991973057
           ],
-          "oldId":244,
+          "oldId":228,
           "pos":[
             -50.07398605,
             -193.935379,
@@ -3832,80 +3572,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.9027544333,
-            -0.4267977016,
-            -0.05364843973
+            -0.9270555807,
+            -0.3710149341,
+            -0.05399878659
           ],
-          "oldId":245,
+          "oldId":229,
           "pos":[
-            224.8366852,
-            -120.6701508,
-            144.2248535
-          ],
-          "radius":8,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ]
-    },
-    {
-      "metadata":{
-        "beamng_file":"/temp/aipacenotes/out_n4o11l40.wav",
-        "success":false
-      },
-      "name":"Pacenote 60",
-      "notes":{
-        "english":{
-          "after":"eighty.",
-          "before":"",
-          "note":"slight right, slowing?"
-        }
-      },
-      "oldId":246,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            -0.7946283224,
-            -0.6067770092,
-            -0.01968477434
-          ],
-          "oldId":247,
-          "pos":[
-            -274.5722351,
-            -370.6870422,
-            134.8722229
-          ],
-          "radius":8,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            -0.8218438773,
-            -0.5689959718,
-            -0.02856965772
-          ],
-          "oldId":248,
-          "pos":[
-            -304.7831421,
-            -392.7248535,
-            133.8881989
-          ],
-          "radius":8,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            -0.7785294101,
-            -0.6274028994,
-            -0.01604865755
-          ],
-          "oldId":249,
-          "pos":[
-            -168.4909973,
-            -286.7758789,
-            137.1775055
+            215.1323242,
+            -124.9326248,
+            143.6526489
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -3917,28 +3592,28 @@
         "beamng_file":"/temp/aipacenotes/out_l0m1nbb7.wav",
         "success":true
       },
-      "name":"Pacenote 61",
+      "name":"Pacenote 59",
       "notes":{
         "english":{
-          "after":"",
+          "after":"fifty.",
           "before":"",
           "note":"six left?"
         }
       },
-      "oldId":250,
+      "oldId":230,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
           "normal":[
-            -0.7960407559,
-            -0.6050153085,
-            -0.01660094498
+            -0.7782558598,
+            -0.6277595487,
+            -0.01535466378
           ],
-          "oldId":251,
+          "oldId":231,
           "pos":[
-            -367.6336975,
-            -436.2779541,
-            132.7696075
+            -377.8530884,
+            -444.2410583,
+            132.5552216
           ],
           "radius":8,
           "waypointType":"cornerStart"
@@ -3946,15 +3621,15 @@
         {
           "name":"corner end",
           "normal":[
-            -0.4986996273,
-            -0.8516963624,
-            0.1609720101
+            -0.5350115795,
+            -0.8295394668,
+            0.1600839871
           ],
-          "oldId":252,
+          "oldId":232,
           "pos":[
-            -449.5454102,
-            -523.2816162,
-            138.7418976
+            -443.9220276,
+            -514.2211914,
+            136.9932709
           ],
           "radius":8,
           "waypointType":"cornerEnd"
@@ -3966,7 +3641,7 @@
             -0.6234306906,
             -0.01584694197
           ],
-          "oldId":253,
+          "oldId":233,
           "pos":[
             -187.5158997,
             -302.0344238,
@@ -3982,15 +3657,15 @@
         "beamng_file":"/temp/aipacenotes/out_71gg80ho.wav",
         "success":true
       },
-      "name":"Pacenote 62",
+      "name":"Pacenote 60",
       "notes":{
         "english":{
           "after":"seventy.",
-          "before":"and",
-          "note":"five right minus over crest?"
+          "before":"",
+          "note":"five right minus over crest, tightens?"
         }
       },
-      "oldId":254,
+      "oldId":234,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3999,7 +3674,7 @@
             -0.903353635,
             0.1709513614
           ],
-          "oldId":255,
+          "oldId":235,
           "pos":[
             -466.994751,
             -558.4848022,
@@ -4015,7 +3690,7 @@
             -0.3930468193,
             0.1696254219
           ],
-          "oldId":256,
+          "oldId":236,
           "pos":[
             -516.2790527,
             -611.2972412,
@@ -4027,15 +3702,15 @@
         {
           "name":"curr",
           "normal":[
-            -0.7654766627,
-            -0.6433208976,
-            -0.01355365601
+            -0.7960407559,
+            -0.6050153085,
+            -0.01660094498
           ],
-          "oldId":257,
+          "oldId":237,
           "pos":[
-            -385.0255432,
-            -450.1159973,
-            132.4166107
+            -367.6336975,
+            -436.2779541,
+            132.7696075
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
@@ -4047,15 +3722,15 @@
         "beamng_file":"/temp/aipacenotes/out_q87hoogw.wav",
         "success":true
       },
-      "name":"Pacenote 63",
+      "name":"Pacenote 61",
       "notes":{
         "english":{
           "after":"",
           "before":"",
-          "note":"two right?"
+          "note":"two right, nip stop sign?"
         }
       },
-      "oldId":258,
+      "oldId":238,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4064,7 +3739,7 @@
             -0.2002805724,
             0.005117130005
           ],
-          "oldId":259,
+          "oldId":239,
           "pos":[
             -584.0099487,
             -629.8668213,
@@ -4080,7 +3755,7 @@
             0.8841933245,
             0.136315677
           ],
-          "oldId":260,
+          "oldId":240,
           "pos":[
             -626.6856079,
             -611.4466553,
@@ -4096,7 +3771,7 @@
             -0.751078359,
             0.1628667649
           ],
-          "oldId":261,
+          "oldId":241,
           "pos":[
             -483.0435791,
             -587.5946655,
@@ -4112,7 +3787,7 @@
         "beamng_file":"/temp/aipacenotes/out_gvq8fi20.wav",
         "success":true
       },
-      "name":"Pacenote 64",
+      "name":"Pacenote 62",
       "notes":{
         "english":{
           "after":"",
@@ -4120,7 +3795,7 @@
           "note":"six left over finish? into long 4 right."
         }
       },
-      "oldId":262,
+      "oldId":242,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -4129,7 +3804,7 @@
             0.8974474685,
             0.1544737156
           ],
-          "oldId":263,
+          "oldId":243,
           "pos":[
             -635.8779297,
             -590.9161377,
@@ -4145,7 +3820,7 @@
             0.6581074629,
             0.1212585197
           ],
-          "oldId":264,
+          "oldId":244,
           "pos":[
             -673.8765259,
             -540.5864258,
@@ -4157,20 +3832,136 @@
         {
           "name":"curr",
           "normal":[
-            -0.9987503716,
-            0.04819196181,
-            0.01323744989
+            -0.9888585026,
+            -0.1486798886,
+            0.007290582522
           ],
-          "oldId":265,
+          "oldId":245,
           "pos":[
-            -598.2614136,
-            -631.7415161,
-            163.024704
+            -590.2076416,
+            -631.0604858,
+            162.9541626
           ],
           "radius":8,
           "waypointType":"fwdAudioTrigger"
         }
       ]
+    }
+  ],
+  "static_pacenotes":[
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"damage_1",
+      "notes":{
+        "english":{
+          "note":"We just took some damage!"
+        },
+        "german":{
+          "note":"Wir haben gerade Schaden genommen!"
+        },
+        "spanish":{
+          "note":"¡Nos acabamos de golpear!"
+        }
+      },
+      "oldId":246,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"go_1/c",
+      "notes":{
+        "english":{
+          "note":"Go!"
+        },
+        "german":{
+          "note":"Los!"
+        },
+        "spanish":{
+          "note":"¡Vamos!"
+        }
+      },
+      "oldId":247,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_1/c",
+      "notes":{
+        "english":{
+          "note":"one"
+        },
+        "german":{
+          "note":"eins"
+        },
+        "spanish":{
+          "note":"uno"
+        }
+      },
+      "oldId":248,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_2/c",
+      "notes":{
+        "english":{
+          "note":"two"
+        },
+        "german":{
+          "note":"zwei"
+        },
+        "spanish":{
+          "note":"dos"
+        }
+      },
+      "oldId":249,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_3/c",
+      "notes":{
+        "english":{
+          "note":"three"
+        },
+        "german":{
+          "note":"drei"
+        },
+        "spanish":{
+          "note":"tres"
+        }
+      },
+      "oldId":250,
+      "pacenoteWaypoints":{}
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"finish_1/c",
+      "notes":{
+        "english":{
+          "note":"Thats it, bring the car to a stop."
+        },
+        "german":{
+          "note":"Das war's, bring das Auto zum Stehen."
+        },
+        "spanish":{
+          "note":"Listo, detén el coche."
+        }
+      },
+      "oldId":251,
+      "pacenoteWaypoints":{}
     }
   ],
   "updated_at":1706436134

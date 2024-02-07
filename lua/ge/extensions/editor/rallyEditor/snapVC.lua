@@ -165,13 +165,14 @@ function C:closestSnapPos(source_pos)
   return closestPos, posAfter
 end
 
-function C:prevSnapPos(srcPosIn)
+function C:prevSnapPos(srcPos)
   if not self.transcript_path then return end
 
-  srcPosIn = vec3(srcPosIn)
+  srcPos = vec3(srcPos)
 
-  -- make sure that srcPosIn is aligned to a snaproad node.
-  local srcPos, _ = self:closestSnapPos(srcPosIn)
+  -- make sure that srcPos is aligned to a snaproad node.
+  local _
+  srcPos, _ = self:closestSnapPos(srcPos)
 
   if not srcPos then
     return nil, nil
@@ -192,15 +193,13 @@ function C:prevSnapPos(srcPosIn)
   end
 end
 
-function C:nextSnapPos(srcPos, limitPos)
+function C:nextSnapPos(srcPos)
   if not self.transcript_path then return end
-
   srcPos = vec3(srcPos)
-  limitPos = vec3(limitPos)
 
   -- make sure that srcPos is aligned to a snaproad node.
+  local _
   srcPos, _ = self:closestSnapPos(srcPos)
-  limitPos, _ = self:closestSnapPos(limitPos)
 
   if not srcPos then
     return nil, nil
@@ -217,14 +216,7 @@ function C:nextSnapPos(srcPos, limitPos)
   end
 
   if i_curr then
-    local currPos = points[i_curr+1]
-    if currPos == limitPos then -- dont go path the limit
-      return nil, nil
-    else
-      local newPos = currPos
-      local normalPos = points[i_curr+2]
-      return newPos, normalPos
-    end
+    return points[i_curr+1], points[i_curr+2]
   end
 end
 

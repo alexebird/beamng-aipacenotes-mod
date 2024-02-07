@@ -58,8 +58,10 @@ local function desktopGetTranscripts()
 end
 
 local function listMissionsForLevel()
+  local level = getCurrentLevelIdentifier()
+
   local filterFn = function (mission)
-    return mission.startTrigger.level == getCurrentLevelIdentifier() and mission.missionType == 'rallyStage'
+    return mission.startTrigger.level == level and mission.missionType == 'rallyStage'
   end
 
   local missionList = {}
@@ -75,9 +77,23 @@ local function listMissionsForLevel()
     end
   end
 
-  -- log('D', 'wtf', dumps(missionList))
+  local settings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')()
+  settings:load()
+  local last_mid = nil
+  local last_load_state = false
+  if settings then
+    last_mid = settings:getLastMissionId(level)
+    last_load_state = settings:getLastLoadState(level)
+  end
 
-  guihooks.trigger('aiPacenotesMissionsLoaded', missionList)
+  -- log('D', 'wtf', dumps(last_mid))
+
+  local resp = {
+    missions = missionList,
+    last_mission_id = last_mid,
+    last_load_state = last_load_state,
+  }
+  guihooks.trigger('aiPacenotesMissionsLoaded', resp)
 end
 
 -- local function onFirstUpdate()
@@ -164,26 +180,6 @@ local function drawDebug()
     end
   end
 end
-
--- local function moveWaypointTowards(pacenote, fwd)
---   local nextWp = pacenote:getActiveFwdAudioTrigger()
---   local cs = pacenote:getCornerStartWaypoint()
---   local newSnapPos, normalAlignPos = nil, nil
---
---   if fwd then
---     newSnapPos, normalAlignPos = snaproads:nextSnapPos(nextWp.pos, cs and cs.pos)
---   else
---     newSnapPos, normalAlignPos = snaproads:prevSnapPos(nextWp.pos)
---   end
---
---   if newSnapPos then
---     nextWp:setPos(newSnapPos)
---     if normalAlignPos then
---       local newNormal = re_util.calculateForwardNormal(newSnapPos, normalAlignPos)
---       nextWp:setNormal(newNormal)
---     end
---   end
--- end
 
 local function moveNextPacenoteForward()
   log('D', 'wtf', 'moveNextPacenoteForward')
@@ -346,14 +342,8 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   end
 end
 
--- local function initSnapRoads()
---   snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads2')()
---   snaproads:loadSnapRoads()
--- end
-
--- VC = vehicle capture
-local function initSnapVC()
-  log('D', logTag, 'initSnapVC')
+-- VC means 'vehicle capture'
+local function initSnaproads()
   snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(missionDir)
   if not snaproads:load() then
     snaproads = nil
@@ -370,8 +360,7 @@ local function initRallyManager(newMissionId, newMissionDir)
   rallyManager:handleNoteSearch()
 
   if missionDir then
-    -- initSnapRoads()
-    initSnapVC()
+    initSnaproads()
   end
 end
 
@@ -444,6 +433,21 @@ end
 --   log('D', 'aipacenotes', 'onVehicleSpawned')
 -- end
 
+
+local function setLastMissionId(mid)
+  local settings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')()
+  if settings then
+    settings:setLastMissionId(getCurrentLevelIdentifier(), mid)
+  end
+end
+
+local function setLastLoadState(state)
+  local settings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')()
+  if settings then
+    settings:setLastLoadState(getCurrentLevelIdentifier(), state)
+  end
+end
+
 M.onVehicleResetted = onVehicleResetted
 -- M.onVehicleSpawned = onVehicleSpawned
 -- M.onVehicleSwitched = onVehicleSwitched
@@ -466,5 +470,7 @@ M.onUpdate = onUpdate
 
 M.trascribe_recording_cut = trascribe_recording_cut
 M.trascribe_recording_stop = trascribe_recording_stop
+M.setLastMissionId = setLastMissionId
+M.setLastLoadState = setLastLoadState
 
 return M

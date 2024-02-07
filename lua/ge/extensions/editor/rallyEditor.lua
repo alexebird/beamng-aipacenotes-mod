@@ -282,6 +282,14 @@ local function newEmptyNotebook()
     )
 end
 
+local function openMission()
+  editor_missionEditor.show()
+  local mid = currentPath:missionId()
+  if mid then
+    editor_missionEditor.setMissionById(mid)
+  end
+end
+
 local function drawEditorGui()
   if focusWindow == true then
     im.SetNextWindowFocus()
@@ -344,6 +352,11 @@ local function drawEditorGui()
         saveNotebook()
       end
       im.PopStyleColor(1)
+
+      im.SameLine()
+      if im.Button("Mission") then
+        openMission()
+      end
 
       if not editor.editMode or editor.editMode.displayName ~= editModeName then
         im.SameLine()

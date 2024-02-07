@@ -14,10 +14,13 @@ local unknown_transcript_str = '[unknown]'
 local aipPath = 'aipacenotes'
 local notebooksPath = aipPath..'/notebooks'
 local transcriptsPath = aipPath..'/transcripts'
-local desktopTranscriptFname = "/settings/aipacenotes/desktop.transcripts.json"
-local staticPacenotesFname = "/settings/aipacenotes/static_pacenotes.json"
-local cornerAnglesFname = '/settings/aipacenotes/corner_angles.json'
-local transcriptsExt = "transcripts.json"
+
+local aipSettingsRoot = '/settings/aipacenotes'
+local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
+local staticPacenotesFname = aipSettingsRoot..'/static_pacenotes.json'
+local cornerAnglesFname = aipSettingsRoot..'/corner_angles.json'
+
+local transcriptsExt = 'transcripts.json'
 local missionSettingsFname = 'mission.settings.json'
 local default_notebook_name = 'primary'
 local default_codriver_name = 'Sophia'
@@ -353,6 +356,7 @@ end
 
 -- vars
 M.aipPath = aipPath
+M.aipSettingsRoot = aipSettingsRoot
 M.aip_fg_color = aip_fg_color
 M.autodist_internal_level1 = autodist_internal_level1
 M.autofill_blocker = autofill_blocker
@@ -361,8 +365,8 @@ M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
 M.default_notebook_name = default_notebook_name
 M.default_punctuation = default_punctuation
-M.dragModes = dragModes
 M.desktopTranscriptFname = desktopTranscriptFname
+M.dragModes = dragModes
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath
 M.staticPacenotesFname = staticPacenotesFname

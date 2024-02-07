@@ -54,18 +54,35 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.$on('aiPacenotesMissionsLoaded', function (event, response) {
-        console.log(JSON.stringify(response))
+        console.log('recce missions loaded: ' + JSON.stringify(response))
 
-        if (typeof response === 'object' && Object.keys(response).length === 0 && !Array.isArray(response)) {
+        let missions = response.missions
+        let last_mid = response.last_mission_id
+        let last_load_state = response.last_load_state
+        console.log(`recce last_mission_id=${last_mid} loaded=${last_load_state}`)
+
+        if (Object.keys(missions).length === 0 && !Array.isArray(missions)) {
           $scope.missions = []
         } else {
-          $scope.missions = response
+          $scope.missions = missions
         }
 
         if ($scope.missions && $scope.missions.length > 0) {
-          $scope.selectedMission = $scope.missions[0]
+          $scope.selectedMission = null
+          $scope.selectedMissionName = null
+
+          $scope.selectedMission = $scope.missions.find((mission) => mission.missionID === last_mid)
+
+          if (!$scope.selectedMission) {
+            $scope.selectedMission = $scope.missions[0]
+          }
+
           $scope.dropdownMissionNames = $scope.missions.map((mission) => mission.missionName)
-          $scope.selectedMissionName = $scope.dropdownMissionNames[0]
+          $scope.selectedMissionName = $scope.selectedMission.missionName
+
+          if (last_load_state) {
+            $scope.btnLoadMission()
+          }
         } else {
           $scope.missions = []
           $scope.selectedMission = null
@@ -145,13 +162,19 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.btnLoadMission = function() {
-        let missionId = $scope.selectedMission.missionId
+        let missionId = $scope.selectedMission.missionID
         let missionDir = $scope.selectedMission.missionDir
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.initRallyManager("'+missionId+'", "'+missionDir+'")')
+        $scope.drawDebug = true
+        updateLuaDrawDebug()
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
       }
 
       $scope.btnUnloadMission = function() {
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearRallyManager()')
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(false)')
+        $scope.drawDebug = false
+        updateLuaDrawDebug()
       }
 
       $scope.btnRetryNetwork = function() {
@@ -159,9 +182,13 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearTimeout()')
       }
 
+      function updateLuaDrawDebug() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')
+      }
+
       $scope.btnToggleDrawDebug = function() {
         $scope.drawDebug = !$scope.drawDebug
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')
+        updateLuaDrawDebug()
       }
 
       $scope.btnToggleSnaproadsDrawDebug = function() {
@@ -210,6 +237,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$watch('selectedMissionName', function(newValue, oldValue) {
         if (newValue !== oldValue) {
           $scope.selectedMission = $scope.missions.find(mission => mission.missionName === $scope.selectedMissionName)
+          if ($scope.selectedMission) {
+            let missionId = $scope.selectedMission.missionID
+            bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastMissionId("'+missionId+'")')
+          }
         }
       });
 
