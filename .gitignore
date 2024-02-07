@@ -1,3 +1,4 @@
 *.json.bak.*
 .DS_Store
+gitsha.txt
 /art
