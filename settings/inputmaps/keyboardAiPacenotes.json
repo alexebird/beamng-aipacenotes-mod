@@ -1,4 +1,6 @@
 {
+  "devicetype":"keyboard",
+  "version":1,
   "bindings":[
     {
       "action":"rallyEditorSave",
@@ -27,8 +29,46 @@
     {
       "action":"rallyEditorPacenoteSelectPrev",
       "control":"1"
+    },
+    {
+      "action":"rallyEditorDeselect",
+      "control":"escape"
+    },
+    {
+      "action":"rallyEditorMoveSelectedWaypointForwardFast",
+      "control":"ctrl n"
+    },
+    {
+      "action":"rallyEditorCameraOrbitUp",
+      "control":"up"
+    },
+    {
+      "action":"rallyEditorMoveSelectedWaypointBackwardFast",
+      "control":"ctrl p"
+    },
+    {
+      "action":"rallyEditorSelectNextWaypoint",
+      "control":"h"
+    },
+    {
+      "action":"rallyEditorMoveSelectedWaypointBackward",
+      "control":"p"
+    },
+    {
+      "action":"rallyEditorCameraOrbitLeft",
+      "control":"left"
+    },
+    {
+      "action":"rallyEditorCameraOrbitDown",
+      "control":"down"
+    },
+    {
+      "action":"rallyEditorCameraOrbitRight",
+      "control":"right"
+    },
+    {
+      "action":"rallyEditorMoveSelectedWaypointForward",
+      "control":"n"
     }
-  ],
-  "devicetype":"keyboard",
-  "version":1
+  ]
 }

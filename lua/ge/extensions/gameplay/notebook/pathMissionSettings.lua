@@ -92,7 +92,7 @@ function C:getTranscriptAbsPath(missionDir, settingName)
     missionDir =  missionDir or editor_rallyEditor.getMissionDir()
     local absPath = re_util.missionTranscriptPath(missionDir, basenameWithExt)
     if not FS:fileExists(absPath) then
-      log('E', logTag, 'transcripts file doesnt exist: '..absPath)
+      log('W', logTag, 'getTranscriptAbsPath absPath file doesnt exist: '..absPath)
       return nil
     else
       return absPath
@@ -119,7 +119,7 @@ function C:setTranscriptAbsPath(settingName, newAbsPath)
       self.transcripts[settingName] = filename..'.'..ext
       self:write()
     else
-      log('E', logTag, 'set transcripts file doesnt exist: '..newAbsPath)
+      log('E', logTag, 'setTranscriptAbsPath newAbsPath doesnt exist: '..newAbsPath)
     end
   end
 end

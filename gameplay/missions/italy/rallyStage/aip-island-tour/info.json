@@ -49,8 +49,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"Italy Island Tour - Vivace (aipacenotes)",
-          "configPath":"vehicles/vivace/Italy Island Tour - Vivace (aipacenotes).pc",
+          "config":"Italy Island Tour - Vivace (aip)",
+          "configPath":"vehicles/vivace/Italy Island Tour - Vivace (aip).pc",
           "model":"vivace",
           "useCustomConfig":false
         }

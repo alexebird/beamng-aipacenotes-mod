@@ -1,0 +1,155 @@
+{
+  "AipSbRadioWarning": {
+    "name": "AipSbRadioWarning",
+    "mapTo": "AipSbRadioWarning",
+    "class": "Material",
+    "persistentId": "1f9c1c81-02f9-43ec-ad2f-14ccc37a48d9",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbRadioPoint": {
+    "name": "AipSbRadioPoint",
+    "mapTo": "AipSbRadioPoint",
+    "class": "Material",
+    "persistentId": "ebd7517c-9c7b-4d72-8289-cefa96d0c8ce",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbStart": {
+    "name": "AipSbStart",
+    "mapTo": "AipSbStart",
+    "class": "Material",
+    "persistentId": "c3be0db0-908d-4ec5-9032-65a482a5af91",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbStop": {
+    "name": "AipSbStop",
+    "mapTo": "AipSbStop",
+    "class": "Material",
+    "persistentId": "1e4074e1-917b-4cde-8f45-b80fc58a6424",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbEndOfArea": {
+    "name": "AipSbEndOfArea",
+    "mapTo": "AipSbEndOfArea",
+    "class": "Material",
+    "persistentId": "bbd52eab-7bc5-4cfd-b3a8-98195d6c77a6",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbMedicalWarning": {
+    "name": "AipSbMedicalWarning",
+    "mapTo": "AipSbMedicalWarning",
+    "class": "Material",
+    "persistentId": "f5631cd0-97b8-4878-9bb0-f3845b6e6c2f",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbMedicalPoint": {
+    "name": "AipSbMedicalPoint",
+    "mapTo": "AipSbMedicalPoint",
+    "class": "Material",
+    "persistentId": "2f7c39ff-e508-40ef-b44f-e7e1d013e124",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbFinish": {
+    "name": "AipSbFinish",
+    "mapTo": "AipSbFinish",
+    "class": "Material",
+    "persistentId": "9c26dc4e-10da-48d1-a6af-cfa64d6959ff",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  },
+  "AipSbFinishEntry": {
+    "name": "AipSbFinishEntry",
+    "mapTo": "AipSbFinishEntry",
+    "class": "Material",
+    "persistentId": "5ea7fa2a-f544-4120-9c41-2bb018addd42",
+    "Stages": [
+      {
+        "baseColorMap": "/art/aipacenotes/rally/signboards/signboard_shared_grid.color.png",
+        "normalMap": "/art/aipacenotes/rally/signboards/signboard_shared.normal.png",
+        "roughnessMap": "/art/aipacenotes/rally/signboards/signboard_shared.roughness.data.png"
+      },
+      {},
+      {},
+      {}
+    ],
+    "version": 1.5
+  }
+}

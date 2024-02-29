@@ -172,7 +172,9 @@ function C:selectPacenote(id)
   -- deselect waypoint if we are changing pacenotes.
   if self.pacenote_tools_state.selected_pn_id ~= id then
     self.pacenote_tools_state.selected_wp_id = nil
-    self.pacenote_tools_state.snaproads:setFilter(nil)
+    if self.pacenote_tools_state.snaproads then
+      self.pacenote_tools_state.snaproads:setFilter(nil)
+    end
   end
 
   if not id then
@@ -226,7 +228,10 @@ function C:selectWaypoint(id)
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
     self:resetGizmoTransformToOrigin()
-    self.pacenote_tools_state.snaproads:setFilter(nil)
+
+    if self.pacenote_tools_state.snaproads then
+      self.pacenote_tools_state.snaproads:setFilter(nil)
+    end
   end
 end
 
@@ -798,7 +803,7 @@ function C:addMouseWaypointToPacenote()
     local note = self:selectedPacenote()
     local waypoint = self:selectedWaypoint()
 
-    if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
+    if waypoint and waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
       if self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
         self:_snapOneHelper(waypoint)
       elseif self.pacenote_tools_state.drag_mode == dragModes.simple then
@@ -1163,12 +1168,11 @@ function C:cycleDragMode()
   self:resetGizmoTransformToOrigin()
 
   if self.pacenote_tools_state.drag_mode == dragModes.simple then
-    self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
+    if self.pacenote_tools_state.snaproads then
+      self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
+    end
   elseif self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    -- self.pacenote_tools_state.drag_mode = dragModes.gizmo
     self.pacenote_tools_state.drag_mode = dragModes.simple
-  -- elseif self.pacenote_tools_state.drag_mode == dragModes.gizmo then
-    -- self.pacenote_tools_state.drag_mode = dragModes.simple
   end
 
   -- log('D', logTag, 'cycle dragMode to '..self.pacenote_tools_state.drag_mode)
@@ -1695,9 +1699,10 @@ function C:loadFullCourse(show)
     self.pacenote_tools_state.snaproads.radius = 0.5
     if not self.pacenote_tools_state.snaproads:load() then
       self.pacenote_tools_state.snaproads = nil
+      self.pacenote_tools_state.drag_mode = dragModes.simple
+    else
+      self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
     end
-
-    self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
   end
 end
 
@@ -2074,6 +2079,8 @@ function C:_snapAll()
 end
 
 function C:_snapOneHelper(wp)
+  if not self.pacenote_tools_state.snaproads then return end
+
   local newPos, normalAlignPos = self.pacenote_tools_state.snaproads:closestSnapPos(wp.pos)
   wp.pos = newPos
   if normalAlignPos then
@@ -2259,6 +2266,9 @@ function C:selectNextWaypoint()
       wp_new = pn:getCornerEndWaypoint()
     elseif wp_sel:isCe() then
       wp_new = pn:getActiveFwdAudioTrigger()
+      if not wp_new then
+        wp_new = pn:getCornerStartWaypoint()
+      end
     end
 
     if wp_new then

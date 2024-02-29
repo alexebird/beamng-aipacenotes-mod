@@ -59,8 +59,8 @@
       "enabled":true,
       "isCustomConfig":false,
       "mode":"choice",
-      "playerConfig":"Pikes Peak - SBR (aipacenotes)",
-      "playerConfigPath":"vehicles/sbr/Pikes Peak - SBR (aipacenotes).pc",
+      "playerConfig":"Pikes Peak - SBR (aip)",
+      "playerConfigPath":"vehicles/sbr/Pikes Peak - SBR (aip).pc",
       "playerModel":"sbr",
       "playerPaintName":"Carbon",
       "usePresetVehicle":true

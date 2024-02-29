@@ -58,8 +58,8 @@
       "usePlayerVehicle":true,
       "vehicles":[
         {
-          "config":"Nordic Sprint - Vivace (aipacenotes)",
-          "configPath":"vehicles/vivace/Nordic Sprint - Vivace (aipacenotes).pc",
+          "config":"Nordic Sprint - Vivace (aip)",
+          "configPath":"vehicles/vivace/Nordic Sprint - Vivace (aip).pc",
           "model":"vivace"
         }
       ]

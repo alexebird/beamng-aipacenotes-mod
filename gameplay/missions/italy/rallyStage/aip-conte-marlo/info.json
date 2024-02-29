@@ -60,8 +60,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"Conte Marlo - Vivace (aipacenotes)",
-          "configPath":"vehicles/vivace/Conte Marlo - Vivace (aipacenotes).pc",
+          "config":"Conte Marlo - Vivace (aip)",
+          "configPath":"vehicles/vivace/Conte Marlo - Vivace (aip).pc",
           "model":"vivace"
         }
       ]

@@ -231,7 +231,7 @@ function C:loadTranscript(fname)
   self.loaded_transcript = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(fname)
 
   if not self.loaded_transcript:load() then
-    log('E', logTag, 'couldnt load transcripts file from '..fname)
+    log('W', logTag, 'transcripts tab loadTranscript couldnt load transcripts file from '..tostring(fname))
     self.loaded_transcript = nil
   end
 end

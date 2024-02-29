@@ -6,12 +6,12 @@
             "voice_name": "en-AU-Neural2-C",
             "_emphasis_level": "moderate",
             "_prosody_volume": "default",
-            "prosody_pitch": "high",
+            "_prosody_pitch": "high",
             "_prosody_rate": "default",
             "dynamic_rate": {
                 "lowest_rate": 0.85,
                 "shortest_phrase": 1,
-                "highest_rate": 1.35,
+                "highest_rate": 1.25,
                 "longest_phrase": 6
             }
         },
@@ -43,7 +43,7 @@
             "voice_name": "en-GB-Neural2-A",
             "_emphasis_level": "moderate",
             "_prosody_volume": "default",
-            "prosody_pitch": "high",
+            "_prosody_pitch": "high",
             "_prosody_rate": "default",
             "dynamic_rate": {
                 "_lowest_rate": 0.8,
@@ -80,7 +80,7 @@
             "voice_name": "es-ES-Neural2-E",
             "_emphasis_level": "moderate",
             "_prosody_volume": "default",
-            "prosody_pitch": "high",
+            "_prosody_pitch": "high",
             "_prosody_rate": "default",
             "dynamic_rate": {
                 "_lowest_rate": 0.8,
@@ -115,7 +115,6 @@
             "type": "gcp",
             "language_code": "de-DE",
             "voice_name": "de-DE-Neural2-A",
-            "prosody_pitch": "high",
             "dynamic_rate": {}
         }
     },
@@ -133,7 +132,6 @@
             "type": "gcp",
             "language_code": "fr-FR",
             "voice_name": "fr-FR-Neural2-A",
-            "prosody_pitch": "high",
             "dynamic_rate": {}
         }
     }

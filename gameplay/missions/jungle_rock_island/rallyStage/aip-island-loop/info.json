@@ -53,8 +53,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"Jungle Island Loop - Vivace (aipacenotes)",
-          "configPath":"vehicles/vivace/Jungle Island Loop - Vivace (aipacenotes).pc",
+          "config":"Jungle Island Loop - Vivace (aip)",
+          "configPath":"vehicles/vivace/Jungle Island Loop - Vivace (aip).pc",
           "model":"vivace"
         }
       ]

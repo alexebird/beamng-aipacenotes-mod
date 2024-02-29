@@ -56,8 +56,8 @@
       "prioritizePlayerVehicle":false,
       "vehicles":[
         {
-          "config":"Echo Canyon - Vivace (aipacenotes)",
-          "configPath":"vehicles/vivace/Echo Canyon - Vivace (aipacenotes).pc",
+          "config":"Echo Canyon - Vivace (aip)",
+          "configPath":"vehicles/vivace/Echo Canyon - Vivace (aip).pc",
           "model":"vivace",
           "useCustomConfig":false
         }

@@ -27,7 +27,7 @@ function C:load()
     self.transcript_path = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(abspath)
 
     if not self.transcript_path:load() then
-      log('E', logTag, 'couldnt load transcripts file from '..tostring(abspath))
+      log('W', logTag, 'snapVC.load couldnt load transcripts file from '..tostring(abspath))
       self.transcript_path = nil
       return false
     end
