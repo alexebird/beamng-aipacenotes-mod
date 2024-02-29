@@ -19,6 +19,14 @@
       "control":"j"
     },
     {
+      "action":"rallyEditorPacenoteSelectNext",
+      "control":"x"
+    },
+    {
+      "action":"rallyEditorPacenoteSelectPrev",
+      "control":"z"
+    },
+    {
       "action":"rallyEditorInsertMode",
       "control":"i"
     },

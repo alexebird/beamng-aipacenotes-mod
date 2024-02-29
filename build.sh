@@ -11,7 +11,7 @@ main() {
         echo "$(git rev-parse HEAD)+dirty" > gitsha.txt
     fi
 
-    zip -r ../$(basename `pwd`).zip ./* -x '*.git*' -x 'art*.png'
+    zip -r ../$(basename `pwd`).zip ./* -x '*.git*' -x 'art*.png' -x 'docs'
     rm -fv gitsha.txt
 }
 
