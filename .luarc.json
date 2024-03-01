@@ -3,6 +3,7 @@
     "globals": [
       "ColorF",
       "ColorI",
+      "getCurrentLevelIdentifier",
       "Engine",
       "FS",
       "Point2F",

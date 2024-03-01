@@ -13,11 +13,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       StreamsManager.add(streamsList)
 
       let defaultCornerCall = 'c'
-      let transcriptRefreshIntervalMs = 500
+      let transcriptRefreshIntervalMs = 250
 
       $scope.transcripts = []
-      $scope.is_recording = false
-      $scope.network_ok = false
+      $scope.isRecording = false
+      // $scope.network_ok = false
       $scope.drawDebug = false
       $scope.drawDebugSnaproads = false
 
@@ -30,12 +30,15 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.dropdownStyleNames = []
       $scope.selectedStyleName = null
 
-      var transcriptInterval = $interval(() => {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
-      }, transcriptRefreshIntervalMs)
+      $scope.missionIsLoaded = false
+      $scope.loadedMissionName = null
+
+      // var transcriptInterval = $interval(() => {
+        // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      // }, transcriptRefreshIntervalMs)
 
       // dont wait for the first interval to get transcripts.
-      bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
 
       function updateCornerCall() {
         var textElement = document.getElementById('cornerCall')
@@ -46,9 +49,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.$on('$destroy', function () {
-        if (angular.isDefined(transcriptInterval)) {
-          $interval.cancel(transcriptInterval);
-        }
+        // if (angular.isDefined(transcriptInterval)) {
+        //   $interval.cancel(transcriptInterval);
+        // }
         StreamsManager.remove(streamsList)
         bngApi.engineLua('extensions.unload("ui_aipacenotes_recceApp")')
       })
@@ -94,19 +97,19 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$on('aiPacenotesTranscriptsLoaded', function (event, response) {
         // console.log(JSON.stringify(response))
         if (response.ok) {
-          $scope.network_ok = true
-          $scope.is_recording = response.is_recording
+          // $scope.network_ok = true
+          // $scope.isRecording = response.is_recording
           $scope.transcripts = response.transcripts
           $scope.transcriptsError = null
         } else {
-          $scope.network_ok = false
+          // $scope.network_ok = false
           $scope.transcripts = []
           $scope.transcriptsError = $sce.trustAsHtml(response.error)
         }
       })
 
       $scope.$on('aiPacenotesInputActionDesktopCallNotOk', function (event, errMsg) {
-          $scope.network_ok = false
+          // $scope.network_ok = false
           $scope.transcriptsError = $sce.trustAsHtml(errMsg)
       })
 
@@ -162,9 +165,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.btnLoadMission = function() {
-        let missionId = $scope.selectedMission.missionID
-        let missionDir = $scope.selectedMission.missionDir
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.initRallyManager("'+missionId+'", "'+missionDir+'")')
+        const loadedMissionId = $scope.selectedMission.missionID
+        const loadedMissionDir = $scope.selectedMission.missionDir
+        $scope.loadedMissionName = $scope.selectedMission.missionName
+        $scope.missionIsLoaded = true
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.initRallyManager("'+loadedMissionId+'", "'+loadedMissionDir+'")')
         $scope.drawDebug = true
         updateLuaDrawDebug()
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
@@ -174,13 +179,36 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearRallyManager()')
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(false)')
         $scope.drawDebug = false
+        $scope.missionIsLoaded = false
         updateLuaDrawDebug()
       }
 
-      $scope.btnRetryNetwork = function() {
-        $scope.transcriptsError = $sce.trustAsHtml('connecting to desktop app...')
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearTimeout()')
+      // $scope.btnRetryNetwork = function() {
+      //   $scope.transcriptsError = $sce.trustAsHtml('connecting to desktop app...')
+      //   bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearTimeout()')
+      // }
+
+      $scope.btnRecordStart = function() {
+        $scope.isRecording = true
+        bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.transcribe_recording_start(${$scope.recordDriveline}, ${$scope.recordVoice})`)
       }
+
+      $scope.btnRecordStop = function() {
+        $scope.isRecording = false
+        bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_stop()")
+      }
+
+      $scope.btnRecordCut = function() {
+        bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_cut()")
+      }
+
+      $scope.submitPacenoteForm = function() {
+        console.log($scope.pacenote)
+      }
+
+      $scope.recordDriveline = false
+      $scope.recordVoice = false
+      $scope.pacenote = "TODO: pacenote text"
 
       function updateLuaDrawDebug() {
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')

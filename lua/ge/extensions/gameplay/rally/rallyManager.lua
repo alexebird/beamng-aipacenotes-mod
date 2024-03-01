@@ -267,7 +267,7 @@ function C:nextPacenotesUpdated()
     table.insert(requestBody, entry)
   end
 
-  local resp = extensions.gameplay_aipacenotes_client.update_next_pacenotes({ pacenotes = requestBody })
+  -- local resp = extensions.gameplay_aipacenotes_client.update_next_pacenotes({ pacenotes = requestBody })
 end
 
 function C:handleNoteSearch()

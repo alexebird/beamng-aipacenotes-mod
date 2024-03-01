@@ -131,7 +131,7 @@ end
 
 function C:damage()
   if self.vehicleData then
-    return self.vehicleData.damage
+    return self.vehicleData.damage or 0
   else
     return nil
   end

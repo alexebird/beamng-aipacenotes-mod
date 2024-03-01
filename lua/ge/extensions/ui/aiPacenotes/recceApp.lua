@@ -7,27 +7,38 @@ local logTag = 'aipacenotes-recce'
 local M = {}
 
 local rallyManager = nil
+
 local vehicleCapture = nil
+local cutCapture = nil
+
 local snaproads = nil
-local cornerAngles = nil
+-- local cornerAngles = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
 local ui_selectedCornerAnglesStyle = ""
 local missionDir = nil
 local missionId = nil
+local shouldRecordDriveline = false
+local shouldRecordVoice = false
 
 local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
 end
 
-local function initVehicleCapture()
-  local veh = be:getPlayerVehicle(0)
-  if isFreeroam() then
+local function initCaptures()
+  vehicleCapture = nil
+  cutCapture = nil
+
+  if isFreeroam() and missionDir then
+    local veh = be:getPlayerVehicle(0)
     vehicleCapture = require('/lua/ge/extensions/gameplay/aipacenotes/vehicleCapture')(
       veh,
-      cornerAngles,
-      ui_selectedCornerAnglesStyle
+      missionDir
+    )
+    cutCapture = require('/lua/ge/extensions/gameplay/aipacenotes/cutCapture')(
+      veh,
+      missionDir
     )
   end
 end
@@ -44,9 +55,9 @@ local function loadCornerAnglesFile()
   end
 end
 
-local function clearTimeout()
-  extensions.gameplay_aipacenotes_client.clear_network_issue()
-end
+-- local function clearTimeout()
+  -- extensions.gameplay_aipacenotes_client.clear_network_issue()
+-- end
 
 local function desktopGetTranscripts()
   local resp = extensions.gameplay_aipacenotes_client.transcribe_transcripts_get(2)
@@ -102,8 +113,9 @@ end
 
 local function updateVehicleCapture()
   if not vehicleCapture then return end
-
-  vehicleCapture:capture()
+  if shouldRecordDriveline then
+    vehicleCapture:capture()
+  end
 end
 
 local function updateRallyManager(dtSim)
@@ -388,41 +400,56 @@ end
 
 local function setCornerAnglesStyleName(name)
   ui_selectedCornerAnglesStyle = name
-  -- initVehicleCapture()
 end
 
-local function getVehiclePosForRequest()
+local function getVehiclePosForCut()
   local vehicle = be:getPlayerVehicle(0)
   local vehiclePos = vehicle:getPosition()
   local vRot = quatFromDir(vehicle:getDirectionVector(), vehicle:getDirectionVectorUp())
-  -- local x,y,z = vRot * vec3(1,0,0),vRot * vec3(0,1,0),vRot * vec3(0,0,1)
   local vehicle_position = { pos=vehiclePos, quat={x=vRot.x,y=vRot.y,z=vRot.z,w=vRot.w} }
   return vehicle_position
 end
 
-local function trascribe_recording_cut()
-  local request = {
-    vehicle_data = getVehiclePosForRequest(),
-  }
-  if vehicleCapture then
-    request.capture_data = vehicleCapture:asJson()
-    vehicleCapture:reset()
-  else
-    initVehicleCapture()
-  end
+local function transcribe_recording_cut()
+  log('I', logTag, 'transcribe_recording_cut')
 
-  local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_cut(request)
-  if not resp.ok then
-    guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
+  if cutCapture then
+    local cutId = cutCapture:capture()
+    if shouldRecordVoice then
+      local request = {
+        -- vehicle_data = getVehiclePosForCut(),
+        cut_id = cutId,
+      }
+      local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_cut(request)
+      if not resp.ok then
+        guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
+      end
+    end
   end
 end
 
-local function trascribe_recording_stop()
-  vehicleCapture = nil
-  local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_stop()
-  if not resp.ok then
-    guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
+local function transcribe_recording_start(recordDriveline, recordVoice)
+  log('I', logTag, 'transcribe_recording_start')
+
+  shouldRecordDriveline = recordDriveline
+  shouldRecordVoice = recordVoice
+
+  initCaptures()
+end
+
+local function transcribe_recording_stop()
+  log('I', logTag, 'transcribe_recording_stop')
+  if vehicleCapture and shouldRecordDriveline then
+    vehicleCapture:writeCaptures(true)
   end
+
+  vehicleCapture = nil
+  cutCapture = nil
+
+  -- local resp = extensions.gameplay_aipacenotes_client.transcribe_recording_stop()
+  -- if not resp.ok then
+  --   guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
+  -- end
 end
 
 -- local function onVehicleSwitched()
@@ -457,7 +484,7 @@ M.listMissionsForLevel = listMissionsForLevel
 M.desktopGetTranscripts = desktopGetTranscripts
 M.initRallyManager = initRallyManager
 M.clearRallyManager = clearRallyManager
-M.clearTimeout = clearTimeout
+-- M.clearTimeout = clearTimeout
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setCornerAnglesStyleName = setCornerAnglesStyleName
@@ -468,8 +495,9 @@ M.moveVehicleForward = moveVehicleForward
 M.onUpdate = onUpdate
 -- M.onFirstUpdate = onFirstUpdate
 
-M.trascribe_recording_cut = trascribe_recording_cut
-M.trascribe_recording_stop = trascribe_recording_stop
+M.transcribe_recording_cut = transcribe_recording_cut
+M.transcribe_recording_stop = transcribe_recording_stop
+M.transcribe_recording_start = transcribe_recording_start
 M.setLastMissionId = setLastMissionId
 M.setLastLoadState = setLastLoadState
 

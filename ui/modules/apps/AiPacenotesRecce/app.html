@@ -18,10 +18,10 @@
 
       <div class="indicators">
         <span class="indicator" id="wheelDegrees">0 &deg;</span>
-        <span class="indicator clickable-indicator" ng-click="btnRetryNetwork()">
-          <span class="dot-indicator" ng-class="{'network-indicator-on': network_ok}"></span>
-          <span class="dot-indicator-label">net</span>
-        </span>
+        <!-- <span class="indicator clickable-indicator" ng-click="btnRetryNetwork()"> -->
+        <!--   <span class="dot-indicator" ng-class="{'network-indicator-on': network_ok}"></span> -->
+        <!--   <span class="dot-indicator-label">net</span> -->
+        <!-- </span> -->
         <span class="indicator">
           <span class="dot-indicator" ng-class="{'recording-indicator-on': is_recording}"></span>
           <span class="dot-indicator-label">rec</span>
@@ -30,6 +30,21 @@
     </div>
 
     <div class="recce-controls">
+      <div class="recce-control" style="display: flex; flex-direction: row;">
+        <button ng-click="btnRecordStart()" class="recce-controls-btn" ng-disabled="isRecording">start</button>
+        <button ng-click="btnRecordStop()" class="recce-controls-btn" ng-disabled="!isRecording">stop</button>
+        <button ng-click="btnRecordCut()" class="recce-controls-btn" ng-disabled="!isRecording">cut</button>
+
+        <md-checkbox ng-model="recordDriveline" ng-disabled="isRecording">driveline</md-checkbox>
+        <md-checkbox ng-model="recordVoice" ng-disabled="isRecording">voice</md-checkbox>
+      </div>
+
+      <div class="recce-control">
+        <form ng-submit="submitPacenoteForm()">
+          <input type="text" ng-model="pacenote" />
+        </form>
+      </div>
+
       <div class="recce-control">
         <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button>
         <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-class="{'debug-on': drawDebug}">
@@ -52,12 +67,11 @@
         </md-select>
       </div>
 
-
-
       <div class="recce-control">
         <button ng-click="btnRefreshMissions()" class="recce-controls-btn">refresh missions</button>
         <button ng-click="btnLoadMission()" class="recce-controls-btn">load</button>
         <button ng-click="btnUnloadMission()" class="recce-controls-btn">unload</button>
+        <span>loaded mission: {{missionIsLoaded ? loadedMissionName : "none"}}</span>
         <md-select class="md-select-dropdown" ng-model="selectedMissionName">
           <md-option ng-value="missionName" ng-repeat="missionName in dropdownMissionNames">{{::missionName}}</md-option>
         </md-select>
