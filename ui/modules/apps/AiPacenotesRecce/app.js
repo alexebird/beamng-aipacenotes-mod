@@ -1,5 +1,5 @@
 // vim: ts=2 sw=2
-angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce', function ($interval, $sce) {
+angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce', '$timeout', function ($interval, $sce, $timeout) {
   return {
     templateUrl: '/ui/modules/apps/AiPacenotesRecce/app.html',
     replace: true,
@@ -33,12 +33,12 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.missionIsLoaded = false
       $scope.loadedMissionName = null
 
-      // var transcriptInterval = $interval(() => {
-        // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
-      // }, transcriptRefreshIntervalMs)
+      var transcriptInterval = $interval(() => {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      }, transcriptRefreshIntervalMs)
 
       // dont wait for the first interval to get transcripts.
-      // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
 
       function updateCornerCall() {
         var textElement = document.getElementById('cornerCall')
@@ -109,28 +109,40 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.$on('aiPacenotesInputActionDesktopCallNotOk', function (event, errMsg) {
-          // $scope.network_ok = false
-          $scope.transcriptsError = $sce.trustAsHtml(errMsg)
+        // $scope.network_ok = false
+        $scope.transcriptsError = $sce.trustAsHtml(errMsg)
+      })
+
+      $scope.$on('aiPacenotesInputActionCutRecording', function (event) {
+        $scope.btnRecordCut()
+
+        if ($scope.isRecording) {
+          var cutBtn = angular.element(document.getElementById('cut-btn'))
+          cutBtn.addClass('cut-fake-click')
+          $timeout(function() {
+            cutBtn.removeClass('cut-fake-click')
+          }, 150);
+        }
       })
 
       $scope.$on('aiPacenotesInputActionToggleDrawDebug', function (event) {
-          $scope.btnToggleDrawDebug()
+        $scope.btnToggleDrawDebug()
       })
 
       $scope.$on('aiPacenotesInputActionRecceMovePacenoteForward', function (event) {
-          $scope.btnMovePacenoteForward()
+        $scope.btnMovePacenoteForward()
       })
 
       $scope.$on('aiPacenotesInputActionRecceMovePacenoteBackward', function (event) {
-          $scope.btnMovePacenoteBackward()
+        $scope.btnMovePacenoteBackward()
       })
 
       $scope.$on('aiPacenotesInputActionRecceMoveVehicleForward', function (event) {
-          $scope.btnMoveVehicleForward()
+        $scope.btnMoveVehicleForward()
       })
 
       $scope.$on('aiPacenotesInputActionRecceMoveVehicleBackward', function (event) {
-          $scope.btnMoveVehicleBackward()
+        $scope.btnMoveVehicleBackward()
       })
 
       $scope.$on('aiPacenotesCornerAnglesLoaded', function (event, cornerAnglesData, errMsg) {
@@ -199,7 +211,13 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.btnRecordCut = function() {
-        bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_cut()")
+        if ($scope.isRecording) {
+          bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_cut()")
+        }
+      }
+
+      $scope.btnClearAll = function() {
+        bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_clear_all()")
       }
 
       $scope.submitPacenoteForm = function() {

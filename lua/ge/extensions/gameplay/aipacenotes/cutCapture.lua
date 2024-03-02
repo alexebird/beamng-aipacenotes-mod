@@ -9,14 +9,19 @@ function C:init(vehicle, missionDir)
   log('I', logTag, 'initializing cutCapture for vehicle='..vehicle:getId())
   self.vehicle = vehicle
   core_vehicleBridge.registerValueChangeNotification(self.vehicle, steeringKey)
-  self.fname = re_util.missionTranscriptPath(missionDir, 'cuts.cuts.json', false)
+  self.fname = re_util.missionTranscripts2Path(missionDir, 'primary', 'cuts.json', false)
+  self.fname_transcripts = re_util.missionTranscripts2Path(missionDir, 'primary', 'transcripts.json', false)
   self.cut_id = 1
   log('I', logTag, 'cutCapture init fname='..self.fname)
-  self:truncateCapturesFile()
 end
 
 function C:truncateCapturesFile()
   self.f = io.open(self.fname, "w")
+  self.f:close()
+end
+
+function C:truncateTranscriptsFile()
+  self.f = io.open(self.fname_transcripts, "w")
   self.f:close()
 end
 

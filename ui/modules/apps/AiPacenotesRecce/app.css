@@ -187,3 +187,7 @@
     margin-left: -10px;
     margin-right: -10px;
 }
+
+.cut-fake-click {
+    background-color: #ff6600;
+}

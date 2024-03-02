@@ -12,7 +12,7 @@ local vehicleCapture = nil
 local cutCapture = nil
 
 local snaproads = nil
--- local cornerAngles = nil
+local cornerAngles = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
@@ -452,6 +452,15 @@ local function transcribe_recording_stop()
   -- end
 end
 
+local function transcribe_clear_all()
+  initCaptures()
+  vehicleCapture:truncateCapturesFile()
+  cutCapture:truncateCapturesFile()
+  cutCapture:truncateTranscriptsFile()
+  vehicleCapture = nil
+  cutCapture = nil
+end
+
 -- local function onVehicleSwitched()
 --   log('D', 'aipacenotes', 'onVehicleSwitched')
 -- end
@@ -498,6 +507,7 @@ M.onUpdate = onUpdate
 M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_start = transcribe_recording_start
+M.transcribe_clear_all = transcribe_clear_all
 M.setLastMissionId = setLastMissionId
 M.setLastLoadState = setLastLoadState
 

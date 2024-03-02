@@ -8,36 +8,12 @@ local steeringKey = 'steering'
 function C:init(vehicle, missionDir) --, cornerAngles, selectedCornerAnglesName)
   log('I', logTag, 'initializing vehicleCapture for vehicle='..vehicle:getId())
   self.vehicle = vehicle
-  -- self.cornerAngles = cornerAngles
-  -- self.selectedCornerAnglesName = selectedCornerAnglesName
-  -- self.style = nil
-
-  -- for _,style in ipairs(self.cornerAngles.pacenoteStyles) do
-  --   if style.name == self.selectedCornerAnglesName then
-  --     self.style = style
-  --     break
-  --   end
-  -- end
-
-  -- core_vehicleBridge.unregisterValueChangeNotification(self.vehicle, 'steering')
   core_vehicleBridge.registerValueChangeNotification(self.vehicle, steeringKey)
-
-  -- time-based
-  -- self.interval_s = 1
-  -- self.last_capture_ts = re_util.getTime()
-  -- self.last_time_pos = nil
-
-  -- distance-based
-  -- self.capture_limit = 200
   self.interval_m = 2
   self.last_dist_pos = nil
-
-  self.captures = {}
-
-  -- self.fname = re_util.missionTranscriptPath(missionDir, 'transcript_'..tostring(os.time()), true)
-  self.fname = re_util.missionTranscriptPath(missionDir, 'full_course', true)
+  self.capturesBuffer = {}
+  self.fname = re_util.missionTranscripts2Path(missionDir, 'primary', 'driveline.json', false)
   log('I', logTag, 'vehicleCapture init fname='..self.fname)
-  self:truncateCapturesFile()
 end
 
 function C:truncateCapturesFile()
@@ -46,18 +22,18 @@ function C:truncateCapturesFile()
 end
 
 function C:writeCaptures(force)
-  if not force and #self.captures < 10 then
+  if not force and #self.capturesBuffer < 10 then
     return
   end
 
-  log('I', logTag, 'vehicleCapture writing '..tostring(#self.captures)..' captures')
+  log('I', logTag, 'vehicleCapture writing '..tostring(#self.capturesBuffer)..' captures')
   self.f = io.open(self.fname, "a")
-  for _,cap in ipairs(self.captures) do
+  for _,cap in ipairs(self.capturesBuffer) do
     local content = jsonEncode(cap)
     self.f:write(content.."\n")
   end
   self.f:close()
-  self.captures = {}
+  self.capturesBuffer = {}
 end
 
 -- function C:getCornerCall(steering)
@@ -101,7 +77,7 @@ function C:capture()
       if steering ~= nil then
         vInfo.steering = steering
       end
-      table.insert(self.captures, vInfo)
+      table.insert(self.capturesBuffer, vInfo)
     end
   else
     self.last_dist_pos = vehPos

@@ -6,9 +6,7 @@
       },
       "name":"damage_1",
       "notes":{
-        "english": { "note": "We just took some damage!" },
-        "spanish": { "note": "¡Nos acabamos de golpear!" },
-        "german":  { "note": "Wir haben gerade Schaden genommen!" }
+        "english": { "note": "We just took some damage!" }
       },
       "oldId":1
     },
@@ -18,9 +16,7 @@
       },
       "name":"go_1/c",
       "notes":{
-        "english": { "note": "Go!" },
-        "spanish": { "note": "¡Vamos!" },
-        "german":  { "note": "Los!" }
+        "english": { "note": "Go!" }
       },
       "oldId":2
     },
@@ -30,9 +26,7 @@
       },
       "name":"countdown_1/c",
       "notes":{
-        "english": { "note": "one" },
-        "spanish": { "note": "uno" },
-        "german":  { "note": "eins" }
+        "english": { "note": "one" }
       },
       "oldId":3
     },
@@ -42,9 +36,7 @@
       },
       "name":"countdown_2/c",
       "notes":{
-        "english": { "note": "two" },
-        "spanish": { "note": "dos" },
-        "german":  { "note": "zwei" }
+        "english": { "note": "two" }
       },
       "oldId":4
     },
@@ -54,9 +46,7 @@
       },
       "name":"countdown_3/c",
       "notes":{
-        "english": { "note": "three" },
-        "spanish": { "note": "tres" },
-        "german":  { "note": "drei" }
+        "english": { "note": "three" }
       },
       "oldId":5
     },
@@ -64,11 +54,29 @@
       "metadata":{
         "static":true
       },
+      "name":"countdown_4/c",
+      "notes":{
+        "english": { "note": "four" }
+      },
+      "oldId":7
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"countdown_5/c",
+      "notes":{
+        "english": { "note": "five" }
+      },
+      "oldId":8
+    },
+    {
+      "metadata":{
+        "static":true
+      },
       "name":"finish_1/c",
       "notes":{
-        "english": { "note": "Thats it, bring the car to a stop." },
-        "spanish": { "note": "Listo, detén el coche." },
-        "german":  { "note": "Das war's, bring das Auto zum Stehen." }
+        "english": { "note": "Thats it, bring the car to a stop." }
       },
       "oldId":6
     }

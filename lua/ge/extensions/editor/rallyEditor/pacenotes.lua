@@ -1,7 +1,6 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
--- local snaproads = require('/lua/ge/extensions/editor/rallyEditor/snaproads')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
@@ -53,6 +52,10 @@ function C:init(rallyEditor)
 
   self.notes_valid = true
   self.validation_issues = {}
+
+  self.recording_state = {
+    driveline = nil,
+  }
 
   self.pacenote_tools_state = {
     drag_mode = dragModes.simple,
@@ -136,7 +139,7 @@ end
 function C:selected()
   if not self.path then return end
 
-  self:loadFullCourse(false)
+  -- self:loadFullCourse(false)
 
   -- self.pacenote_tools_state.selected_pn_id = nil
   -- self.pacenote_tools_state.selected_wp_id = nil
@@ -386,16 +389,20 @@ function C:drawDebugEntrypoint()
     self.pacenote_tools_state.snaproads:drawSnapRoads(self.mouseInfo)
   end
 
-  local tscs = self:getTranscripts()
-  if tscs and self.transcript_tools_state.show then
-    tscs:drawDebug(self.transcript_tools_state.selected_id)
-
-    if self.transcript_tools_state.playbackLastCameraPos then
-      local clr = cc.clr_purple
-      local radius = self.pacenote_tools_state.snaproads and (self.pacenote_tools_state.snaproads.radius * 2.0) or 1
-      debugDrawer:drawSphere(self.transcript_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],0.9))
-    end
+  if self.recording_state.driveline then
+    self.recording_state.driveline:drawDebugDriveline()
   end
+
+  -- local tscs = self:getTranscripts()
+  -- if tscs and self.transcript_tools_state.show then
+  --   tscs:drawDebug(self.transcript_tools_state.selected_id)
+  --
+  --   if self.transcript_tools_state.playbackLastCameraPos then
+  --     local clr = cc.clr_purple
+  --     local radius = self.pacenote_tools_state.snaproads and (self.pacenote_tools_state.snaproads.radius * 2.0) or 1
+  --     debugDrawer:drawSphere(self.transcript_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],0.9))
+  --   end
+  -- end
 end
 
 function C:handleMouseDown(hoveredWp, hoveredTsc)
@@ -1272,7 +1279,7 @@ function C:drawPacenotesList(height)
   end
 
   -- im.SameLine()
-  if im.Button("Cleanup names") then
+  if im.Button("Cleanup Names") then
     self:cleanupPacenoteNames()
   end
   im.tooltip("Re-name all pacenotes with increasing numbers.")
@@ -1281,31 +1288,31 @@ function C:drawPacenotesList(height)
   --   self:autoAssignSegments()
   -- end
   -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
-  im.SameLine()
-  if im.Button("Snap All") then
-    self:_snapAll()
-  end
-  im.tooltip("Snap all waypoints to nearest snaproad point.")
-  im.SameLine()
-  if im.Button("All to Terrain") then
-    self:allToTerrain()
-  end
-  im.tooltip("Snap all waypoints to terrain.")
+  -- im.SameLine()
+  -- if im.Button("Snap All") then
+  --   self:_snapAll()
+  -- end
+  -- im.tooltip("Snap all waypoints to nearest snaproad point.")
+  -- im.SameLine()
+  -- if im.Button("All to Terrain") then
+  --   self:allToTerrain()
+  -- end
+  -- im.tooltip("Snap all waypoints to terrain.")
   im.SameLine()
   if im.Button("Set All Radii") then
     self:setAllRadii()
   end
   im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
   im.SameLine()
-  if im.Button("Normalize Note Text") then
+  if im.Button("Set Punctuation") then
     self:normalizeNotes()
   end
   im.tooltip("Add puncuation and replace digits with words.")
-  im.SameLine()
-  if im.Button("Autofill Dist Calls") then
-    self:autoFillDistanceCalls()
-  end
-  im.tooltip("Autofill distance calls.")
+  -- im.SameLine()
+  -- if im.Button("Autofill Dist Calls") then
+  --   self:autoFillDistanceCalls()
+  -- end
+  -- im.tooltip("Autofill distance calls.")
 
 
   if im.Button("Prev") then
@@ -1358,11 +1365,11 @@ function C:drawPacenotesList(height)
       im.tooltip("[!] Found "..(#note.validation_issues).." issue(s).\nCheck pacenote for details ")
     end
   end
-  im.Separator()
-  if im.Selectable1('New...', self.pacenote_tools_state.selected_pn_id == nil) then
-    local pacenote = notebook.pacenotes:create(nil, nil)
-    self:selectPacenote(pacenote.id)
-  end
+  -- im.Separator()
+  -- if im.Selectable1('New...', self.pacenote_tools_state.selected_pn_id == nil) then
+  --   local pacenote = notebook.pacenotes:create(nil, nil)
+  --   self:selectPacenote(pacenote.id)
+  -- end
   im.tooltip("Ctrl-Drag in the world to create a new pacenote.")
   im.EndChild() -- pacenotes child window
 
@@ -1550,7 +1557,8 @@ Any lua code is allowed, so be careful. Examples:
 end
 
 function C:drawTranscriptsSection(height)
-  im.BeginChild1("transcriptsSection", im.ImVec2(0, height*im.uiscale[0]), im.WindowFlags_ChildWindow)
+  -- im.BeginChild1("transcriptsSection", im.ImVec2(0, height*im.uiscale[0]), im.WindowFlags_ChildWindow)
+  im.BeginChild1("transcriptsSection", nil, im.WindowFlags_ChildWindow)
 
   local tscs = self:getTranscripts()
   im.BeginChild1("transcriptsList", im.ImVec2(200*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
@@ -1570,30 +1578,37 @@ function C:drawTranscriptsSection(height)
 
   im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
   im.HeaderText('Transcript Tools')
+
   im.SameLine()
-  if im.Button("Clear") then
-    self.rallyEditor.getTranscriptsWindow():clearSelection()
-    self.pacenote_tools_state.snaproads = nil
-    self.transcript_tools_state.search = nil
-    self.transcript_tools_state.show = true
-    transcriptsSearchText = im.ArrayChar(1024, "")
-    self.pacenote_tools_state.drag_mode = dragModes.simple
+  if im.Button("Load") then
+    self.recording_state.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/recording/driveline')(self.rallyEditor.getMissionDir())
+    self.recording_state.driveline:load()
   end
-  im.SameLine()
-  if im.Button("Load Curr") then
-    local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
-    if settings then
-      self.transcript_tools_state.search = nil
-      transcriptsSearchText = im.ArrayChar(1024, "")
-      local abspath = settings:getCurrTranscriptAbsPath()
-      self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
-      self:selectFirstTranscript()
-    end
-  end
-  im.SameLine()
-  if im.Button("Load Full Course") then
-    self:loadFullCourse(true)
-  end
+
+  -- im.SameLine()
+  -- if im.Button("Clear") then
+  --   self.rallyEditor.getTranscriptsWindow():clearSelection()
+  --   self.pacenote_tools_state.snaproads = nil
+  --   self.transcript_tools_state.search = nil
+  --   self.transcript_tools_state.show = true
+  --   transcriptsSearchText = im.ArrayChar(1024, "")
+  --   self.pacenote_tools_state.drag_mode = dragModes.simple
+  -- end
+  -- im.SameLine()
+  -- if im.Button("Load Curr") then
+  --   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+  --   if settings then
+  --     self.transcript_tools_state.search = nil
+  --     transcriptsSearchText = im.ArrayChar(1024, "")
+  --     local abspath = settings:getCurrTranscriptAbsPath()
+  --     self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
+  --     self:selectFirstTranscript()
+  --   end
+  -- end
+  -- im.SameLine()
+  -- if im.Button("Load Full Course") then
+  --   self:loadFullCourse(true)
+  -- end
   im.SameLine()
   if im.Checkbox("Show/Hide Transcripts##show_tscs", im.BoolPtr(self.transcript_tools_state.show)) then
     self.transcript_tools_state.show = not self.transcript_tools_state.show
@@ -1685,46 +1700,46 @@ function C:drawTranscriptsSection(height)
   im.EndChild() -- transcripts section child window
 end
 
-function C:loadFullCourse(show)
-  local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
-  if settings then
-    self.transcript_tools_state.search = nil
-    self.transcript_tools_state.show = show
-    transcriptsSearchText = im.ArrayChar(1024, "")
-    local abspath = settings:getFullCourseTranscriptAbsPath()
-    self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
-    -- self:selectFirstTranscript()
+-- function C:loadFullCourse(show)
+--   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+--   if settings then
+--     self.transcript_tools_state.search = nil
+--     self.transcript_tools_state.show = show
+--     transcriptsSearchText = im.ArrayChar(1024, "")
+--     local abspath = settings:getFullCourseTranscriptAbsPath()
+--     self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
+--     -- self:selectFirstTranscript()
+--
+--     self.pacenote_tools_state.snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(self.rallyEditor.getMissionDir())
+--     self.pacenote_tools_state.snaproads.radius = 0.5
+--     if not self.pacenote_tools_state.snaproads:load() then
+--       self.pacenote_tools_state.snaproads = nil
+--       self.pacenote_tools_state.drag_mode = dragModes.simple
+--     else
+--       self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
+--     end
+--   end
+-- end
 
-    self.pacenote_tools_state.snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(self.rallyEditor.getMissionDir())
-    self.pacenote_tools_state.snaproads.radius = 0.5
-    if not self.pacenote_tools_state.snaproads:load() then
-      self.pacenote_tools_state.snaproads = nil
-      self.pacenote_tools_state.drag_mode = dragModes.simple
-    else
-      self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
-    end
-  end
-end
-
-function C:selectFirstTranscript()
-  local transcripts_path = self:getTranscripts()
-  if not transcripts_path then return end
-
-  -- local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
-  local sorted = transcripts_path.transcripts.sorted
-
-  for i = 1,#sorted do
-    local tsc = sorted[i]
-    if tsc and not tsc.missing and tsc:isUsable() then
-      self:selectTranscript(tsc.id)
-      break
-    end
-  end
-
-  if self.rallyEditor.getPrefTopDownCameraFollow() then
-    self:setCameraToTranscript()
-  end
-end
+-- function C:selectFirstTranscript()
+--   local transcripts_path = self:getTranscripts()
+--   if not transcripts_path then return end
+--
+--   -- local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
+--   local sorted = transcripts_path.transcripts.sorted
+--
+--   for i = 1,#sorted do
+--     local tsc = sorted[i]
+--     if tsc and not tsc.missing and tsc:isUsable() then
+--       self:selectTranscript(tsc.id)
+--       break
+--     end
+--   end
+--
+--   if self.rallyEditor.getPrefTopDownCameraFollow() then
+--     self:setCameraToTranscript()
+--   end
+-- end
 
 function C:searchTranscriptMatchFn(tsc)
   -- return tsc and not tsc.missing and tsc:isUsable()
@@ -1874,11 +1889,11 @@ function C:drawWaypointList(note)
     end
   end
 
-  im.Separator()
+  -- im.Separator()
 
-  if im.Selectable1('New...', self.pacenote_tools_state.selected_wp_id == nil) then
-    self:selectWaypoint(nil)
-  end
+  -- if im.Selectable1('New...', self.pacenote_tools_state.selected_wp_id == nil) then
+  --   self:selectWaypoint(nil)
+  -- end
 
   im.tooltip("Shift-Drag in the world to create a new pacenote waypoint.")
   im.EndChild() -- waypoints child window

@@ -120,16 +120,6 @@ function C:drawDebugTranscripts(selected_id)
   end
 end
 
--- function C:getUsableTranscripts()
---   local usable = {}
---   for i,tsc in ipairs(self.transcripts.sorted) do
---     if tsc:isUsable() then
---       table.insert(usable, tsc)
---     end
---   end
---   return usable
--- end
-
 return function(...)
   local o = {}
   setmetatable(o, C)

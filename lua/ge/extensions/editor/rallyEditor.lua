@@ -301,48 +301,49 @@ local function drawEditorGui()
   local minMiddleHeight = 500 * im.uiscale[0]
   local heightAdditional = 110-- * im.uiscale[0]
 
-  if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
-    if im.BeginMenuBar() then
-      if im.BeginMenu("File") then
+  -- if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
+  if editor.beginWindow(toolWindowName, "Rally Editor") then
+    -- if im.BeginMenuBar() then
+      -- if im.BeginMenu("File") then
         -- im.Text(previousFilepath .. previousFilename)
         -- im.Separator()
-        if im.MenuItem1("New Notebook") then
-          newEmptyNotebook()
-        end
-        local defaultFileDialogPath = '/gameplay/missions'
-        if im.MenuItem1("Load...") then
-          editor_fileDialog.openFile(
-            function(data)
-              loadNotebook(data.filepath)
-            end,
-            {{"Notebook files",".notebook.json"}},
-            false,
-            (currentPath and currentPath:dir()) or defaultFileDialogPath
-          )
-        end
+        -- if im.MenuItem1("New Notebook") then
+        --   newEmptyNotebook()
+        -- end
+        -- local defaultFileDialogPath = '/gameplay/missions'
+        -- if im.MenuItem1("Load...") then
+        --   editor_fileDialog.openFile(
+        --     function(data)
+        --       loadNotebook(data.filepath)
+        --     end,
+        --     {{"Notebook files",".notebook.json"}},
+        --     false,
+        --     (currentPath and currentPath:dir()) or defaultFileDialogPath
+        --   )
+        -- end
         -- local canSave = currentPath and previousFilepath
-        if im.MenuItem1("Save") then
-          saveNotebook()
-        end
-        if im.MenuItem1("Save as...") then
-          extensions.editor_fileDialog.saveFile(
-            function(data)
-              if currentPath then
-                currentPath:setFname(data.filepath)
-                saveNotebook()
-              else
-                log('W', logTag, 'cant Save As; no notebook loaded.')
-              end
-            end,
-            {{"Notebook files",".notebook.json"}},
-            false,
-            (currentPath and currentPath:dir()) or defaultFileDialogPath
-          )
-        end
-        im.EndMenu()
-      end
-      im.EndMenuBar()
-    end
+        -- if im.MenuItem1("Save") then
+        --   saveNotebook()
+        -- end
+        -- if im.MenuItem1("Save as...") then
+        --   extensions.editor_fileDialog.saveFile(
+        --     function(data)
+        --       if currentPath then
+        --         currentPath:setFname(data.filepath)
+        --         saveNotebook()
+        --       else
+        --         log('W', logTag, 'cant Save As; no notebook loaded.')
+        --       end
+        --     end,
+        --     {{"Notebook files",".notebook.json"}},
+        --     false,
+        --     (currentPath and currentPath:dir()) or defaultFileDialogPath
+        --   )
+        -- end
+        -- im.EndMenu()
+      -- end
+      -- im.EndMenuBar()
+    -- end
 
     if currentPath then
       im.BeginChild1("##top-toolbar", im.ImVec2(0,topToolbarHeight), im.WindowFlags_ChildWindow)
@@ -354,7 +355,7 @@ local function drawEditorGui()
       im.PopStyleColor(1)
 
       im.SameLine()
-      if im.Button("Mission") then
+      if im.Button("Open Mission Editor") then
         openMission()
       end
 
@@ -424,9 +425,10 @@ local function drawEditorGui()
 
       im.EndChild() -- end tabs-child
 
-      im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
+      -- im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
+      -- im.BeginChild1("##bottom-toolbar", nil, im.WindowFlags_ChildWindow)
       prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
-      im.EndChild() -- end bottom-toolbar
+      -- im.EndChild() -- end bottom-toolbar
 
       local fg_mgr = editor_flowgraphEditor.getManager()
       local paused = simTimeAuthority.getPause()
@@ -629,11 +631,12 @@ local function onEditorInitialized()
 
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebookInfo')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/transcripts')(M))
+  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/transcripts')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/missionSettings')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
 
-  notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
+  -- notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
+  notebookInfoWindow, pacenotesWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4]
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)

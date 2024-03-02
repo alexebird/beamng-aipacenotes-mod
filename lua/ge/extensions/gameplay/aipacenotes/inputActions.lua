@@ -30,7 +30,7 @@ end
 
 local function action_transcribe_recording_cut()
   if not is_recceApp_loaded() then return end
-  extensions.ui_aipacenotes_recceApp.transcribe_recording_cut()
+  guihooks.trigger('aiPacenotesInputActionCutRecording')
 end
 
 local function action_toggle_recce_drawDebug()

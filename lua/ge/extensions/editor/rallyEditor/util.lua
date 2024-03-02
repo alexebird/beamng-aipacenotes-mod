@@ -251,6 +251,23 @@ local function missionTranscriptPath(missionDir, basename, addExt)
   return rv
 end
 
+local function missionTranscripts2Path(missionDir, subdir, basename, addExt)
+  addExt = addExt or false
+  local rv = missionTranscriptsDir(missionDir)..'/'..subdir..'/'..basename
+  if addExt then
+    rv = rv..'.'..transcriptsExt
+  end
+  return rv
+end
+
+local function drivelineFile(missionDir)
+  return missionTranscripts2Path(missionDir, 'primary', 'driveline.json', false)
+end
+
+local function cutsFile(missionDir)
+  return missionTranscripts2Path(missionDir, 'primary', 'cuts.json', false)
+end
+
 -- args are both vec3's representing a position.
 local function calculateForwardNormal(snap_pos, next_pos)
   local flip = false
@@ -392,6 +409,9 @@ M.loadCornerAnglesFile = loadCornerAnglesFile
 M.loadMissionSettings = loadMissionSettings
 M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
+M.missionTranscripts2Path = missionTranscripts2Path
+M.drivelineFile = drivelineFile
+M.cutsFile = cutsFile
 M.missionTranscriptsDir = missionTranscriptsDir
 M.normalize_name = normalize_name
 M.pacenote_hash = pacenote_hash
