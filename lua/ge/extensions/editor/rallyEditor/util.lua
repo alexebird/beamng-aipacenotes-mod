@@ -268,6 +268,10 @@ local function cutsFile(missionDir)
   return missionTranscripts2Path(missionDir, 'primary', 'cuts.json', false)
 end
 
+local function transcriptsFile(missionDir)
+  return missionTranscripts2Path(missionDir, 'primary', 'transcripts.json', false)
+end
+
 -- args are both vec3's representing a position.
 local function calculateForwardNormal(snap_pos, next_pos)
   local flip = false
@@ -410,8 +414,11 @@ M.loadMissionSettings = loadMissionSettings
 M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
 M.missionTranscripts2Path = missionTranscripts2Path
+
 M.drivelineFile = drivelineFile
 M.cutsFile = cutsFile
+M.transcriptsFile = transcriptsFile
+
 M.missionTranscriptsDir = missionTranscriptsDir
 M.normalize_name = normalize_name
 M.pacenote_hash = pacenote_hash

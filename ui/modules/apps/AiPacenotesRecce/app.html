@@ -38,7 +38,9 @@
         <md-checkbox ng-model="recordDriveline" ng-disabled="!missionIsLoaded || isRecording">driveline</md-checkbox>
         <md-checkbox ng-model="recordVoice" ng-disabled="!missionIsLoaded || isRecording">voice</md-checkbox>
 
-        <button ng-click="btnClearAll()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">clear</button>
+        <button ng-click="btnClear1()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">{{ clear1Enabled ? "cancel" : "clear" }}</button>
+
+        <button ng-show="clear1Enabled" ng-click="btnClearAll()" class="recce-controls-btn btn-danger" ng-disabled="!missionIsLoaded || isRecording || !clear1Enabled">clear</button>
       </div>
 
       <div class="recce-control">

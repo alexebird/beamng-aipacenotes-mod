@@ -33,6 +33,8 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.missionIsLoaded = false
       $scope.loadedMissionName = null
 
+      $scope.clear1Enabled = false
+
       let transcriptInterval = null
 
       // dont wait for the first interval to get transcripts.
@@ -222,7 +224,16 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.btnClearAll = function() {
+        $scope.clear1Enabled = false
         bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_clear_all()")
+      }
+
+      $scope.btnClear1 = function() {
+        if ($scope.clear1Enabled) {
+          $scope.clear1Enabled = false
+        } else {
+          $scope.clear1Enabled = true
+        }
       }
 
       $scope.submitPacenoteForm = function() {

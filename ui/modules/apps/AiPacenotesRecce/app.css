@@ -191,3 +191,16 @@
 .cut-fake-click {
     background-color: #ff6600;
 }
+
+/* .clear-widget-visible { */
+/*     display: block; */
+/* } */
+/**/
+/* .clear-widget-hidden { */
+/*     display: none; */
+/* } */
+
+.btn-danger {
+    background-color: red;
+    color: black;
+}

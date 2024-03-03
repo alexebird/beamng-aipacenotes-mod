@@ -133,4 +133,8 @@ M.new_pacenote_cursor_linkToWidth = 0.25
 -- M.segments_clr_assigned = M.clr_white
 -- M.segments_clr = M.clr_aqua
 
+M.recce_alpha = 0.5
+M.recce_driveline_clr = M.clr_red
+M.recce_cut_clr = M.clr_teal
+
 return M

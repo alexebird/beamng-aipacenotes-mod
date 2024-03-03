@@ -19,7 +19,7 @@ local currentPath = nil
 -- currentPath._dir = previousFilepath
 
 local windows = {}
-local notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow
+local notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow, staticPacenotesWindow
 local currentWindow = {}
 local changedWindow = false
 local programmaticTabSelect = false
@@ -437,8 +437,8 @@ local function drawEditorGui()
       if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
         if currentWindow == pacenotesWindow then
           pacenotesWindow:drawDebugEntrypoint()
-        elseif currentWindow == transcriptsWindow then
-          transcriptsWindow:drawDebugEntrypoint()
+        elseif currentWindow == recceWindow then
+          recceWindow:drawDebugEntrypoint()
         end
       end
     end
@@ -632,11 +632,12 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebookInfo')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
   -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/transcripts')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/recceTab')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/missionSettings')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
 
-  -- notebookInfoWindow, pacenotesWindow, transcriptsWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
-  notebookInfoWindow, pacenotesWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4]
+  notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
+  -- notebookInfoWindow, pacenotesWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4]
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)
@@ -907,7 +908,7 @@ M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
 M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
 
 M.onEditorInitialized = onEditorInitialized
-M.getTranscriptsWindow = function() return transcriptsWindow end
+M.getTranscriptsWindow = function() return recceWindow end
 M.getPacenotesWindow = function() return pacenotesWindow end
 M.getMissionDir = getMissionDir
 
