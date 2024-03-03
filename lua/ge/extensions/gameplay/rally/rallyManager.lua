@@ -59,7 +59,8 @@ function C:setup(damageThresh, closestPacenotes_n)
   self.damageThresh = damageThresh
   self.closestPacenotes_n = closestPacenotes_n
 
-  self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')(self)
+  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')(self)
+  self.audioManager = require('/lua/ge/extensions/gameplay/rally/remoteAudioManager')(self)
   self.audioManager:resetAudioQueue()
 
   self:detectMissionId()

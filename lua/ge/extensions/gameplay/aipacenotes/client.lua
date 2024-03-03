@@ -152,6 +152,32 @@ local function transcribe_transcripts_get(count)
   return resp
 end
 
+local function remote_audio_play_file(audioFname)
+  log('I', logTag, 'client.remote_audio_play_file')
+
+  local requestBody = {
+    audioFname = audioFname,
+  }
+
+  local url = base_url..'/remoteAudio/playFile'
+  local resp = jsonRequestPost(url, requestBody)
+  if not resp.ok then
+    resp.client_msg = resp.error
+  end
+  return resp
+end
+
+local function remote_audio_reset()
+  log('I', logTag, 'client.remote_audio_reset')
+
+  local url = base_url..'/remoteAudio/reset'
+  local resp = jsonRequestPost(url, {})
+  if not resp.ok then
+    resp.client_msg = resp.error
+  end
+  return resp
+end
+
 -- local function update_next_pacenotes(data)
 --   -- log('D', 'wtf', dumps(data))
 --   --
@@ -174,10 +200,13 @@ end
 --   return resp
 -- end
 
-M.transcribe_recording_start = transcribe_recording_start
-M.transcribe_recording_stop = transcribe_recording_stop
+-- M.transcribe_recording_start = transcribe_recording_start
+-- M.transcribe_recording_stop = transcribe_recording_stop
+-- M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_transcripts_get = transcribe_transcripts_get
+M.remote_audio_play_file = remote_audio_play_file
+M.remote_audio_reset = remote_audio_reset
 -- M.clear_network_issue = clear_network_issue
 -- M.has_network_issue = has_network_issue
 -- M.update_next_pacenotes = update_next_pacenotes
