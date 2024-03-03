@@ -1260,6 +1260,11 @@ function C:validate()
   end
 end
 
+function C:deleteAllPacenotes()
+  if not self.path then return end
+  self.path:deleteAllPacenotes()
+end
+
 function C:drawPacenotesList(height)
   if not self.path then return end
 
@@ -1314,6 +1319,28 @@ function C:drawPacenotesList(height)
   -- end
   -- im.tooltip("Autofill distance calls.")
 
+  im.SameLine()
+  if im.Button("Delete All") then
+    im.OpenPopup("Delete All")
+  end
+  im.tooltip("Delete all pacenotes from this notebook.")
+  if im.BeginPopupModal("Delete All", nil, im.WindowFlags_AlwaysAutoResize) then
+    -- local dir, filename, ext = path.splitWithoutExt(self.selected_fname, true)
+    -- im.Text("Current Name: "..filename)
+    im.Text("Delete all pacenotes?")
+    -- im.InputText("Key:##translationKey", translationData.translationKeyPtr, translationData.translationKeyLength)
+
+    im.Separator()
+    if im.Button("Ok", im.ImVec2(120,0)) then
+      self:deleteAllPacenotes()
+      im.CloseCurrentPopup()
+    end
+    im.SameLine()
+    if im.Button("Cancel", im.ImVec2(120,0)) then
+      im.CloseCurrentPopup()
+    end
+    im.EndPopup()
+  end
 
   if im.Button("Prev") then
       self:selectPrevPacenote()

@@ -460,7 +460,8 @@ function C:drawSectionV3()
   end
 
   if self.recce and self.recce.loaded then
-    im.Text('driveline: '..tostring(#self.recce.driveline))
+    im.Text('driveline: '..tostring(#self.recce.driveline)..' points')
+    im.Text('cuts: '..tostring(#self.recce.cuts)..' points')
   else
     im.Text('recce recording not loaded')
   end

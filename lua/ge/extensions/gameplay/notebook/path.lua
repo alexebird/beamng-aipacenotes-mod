@@ -53,6 +53,14 @@ function C:init(name)
   self.validation_issues = {}
 end
 
+function C:deleteAllPacenotes()
+  self.pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
+    "pacenotes",
+    self,
+    require('/lua/ge/extensions/gameplay/notebook/pacenote')
+  )
+end
+
 function C:missionId()
   if not self.fname then return nil end
   local pattern = "/gameplay/missions/(.-)/"..re_util.aipPath
