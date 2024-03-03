@@ -33,12 +33,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.missionIsLoaded = false
       $scope.loadedMissionName = null
 
-      var transcriptInterval = $interval(() => {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
-      }, transcriptRefreshIntervalMs)
+      let transcriptInterval = null
 
       // dont wait for the first interval to get transcripts.
-      bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+      // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
 
       function updateCornerCall() {
         var textElement = document.getElementById('cornerCall')
@@ -49,9 +47,6 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.$on('$destroy', function () {
-        // if (angular.isDefined(transcriptInterval)) {
-        //   $interval.cancel(transcriptInterval);
-        // }
         StreamsManager.remove(streamsList)
         bngApi.engineLua('extensions.unload("ui_aipacenotes_recceApp")')
       })
@@ -202,11 +197,21 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.btnRecordStart = function() {
         $scope.isRecording = true
+
+        transcriptInterval = $interval(() => {
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+        }, transcriptRefreshIntervalMs)
+
         bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.transcribe_recording_start(${$scope.recordDriveline}, ${$scope.recordVoice})`)
       }
 
       $scope.btnRecordStop = function() {
         $scope.isRecording = false
+
+        if (angular.isDefined(transcriptInterval)) {
+          $interval.cancel(transcriptInterval)
+        }
+
         bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_stop()")
       }
 

@@ -43,4 +43,3 @@ return function(...)
   o:init(...)
   return o
 end
-
