@@ -20,6 +20,7 @@ local number_map = {
 -- local boundary = "(%W)"
 
 local function replaceDigits(note)
+  if not note then return note end
   -- Replace digits with written-out numbers
   for digit, word in pairs(number_map) do
     note = note:gsub(digit, word)

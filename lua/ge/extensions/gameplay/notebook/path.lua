@@ -33,24 +33,18 @@ function C:init(name)
     require('/lua/ge/extensions/gameplay/notebook/pacenote')
   )
 
-  -- self.static_pacenotes = require('/lua/ge/extensions/gameplay/util/sortedList')(
-  --   "static_pacenotes",
-  --   self,
-  --   require('/lua/ge/extensions/gameplay/notebook/pacenote')
-  -- )
-  -- local static_pn_data = self:generateStaticPacenotesData()
-  -- self.static_pacenotes:onDeserialized(static_pn_data, {})
   self:loadStaticPacenotes()
 
   self.id = self:getNextUniqueIdentifier()
-
   self.fname = nil
-
-  -- set by rallyEditor
-  -- self._fnWithoutExt = nil
-  -- self._dir = nil
-
   self.validation_issues = {}
+end
+
+function C:appendPacenotes(pacenotes)
+  for _,pn in ipairs(pacenotes) do
+    local newPn = self.pacenotes:create()
+    newPn:onDeserialized(pn, {})
+  end
 end
 
 function C:deleteAllPacenotes()

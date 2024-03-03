@@ -539,35 +539,37 @@ local function onUpdate()
   if changed then
     local cameraPosition = core_camera.getPosition()
     local pn = pacenotesWindow:selectedPacenote()
-    local wp = pn:getCornerStartWaypoint()
-    local targetPosition = wp.pos
+    if pn then
+      local wp = pn:getCornerStartWaypoint()
+      local targetPosition = wp.pos
 
-    -- Convert to Spherical Coordinates
-    local radius, theta, phi = cartesianToSpherical(cameraPosition.x - targetPosition.x, cameraPosition.y - targetPosition.y, cameraPosition.z - targetPosition.z)
+      -- Convert to Spherical Coordinates
+      local radius, theta, phi = cartesianToSpherical(cameraPosition.x - targetPosition.x, cameraPosition.y - targetPosition.y, cameraPosition.z - targetPosition.z)
 
-    local orbitSpeed = 0.02 -- Adjust as needed
+      local orbitSpeed = 0.02 -- Adjust as needed
 
-    if editor.keyModifiers.shift then
-      orbitSpeed = 0.05
+      if editor.keyModifiers.shift then
+        orbitSpeed = 0.05
+      end
+
+      -- Update theta and phi based on input
+      if r then theta = theta + orbitSpeed end
+      if l then theta = theta - orbitSpeed end
+      if u then phi = phi - orbitSpeed end
+      if d then phi = phi + orbitSpeed end
+
+      -- Ensure phi stays within bounds
+      phi = math.max(0.1, math.min(math.pi - 0.1, phi))
+
+      -- Convert back to Cartesian Coordinates
+      local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
+      local newPos = vec3(newX + targetPosition.x, newY + targetPosition.y, newZ + targetPosition.z)
+
+      -- Set the new camera position and rotation
+      core_camera.setPosition(0, newPos)
+      -- make the camera look at the center point.
+      core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
     end
-
-    -- Update theta and phi based on input
-    if r then theta = theta + orbitSpeed end
-    if l then theta = theta - orbitSpeed end
-    if u then phi = phi - orbitSpeed end
-    if d then phi = phi + orbitSpeed end
-
-    -- Ensure phi stays within bounds
-    phi = math.max(0.1, math.min(math.pi - 0.1, phi))
-
-    -- Convert back to Cartesian Coordinates
-    local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
-    local newPos = vec3(newX + targetPosition.x, newY + targetPosition.y, newZ + targetPosition.z)
-
-    -- Set the new camera position and rotation
-    core_camera.setPosition(0, newPos)
-    -- make the camera look at the center point.
-    core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
   end
 end
 

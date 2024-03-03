@@ -3,6 +3,8 @@ local logTag = 'recce'
 
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
+local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 
 function C:init(missionDir)
   self.missionDir = missionDir
@@ -165,6 +167,90 @@ function C:drawDebugDriveline()
       ColorF(clr[1], clr[2], clr[3], alpha_shape)
     )
   end
+end
+
+function C:createPacenotesData(notebook)
+  if not self.loaded then return end
+
+  log('I', logTag, 'import pacenotes to notebook')
+
+  local importIdent = notebook:nextImportIdent()
+  local import_language = re_util.default_codriver_language
+
+  local pacenotes = {}
+
+  for _,cut in ipairs(self.cuts) do
+    local note = cut.transcript.text
+    note = normalizer.replaceDigits(note)
+
+    local pos = cut.pos
+    local radius = editor_rallyEditor.getPrefDefaultRadius()
+
+    -- set the pacenote name
+    local pacenoteNewId = notebook:getNextUniqueIdentifier()
+    local name = "Pacenote "..pacenoteNewId
+    if importIdent then
+      name = "Import_"..importIdent.." " .. pacenoteNewId
+    end
+
+    -- set some metadata
+    local metadata = {}
+    -- if transcript.beamng_file then
+    -- metadata['success'] = transcript.success
+    -- metadata['beamng_file'] = transcript.beamng_file
+    -- end
+
+    local posCe = pos
+    local posCs = posCe + (vec3(1,0,0) * (radius * 2))
+    local posAt = posCs + (vec3(1,0,0) * (radius * 2))
+
+    -- set the Cs pos based on last pacenote direction vector
+    -- local lastPacenote = pacenotes[#pacenotes]
+    -- if lastPacenote then
+    --   local lastPnCe = lastPacenote.pacenoteWaypoints[2]
+    --   local lastCePos = vec3(lastPnCe.pos)
+    --   local directionVec = lastCePos - posCe
+    --   directionVec = vec3(directionVec):normalized()
+    --   posCs = posCe + (directionVec * (radius * 2))
+    -- end
+
+    local pn = {
+      name = name,
+      notes = { [import_language] = {note = note}},
+      metadata = metadata,
+      oldId = pacenoteNewId,
+      pacenoteWaypoints = {
+        {
+          name = "audio trigger",
+          normal = {0.0, 1.0, 0.0},
+          oldId = notebook:getNextUniqueIdentifier(),
+          pos = posAt,
+          radius = radius,
+          waypointType = waypointTypes.wpTypeFwdAudioTrigger,
+        },
+        {
+          name = "corner start",
+          normal = {0.0, 1.0, 0.0},
+          oldId = notebook:getNextUniqueIdentifier(),
+          pos = posCs,
+          radius = radius,
+          waypointType = waypointTypes.wpTypeCornerStart,
+        },
+        {
+          name = "corner end",
+          normal = {0.0, 1.0, 0.0},
+          oldId = notebook:getNextUniqueIdentifier(),
+          pos = posCe,
+          radius = radius,
+          waypointType = waypointTypes.wpTypeCornerEnd,
+        }
+      }
+    }
+
+    table.insert(pacenotes, pn)
+  end
+
+  return pacenotes
 end
 
 return function(...)
