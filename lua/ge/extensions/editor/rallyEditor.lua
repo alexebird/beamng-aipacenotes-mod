@@ -466,11 +466,16 @@ local function drawEditorGui()
       local paused = simTimeAuthority.getPause()
       local is_path_cam = core_camera.getActiveCamName() == "path"
 
-      if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
+      -- if not is_path_cam and not (fg_mgr and fg_mgr.runningState ~= 'stopped' and not paused) then
+      if not is_path_cam then
         if currentWindow == pacenotesWindow then
           pacenotesWindow:drawDebugEntrypoint()
         elseif currentWindow == recceWindow then
           recceWindow:drawDebugEntrypoint()
+        end
+      else
+        if currentWindow == pacenotesWindow then
+          pacenotesWindow:drawDebugCameraPlaying()
         end
       end
     end

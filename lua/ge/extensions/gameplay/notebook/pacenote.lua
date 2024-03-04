@@ -249,10 +249,14 @@ function C:is_valid()
 end
 
 function C:nameForSelect()
+  local txt = self.name
+  local note = self.notes[self.notebook:editingLanguage()].note
+  txt = txt..' - '..note
+
   if self:is_valid() then
-    return self.name
+    return txt
   else
-    return '[!] '..self.name
+    return '[!] '..txt
   end
 end
 
@@ -414,6 +418,11 @@ local function textForDrawDebug(drawConfig, selection_state, wp, dist_text)
     --   txt = txt..'] '..note_text
     -- else
     txt = note_text
+
+    if editor_rallyEditor and editor_rallyEditor.getPrefLockWaypoints() and selection_state.selected_pn_id then
+      txt = '[LOCK] '..txt
+    end
+
     if not txt or txt == '' then
       txt = '<empty pacenote>'
     end
@@ -500,9 +509,27 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
       clr_textFg = cc.clr_white
       clr_textBg = cc.clr_red_dark
     end
+    radius_factor = cc.pacenote_adjacent_radius_factor
   elseif pn_drawMode == pn_drawMode_noSelection then
+    alpha_text = 1.0
     if valid then
-      clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
+      -- rainbow theme
+      -- clr = rainbowColor(#wp.pacenote.notebook.pacenotes.sorted, (wp.pacenote.sortOrder-1), 1)
+
+      -- dark green theme
+      -- clr = cc.clr_green_dark
+      -- clr_textFg = cc.clr_white
+      -- clr_textBg = cc.clr_green_dark
+
+      -- dark theme
+      clr = cc.waypoint_clr_background
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_black
+
+      -- light theme
+      -- clr = cc.clr_white
+      -- clr_textFg = cc.clr_black
+      -- clr_textBg = cc.clr_white
     else
       clr = cc.clr_red_dark
       clr_textFg = cc.clr_white

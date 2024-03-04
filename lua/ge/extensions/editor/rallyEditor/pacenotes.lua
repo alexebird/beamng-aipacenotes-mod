@@ -14,7 +14,7 @@ local waypointPosition = im.ArrayFloat(3)
 local waypointNormal = im.ArrayFloat(3)
 local waypointRadius = im.FloatPtr(0)
 
-local transcriptsSearchText = im.ArrayChar(1024, "")
+-- local transcriptsSearchText = im.ArrayChar(1024, "")
 local pacenotesSearchText = im.ArrayChar(1024, "")
 
 
@@ -61,17 +61,17 @@ function C:init(rallyEditor)
     selected_pn_id = nil,
     selected_wp_id = nil,
     recent_selected_pn_id = nil,
-  }
-
-  self.transcript_tools_state = {
-    show = false,
-    selected_id = nil,
     playbackLastCameraPos = nil,
     last_camera = {
       pos = nil,
       quat = nil
     }
   }
+
+  -- self.transcript_tools_state = {
+  --   show = false,
+  --   selected_id = nil,
+  -- }
 end
 
 function C:isValid()
@@ -122,14 +122,14 @@ function C:selectedWaypoint()
   end
 end
 
-function C:selectedTranscript()
-  if not self:getTranscripts() then return nil end
-  if self.transcript_tools_state.selected_id then
-    return self:getTranscripts().transcripts.objects[self.transcript_tools_state.selected_id]
-  else
-    return nil
-  end
-end
+-- function C:selectedTranscript()
+--   if not self:getTranscripts() then return nil end
+--   if self.transcript_tools_state.selected_id then
+--     return self:getTranscripts().transcripts.objects[self.transcript_tools_state.selected_id]
+--   else
+--     return nil
+--   end
+-- end
 
 function C:loadSnaproad()
   local recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')(self.rallyEditor.getMissionDir())
@@ -186,7 +186,7 @@ function C:selectPacenote(id)
     end
   end
 
-  if not id then
+  if not id then -- track the most recent selection
     if self.pacenote_tools_state.selected_pn_id then
       self.pacenote_tools_state.recent_selected_pn_id = self.pacenote_tools_state.selected_pn_id
     end
@@ -211,9 +211,11 @@ function C:selectPacenote(id)
     local note = self.path.pacenotes.objects[id]
     pacenoteNameText = im.ArrayChar(1024, note.name)
     playbackRulesText = im.ArrayChar(1024, note.playback_rules)
+    self.pacenote_tools_state.snaproad:setPacenote(note)
   else
     pacenoteNameText = im.ArrayChar(1024, "")
     playbackRulesText = im.ArrayChar(1024, "")
+    self.pacenote_tools_state.snaproad:setPacenote(nil)
   end
 end
 
@@ -229,12 +231,16 @@ function C:selectWaypoint(id)
       self:updateGizmoTransform(id)
       if self.pacenote_tools_state.snaproad then
         self.pacenote_tools_state.snaproad:setFilter(waypoint)
+        -- self.pacenote_tools_state.snaproad:setPacenote(nil)
       end
     else
       log('E', logTag, 'expected to find waypoint with id='..id)
-      self.pacenote_tools_state.snaproad:setFilter(nil)
+      if self.pacenote_tools_state.snaproad then
+        self.pacenote_tools_state.snaproad:setFilter(nil)
+        self.pacenote_tools_state.snaproad:setPacenote(self:selectedPacenote())
+      end
     end
-  else
+  else -- deselect waypoint
     waypointNameText = im.ArrayChar(1024, "")
     -- I think this fixes the bug where you cant click on a pacenote waypoint anymore.
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
@@ -242,6 +248,7 @@ function C:selectWaypoint(id)
 
     if self.pacenote_tools_state.snaproad then
       self.pacenote_tools_state.snaproad:setFilter(nil)
+      self.pacenote_tools_state.snaproad:setPacenote(self:selectedPacenote())
     end
   end
 end
@@ -256,13 +263,13 @@ function C:deselect()
   end
 end
 
-function C:selectTranscript(id)
-  if not self:getTranscripts() then return end
-  self.transcript_tools_state.selected_id = id
-  -- if id then
-  -- else
-  -- end
-end
+-- function C:selectTranscript(id)
+--   if not self:getTranscripts() then return end
+--   self.transcript_tools_state.selected_id = id
+--   -- if id then
+--   -- else
+--   -- end
+-- end
 
 function C:attemptToFixMapEdgeIssue()
   self:resetGizmoTransformToOrigin()
@@ -409,7 +416,13 @@ function C:drawDebugEntrypoint()
   -- end
 end
 
-function C:handleMouseDown(hoveredWp, hoveredTsc)
+function C:drawDebugCameraPlaying()
+  if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
+    self.pacenote_tools_state.snaproad:drawDebugCameraPlaying()
+  end
+end
+
+function C:handleMouseDown(hoveredWp)
   if hoveredWp then
     local selectedPn = hoveredWp.pacenote
     if self:selectedPacenote() and self:selectedPacenote().id == selectedPn.id then
@@ -433,9 +446,6 @@ function C:handleMouseDown(hoveredWp, hoveredTsc)
       self:selectPacenote(selectedPn.id)
       self:selectWaypoint(nil)
     end
-  elseif hoveredTsc and not self:selectedWaypoint() then
-    im.SetClipboardText(hoveredTsc.text)
-    self:selectTranscript(hoveredTsc.id)
   else
     -- clear selection by clicking off waypoint.
     self:deselect()
@@ -443,32 +453,27 @@ function C:handleMouseDown(hoveredWp, hoveredTsc)
 end
 
 function C:handleMouseHold()
-  if self.pacenote_tools_state.drag_mode == dragModes.simple or self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    local mouse_pos = self.mouseInfo._holdPos
-    -- this sphere indicates the drag cursor
-    -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
+  local mouse_pos = self.mouseInfo._holdPos
 
-    local wp_sel = self:selectedWaypoint()
-    if wp_sel and not wp_sel:isLocked() then
-      if self.mouseInfo.rayCast then
-        local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
-        if new_pos then
-          wp_sel.pos = new_pos
-          self:autoFillDistanceCalls()
-          if normal_align_pos then
-            local rv = re_util.calculateForwardNormal(new_pos, normal_align_pos)
-            wp_sel.normal = vec3(rv.x, rv.y, rv.z)
-          elseif wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
-            local note = wp_sel.pacenote
-            -- local at = note:getActiveFwdAudioTrigger()
-            for _,at in ipairs(note:getAudioTriggerWaypoints()) do
-              local rv = re_util.calculateForwardNormal(at.pos, wp_sel.pos)
-              at.normal = vec3(rv.x, rv.y, rv.z)
-            end
-            -- if at then
-            --   local rv = re_util.calculateForwardNormal(at.pos, wp_sel.pos)
-            --   at.normal = vec3(rv.x, rv.y, rv.z)
-            -- end
+  -- this sphere indicates the drag cursor
+  -- debugDrawer:drawSphere((mouse_pos), 1, ColorF(1,1,0,1.0)) -- radius=1, color=yellow
+
+  local wp_sel = self:selectedWaypoint()
+
+  if wp_sel and not wp_sel:isLocked() then
+    if self.mouseInfo.rayCast then
+      local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
+      if new_pos then
+        wp_sel.pos = new_pos
+        self:autoFillDistanceCalls()
+        if normal_align_pos then
+          local rv = re_util.calculateForwardNormal(new_pos, normal_align_pos)
+          wp_sel.normal = vec3(rv.x, rv.y, rv.z)
+        elseif wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
+          local note = wp_sel.pacenote
+          for _,at in ipairs(note:getAudioTriggerWaypoints()) do
+            local rv = re_util.calculateForwardNormal(at.pos, wp_sel.pos)
+            at.normal = vec3(rv.x, rv.y, rv.z)
           end
         end
       end
@@ -516,29 +521,29 @@ function C:handleMouseUp()
   end
 end
 
-function C:setHover(wp, tsc)
-  local tscs = self:getTranscripts()
-  if tscs and self.transcript_tools_state.show then
-    tscs._draw_debug_hover_tsc_id = nil
-  end
+function C:setHover(wp)
+  -- local tscs = self:getTranscripts()
+  -- if tscs and self.transcript_tools_state.show then
+  --   tscs._draw_debug_hover_tsc_id = nil
+  -- end
   self.pacenote_tools_state.hover_wp_id = nil
 
-  if tscs and self.transcript_tools_state.show and tsc then
-    tscs._draw_debug_hover_tsc_id = tsc.id
-  elseif wp then
+  -- if tscs and self.transcript_tools_state.show and tsc then
+    -- tscs._draw_debug_hover_tsc_id = tsc.id
+  if wp then
     self.pacenote_tools_state.hover_wp_id = wp.id
   end
 end
 
-function C:handleUnmodifiedMouseInteraction(hoveredWp, hoveredTsc)
+function C:handleUnmodifiedMouseInteraction(hoveredWp)
   if self.mouseInfo.down then
-    self:handleMouseDown(hoveredWp, hoveredTsc)
+    self:handleMouseDown(hoveredWp)
   elseif self.mouseInfo.hold then
     self:handleMouseHold()
   elseif self.mouseInfo.up then
     self:handleMouseUp()
   else
-    self:setHover(hoveredWp, hoveredTsc)
+    self:setHover(hoveredWp)
   end
 end
 
@@ -576,7 +581,6 @@ function C:handleMouseInput()
   -- after a cold world editor start. Well, since I'm not using the gizmo for
   -- this tool, I'm just going to comment it and hope for the best.
 
-  local hoveredTsc = self:detectMouseHoverTranscript()
   local hoveredWp = self:detectMouseHoverWaypoint()
 
   local states = self:getSelectionLayerStates()
@@ -607,7 +611,7 @@ function C:handleMouseInput()
       self:createMouseDragPacenote()
     end
   else
-    self:handleUnmodifiedMouseInteraction(hoveredWp, hoveredTsc)
+    self:handleUnmodifiedMouseInteraction(hoveredWp)
   end
 end
 
@@ -630,14 +634,14 @@ function C:getSelectionLayerStates()
     end
   end
 
-  local transcriptsLayerState = 'none'
-  if self:selectedTranscript() then
-    transcriptsLayerState = 'transcript'
-  end
+  -- local transcriptsLayerState = 'none'
+  -- if self:selectedTranscript() then
+  --   transcriptsLayerState = 'transcript'
+  -- end
 
   return {
     pacenotesLayer = pacenoteLayerState,
-    transcriptsLayer = transcriptsLayerState,
+    -- transcriptsLayer = transcriptsLayerState,
   }
 end
 
@@ -832,30 +836,30 @@ function C:addMouseWaypointToPacenote()
   end
 end
 
-function C:detectMouseHoverTranscript()
-  local transcripts = self:getTranscripts()
-  if not transcripts then return end
-  if not self.transcript_tools_state.show then return end
-
-  local min_dist = 4294967295
-  local hover_tsc = nil
-
-  for _,tsc in ipairs(transcripts.transcripts.sorted) do
-    local vpos = tsc:vehiclePos()
-    if vpos and tsc.show then
-      local distNoteToCam = (vpos - self.mouseInfo.camPos):length()
-      local noteRayDistance = (vpos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
-      if noteRayDistance <= transcripts.selection_sphere_r then
-        if distNoteToCam < min_dist then
-          min_dist = distNoteToCam
-          hover_tsc = tsc
-        end
-      end
-    end
-  end
-
-  return hover_tsc
-end
+-- function C:detectMouseHoverTranscript()
+--   local transcripts = self:getTranscripts()
+--   if not transcripts then return end
+--   if not self.transcript_tools_state.show then return end
+--
+--   local min_dist = 4294967295
+--   local hover_tsc = nil
+--
+--   for _,tsc in ipairs(transcripts.transcripts.sorted) do
+--     local vpos = tsc:vehiclePos()
+--     if vpos and tsc.show then
+--       local distNoteToCam = (vpos - self.mouseInfo.camPos):length()
+--       local noteRayDistance = (vpos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
+--       if noteRayDistance <= transcripts.selection_sphere_r then
+--         if distNoteToCam < min_dist then
+--           min_dist = distNoteToCam
+--           hover_tsc = tsc
+--         end
+--       end
+--     end
+--   end
+--
+--   return hover_tsc
+-- end
 
 -- figures out which pacenote to select with the mouse in the 3D scene.
 function C:detectMouseHoverWaypoint()
@@ -958,19 +962,15 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
       return newPos, nil
     end
   elseif self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    -- if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-      if self.mouseInfo.rayCast then
-        local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-        newPos = self.pacenote_tools_state.snaproad:closestSnapPos(newPos)
-        return newPos
-      else
-        local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-        return newPos, nil
-      end
-    -- else
-    --   local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-    --   return newPos, nil
-    -- end
+    if self.mouseInfo.rayCast then
+      local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
+      local newPoint = self.pacenote_tools_state.snaproad:closestSnapPoint(newPos)
+      local _, toPoint = self.pacenote_tools_state.snaproad:normalAlignPoint(newPoint)
+      return newPoint.pos, toPoint.pos
+    else
+      local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
+      return newPos, nil
+    end
   else
     log('W', logTag, 'wpPosForSimpleDrag hit the else when should no hit else')
     return nil, nil
@@ -1405,9 +1405,9 @@ function C:drawPacenotesList(height)
   -- vertical space
   for i = 1,5 do im.Spacing() end
 
-  im.BeginChild1("pacenotes", im.ImVec2(125*im.uiscale[0],height), im.WindowFlags_ChildWindow)
+  im.BeginChild1("pacenotes", im.ImVec2(200*im.uiscale[0],height), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
-    if im.Selectable1( note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then
+    if im.Selectable1(note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then
       editor.history:commitAction("Select Pacenote",
         {old = self.pacenote_tools_state.selected_pn_id, new = note.id, self = self},
         selectPacenoteUndo, selectPacenoteRedo)
@@ -1423,7 +1423,7 @@ function C:drawPacenotesList(height)
   --   local pacenote = notebook.pacenotes:create(nil, nil)
   --   self:selectPacenote(pacenote.id)
   -- end
-  im.tooltip("Ctrl-Drag in the world to create a new pacenote.")
+  -- im.tooltip("Ctrl-Drag in the world to create a new pacenote.")
   im.EndChild() -- pacenotes child window
 
   im.SameLine()
@@ -1474,6 +1474,27 @@ function C:drawPacenotesList(height)
 
     if im.Button("Insert After") then
       self:insertNewPacenoteAfter(note)
+    end
+
+    if core_camera.getActiveCamName() == "path" then
+      if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(24, 24)) then
+        self.pacenote_tools_state.snaproad:stopCameraPath()
+        self.pacenote_tools_state.playbackLastCameraPos = core_camera.getPosition()
+        core_camera.setPosition(0, self.pacenote_tools_state.last_camera.pos)
+        core_camera.setRotation(0, self.pacenote_tools_state.last_camera.quat)
+      end
+      im.SameLine()
+      im.Text('Stop')
+    else
+      if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(24, 24)) then
+        self:selectWaypoint(nil)
+        self.pacenote_tools_state.last_camera.pos = core_camera.getPosition()
+        self.pacenote_tools_state.last_camera.quat = core_camera.getQuat()
+        self.pacenote_tools_state.snaproad:playCameraPath()
+      end
+      im.SameLine()
+      local paused = simTimeAuthority.getPause()
+      im.Text('Play'..((paused and ' (must unpause game!)') or ''))
     end
 
     for _ = 1,5 do im.Spacing() end
@@ -1609,149 +1630,149 @@ Any lua code is allowed, so be careful. Examples:
   -- for i = 1,3 do im.Spacing() end
 end
 
-function C:drawTranscriptsSection(height)
-  -- im.BeginChild1("transcriptsSection", im.ImVec2(0, height*im.uiscale[0]), im.WindowFlags_ChildWindow)
-  im.BeginChild1("transcriptsSection", nil, im.WindowFlags_ChildWindow)
-
-  local tscs = self:getTranscripts()
-  im.BeginChild1("transcriptsList", im.ImVec2(200*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
-  if tscs then
-    for _,tsc in ipairs(tscs.transcripts.sorted) do
-      if tsc:isUsable() then
-        if im.Selectable1((tsc.text)..'##'..(tsc.id), tsc.id == self.transcript_tools_state.selected_id) then
-          self.transcript_tools_state.selected_id = tsc.id
-          self.transcript_tools_state.show = true
-        end
-      end
-    end
-  end
-  im.EndChild() -- transcripts section child window
-
-  im.SameLine()
-
-  im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
-  im.HeaderText('Transcript Tools')
-
-  -- im.SameLine()
-  -- if im.Button("Load") then
-    -- self.recording_state.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/recording/driveline')(self.rallyEditor.getMissionDir())
-    -- self.recording_state.driveline:load()
-  -- end
-
-  -- im.SameLine()
-  -- if im.Button("Clear") then
-  --   self.rallyEditor.getTranscriptsWindow():clearSelection()
-  --   self.pacenote_tools_state.snaproads = nil
-  --   self.transcript_tools_state.search = nil
-  --   self.transcript_tools_state.show = true
-  --   transcriptsSearchText = im.ArrayChar(1024, "")
-  --   self.pacenote_tools_state.drag_mode = dragModes.simple
-  -- end
-  -- im.SameLine()
-  -- if im.Button("Load Curr") then
-  --   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
-  --   if settings then
-  --     self.transcript_tools_state.search = nil
-  --     transcriptsSearchText = im.ArrayChar(1024, "")
-  --     local abspath = settings:getCurrTranscriptAbsPath()
-  --     self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
-  --     self:selectFirstTranscript()
-  --   end
-  -- end
-  -- im.SameLine()
-  -- if im.Button("Load Full Course") then
-  --   self:loadFullCourse(true)
-  -- end
-  im.SameLine()
-  if im.Checkbox("Show/Hide Transcripts##show_tscs", im.BoolPtr(self.transcript_tools_state.show)) then
-    self.transcript_tools_state.show = not self.transcript_tools_state.show
-  end
-
-  if im.Button("Prev") then
-    -- if self.transcript_tools_state.search then
-      -- self:searchForTranscript()
-    -- else
-      self:selectPrevTranscript()
-    -- end
-  end
-  im.SameLine()
-  if im.Button("Next") then
-    -- if self.transcript_tools_state.search then
-      -- self:searchForTranscript()
-    -- else
-      self:selectNextTranscript()
-    -- end
-  end
-  im.SameLine()
-  local editEnded = im.BoolPtr(false)
-  editor.uiInputText("##SearchTsc", transcriptsSearchText, nil, nil, nil, nil, editEnded)
-  if editEnded[0] then
-    self.transcript_tools_state.search = ffi.string(transcriptsSearchText)
-    if re_util.trimString(self.transcript_tools_state.search) == '' then
-      self.transcript_tools_state.search = nil
-    end
-
-    if self.transcript_tools_state.search then
-      log('D', logTag, 'searching transcripts: '..self.transcript_tools_state.search)
-      local tsc = self:selectedTranscript()
-      if tsc then
-        if not self:transcriptSearchMatches(tsc.text) then
-          self:selectNextTranscript()
-        end
-      end
-    end
-  end
-  im.SameLine()
-  if im.Button("X") then
-    self.transcript_tools_state.search = nil
-    self.transcript_tools_state.playbackLastCameraPos = nil
-    transcriptsSearchText = im.ArrayChar(1024, "")
-  end
-
-  if not tscs then
-    im.Text('Click one of the Load buttons above, or select a Transcript in the Transcripts tab.')
-  else
-    local tsc = self:selectedTranscript()
-    if tsc then
-      if editor.uiIconImageButton(editor.icons.content_copy, im.ImVec2(24, 24)) then
-        im.SetClipboardText(tsc.text)
-      end
-      -- im.tooltip('Copy to clipboard')
-      im.SameLine()
-      im.Text('Copy to Clipboard')
-
-      if core_camera.getActiveCamName() == "path" then
-        if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(24, 24)) then
-          core_paths.stopCurrentPath()
-          self.transcript_tools_state.playbackLastCameraPos = core_camera.getPosition()
-          core_camera.setPosition(0, self.transcript_tools_state.last_camera.pos)
-          core_camera.setRotation(0, self.transcript_tools_state.last_camera.quat)
-        end
-        im.SameLine()
-        im.Text('Stop Camera Path')
-      else
-        if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(24, 24)) then
-          self.transcript_tools_state.last_camera.pos = core_camera.getPosition()
-          self.transcript_tools_state.last_camera.quat = core_camera.getQuat()
-          tsc:playCameraPath()
-        end
-        im.SameLine()
-        local paused = simTimeAuthority.getPause()
-        im.Text('Play Camera Path'..((paused and ' (must unpause game!)') or ''))
-      end
-
-      if editor.uiIconImageButton(editor.icons.location_searching, im.ImVec2(24, 24)) then
-        tsc:lookAtMe()
-      end
-      -- im.tooltip('')
-      im.SameLine()
-      im.Text('Look at')
-    end
-  end
-  im.EndChild() -- transcript detail section child window
-
-  im.EndChild() -- transcripts section child window
-end
+-- function C:drawTranscriptsSection(height)
+--   -- im.BeginChild1("transcriptsSection", im.ImVec2(0, height*im.uiscale[0]), im.WindowFlags_ChildWindow)
+--   im.BeginChild1("transcriptsSection", nil, im.WindowFlags_ChildWindow)
+--
+--   local tscs = self:getTranscripts()
+--   im.BeginChild1("transcriptsList", im.ImVec2(200*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
+--   if tscs then
+--     for _,tsc in ipairs(tscs.transcripts.sorted) do
+--       if tsc:isUsable() then
+--         if im.Selectable1((tsc.text)..'##'..(tsc.id), tsc.id == self.transcript_tools_state.selected_id) then
+--           self.transcript_tools_state.selected_id = tsc.id
+--           self.transcript_tools_state.show = true
+--         end
+--       end
+--     end
+--   end
+--   im.EndChild() -- transcripts section child window
+--
+--   im.SameLine()
+--
+--   im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+--   im.HeaderText('Transcript Tools')
+--
+--   -- im.SameLine()
+--   -- if im.Button("Load") then
+--     -- self.recording_state.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/recording/driveline')(self.rallyEditor.getMissionDir())
+--     -- self.recording_state.driveline:load()
+--   -- end
+--
+--   -- im.SameLine()
+--   -- if im.Button("Clear") then
+--   --   self.rallyEditor.getTranscriptsWindow():clearSelection()
+--   --   self.pacenote_tools_state.snaproads = nil
+--   --   self.transcript_tools_state.search = nil
+--   --   self.transcript_tools_state.show = true
+--   --   transcriptsSearchText = im.ArrayChar(1024, "")
+--   --   self.pacenote_tools_state.drag_mode = dragModes.simple
+--   -- end
+--   -- im.SameLine()
+--   -- if im.Button("Load Curr") then
+--   --   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+--   --   if settings then
+--   --     self.transcript_tools_state.search = nil
+--   --     transcriptsSearchText = im.ArrayChar(1024, "")
+--   --     local abspath = settings:getCurrTranscriptAbsPath()
+--   --     self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
+--   --     self:selectFirstTranscript()
+--   --   end
+--   -- end
+--   -- im.SameLine()
+--   -- if im.Button("Load Full Course") then
+--   --   self:loadFullCourse(true)
+--   -- end
+--   im.SameLine()
+--   if im.Checkbox("Show/Hide Transcripts##show_tscs", im.BoolPtr(self.transcript_tools_state.show)) then
+--     self.transcript_tools_state.show = not self.transcript_tools_state.show
+--   end
+--
+--   if im.Button("Prev") then
+--     -- if self.transcript_tools_state.search then
+--       -- self:searchForTranscript()
+--     -- else
+--       self:selectPrevTranscript()
+--     -- end
+--   end
+--   im.SameLine()
+--   if im.Button("Next") then
+--     -- if self.transcript_tools_state.search then
+--       -- self:searchForTranscript()
+--     -- else
+--       self:selectNextTranscript()
+--     -- end
+--   end
+--   im.SameLine()
+--   local editEnded = im.BoolPtr(false)
+--   editor.uiInputText("##SearchTsc", transcriptsSearchText, nil, nil, nil, nil, editEnded)
+--   if editEnded[0] then
+--     self.transcript_tools_state.search = ffi.string(transcriptsSearchText)
+--     if re_util.trimString(self.transcript_tools_state.search) == '' then
+--       self.transcript_tools_state.search = nil
+--     end
+--
+--     if self.transcript_tools_state.search then
+--       log('D', logTag, 'searching transcripts: '..self.transcript_tools_state.search)
+--       local tsc = self:selectedTranscript()
+--       if tsc then
+--         if not self:transcriptSearchMatches(tsc.text) then
+--           self:selectNextTranscript()
+--         end
+--       end
+--     end
+--   end
+--   im.SameLine()
+--   if im.Button("X") then
+--     self.transcript_tools_state.search = nil
+--     self.transcript_tools_state.playbackLastCameraPos = nil
+--     transcriptsSearchText = im.ArrayChar(1024, "")
+--   end
+--
+--   if not tscs then
+--     im.Text('Click one of the Load buttons above, or select a Transcript in the Transcripts tab.')
+--   else
+--     local tsc = self:selectedTranscript()
+--     if tsc then
+--       if editor.uiIconImageButton(editor.icons.content_copy, im.ImVec2(24, 24)) then
+--         im.SetClipboardText(tsc.text)
+--       end
+--       -- im.tooltip('Copy to clipboard')
+--       im.SameLine()
+--       im.Text('Copy to Clipboard')
+--
+--       if core_camera.getActiveCamName() == "path" then
+--         if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(24, 24)) then
+--           core_paths.stopCurrentPath()
+--           self.transcript_tools_state.playbackLastCameraPos = core_camera.getPosition()
+--           core_camera.setPosition(0, self.transcript_tools_state.last_camera.pos)
+--           core_camera.setRotation(0, self.transcript_tools_state.last_camera.quat)
+--         end
+--         im.SameLine()
+--         im.Text('Stop Camera Path')
+--       else
+--         if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(24, 24)) then
+--           self.transcript_tools_state.last_camera.pos = core_camera.getPosition()
+--           self.transcript_tools_state.last_camera.quat = core_camera.getQuat()
+--           tsc:playCameraPath()
+--         end
+--         im.SameLine()
+--         local paused = simTimeAuthority.getPause()
+--         im.Text('Play Camera Path'..((paused and ' (must unpause game!)') or ''))
+--       end
+--
+--       if editor.uiIconImageButton(editor.icons.location_searching, im.ImVec2(24, 24)) then
+--         tsc:lookAtMe()
+--       end
+--       -- im.tooltip('')
+--       im.SameLine()
+--       im.Text('Look at')
+--     end
+--   end
+--   im.EndChild() -- transcript detail section child window
+--
+--   im.EndChild() -- transcripts section child window
+-- end
 
 -- function C:loadFullCourse(show)
 --   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
@@ -1794,73 +1815,73 @@ end
 --   end
 -- end
 
-function C:searchTranscriptMatchFn(tsc)
-  -- return tsc and not tsc.missing and tsc:isUsable()
-  return tsc and not tsc.missing and tsc:isUsable() and self:transcriptSearchMatches(tsc.text)
-end
+-- function C:searchTranscriptMatchFn(tsc)
+--   -- return tsc and not tsc.missing and tsc:isUsable()
+--   return tsc and not tsc.missing and tsc:isUsable() and self:transcriptSearchMatches(tsc.text)
+-- end
 
 function C:searchPacenoteMatchFn(pacenote)
   -- return pacenote and not pacenote.missing and pacenote:isUsable()
   return pacenote and not pacenote.missing and self:pacenoteSearchMatches(pacenote)
 end
 
-function C:selectPrevTranscript()
-  local transcripts_path = self:getTranscripts()
-  if not transcripts_path then return end
-
-  self.transcript_tools_state.show = true
-
-  local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
-  local sorted = transcripts_path.transcripts.sorted
-
-  if curr and not curr.missing then
-    local prev = nil
-    for i = curr.sortOrder-1,1,-1 do
-      local tsc = sorted[i]
-      if self:searchTranscriptMatchFn(tsc) then
-        prev = tsc
-        break
-      end
-    end
-
-    if not prev then
-      for i = #sorted,1,-1 do
-        local tsc = sorted[i]
-        if self:searchTranscriptMatchFn(tsc) then
-          prev = tsc
-          break
-        end
-      end
-    end
-
-    if prev then
-      self:selectTranscript(prev.id)
-    end
-  else
-    -- if no curr, that means no pacenote was selected, so then select the last one.
-    for i = 1,#sorted do
-      local tsc = sorted[i]
-      if self:searchTranscriptMatchFn(tsc) then
-        self:selectTranscript(tsc.id)
-        break
-      end
-    end
-  end
-
-  if self.rallyEditor.getPrefTopDownCameraFollow() then
-    self:setCameraToTranscript()
-  end
-end
-
-function C:transcriptSearchMatches(stringToMatch)
-  if not self.transcript_tools_state.search then return true end
-
-  local searchPattern = re_util.trimString(self.transcript_tools_state.search)
-  if searchPattern == '' then return true end
-  log('D', logTag, 'transcriptSearchMatches: search="'..searchPattern..'" input="'..stringToMatch..'"')
-
-  return re_util.matchSearchPattern(searchPattern, stringToMatch)
-end
+-- function C:selectPrevTranscript()
+--   local transcripts_path = self:getTranscripts()
+--   if not transcripts_path then return end
+--
+--   self.transcript_tools_state.show = true
+--
+--   local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
+--   local sorted = transcripts_path.transcripts.sorted
+--
+--   if curr and not curr.missing then
+--     local prev = nil
+--     for i = curr.sortOrder-1,1,-1 do
+--       local tsc = sorted[i]
+--       if self:searchTranscriptMatchFn(tsc) then
+--         prev = tsc
+--         break
+--       end
+--     end
+--
+--     if not prev then
+--       for i = #sorted,1,-1 do
+--         local tsc = sorted[i]
+--         if self:searchTranscriptMatchFn(tsc) then
+--           prev = tsc
+--           break
+--         end
+--       end
+--     end
+--
+--     if prev then
+--       self:selectTranscript(prev.id)
+--     end
+--   else
+--     -- if no curr, that means no pacenote was selected, so then select the last one.
+--     for i = 1,#sorted do
+--       local tsc = sorted[i]
+--       if self:searchTranscriptMatchFn(tsc) then
+--         self:selectTranscript(tsc.id)
+--         break
+--       end
+--     end
+--   end
+--
+--   if self.rallyEditor.getPrefTopDownCameraFollow() then
+--     self:setCameraToTranscript()
+--   end
+-- end
+--
+-- function C:transcriptSearchMatches(stringToMatch)
+--   if not self.transcript_tools_state.search then return true end
+--
+--   local searchPattern = re_util.trimString(self.transcript_tools_state.search)
+--   if searchPattern == '' then return true end
+--   log('D', logTag, 'transcriptSearchMatches: search="'..searchPattern..'" input="'..stringToMatch..'"')
+--
+--   return re_util.matchSearchPattern(searchPattern, stringToMatch)
+-- end
 
 function C:pacenoteSearchMatches(pacenote)
   if not self.pacenote_tools_state.search then return true end
@@ -1871,54 +1892,54 @@ function C:pacenoteSearchMatches(pacenote)
   return pacenote:matchesSearchPattern(searchPattern)
 end
 
-function C:selectNextTranscript()
-  local transcripts_path = self:getTranscripts()
-  if not transcripts_path then return end
-
-  self.transcript_tools_state.show = true
-
-  local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
-  local sorted = transcripts_path.transcripts.sorted
-
-  if curr and not curr.missing then
-    local next = nil
-    for i = curr.sortOrder+1,#sorted do
-      local tsc = sorted[i]
-      if self:searchTranscriptMatchFn(tsc) then
-        next = tsc
-        break
-      end
-    end
-
-    -- wrap around: find the first usable one
-    if not next then
-      for i = 1,#sorted do
-        local tsc = sorted[i]
-        if self:searchTranscriptMatchFn(tsc) then
-          next = tsc
-          break
-        end
-      end
-    end
-
-    if next then
-      self:selectTranscript(next.id)
-    end
-  else
-    -- if no curr, that means no pacenote was selected, so then select the last one.
-    for i = #sorted,1,-1 do
-      local tsc = sorted[i]
-      if self:searchTranscriptMatchFn(tsc) then
-        self:selectTranscript(tsc.id)
-        break
-      end
-    end
-  end
-
-  if self.rallyEditor.getPrefTopDownCameraFollow() then
-    self:setCameraToTranscript()
-  end
-end
+-- function C:selectNextTranscript()
+--   local transcripts_path = self:getTranscripts()
+--   if not transcripts_path then return end
+--
+--   self.transcript_tools_state.show = true
+--
+--   local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
+--   local sorted = transcripts_path.transcripts.sorted
+--
+--   if curr and not curr.missing then
+--     local next = nil
+--     for i = curr.sortOrder+1,#sorted do
+--       local tsc = sorted[i]
+--       if self:searchTranscriptMatchFn(tsc) then
+--         next = tsc
+--         break
+--       end
+--     end
+--
+--     -- wrap around: find the first usable one
+--     if not next then
+--       for i = 1,#sorted do
+--         local tsc = sorted[i]
+--         if self:searchTranscriptMatchFn(tsc) then
+--           next = tsc
+--           break
+--         end
+--       end
+--     end
+--
+--     if next then
+--       self:selectTranscript(next.id)
+--     end
+--   else
+--     -- if no curr, that means no pacenote was selected, so then select the last one.
+--     for i = #sorted,1,-1 do
+--       local tsc = sorted[i]
+--       if self:searchTranscriptMatchFn(tsc) then
+--         self:selectTranscript(tsc.id)
+--         break
+--       end
+--     end
+--   end
+--
+--   if self.rallyEditor.getPrefTopDownCameraFollow() then
+--     self:setCameraToTranscript()
+--   end
+-- end
 
 function C:handleNoteFieldEdit(note, language, subfield, buf)
   local newVal = note.notes
@@ -2114,12 +2135,12 @@ end
 --   log('I', logTag, 'reloaded voices from '..voiceFname)
 -- end
 
-function C:setCameraToTranscript()
-  local tsc = self:selectedTranscript()
-  if tsc then
-    tsc:lookAtMe()
-  end
-end
+-- function C:setCameraToTranscript()
+--   local tsc = self:selectedTranscript()
+--   if tsc then
+--     tsc:lookAtMe()
+--   end
+-- end
 
 function C:setCameraToPacenote()
   local pacenote = self:selectedPacenote()

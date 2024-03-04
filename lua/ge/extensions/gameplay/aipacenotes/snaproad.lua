@@ -8,12 +8,20 @@ local startingMinDist = 4294967295
 
 function C:init(recce)
   self.recce = recce
+  self.cameraPathPlayer = require('/lua/ge/extensions/gameplay/aipacenotes/cameraPathPlayer')(self)
 
-  self.filtered_points = nil
+  self.filter = {
+    enabled = false,
+    points = {},
+  }
 
-  self.partition_before_points = nil
-  self.partition_focus_points = nil
-  self.partition_after_points = nil
+  self.partition = {
+    enabled = false,
+    pacenote = nil,
+    before_points = {},
+    focus_points = {},
+    after_points = {},
+  }
 end
 
 -- function C:load()
@@ -70,33 +78,109 @@ end
 --   return closestWp
 -- end
 
-function C:drawDebugSnaproad()
-
-  -- self.recce.driveline:drawDebugDriveline()
-
-  local points = self:_operativePoints()
-
-  -- local clr = cc.recce_driveline_clr
-  -- local alpha_shape = cc.recce_alpha
-
-  local clr = cc.snaproads_clr
-  local alpha_shape = cc.snaproads_alpha
-  local radius = cc.snaproads_radius
+local function _drawDebugPoints(points, clr, alpha, radius)
+  local alpha_shape = alpha or cc.snaproads_alpha
+  local radius = radius or cc.snaproads_radius
 
   for _,point in ipairs(points) do
     local pos = point.pos
-    -- if pos == closest_snap_for_hover then
-      -- clr = clr_override or cc.snaproads_clr_hover
-      -- alpha = cc.snaproads_alpha_hover
-    -- elseif pos == snap_pos then
-    --   clr = clr_blue
-    -- else
-    -- end
     debugDrawer:drawSphere(
       pos,
       radius,
       ColorF(clr[1],clr[2],clr[3], alpha_shape)
     )
+  end
+end
+
+function C:_drawDebugPartition()
+  local points = self.partition.focus_points
+  local clr = nil
+
+  if self.filter.enabled then
+    clr = cc.clr_white
+  else
+    clr = cc.snaproads_clr
+  end
+
+  _drawDebugPoints(points, clr)
+
+  points = self.partition.before_points
+  -- clr = cc.snaproads_clr
+  clr = cc.waypoint_clr_background
+  _drawDebugPoints(points, clr)
+
+  points = self.partition.after_points
+  -- clr = cc.snaproads_clr
+  clr = cc.waypoint_clr_background
+  _drawDebugPoints(points, clr)
+end
+
+-- function C:_drawDebugFilter()
+--   local points = self:_operativePoints()
+--   local clr = cc.clr_white
+--   _drawDebugPoints(points, clr)
+-- end
+
+function C:_drawDebugDefault()
+  local points = self:_allPoints()
+  local clr = cc.snaproads_clr
+  _drawDebugPoints(points, clr)
+end
+
+function C:drawDebugSnaproad()
+  -- if self.filter.enabled then
+    -- self:_drawDebugFilter()
+  if self.partition.enabled then
+    self:_drawDebugPartition()
+  else
+    self:_drawDebugDefault()
+  end
+end
+
+function C:drawDebugCameraPlaying()
+  local pn = self.partition.pacenote
+  if self.partition.enabled and pn then
+    local radius = 1.0
+    local clr = cc.waypoint_clr_at
+    local alpha_shape = 0.2
+
+    local adjustHeight = function(pos, r)
+      local newZ = core_terrain.getTerrainHeight(pos)
+      return vec3(pos.x, pos.y, newZ-(r*0.25))
+    end
+
+    debugDrawer:drawSphere(
+      adjustHeight(pn:getActiveFwdAudioTrigger().pos, radius),
+      radius,
+      ColorF(clr[1],clr[2],clr[3], alpha_shape)
+    )
+
+    clr = cc.waypoint_clr_cs
+    debugDrawer:drawSphere(
+      adjustHeight(pn:getCornerStartWaypoint().pos, radius),
+      radius,
+      ColorF(clr[1],clr[2],clr[3], alpha_shape)
+    )
+
+    clr = cc.waypoint_clr_ce
+    debugDrawer:drawSphere(
+      adjustHeight(pn:getCornerEndWaypoint().pos, radius),
+      radius,
+      ColorF(clr[1],clr[2],clr[3], alpha_shape)
+    )
+
+    clr = cc.clr_white
+    -- alpha_shape = 0.2
+    radius = 0.2
+    local points = self.partition.focus_points
+    for _,point in ipairs(points) do
+      local pos = point.pos
+      debugDrawer:drawSphere(
+        adjustHeight(pos, radius),
+        radius,
+        ColorF(clr[1],clr[2],clr[3], alpha_shape)
+      )
+    end
   end
 end
 
@@ -139,13 +223,28 @@ end
 --   return posAfter
 -- end
 
+function C:_allPoints()
+  return self.recce.driveline.points
+end
+
 function C:_operativePoints()
-  return self.filtered_points or self.recce.driveline.points
+  if self.filter.enabled then
+    return self.filter.points
+  else
+    return self:_allPoints()
+  end
 end
 
 -- source_pos - should be a vec3
-function C:closestSnapPoint(source_pos)
-  local points = self:_operativePoints()
+function C:closestSnapPoint(source_pos, useAllPoints)
+  useAllPoints = useAllPoints or false
+  local points = nil
+
+  if useAllPoints then
+    points = self:_allPoints()
+  else
+    points = self:_operativePoints()
+  end
 
   local minDist = startingMinDist
   local closestPoint = nil
@@ -171,7 +270,7 @@ function C:closestSnapPos(source_pos)
   end
 end
 
-function C:forwardNormalVec(point)
+function C:normalAlignPoint(point)
   local fromPoint = nil
   local toPoint = nil
 
@@ -179,11 +278,30 @@ function C:forwardNormalVec(point)
     fromPoint = point
     toPoint = point.next
   elseif point.prev then
-    fromPoint = point.prev
-    toPoint = point
+    toPoint = point.prev
+    fromPoint = point
   else
-    return vec3(1,0,0)
+    toPoint = point + vec3(1,0,0)
   end
+
+  return fromPoint, toPoint
+end
+
+function C:forwardNormalVec(point)
+  local fromPoint, toPoint = self:normalAlignPoint(point)
+
+  -- local fromPoint = nil
+  -- local toPoint = nil
+  --
+  -- if point.next then
+  --   fromPoint = point
+  --   toPoint = point.next
+  -- elseif point.prev then
+  --   fromPoint = point.prev
+  --   toPoint = point
+  -- else
+  --   return vec3(1,0,0)
+  -- end
 
   local normVec = re_util.calculateForwardNormal(fromPoint.pos, toPoint.pos)
   return vec3(normVec.x, normVec.y, normVec.z)
@@ -320,21 +438,115 @@ function C:nextSnapPoint(srcPos)
 end
 
 function C:setPacenote(pn)
-  self.partition_before_points = nil
-  self.partition_focus_points = nil
-  self.partition_after_points = nil
+  self.partition.pacenote = pn
+
+  if not pn then
+    self:clearPartition()
+    return
+  end
+
+  -- find snappoints for pacenote CE and CS
+  local pointAt = self:closestSnapPoint(pn:getActiveFwdAudioTrigger().pos)
+  -- local pointCs = self:closestSnapPoint(pn:getCornerStartWaypoint().pos)
+  local pointCe = self:closestSnapPoint(pn:getCornerEndWaypoint().pos)
+
+  self:_partitionPoints(pointAt, pointCe)
+end
+
+function C:clearPartition()
+  self.partition.enabled = false
+  self.partition.before_points = {}
+  self.partition.focus_points = {}
+  self.partition.after_points = {}
+end
+
+function C:_partitionPoints(fromPoint, toPoint)
+  -- reset state
+  self.partition.enabled = true
+  self.partition.before_points = {}
+  self.partition.focus_points = {}
+  self.partition.after_points = {}
+
+  -- fill the focus points
+  local currPoint = fromPoint
+  table.insert(self.partition.focus_points, currPoint)
+
+  while true do
+    local nextPoint = currPoint.next
+
+    if nextPoint then
+      table.insert(self.partition.focus_points, nextPoint)
+
+      if nextPoint.id == toPoint.id then
+        break
+      end
+
+      currPoint = nextPoint
+    else
+      break
+    end
+  end
+
+  -- fill the before points
+  local points = self:_allPoints()
+  local currPoint = points[1]
+  local toPoint = self.partition.focus_points[1]
+  table.insert(self.partition.before_points, currPoint)
+  while true do
+    local nextPoint = currPoint.next
+
+    if nextPoint then
+      if nextPoint.id == toPoint.id then
+        break
+      else
+        table.insert(self.partition.before_points, nextPoint)
+      end
+
+      currPoint = nextPoint
+    else
+      break
+    end
+  end
+
+  -- fill the after points
+  local points = self:_allPoints()
+  local currPoint = self.partition.focus_points[#self.partition.focus_points]
+  if currPoint.next then
+    local toPoint = points[#points]
+    while true do
+      local nextPoint = currPoint.next
+
+      if nextPoint then
+        if nextPoint.id == toPoint.id then
+          break
+        else
+          table.insert(self.partition.after_points, nextPoint)
+        end
+
+        currPoint = nextPoint
+      else
+        break
+      end
+    end
+  end
 end
 
 function C:setFilter(wp)
-  self.filtered_points = nil
-  if not wp then return end
+  if not wp then
+    self.filter.enabled = false
+    self.filter.points = {}
+    self:clearPartition()
+    return
+  end
+
+  -- self.filter.points = {}
 
   -- filtering modes:
   -- * AT is selected
   --   ->  back: cant go past prev AT
   --   ->  fwd:  cant go past self CS
   -- * CS is selected
-  --   -> back: cant go past self AT
+  --   -> back: cant go past self AT OR cant go past prev CE
   --   -> fwd:  cant go past self CE
   -- * CE is selected
   --   -> back: cant go past self CS
@@ -350,48 +562,64 @@ function C:setFilter(wp)
     if pn_prev then
       local wp_at_prev = pn_prev:getActiveFwdAudioTrigger()
       if wp_at_prev then
-        local point = self:closestSnapPoint(wp_at_prev.pos)
+        local point = self:closestSnapPoint(wp_at_prev.pos, true)
         limitBackPoint = point
       end
     end
     local wp_cs = pn_sel:getCornerStartWaypoint()
     if wp_cs then
-      local point = self:closestSnapPoint(wp_cs.pos)
+      local point = self:closestSnapPoint(wp_cs.pos, true)
       limitFwdPoint = point
     end
   elseif wp:isCs() then
     local wp_at = pn_sel:getActiveFwdAudioTrigger()
     if wp_at then
-      local point = self:closestSnapPoint(wp_at.pos)
+      local point = self:closestSnapPoint(wp_at.pos, true)
       limitBackPoint = point
     end
+
+    if pn_prev then
+      local prev_wp_ce = pn_prev:getCornerEndWaypoint()
+      if prev_wp_ce then
+        local point = self:closestSnapPoint(prev_wp_ce.pos, true)
+        if limitBackPoint then
+          if point.id > limitBackPoint.id then
+            limitBackPoint = point
+          end
+        else
+          limitBackPoint = point
+        end
+      end
+    end
+
     local wp_ce = pn_sel:getCornerEndWaypoint()
     if wp_ce then
-      local point = self:closestSnapPoint(wp_ce.pos)
+      local point = self:closestSnapPoint(wp_ce.pos, true)
       limitFwdPoint = point
     end
   elseif wp:isCe() then
     local wp_cs = pn_sel:getCornerStartWaypoint()
     if wp_cs then
-      local point = self:closestSnapPoint(wp_cs.pos)
+      local point = self:closestSnapPoint(wp_cs.pos, true)
       limitBackPoint = point
     end
     if pn_next then
       local wp_cs_next = pn_next:getCornerStartWaypoint()
       if wp_cs_next then
-        local point = self:closestSnapPoint(wp_cs_next.pos)
+        local point = self:closestSnapPoint(wp_cs_next.pos, true)
         limitFwdPoint = point
       end
     end
   end
 
-  local unfilteredPoints = self.recce.driveline.points
+  local unfilteredPoints = self:_allPoints()
 
   limitBackPoint = limitBackPoint or unfilteredPoints[1]
   local hitBackPos = false
   limitFwdPoint = limitFwdPoint or unfilteredPoints[#unfilteredPoints]
 
-  self.filtered_points = {}
+  self.filter.enabled = true
+  self.filter.points = {}
 
   for _,point in ipairs(unfilteredPoints) do
     if not hitBackPos then
@@ -401,9 +629,28 @@ function C:setFilter(wp)
     elseif point == limitFwdPoint then
       break
     else
-      table.insert(self.filtered_points, point)
+      table.insert(self.filter.points, point)
     end
   end
+
+  self:_partitionPoints(self.filter.points[1], self.filter.points[#self.filter.points])
+end
+
+function C:pointsForCameraPath()
+  if self.partition.enabled then
+    local points = self.partition.focus_points
+    return points
+  else
+    return nil
+  end
+end
+
+function C:playCameraPath()
+  self.cameraPathPlayer:play()
+end
+
+function C:stopCameraPath()
+  self.cameraPathPlayer:stop()
 end
 
 return function(...)

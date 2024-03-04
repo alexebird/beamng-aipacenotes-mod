@@ -7,6 +7,7 @@ M.clr_white       = {1.0, 1.0, 1.0}
 M.clr_black       = {0.0, 0.0, 0.0}
 
 M.clr_green       = {0.0, 1.0, 0.0}
+M.clr_green_dark  = {0.0, 0.5, 0.0}
 M.clr_light_green = {0.5, 1.0, 0.5}
 M.clr_lime_green  = {0.66, 1.0, 0.0}
 M.clr_green_pastel = {0.718, 1, 0.455}
@@ -44,7 +45,7 @@ M.snaproads_radius = 0.7
 M.snaproads_alpha = 0.8
 -- M.snaproads_alpha_hover = 0.9
 M.snaproads_clr = M.clr_red
-M.snaproads_clr_hover = M.clr_white
+-- M.snaproads_clr_hover = M.clr_white
 
 M.recce_alpha = M.snaproads_alpha
 M.recce_driveline_clr = M.snaproads_clr
