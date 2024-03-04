@@ -69,7 +69,7 @@ function C:convertTranscriptToNotebook(importIdent, start_i)
 
   for _,transcript in ipairs(self.loaded_transcript.transcripts.sorted) do
     local note = transcript.text or ""
-    note = normalizer.replaceDigits(note)
+    note = normalizer.replaceEnglishWords(note)
 
     if transcript.show and transcript.vehicle_data and transcript.vehicle_data.vehicle_data then
       local pos = transcript.vehicle_data.vehicle_data.pos or {}

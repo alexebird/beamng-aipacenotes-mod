@@ -1,7 +1,7 @@
 local M = {}
 
 -- Mapping table for digits to written-out numbers
-local number_map = {
+local replacement_map = {
   ["0"] = "zero",
   ["1"] = "one",
   ["2"] = "two",
@@ -16,19 +16,17 @@ local number_map = {
   ["-"] = "minus",
   ["for right"] = "four right",
   ["for left"] = "four left",
+  ["write"] = "right",
 }
--- local boundary = "(%W)"
 
-local function replaceDigits(note)
+local function replaceEnglishWords(note)
   if not note then return note end
-  -- Replace digits with written-out numbers
-  for digit, word in pairs(number_map) do
-    note = note:gsub(digit, word)
-    -- note = note:gsub(boundary .. digit .. boundary, "%1" .. word .. "%1")
+  for from, to in pairs(replacement_map) do
+    note = note:gsub(from, to)
   end
   return note
 end
 
-M.replaceDigits = replaceDigits
+M.replaceEnglishWords = replaceEnglishWords
 
 return M

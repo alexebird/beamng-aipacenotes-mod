@@ -53,13 +53,9 @@ function C:init(rallyEditor)
   self.notes_valid = true
   self.validation_issues = {}
 
-  self.recording_state = {
-    driveline = nil,
-  }
-
   self.pacenote_tools_state = {
     drag_mode = dragModes.simple,
-    snaproads = nil,
+    snaproad = nil,
     search = nil,
     hover_wp_id = nil,
     selected_pn_id = nil,
@@ -135,16 +131,26 @@ function C:selectedTranscript()
   end
 end
 
+function C:loadSnaproad()
+  local recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')(self.rallyEditor.getMissionDir())
+  recce:load()
+  self.pacenote_tools_state.snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')(recce)
+
+  self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
+end
+
 -- called by RallyEditor when this tab is selected.
 function C:selected()
   if not self.path then return end
+
+  self:loadSnaproad()
 
   -- self:loadFullCourse(false)
 
   -- self.pacenote_tools_state.selected_pn_id = nil
   -- self.pacenote_tools_state.selected_wp_id = nil
 
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add waypoint to current pacenote"
+  -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add waypoint to current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Create new pacenote"
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Free Edit with Gizmo"
   -- editor.editModes.notebookEditMode.auxShortcuts["g"] = "Cycle Drag MMode"
@@ -160,7 +166,7 @@ function C:unselect()
   -- self:selectWaypoint(nil)
   -- self:selectPacenote(nil)
 
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
+  -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = nil
@@ -175,8 +181,8 @@ function C:selectPacenote(id)
   -- deselect waypoint if we are changing pacenotes.
   if self.pacenote_tools_state.selected_pn_id ~= id then
     self.pacenote_tools_state.selected_wp_id = nil
-    if self.pacenote_tools_state.snaproads then
-      self.pacenote_tools_state.snaproads:setFilter(nil)
+    if self.pacenote_tools_state.snaproad then
+      self.pacenote_tools_state.snaproad:setFilter(nil)
     end
   end
 
@@ -219,12 +225,12 @@ function C:selectWaypoint(id)
       self:selectPacenote(waypoint.pacenote.id)
       waypointNameText = im.ArrayChar(1024, waypoint.name)
       self:updateGizmoTransform(id)
-      if self.pacenote_tools_state.snaproads then
-        self.pacenote_tools_state.snaproads:setFilter(waypoint)
+      if self.pacenote_tools_state.snaproad then
+        self.pacenote_tools_state.snaproad:setFilter(waypoint)
       end
     else
       log('E', logTag, 'expected to find waypoint with id='..id)
-      self.pacenote_tools_state.snaproads:setFilter(nil)
+      self.pacenote_tools_state.snaproad:setFilter(nil)
     end
   else
     waypointNameText = im.ArrayChar(1024, "")
@@ -232,8 +238,8 @@ function C:selectWaypoint(id)
     -- I think that was due to the Gizmo being present but undrawn, and the gizmo's mouseover behavior was superseding our pacenote hover.
     self:resetGizmoTransformToOrigin()
 
-    if self.pacenote_tools_state.snaproads then
-      self.pacenote_tools_state.snaproads:setFilter(nil)
+    if self.pacenote_tools_state.snaproad then
+      self.pacenote_tools_state.snaproad:setFilter(nil)
     end
   end
 end
@@ -385,12 +391,8 @@ function C:drawDebugEntrypoint()
     self.path:drawDebugNotebook(self.pacenote_tools_state)
   end
 
-  if self.pacenote_tools_state.snaproads and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    self.pacenote_tools_state.snaproads:drawSnapRoads(self.mouseInfo)
-  end
-
-  if self.recording_state.driveline then
-    self.recording_state.driveline:drawDebugDriveline()
+  if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
+    self.pacenote_tools_state.snaproad:drawDebugSnaproad()
   end
 
   -- local tscs = self:getTranscripts()
@@ -577,28 +579,28 @@ function C:handleMouseInput()
 
   local states = self:getSelectionLayerStates()
 
-  if editor.keyModifiers.shift then
-    if states.pacenotesLayer == 'none' then
-      local pos_rayCast = self.mouseInfo.rayCast.pos
-      debugDrawer:drawTextAdvanced(
-        vec3(pos_rayCast),
-        String("Shift+Click to deselect Transcript"),
-        ColorF(1,1,1,1),
-        true,
-        false,
-        ColorI(0,0,0,255)
-      )
-
-      if self.mouseInfo.down then
-        self:selectTranscript(nil)
-      end
-    elseif states.pacenotesLayer == 'pacenote' then
+  -- if editor.keyModifiers.shift then
+    -- if states.pacenotesLayer == 'none' then
+    --   local pos_rayCast = self.mouseInfo.rayCast.pos
+    --   debugDrawer:drawTextAdvanced(
+    --     vec3(pos_rayCast),
+    --     String("Shift+Click to deselect Transcript"),
+    --     ColorF(1,1,1,1),
+    --     true,
+    --     false,
+    --     ColorI(0,0,0,255)
+    --   )
+    --
+    --   if self.mouseInfo.down then
+    --     self:selectTranscript(nil)
+    --   end
+    -- elseif states.pacenotesLayer == 'pacenote' then
       -- if self.mouseInfo.down then
-        self:addMouseWaypointToPacenote()
+        -- self:addMouseWaypointToPacenote()
       -- elseif self.mouseInfo.hold then
         -- self:handleMouseHold()
-    end
-  elseif editor.keyModifiers.ctrl then
+    -- end
+  if editor.keyModifiers.ctrl then
     if states.pacenotesLayer == 'none' then
       self:createMouseDragPacenote()
     end
@@ -649,8 +651,8 @@ function C:draw(mouseInfo, tabContentsHeight)
   -- self:drawPacenotesList(availableHeight * ratio)
   -- self:drawTranscriptsSection(availableHeight * (1.0 - ratio))
 
-  self:drawPacenotesList(tabContentsHeight * 0.65)
-  self:drawTranscriptsSection(tabContentsHeight * 0.15)
+  self:drawPacenotesList(tabContentsHeight * 0.7)
+  -- self:drawTranscriptsSection(tabContentsHeight * 0.15)
 end
 
 function C:debugDrawNewPacenote(pos_cs, pos_ce)
@@ -685,18 +687,18 @@ function C:createMouseDragPacenote()
   local txt = "Create new pacenote (Drag to place corner start and end)"
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
-  if self.pacenote_tools_state.snaproads and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    pos_rayCast = self.pacenote_tools_state.snaproads:closestSnapPos(pos_rayCast)
+  if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
+    pos_rayCast = self.pacenote_tools_state.snaproad:closestSnapPos(pos_rayCast)
   end
 
   local pos_cs = self.mouseInfo._downPos
-  if self.pacenote_tools_state.snaproads and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap and pos_cs then
-    pos_cs = self.pacenote_tools_state.snaproads:closestSnapPos(pos_cs)
+  if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap and pos_cs then
+    pos_cs = self.pacenote_tools_state.snaproad:closestSnapPos(pos_cs)
   end
 
   local pos_ce = self.mouseInfo._holdPos
-  if self.pacenote_tools_state.snaproads and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap and pos_ce then
-    pos_ce = self.pacenote_tools_state.snaproads:closestSnapPos(pos_ce)
+  if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap and pos_ce then
+    pos_ce = self.pacenote_tools_state.snaproad:closestSnapPos(pos_ce)
   end
 
   -- draw the cursor text
@@ -747,8 +749,8 @@ function C:addMouseWaypointToPacenote()
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
 
-  if self.pacenote_tools_state.snaproads and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    pos_rayCast = self.pacenote_tools_state.snaproads:closestSnapPos(pos_rayCast)
+  if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
+    pos_rayCast = self.pacenote_tools_state.snaproad:closestSnapPos(pos_rayCast)
   end
 
   -- draw the cursor text
@@ -947,11 +949,12 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
       local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
       return newPos, nil
     end
-  elseif self.pacenote_tools_state.snaproads and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
+  elseif self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
     -- if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
       if self.mouseInfo.rayCast then
         local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-        return self.pacenote_tools_state.snaproads:closestSnapPos(newPos)
+        newPos = self.pacenote_tools_state.snaproad:closestSnapPos(newPos)
+        return newPos
       else
         local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
         return newPos, nil
@@ -1096,15 +1099,16 @@ function C:selectPrevPacenote()
       end
     end
 
-    if not prev then
-      for i = #sorted,1,-1 do
-        local pacenote = sorted[i]
-        if self:searchPacenoteMatchFn(pacenote) then
-          prev = pacenote
-          break
-        end
-      end
-    end
+    -- wrap around: find the first usable one
+    -- if not prev then
+    --   for i = #sorted,1,-1 do
+    --     local pacenote = sorted[i]
+    --     if self:searchPacenoteMatchFn(pacenote) then
+    --       prev = pacenote
+    --       break
+    --     end
+    --   end
+    -- end
 
     if prev then
       self:selectPacenote(prev.id)
@@ -1142,15 +1146,15 @@ function C:selectNextPacenote()
     end
 
     -- wrap around: find the first usable one
-    if not next then
-      for i = 1,#sorted do
-        local pacenote = sorted[i]
-        if self:searchPacenoteMatchFn(pacenote) then
-          next = pacenote
-          break
-        end
-      end
-    end
+    -- if not next then
+    --   for i = 1,#sorted do
+    --     local pacenote = sorted[i]
+    --     if self:searchPacenoteMatchFn(pacenote) then
+    --       next = pacenote
+    --       break
+    --     end
+    --   end
+    -- end
 
     if next then
       self:selectPacenote(next.id)
@@ -1175,7 +1179,7 @@ function C:cycleDragMode()
   self:resetGizmoTransformToOrigin()
 
   if self.pacenote_tools_state.drag_mode == dragModes.simple then
-    if self.pacenote_tools_state.snaproads then
+    if self.pacenote_tools_state.snaproad then
       self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
     end
   elseif self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
@@ -1574,7 +1578,7 @@ Any lua code is allowed, so be careful. Examples:
       end
     end -- / self.path:getLanguages()
 
-    self:drawWaypointList(note)
+    -- self:drawWaypointList(note)
 
     end -- / if not note.missing then
   end -- / if pacenote_id
@@ -1606,11 +1610,11 @@ function C:drawTranscriptsSection(height)
   im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
   im.HeaderText('Transcript Tools')
 
-  im.SameLine()
-  if im.Button("Load") then
-    self.recording_state.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/recording/driveline')(self.rallyEditor.getMissionDir())
-    self.recording_state.driveline:load()
-  end
+  -- im.SameLine()
+  -- if im.Button("Load") then
+    -- self.recording_state.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/recording/driveline')(self.rallyEditor.getMissionDir())
+    -- self.recording_state.driveline:load()
+  -- end
 
   -- im.SameLine()
   -- if im.Button("Clear") then
@@ -1922,7 +1926,7 @@ function C:drawWaypointList(note)
   --   self:selectWaypoint(nil)
   -- end
 
-  im.tooltip("Shift-Drag in the world to create a new pacenote waypoint.")
+  -- im.tooltip("Shift-Drag in the world to create a new pacenote waypoint.")
   im.EndChild() -- waypoints child window
 
   im.SameLine()
@@ -2104,7 +2108,7 @@ end
 
 function C:_snapAll()
   if not self.path then return end
-  if not self.pacenote_tools_state.snaproads then return end
+  if not self.pacenote_tools_state.snaproad then return end
 
   editor.history:commitAction("Snap all waypoints",
     {
@@ -2121,9 +2125,9 @@ function C:_snapAll()
 end
 
 function C:_snapOneHelper(wp)
-  if not self.pacenote_tools_state.snaproads then return end
+  if not self.pacenote_tools_state.snaproad then return end
 
-  local newPos, normalAlignPos = self.pacenote_tools_state.snaproads:closestSnapPos(wp.pos)
+  local newPos, normalAlignPos = self.pacenote_tools_state.snaproad:closestSnapPos(wp.pos)
   wp.pos = newPos
   if normalAlignPos then
     local rv = re_util.calculateForwardNormal(newPos, normalAlignPos)
@@ -2329,9 +2333,9 @@ function C:_moveSelectedWaypointHelper(fwd, steps)
   local wp = self:selectedWaypoint()
   if not wp then return end
 
-  if self.pacenote_tools_state.snaproads then
+  if self.pacenote_tools_state.snaproad then
     local pn = self:selectedPacenote()
-    pn:moveWaypointTowards(self.pacenote_tools_state.snaproads, wp, fwd, steps)
+    pn:moveWaypointTowards(self.pacenote_tools_state.snaproad, wp, fwd, steps)
   end
 end
 

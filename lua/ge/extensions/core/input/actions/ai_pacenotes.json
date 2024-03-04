@@ -131,6 +131,24 @@
     "desc": "Orbit camera down.",
     "onChange": "editor_rallyEditor.cameraOrbitDown(VALUE)"
   },
+  "rallyEditorCameraOrbitZoomIn": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor - Orbit camera zoom in (aipacenotes)",
+    "desc": "Orbit camera zoom in.",
+    "onChange": "editor_rallyEditor.cameraOrbitZoomIn(VALUE)"
+  },
+  "rallyEditorCameraOrbitZoomOut": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 1,
+    "actionMap": "rallyEditor",
+    "title": "Rally Editor - Orbit camera zoom out (aipacenotes)",
+    "desc": "Orbit camera zoom out.",
+    "onChange": "editor_rallyEditor.cameraOrbitZoomOut(VALUE)"
+  },
   "rallyEditorDeselect": {
     "cat": "editor",
     "ctx": "tlua",

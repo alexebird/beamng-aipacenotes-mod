@@ -47,10 +47,6 @@
       "control":"ctrl n"
     },
     {
-      "action":"rallyEditorCameraOrbitUp",
-      "control":"up"
-    },
-    {
       "action":"rallyEditorMoveSelectedWaypointBackwardFast",
       "control":"ctrl p"
     },
@@ -63,6 +59,10 @@
       "control":"p"
     },
     {
+      "action":"rallyEditorCameraOrbitUp",
+      "control":"up"
+    },
+    {
       "action":"rallyEditorCameraOrbitLeft",
       "control":"left"
     },
@@ -73,6 +73,14 @@
     {
       "action":"rallyEditorCameraOrbitRight",
       "control":"right"
+    },
+    {
+      "action":"rallyEditorCameraOrbitZoomIn",
+      "control":"ctrl up"
+    },
+    {
+      "action":"rallyEditorCameraOrbitZoomOut",
+      "control":"ctrl down"
     },
     {
       "action":"rallyEditorMoveSelectedWaypointForward",

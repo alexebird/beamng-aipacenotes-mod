@@ -165,6 +165,8 @@ local cameraOrbitState = {
   down = 0,
   right = 0,
   left = 0,
+  zoomIn = 0,
+  zoomOut = 0,
 }
 local function cameraOrbitRight(v)
   if pacenotesWindow:selectedPacenote() then
@@ -187,6 +189,18 @@ end
 local function cameraOrbitDown(v)
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.down = v
+  end
+end
+
+local function cameraOrbitZoomIn(v)
+  if pacenotesWindow:selectedPacenote() then
+    cameraOrbitState.zoomIn = v
+  end
+end
+
+local function cameraOrbitZoomOut(v)
+  if pacenotesWindow:selectedPacenote() then
+    cameraOrbitState.zoomOut = v
   end
 end
 
@@ -534,9 +548,12 @@ local function onUpdate()
   local d = cameraOrbitState.down == 1
   local r = cameraOrbitState.right == 1
   local l = cameraOrbitState.left == 1
-  local changed = u or d or r or l
+  local zi = cameraOrbitState.zoomIn == 1
+  local zo = cameraOrbitState.zoomOut == 1
+  local orbitChanged = u or d or r or l
+  local zoomChanged = zi or zo
 
-  if changed then
+  if orbitChanged then
     local cameraPosition = core_camera.getPosition()
     local pn = pacenotesWindow:selectedPacenote()
     if pn then
@@ -546,10 +563,11 @@ local function onUpdate()
       -- Convert to Spherical Coordinates
       local radius, theta, phi = cartesianToSpherical(cameraPosition.x - targetPosition.x, cameraPosition.y - targetPosition.y, cameraPosition.z - targetPosition.z)
 
-      local orbitSpeed = 0.02 -- Adjust as needed
+      local orbitSpeed = 0.025
 
       if editor.keyModifiers.shift then
-        orbitSpeed = 0.05
+        -- orbitSpeed = 0.05
+        orbitSpeed = orbitSpeed * 2
       end
 
       -- Update theta and phi based on input
@@ -565,52 +583,39 @@ local function onUpdate()
       local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
       local newPos = vec3(newX + targetPosition.x, newY + targetPosition.y, newZ + targetPosition.z)
 
+      -- Check and adjust the camera position to ensure it's above the terrain
+      local terrainHeight = core_terrain.getTerrainHeight(vec3(newPos.x, newPos.z, 0))
+      terrainHeight = terrainHeight + 5
+      if newPos.z < terrainHeight then
+        newPos.z = terrainHeight
+      end
+
       -- Set the new camera position and rotation
       core_camera.setPosition(0, newPos)
       -- make the camera look at the center point.
       core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
     end
   end
+
+  if zoomChanged then
+    local zoomStep = 1.6
+    if editor.keyModifiers.shift then
+      zoomStep = zoomStep * 4
+    end
+
+    local direction = (zo and 1) or -1
+    local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
+    elevation = elevation + zoomStep*direction
+    editor_rallyEditor.setPrefTopDownCameraElevation(elevation)
+
+    local pn = pacenotesWindow:selectedPacenote()
+    if pn then
+      local wp = pn:getCornerStartWaypoint()
+      re_util.setCameraTarget(wp.pos)
+    end
+  end
 end
 
--- works, kinda.
--- local function onUpdate()
---   local u = cameraOrbitState.up == 1
---   local d = cameraOrbitState.down == 1
---   local r = cameraOrbitState.right == 1
---   local l = cameraOrbitState.left == 1
---   local changed = u or d or r or l
---
---   if changed then
---     local cameraPosition = core_camera.getPosition()
---     local pn = pacenotesWindow:selectedPacenote()
---     local wp = pn:getCornerStartWaypoint()
---     local targetPosition = wp.pos
---
---     -- Convert to Spherical Coordinates
---     local radius, theta, phi = cartesianToSpherical(cameraPosition.x, cameraPosition.y, cameraPosition.z)
---
---     local orbitSpeed = 0.01 -- Adjust as needed
---
---     -- Update theta and phi based on input
---     if r then theta = theta + orbitSpeed end
---     if l then theta = theta - orbitSpeed end
---     if u then phi = phi + orbitSpeed end
---     if d then phi = phi - orbitSpeed end
---
---     -- Ensure phi stays within bounds to prevent camera flip
---     phi = math.max(0.1, math.min(math.pi - 0.1, phi))
---
---     -- Convert back to Cartesian Coordinates
---     local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
---     local newPos = vec3(newX,newY,newZ)
---
---     -- Set the new camera position
---     core_camera.setPosition(0, newPos)
---     core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
---   end
--- end
---
 -- this is called after you Ctrl+L to reload lua.
 local function onEditorInitialized()
   editor.editModes.notebookEditMode =
@@ -770,6 +775,21 @@ local function getPrefTopDownCameraElevation()
   return getPreference('rallyEditor.topDownCamera.elevation', 200)
 end
 
+local function setPrefTopDownCameraElevation(val)
+  local min = 20
+  local max = 700
+
+  if val < min then
+    val = min
+  end
+
+  if val > max then
+    val = max
+  end
+
+  editor.setPreference("rallyEditor.topDownCamera.elevation", val)
+end
+
 local function getPrefTopDownCameraFollow()
   return getPreference('rallyEditor.topDownCamera.shouldFollow', true)
 end
@@ -898,10 +918,14 @@ M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
 M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
+
 M.cameraOrbitRight = cameraOrbitRight
 M.cameraOrbitLeft = cameraOrbitLeft
 M.cameraOrbitUp = cameraOrbitUp
 M.cameraOrbitDown = cameraOrbitDown
+M.cameraOrbitZoomIn = cameraOrbitZoomIn
+M.cameraOrbitZoomOut = cameraOrbitZoomOut
+
 M.deselect = deselect
 M.selectNextWaypoint = selectNextWaypoint
 M.moveSelectedWaypointForward = moveSelectedWaypointForward
@@ -929,6 +953,7 @@ M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
 M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
 M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
+M.setPrefTopDownCameraElevation = setPrefTopDownCameraElevation
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefUiPacenoteNoteFieldWidth = getPrefUiPacenoteNoteFieldWidth
 

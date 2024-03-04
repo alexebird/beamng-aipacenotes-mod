@@ -13,9 +13,8 @@ function C:init(missionDir)
 end
 
 function C:_resetState()
-  self.driveline = {}
-  self.cuts = {}
-  -- self.transcripts = {}
+  self.driveline = nil
+  self.cuts = nil
 end
 
 function C:load()
@@ -46,10 +45,13 @@ function C:loadCuts()
   log('I', logTag, 'loaded '..tostring(tscCount)..' transcripts')
 
   -- load the cuts
+  self.cuts = {}
   fname = re_util.cutsFile(self.missionDir)
 
   for line in io.lines(fname) do
     local obj = jsonDecode(line)
+    obj.pos = vec3(obj.pos)
+    obj.quat = quat(obj.quat)
     local tsc = transcripts[obj.id]
     if tsc then
       obj.transcript = {
@@ -59,6 +61,7 @@ function C:loadCuts()
     else
       obj.transcript = {}
     end
+
     table.insert(self.cuts, obj)
   end
 
@@ -67,42 +70,59 @@ end
 
 function C:loadDriveline()
   local fname = re_util.drivelineFile(self.missionDir)
+  local points = {}
 
   for line in io.lines(fname) do
     local obj = jsonDecode(line)
-    table.insert(self.driveline, obj)
+    obj.pos = vec3(obj.pos)
+    obj.quat = quat(obj.quat)
+    obj.prev = nil
+    obj.next = nil
+    obj.idx = nil
+    table.insert(points, obj)
   end
 
-  log('I', logTag, 'loaded driveline with '..tostring(#self.driveline)..' points')
+  for i,point in ipairs(points) do
+    point.idx = i
+    if i > 1 then
+      point.prev = points[i-1]
+    end
+    if i < #points then
+      point.next = points[i+1]
+    end
+  end
+
+  log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
+  self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(points)
 end
 
 function C:drawDebugRecce()
-  self:drawDebugDriveline()
+  self.driveline:drawDebugDriveline()
   self:drawDebugCuts()
 end
 
 function C:drawDebugCuts()
   for _,point in ipairs(self.cuts) do
     local pos = point.pos
-    local rot = point.quat
+    local quat = point.quat
     local txt = nil
     if point.transcript.text then
       txt = point.transcript.text
     end
-    self:drawLittleCar(vec3(pos), quat(rot), txt)
+    self:drawLittleCar(pos, quat, txt)
   end
 end
 
-function C:drawLittleCar(pos, rot, txt)
+function C:drawLittleCar(pos, quat, txt)
   local h = 1.6
   local w = 1.8
   local l = 4.4
 
   -- local upVector = vec3(0,0,1)  -- 'up' in a Z-up system
-  -- local rotatedUpVector = rot * upVector * h  -- Rotate and scale the up vector
+  -- local rotatedUpVector = quat * upVector * h  -- Rotate and scale the up vector
 
   local forwardVector = vec3(0,1,0)
-  local rotatedForwardVector = rot * forwardVector * (l/2) -- assume pos is the center of car so divide length by 2
+  local rotatedForwardVector = quat * forwardVector * (l/2) -- assume pos is the center of car so divide length by 2
   local frontOfCar = pos + rotatedForwardVector
   local backOfCar = pos - rotatedForwardVector
 
@@ -119,7 +139,7 @@ function C:drawLittleCar(pos, rot, txt)
 
   -- Function to rotate and translate a local position to a world position
   local function toWorldPosition(localPos)
-    local rotatedPos = rot * localPos  -- Rotate by car's orientation
+    local rotatedPos = quat * localPos  -- Rotate by car's orientation
     return pos + rotatedPos            -- Translate to car's world position
   end
 
@@ -155,20 +175,6 @@ function C:drawLittleCar(pos, rot, txt)
   end
 end
 
-function C:drawDebugDriveline()
-  local clr = cc.recce_driveline_clr
-  local alpha_shape = cc.recce_alpha
-
-  for _,point in ipairs(self.driveline) do
-    local pos = point.pos
-    debugDrawer:drawSphere(
-      (pos),
-      0.5,
-      ColorF(clr[1], clr[2], clr[3], alpha_shape)
-    )
-  end
-end
-
 function C:createPacenotesData(notebook)
   if not self.loaded then return end
 
@@ -177,11 +183,13 @@ function C:createPacenotesData(notebook)
   local importIdent = notebook:nextImportIdent()
   local import_language = re_util.default_codriver_language
 
+  local snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')(self)
+
   local pacenotes = {}
 
   for _,cut in ipairs(self.cuts) do
     local note = cut.transcript.text
-    note = normalizer.replaceDigits(note)
+    note = normalizer.replaceEnglishWords(note)
 
     local pos = cut.pos
     local radius = editor_rallyEditor.getPrefDefaultRadius()
@@ -200,9 +208,20 @@ function C:createPacenotesData(notebook)
     -- metadata['beamng_file'] = transcript.beamng_file
     -- end
 
-    local posCe = pos
-    local posCs = posCe + (vec3(1,0,0) * (radius * 2))
-    local posAt = posCs + (vec3(1,0,0) * (radius * 2))
+    -- print(dumps(pos))
+    local pointCe = snaproad:closestSnapPoint(pos)
+    local posCe = pointCe.pos
+    -- local pointCs = snaproad:pointsBackwards(pointCe, 2)
+    local pointCs = snaproad:distanceBackwards(pointCe, 2*radius)
+    local posCs = pointCs.pos
+    -- local pointAt = snaproad:pointsBackwards(pointCs, 2)
+    local pointAt = snaproad:distanceBackwards(pointCs, 2*radius)
+    local posAt = pointAt.pos
+
+    local normalAt = snaproad:forwardNormalVec(pointAt)
+
+    -- local posCs = posCe + (vec3(1,0,0) * (radius * 2))
+    -- local posAt = posCs + (vec3(1,0,0) * (radius * 2))
 
     -- set the Cs pos based on last pacenote direction vector
     -- local lastPacenote = pacenotes[#pacenotes]
@@ -222,7 +241,7 @@ function C:createPacenotesData(notebook)
       pacenoteWaypoints = {
         {
           name = "audio trigger",
-          normal = {0.0, 1.0, 0.0},
+          normal = normalAt,
           oldId = notebook:getNextUniqueIdentifier(),
           pos = posAt,
           radius = radius,
