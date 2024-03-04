@@ -78,12 +78,12 @@ function C:loadDriveline()
     obj.quat = quat(obj.quat)
     obj.prev = nil
     obj.next = nil
-    obj.idx = nil
+    obj.id = nil
     table.insert(points, obj)
   end
 
   for i,point in ipairs(points) do
-    point.idx = i
+    point.id = i
     if i > 1 then
       point.prev = points[i-1]
     end

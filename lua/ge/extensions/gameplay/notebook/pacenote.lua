@@ -1054,20 +1054,21 @@ function C:matchesSearchPattern(searchPattern)
 end
 
 function C:_moveWaypointTowardsStepper(snaproads, wp, fwd)
-  local newSnapPos, normalAlignPos = nil, nil
+  local newSnapPoint = nil
 
   if fwd then
-    newSnapPos, normalAlignPos = snaproads:nextSnapPos(wp.pos)
+    newSnapPoint = snaproads:nextSnapPoint(wp.pos)
   else
-    newSnapPos, normalAlignPos = snaproads:prevSnapPos(wp.pos)
+    newSnapPoint = snaproads:prevSnapPoint(wp.pos)
   end
 
-  if newSnapPos then
-    wp:setPos(newSnapPos)
+  if newSnapPoint then
+    wp:setPos(newSnapPoint.pos)
     wp.pacenote.notebook:autofillDistanceCalls()
-    if normalAlignPos then
-      local newNormal = re_util.calculateForwardNormal(newSnapPos, normalAlignPos)
-      wp:setNormal(newNormal)
+    local normalVec = snaproads:forwardNormalVec(newSnapPoint)
+    if normalVec then
+      -- local newNormal = re_util.calculateForwardNormal(newSnapPoint, normalAlignPos)
+      wp:setNormal(normalVec)
     end
   end
 end

@@ -172,7 +172,7 @@ local function drawDebug()
         ColorF(1,0,0,alpha)
       )
 
-      local nextSnapPos,_ = snaproads:nextSnapPos(pos)
+      local nextSnapPos = snaproads:nextSnapPos(pos)
       if nextSnapPos then
         debugDrawer:drawSphere(
           (nextSnapPos),
@@ -181,7 +181,7 @@ local function drawDebug()
         )
       end
 
-      local prevSnapPos,_ = snaproads:prevSnapPos(pos)
+      local prevSnapPos = snaproads:prevSnapPos(pos)
       if prevSnapPos then
         debugDrawer:drawSphere(
           (prevSnapPos),

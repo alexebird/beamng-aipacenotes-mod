@@ -40,11 +40,15 @@ M.clr_purple       = {0.73, 0, 1}
 --
 -- snaproads.lua
 --
-M.snaproads_radius = 1.5
-M.snaproads_alpha = 0.6
-M.snaproads_alpha_hover = 0.9
+M.snaproads_radius = 0.7
+M.snaproads_alpha = 0.8
+-- M.snaproads_alpha_hover = 0.9
 M.snaproads_clr = M.clr_red
 M.snaproads_clr_hover = M.clr_white
+
+M.recce_alpha = M.snaproads_alpha
+M.recce_driveline_clr = M.snaproads_clr
+M.recce_cut_clr = M.clr_teal
 
 local clr_at = M.clr_blue
 local clr_at_adjacent = M.clr_blue_light
@@ -132,9 +136,5 @@ M.new_pacenote_cursor_linkToWidth = 0.25
 -- M.segments_alpha = 0.5
 -- M.segments_clr_assigned = M.clr_white
 -- M.segments_clr = M.clr_aqua
-
-M.recce_alpha = 0.5
-M.recce_driveline_clr = M.clr_red
-M.recce_cut_clr = M.clr_teal
 
 return M

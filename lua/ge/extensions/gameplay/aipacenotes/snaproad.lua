@@ -9,12 +9,11 @@ local startingMinDist = 4294967295
 function C:init(recce)
   self.recce = recce
 
-  -- self.settings = nil
-  -- self.transcript_path = nil
-  -- self.missionDir = missionDir
-  -- self.radius = 0.25
-  -- self.spline_points = {}
   self.filtered_points = nil
+
+  self.partition_before_points = nil
+  self.partition_focus_points = nil
+  self.partition_after_points = nil
 end
 
 -- function C:load()
@@ -73,33 +72,32 @@ end
 
 function C:drawDebugSnaproad()
 
-  self.recce.driveline:drawDebugDriveline()
+  -- self.recce.driveline:drawDebugDriveline()
 
+  local points = self:_operativePoints()
 
+  -- local clr = cc.recce_driveline_clr
+  -- local alpha_shape = cc.recce_alpha
 
+  local clr = cc.snaproads_clr
+  local alpha_shape = cc.snaproads_alpha
+  local radius = cc.snaproads_radius
 
-  -- if not self.transcript_path then return end
-  --
-  -- -- local closest_snap_for_hover = self:_mouseOverSnapRoad(mouseInfo)
-  -- local clr = nil
-  -- local alpha = nil
-  --
-  -- for _,pos in pairs(self:_filteredSnapPoints()) do
-  --   -- if pos == closest_snap_for_hover then
-  --     -- clr = clr_override or cc.snaproads_clr_hover
-  --     -- alpha = cc.snaproads_alpha_hover
-  --   -- elseif pos == snap_pos then
-  --   --   clr = clr_blue
-  --   -- else
-  --     clr = clr_override or cc.snaproads_clr
-  --     alpha = cc.snaproads_alpha
-  --   -- end
-  --   debugDrawer:drawSphere(
-  --     (pos),
-  --     self.radius,
-  --     ColorF(clr[1],clr[2],clr[3], alpha)--,false)
-  --   )
-  -- end
+  for _,point in ipairs(points) do
+    local pos = point.pos
+    -- if pos == closest_snap_for_hover then
+      -- clr = clr_override or cc.snaproads_clr_hover
+      -- alpha = cc.snaproads_alpha_hover
+    -- elseif pos == snap_pos then
+    --   clr = clr_blue
+    -- else
+    -- end
+    debugDrawer:drawSphere(
+      pos,
+      radius,
+      ColorF(clr[1],clr[2],clr[3], alpha_shape)
+    )
+  end
 end
 
 -- use this in case you still want a point for orienting a normal
@@ -223,58 +221,108 @@ function C:distanceBackwards(fromPoint, meters)
 end
 
 function C:prevSnapPos(srcPos)
-  if not self.transcript_path then return end
+  return self:prevSnapPoint(srcPos).pos
+end
 
-  srcPos = vec3(srcPos)
+function C:prevSnapPoint(srcPos)
+  print('prevSnapPos')
 
-  -- make sure that srcPos is aligned to a snaproad node.
-  local _
-  srcPos, _ = self:closestSnapPos(srcPos)
+  -- srcPos = vec3(srcPos)
 
-  if not srcPos then
-    return nil, nil
-  end
+  local snapPoint = self:closestSnapPoint(srcPos)
+  if not snapPoint then return nil end
 
   local points = self:_operativePoints()
 
-  -- find current snaproad point
-  local i_curr = nil
-  for i,point in ipairs(points) do
-    if srcPos == point then
-      i_curr = i
-    end
+  -- check if we are at the beginning of the points list
+  if snapPoint.id == points[1].id then
+    return snapPoint
+  elseif snapPoint.prev then
+    local newPoint = snapPoint.prev
+    return newPoint
+  else
+    return snapPoint
   end
 
-  if i_curr then
-    return points[i_curr-1], points[i_curr]
-  end
+
+
+  -- make sure that srcPos is aligned to a snaproad node.
+  -- local _
+  -- srcPos, _ = self:closestSnapPos(srcPos)
+  --
+  -- if not srcPos then
+  --   return nil, nil
+  -- end
+  --
+  -- local points = self:_operativePoints()
+  --
+  -- -- find current snaproad point
+  -- local i_curr = nil
+  -- for i,point in ipairs(points) do
+  --   if srcPos == point then
+  --     i_curr = i
+  --   end
+  -- end
+  --
+  -- if i_curr then
+  --   return points[i_curr-1], points[i_curr]
+  -- end
 end
 
 function C:nextSnapPos(srcPos)
-  if not self.transcript_path then return end
-  srcPos = vec3(srcPos)
+  return self:nextSnapPoint(srcPos).pos
+end
 
-  -- make sure that srcPos is aligned to a snaproad node.
-  local _
-  srcPos, _ = self:closestSnapPos(srcPos)
+function C:nextSnapPoint(srcPos)
+  print('nextSnapPos')
 
-  if not srcPos then
-    return nil, nil
-  end
+  local snapPoint = self:closestSnapPoint(srcPos)
+  if not snapPoint then return nil end
 
   local points = self:_operativePoints()
 
-  -- find current snaproad point
-  local i_curr = nil
-  for i,point in ipairs(points) do
-    if srcPos == point then
-      i_curr = i
-    end
+  -- check if we are at the end of the points list
+  if snapPoint.id == points[#points].id then
+    return snapPoint
+  elseif snapPoint.next then
+    local newPoint = snapPoint.next
+    return newPoint
+  else
+    return snapPoint
   end
 
-  if i_curr then
-    return points[i_curr+1], points[i_curr+2]
-  end
+
+
+
+  -- srcPos = vec3(srcPos)
+  --
+  -- -- make sure that srcPos is aligned to a snaproad node.
+  -- local _
+  -- srcPos, _ = self:closestSnapPos(srcPos)
+  --
+  -- if not srcPos then
+  --   return nil, nil
+  -- end
+  --
+  -- local points = self:_operativePoints()
+  --
+  -- -- find current snaproad point
+  -- local i_curr = nil
+  -- for i,point in ipairs(points) do
+  --   if srcPos == point then
+  --     i_curr = i
+  --   end
+  -- end
+  --
+  -- if i_curr then
+  --   return points[i_curr+1], points[i_curr+2]
+  -- end
+end
+
+function C:setPacenote(pn)
+  self.partition_before_points = nil
+  self.partition_focus_points = nil
+  self.partition_after_points = nil
 end
 
 function C:setFilter(wp)
