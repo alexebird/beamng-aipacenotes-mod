@@ -118,9 +118,6 @@ function C:drawLittleCar(pos, quat, txt)
   local w = 1.8
   local l = 4.4
 
-  -- local upVector = vec3(0,0,1)  -- 'up' in a Z-up system
-  -- local rotatedUpVector = quat * upVector * h  -- Rotate and scale the up vector
-
   local forwardVector = vec3(0,1,0)
   local rotatedForwardVector = quat * forwardVector * (l/2) -- assume pos is the center of car so divide length by 2
   local frontOfCar = pos + rotatedForwardVector

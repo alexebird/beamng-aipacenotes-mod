@@ -174,7 +174,7 @@
     "actionMap": "rallyEditor",
     "title": "Rally Editor - Move waypoint forward (aipacenotes)",
     "desc": "If a waypoint is selected, move forward along snaproad.",
-    "onDown": "editor_rallyEditor.moveSelectedWaypointForward()"
+    "onChange": "editor_rallyEditor.moveSelectedWaypointForward(VALUE)"
   },
   "rallyEditorMoveSelectedWaypointBackward": {
     "cat": "editor",
@@ -183,24 +183,6 @@
     "actionMap": "rallyEditor",
     "title": "Rally Editor - Move waypoint backward (aipacenotes)",
     "desc": "If a waypoint is selected, move backward along snaproad.",
-    "onDown": "editor_rallyEditor.moveSelectedWaypointBackward()"
-  },
-  "rallyEditorMoveSelectedWaypointForwardFast": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Move waypoint forward fast (aipacenotes)",
-    "desc": "If a waypoint is selected, move muliple steps forward along snaproad.",
-    "onDown": "editor_rallyEditor.moveSelectedWaypointForwardFast()"
-  },
-  "rallyEditorMoveSelectedWaypointBackwardFast": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Move waypoint backward fast (aipacenotes)",
-    "desc": "If a waypoint is selected, move multiple steps backward along snaproad.",
-    "onDown": "editor_rallyEditor.moveSelectedWaypointBackwardFast()"
+    "onChange": "editor_rallyEditor.moveSelectedWaypointBackward(VALUE)"
   }
 }

@@ -187,7 +187,9 @@ function C:selectPacenote(id)
   end
 
   if not id then
-    self.pacenote_tools_state.recent_selected_pn_id = self.pacenote_tools_state.selected_pn_id
+    if self.pacenote_tools_state.selected_pn_id then
+      self.pacenote_tools_state.recent_selected_pn_id = self.pacenote_tools_state.selected_pn_id
+    end
   end
 
   self.pacenote_tools_state.selected_pn_id = id
@@ -865,7 +867,6 @@ function C:detectMouseHoverWaypoint()
   local selected_pacenote_i = -1
   local waypoints = {}
 
-
   -- figure out which waypoints are available to select.
   for i, pacenote in ipairs(self.path.pacenotes.sorted) do
     -- if a pacenote is selected, then we can only select it's waypoints.
@@ -887,12 +888,15 @@ function C:detectMouseHoverWaypoint()
     end
   end
 
+  local radius_factors = {}
+
   -- add waypoints from the previous pacenote.
   if editor_rallyEditor.getPrefShowPreviousPacenote() then
     local prev_i = selected_pacenote_i - 1
     if prev_i > 0 and self:selectedWaypoint() then
       local pn_prev = self.path.pacenotes.sorted[prev_i]
       for _,waypoint in ipairs(pn_prev.pacenoteWaypoints.sorted) do
+        radius_factors[waypoint.id] = cc.pacenote_adjacent_radius_factor
         table.insert(waypoints, waypoint)
       end
     end
@@ -904,6 +908,7 @@ function C:detectMouseHoverWaypoint()
     if next_i <= #self.path.pacenotes.sorted and self:selectedWaypoint() then
       local pn_next = self.path.pacenotes.sorted[next_i]
       for _,waypoint in ipairs(pn_next.pacenoteWaypoints.sorted) do
+        radius_factors[waypoint.id] = cc.pacenote_adjacent_radius_factor
         table.insert(waypoints, waypoint)
       end
     end
@@ -913,7 +918,10 @@ function C:detectMouseHoverWaypoint()
   for _, waypoint in ipairs(waypoints) do
     local distNoteToCam = (waypoint.pos - self.mouseInfo.camPos):length()
     local noteRayDistance = (waypoint.pos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
-    local sphereRadius = waypoint.radius
+    local sphereRadius =  waypoint.radius
+    if radius_factors[waypoint.id] then
+      sphereRadius = sphereRadius * radius_factors[waypoint.id]
+    end
     if noteRayDistance <= sphereRadius then
       if distNoteToCam < min_note_dist then
         min_note_dist = distNoteToCam
@@ -1083,8 +1091,20 @@ function C:deleteSelectedPacenote()
   )
 end
 
+function C:selectRecentPacenote()
+  if not self:selectedPacenote() then
+    if self.pacenote_tools_state.recent_selected_pn_id then
+      self:selectPacenote(self.pacenote_tools_state.recent_selected_pn_id)
+      return true
+    end
+  end
+  return false
+end
+
 function C:selectPrevPacenote()
   if not self.path then return end
+
+  if self:selectRecentPacenote() then return end
 
   local curr = self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
   local sorted = self.path.pacenotes.sorted
@@ -1131,6 +1151,8 @@ end
 
 function C:selectNextPacenote()
   if not self.path then return end
+
+  if self:selectRecentPacenote() then return end
 
   local curr = self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
   local sorted = self.path.pacenotes.sorted
@@ -2294,13 +2316,19 @@ end
 
 function C:selectNextWaypoint()
   -- if there's no selected PN, select the recent one.
+
+  -- if not pn then
+  --   if self.pacenote_tools_state.recent_selected_pn_id then
+  --     self:selectPacenote(self.pacenote_tools_state.recent_selected_pn_id)
+  --   end
+  --   return
+  -- end
+
+  -- if self:selectRecentPacenote() then return end
+  self:selectRecentPacenote()
+
   local pn = self:selectedPacenote()
-  if not pn then
-    if self.pacenote_tools_state.recent_selected_pn_id then
-      self:selectPacenote(self.pacenote_tools_state.recent_selected_pn_id)
-    end
-    return
-  end
+  if not pn then return end
 
   local wp_sel = self:selectedWaypoint()
 
@@ -2339,21 +2367,23 @@ function C:_moveSelectedWaypointHelper(fwd, steps)
   end
 end
 
-function C:moveSelectedWaypointForward()
-  self:_moveSelectedWaypointHelper(true, 1)
+function C:moveSelectedWaypointForward(steps)
+  steps = steps or 1
+  self:_moveSelectedWaypointHelper(true, steps)
 end
 
-function C:moveSelectedWaypointBackward()
-  self:_moveSelectedWaypointHelper(false, 1)
+function C:moveSelectedWaypointBackward(steps)
+  steps = steps or 1
+  self:_moveSelectedWaypointHelper(false, steps)
 end
 
-function C:moveSelectedWaypointForwardFast()
-  self:_moveSelectedWaypointHelper(true, 5)
-end
-
-function C:moveSelectedWaypointBackwardFast()
-  self:_moveSelectedWaypointHelper(false, 5)
-end
+-- function C:moveSelectedWaypointForwardFast()
+--   self:_moveSelectedWaypointHelper(true, 5)
+-- end
+--
+-- function C:moveSelectedWaypointBackwardFast()
+--   self:_moveSelectedWaypointHelper(false, 5)
+-- end
 
 return function(...)
   local o = {}

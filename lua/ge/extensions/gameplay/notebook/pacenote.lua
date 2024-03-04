@@ -889,9 +889,9 @@ function C:drawDebugPacenoteNext(selection_state, pn_sel)
     cs_text = true,
     ce_text = false,
     di_text = false,
-    cs_radius = 0.5,
-    ce_radius = 0.5,
-    at_radius = 0.5,
+    cs_radius = cc.pacenote_adjacent_radius_factor,
+    ce_radius = cc.pacenote_adjacent_radius_factor,
+    at_radius = cc.pacenote_adjacent_radius_factor,
   }
   adjustFromPrefs(drawConfig)
   self:drawDebugPacenoteHelper(drawConfig, selection_state)
@@ -912,9 +912,9 @@ function C:drawDebugPacenotePrev(selection_state, pn_sel)
     cs_text = true,
     ce_text = false,
     di_text = false,
-    cs_radius = 0.5,
-    ce_radius = 0.5,
-    at_radius = 0.5,
+    cs_radius = cc.pacenote_adjacent_radius_factor,
+    ce_radius = cc.pacenote_adjacent_radius_factor,
+    at_radius = cc.pacenote_adjacent_radius_factor,
   }
   adjustFromPrefs(drawConfig)
   self:drawDebugPacenoteHelper(drawConfig, selection_state)

@@ -212,21 +212,39 @@ local function selectNextWaypoint()
   pacenotesWindow:selectNextWaypoint()
 end
 
-local function moveSelectedWaypointForward()
-  pacenotesWindow:moveSelectedWaypointForward()
+local moveWaypointState = {
+  debounce = 0.25,
+  lastMoveTs = 0,
+  forward = 0,
+  backward = 0,
+}
+local function moveSelectedWaypointForward(v)
+  if v == 0 then
+    moveWaypointState.lastMoveTs = 0
+  end
+
+  if pacenotesWindow:selectedWaypoint() then
+    moveWaypointState.forward = v
+  end
 end
 
-local function moveSelectedWaypointBackward()
-  pacenotesWindow:moveSelectedWaypointBackward()
+local function moveSelectedWaypointBackward(v)
+  if v == 0 then
+    moveWaypointState.lastMoveTs = 0
+  end
+
+  if pacenotesWindow:selectedWaypoint() then
+    moveWaypointState.backward = v
+  end
 end
 
-local function moveSelectedWaypointForwardFast()
-  pacenotesWindow:moveSelectedWaypointForwardFast()
-end
-
-local function moveSelectedWaypointBackwardFast()
-  pacenotesWindow:moveSelectedWaypointBackwardFast()
-end
+-- local function moveSelectedWaypointForwardFast()
+--   pacenotesWindow:moveSelectedWaypointForwardFast()
+-- end
+--
+-- local function moveSelectedWaypointBackwardFast()
+--   pacenotesWindow:moveSelectedWaypointBackwardFast()
+-- end
 
 local function loadNotebook(full_filename)
   if not full_filename then
@@ -614,6 +632,36 @@ local function onUpdate()
       re_util.setCameraTarget(wp.pos)
     end
   end
+
+  local wp_fwd = moveWaypointState.forward == 1
+  local wp_bak = moveWaypointState.backward == 1
+  local wpMoveChanged = wp_fwd or wp_bak
+
+  if wpMoveChanged then
+    local diff = re_util.getTime() - moveWaypointState.lastMoveTs
+    local debounce = moveWaypointState.debounce
+    local steps = 1
+
+    if editor.keyModifiers.shift then
+      debounce = debounce / 8
+    end
+
+    if editor.keyModifiers.ctrl then
+      if editor.keyModifiers.shift then
+        debounce = debounce * 2
+      end
+      steps = 10
+    end
+
+    if diff > debounce then
+      moveWaypointState.lastMoveTs = re_util.getTime()
+      if wp_fwd then
+        pacenotesWindow:moveSelectedWaypointForward(steps)
+      elseif wp_bak then
+        pacenotesWindow:moveSelectedWaypointBackward(steps)
+      end
+    end
+  end
 end
 
 -- this is called after you Ctrl+L to reload lua.
@@ -930,8 +978,8 @@ M.deselect = deselect
 M.selectNextWaypoint = selectNextWaypoint
 M.moveSelectedWaypointForward = moveSelectedWaypointForward
 M.moveSelectedWaypointBackward = moveSelectedWaypointBackward
-M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
-M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
+-- M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
+-- M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
 
 M.onEditorInitialized = onEditorInitialized
 M.getTranscriptsWindow = function() return recceWindow end

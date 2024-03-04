@@ -50,6 +50,8 @@ M.recce_alpha = M.snaproads_alpha
 M.recce_driveline_clr = M.snaproads_clr
 M.recce_cut_clr = M.clr_teal
 
+M.pacenote_adjacent_radius_factor = 0.5
+
 local clr_at = M.clr_blue
 local clr_at_adjacent = M.clr_blue_light
 local clr_di = M.clr_orange
