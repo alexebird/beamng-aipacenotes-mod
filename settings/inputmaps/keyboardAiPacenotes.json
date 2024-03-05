@@ -7,10 +7,6 @@
       "control":"ctrl s"
     },
     {
-      "action":"rallyEditorCycleDragMode",
-      "control":"g"
-    },
-    {
       "action":"rallyEditorPacenoteSelectPrev",
       "control":"k"
     },

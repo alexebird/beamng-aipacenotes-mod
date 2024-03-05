@@ -26,6 +26,8 @@ function C:init(pacenote, name, pos, forceId)
   self.sortOrder = 999999
   self.mode = nil
   -- self.validation_issues = {}
+
+  self._snap_point = nil
 end
 
 -- function C:validate()

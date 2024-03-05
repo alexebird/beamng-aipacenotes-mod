@@ -14,6 +14,7 @@ local unknown_transcript_str = '[unknown]'
 local aipPath = 'aipacenotes'
 local notebooksPath = aipPath..'/notebooks'
 local transcriptsPath = aipPath..'/transcripts'
+local reccePath = aipPath..'/recce'
 
 local aipSettingsRoot = '/settings/aipacenotes'
 local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
@@ -242,6 +243,10 @@ local function missionTranscriptsDir(missionDir)
   return missionDir..'/'..transcriptsPath
 end
 
+local function missionRecceDir(missionDir)
+  return missionDir..'/'..reccePath
+end
+
 local function missionTranscriptPath(missionDir, basename, addExt)
   addExt = addExt or false
   local rv = missionTranscriptsDir(missionDir)..'/'..basename
@@ -251,25 +256,21 @@ local function missionTranscriptPath(missionDir, basename, addExt)
   return rv
 end
 
-local function missionTranscripts2Path(missionDir, subdir, basename, addExt)
-  addExt = addExt or false
-  local rv = missionTranscriptsDir(missionDir)..'/'..subdir..'/'..basename
-  if addExt then
-    rv = rv..'.'..transcriptsExt
-  end
+local function missionReccePath(missionDir, subdir, basename)
+  local rv = missionRecceDir(missionDir)..'/'..subdir..'/'..basename
   return rv
 end
 
 local function drivelineFile(missionDir)
-  return missionTranscripts2Path(missionDir, 'primary', 'driveline.json', false)
+  return missionReccePath(missionDir, 'primary', 'driveline.json')
 end
 
 local function cutsFile(missionDir)
-  return missionTranscripts2Path(missionDir, 'primary', 'cuts.json', false)
+  return missionReccePath(missionDir, 'primary', 'cuts.json')
 end
 
 local function transcriptsFile(missionDir)
-  return missionTranscripts2Path(missionDir, 'primary', 'transcripts.json', false)
+  return missionReccePath(missionDir, 'primary', 'transcripts.json')
 end
 
 -- args are both vec3's representing a position.
@@ -413,7 +414,7 @@ M.loadCornerAnglesFile = loadCornerAnglesFile
 M.loadMissionSettings = loadMissionSettings
 M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
-M.missionTranscripts2Path = missionTranscripts2Path
+M.missionReccePath = missionReccePath
 
 M.drivelineFile = drivelineFile
 M.cutsFile = cutsFile

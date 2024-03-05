@@ -238,7 +238,7 @@ function C:validate()
       elseif note_field == re_util.unknown_transcript_str then
         table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' note for language "..note_lang)
       elseif not re_util.hasPunctuation(last_char) then
-        table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Normalize Note Text' button)")
+        table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Set Puncuation' button)")
       end
     end
   end
@@ -251,7 +251,7 @@ end
 function C:nameForSelect()
   local txt = self.name
   local note = self.notes[self.notebook:editingLanguage()].note
-  txt = txt..' - '..note
+  txt = txt..' - '..(note or '')
 
   if self:is_valid() then
     return txt

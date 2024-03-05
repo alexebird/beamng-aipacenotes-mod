@@ -58,15 +58,6 @@
     "desc": "Save the current notebook.",
     "onDown": "editor_rallyEditor.saveNotebook()"
   },
-  "rallyEditorCycleDragMode": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1.5,
-    "actionMap": "rallyEditor",
-    "title": "Cycle Drag Mode (aip)",
-    "desc": "Cycle between drag modes (simple, simple+road snap, free edit w/gizmo)",
-    "onDown": "editor_rallyEditor.cycleDragMode()"
-  },
   "rallyEditorPacenoteSelectNext": {
     "cat": "editor",
     "ctx": "tlua",

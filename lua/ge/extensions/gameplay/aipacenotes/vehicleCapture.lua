@@ -12,7 +12,7 @@ function C:init(vehicle, missionDir) --, cornerAngles, selectedCornerAnglesName)
   self.interval_m = 2
   self.last_dist_pos = nil
   self.capturesBuffer = {}
-  self.fname = re_util.missionTranscripts2Path(missionDir, 'primary', 'driveline.json', false)
+  self.fname = re_util.missionReccePath(missionDir, 'primary', 'driveline.json', false)
   log('I', logTag, 'vehicleCapture init fname='..self.fname)
 end
 

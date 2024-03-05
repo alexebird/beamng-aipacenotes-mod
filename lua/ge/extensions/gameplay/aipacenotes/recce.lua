@@ -27,6 +27,8 @@ end
 function C:loadCuts()
   -- load the transcripts
   local fname = re_util.transcriptsFile(self.missionDir)
+
+
   local transcripts = {}
   local tscCount = 0
 
@@ -45,8 +47,13 @@ function C:loadCuts()
   log('I', logTag, 'loaded '..tostring(tscCount)..' transcripts')
 
   -- load the cuts
-  self.cuts = {}
   fname = re_util.cutsFile(self.missionDir)
+  if not FS:fileExists(fname) then
+    self.cuts = nil
+    return
+  end
+
+  self.cuts = {}
 
   for line in io.lines(fname) do
     local obj = jsonDecode(line)
@@ -71,6 +78,11 @@ end
 function C:loadDriveline()
   local fname = re_util.drivelineFile(self.missionDir)
   local points = {}
+
+  if not FS:fileExists(fname) then
+    self.driveline = nil
+    return
+  end
 
   for line in io.lines(fname) do
     local obj = jsonDecode(line)
@@ -97,6 +109,7 @@ function C:loadDriveline()
 end
 
 function C:drawDebugRecce()
+  if not self.driveline then return end
   self.driveline:drawDebugDriveline()
   self:drawDebugCuts()
 end
@@ -174,6 +187,7 @@ end
 
 function C:createPacenotesData(notebook)
   if not self.loaded then return end
+  if not self.cuts then return end
 
   log('I', logTag, 'import pacenotes to notebook')
 

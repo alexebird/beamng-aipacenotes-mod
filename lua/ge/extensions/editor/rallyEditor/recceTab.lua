@@ -51,22 +51,29 @@ end
 
 function C:drawSectionV3()
   im.HeaderText("Recce Recording")
-  if im.Button("Refresh") then
-    self:refresh()
-  end
+  -- if im.Button("Refresh") then
+  --   self:refresh()
+  -- end
 
-  if self.recce and self.recce.loaded then
+  if self.recce and self.recce.loaded and self.recce.driveline then
     im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points')
     im.Text('cuts: '..tostring(#self.recce.cuts)..' points')
   else
-    im.Text('recce recording not loaded')
+    im.Text('Recorded driveline was not found.')
+    im.Text(
+      'A driveline is required to make pacenotes. '..
+      'Using a driveline makes creating pacenotes much easier. '..
+      'To record a driveline, use the Recce UI app in freeroam.'
+    )
   end
 
-  if self.recce and self.recce.loaded then
+  if self.recce and self.recce.loaded and self.recce.cuts then
     if im.Button("Import") then
       self:import()
     end
-  else
+  end
+
+  if self.recce and self.recce.loaded then
     im.Text('To Import Pacenotes, make sure there is a recce recording.')
   end
 end

@@ -146,10 +146,10 @@ local function selectNextPacenote()
   pacenotesWindow:selectNextPacenote()
 end
 
-local function cycleDragMode()
-  if currentWindow ~= pacenotesWindow then return end
-  pacenotesWindow:cycleDragMode()
-end
+-- local function cycleDragMode()
+--   if currentWindow ~= pacenotesWindow then return end
+--   pacenotesWindow:cycleDragMode()
+-- end
 
 local function insertMode()
   if currentWindow ~= pacenotesWindow then return end
@@ -165,45 +165,45 @@ local cameraOrbitState = {
   zoomOut = 0,
 }
 local function cameraOrbitRight(v)
-  if currentWindow ~= pacenotesWindow then return end
-  if pacenotesWindow:selectedPacenote() then
-    cameraOrbitState.right = v
-  end
+  -- if currentWindow ~= pacenotesWindow then return end
+  -- if pacenotesWindow:selectedPacenote() then
+  --   cameraOrbitState.right = v
+  -- end
 end
 
 local function cameraOrbitLeft(v)
-  if currentWindow ~= pacenotesWindow then return end
-  if pacenotesWindow:selectedPacenote() then
-    cameraOrbitState.left = v
-  end
+  -- if currentWindow ~= pacenotesWindow then return end
+  -- if pacenotesWindow:selectedPacenote() then
+  --   cameraOrbitState.left = v
+  -- end
 end
 
 local function cameraOrbitUp(v)
-  if currentWindow ~= pacenotesWindow then return end
-  if pacenotesWindow:selectedPacenote() then
-    cameraOrbitState.up = v
-  end
+  -- if currentWindow ~= pacenotesWindow then return end
+  -- if pacenotesWindow:selectedPacenote() then
+  --   cameraOrbitState.up = v
+  -- end
 end
 
 local function cameraOrbitDown(v)
-  if currentWindow ~= pacenotesWindow then return end
-  if pacenotesWindow:selectedPacenote() then
-    cameraOrbitState.down = v
-  end
+  -- if currentWindow ~= pacenotesWindow then return end
+  -- if pacenotesWindow:selectedPacenote() then
+  --   cameraOrbitState.down = v
+  -- end
 end
 
 local function cameraOrbitZoomIn(v)
-  if currentWindow ~= pacenotesWindow then return end
-  if pacenotesWindow:selectedPacenote() then
-    cameraOrbitState.zoomIn = v
-  end
+  -- if currentWindow ~= pacenotesWindow then return end
+  -- if pacenotesWindow:selectedPacenote() then
+  --   cameraOrbitState.zoomIn = v
+  -- end
 end
 
 local function cameraOrbitZoomOut(v)
-  if currentWindow ~= pacenotesWindow then return end
-  if pacenotesWindow:selectedPacenote() then
-    cameraOrbitState.zoomOut = v
-  end
+  -- if currentWindow ~= pacenotesWindow then return end
+  -- if pacenotesWindow:selectedPacenote() then
+  --   cameraOrbitState.zoomOut = v
+  -- end
 end
 
 local function deselect()
@@ -341,7 +341,7 @@ local function drawEditorGui()
     focusWindow = false
   end
 
-  local topToolbarHeight = 135 * im.uiscale[0]
+  local topToolbarHeight = 120 * im.uiscale[0]
   local bottomToolbarHeight = 200 * im.uiscale[0]
   local minMiddleHeight = 500 * im.uiscale[0]
   local heightAdditional = 110-- * im.uiscale[0]
@@ -399,10 +399,6 @@ local function drawEditorGui()
       end
       im.PopStyleColor(1)
 
-      im.SameLine()
-      if im.Button("Open Mission Editor") then
-        openMission()
-      end
 
       if not editor.editMode or editor.editMode.displayName ~= editModeName then
         im.SameLine()
@@ -412,10 +408,17 @@ local function drawEditorGui()
         end
         im.PopStyleColor(1)
       end
+      im.SameLine()
+      im.Text(""..tostring(currentPath.fname))
 
-      im.Text("Notebook: "..tostring(currentPath.fname))
+      im.Text("Mission: "..tostring(currentPath:missionId()))
+      im.SameLine()
+      if im.Button("Open Mission Editor") then
+        openMission()
+      end
 
-      im.Text('DragMode: '..pacenotesWindow.pacenote_tools_state.drag_mode)
+      -- im.Text('DragMode: '..pacenotesWindow.pacenote_tools_state.drag_mode)
+
       local selParts, selMode = pacenotesWindow:selectionString()
 
       local clr = im.ImVec4(1, 0.6, 1, 1)
@@ -985,7 +988,7 @@ M.listNotebooks = listNotebooks
 
 M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
-M.cycleDragMode = cycleDragMode
+-- M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
 
 M.cameraOrbitRight = cameraOrbitRight

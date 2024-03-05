@@ -92,6 +92,16 @@ local function _drawDebugPoints(points, clr, alpha, radius)
   end
 end
 
+function C:_drawDebugPartitionsAll()
+  local points = self.partitions_all
+  if not points then return end
+  local clr = cc.snaproads_clr
+
+  for i,partition in ipairs(points) do
+    _drawDebugPoints(partition, clr)
+  end
+end
+
 function C:_drawDebugPartition()
   local points = self.partition.focus_points
   local clr = nil
@@ -133,7 +143,8 @@ function C:drawDebugSnaproad()
   if self.partition.enabled then
     self:_drawDebugPartition()
   else
-    self:_drawDebugDefault()
+    -- self:_drawDebugDefault()
+    self:_drawDebugPartitionsAll()
   end
 end
 
@@ -184,47 +195,12 @@ function C:drawDebugCameraPlaying()
   end
 end
 
--- use this in case you still want a point for orienting a normal
--- but it's the last point in the spline list.
--- local function extrapolateLine(point1, point2)
---   -- Calculate direction vector from point1 to point2
---   local dirVector = {
---     x = point2.x - point1.x,
---     y = point2.y - point1.y,
---     z = point2.z - point1.z
---   }
---
---   -- Normalize the direction vector
---   local length = math.sqrt(dirVector.x^2 + dirVector.y^2 + dirVector.z^2)
---   local normVector = {
---     x = dirVector.x / length,
---     y = dirVector.y / length,
---     z = dirVector.z / length
---   }
---
---   -- Calculate the new point (point3)
---   local point3 = {
---     point2.x + normVector.x * length,
---     point2.y + normVector.y * length,
---     point2.z + normVector.z * length
---   }
---
---   return vec3(point3)
--- end
-
--- local function findPosForNormal(snaps, closest_i)
---   local posAfter = nil
---   if closest_i and closest_i + 1 <= #snaps then
---     posAfter = snaps[closest_i + 1]
---   elseif #snaps >= 2 then
---     posAfter = extrapolateLine(snaps[#snaps-1], snaps[#snaps])
---   end
---
---   return posAfter
--- end
-
 function C:_allPoints()
-  return self.recce.driveline.points
+  if self.recce.driveline then
+    return self.recce.driveline.points
+  else
+    return {}
+  end
 end
 
 function C:_operativePoints()
@@ -270,7 +246,9 @@ function C:closestSnapPos(source_pos)
   end
 end
 
-function C:normalAlignPoint(point)
+function C:normalAlignPoints(point)
+  if not point then return nil, nil end
+
   local fromPoint = nil
   local toPoint = nil
 
@@ -288,20 +266,7 @@ function C:normalAlignPoint(point)
 end
 
 function C:forwardNormalVec(point)
-  local fromPoint, toPoint = self:normalAlignPoint(point)
-
-  -- local fromPoint = nil
-  -- local toPoint = nil
-  --
-  -- if point.next then
-  --   fromPoint = point
-  --   toPoint = point.next
-  -- elseif point.prev then
-  --   fromPoint = point.prev
-  --   toPoint = point
-  -- else
-  --   return vec3(1,0,0)
-  -- end
+  local fromPoint, toPoint = self:normalAlignPoints(point)
 
   local normVec = re_util.calculateForwardNormal(fromPoint.pos, toPoint.pos)
   return vec3(normVec.x, normVec.y, normVec.z)
@@ -338,6 +303,29 @@ function C:distanceBackwards(fromPoint, meters)
   return toPoint
 end
 
+function C:distanceForwards(fromPoint, meters)
+  local toPoint = fromPoint
+  local dist = 0
+  while true do
+    local nextPoint = toPoint.next
+    if nextPoint then
+
+      dist = dist + vec3(toPoint.pos):distance(vec3(nextPoint.pos))
+      toPoint = nextPoint
+
+      if dist > meters then
+        break
+      end
+    else
+      break
+    end
+  end
+  return toPoint
+end
+
+-- function C:closestPointBackwards(sourcePoint, notebook)
+-- end
+
 function C:prevSnapPos(srcPos)
   return self:prevSnapPoint(srcPos).pos
 end
@@ -361,30 +349,6 @@ function C:prevSnapPoint(srcPos)
   else
     return snapPoint
   end
-
-
-
-  -- make sure that srcPos is aligned to a snaproad node.
-  -- local _
-  -- srcPos, _ = self:closestSnapPos(srcPos)
-  --
-  -- if not srcPos then
-  --   return nil, nil
-  -- end
-  --
-  -- local points = self:_operativePoints()
-  --
-  -- -- find current snaproad point
-  -- local i_curr = nil
-  -- for i,point in ipairs(points) do
-  --   if srcPos == point then
-  --     i_curr = i
-  --   end
-  -- end
-  --
-  -- if i_curr then
-  --   return points[i_curr-1], points[i_curr]
-  -- end
 end
 
 function C:nextSnapPos(srcPos)
@@ -408,33 +372,6 @@ function C:nextSnapPoint(srcPos)
   else
     return snapPoint
   end
-
-
-
-
-  -- srcPos = vec3(srcPos)
-  --
-  -- -- make sure that srcPos is aligned to a snaproad node.
-  -- local _
-  -- srcPos, _ = self:closestSnapPos(srcPos)
-  --
-  -- if not srcPos then
-  --   return nil, nil
-  -- end
-  --
-  -- local points = self:_operativePoints()
-  --
-  -- -- find current snaproad point
-  -- local i_curr = nil
-  -- for i,point in ipairs(points) do
-  --   if srcPos == point then
-  --     i_curr = i
-  --   end
-  -- end
-  --
-  -- if i_curr then
-  --   return points[i_curr+1], points[i_curr+2]
-  -- end
 end
 
 function C:setPacenote(pn)
@@ -461,6 +398,10 @@ function C:clearPartition()
 end
 
 function C:_partitionPoints(fromPoint, toPoint)
+  if not (fromPoint and toPoint) then
+    return
+  end
+
   -- reset state
   self.partition.enabled = true
   self.partition.before_points = {}
@@ -517,10 +458,11 @@ function C:_partitionPoints(fromPoint, toPoint)
       local nextPoint = currPoint.next
 
       if nextPoint then
+        table.insert(self.partition.after_points, nextPoint)
         if nextPoint.id == toPoint.id then
           break
-        else
-          table.insert(self.partition.after_points, nextPoint)
+        -- else
+          -- table.insert(self.partition.after_points, nextPoint)
         end
 
         currPoint = nextPoint
@@ -529,6 +471,63 @@ function C:_partitionPoints(fromPoint, toPoint)
       end
     end
   end
+end
+
+function C:partitionAllPacenotes(notebook)
+  local partitions = {}
+
+  local pt_curr = self:_allPoints()[1]
+
+  local partition = {}
+
+  for i,pn_curr in ipairs(notebook.pacenotes.sorted) do
+    local wp_cs = pn_curr:getCornerStartWaypoint()
+    local wp_ce = pn_curr:getCornerEndWaypoint()
+    local pos_cs = wp_cs.pos
+    local pos_ce = wp_ce.pos
+    wp_cs._snap_point = self:closestSnapPoint(pos_cs)
+    wp_ce._snap_point = self:closestSnapPoint(pos_ce)
+
+    partition = {}
+
+    while pt_curr.id < wp_cs._snap_point.id do
+      table.insert(partition, pt_curr)
+      pt_curr = pt_curr.next
+    end
+
+    while pt_curr.id <= wp_ce._snap_point.id do
+      pt_curr = pt_curr.next
+    end
+
+
+    table.insert(partitions, partition)
+
+    -- elseif pt_curr.id == wp_cs._snap_point.id then
+    --   -- transitioning from partition to inside a pacenote
+    --   table.insert(partitions, partition)
+    -- elseif pt_curr.id > wp_cs._snap_point.id and pt_curr.id < wp_ce._snap_point.id then
+    -- elseif pt_curr.id == wp_ce._snap_point.id then
+    -- end
+
+  end
+
+  partition = {}
+  while pt_curr do
+    table.insert(partition, pt_curr)
+    pt_curr = pt_curr.next
+  end
+  table.insert(partitions, partition)
+
+  print('partitions:')
+  for i,p in ipairs(partitions) do
+    local s = ''
+    for i,pt in ipairs(p) do
+      s = s..', '..tostring(pt.id)
+    end
+    print(s)
+  end
+
+  self.partitions_all = partitions
 end
 
 function C:setFilter(wp)
