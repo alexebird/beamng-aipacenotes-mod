@@ -190,6 +190,7 @@ function C:selectPacenote(id)
     if self.pacenote_tools_state.selected_pn_id then
       self.pacenote_tools_state.recent_selected_pn_id = self.pacenote_tools_state.selected_pn_id
     end
+    self.pacenote_tools_state.playbackLastCameraPos = nil
   end
 
   self.pacenote_tools_state.selected_pn_id = id
@@ -404,15 +405,17 @@ function C:drawDebugEntrypoint()
     self.pacenote_tools_state.snaproad:drawDebugSnaproad()
   end
 
+    if self.pacenote_tools_state.playbackLastCameraPos then
+      local clr = cc.clr_purple
+      local radius = cc.cam_last_pos_radius
+      local alpha = cc.cam_last_pos_alpha
+      debugDrawer:drawSphere(self.pacenote_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],alpha))
+    end
+
   -- local tscs = self:getTranscripts()
   -- if tscs and self.transcript_tools_state.show then
   --   tscs:drawDebug(self.transcript_tools_state.selected_id)
   --
-  --   if self.transcript_tools_state.playbackLastCameraPos then
-  --     local clr = cc.clr_purple
-  --     local radius = self.pacenote_tools_state.snaproads and (self.pacenote_tools_state.snaproads.radius * 2.0) or 1
-  --     debugDrawer:drawSphere(self.transcript_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],0.9))
-  --   end
   -- end
 end
 
@@ -1476,26 +1479,19 @@ function C:drawPacenotesList(height)
       self:insertNewPacenoteAfter(note)
     end
 
-    if core_camera.getActiveCamName() == "path" then
-      if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(24, 24)) then
-        self.pacenote_tools_state.snaproad:stopCameraPath()
-        self.pacenote_tools_state.playbackLastCameraPos = core_camera.getPosition()
-        core_camera.setPosition(0, self.pacenote_tools_state.last_camera.pos)
-        core_camera.setRotation(0, self.pacenote_tools_state.last_camera.quat)
-      end
-      im.SameLine()
-      im.Text('Stop')
-    else
-      if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(24, 24)) then
-        self:selectWaypoint(nil)
-        self.pacenote_tools_state.last_camera.pos = core_camera.getPosition()
-        self.pacenote_tools_state.last_camera.quat = core_camera.getQuat()
-        self.pacenote_tools_state.snaproad:playCameraPath()
-      end
-      im.SameLine()
-      local paused = simTimeAuthority.getPause()
-      im.Text('Play'..((paused and ' (must unpause game!)') or ''))
+    local icon = editor.icons.play_arrow
+    local paused = simTimeAuthority.getPause()
+    local camTxt = 'Play'..((paused and ' (must unpause game!)') or '')
+
+    if self:cameraPathIsPlaying() then
+      icon = editor.icons.stop
+      camTxt = 'Stop'
     end
+    if editor.uiIconImageButton(icon, im.ImVec2(24, 24)) then
+      self:cameraPathPlay()
+    end
+    im.SameLine()
+    im.Text(camTxt)
 
     for _ = 1,5 do im.Spacing() end
 
@@ -2396,6 +2392,24 @@ end
 function C:moveSelectedWaypointBackward(steps)
   steps = steps or 1
   self:_moveSelectedWaypointHelper(false, steps)
+end
+
+function C:cameraPathPlay()
+  if self:cameraPathIsPlaying() then
+    self.pacenote_tools_state.snaproad:stopCameraPath()
+    self.pacenote_tools_state.playbackLastCameraPos = core_camera.getPosition()
+    core_camera.setPosition(0, self.pacenote_tools_state.last_camera.pos)
+    core_camera.setRotation(0, self.pacenote_tools_state.last_camera.quat)
+  else
+    self:selectWaypoint(nil)
+    self.pacenote_tools_state.last_camera.pos = core_camera.getPosition()
+    self.pacenote_tools_state.last_camera.quat = core_camera.getQuat()
+    self.pacenote_tools_state.snaproad:playCameraPath()
+  end
+end
+
+function C:cameraPathIsPlaying()
+  return core_camera.getActiveCamName() == "path"
 end
 
 -- function C:moveSelectedWaypointForwardFast()

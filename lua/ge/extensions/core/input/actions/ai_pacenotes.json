@@ -3,32 +3,23 @@
     "cat": "gameplay",
     "ctx": "tlua",
     "order": 1,
-    "title": "Cut Voice Transcription (aipacenotes)",
+    "title": "Cut Voice Transcription (aip)",
     "desc": "If a recording is running, this stops it and immediately starts another. Requires AI-Pacenotes desktop app.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_transcribe_recording_cut()"
   },
-  "toggle_recce_drawDebug": {
-    "cat": "gameplay",
-    "ctx": "tlua",
-    "order": 1,
-    "title": "Toggle Recce Pacenotes Visualization (aipacenotes)",
-    "desc": "Toggle the drawing of visual markers for pacenotes.",
-    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
-  },
-
   "recce_move_pacenote_forward": {
     "cat": "gameplay",
     "ctx": "tlua",
-    "order": 1,
-    "title": "Move Pacenote Forward in Recce (aipacenotes)",
+    "order": 2,
+    "title": "Move Pacenote Forward in Recce (aip)",
     "desc": "Move the next pacenote toward CornerStart along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_pacenote_forward()"
   },
   "recce_move_pacenote_backward": {
     "cat": "gameplay",
     "ctx": "tlua",
-    "order": 1,
-    "title": "Move Pacenote Backward in Recce (aipacenotes)",
+    "order": 3,
+    "title": "Move Pacenote Backward in Recce (aip)",
     "desc": "Move the next pacenote towards vehicle along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_pacenote_backward()"
   },
@@ -36,18 +27,26 @@
   "recce_move_vehicle_forward": {
     "cat": "gameplay",
     "ctx": "tlua",
-    "order": 1,
-    "title": "Move Vehicle Forward in Recce (aipacenotes)",
+    "order": 4,
+    "title": "Move Vehicle Forward in Recce (aip)",
     "desc": "Move the next vehicle toward CornerStart along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_forward()"
   },
   "recce_move_vehicle_backward": {
     "cat": "gameplay",
     "ctx": "tlua",
-    "order": 1,
-    "title": "Move Vehicle Backward in Recce (aipacenotes)",
+    "order": 5,
+    "title": "Move Vehicle Backward in Recce (aip)",
     "desc": "Move the next vehicle towards vehicle along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_backward()"
+  },
+  "toggle_recce_drawDebug": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 6,
+    "title": "Toggle Recce Pacenotes Visualization (aip)",
+    "desc": "Toggle the drawing of visual markers for pacenotes.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
   },
 
   "rallyEditorSave": {
@@ -55,134 +54,143 @@
     "ctx": "tlua",
     "order": 1,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Save (aipacenotes)",
+    "title": "Save (aip)",
     "desc": "Save the current notebook.",
     "onDown": "editor_rallyEditor.saveNotebook()"
-  },
-  "rallyEditorPacenoteSelectPrev": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Select Previous Pacenote (aipacenotes)",
-    "desc": "Select the previous pacenote.",
-    "onDown": "editor_rallyEditor.selectPrevPacenote()"
-  },
-  "rallyEditorPacenoteSelectNext": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Select Next Pacenote (aipacenotes)",
-    "desc": "Select the next pacenote.",
-    "onDown": "editor_rallyEditor.selectNextPacenote()"
   },
   "rallyEditorCycleDragMode": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 1.5,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Cycle Drag Mode (aipacenotes)",
+    "title": "Cycle Drag Mode (aip)",
     "desc": "Cycle between drag modes (simple, simple+road snap, free edit w/gizmo)",
     "onDown": "editor_rallyEditor.cycleDragMode()"
   },
-  "rallyEditorInsertMode": {
+  "rallyEditorPacenoteSelectNext": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 2,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Focus Note Edit Field (aipacenotes)",
-    "desc": "Shortcut to focus the cursor on editing the currently selected note text.",
-    "onDown": "editor_rallyEditor.insertMode()"
+    "title": "Select Next Pacenote (aip)",
+    "desc": "Select the next pacenote.",
+    "onDown": "editor_rallyEditor.selectNextPacenote()"
   },
-  "rallyEditorCameraOrbitRight": {
+  "rallyEditorPacenoteSelectPrev": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 3,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Orbit camera right (aipacenotes)",
-    "desc": "Orbit camera right.",
-    "onChange": "editor_rallyEditor.cameraOrbitRight(VALUE)"
-  },
-  "rallyEditorCameraOrbitLeft": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Orbit camera left (aipacenotes)",
-    "desc": "Orbit camera left.",
-    "onChange": "editor_rallyEditor.cameraOrbitLeft(VALUE)"
-  },
-  "rallyEditorCameraOrbitUp": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Orbit camera up (aipacenotes)",
-    "desc": "Orbit camera up.",
-    "onChange": "editor_rallyEditor.cameraOrbitUp(VALUE)"
-  },
-  "rallyEditorCameraOrbitDown": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Orbit camera down (aipacenotes)",
-    "desc": "Orbit camera down.",
-    "onChange": "editor_rallyEditor.cameraOrbitDown(VALUE)"
-  },
-  "rallyEditorCameraOrbitZoomIn": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Orbit camera zoom in (aipacenotes)",
-    "desc": "Orbit camera zoom in.",
-    "onChange": "editor_rallyEditor.cameraOrbitZoomIn(VALUE)"
-  },
-  "rallyEditorCameraOrbitZoomOut": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 1,
-    "actionMap": "rallyEditor",
-    "title": "Rally Editor - Orbit camera zoom out (aipacenotes)",
-    "desc": "Orbit camera zoom out.",
-    "onChange": "editor_rallyEditor.cameraOrbitZoomOut(VALUE)"
+    "title": "Select Previous Pacenote (aip)",
+    "desc": "Select the previous pacenote.",
+    "onDown": "editor_rallyEditor.selectPrevPacenote()"
   },
   "rallyEditorDeselect": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 4,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Deselect (aipacenotes)",
+    "title": "Deselect (aip)",
     "desc": "Deselect.",
     "onDown": "editor_rallyEditor.deselect()"
+  },
+  "rallyEditorInsertMode": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 5,
+    "actionMap": "rallyEditor",
+    "title": "Edit Note Text (aip)",
+    "desc": "Shortcut to focus the cursor on editing the currently selected note text.",
+    "onDown": "editor_rallyEditor.insertMode()"
+  },
+  "rallyEditorCameraPathPlay": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 6,
+    "actionMap": "rallyEditor",
+    "title": "Play/Stop Camera Path (aip)",
+    "desc": "If a pacenote is selected, play/stop camera path playback.",
+    "onDown": "editor_rallyEditor.cameraPathPlay()"
   },
   "rallyEditorSelectNextWaypoint": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 20,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Select Next Waypoint (aipacenotes)",
+    "title": "Select Next Waypoint (aip)",
     "desc": "If a pacenote is selected, select the next waypoint.",
     "onDown": "editor_rallyEditor.selectNextWaypoint()"
   },
   "rallyEditorMoveSelectedWaypointForward": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 21,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Move waypoint forward (aipacenotes)",
+    "title": "Move Waypoint Forward (aip)",
     "desc": "If a waypoint is selected, move forward along snaproad.",
     "onChange": "editor_rallyEditor.moveSelectedWaypointForward(VALUE)"
   },
   "rallyEditorMoveSelectedWaypointBackward": {
     "cat": "editor",
     "ctx": "tlua",
-    "order": 1,
+    "order": 22,
     "actionMap": "rallyEditor",
-    "title": "Rally Editor - Move waypoint backward (aipacenotes)",
+    "title": "Move Waypoint Backward (aip)",
     "desc": "If a waypoint is selected, move backward along snaproad.",
     "onChange": "editor_rallyEditor.moveSelectedWaypointBackward(VALUE)"
+  },
+  "rallyEditorCameraOrbitRight": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 50,
+    "actionMap": "rallyEditor",
+    "title": "Orbit Camera Right (aip)",
+    "desc": "Orbit camera right.",
+    "onChange": "editor_rallyEditor.cameraOrbitRight(VALUE)"
+  },
+  "rallyEditorCameraOrbitLeft": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 51,
+    "actionMap": "rallyEditor",
+    "title": "Orbit Camera Left (aip)",
+    "desc": "Orbit camera left.",
+    "onChange": "editor_rallyEditor.cameraOrbitLeft(VALUE)"
+  },
+  "rallyEditorCameraOrbitUp": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 52,
+    "actionMap": "rallyEditor",
+    "title": "Orbit Camera Up (aip)",
+    "desc": "Orbit camera up.",
+    "onChange": "editor_rallyEditor.cameraOrbitUp(VALUE)"
+  },
+  "rallyEditorCameraOrbitDown": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 53,
+    "actionMap": "rallyEditor",
+    "title": "Orbit Camera Down (aip)",
+    "desc": "Orbit camera down.",
+    "onChange": "editor_rallyEditor.cameraOrbitDown(VALUE)"
+  },
+  "rallyEditorCameraOrbitZoomIn": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 54,
+    "actionMap": "rallyEditor",
+    "title": "Orbit Camera Zoom In (aip)",
+    "desc": "Orbit camera zoom in.",
+    "onChange": "editor_rallyEditor.cameraOrbitZoomIn(VALUE)"
+  },
+  "rallyEditorCameraOrbitZoomOut": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 55,
+    "actionMap": "rallyEditor",
+    "title": "Orbit Camera Zoom Out (aip)",
+    "desc": "Orbit camera zoom out.",
+    "onChange": "editor_rallyEditor.cameraOrbitZoomOut(VALUE)"
   }
 }

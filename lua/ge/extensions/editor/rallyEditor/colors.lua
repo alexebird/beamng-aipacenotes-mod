@@ -53,6 +53,9 @@ M.recce_cut_clr = M.clr_teal
 
 M.pacenote_adjacent_radius_factor = 0.5
 
+M.cam_last_pos_radius = M.snaproads_radius * 2
+M.cam_last_pos_alpha = M.snaproads_alpha
+
 local clr_at = M.clr_blue
 local clr_at_adjacent = M.clr_blue_light
 local clr_di = M.clr_orange

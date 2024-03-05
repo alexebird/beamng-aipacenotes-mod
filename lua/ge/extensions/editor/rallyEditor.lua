@@ -137,27 +137,23 @@ local function saveNotebook()
 end
 
 local function selectPrevPacenote()
-  if currentWindow == pacenotesWindow then
-    pacenotesWindow:selectPrevPacenote()
-  end
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:selectPrevPacenote()
 end
 
 local function selectNextPacenote()
-  if currentWindow == pacenotesWindow then
-    pacenotesWindow:selectNextPacenote()
-  end
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:selectNextPacenote()
 end
 
 local function cycleDragMode()
-  if currentWindow == pacenotesWindow then
-    pacenotesWindow:cycleDragMode()
-  end
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:cycleDragMode()
 end
 
 local function insertMode()
-  if currentWindow == pacenotesWindow then
-    pacenotesWindow:insertMode()
-  end
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:insertMode()
 end
 
 local cameraOrbitState = {
@@ -169,46 +165,54 @@ local cameraOrbitState = {
   zoomOut = 0,
 }
 local function cameraOrbitRight(v)
+  if currentWindow ~= pacenotesWindow then return end
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.right = v
   end
 end
 
 local function cameraOrbitLeft(v)
+  if currentWindow ~= pacenotesWindow then return end
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.left = v
   end
 end
 
 local function cameraOrbitUp(v)
+  if currentWindow ~= pacenotesWindow then return end
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.up = v
   end
 end
 
 local function cameraOrbitDown(v)
+  if currentWindow ~= pacenotesWindow then return end
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.down = v
   end
 end
 
 local function cameraOrbitZoomIn(v)
+  if currentWindow ~= pacenotesWindow then return end
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.zoomIn = v
   end
 end
 
 local function cameraOrbitZoomOut(v)
+  if currentWindow ~= pacenotesWindow then return end
   if pacenotesWindow:selectedPacenote() then
     cameraOrbitState.zoomOut = v
   end
 end
 
 local function deselect()
+  if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:deselect()
 end
 
 local function selectNextWaypoint()
+  if currentWindow ~= pacenotesWindow then return end
   pacenotesWindow:selectNextWaypoint()
 end
 
@@ -219,6 +223,8 @@ local moveWaypointState = {
   backward = 0,
 }
 local function moveSelectedWaypointForward(v)
+  if currentWindow ~= pacenotesWindow then return end
+
   if v == 0 then
     moveWaypointState.lastMoveTs = 0
   end
@@ -229,6 +235,8 @@ local function moveSelectedWaypointForward(v)
 end
 
 local function moveSelectedWaypointBackward(v)
+  if currentWindow ~= pacenotesWindow then return end
+
   if v == 0 then
     moveWaypointState.lastMoveTs = 0
   end
@@ -236,6 +244,11 @@ local function moveSelectedWaypointBackward(v)
   if pacenotesWindow:selectedWaypoint() then
     moveWaypointState.backward = v
   end
+end
+
+local function cameraPathPlay()
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:cameraPathPlay()
 end
 
 -- local function moveSelectedWaypointForwardFast()
@@ -756,8 +769,8 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
-    {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
-    {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
+    -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
+    -- {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
     {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
   })
 
@@ -772,7 +785,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
 
   prefsRegistry:registerSubCategory("rallyEditor", "topDownCamera", nil, {
     {elevation = {"int", 200, "Elevation for the top-down camera view.", nil, 1, 1000}},
-    {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
+    -- {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
   })
 
   prefsRegistry:registerSubCategory("rallyEditor", "waypoints", nil, {
@@ -793,7 +806,8 @@ local function getPreference(key, default)
 end
 
 local function getPrefShowDistanceMarkers()
-  return getPreference('rallyEditor.editing.showDistanceMarkers', true)
+  return false
+  -- return getPreference('rallyEditor.editing.showDistanceMarkers', true)
 end
 
 local function getPrefShowAudioTriggers()
@@ -809,7 +823,8 @@ local function getPrefShowNextPacenote()
 end
 
 local function getPrefEditingLanguage()
-  return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
+  return re_util.default_codriver_language
+  -- return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
 end
 
 local function getPrefDefaultPunctuation()
@@ -844,7 +859,8 @@ local function setPrefTopDownCameraElevation(val)
 end
 
 local function getPrefTopDownCameraFollow()
-  return getPreference('rallyEditor.topDownCamera.shouldFollow', true)
+  return true
+  -- return getPreference('rallyEditor.topDownCamera.shouldFollow', true)
 end
 
 local function getPrefLockWaypoints()
@@ -985,6 +1001,7 @@ M.moveSelectedWaypointForward = moveSelectedWaypointForward
 M.moveSelectedWaypointBackward = moveSelectedWaypointBackward
 -- M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
 -- M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
+M.cameraPathPlay = cameraPathPlay
 
 M.onEditorInitialized = onEditorInitialized
 M.getTranscriptsWindow = function() return recceWindow end
