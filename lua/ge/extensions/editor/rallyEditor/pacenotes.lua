@@ -213,9 +213,16 @@ function C:selectPacenote(id)
     pacenoteNameText = im.ArrayChar(1024, note.name)
     playbackRulesText = im.ArrayChar(1024, note.playback_rules)
     self.pacenote_tools_state.snaproad:setPacenote(note)
-    core_camera.setByName(0, "pacenote")
-    local camMode = core_camera.getGlobalCameras().pacenote
-    camMode:setTarget(note:getCornerStartWaypoint().pos)
+
+    -- core_camera.setByName(0, "pacenote")
+    -- local camMode = core_camera.getGlobalCameras().pacenote
+    core_camera.setByName(0, "pacenoteOrbit")
+    -- local cams = core_camera.getGlobalCameras()
+    -- print(dumps(cams))
+
+    -- camMode:setTarget(note:getCornerStartWaypoint().pos)
+    core_camera.setRef(0, note:getCornerStartWaypoint().pos)
+    core_camera.setDistance(0, 100)
   else
     pacenoteNameText = im.ArrayChar(1024, "")
     playbackRulesText = im.ArrayChar(1024, "")

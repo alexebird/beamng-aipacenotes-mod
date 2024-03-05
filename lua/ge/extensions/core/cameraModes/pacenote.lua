@@ -5,7 +5,7 @@
 local C = {}
 C.__index = C
 
-local manualzoom = require('core/cameraModes/manualzoom')
+-- local manualzoom = require('core/cameraModes/manualzoom')
 
 local rotEulerTemp = quat()
 local function setRotateEuler(x, y, z, qSource, qDest)
@@ -21,8 +21,8 @@ end
 function C:reset()
   self.angularVelocity = vec3(0,0,0)
   self.velocity = vec3(0,0,0)
-  self.manualzoom = manualzoom()
-  self.manualzoom:init(65)
+  -- self.manualzoom = manualzoom()
+  -- self.manualzoom:init(65)
   self.rot.z = 0 -- reset roll
 end
 
@@ -66,9 +66,9 @@ function C:setPosition(position)
   self.pos = position
 end
 
-function C:setFOV(fovDeg)
-  self.manualzoom:init(fovDeg)
-end
+-- function C:setFOV(fovDeg)
+  -- self.manualzoom:init(fovDeg)
+-- end
 
 function C:setNewtonRotation(enabled)
   self.newtonRotation = enabled
@@ -133,9 +133,15 @@ function C:update(data)
     --self.rot.z = self.rot.z + 300*data.dt*(MoveManager.rollRight - MoveManager.rollLeft)
   -- end
 
+
+  --   MoveManager.right - MoveManager.left + MoveManager.absXAxis,
+  --   MoveManager.forward - MoveManager.backward + MoveManager.absYAxis,
+  --   MoveManager.up - MoveManager.down + MoveManager.absZAxis
+
+
     -- pitch
-  local u = mousePitch < 0
-  local d = mousePitch > 0
+  local u = mousePitch > 0
+  local d = mousePitch < 0
     -- yaw
   local r = mouseYaw > 0
   local l = mouseYaw < 0
@@ -252,6 +258,9 @@ function C:update(data)
 
 
 
+  -------------------------------------------------------------------------
+  -- FREE CAM
+  --
   -- Rotation
   -- local dtFactor = data.dt * 200
   -- inputVec:set(
@@ -306,6 +315,9 @@ function C:update(data)
   -- data.res.pos:set(self.pos)
 
   -- self.manualzoom:update(data)
+  --
+  -- /FREE CAM
+  -------------------------------------------------------------------------
   return true
 end
 
