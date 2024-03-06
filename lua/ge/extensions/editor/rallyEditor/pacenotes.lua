@@ -57,6 +57,7 @@ function C:init(rallyEditor)
     -- drag_mode = dragModes.simple,
     snaproad = nil,
     search = nil,
+    internal_lock = false,
     hover_wp_id = nil,
     selected_pn_id = nil,
     selected_wp_id = nil,
@@ -421,26 +422,24 @@ end
 
 function C:drawDebugEntrypoint()
   if self.path then
-    self.path:drawDebugNotebook(self.pacenote_tools_state)
+    if not self.pacenote_tools_state.snaproad:partitionAllEnabled() then
+      self.path:drawDebugNotebook(self.pacenote_tools_state)
+    end
   end
 
-  -- if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
   if self.pacenote_tools_state.snaproad then
     self.pacenote_tools_state.snaproad:drawDebugSnaproad()
+    if self.pacenote_tools_state.snaproad:partitionAllEnabled() then
+      self.path:drawDebugNotebookForPartitionedSnaproad()
+    end
   end
 
-    if self.pacenote_tools_state.playbackLastCameraPos then
-      local clr = cc.clr_purple
-      local radius = cc.cam_last_pos_radius
-      local alpha = cc.cam_last_pos_alpha
-      debugDrawer:drawSphere(self.pacenote_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],alpha))
-    end
-
-  -- local tscs = self:getTranscripts()
-  -- if tscs and self.transcript_tools_state.show then
-  --   tscs:drawDebug(self.transcript_tools_state.selected_id)
-  --
-  -- end
+  if self.pacenote_tools_state.playbackLastCameraPos then
+    local clr = cc.clr_purple
+    local radius = cc.cam_last_pos_radius
+    local alpha = cc.cam_last_pos_alpha
+    debugDrawer:drawSphere(self.pacenote_tools_state.playbackLastCameraPos, radius, ColorF(clr[1],clr[2],clr[3],alpha))
+  end
 end
 
 function C:drawDebugCameraPlaying()
@@ -461,13 +460,14 @@ function C:handleMouseDown(hoveredWp)
     elseif self:selectedPacenote() and self:selectedWaypoint() and self:selectedPacenote().id ~= selectedPn.id then
       -- if the selected pacenote is different than clicked waypoint
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
+      self.pacenote_tools_state.internal_lock = true
       self:selectPacenote(selectedPn.id)
       self:selectWaypoint(hoveredWp.id)
     elseif self:selectedPacenote() and self:selectedPacenote().id ~= selectedPn.id then
       -- if the selected pacenote is different than clicked waypoint
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
+      self.pacenote_tools_state.internal_lock = true
       self:selectPacenote(selectedPn.id)
-      -- self:selectWaypoint(hoveredWp.id)
       self:selectWaypoint(nil)
     elseif not self:selectedPacenote() then
       -- if no pacenote is selected
@@ -488,7 +488,7 @@ function C:handleMouseHold()
 
   local wp_sel = self:selectedWaypoint()
 
-  if wp_sel and not wp_sel:isLocked() then
+  if wp_sel and not wp_sel:isLocked() and not self.pacenote_tools_state.internal_lock then
     if self.mouseInfo.rayCast then
       local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
       if new_pos then
@@ -510,6 +510,8 @@ function C:handleMouseHold()
 end
 
 function C:handleMouseUp()
+  self.pacenote_tools_state.internal_lock = false
+
   -- if self.pacenote_tools_state.drag_mode == dragModes.simple or self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
     local wp_sel = self:selectedWaypoint()
     if wp_sel and not wp_sel.missing then
@@ -641,6 +643,10 @@ function C:handleMouseInput()
       -- self:createMouseClickPacenote()
     end
   elseif self.pacenote_tools_state.snaproad.recce.driveline then
+    if self.pacenote_tools_state.snaproad:partitionAllEnabled() then
+      self.pacenote_tools_state.snaproad:clearPartitionAll()
+    end
+
     self:handleUnmodifiedMouseInteraction(hoveredWp)
   end
   -- end
@@ -788,10 +794,15 @@ function C:createMouseDragPacenote()
   if not self.mouseInfo.rayCast then return end
   if not self.pacenote_tools_state.snaproad then return end
 
+  if not self.pacenote_tools_state.snaproad:partitionAllEnabled() then
+    self.pacenote_tools_state.snaproad:partitionAllPacenotes(self.path)
+    self.pacenote_tools_state.snaproad:setFilterToAllPartitions()
+  end
+
   -- self:selectPacenote(nil)
   -- self:selectWaypoint(nil)
 
-  local txt = "Create New Pacenote (drag to place CornerStart and CornerEnd)"
+  local txt = "Click to Create New Pacenote"
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
   pos_rayCast = self.pacenote_tools_state.snaproad:closestSnapPos(pos_rayCast)
@@ -809,13 +820,15 @@ function C:createMouseDragPacenote()
   -- end
 
   -- draw the cursor text
+  local clr_txt = cc.clr_black
+  local clr_bg = cc.clr_green
   debugDrawer:drawTextAdvanced(
     pos_rayCast,
     String(txt),
-    ColorF(1,1,1,1),
+    ColorF(clr_txt[1],clr_txt[2],clr_txt[3],1),
     true,
     false,
-    ColorI(0,0,0,255)
+    ColorI(clr_bg[1]*255, clr_bg[2]*255, clr_bg[3]*255, 255)
   )
 
   if self.mouseInfo.hold then
@@ -827,8 +840,6 @@ function C:createMouseDragPacenote()
     -- newPacenote.pacenoteWaypoints:create('corner end', point_ce.pos)
     -- local point_at = self.pacenote_tools_state.snaproad:distanceBackwards(point_cs, 10)
     -- newPacenote.pacenoteWaypoints:create('audio trigger', point_at.pos)
-
-    self.pacenote_tools_state.snaproad:partitionAllPacenotes(self.path)
 
 
     -- self.path:sortPacenotesByName()

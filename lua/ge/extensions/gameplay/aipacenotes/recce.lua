@@ -91,6 +91,7 @@ function C:loadDriveline()
     obj.prev = nil
     obj.next = nil
     obj.id = nil
+    obj.partition = nil
     table.insert(points, obj)
   end
 

@@ -352,6 +352,36 @@ function C:drawDebugNotebook(selection_state)
   end
 end
 
+function C:drawDebugNotebookForPartitionedSnaproad()
+  local pacenotes = self.pacenotes.sorted
+  -- local pn_prev, pn_sel, pn_next = self:getAdjacentPacenoteSet(selection_state.selected_pn_id)
+
+  -- if pn_sel and selection_state.selected_wp_id then
+  --   pn_sel:drawDebugPacenoteSelected(selection_state)
+  --
+  --   if editor_rallyEditor.getPrefShowPreviousPacenote() and pn_prev and pn_prev.id ~= pn_sel.id then
+  --     pn_prev:drawDebugPacenotePrev(selection_state, pn_sel)
+  --   end
+  --
+  --   if editor_rallyEditor.getPrefShowNextPacenote() and pn_next and pn_next.id ~= pn_sel.id then
+  --     pn_next:drawDebugPacenoteNext(selection_state, pn_sel)
+  --   end
+  -- elseif pn_sel then
+  --   pn_sel:drawDebugPacenoteSelected(selection_state)
+  --   drawPacenotesAsBackground(pacenotes, pn_sel, selection_state)
+  -- else
+    -- drawPacenotesAsRainbow(pacenotes, selection_state)
+  -- end
+
+  local selection_state = {
+    hover_wp_id = nil,
+    selected_wp_id = nil,
+  }
+  for _,pacenote in ipairs(pacenotes) do
+    pacenote:drawDebugPacenotePartitionedSnaproad(selection_state)
+  end
+end
+
 function C:onSerialize()
   local ret = {
     name = self.name,

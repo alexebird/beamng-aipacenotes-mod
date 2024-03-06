@@ -22,6 +22,13 @@ function C:init(recce)
     focus_points = {},
     after_points = {},
   }
+
+  self.partition_all_state = {
+    enabled = false,
+    notebook = nil,
+    partitions = {},
+    pacenote_partitions = {},
+  }
 end
 
 -- function C:load()
@@ -93,9 +100,17 @@ local function _drawDebugPoints(points, clr, alpha, radius)
 end
 
 function C:_drawDebugPartitionsAll()
-  local points = self.partitions_all
+  local points = self.partition_all_state.partitions
   if not points then return end
-  local clr = cc.snaproads_clr
+  -- local clr = cc.snaproads_clr
+  local clr = cc.clr_green
+
+  for i,partition in ipairs(points) do
+    _drawDebugPoints(partition, clr)
+  end
+
+  points = self.partition_all_state.pacenote_partitions
+  clr = cc.waypoint_clr_background
 
   for i,partition in ipairs(points) do
     _drawDebugPoints(partition, clr)
@@ -142,9 +157,10 @@ function C:drawDebugSnaproad()
     -- self:_drawDebugFilter()
   if self.partition.enabled then
     self:_drawDebugPartition()
-  else
-    -- self:_drawDebugDefault()
+  elseif self.partition_all_state.enabled then
     self:_drawDebugPartitionsAll()
+  else
+    self:_drawDebugDefault()
   end
 end
 
@@ -407,6 +423,7 @@ function C:_partitionPoints(fromPoint, toPoint)
   self.partition.before_points = {}
   self.partition.focus_points = {}
   self.partition.after_points = {}
+  self:_clearPointCachedPartitions()
 
   -- fill the focus points
   local currPoint = fromPoint
@@ -417,6 +434,7 @@ function C:_partitionPoints(fromPoint, toPoint)
 
     if nextPoint then
       table.insert(self.partition.focus_points, nextPoint)
+      nextPoint.partition = self.partition.focus_points
 
       if nextPoint.id == toPoint.id then
         break
@@ -473,14 +491,38 @@ function C:_partitionPoints(fromPoint, toPoint)
   end
 end
 
+function C:clearPartitionAll()
+  self.partition_all_state.enabled = false
+  self.partition_all_state.notebook = nil
+  self.partition_all_state.partitions = {}
+  self.partition_all_state.pacenote_partitions = {}
+  self:clearFilter()
+  self:_clearPointCachedPartitions()
+end
+
+function C:_clearPointCachedPartitions()
+  for _,point in ipairs(self:_allPoints()) do
+    point.partition = nil
+  end
+end
+
 function C:partitionAllPacenotes(notebook)
+  -- reset state
+  self.partition_all_state.enabled = true
+  self.partition_all_state.notebook = notebook
+  self.partition_all_state.partitions = {}
+  self.partition_all_state.pacenote_partitions = {}
+  self:_clearPointCachedPartitions()
+
+  local pn_partitions = {}
   local partitions = {}
 
   local pt_curr = self:_allPoints()[1]
 
   local partition = {}
+  local pn_partition = {}
 
-  for i,pn_curr in ipairs(notebook.pacenotes.sorted) do
+  for _,pn_curr in ipairs(notebook.pacenotes.sorted) do
     local wp_cs = pn_curr:getCornerStartWaypoint()
     local wp_ce = pn_curr:getCornerEndWaypoint()
     local pos_cs = wp_cs.pos
@@ -489,18 +531,21 @@ function C:partitionAllPacenotes(notebook)
     wp_ce._snap_point = self:closestSnapPoint(pos_ce)
 
     partition = {}
+    pn_partition = {}
 
     while pt_curr.id < wp_cs._snap_point.id do
       table.insert(partition, pt_curr)
+      pt_curr.partition = partition
       pt_curr = pt_curr.next
     end
 
     while pt_curr.id <= wp_ce._snap_point.id do
+      table.insert(pn_partition, pt_curr)
       pt_curr = pt_curr.next
     end
 
-
     table.insert(partitions, partition)
+    table.insert(pn_partitions, pn_partition)
 
     -- elseif pt_curr.id == wp_cs._snap_point.id then
     --   -- transitioning from partition to inside a pacenote
@@ -508,26 +553,48 @@ function C:partitionAllPacenotes(notebook)
     -- elseif pt_curr.id > wp_cs._snap_point.id and pt_curr.id < wp_ce._snap_point.id then
     -- elseif pt_curr.id == wp_ce._snap_point.id then
     -- end
-
   end
 
+  -- add points after the last pacenote to it's own partition
   partition = {}
   while pt_curr do
     table.insert(partition, pt_curr)
+    pt_curr.partition = partition
     pt_curr = pt_curr.next
   end
   table.insert(partitions, partition)
 
-  print('partitions:')
-  for i,p in ipairs(partitions) do
-    local s = ''
-    for i,pt in ipairs(p) do
-      s = s..', '..tostring(pt.id)
-    end
-    print(s)
-  end
+  -- print('partitions:')
+  -- for i,p in ipairs(partitions) do
+  --   local s = ''
+  --   for i,pt in ipairs(p) do
+  --     s = s..', '..tostring(pt.id)
+  --   end
+  --   print(s)
+  -- end
 
-  self.partitions_all = partitions
+  self.partition_all_state.partitions = partitions
+  self.partition_all_state.pacenote_partitions = pn_partitions
+end
+
+function C:clearFilter()
+  self.filter.enabled = false
+  self.filter.points = {}
+end
+
+function C:setFilterToAllPartitions()
+  if not self.partition_all_state.enabled then return end
+
+  self.filter.enabled = true
+  self.filter.points = {}
+
+  local partitions = self.partition_all_state.partitions
+
+  for i,partition in ipairs(partitions) do
+    for i,point in ipairs(partition) do
+      table.insert(self.filter.points, point)
+    end
+  end
 end
 
 function C:setFilter(wp)
@@ -535,6 +602,7 @@ function C:setFilter(wp)
     self.filter.enabled = false
     self.filter.points = {}
     self:clearPartition()
+    -- self:clearPartitionAll()
     return
   end
 
@@ -650,6 +718,10 @@ end
 
 function C:stopCameraPath()
   self.cameraPathPlayer:stop()
+end
+
+function C:partitionAllEnabled()
+  return self.partition_all_state.enabled
 end
 
 return function(...)

@@ -6,6 +6,7 @@ local C = {}
 local logTag = 'aipacenotes_pacenote'
 
 local pn_drawMode_noSelection = 'no_selection'
+local pn_drawMode_partitionedSnaproad = 'partitioned_snaproad'
 local pn_drawMode_background = 'background'
 local pn_drawMode_next = 'next'
 local pn_drawMode_previous = 'previous'
@@ -483,6 +484,11 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
     else
       clr = wp:colorForWpType(pn_drawMode)
     end
+
+    if not valid then
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_red_dark
+    end
   elseif pn_drawMode == pn_drawMode_previous then
     clr = wp:colorForWpType(pn_drawMode)
     if wp:isCs() then
@@ -491,6 +497,11 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
       radius_factor = drawConfig.ce_radius
     elseif wp:isAt() then
       radius_factor = drawConfig.at_radius
+    end
+
+    if not valid then
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_red_dark
     end
   elseif pn_drawMode == pn_drawMode_next then
     clr = wp:colorForWpType(pn_drawMode)
@@ -501,6 +512,19 @@ local function drawWaypoint(drawConfig, selection_state, wp, dist_text)
     elseif wp:isAt() then
       radius_factor = drawConfig.at_radius
     end
+
+    if not valid then
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_red_dark
+    end
+  elseif pn_drawMode == pn_drawMode_partitionedSnaproad then
+    alpha_text = 1.0
+    clr = wp:colorForWpType(pn_drawMode_previous)
+    if not valid then
+      clr_textFg = cc.clr_white
+      clr_textBg = cc.clr_red_dark
+    end
+    radius_factor = cc.pacenote_adjacent_radius_factor
   elseif pn_drawMode == pn_drawMode_background then
     if valid then
       clr = cc.waypoint_clr_background
@@ -838,6 +862,28 @@ local function adjustFromPrefs(drawConfig)
 
   local show_at = editor_rallyEditor.getPrefShowAudioTriggers()
   drawConfig.at = show_at and drawConfig.at
+end
+
+function C:drawDebugPacenotePartitionedSnaproad(selection_state)
+  local drawConfig = {
+    pn_drawMode = pn_drawMode_partitionedSnaproad,
+    di_before = false,
+    at = false,
+    cs = true,
+    di_middle = false,
+    ce = true,
+    di_after = false,
+    base_alpha = cc.pacenote_base_alpha_no_sel,
+    at_text = false,
+    cs_text = true,
+    ce_text = false,
+    di_text = false,
+    cs_radius = cc.pacenote_adjacent_radius_factor,
+    ce_radius = cc.pacenote_adjacent_radius_factor,
+    at_radius = cc.pacenote_adjacent_radius_factor,
+  }
+  adjustFromPrefs(drawConfig)
+  self:drawDebugPacenoteHelper(drawConfig, selection_state)
 end
 
 function C:drawDebugPacenoteNoSelection(selection_state)
