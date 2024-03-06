@@ -5,11 +5,14 @@ local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+local RecceSettings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')
+local Snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')
 
 function C:init(missionDir)
   self.missionDir = missionDir
   self.loaded = false
   self:_resetState()
+  self.settings = RecceSettings()
 end
 
 function C:_resetState()
@@ -19,6 +22,7 @@ end
 
 function C:load()
   self:_resetState()
+  self.settings:load()
   self:loadDriveline()
   self:loadCuts()
   self.loaded = true
@@ -195,7 +199,7 @@ function C:createPacenotesData(notebook)
   local importIdent = notebook:nextImportIdent()
   local import_language = re_util.default_codriver_language
 
-  local snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')(self)
+  local snaproad = Snaproad(self)
 
   local pacenotes = {}
 

@@ -42,7 +42,9 @@ M.clr_purple       = {0.73, 0, 1}
 -- snaproads.lua
 --
 M.snaproads_radius = 0.7
+M.snaproads_radius_driving = 0.2
 M.snaproads_alpha = 0.8
+M.snaproads_alpha_driving = 0.2
 -- M.snaproads_alpha_hover = 0.9
 M.snaproads_clr = M.clr_red
 -- M.snaproads_clr_hover = M.clr_white

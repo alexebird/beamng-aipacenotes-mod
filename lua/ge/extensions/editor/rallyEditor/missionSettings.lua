@@ -1,44 +1,48 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local RecceSettings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')
 
 local C = {}
 C.windowDescription = 'Mission Settings'
 
-local notebookFilenamesSorted = {}
--- local transcriptFilenamesSorted = {}
-
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.settings = nil
+  self.notebookFilenamesSorted = {}
+  self.recce_settings = nil
 end
 
 function C:setPath(path)
-  self.path = path
+  -- self.path = path
+end
+
+function C:load()
+  self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+  self.notebookFilenamesSorted = self.rallyEditor.listNotebooks()
+
+  self.recce_settings = RecceSettings()
+  self.recce_settings:load()
 end
 
 -- called by RallyEditor when this tab is selected.
 function C:selected()
-  if not self.path then return end
-
-  self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
-  notebookFilenamesSorted = self.rallyEditor.listNotebooks()
-  -- transcriptFilenamesSorted = self:loadTranscripts()
-
+  -- if not self.path then return end
+  self:load()
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
 -- called by RallyEditor when this tab is unselected.
 function C:unselect()
-  if not self.path then return end
+  -- if not self.path then return end
 
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
-function C:draw(_mouseInfo)
-  if not self.path then return end
+function C:draw()
+  -- if not self.path then return end
 
   im.HeaderText("Mission Settings")
 
@@ -46,13 +50,12 @@ function C:draw(_mouseInfo)
   self:notebookFilenameSelector()
   self:codriverSelector()
 
-  -- for i = 1,5 do im.Spacing() end
-  -- im.Separator()
-  -- for i = 1,5 do im.Spacing() end
-  --
-  -- im.Text("Transcript Settings")
-  -- self:transcriptSettingsSection('Full Course', 'full_course')
-  -- self:transcriptSettingsSection('Current', 'curr')
+  for i = 1,5 do im.Spacing() end
+  im.Separator()
+  for i = 1,5 do im.Spacing() end
+
+  im.HeaderText("Recce Settings")
+  self:recceSettingsSection()
 end
 
 -- function C:loadTranscripts()
@@ -109,11 +112,12 @@ function C:notebookFilenameSelector()
 
   local basenames = {}
 
-  for _,thepath in ipairs(notebookFilenamesSorted) do
+  for _,thepath in ipairs(self.notebookFilenamesSorted) do
     local _, fname, _ = path.split(thepath)
     table.insert(basenames, fname)
   end
 
+  im.SetNextItemWidth(400)
   if im.BeginCombo(name..'##filename', self.settings.notebook.filename or '') then
 
     for _, fname in ipairs(basenames) do
@@ -143,6 +147,7 @@ function C:codriverSelector()
   local name = 'Codriver'
   local tt = 'Set the codriver.'
 
+  im.SetNextItemWidth(400)
   if im.BeginCombo(name..'##codriver', self.settings.notebook.codriver or '') then
 
     for _, codriver in ipairs(self.codrivers or {}) do
@@ -150,6 +155,26 @@ function C:codriverSelector()
       if im.Selectable1(((current and '[current] ') or '')..codriver, current) then
         self.settings.notebook.codriver = codriver
         self.settings:write()
+      end
+    end
+
+    im.EndCombo()
+  end
+
+  im.tooltip(tt)
+end
+
+function C:recceSettingsSection()
+  local name = 'Corner Call Style'
+  local tt = 'Set the style of corner calls.'
+
+  im.SetNextItemWidth(400)
+  if im.BeginCombo(name..'##corner_call_style_name', self.recce_settings:getCornerCallStyleName() or '') then
+
+    for _, style_name in ipairs(self.recce_settings:cornerCallStyleNames()) do
+      local current = self.recce_settings:getCornerCallStyleName() == style_name
+      if im.Selectable1(((current and '[current] ') or '')..style_name, current) then
+        self.recce_settings:setCornerCallStyleName(style_name)
       end
     end
 

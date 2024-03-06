@@ -2,25 +2,33 @@
 
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local Recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')
+local RecceSettings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')
+local RallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')
+local Snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')
 local logTag = 'aipacenotes-recce'
 
 local M = {}
 
+-- loaded extension state
+local recce_settings = nil
+
+-- loaded mission state
+local missionDir = nil
+local missionId = nil
 local rallyManager = nil
-
-local vehicleCapture = nil
-local cutCapture = nil
-
-local snaproads = nil
-local cornerAngles = nil
+local snaproad = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
-local ui_selectedCornerAnglesStyle = ""
-local missionDir = nil
-local missionId = nil
+
+-- recording state
+local vehicleCapture = nil
+local cutCapture = nil
+-- recording settings state
 local shouldRecordDriveline = false
 local shouldRecordVoice = false
+
 
 local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
@@ -43,17 +51,20 @@ local function initCaptures()
   end
 end
 
-local function loadCornerAnglesFile()
-  local json, err = re_util.loadCornerAnglesFile()
+-- local function loadCornerAngles()
+  -- local json, err = re_util.loadCornerAnglesFile()
+  --
+  -- if json then
+  --   local cornerAngles = json
+  --   guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
+  -- else
+  --   log('E', 'aipacenotes', err)
+  --   guihooks.trigger('aiPacenotesCornerAnglesLoaded', nil, err)
+  -- end
 
-  if json then
-    cornerAngles = json
-    guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
-  else
-    log('E', 'aipacenotes', err)
-    guihooks.trigger('aiPacenotesCornerAnglesLoaded', nil, err)
-  end
-end
+--   local style = recce_settings:getCornerCallStyle()
+--   guihooks.trigger('aiPacenotes.recceApp.cornerAnglesLoaded', style)
+-- end
 
 -- local function clearTimeout()
   -- extensions.gameplay_aipacenotes_client.clear_network_issue()
@@ -68,7 +79,8 @@ local function desktopGetTranscripts()
   end
 end
 
-local function listMissionsForLevel()
+-- local function listMissionsForLevel()
+local function refresh()
   local level = getCurrentLevelIdentifier()
 
   local filterFn = function (mission)
@@ -88,13 +100,15 @@ local function listMissionsForLevel()
     end
   end
 
-  local settings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')()
-  settings:load()
+  recce_settings:load()
+
   local last_mid = nil
   local last_load_state = false
-  if settings then
-    last_mid = settings:getLastMissionId(level)
-    last_load_state = settings:getLastLoadState(level)
+  local style = nil
+  if recce_settings then
+    last_mid = recce_settings:getLastMissionId(level)
+    last_load_state = recce_settings:getLastLoadState(level)
+    style = recce_settings:getCornerCallStyle()
   end
 
   -- log('D', 'wtf', dumps(last_mid))
@@ -103,8 +117,9 @@ local function listMissionsForLevel()
     missions = missionList,
     last_mission_id = last_mid,
     last_load_state = last_load_state,
+    corner_angles_style = style,
   }
-  guihooks.trigger('aiPacenotesMissionsLoaded', resp)
+  guihooks.trigger('aiPacenotes.recceApp.refreshed', resp)
 end
 
 -- local function onFirstUpdate()
@@ -143,60 +158,67 @@ local function drawDebug()
     wp_audio_trigger:drawDebugRecce(i, nextPacenotes, pacenote._cached_fgData.note_text)
   end
 
-  if snaproads and flag_drawDebugSnaproads then
-    snaproads:drawSnapRoads(nil, cc.clr_orange)
-    if #nextPacenotes > 0 then
-      local rad = 0.5
-      local alpha = 0.5
+  -- local pacenote = nextPacenotes[1]
+  -- if pacenote then
+  --   local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+  --   wp_audio_trigger:drawDebugRecce(1, nextPacenotes, pacenote._cached_fgData.note_text)
+  -- end
 
-      local nextNote = nextPacenotes[1]
-      local wp_audio_trigger = nextNote:getActiveFwdAudioTrigger()
-      local pos = wp_audio_trigger.pos
-      debugDrawer:drawSphere(
-        (pos),
-        rad,
-        ColorF(1,1,1,alpha)
-      )
+  if snaproad and flag_drawDebugSnaproads then
+    snaproad:drawDebugRecceApp()
 
-      local cs = nextNote:getCornerStartWaypoint()
-      debugDrawer:drawSphere(
-        (cs.pos),
-        rad,
-        ColorF(0,1,0,alpha)
-      )
-
-      local ce = nextNote:getCornerEndWaypoint()
-      debugDrawer:drawSphere(
-        (ce.pos),
-        rad,
-        ColorF(1,0,0,alpha)
-      )
-
-      local nextSnapPos = snaproads:nextSnapPos(pos)
-      if nextSnapPos then
-        debugDrawer:drawSphere(
-          (nextSnapPos),
-          rad,
-          ColorF(1,0,1,alpha)
-        )
-      end
-
-      local prevSnapPos = snaproads:prevSnapPos(pos)
-      if prevSnapPos then
-        debugDrawer:drawSphere(
-          (prevSnapPos),
-          rad,
-          ColorF(0,1,1,alpha)
-        )
-      end
-    end
+    -- if #nextPacenotes > 0 then
+    --   local rad = 0.5
+    --   local alpha = 0.5
+    --
+    --   local nextNote = nextPacenotes[1]
+    --   local wp_audio_trigger = nextNote:getActiveFwdAudioTrigger()
+    --   local pos = wp_audio_trigger.pos
+    --   debugDrawer:drawSphere(
+    --     (pos),
+    --     rad,
+    --     ColorF(1,1,1,alpha)
+    --   )
+    --
+    --   local cs = nextNote:getCornerStartWaypoint()
+    --   debugDrawer:drawSphere(
+    --     (cs.pos),
+    --     rad,
+    --     ColorF(0,1,0,alpha)
+    --   )
+    --
+    --   local ce = nextNote:getCornerEndWaypoint()
+    --   debugDrawer:drawSphere(
+    --     (ce.pos),
+    --     rad,
+    --     ColorF(1,0,0,alpha)
+    --   )
+    --
+    --   local nextSnapPos = snaproad:nextSnapPos(pos)
+    --   if nextSnapPos then
+    --     debugDrawer:drawSphere(
+    --       (nextSnapPos),
+    --       rad,
+    --       ColorF(1,0,1,alpha)
+    --     )
+    --   end
+    --
+    --   local prevSnapPos = snaproad:prevSnapPos(pos)
+    --   if prevSnapPos then
+    --     debugDrawer:drawSphere(
+    --       (prevSnapPos),
+    --       rad,
+    --       ColorF(0,1,1,alpha)
+    --     )
+    --   end
+    -- end
   end
 end
 
 local function moveNextPacenoteForward()
   log('D', 'wtf', 'moveNextPacenoteForward')
   if not rallyManager then return end
-  if not snaproads then return end
+  if not snaproad then return end
 
   local nextPacenotes = rallyManager:getNextPacenotes()
   if nextPacenotes and #nextPacenotes > 0 then
@@ -205,7 +227,7 @@ local function moveNextPacenoteForward()
       return
     end
     local wp = nextNote:getActiveFwdAudioTrigger()
-    nextNote:moveWaypointTowards(snaproads, wp, true)
+    nextNote:moveWaypointTowards(snaproad, wp, true)
     rallyManager:saveNotebook()
   end
 end
@@ -213,7 +235,7 @@ end
 local function moveNextPacenoteBackward()
   log('D', 'wtf', 'moveNextPacenoteBackward')
   if not rallyManager then return end
-  if not snaproads then return end
+  if not snaproad then return end
 
   local nextPacenotes = rallyManager:getNextPacenotes()
   if nextPacenotes and #nextPacenotes > 0 then
@@ -223,7 +245,7 @@ local function moveNextPacenoteBackward()
       return
     end
     local wp = nextNote:getActiveFwdAudioTrigger()
-    nextNote:moveWaypointTowards(snaproads, wp, false)
+    nextNote:moveWaypointTowards(snaproad, wp, false)
     rallyManager:saveNotebook()
   end
 end
@@ -354,30 +376,32 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   end
 end
 
--- VC means 'vehicle capture'
-local function initSnaproads()
-  snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(missionDir)
-  if not snaproads:load() then
-    snaproads = nil
-  end
-end
-
-local function initRallyManager(newMissionId, newMissionDir)
+local function loadMission(newMissionId, newMissionDir)
   missionDir = newMissionDir
   missionId = newMissionId
   flag_NoteSearch = false
-  rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
+  flag_drawDebug = false
+  flag_drawDebugSnaproads = false
+  rallyManager = RallyManager()
   rallyManager:setOverrideMission(missionId, missionDir)
   rallyManager:setup(100, 10)
   rallyManager:handleNoteSearch()
 
   if missionDir then
-    initSnaproads()
+    local recce = Recce(missionDir)
+    recce:load()
+    snaproad = Snaproad(recce)
   end
 end
 
-local function clearRallyManager()
+local function unloadMission()
   rallyManager = nil
+  missionDir = nil
+  missionId = nil
+  snaproad = nil
+  flag_NoteSearch = false
+  flag_drawDebug = false
+  flag_drawDebugSnaproads = false
 end
 
 local function setDrawDebug(val)
@@ -398,17 +422,17 @@ local function onVehicleResetted()
   end
 end
 
-local function setCornerAnglesStyleName(name)
-  ui_selectedCornerAnglesStyle = name
-end
+-- local function setCornerAnglesStyleName(name)
+--   ui_selectedCornerAnglesStyle = name
+-- end
 
-local function getVehiclePosForCut()
-  local vehicle = be:getPlayerVehicle(0)
-  local vehiclePos = vehicle:getPosition()
-  local vRot = quatFromDir(vehicle:getDirectionVector(), vehicle:getDirectionVectorUp())
-  local vehicle_position = { pos=vehiclePos, quat={x=vRot.x,y=vRot.y,z=vRot.z,w=vRot.w} }
-  return vehicle_position
-end
+-- local function getVehiclePosForCut()
+--   local vehicle = be:getPlayerVehicle(0)
+--   local vehiclePos = vehicle:getPosition()
+--   local vRot = quatFromDir(vehicle:getDirectionVector(), vehicle:getDirectionVectorUp())
+--   local vehicle_position = { pos=vehiclePos, quat={x=vRot.x,y=vRot.y,z=vRot.z,w=vRot.w} }
+--   return vehicle_position
+-- end
 
 local function transcribe_recording_cut()
   log('I', logTag, 'transcribe_recording_cut')
@@ -471,32 +495,45 @@ end
 
 
 local function setLastMissionId(mid)
-  local settings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')()
-  if settings then
-    settings:setLastMissionId(getCurrentLevelIdentifier(), mid)
+  if recce_settings then
+    recce_settings:setLastMissionId(getCurrentLevelIdentifier(), mid)
   end
 end
 
 local function setLastLoadState(state)
-  local settings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')()
-  if settings then
-    settings:setLastLoadState(getCurrentLevelIdentifier(), state)
+  if recce_settings then
+    recce_settings:setLastLoadState(getCurrentLevelIdentifier(), state)
   end
 end
+
+local function initRecceApp()
+  recce_settings = RecceSettings()
+  recce_settings:load()
+end
+
+local function onExtensionLoaded()
+  print('recceApp.onExtensionLoaded')
+  initRecceApp()
+  guihooks.trigger('aiPacenotes.recceApp.onExtensionLoaded', {})
+end
+
+M.onExtensionLoaded = onExtensionLoaded
 
 M.onVehicleResetted = onVehicleResetted
 -- M.onVehicleSpawned = onVehicleSpawned
 -- M.onVehicleSwitched = onVehicleSwitched
 
-M.loadCornerAnglesFile = loadCornerAnglesFile
-M.listMissionsForLevel = listMissionsForLevel
+-- M.loadCornerAngles = loadCornerAngles
+-- M.listMissionsForLevel = listMissionsForLevel
+M.refresh = refresh
 M.desktopGetTranscripts = desktopGetTranscripts
-M.initRallyManager = initRallyManager
-M.clearRallyManager = clearRallyManager
+M.loadMission = loadMission
+M.initRecceApp = initRecceApp
+M.unloadMission = unloadMission
 -- M.clearTimeout = clearTimeout
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
-M.setCornerAnglesStyleName = setCornerAnglesStyleName
+-- M.setCornerAnglesStyleName = setCornerAnglesStyleName
 M.moveNextPacenoteBackward = moveNextPacenoteBackward
 M.moveNextPacenoteForward = moveNextPacenoteForward
 M.moveVehicleBackward = moveVehicleBackward

@@ -50,7 +50,7 @@
       </div>
 
       <div class="recce-control">
-        <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button>
+        <!-- <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button> -->
         <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded" ng-class="{'debug-on': drawDebug}">
          {{ drawDebug ? 'hide notes' : 'show notes' }}
         </button>
@@ -66,9 +66,9 @@
         <span class="middle-label">V</span>
         <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn vehicle-backward" ng-disabled="!drawDebug">&darr;</button>
 
-        <md-select class="md-select-dropdown" ng-model="selectedStyleName">
-          <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option>
-        </md-select>
+        <!-- <md-select class="md-select-dropdown" ng-model="selectedStyleName"> -->
+        <!--   <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option> -->
+        <!-- </md-select> -->
       </div>
 
       <div class="recce-control">

@@ -31,60 +31,6 @@ function C:init(recce)
   }
 end
 
--- function C:load()
---   local settings = re_util.loadMissionSettings(self.missionDir)
---
---   if settings then
---     self.settings = settings
---     local abspath = self.settings:getFullCourseTranscriptAbsPath(self.missionDir)
---     self.transcript_path = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(abspath)
---
---     if not self.transcript_path:load() then
---       log('W', logTag, 'snapVC.load couldnt load transcripts file from '..tostring(abspath))
---       self.transcript_path = nil
---       return false
---     end
---   else
---     return false
---   end
---
---   self.spline_points = {}
---   self._filtered_spline_points = nil
---
---   for _,tsc in ipairs(self.transcript_path.transcripts.sorted) do
---     if tsc:capture_data() then
---       for _,cap in ipairs(tsc:capture_data().captures) do
---         table.insert(self.spline_points, vec3(cap.pos))
---       end
---     end
---   end
---
---   log('I', logTag, 'snapVC loaded '..tostring(#self.spline_points)..' points')
---   return true
--- end
-
--- function C:_mouseOverSnapRoad(mouseInfo)
---   if not mouseInfo then return nil end
---
---   local minNoteDist = startingMinDist
---   local closestWp = nil
---   local sphereRadius = self.radius
---
---   for _,node in ipairs(self:_filteredSnapPoints()) do
---     local pos = node
---     local distNoteToCam = (pos - mouseInfo.camPos):length()
---     local noteRayDistance = (pos - mouseInfo.camPos):cross(mouseInfo.rayDir):length() / mouseInfo.rayDir:length()
---     if noteRayDistance <= sphereRadius then
---       if distNoteToCam < minNoteDist then
---         minNoteDist = distNoteToCam
---         closestWp = node
---       end
---     end
---   end
---
---   return closestWp
--- end
-
 local function _drawDebugPoints(points, clr, alpha, radius)
   local alpha_shape = alpha or cc.snaproads_alpha
   local radius = radius or cc.snaproads_radius
@@ -164,17 +110,34 @@ function C:drawDebugSnaproad()
   end
 end
 
+local adjustHeight = function(pos, r)
+  local newZ = core_terrain.getTerrainHeight(pos)
+  return vec3(pos.x, pos.y, newZ-(r*0.25))
+end
+
+function C:drawDebugRecceApp()
+  local points = self:_allPoints()
+
+  local clr = cc.snaproads_clr
+  local alpha_shape = cc.snaproads_alpha_driving
+  local radius = cc.snaproads_radius_driving
+
+  for _,point in ipairs(points) do
+    local pos = point.pos
+    debugDrawer:drawSphere(
+      adjustHeight(pos, radius),
+      radius,
+      ColorF(clr[1],clr[2],clr[3], alpha_shape)
+    )
+  end
+end
+
 function C:drawDebugCameraPlaying()
   local pn = self.partition.pacenote
   if self.partition.enabled and pn then
     local radius = 1.0
     local clr = cc.waypoint_clr_at
-    local alpha_shape = 0.2
-
-    local adjustHeight = function(pos, r)
-      local newZ = core_terrain.getTerrainHeight(pos)
-      return vec3(pos.x, pos.y, newZ-(r*0.25))
-    end
+    local alpha_shape = cc.snaproads_alpha_driving
 
     debugDrawer:drawSphere(
       adjustHeight(pn:getActiveFwdAudioTrigger().pos, radius),
@@ -197,9 +160,9 @@ function C:drawDebugCameraPlaying()
     )
 
     clr = cc.clr_white
-    -- alpha_shape = 0.2
-    radius = 0.2
+    radius = cc.snaproads_radius_driving
     local points = self.partition.focus_points
+
     for _,point in ipairs(points) do
       local pos = point.pos
       debugDrawer:drawSphere(
@@ -208,6 +171,137 @@ function C:drawDebugCameraPlaying()
         ColorF(clr[1],clr[2],clr[3], alpha_shape)
       )
     end
+  end
+end
+
+local function mylerp(a, b, t)
+  return a + (b - a) * t
+end
+
+local function createGradient(steps)
+  local gradient = {}
+
+  for i = 1, steps do
+    local t = (i - 1) / (steps - 1)  -- Normalize t to 0-1
+    local r, g, b
+
+    if t <= 0.5 then
+      -- Interpolate between red and yellow
+      r = 1
+      g = mylerp(0, 1, t * 2)  -- Double t because it's only half the gradient
+      b = 0
+    else
+      -- Interpolate between yellow and green
+      r = mylerp(1, 0, (t - 0.5) * 2)  -- Adjust t and double for second half
+      g = 1
+      b = 0
+    end
+
+    table.insert(gradient, {r, g, b})
+  end
+
+  return gradient
+end
+
+function C:get_grouped_captures(points, style_data)
+
+  -- if editor_rallyEditor then
+    -- local cornerAnglesStyle = capture_data.cornerAnglesStyle
+    -- local corner_angles_data = editor_rallyEditor.getTranscriptsWindow():getCornerAngles(force_reload)
+    -- local style_data = nil
+    -- for _,style in ipairs(corner_angles_data.pacenoteStyles) do
+    --   if style.name == cornerAnglesStyle then
+    --     style_data = style
+    --   end
+    -- end
+
+  local sortedAngles = {}
+  for i,angle in ipairs(style_data.angles) do
+    table.insert(sortedAngles, angle)
+  end
+  local function sortByAngleRev(a, b)
+    return a.fromAngleDegrees > b.fromAngleDegrees
+  end
+  table.sort(sortedAngles, sortByAngleRev)
+
+  local steps = #sortedAngles - 1  -- Number of color steps in the gradient
+  -- subtract 1 for Center
+  local gradientColors = createGradient(steps)
+  for i,angle in ipairs(sortedAngles) do
+    angle.color = gradientColors[i]
+  end
+  sortedAngles[#sortedAngles].color = cc.clr_white
+
+  local subgroups = {{points = {}, label_point=-1, calc=nil}}
+
+  for _,point in ipairs(points) do
+    local subgroup_points = subgroups[#subgroups].points
+
+    local angle_data, cornerCallStr, pct = re_util.determineCornerCall(sortedAngles, point.steering)
+    point.calc = {
+      -- angle_i = angle_i,
+      angle_pct = pct,
+      angle_data = angle_data,
+      cornerCallStr = cornerCallStr,
+    }
+
+    if #subgroup_points == 0 then
+      table.insert(subgroup_points, point)
+      subgroups[#subgroups].calc = point.calc
+    elseif subgroup_points[#subgroup_points].calc.cornerCallStr ~= point.calc.cornerCallStr then
+      table.insert(subgroups, {points={point}, label_point=-1, calc=point.calc})
+    else
+      table.insert(subgroup_points, point)
+      subgroups[#subgroups].calc = point.calc
+    end
+  end
+
+  for _,grp in ipairs(subgroups) do
+    local label_i = round(#grp.points / 2)
+    grp.label_point = grp.points[label_i]
+  end
+
+  return subgroups
+end
+
+function C:drawDebugCornerCalls()
+  local capture_data = self:capture_data()
+  if not capture_data then return end
+
+  -- local captures = capture_data.captures
+  local cornerAnglesStyle = capture_data.cornerAnglesStyle
+
+  local radius = 0.5
+  local shapeAlpha = 0.9
+  local clr = cc.clr_teal
+
+  local groups = self:get_grouped_captures()
+  if not groups then return end
+
+  for i_grp,grp in ipairs(groups) do
+    for _,cap in ipairs(grp.captures) do
+      clr = cap.calc.angle_data.color
+      -- clr = cap.calc.color_within_angle
+      -- log('D', 'wtf', dumps(clr))
+
+      local pos = vec3(cap.pos)
+      debugDrawer:drawSphere(pos, radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
+    end
+    -- log('D', 'wtf', '---')
+    local label_point = grp.label_point
+    local calc = grp.calc
+    local clr_text_fg = cc.clr_black
+    local clr_text_bg = calc.angle_data.color
+    local textAlpha = 1.0
+
+    debugDrawer:drawTextAdvanced(
+      vec3(label_point.pos),
+      String(calc.cornerCallStr..' '),
+      ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], textAlpha),
+      true,
+      false,
+      ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, textAlpha*255)
+    )
   end
 end
 

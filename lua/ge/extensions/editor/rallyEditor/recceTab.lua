@@ -3,6 +3,7 @@ local logTag = 'aipacenotes'
 
 -- local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local Recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')
 
 local C = {}
 C.windowDescription = 'Recce'
@@ -11,24 +12,7 @@ function C:init(rallyEditor)
   self.path = nil
   self.rallyEditor = rallyEditor
   self.recce = nil
-  self.corner_angles_data = nil
 end
-
--- function C:getCornerAngles(reload)
---   if reload then
---     self.corner_angles_data = nil
---   end
---
---   if self.corner_angles_data then return self.corner_angles_data end
---
---   local json, err = re_util.loadCornerAnglesFile()
---   if json then
---     self.corner_angles_data = json
---     return self.corner_angles_data
---   else
---     return nil
---   end
--- end
 
 function C:setPath(path)
   self.path = path
@@ -55,9 +39,14 @@ function C:drawSectionV3()
   --   self:refresh()
   -- end
 
-  if self.recce and self.recce.loaded and self.recce.driveline then
-    im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points')
-    im.Text('cuts: '..tostring(#self.recce.cuts)..' points')
+  if not (self.recce and self.recce.loaded) then
+    im.Text('To Import Pacenotes, make sure there is a recce recording.')
+    return
+  end
+
+  if self.recce.driveline then
+    im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points (the red line)')
+    im.Text('cuts: '..tostring(#self.recce.cuts)..' (the little green cars)')
   else
     im.Text('Recorded driveline was not found.')
     im.Text(
@@ -67,19 +56,16 @@ function C:drawSectionV3()
     )
   end
 
-  if self.recce and self.recce.loaded and self.recce.cuts then
+  if self.recce.cuts then
     if im.Button("Import") then
       self:import()
     end
-  end
-
-  if self.recce and self.recce.loaded then
-    im.Text('To Import Pacenotes, make sure there is a recce recording.')
+    im.Text('Import will create a new pacenote for each of the cuts.')
   end
 end
 
 function C:refresh()
-  self.recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')(self.rallyEditor.getMissionDir())
+  self.recce = Recce(self.rallyEditor.getMissionDir())
   self.recce:load()
 end
 

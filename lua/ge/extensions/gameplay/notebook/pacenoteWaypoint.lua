@@ -246,7 +246,8 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
   -- local textAlpha = (#nextPacenotes - (i-1)) / #nextPacenotes -- scale the alpha by distance.
   local alpha_text = 0.5
 
-  local clr_cyl = cc.clr_red
+  -- local clr_cyl = cc.clr_red
+  local clr_cyl = cc.waypoint_clr_at
   local alpha_cyl = 0.2
   -- local cyl_alpha = 0.5 * ((#nextPacenotes - (i-1)) / #nextPacenotes) -- scale the alpha by distance.
 
@@ -255,9 +256,9 @@ function C:drawDebugRecce(i, nextPacenotes, note_text)
     alpha_cyl = 0.5
   end
 
-  if multiple_notes then
-    clr_cyl = cc.clr_yellow
-  end
+  -- if multiple_notes then
+  --   clr_cyl = cc.clr_yellow
+  -- end
 
   debugDrawer:drawTextAdvanced(
     self.pos + (vec3(0,0,height/2)),

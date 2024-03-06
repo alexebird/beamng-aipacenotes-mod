@@ -3,6 +3,8 @@ local logTag = 'aipacenotes'
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local Snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')
+local Recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')
 
 -- pacenote form fields
 local pacenoteNameText = im.ArrayChar(1024, "")
@@ -146,9 +148,9 @@ end
 -- end
 
 function C:loadSnaproad()
-  local recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')(self.rallyEditor.getMissionDir())
+  local recce = Recce(self.rallyEditor.getMissionDir())
   recce:load()
-  self.pacenote_tools_state.snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')(recce)
+  self.pacenote_tools_state.snaproad = Snaproad(recce)
 
   -- self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
 end

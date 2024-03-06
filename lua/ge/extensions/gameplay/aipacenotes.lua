@@ -8,82 +8,12 @@ local logTag = 'aipacenotes'
 local M = {}
 
 local rallyManager = nil
--- local vehicleCapture = nil
--- local snaproads = nil
--- local cornerAngles = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
--- local flag_drawDebugSnaproads = false
--- local ui_selectedCornerAnglesStyle = ""
-
 
 local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
 end
-
--- local function initVehicleCapture()
---   local veh = be:getPlayerVehicle(0)
---   if isFreeroam() then
---     vehicleCapture = require('/lua/ge/extensions/gameplay/aipacenotes/vehicleCapture')(
---       veh,
---       cornerAngles,
---       ui_selectedCornerAnglesStyle
---     )
---   end
--- end
-
--- local function loadCornerAnglesFile()
---   local json, err = re_util.loadCornerAnglesFile()
---
---   if json then
---     cornerAngles = json
---     guihooks.trigger('aiPacenotesCornerAnglesLoaded', json, nil)
---   else
---     log('E', 'aipacenotes', err)
---     guihooks.trigger('aiPacenotesCornerAnglesLoaded', nil, err)
---   end
--- end
-
--- local function clearTimeout()
---   extensions.gameplay_aipacenotes_client.clear_network_issue()
--- end
-
--- local function desktopGetTranscripts()
---   local resp = extensions.gameplay_aipacenotes_client.transcribe_transcripts_get(2)
---   if resp.ok then
---     guihooks.trigger('aiPacenotesTranscriptsLoaded', resp)
---   else
---     guihooks.trigger('aiPacenotesInputActionDesktopCallNotOk', resp.client_msg)
---   end
--- end
-
--- local function listMissionsForLevel()
---   local filterFn = function (mission)
---     return mission.startTrigger.level == getCurrentLevelIdentifier() and mission.missionType == 'rallyStage'
---   end
---
---   local missionList = {}
---
---   for _, mission in ipairs(gameplay_missions_missions.getFilesData() or {}) do
---     if filterFn(mission) then
---       local missionData = {
---         missionID = mission.id,
---         missionDir = mission.missionFolder,
---         missionName = mission.name,
---       }
---       table.insert(missionList, missionData)
---     end
---   end
---
---   -- log('D', 'wtf', dumps(missionList))
---
---   guihooks.trigger('aiPacenotesMissionsLoaded', missionList)
--- end
-
--- local function updateVehicleCapture()
---   if not vehicleCapture then return end
---   vehicleCapture:capture()
--- end
 
 local function updateRallyManager(dtSim)
   if not rallyManager then return end
