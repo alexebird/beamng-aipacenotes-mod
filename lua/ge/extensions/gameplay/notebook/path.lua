@@ -190,10 +190,6 @@ function C:nextImportIdent()
 end
 
 function C:cleanupPacenoteNames()
-  -- for i, v in ipairs(self.pacenotes.sorted) do
-  --   v.name = "Pacenote "..i
-  -- end
-
   for i, v in ipairs(self.pacenotes.sorted) do
     -- Pattern to match a name ending with a number: capture the non-numeric part and the numeric part
     local baseName, number = string.match(v.name, "(.-)%s*([%d%.]+)$")

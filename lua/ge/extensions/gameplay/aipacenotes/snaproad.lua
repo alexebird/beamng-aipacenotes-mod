@@ -491,7 +491,7 @@ function C:_partitionPoints(fromPoint, toPoint)
   end
 end
 
-function C:clearPartitionAll()
+function C:clearAll()
   self.partition_all_state.enabled = false
   self.partition_all_state.notebook = nil
   self.partition_all_state.partitions = {}
@@ -544,15 +544,9 @@ function C:partitionAllPacenotes(notebook)
       pt_curr = pt_curr.next
     end
 
+    partition.pacenote_after = pn_curr
     table.insert(partitions, partition)
     table.insert(pn_partitions, pn_partition)
-
-    -- elseif pt_curr.id == wp_cs._snap_point.id then
-    --   -- transitioning from partition to inside a pacenote
-    --   table.insert(partitions, partition)
-    -- elseif pt_curr.id > wp_cs._snap_point.id and pt_curr.id < wp_ce._snap_point.id then
-    -- elseif pt_curr.id == wp_ce._snap_point.id then
-    -- end
   end
 
   -- add points after the last pacenote to it's own partition
@@ -597,12 +591,24 @@ function C:setFilterToAllPartitions()
   end
 end
 
+function C:setFilterPartitionPoint(point)
+  if not self.partition_all_state.enabled then return end
+
+  self.filter.enabled = true
+  self.filter.points = {}
+
+  local partition = point.partition
+
+  for i,point in ipairs(partition) do
+    table.insert(self.filter.points, point)
+  end
+end
+
 function C:setFilter(wp)
   if not wp then
     self.filter.enabled = false
     self.filter.points = {}
     self:clearPartition()
-    -- self:clearPartitionAll()
     return
   end
 

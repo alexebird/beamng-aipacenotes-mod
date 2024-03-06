@@ -125,7 +125,11 @@ end
 function C:selectedWaypoint()
   if not self:selectedPacenote() then return nil end
   if self.pacenote_tools_state.selected_wp_id then
-    return self:selectedPacenote().pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
+    if self:selectedPacenote().pacenoteWaypoints then
+      return self:selectedPacenote().pacenoteWaypoints.objects[self.pacenote_tools_state.selected_wp_id]
+    else
+      return nil
+    end
   else
     return nil
   end
@@ -161,7 +165,7 @@ function C:selected()
   -- self.pacenote_tools_state.selected_wp_id = nil
 
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add waypoint to current pacenote"
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Create new pacenote"
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Create new pacenote"
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Free Edit with Gizmo"
   -- editor.editModes.notebookEditMode.auxShortcuts["g"] = "Cycle Drag MMode"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = "Delete"
@@ -179,7 +183,7 @@ function C:unselect()
   -- self:selectPacenote(nil)
 
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
-  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = nil
+  editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = nil
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = nil
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Delete] = nil
   -- force redraw of shortcutLegend window
@@ -637,14 +641,13 @@ function C:handleMouseInput()
       -- elseif self.mouseInfo.hold then
         -- self:handleMouseHold()
     -- end
-  if editor.keyModifiers.shift then
+  if editor.keyModifiers.ctrl then
     if not self:selectedPacenote() then
       self:createMouseDragPacenote()
-      -- self:createMouseClickPacenote()
     end
   elseif self.pacenote_tools_state.snaproad.recce.driveline then
     if self.pacenote_tools_state.snaproad:partitionAllEnabled() then
-      self.pacenote_tools_state.snaproad:clearPartitionAll()
+      self.pacenote_tools_state.snaproad:clearAll()
     end
 
     self:handleUnmodifiedMouseInteraction(hoveredWp)
@@ -742,53 +745,6 @@ function C:debugDrawNewPacenote2(pos_cs, pos_ce)
   )
 end
 
--- function C:createMouseClickPacenote()
---   if not self.path then return end
---   if not self.mouseInfo.rayCast then return end
---
---   local pos_rayCast = self.mouseInfo.rayCast.pos
---   -- if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
---   if self.pacenote_tools_state.snaproad then
---     pos_rayCast = self.pacenote_tools_state.snaproad:closestSnapPos(pos_rayCast)
---   end
---
---   -- draw the cursor text
---   local txt = "Create New Pacenote"
---   debugDrawer:drawTextAdvanced(
---     pos_rayCast,
---     String(txt),
---     ColorF(1,1,1,1),
---     true,
---     false,
---     ColorI(0,0,0,255)
---   )
---
---   if self.mouseInfo.hold then
---     self:debugDrawNewPacenote2()
---   elseif self.mouseInfo.up then
---   --   local newPacenote = self.path.pacenotes:create(nil, nil)
---   --   newPacenote.pacenoteWaypoints:create('corner start', pos_cs)
---   --   newPacenote.pacenoteWaypoints:create('corner end', pos_ce)
---   --
---   --   editor.history:commitAction("Create pacenote from mouse drag",
---   --     {
---   --       self = self,
---   --       pacenote_data = newPacenote:onSerialize(),
---   --       pacenote_id = newPacenote.id,
---   --     },
---   --     function(data) -- undo
---   --       self.path.pacenotes:remove(data.pacenote_id)
---   --       self:selectPacenote(nil)
---   --     end,
---   --     function(data) -- redo
---   --       local note = self.path.pacenotes:create(nil, data.pacenote_data.oldId)
---   --       note:onDeserialized(data.pacenote_data, {})
---   --       self:selectPacenote(data.pacenote_id)
---   --     end
---   --   )
---   end
--- end
-
 function C:createMouseDragPacenote()
   if not self.path then return end
   if not self.mouseInfo.rayCast then return end
@@ -799,20 +755,10 @@ function C:createMouseDragPacenote()
     self.pacenote_tools_state.snaproad:setFilterToAllPartitions()
   end
 
-  -- self:selectPacenote(nil)
-  -- self:selectWaypoint(nil)
-
   local txt = "Click to Create New Pacenote"
 
   local pos_rayCast = self.mouseInfo.rayCast.pos
   pos_rayCast = self.pacenote_tools_state.snaproad:closestSnapPos(pos_rayCast)
-
-  local pos_cs = self.mouseInfo._downPos
-  local point_cs = nil
-  if pos_cs then
-    point_cs = self.pacenote_tools_state.snaproad:closestSnapPoint(pos_cs)
-    pos_cs = point_cs.pos
-  end
 
   -- local pos_ce = self.mouseInfo._holdPos
   -- if pos_ce then
@@ -830,6 +776,91 @@ function C:createMouseDragPacenote()
     false,
     ColorI(clr_bg[1]*255, clr_bg[2]*255, clr_bg[3]*255, 255)
   )
+
+  if self.mouseInfo.down then
+    print('down')
+
+    local pos_down = self.mouseInfo._downPos
+    if pos_down then
+      local point_cs = self.pacenote_tools_state.snaproad:closestSnapPoint(pos_down)
+      local partition = point_cs.partition
+      if not partition then
+        log('W', logTag, 'found no snaproad partition for create')
+        return
+      end
+
+      local pn = partition.pacenote_after
+      local sortOrder = self.path.pacenotes.sorted[#self.path.pacenotes.sorted].sortOrder + 5 -- default to end of pacenotes list
+      if pn then
+        print(pn.sortOrder)
+        sortOrder = pn.sortOrder - 0.5 -- go before the partition's pacenote_after
+      end
+
+      -- print(dumps(partition))
+
+      -- local pos_cs = point_cs.pos
+
+      self.pacenote_tools_state.snaproad:setFilterPartitionPoint(point_cs)
+
+      if point_cs.id == partition[1].id then
+        if point_cs.next then
+          point_cs = point_cs.next
+        end
+      end
+
+      if point_cs.id == partition[#partition].id then
+        if point_cs.prev then
+          point_cs = point_cs.prev
+        end
+      end
+
+      local defaultDistMeters = 10
+      local point_ce = self.pacenote_tools_state.snaproad:distanceForwards(point_cs, defaultDistMeters)
+      local point_at = self.pacenote_tools_state.snaproad:distanceBackwards(point_cs, defaultDistMeters)
+
+      local newPacenote = self.path.pacenotes:create(nil, nil)
+      newPacenote.sortOrder = sortOrder
+      newPacenote.pacenoteWaypoints:create('corner start', point_cs.pos)
+      newPacenote.pacenoteWaypoints:create('corner end', point_ce.pos)
+      local wp_at = newPacenote.pacenoteWaypoints:create('audio trigger', point_at.pos)
+
+      local normalVec = self.pacenote_tools_state.snaproad:forwardNormalVec(point_at)
+      if normalVec then
+        wp_at:setNormal(normalVec)
+      end
+
+      self.path.pacenotes:sort()
+      self.path:cleanupPacenoteNames()
+      -- self.path:sortPacenotesByName()
+      -- sortOrder = newPacenote.sortOrder
+
+      self.pacenote_tools_state.snaproad:clearAll()
+
+      self:autoFillDistanceCalls()
+      self:selectPacenote(newPacenote.id)
+
+      -- editor.history:commitAction("Create pacenote with mouse",
+      --   {
+      --     self = self,
+      --     pacenote_data = newPacenote:onSerialize(),
+      --     pacenote_id = newPacenote.id,
+      --     sortOrder = newPacenote.sortOrder,
+      --   },
+      --   function(data) -- undo
+      --     self.path.pacenotes:remove(data.pacenote_id)
+      --     self:selectPacenote(nil)
+      --   end,
+      --   function(data) -- redo
+      --     local note = self.path.pacenotes:create(nil, data.pacenote_data.oldId)
+      --     note.sortOrder = data.sortOrder
+      --     data.self.path.pacenotes:sort()
+      --     -- data.self.path:sortPacenotesByName()
+      --     note:onDeserialized(data.pacenote_data, {})
+      --     self:selectPacenote(data.pacenote_id)
+      --   end
+      -- )
+    end
+  end
 
   if self.mouseInfo.hold then
     -- self:debugDrawNewPacenote2(pos_cs, pos_ce)
@@ -1171,9 +1202,7 @@ local function setWaypointNormalRedo(data)
 end
 
 function C:deleteSelected()
-  if self:selectedWaypoint() then
-    self:deleteSelectedWaypoint()
-  elseif self:selectedPacenote() then
+  if self:selectedPacenote() then
     self:deleteSelectedPacenote()
   end
 end
