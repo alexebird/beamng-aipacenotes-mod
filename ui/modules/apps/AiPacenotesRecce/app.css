@@ -94,6 +94,10 @@
     margin: 0.1em;
 }
 
+.recce-controls-shift-left {
+    margin-right: -0.5rem;
+}
+
 .debug-on {
     background-color: rgba(255, 255, 255, 1.0) !important;
     color: rgba(0, 0, 0, 0.43) !important;
@@ -183,10 +187,10 @@
     width: 450px;
 }
 
-.middle-label {
-    margin-left: -10px;
-    margin-right: -10px;
-}
+/* .middle-label { */
+    /* margin-left: -10px; */
+    /* margin-right: 0px; */
+/* } */
 
 .cut-fake-click {
     background-color: #ff6600;
@@ -203,4 +207,8 @@
 .btn-danger {
     background-color: red;
     color: black;
+}
+
+.disabled-label {
+    color: grey;
 }

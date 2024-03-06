@@ -167,56 +167,60 @@ local function drawDebug()
   if snaproad and flag_drawDebugSnaproads then
     snaproad:drawDebugRecceApp()
 
-    -- if #nextPacenotes > 0 then
-    --   local rad = 0.5
-    --   local alpha = 0.5
-    --
-    --   local nextNote = nextPacenotes[1]
-    --   local wp_audio_trigger = nextNote:getActiveFwdAudioTrigger()
-    --   local pos = wp_audio_trigger.pos
-    --   debugDrawer:drawSphere(
-    --     (pos),
-    --     rad,
-    --     ColorF(1,1,1,alpha)
-    --   )
-    --
-    --   local cs = nextNote:getCornerStartWaypoint()
-    --   debugDrawer:drawSphere(
-    --     (cs.pos),
-    --     rad,
-    --     ColorF(0,1,0,alpha)
-    --   )
-    --
-    --   local ce = nextNote:getCornerEndWaypoint()
-    --   debugDrawer:drawSphere(
-    --     (ce.pos),
-    --     rad,
-    --     ColorF(1,0,0,alpha)
-    --   )
-    --
-    --   local nextSnapPos = snaproad:nextSnapPos(pos)
-    --   if nextSnapPos then
-    --     debugDrawer:drawSphere(
-    --       (nextSnapPos),
-    --       rad,
-    --       ColorF(1,0,1,alpha)
-    --     )
-    --   end
-    --
-    --   local prevSnapPos = snaproad:prevSnapPos(pos)
-    --   if prevSnapPos then
-    --     debugDrawer:drawSphere(
-    --       (prevSnapPos),
-    --       rad,
-    --       ColorF(0,1,1,alpha)
-    --     )
-    --   end
-    -- end
+    if #nextPacenotes > 0 then
+      local rad = 0.5
+      local alpha = 0.5
+
+      local nextNote = nextPacenotes[1]
+      local wp_audio_trigger = nextNote:getActiveFwdAudioTrigger()
+      local pos = wp_audio_trigger.pos
+      debugDrawer:drawSphere(
+        (pos),
+        rad,
+        ColorF(1,1,1,alpha)
+      )
+
+      local cs = nextNote:getCornerStartWaypoint()
+      local point_cs = snaproad:closestSnapPoint(cs.pos)
+      debugDrawer:drawSphere(
+        cs.pos,
+        rad,
+        ColorF(0,1,0,alpha)
+      )
+
+      local ce = nextNote:getCornerEndWaypoint()
+      local point_ce = snaproad:closestSnapPoint(ce.pos)
+      debugDrawer:drawSphere(
+        ce.pos,
+        rad,
+        ColorF(1,0,0,alpha)
+      )
+
+      local nextSnapPoint = snaproad:nextSnapPoint(pos)
+      if nextSnapPoint and nextSnapPoint.id ~= point_cs.id then
+        debugDrawer:drawSphere(
+          nextSnapPoint.pos,
+          rad,
+          ColorF(1,0,1,alpha)
+        )
+      end
+
+      local prevSnapPoint = snaproad:prevSnapPoint(pos)
+      -- requires getting prevNote to not render the aqua gumdrop
+      -- if prevSnapPoint and prevSnapPoint.id ~= point_ce.id then
+      if prevSnapPoint then
+        debugDrawer:drawSphere(
+          prevSnapPoint.pos,
+          rad,
+          ColorF(0,1,1,alpha)
+        )
+      end
+    end
   end
 end
 
-local function moveNextPacenoteForward()
-  log('D', 'wtf', 'moveNextPacenoteForward')
+local function moveNextPacenoteATForward()
+  log('D', 'wtf', 'moveNextPacenoteATForward')
   if not rallyManager then return end
   if not snaproad then return end
 
@@ -226,14 +230,18 @@ local function moveNextPacenoteForward()
     if not nextNote then
       return
     end
+
     local wp = nextNote:getActiveFwdAudioTrigger()
+    snaproad:setPacenote(nextNote)
+    snaproad:setFilter(wp)
     nextNote:moveWaypointTowards(snaproad, wp, true)
     rallyManager:saveNotebook()
+    snaproad:setFilter(nil)
   end
 end
 
-local function moveNextPacenoteBackward()
-  log('D', 'wtf', 'moveNextPacenoteBackward')
+local function moveNextPacenoteATBackward()
+  log('D', 'wtf', 'moveNextPacenoteATBackward')
   if not rallyManager then return end
   if not snaproad then return end
 
@@ -245,8 +253,11 @@ local function moveNextPacenoteBackward()
       return
     end
     local wp = nextNote:getActiveFwdAudioTrigger()
+    snaproad:setPacenote(nextNote)
+    snaproad:setFilter(wp)
     nextNote:moveWaypointTowards(snaproad, wp, false)
     rallyManager:saveNotebook()
+    snaproad:setFilter(nil)
   end
 end
 
@@ -380,8 +391,8 @@ local function loadMission(newMissionId, newMissionDir)
   missionDir = newMissionDir
   missionId = newMissionId
   flag_NoteSearch = false
-  flag_drawDebug = false
-  flag_drawDebugSnaproads = false
+  -- flag_drawDebug = false
+  -- flag_drawDebugSnaproads = false
   rallyManager = RallyManager()
   rallyManager:setOverrideMission(missionId, missionDir)
   rallyManager:setup(100, 10)
@@ -400,8 +411,8 @@ local function unloadMission()
   missionId = nil
   snaproad = nil
   flag_NoteSearch = false
-  flag_drawDebug = false
-  flag_drawDebugSnaproads = false
+  -- flag_drawDebug = false
+  -- flag_drawDebugSnaproads = false
 end
 
 local function setDrawDebug(val)
@@ -534,8 +545,8 @@ M.unloadMission = unloadMission
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 -- M.setCornerAnglesStyleName = setCornerAnglesStyleName
-M.moveNextPacenoteBackward = moveNextPacenoteBackward
-M.moveNextPacenoteForward = moveNextPacenoteForward
+M.moveNextPacenoteATBackward = moveNextPacenoteATBackward
+M.moveNextPacenoteATForward = moveNextPacenoteATForward
 M.moveVehicleBackward = moveVehicleBackward
 M.moveVehicleForward = moveVehicleForward
 M.onUpdate = onUpdate

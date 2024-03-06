@@ -33,7 +33,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.recordDriveline = false
       $scope.recordVoice = false
-      $scope.pacenote = "TODO: pacenote text"
+      $scope.pacenoteText = "TODO: pacenote text"
 
       let transcriptInterval = null
 
@@ -135,11 +135,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.$on('aiPacenotesInputActionRecceMovePacenoteForward', function (event) {
-        $scope.btnMovePacenoteForward()
+        $scope.btnMovePacenoteATForward()
       })
 
       $scope.$on('aiPacenotesInputActionRecceMovePacenoteBackward', function (event) {
-        $scope.btnMovePacenoteBackward()
+        $scope.btnMovePacenoteATBackward()
       })
 
       $scope.$on('aiPacenotesInputActionRecceMoveVehicleForward', function (event) {
@@ -231,7 +231,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.submitPacenoteForm = function() {
-        console.log($scope.pacenote)
+        console.log($scope.pacenoteText)
       }
 
       $scope.btnToggleDrawDebug = function() {
@@ -247,14 +247,14 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // NOTE these are proxying a lua call through the recce app in order to stay on one pattern.
       // ie: inputAction(lua) -> JS(js) -> engineLua(lua)
       // this pattern is good in case some frontend state needs to be updated.
-      $scope.btnMovePacenoteForward = function() {
+      $scope.btnMovePacenoteATForward = function() {
         if ($scope.drawDebug) {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteForward()')
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteATForward()')
         }
       }
-      $scope.btnMovePacenoteBackward = function() {
+      $scope.btnMovePacenoteATBackward = function() {
         if ($scope.drawDebug) {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteBackward()')
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteATBackward()')
         }
       }
 

@@ -4,7 +4,7 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local RecceSettings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')
 
 local C = {}
-C.windowDescription = 'Mission Settings'
+C.windowDescription = 'Settings'
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor

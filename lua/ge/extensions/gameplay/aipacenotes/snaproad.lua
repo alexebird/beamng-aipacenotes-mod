@@ -441,10 +441,6 @@ function C:prevSnapPos(srcPos)
 end
 
 function C:prevSnapPoint(srcPos)
-  print('prevSnapPos')
-
-  -- srcPos = vec3(srcPos)
-
   local snapPoint = self:closestSnapPoint(srcPos)
   if not snapPoint then return nil end
 
@@ -466,8 +462,6 @@ function C:nextSnapPos(srcPos)
 end
 
 function C:nextSnapPoint(srcPos)
-  print('nextSnapPos')
-
   local snapPoint = self:closestSnapPoint(srcPos)
   if not snapPoint then return nil end
 
