@@ -17,6 +17,8 @@ local waypointRadius = im.FloatPtr(0)
 -- local transcriptsSearchText = im.ArrayChar(1024, "")
 local pacenotesSearchText = im.ArrayChar(1024, "")
 
+local editingNote = false
+local pacenoteUnderEdit = false
 
 local C = {}
 C.windowDescription = 'Pacenotes'
@@ -38,14 +40,13 @@ end
 local dragModes = re_util.dragModes
 
 local language_form_fields = {}
-language_form_fields.before = im.ArrayChar(64)
-language_form_fields.note = im.ArrayChar(1024)
-language_form_fields.after = im.ArrayChar(256)
+-- language_form_fields.before = im.ArrayChar(64)
+-- language_form_fields.note = im.ArrayChar(1024)
+-- language_form_fields.after = im.ArrayChar(256)
 
 function C:init(rallyEditor)
   self.rallyEditor = rallyEditor
   self.mouseInfo = {}
-
 
   self._insertMode = false
   self.wasWPSelected = false
@@ -1594,16 +1595,16 @@ function C:drawPacenotesList(height)
   im.BeginChild1("currentPacenote", im.ImVec2(0,height), im.WindowFlags_ChildWindow)
 
   if self.pacenote_tools_state.selected_pn_id then
-    local note = notebook.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
+    local pacenote = notebook.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
 
-    if not note.missing then
+    if not pacenote.missing then
 
-    if note:is_valid() then
+    if pacenote:is_valid() then
       im.HeaderText("Pacenote Info")
     else
       im.HeaderText("[!] Pacenote Info")
-      local issues = "Issues (".. (#note.validation_issues) .."):\n"
-      for _, issue in ipairs(note.validation_issues) do
+      local issues = "Issues (".. (#pacenote.validation_issues) .."):\n"
+      for _, issue in ipairs(pacenote.validation_issues) do
         issues = issues..'- '..issue..'\n'
       end
       im.Text(issues)
@@ -1637,7 +1638,7 @@ function C:drawPacenotesList(height)
     end
 
     if im.Button("Insert After") then
-      self:insertNewPacenoteAfter(note)
+      self:insertNewPacenoteAfter(pacenote)
     end
 
     local icon = editor.icons.play_arrow
@@ -1660,14 +1661,14 @@ function C:drawPacenotesList(height)
     editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
       editor.history:commitAction("Change Name of Note",
-        {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.name, new = ffi.string(pacenoteNameText), field = 'name'},
+        {index = self.pacenote_tools_state.selected_pn_id, self = self, old = pacenote.name, new = ffi.string(pacenoteNameText), field = 'name'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
 
     editor.uiInputText("Playback Rules", playbackRulesText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
       editor.history:commitAction("Change the playback rules",
-        {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.playback_rules, new = ffi.string(playbackRulesText), field = 'playback_rules'},
+        {index = self.pacenote_tools_state.selected_pn_id, self = self, old = pacenote.playback_rules, new = ffi.string(playbackRulesText), field = 'playback_rules'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
     end
     im.tooltip([[Playback Rules
@@ -1696,15 +1697,16 @@ Any lua code is allowed, so be careful. Examples:
 
     im.HeaderText("Languages")
     editEnded = im.BoolPtr(false)
+    -- language_form_fields = {}
     for i,lang_data in ipairs(self.path:getLanguages()) do
       local language = lang_data.language
       local codrivers = lang_data.codrivers
       language_form_fields[language] = language_form_fields[language] or {}
       local fields = language_form_fields[language]
 
-      fields.before = im.ArrayChar(256, note:getNoteFieldBefore(language))
-      fields.note   = im.ArrayChar(1024, note:getNoteFieldNote(language))
-      fields.after  = im.ArrayChar(256, note:getNoteFieldAfter(language))
+      fields.before = im.ArrayChar(256, pacenote:getNoteFieldBefore(language))
+      fields.note   = im.ArrayChar(1024, pacenote:getNoteFieldNote(language))
+      fields.after  = im.ArrayChar(256, pacenote:getNoteFieldAfter(language))
 
       im.Text(language..": ")
 
@@ -1714,7 +1716,7 @@ Any lua code is allowed, so be careful. Examples:
       local fname = nil
 
       for _,codriver in ipairs(codrivers) do
-        fname = note:audioFname(codriver)
+        fname = pacenote:audioFname(codriver)
         if re_util.fileExists(fname) then
           file_exists = true
           tooltipStr = "Codriver: "..codriver.name.."\nPlay pacenote audio file:\n"..fname
@@ -1737,29 +1739,29 @@ Any lua code is allowed, so be careful. Examples:
         im.SameLine()
       end
 
-      voicePlayClr = nil
-      file_exists = false
-      tooltipStr = "Play audio from voice transcription"
-      if note.metadata.beamng_file and re_util.fileExists(note.metadata.beamng_file) then
-        fname = note.metadata.beamng_file
-        file_exists = true
-      else
-        voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
-        tooltipStr = "No voice transcription audio"
-      end
-      if editor.uiIconImageButton(editor.icons.record_voice_over, im.ImVec2(20, 20), voicePlayClr) then
-        if file_exists then
-          local audioObj = re_util.buildAudioObjPacenote(fname)
-          re_util.playPacenote(audioObj)
-        end
-      end
-      im.tooltip(tooltipStr)
-      im.SameLine()
+      -- voicePlayClr = nil
+      -- file_exists = false
+      -- tooltipStr = "Play audio from voice transcription"
+      -- if note.metadata.beamng_file and re_util.fileExists(note.metadata.beamng_file) then
+      --   fname = note.metadata.beamng_file
+      --   file_exists = true
+      -- else
+      --   voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
+      --   tooltipStr = "No voice transcription audio"
+      -- end
+      -- if editor.uiIconImageButton(editor.icons.record_voice_over, im.ImVec2(20, 20), voicePlayClr) then
+      --   if file_exists then
+      --     local audioObj = re_util.buildAudioObjPacenote(fname)
+      --     re_util.playPacenote(audioObj)
+      --   end
+      -- end
+      -- im.tooltip(tooltipStr)
+      -- im.SameLine()
 
       im.SetNextItemWidth(90)
       editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
-        self:handleNoteFieldEdit(note, language, 'before', fields.before)
+        self:handleNoteFieldEdit(pacenote, language, 'before', fields.before)
       end
       im.SameLine()
 
@@ -1771,15 +1773,25 @@ Any lua code is allowed, so be careful. Examples:
       end
       im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       -- editor.uiInputTextMultiline('##'..language..'_note', fields.note, nil, im.ImVec2(300, 2 * im.GetTextLineHeightWithSpacing()), nil, nil, nil, editEnded)
-      editor.uiInputText('##'..language..'_note', fields.note, nil, nil, nil, nil, editEnded)
+      editingNote = editor.uiInputText('##'..language..'_note', fields.note, nil, nil, nil, nil, editEnded)
+
       if editEnded[0] then
-        self:handleNoteFieldEdit(note, language, 'note', fields.note)
+        if pacenoteUnderEdit and pacenote.id == pacenoteUnderEdit.id then
+          self:handleNoteFieldEdit(pacenote, language, 'note', fields.note)
+        end
       end
+
+      if editingNote and not pacenoteUnderEdit then
+        pacenoteUnderEdit = pacenote
+      elseif not editingNote then
+        pacenoteUnderEdit = nil
+      end
+
       im.SameLine()
       im.SetNextItemWidth(150)
       editor.uiInputText('##'..language..'_after', fields.after, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
-        self:handleNoteFieldEdit(note, language, 'after', fields.after)
+        self:handleNoteFieldEdit(pacenote, language, 'after', fields.after)
       end
     end -- / self.path:getLanguages()
 
@@ -2566,6 +2578,7 @@ function C:cameraPathPlay()
     self.pacenote_tools_state.playbackLastCameraPos = core_camera.getPosition()
     core_camera.setPosition(0, self.pacenote_tools_state.last_camera.pos)
     core_camera.setRotation(0, self.pacenote_tools_state.last_camera.quat)
+    self:selectPacenote(self:selectedPacenote().id)
   else
     self:selectWaypoint(nil)
     self.pacenote_tools_state.last_camera.pos = core_camera.getPosition()
