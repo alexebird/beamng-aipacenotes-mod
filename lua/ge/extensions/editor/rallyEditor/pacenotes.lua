@@ -82,6 +82,14 @@ function C:setPath(path)
   self.path = path
 end
 
+function C:onEditModeActivate()
+  self:selectPacenote(self.pacenote_tools_state.selected_pn_id)
+end
+
+function C:onEditModeDeactivate()
+  self.rallyEditor.setFreeCam()
+end
+
 function C:getRacePath()
   return editor_raceEditor.getCurrentPath()
 end
@@ -144,6 +152,7 @@ function C:selected()
   if not self.path then return end
 
   self:loadSnaproad()
+  self:selectPacenote(self.pacenote_tools_state.selected_pn_id)
 
   -- self:loadFullCourse(false)
 
@@ -162,6 +171,8 @@ end
 -- called by RallyEditor when this tab is unselected.
 function C:unselect()
   if not self.path then return end
+
+  self.rallyEditor.setFreeCam()
 
   -- self:selectWaypoint(nil)
   -- self:selectPacenote(nil)
@@ -216,19 +227,21 @@ function C:selectPacenote(id)
 
     -- core_camera.setByName(0, "pacenote")
     -- local camMode = core_camera.getGlobalCameras().pacenote
-    core_camera.setByName(0, "pacenoteOrbit")
     -- local cams = core_camera.getGlobalCameras()
     -- print(dumps(cams))
-
     -- camMode:setTarget(note:getCornerStartWaypoint().pos)
+
+    core_camera.setByName(0, "pacenoteOrbit")
     core_camera.setRef(0, note:getCornerStartWaypoint().pos)
-    core_camera.setDistance(0, 100)
+    core_camera.setDistance(0, self.rallyEditor.getPrefTopDownCameraElevation())
   else
     pacenoteNameText = im.ArrayChar(1024, "")
     playbackRulesText = im.ArrayChar(1024, "")
     self.pacenote_tools_state.snaproad:setPacenote(nil)
+    self.rallyEditor.setFreeCam()
   end
 end
+
 
 function C:selectWaypoint(id)
   if not self.path then return end
@@ -1673,6 +1686,11 @@ Any lua code is allowed, so be careful. Examples:
           if file_exists then
             local audioObj = re_util.buildAudioObjPacenote(fname)
             re_util.playPacenote(audioObj)
+
+            -- core_sounds.cabinFilterStrength = 0
+            -- local globalParams = Engine.Audio.getGlobalParams()
+            -- globalParams:setParameterValue("c_CabinFilterReverbStrength", 1) -- cockpit flag, used e.g. for driver camera
+            -- re_util.playPacenote2(audioObj)
           end
         end
         im.tooltip(tooltipStr)

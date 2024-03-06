@@ -6,7 +6,7 @@ local M = {}
 local logTag = 'rally_editor'
 
 local toolWindowName = "rallyEditor"
-local editModeName = "Edit Notebook"
+local editModeName = "AI Pacenotes"
 local focusWindow = false
 local mouseInfo = {}
 
@@ -204,6 +204,15 @@ local function cameraOrbitZoomOut(v)
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.zoomOut = v
   -- end
+end
+
+local function setFreeCam()
+  local lastCamPos = core_camera.getPosition()
+  local lastCamRot = core_camera.getQuat()
+
+  core_camera.setByName(0, 'free')
+  core_camera.setPosition(0, lastCamPos)
+  core_camera.setRotation(0, lastCamRot)
 end
 
 local function deselect()
@@ -540,6 +549,7 @@ local function onActivate()
     end
   end
 end
+
 local function onDeactivate()
   for _, win in ipairs(windows) do
     if win.onEditModeDeactivate then
@@ -997,6 +1007,8 @@ M.cameraOrbitUp = cameraOrbitUp
 M.cameraOrbitDown = cameraOrbitDown
 M.cameraOrbitZoomIn = cameraOrbitZoomIn
 M.cameraOrbitZoomOut = cameraOrbitZoomOut
+
+M.setFreeCam = setFreeCam
 
 M.deselect = deselect
 M.selectNextWaypoint = selectNextWaypoint

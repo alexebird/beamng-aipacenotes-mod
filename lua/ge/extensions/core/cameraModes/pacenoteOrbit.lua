@@ -194,7 +194,7 @@ function C:update(data)
   local pitchDif = 0.1 * (MoveManager.pitchDown - MoveManager.pitchUp)
 
   -- Camera rotation around the fixed point based on user input
-  local maxRot = 200 -- rotation speed
+  local maxRot = 180 -- rotation speed
   local dtfactor = data.dt * 1000
   local mouseYaw = sign(MoveManager.yawRelative) * math.min(math.abs(MoveManager.yawRelative * 10), maxRot * data.dt) + yawDif * dtfactor
   local mousePitch = sign(-MoveManager.pitchRelative) * math.min(math.abs(MoveManager.pitchRelative * 10), maxRot * data.dt) + pitchDif * dtfactor
@@ -248,10 +248,6 @@ function C:update(data)
   local offsetAboveTerrain = 1.0 -- Adjust this value as needed
   if camPos.z < terrainHeight + offsetAboveTerrain then
     camPos.z = terrainHeight + offsetAboveTerrain
-
-  -- else
-    -- data.res.pos = self.fixedTargetPos
-    -- data.res.rot = self.camRot
   end
 
   -- Apply the calculated camera position and orientation
