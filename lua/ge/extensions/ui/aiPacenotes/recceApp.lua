@@ -134,6 +134,9 @@ local function setSelectedPacenoteText(newText)
   local codriver = rallyManager.codriver
   local lang = codriver.language
   selectedPacenote:setNoteFieldNote(lang, newText)
+  selectedPacenote:normalizeNoteText(lang)
+  sendSelectedPacenoteText()
+  selectedPacenote:clearCachedFgData()
   rallyManager:saveNotebook()
 end
 
@@ -193,12 +196,15 @@ local function drawDebug()
   if selectedPacenote then
     local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
     nextPacenotes = rallyManager:getPacenotesNearPos(wp_audio_trigger.pos)
-    wp_audio_trigger:drawDebugRecce(1, selectedPacenote._cached_fgData.note_text)
+    local noteData = selectedPacenote:asFlowgraphData(rallyManager.missionSettings, rallyManager.codriver)
+    wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
 
     for i,pacenote in ipairs(nextPacenotes) do
       if pacenote.id ~= selectedPacenote.id then
         local wp_at = pacenote:getActiveFwdAudioTrigger()
-        wp_at:drawDebugRecce(i, pacenote._cached_fgData.note_text)
+
+        noteData = pacenote:asFlowgraphData(rallyManager.missionSettings, rallyManager.codriver)
+        wp_at:drawDebugRecce(i, noteData.note_text)
       end
     end
   end

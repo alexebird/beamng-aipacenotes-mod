@@ -144,12 +144,16 @@ end
 function C:saveNotebook()
   if self.notebook then
     if self.notebook:save() then
+      -- self.notebook:reload()
+      -- self.notebook:cachePacenoteFgData(self.missionSettings, self.codriver)
+
       if editor_rallyEditor then
         local notebook = editor_rallyEditor.getCurrentPath()
         if notebook then
           notebook:reload()
         end
       end
+
       return true
     end
   end
@@ -269,8 +273,9 @@ function C:nextPacenotesUpdated()
   end
 
   for i,pacenote in ipairs(pacenotes) do
+    local noteData = pacenote:asFlowgraphData(self.missionSettings, self.codriver)
     local entry = {
-      pacenote = pacenote._cached_fgData.note_text
+      pacenote = noteData.note_text
     }
     table.insert(requestBody, entry)
   end

@@ -28,6 +28,7 @@ local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
 local default_punctuation = '?'
+local default_punctuation_last = '.'
 
 
 local dragModes = {
@@ -249,6 +250,40 @@ end
 
 local function hasPunctuation(last_char)
   return last_char == "." or last_char == "?" or last_char == "!"
+end
+
+local function stripWhitespace(str)
+  return str:gsub("^%s*(.-)%s*$", "%1")
+end
+
+local function normalizeNoteText(note, last)
+  note = stripWhitespace(note)
+
+  if note ~= autofill_blocker then
+    if note ~= '' and note ~= unknown_transcript_str then
+      -- add punction if not present
+      local last_char = note:sub(-1)
+      if not hasPunctuation(last_char) then
+
+        local punc = nil
+        if last then
+          punc = default_punctuation_last
+          if editor_rallyEditor then
+            punc = editor_rallyEditor.getPrefDefaultPunctuationLast()
+          end
+        else
+          punc = default_punctuation
+          if editor_rallyEditor then
+            punc = editor_rallyEditor.getPrefDefaultPunctuation()
+          end
+        end
+
+        note = note..punc
+      end
+    end
+  end
+
+  return note
 end
 
 local function detectMissionManagerMissionId()
@@ -489,6 +524,7 @@ M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
 M.default_notebook_name = default_notebook_name
 M.default_punctuation = default_punctuation
+M.default_punctuation_last = default_punctuation_last
 M.desktopTranscriptFname = desktopTranscriptFname
 M.dragModes = dragModes
 M.missionSettingsFname = missionSettingsFname
@@ -524,6 +560,7 @@ M.transcriptsFile = transcriptsFile
 
 M.missionTranscriptsDir = missionTranscriptsDir
 M.normalize_name = normalize_name
+M.normalizeNoteText = normalizeNoteText
 M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
 M.playPacenote2 = playPacenote2

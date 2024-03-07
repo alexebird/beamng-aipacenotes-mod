@@ -92,6 +92,8 @@ function C:save(fname)
     return
   end
 
+  self:normalizeNotes()
+
   local json = self:onSerialize()
   local saveOk = jsonWriteFile(fname, json, true)
   if not saveOk then
@@ -605,29 +607,14 @@ function C:editingLanguage()
   return editor_rallyEditor.getPrefEditingLanguage()
 end
 
-local function stripWhitespace(str)
-  return str:gsub("^%s*(.-)%s*$", "%1")
-end
-
 function C:normalizeNotes(lang)
   lang = lang or self:editingLanguage()
 
-  for _,pacenote in ipairs(self.pacenotes.sorted) do
-    local note = pacenote:getNoteFieldNote(lang)
+  local last = false
 
-    note = stripWhitespace(note)
-
-    if note ~= re_util.autofill_blocker then
-      if note ~= '' and note ~= re_util.unknown_transcript_str then
-        -- add punction if not present
-        local last_char = note:sub(-1)
-        if  not re_util.hasPunctuation(last_char) then
-          note = note..editor_rallyEditor.getPrefDefaultPunctuation()
-        end
-
-        pacenote:setNoteFieldNote(lang, note)
-      end
-    end
+  for i,pacenote in ipairs(self.pacenotes.sorted) do
+    last = i == #self.pacenotes.sorted
+    pacenote:normalizeNoteText(lang, last)
   end
 end
 

@@ -393,10 +393,10 @@ local function drawEditorGui()
       end
       im.PopStyleColor(1)
 
-      im.SameLine()
-      if im.Button("Refresh") then
-        currentPath:reload()
-      end
+      -- im.SameLine()
+      -- if im.Button("Refresh") then
+      --   currentPath:reload()
+      -- end
 
       if not editor.editMode or editor.editMode.displayName ~= editModeName then
         im.SameLine()
@@ -774,6 +774,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
     -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     -- {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
     {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
+    {punctuationLast = {"string", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize."}},
   })
 
   prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
@@ -831,6 +832,10 @@ end
 
 local function getPrefDefaultPunctuation()
   return getPreference('rallyEditor.editing.punctuation', re_util.default_punctuation)
+end
+
+local function getPrefDefaultPunctuationLast()
+  return getPreference('rallyEditor.editing.punctuationLast', re_util.default_punctuation_last)
 end
 
 local function getPrefDefaultRadius()
@@ -1015,6 +1020,7 @@ M.getMissionDir = getMissionDir
 M.getPrefDefaultRadius = getPrefDefaultRadius
 M.getPrefEditingLanguage = getPrefEditingLanguage
 M.getPrefDefaultPunctuation = getPrefDefaultPunctuation
+M.getPrefDefaultPunctuationLast = getPrefDefaultPunctuationLast
 M.getPrefLevel1Text = getPrefLevel1Text
 M.getPrefLevel1Thresh = getPrefLevel1Thresh
 M.getPrefLevel2Text = getPrefLevel2Text

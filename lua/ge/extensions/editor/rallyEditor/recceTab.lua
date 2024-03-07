@@ -73,6 +73,7 @@ function C:import()
   local pacenotes = self.recce:createPacenotesData(self.path)
   if pacenotes then
     self.path:appendPacenotes(pacenotes)
+    self.path:normalizeNotes()
   end
 end
 

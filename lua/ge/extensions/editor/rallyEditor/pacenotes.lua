@@ -1506,11 +1506,11 @@ function C:drawPacenotesList(height)
     self:setAllRadii()
   end
   im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
-  im.SameLine()
-  if im.Button("Set Punctuation") then
-    self:normalizeNotes()
-  end
-  im.tooltip("Add puncuation and replace digits with words.")
+  -- im.SameLine()
+  -- if im.Button("Set Punctuation") then
+  --   self:normalizeNotes()
+  -- end
+  -- im.tooltip("Add puncuation and replace digits with words.")
   -- im.SameLine()
   -- if im.Button("Autofill Dist Calls") then
   --   self:autoFillDistanceCalls()
@@ -2436,22 +2436,22 @@ end
 --   )
 -- end
 
-function C:normalizeNotes()
-  if not self.path then return end
-
-  editor.history:commitAction("Normalize pacenote.note field",
-    {
-      notebook = self.path,
-      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
-    },
-    function(data) -- undo
-      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
-    end,
-    function(data) -- redo
-      data.notebook:normalizeNotes()
-    end
-  )
-end
+-- function C:normalizeNotes()
+--   if not self.path then return end
+--
+--   editor.history:commitAction("Normalize pacenote.note field",
+--     {
+--       notebook = self.path,
+--       old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+--     },
+--     function(data) -- undo
+--       data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+--     end,
+--     function(data) -- redo
+--       data.notebook:normalizeNotes()
+--     end
+--   )
+-- end
 
 function C:autoFillDistanceCalls()
   if not self.path then return end

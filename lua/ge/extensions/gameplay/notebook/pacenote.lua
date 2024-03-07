@@ -181,6 +181,10 @@ end
 --   self.normal = wp_trigger.normal
 -- end
 
+function C:clearCachedFgData()
+  self._cached_fgData = nil
+end
+
 function C:asFlowgraphData(missionSettings, codriver)
   -- TODO reuse validations here.
   if self._cached_fgData then
@@ -188,10 +192,10 @@ function C:asFlowgraphData(missionSettings, codriver)
   end
 
   local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir)
-  if not FS:fileExists(fname) then
-    log('E', logTag, "pacenote audio file not found: "..fname)
-    return nil
-  end
+  -- if not FS:fileExists(fname) then
+  --   log('E', logTag, "pacenote audio file not found: "..fname)
+  --   return nil
+  -- end
 
   local wp_trigger = self:getActiveFwdAudioTrigger()
   if not wp_trigger and not self.metadata.static then
@@ -1151,6 +1155,25 @@ function C:moveWaypointTowards(snaproads, wp, fwd, step)
   for _ = 1,step do
     self:_moveWaypointTowardsStepper(snaproads, wp, fwd)
   end
+end
+
+function C:normalizeNoteText(lang, last)
+  local note = self:getNoteFieldNote(lang)
+
+  -- if note ~= re_util.autofill_blocker then
+  --   if note ~= '' and note ~= re_util.unknown_transcript_str then
+  --     -- add punction if not present
+  --     local last_char = note:sub(-1)
+  --     if  not re_util.hasPunctuation(last_char) then
+  --       note = note..editor_rallyEditor.getPrefDefaultPunctuation()
+  --     end
+  --
+  --     self:setNoteFieldNote(lang, note)
+  --   end
+  -- end
+
+  local newTxt = re_util.normalizeNoteText(note, last)
+  self:setNoteFieldNote(lang, newTxt)
 end
 
 return function(...)
