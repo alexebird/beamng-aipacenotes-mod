@@ -1624,9 +1624,9 @@ function C:drawPacenotesList(height)
     --   self:setCameraToPacenote()
     -- end
     -- im.SameLine()
-    if im.Button("Place Vehicle") then
-      self:placeVehicleAtPacenote()
-    end
+    -- if im.Button("Place Vehicle") then
+    --   self:placeVehicleAtPacenote()
+    -- end
     -- im.SameLine()
     -- if im.Button("Move Up") then
     --   editor.history:commitAction("Move Pacenote in List",
@@ -2125,7 +2125,12 @@ end
 function C:handleNoteFieldEdit(note, language, subfield, buf)
   local newVal = note.notes
   local lang_data = newVal[language] or {}
-  lang_data[subfield] = re_util.trimString(ffi.string(buf))
+  local val = re_util.trimString(ffi.string(buf))
+  if subfield == 'note' then
+    local last = note.id == self.path.pacenotes.sorted[#self.path.pacenotes.sorted].id
+    val = re_util.normalizeNoteText(val, last)
+  end
+  lang_data[subfield] = val
   newVal[language] = lang_data
   editor.history:commitAction("Change Notes of Pacenote",
     {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.notes, new = newVal, field = 'notes'},
@@ -2470,16 +2475,16 @@ function C:autoFillDistanceCalls()
   )
 end
 
-function C:placeVehicleAtPacenote()
-  local pos, rot = self:selectedPacenote():vehiclePlacementPosAndRot()
-
-  if pos and rot then
-    local playerVehicle = be:getPlayerVehicle(0)
-    if playerVehicle then
-      spawn.safeTeleport(playerVehicle, pos, rot)
-    end
-  end
-end
+-- function C:placeVehicleAtPacenote()
+--   local pos, rot = self:selectedPacenote():vehiclePlacementPosAndRot()
+--
+--   if pos and rot then
+--     local playerVehicle = be:getPlayerVehicle(0)
+--     if playerVehicle then
+--       spawn.safeTeleport(playerVehicle, pos, rot)
+--     end
+--   end
+-- end
 
 function C:insertNewPacenoteAfter(note)
   if not self.path then return end
