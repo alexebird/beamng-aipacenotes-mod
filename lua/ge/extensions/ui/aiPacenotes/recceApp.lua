@@ -123,6 +123,21 @@ local function refresh()
   guihooks.trigger('aiPacenotes.recceApp.refreshed', resp)
 end
 
+local function sendSelectedPacenoteText()
+  local codriver = rallyManager.codriver
+  local lang = codriver.language
+  local noteText = selectedPacenote:getNoteFieldNote(lang)
+  guihooks.trigger('aiPacenotes.recceApp.pacenoteTextChanged', {pacenoteText = noteText})
+end
+
+local function setSelectedPacenoteText(newText)
+  if not selectedPacenote then return end
+  local codriver = rallyManager.codriver
+  local lang = codriver.language
+  selectedPacenote:setNoteFieldNote(lang, newText)
+  rallyManager:saveNotebook()
+end
+
 local function updateCameraForSelectedPacenote()
   snaproad:setPartitionToPacenote(selectedPacenote)
   core_camera.setByName(0, "pacenoteOrbit")
@@ -330,6 +345,7 @@ local function movePacenoteSelectionForward()
     selectedPacenote = selectedPacenote.nextNote
     snaproad:setPartitionToPacenote(selectedPacenote)
     updateCameraForSelectedPacenote()
+    sendSelectedPacenoteText()
   end
 end
 
@@ -343,6 +359,7 @@ local function movePacenoteSelectionBackward()
     selectedPacenote = selectedPacenote.prevNote
     snaproad:setPartitionToPacenote(selectedPacenote)
     updateCameraForSelectedPacenote()
+    sendSelectedPacenoteText()
   end
 end
 
@@ -351,6 +368,8 @@ local function movePacenoteSelectionToVehicle()
   local pacenote = rallyManager:closestPacenoteToVehicle()
   selectedPacenote = pacenote
   snaproad:setPartitionToPacenote(selectedPacenote)
+  updateCameraForSelectedPacenote()
+  sendSelectedPacenoteText()
 end
 
 local function moveVehicleBackward()
@@ -532,6 +551,7 @@ local function setDrawDebugSnaproads(val)
 
   if flag_drawDebugSnaproads and selectedPacenote then
     updateCameraForSelectedPacenote()
+    sendSelectedPacenoteText()
   else
     commands.setGameCamera()
   end
@@ -663,6 +683,7 @@ M.setLastLoadState = setLastLoadState
 
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
+M.setSelectedPacenoteText = setSelectedPacenoteText
 -- M.setCornerAnglesStyleName = setCornerAnglesStyleName
 
 M.movePacenoteATBackward = movePacenoteATBackward

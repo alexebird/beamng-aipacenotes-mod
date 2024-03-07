@@ -44,8 +44,8 @@
       </div>
 
       <div class="recce-control">
-        <form ng-submit="submitPacenoteForm()">
-          <input type="text" ng-model="pacenoteText" />
+        <form ng-submit="submitPacenoteForm()" ng-disabled="true">
+          <input type="text" ng-model="pacenoteText" class="pacenote-text-input" ng-disabled="!drawDebug || !drawDebugSnaproads" />
         </form>
       </div>
 

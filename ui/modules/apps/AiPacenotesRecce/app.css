@@ -212,3 +212,7 @@
 .disabled-label {
     color: grey;
 }
+
+.pacenote-text-input {
+    width: 100%;
+}

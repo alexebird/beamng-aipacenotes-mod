@@ -101,6 +101,17 @@ function C:save(fname)
   return saveOk
 end
 
+function C:reload()
+  if not self.fname then return end
+
+  local json = jsonReadFile(self.fname)
+  if not json then
+    log('E', logTag, 'couldnt find notebook file')
+  end
+
+  self:onDeserialized(json)
+end
+
 function C:validate()
   self.validation_issues = {}
 

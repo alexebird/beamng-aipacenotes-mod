@@ -33,7 +33,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.recordDriveline = false
       $scope.recordVoice = false
-      $scope.pacenoteText = "TODO: pacenote text"
+      $scope.pacenoteText = ""
 
       $scope.missions = []
       $scope.dropdownMissionNames = []
@@ -155,6 +155,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.btnMoveVehicleBackward()
       })
 
+      $scope.$on('aiPacenotes.recceApp.pacenoteTextChanged', function (event, resp) {
+        $scope.pacenoteText = resp.pacenoteText
+      })
+
+
       // $scope.$on('aiPacenotes.recceApp.cornerAnglesLoaded', function (event, cornerCallStyle) {
       //   $scope.cornerCallStyle = cornerCallStyle
       // })
@@ -238,7 +243,8 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.submitPacenoteForm = function() {
-        console.log($scope.pacenoteText)
+        // console.log($scope.pacenoteText)
+        bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.setSelectedPacenoteText("${$scope.pacenoteText}")`)
       }
 
       $scope.btnToggleDrawDebug = function() {

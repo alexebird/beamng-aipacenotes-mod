@@ -94,15 +94,7 @@ local function getMissionDir()
   return missionDir
 end
 
--- local function saveNotebook(savePath)
 local function saveNotebook()
-  -- local notebook = currentPath
-
-  -- if not savePath then
-    -- savePath = previousFilepath..previousFilename
-    -- savePath = currentPath.fname
-  -- end
-
   if not currentPath then
     log('W', logTag, 'cant save; no notebook loaded.')
     return
@@ -111,13 +103,6 @@ local function saveNotebook()
   if not currentPath:save() then
     return
   end
-
-  -- local dir, filename, ext = path.split(savePath)
-  -- previousFilepath = dir
-  -- previousFilename = filename
-  -- notebook._dir = dir
-  -- local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  -- notebook._fnWithoutExt = fn2
 
   -- log('D', 'wtf', 'getMD: '..getMissionDir())
   -- log('D', 'wtf', 'aipPath: '..re_util.aipPath)
@@ -408,6 +393,10 @@ local function drawEditorGui()
       end
       im.PopStyleColor(1)
 
+      im.SameLine()
+      if im.Button("Refresh") then
+        currentPath:reload()
+      end
 
       if not editor.editMode or editor.editMode.displayName ~= editModeName then
         im.SameLine()
