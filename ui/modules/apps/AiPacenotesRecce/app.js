@@ -1,4 +1,22 @@
 // vim: ts=2 sw=2
+
+// angular.module('beamng.apps').directive('focusMe', function($timeout) {
+//   return {
+//     link: function(scope, element, attrs) {
+//       scope.$watch(attrs.focusMe, function(value) {
+//         if(value === true) {
+//           // Using $timeout to ensure focus is called within Angular's digest cycle,
+//           // can be omitted if focusing after certain events where Angular's digest cycle is already in process.
+//           $timeout(function() {
+//             element[0].focus();
+//           });
+//           scope[attrs.focusMe] = false; // Optionally reset the condition
+//         }
+//       });
+//     }
+//   };
+// });
+
 angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce', '$timeout', function ($interval, $sce, $timeout) {
   return {
     templateUrl: '/ui/modules/apps/AiPacenotesRecce/app.html',
@@ -20,6 +38,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // $scope.network_ok = false
       $scope.drawDebug = false
       $scope.drawDebugSnaproads = false
+      // $scope.insertMode = false
 
       $scope.cornerCall = defaultCornerCall
       $scope.wheelDegrees =  0
@@ -158,6 +177,13 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$on('aiPacenotes.recceApp.pacenoteTextChanged', function (event, resp) {
         $scope.pacenoteText = resp.pacenoteText
       })
+
+      // $scope.$on('aiPacenotes.InputAction.RecceInsertMode', function (event, resp) {
+      //   // $scope.insertMode = true
+      //
+      //   var el = document.getElementById('pacenote-input')
+      //   el.focus()
+      // })
 
 
       // $scope.$on('aiPacenotes.recceApp.cornerAnglesLoaded', function (event, cornerCallStyle) {

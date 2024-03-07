@@ -149,47 +149,47 @@ local cameraOrbitState = {
   zoomIn = 0,
   zoomOut = 0,
 }
-local function cameraOrbitRight(v)
+-- local function cameraOrbitRight(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.right = v
   -- end
-end
+-- end
 
-local function cameraOrbitLeft(v)
+-- local function cameraOrbitLeft(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.left = v
   -- end
-end
+-- end
 
-local function cameraOrbitUp(v)
+-- local function cameraOrbitUp(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.up = v
   -- end
-end
+-- end
 
-local function cameraOrbitDown(v)
+-- local function cameraOrbitDown(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.down = v
   -- end
-end
+-- end
 
-local function cameraOrbitZoomIn(v)
+-- local function cameraOrbitZoomIn(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.zoomIn = v
   -- end
-end
+-- end
 
-local function cameraOrbitZoomOut(v)
+-- local function cameraOrbitZoomOut(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
   --   cameraOrbitState.zoomOut = v
   -- end
-end
+-- end
 
 local function setFreeCam()
   local lastCamPos = core_camera.getPosition()
@@ -995,12 +995,12 @@ M.selectNextPacenote = selectNextPacenote
 -- M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
 
-M.cameraOrbitRight = cameraOrbitRight
-M.cameraOrbitLeft = cameraOrbitLeft
-M.cameraOrbitUp = cameraOrbitUp
-M.cameraOrbitDown = cameraOrbitDown
-M.cameraOrbitZoomIn = cameraOrbitZoomIn
-M.cameraOrbitZoomOut = cameraOrbitZoomOut
+-- M.cameraOrbitRight = cameraOrbitRight
+-- M.cameraOrbitLeft = cameraOrbitLeft
+-- M.cameraOrbitUp = cameraOrbitUp
+-- M.cameraOrbitDown = cameraOrbitDown
+-- M.cameraOrbitZoomIn = cameraOrbitZoomIn
+-- M.cameraOrbitZoomOut = cameraOrbitZoomOut
 
 M.setFreeCam = setFreeCam
 

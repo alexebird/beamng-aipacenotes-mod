@@ -1159,19 +1159,6 @@ end
 
 function C:normalizeNoteText(lang, last)
   local note = self:getNoteFieldNote(lang)
-
-  -- if note ~= re_util.autofill_blocker then
-  --   if note ~= '' and note ~= re_util.unknown_transcript_str then
-  --     -- add punction if not present
-  --     local last_char = note:sub(-1)
-  --     if  not re_util.hasPunctuation(last_char) then
-  --       note = note..editor_rallyEditor.getPrefDefaultPunctuation()
-  --     end
-  --
-  --     self:setNoteFieldNote(lang, note)
-  --   end
-  -- end
-
   local newTxt = re_util.normalizeNoteText(note, last)
   self:setNoteFieldNote(lang, newTxt)
 end

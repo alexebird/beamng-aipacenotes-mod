@@ -288,6 +288,8 @@ function C:selectWaypoint(id)
 end
 
 function C:deselect()
+  if self:cameraPathIsPlaying() then return end
+
   -- since there are two levels of selection (waypoint+pacenote, pacenote),
   -- you must deselect twice to deselect everything.
   if self:selectedWaypoint() then
@@ -1272,6 +1274,7 @@ end
 
 function C:selectPrevPacenote()
   if not self.path then return end
+  if self:cameraPathIsPlaying() then return end
 
   if self:selectRecentPacenote() then return end
 
@@ -1322,6 +1325,7 @@ end
 
 function C:selectNextPacenote()
   if not self.path then return end
+  if self:cameraPathIsPlaying() then return end
 
   if self:selectRecentPacenote() then return end
 
@@ -1384,6 +1388,7 @@ end
 -- end
 
 function C:insertMode()
+  if self:cameraPathIsPlaying() then return end
   self._insertMode = true
 end
 
@@ -1580,9 +1585,13 @@ function C:drawPacenotesList(height)
   im.BeginChild1("pacenotes", im.ImVec2(200*im.uiscale[0],height), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1(note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then
-      editor.history:commitAction("Select Pacenote",
-        {old = self.pacenote_tools_state.selected_pn_id, new = note.id, self = self},
-        selectPacenoteUndo, selectPacenoteRedo)
+
+      self:selectPacenote(note.id)
+      self:setOrbitCameraToSelectedPacenote()
+
+      -- editor.history:commitAction("Select Pacenote",
+      --   {old = self.pacenote_tools_state.selected_pn_id, new = note.id, self = self},
+      --   selectPacenoteUndo, selectPacenoteRedo)
     end
     if note:is_valid() then
       im.tooltip("No issues")
@@ -1639,14 +1648,14 @@ function C:drawPacenotesList(height)
     --     {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = 1},
     --     movePacenoteUndo, movePacenoteRedo)
     -- end
-    im.SameLine()
+    -- im.SameLine()
     if im.Button("Delete") then
       self:deleteSelectedPacenote()
     end
 
-    if im.Button("Insert After") then
-      self:insertNewPacenoteAfter(pacenote)
-    end
+    -- if im.Button("Insert After") then
+    --   self:insertNewPacenoteAfter(pacenote)
+    -- end
 
     local icon = editor.icons.play_arrow
     local paused = simTimeAuthority.getPause()
@@ -2073,55 +2082,6 @@ function C:pacenoteSearchMatches(pacenote)
   return pacenote:matchesSearchPattern(searchPattern)
 end
 
--- function C:selectNextTranscript()
---   local transcripts_path = self:getTranscripts()
---   if not transcripts_path then return end
---
---   self.transcript_tools_state.show = true
---
---   local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
---   local sorted = transcripts_path.transcripts.sorted
---
---   if curr and not curr.missing then
---     local next = nil
---     for i = curr.sortOrder+1,#sorted do
---       local tsc = sorted[i]
---       if self:searchTranscriptMatchFn(tsc) then
---         next = tsc
---         break
---       end
---     end
---
---     -- wrap around: find the first usable one
---     if not next then
---       for i = 1,#sorted do
---         local tsc = sorted[i]
---         if self:searchTranscriptMatchFn(tsc) then
---           next = tsc
---           break
---         end
---       end
---     end
---
---     if next then
---       self:selectTranscript(next.id)
---     end
---   else
---     -- if no curr, that means no pacenote was selected, so then select the last one.
---     for i = #sorted,1,-1 do
---       local tsc = sorted[i]
---       if self:searchTranscriptMatchFn(tsc) then
---         self:selectTranscript(tsc.id)
---         break
---       end
---     end
---   end
---
---   if self.rallyEditor.getPrefTopDownCameraFollow() then
---     self:setCameraToTranscript()
---   end
--- end
-
 function C:handleNoteFieldEdit(note, language, subfield, buf)
   local newVal = note.notes
   local lang_data = newVal[language] or {}
@@ -2522,6 +2482,8 @@ function C:insertNewPacenoteAfter(note)
 end
 
 function C:selectNextWaypoint()
+  if self:cameraPathIsPlaying() then return end
+
   -- if there's no selected PN, select the recent one.
 
   -- if not pn then
@@ -2575,11 +2537,13 @@ function C:_moveSelectedWaypointHelper(fwd, steps)
 end
 
 function C:moveSelectedWaypointForward(steps)
+  if self:cameraPathIsPlaying() then return end
   steps = steps or 1
   self:_moveSelectedWaypointHelper(true, steps)
 end
 
 function C:moveSelectedWaypointBackward(steps)
+  if self:cameraPathIsPlaying() then return end
   steps = steps or 1
   self:_moveSelectedWaypointHelper(false, steps)
 end

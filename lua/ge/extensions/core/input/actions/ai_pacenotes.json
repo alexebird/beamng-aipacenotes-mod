@@ -129,59 +129,5 @@
     "title": "Move Waypoint Backward (aip)",
     "desc": "If a waypoint is selected, move backward along snaproad.",
     "onChange": "editor_rallyEditor.moveSelectedWaypointBackward(VALUE)"
-  },
-  "rallyEditorCameraOrbitRight": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 50,
-    "actionMap": "rallyEditor",
-    "title": "Orbit Camera Right (aip)",
-    "desc": "Orbit camera right.",
-    "onChange": "editor_rallyEditor.cameraOrbitRight(VALUE)"
-  },
-  "rallyEditorCameraOrbitLeft": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 51,
-    "actionMap": "rallyEditor",
-    "title": "Orbit Camera Left (aip)",
-    "desc": "Orbit camera left.",
-    "onChange": "editor_rallyEditor.cameraOrbitLeft(VALUE)"
-  },
-  "rallyEditorCameraOrbitUp": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 52,
-    "actionMap": "rallyEditor",
-    "title": "Orbit Camera Up (aip)",
-    "desc": "Orbit camera up.",
-    "onChange": "editor_rallyEditor.cameraOrbitUp(VALUE)"
-  },
-  "rallyEditorCameraOrbitDown": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 53,
-    "actionMap": "rallyEditor",
-    "title": "Orbit Camera Down (aip)",
-    "desc": "Orbit camera down.",
-    "onChange": "editor_rallyEditor.cameraOrbitDown(VALUE)"
-  },
-  "rallyEditorCameraOrbitZoomIn": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 54,
-    "actionMap": "rallyEditor",
-    "title": "Orbit Camera Zoom In (aip)",
-    "desc": "Orbit camera zoom in.",
-    "onChange": "editor_rallyEditor.cameraOrbitZoomIn(VALUE)"
-  },
-  "rallyEditorCameraOrbitZoomOut": {
-    "cat": "editor",
-    "ctx": "tlua",
-    "order": 55,
-    "actionMap": "rallyEditor",
-    "title": "Orbit Camera Zoom Out (aip)",
-    "desc": "Orbit camera zoom out.",
-    "onChange": "editor_rallyEditor.cameraOrbitZoomOut(VALUE)"
   }
 }

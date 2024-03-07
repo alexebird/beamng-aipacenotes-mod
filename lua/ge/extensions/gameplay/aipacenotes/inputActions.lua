@@ -66,6 +66,12 @@ local function action_recce_move_vehicle_backward()
   guihooks.trigger('aiPacenotesInputActionRecceMoveVehicleBackward')
 end
 
+-- local function action_recce_insert_mode()
+  -- log('I', logTag, 'action_recce_insert_mode')
+  -- if not is_recceApp_loaded() then return end
+  -- guihooks.trigger('aiPacenotes.InputAction.RecceInsertMode')
+-- end
+
 -- M.action_transcribe_recording_start = action_transcribe_recording_start
 -- M.action_transcribe_recording_stop = action_transcribe_recording_stop
 M.action_transcribe_recording_cut = action_transcribe_recording_cut
@@ -74,5 +80,6 @@ M.action_recce_move_pacenote_forward = action_recce_move_pacenote_forward
 M.action_recce_move_pacenote_backward = action_recce_move_pacenote_backward
 M.action_recce_move_vehicle_forward = action_recce_move_vehicle_forward
 M.action_recce_move_vehicle_backward = action_recce_move_vehicle_backward
+-- M.action_recce_insert_mode = action_recce_insert_mode
 
 return M
