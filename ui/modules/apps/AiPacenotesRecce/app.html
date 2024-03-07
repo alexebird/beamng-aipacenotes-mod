@@ -62,14 +62,15 @@
         <button ng-click="btnMovePacenoteATForward()" class="recce-controls-btn recce-controls-shift-left pacenote-forward" ng-disabled="!drawDebug">&uarr;</button>
         <button ng-click="btnMovePacenoteATBackward()" class="recce-controls-btn pacenote-backward" ng-disabled="!drawDebug">&darr;</button>
 
-        <!-- <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug}">Pacenote</span> -->
-        <!-- <button ng-click="btnMovePacenoteSelectionForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&uarr;</button> -->
-        <!-- <button ng-click="btnMovePacenoteSelectionBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&darr;</button> -->
-        <!-- <button ng-click="btnMovePacenoteSelectionToVehicle()" class="recce-controls-btn" ng-disabled="!drawDebug">V</button> -->
+        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug}">Pacenote</span>
+        <button ng-click="btnMovePacenoteSelectionForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&uarr;</button>
+        <button ng-click="btnMovePacenoteSelectionBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&darr;</button>
+        <button ng-click="btnMovePacenoteSelectionToVehicle()" class="recce-controls-btn" ng-disabled="!drawDebug">V</button>
 
         <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug}">Vehicle</span>
         <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&uarr;</button>
-        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn" ng-disabled="!drawDebug">&darr;</button>
+        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&darr;</button>
+        <button ng-click="btnMoveVehicleToSelectedPacenote()" class="recce-controls-btn" ng-disabled="!drawDebug">P</button>
 
         <!-- <md-select class="md-select-dropdown" ng-model="selectedStyleName"> -->
         <!--   <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option> -->

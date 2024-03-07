@@ -97,7 +97,7 @@ function C:save(fname)
   if not saveOk then
     log('E', logTag, 'error saving notebook')
   end
-  log('I', logTag, 'saved notebook')
+  -- log('I', logTag, 'saved notebook')
   return saveOk
 end
 
@@ -781,6 +781,19 @@ function C:getStaticPacenoteByName(name)
   end
 
   return nil
+end
+
+function C:setAdjacentNotes(pacenote_id)
+  local pacenotesSorted = self.pacenotes.sorted
+  for i, note in ipairs(pacenotesSorted) do
+    if pacenote_id == note.id then
+      local prevNote = pacenotesSorted[i-1]
+      local nextNote = pacenotesSorted[i+1]
+      note:setAdjacentNotes(prevNote, nextNote)
+    else
+      note:clearAdjacentNotes()
+    end
+  end
 end
 
 return function(...)

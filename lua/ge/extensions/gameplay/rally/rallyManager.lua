@@ -242,10 +242,9 @@ function C:update(dtSim, raceData)
   end
 end
 
+-- used to send the next pacenotes to server, for Buddy Mode.
 function C:nextPacenotesUpdated()
-
   if not self.buddyMode then return end
-
 
   local requestBody = {}
 
@@ -271,6 +270,15 @@ function C:nextPacenotesUpdated()
   -- local resp = extensions.gameplay_aipacenotes_client.update_next_pacenotes({ pacenotes = requestBody })
 end
 
+function C:closestPacenoteToVehicle()
+  local pacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), 1)
+  if pacenotes and pacenotes[1] then
+    return pacenotes[1]
+  else
+    return nil
+  end
+end
+
 function C:handleNoteSearch()
   self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
   self.nextPacenotes = self.closestPacenotes
@@ -283,6 +291,14 @@ function C:getNextPacenotes()
   else
     return {}
   end
+end
+
+function C:getPacenotesNearPos(pos)
+  if not pos then return {} end
+  -- return self:getNextPacenotes()
+
+  local closestPacenotes = self.notebook:findNClosestPacenotes(pos, self.closestPacenotes_n)
+  return closestPacenotes
 end
 
 function C:updateRaceData(raceData)

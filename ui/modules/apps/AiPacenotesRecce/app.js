@@ -249,13 +249,23 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // this pattern is good in case some frontend state needs to be updated.
       $scope.btnMovePacenoteATForward = function() {
         if ($scope.drawDebug) {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteATForward()')
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteATForward()')
         }
       }
       $scope.btnMovePacenoteATBackward = function() {
         if ($scope.drawDebug) {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveNextPacenoteATBackward()')
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteATBackward()')
         }
+      }
+
+      $scope.btnMovePacenoteSelectionForward = function() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteSelectionForward()')
+      }
+      $scope.btnMovePacenoteSelectionBackward = function() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteSelectionBackward()')
+      }
+      $scope.btnMovePacenoteSelectionToVehicle = function() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteSelectionToVehicle()')
       }
 
       $scope.btnMoveVehicleForward = function() {
@@ -263,6 +273,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
       $scope.btnMoveVehicleBackward = function() {
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveVehicleBackward()')
+      }
+      $scope.btnMoveVehicleToSelectedPacenote = function() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveVehicleToSelectedPacenote()')
       }
 
       // Use vehicle reset to trigger a reload of the corner_angles.json file.

@@ -215,16 +215,18 @@ function C:selectPacenote(id)
   self.pacenote_tools_state.selected_pn_id = id
 
   -- find the pacenotes before and after the selected one.
-  local pacenotesSorted = self.path.pacenotes.sorted
-  for i, note in ipairs(pacenotesSorted) do
-    if self.pacenote_tools_state.selected_pn_id == note.id then
-      local prevNote = pacenotesSorted[i-1]
-      local nextNote = pacenotesSorted[i+1]
-      note:setAdjacentNotes(prevNote, nextNote)
-    else
-      note:clearAdjacentNotes()
-    end
-  end
+  -- local pacenotesSorted = self.path.pacenotes.sorted
+  -- for i, note in ipairs(pacenotesSorted) do
+  --   if self.pacenote_tools_state.selected_pn_id == note.id then
+  --     local prevNote = pacenotesSorted[i-1]
+  --     local nextNote = pacenotesSorted[i+1]
+  --     note:setAdjacentNotes(prevNote, nextNote)
+  --   else
+  --     note:clearAdjacentNotes()
+  --   end
+  -- end
+
+  self.path:setAdjacentNotes(self.pacenote_tools_state.selected_pn_id)
 
   -- select the pacenote
   if id then

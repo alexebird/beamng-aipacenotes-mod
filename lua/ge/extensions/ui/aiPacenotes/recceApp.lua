@@ -18,6 +18,7 @@ local missionDir = nil
 local missionId = nil
 local rallyManager = nil
 local snaproad = nil
+local selectedPacenote = nil
 local flag_NoteSearch = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
@@ -151,20 +152,37 @@ end
 local function drawDebug()
   if not rallyManager then return end
 
-  local nextPacenotes = rallyManager:getNextPacenotes()
+  local nextPacenotes = nil
 
-  for i,pacenote in ipairs(nextPacenotes) do
-    local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-    wp_audio_trigger:drawDebugRecce(i, nextPacenotes, pacenote._cached_fgData.note_text)
-  end
+  -- nextPacenotes = rallyManager:getNextPacenotes()
 
+  -- draw all the nearest notes
+  -- for i,pacenote in ipairs(nextPacenotes) do
+  --   local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+  --   wp_audio_trigger:drawDebugRecce(i, pacenote._cached_fgData.note_text)
+  -- end
+
+  -- just draw the nearest
   -- local pacenote = nextPacenotes[1]
   -- if pacenote then
   --   local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-  --   wp_audio_trigger:drawDebugRecce(1, nextPacenotes, pacenote._cached_fgData.note_text)
+  --   wp_audio_trigger:drawDebugRecce(1, pacenote._cached_fgData.note_text)
   -- end
 
-  if snaproad and flag_drawDebugSnaproads then
+  if selectedPacenote then
+    local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
+    nextPacenotes = rallyManager:getPacenotesNearPos(wp_audio_trigger.pos)
+    wp_audio_trigger:drawDebugRecce(1, selectedPacenote._cached_fgData.note_text)
+
+    for i,pacenote in ipairs(nextPacenotes) do
+      if pacenote.id ~= selectedPacenote.id then
+        local wp_at = pacenote:getActiveFwdAudioTrigger()
+        wp_at:drawDebugRecce(i, pacenote._cached_fgData.note_text)
+      end
+    end
+  end
+
+  if snaproad and flag_drawDebugSnaproads and nextPacenotes then
     snaproad:drawDebugRecceApp()
 
     if #nextPacenotes > 0 then
@@ -219,56 +237,108 @@ local function drawDebug()
   end
 end
 
-local function moveNextPacenoteATForward()
-  log('D', 'wtf', 'moveNextPacenoteATForward')
+local function movePacenoteATForward()
+  -- log('D', 'wtf', 'movePacenoteATForward')
   if not rallyManager then return end
   if not snaproad then return end
 
-  local nextPacenotes = rallyManager:getNextPacenotes()
-  if nextPacenotes and #nextPacenotes > 0 then
-    local nextNote = nextPacenotes[1]
-    if not nextNote then
-      return
-    end
+  -- local nextPacenotes = rallyManager:getNextPacenotes()
+  -- if nextPacenotes and #nextPacenotes > 0 then
+  --   local nextNote = nextPacenotes[1]
+  --   if not nextNote then
+  --     return
+  --   end
+  --
+  --   local wp = nextNote:getActiveFwdAudioTrigger()
+  --   snaproad:setPacenote(nextNote)
+  --   snaproad:setFilter(wp)
+  --   nextNote:moveWaypointTowards(snaproad, wp, true)
+  --   rallyManager:saveNotebook()
+  --   snaproad:setFilter(nil)
+  -- end
 
-    local wp = nextNote:getActiveFwdAudioTrigger()
-    snaproad:setPacenote(nextNote)
+  if selectedPacenote then
+    local pacenote = selectedPacenote
+    local wp = pacenote:getActiveFwdAudioTrigger()
+    snaproad:setPacenote(pacenote)
     snaproad:setFilter(wp)
-    nextNote:moveWaypointTowards(snaproad, wp, true)
+    pacenote:moveWaypointTowards(snaproad, wp, true)
     rallyManager:saveNotebook()
     snaproad:setFilter(nil)
   end
 end
 
-local function moveNextPacenoteATBackward()
-  log('D', 'wtf', 'moveNextPacenoteATBackward')
+local function movePacenoteATBackward()
+  -- log('D', 'wtf', 'movePacenoteATBackward')
   if not rallyManager then return end
   if not snaproad then return end
 
-  local nextPacenotes = rallyManager:getNextPacenotes()
-  if nextPacenotes and #nextPacenotes > 0 then
-    local nextNote = nextPacenotes[1]
-    local veh = be:getPlayerVehicle(0)
-    if not nextNote or not veh then
-      return
-    end
-    local wp = nextNote:getActiveFwdAudioTrigger()
-    snaproad:setPacenote(nextNote)
+  -- local nextPacenotes = rallyManager:getNextPacenotes()
+  -- if nextPacenotes and #nextPacenotes > 0 then
+  --   local nextNote = nextPacenotes[1]
+  --   local veh = be:getPlayerVehicle(0)
+  --   if not nextNote or not veh then
+  --     return
+  --   end
+  --   local wp = nextNote:getActiveFwdAudioTrigger()
+  --   snaproad:setPacenote(nextNote)
+  --   snaproad:setFilter(wp)
+  --   nextNote:moveWaypointTowards(snaproad, wp, false)
+  --   rallyManager:saveNotebook()
+  --   snaproad:setFilter(nil)
+  -- end
+
+
+  -- local nextPacenotes = rallyManager:getNextPacenotes()
+  -- if nextPacenotes and #nextPacenotes > 0 then
+
+
+  if selectedPacenote then
+    local pacenote = selectedPacenote
+    local wp = pacenote:getActiveFwdAudioTrigger()
+    snaproad:setPacenote(pacenote)
     snaproad:setFilter(wp)
-    nextNote:moveWaypointTowards(snaproad, wp, false)
+    pacenote:moveWaypointTowards(snaproad, wp, false)
     rallyManager:saveNotebook()
     snaproad:setFilter(nil)
   end
+end
+
+local function movePacenoteSelectionForward()
+  if not rallyManager then return end
+  if not rallyManager.notebook then return end
+  if not selectedPacenote then return end
+
+  rallyManager.notebook:setAdjacentNotes(selectedPacenote.id)
+  if selectedPacenote.nextNote then
+    selectedPacenote = selectedPacenote.nextNote
+  end
+end
+
+local function movePacenoteSelectionBackward()
+  if not rallyManager then return end
+  if not rallyManager.notebook then return end
+  if not selectedPacenote then return end
+
+  rallyManager.notebook:setAdjacentNotes(selectedPacenote.id)
+  if selectedPacenote.prevNote then
+    selectedPacenote = selectedPacenote.prevNote
+  end
+end
+
+local function movePacenoteSelectionToVehicle()
+  if not rallyManager then return end
+  local pacenote = rallyManager:closestPacenoteToVehicle()
+  selectedPacenote = pacenote
 end
 
 local function moveVehicleBackward()
-  log('D', 'wtf', 'moveVehicleBackward')
+  -- log('D', 'wtf', 'moveVehicleBackward')
 
   if not rallyManager then return end
   if not rallyManager.notebook then return end
   if not rallyManager.vehicleTracker then return end
 
-  log('D', 'wtf', 'moveVehicleBackward proceeding')
   -- 1. find closest AT
   -- 2. if car is not within 10m of vehicle placement point for the chosen AT, then place at that AT
   -- 3. else place at prev pacenote AT
@@ -295,7 +365,7 @@ local function moveVehicleBackward()
   if nearestPacenote then
     local placementPos, _ = nearestPacenote:vehiclePlacementPosAndRot()
     local vdist = vPos:distance(placementPos)
-    log('D', 'wtf', 'vdist='..tostring(vdist))
+    -- log('D', 'wtf', 'vdist='..tostring(vdist))
     if vdist < 10 then
       -- go to the next one after closest
 
@@ -321,13 +391,13 @@ local function moveVehicleBackward()
 end
 
 local function moveVehicleForward()
-  log('D', 'wtf', 'moveVehicleBackward')
+  -- log('D', 'wtf', 'moveVehicleBackward')
 
   if not rallyManager then return end
   if not rallyManager.notebook then return end
   if not rallyManager.vehicleTracker then return end
 
-  log('D', 'wtf', 'moveVehicleForward proceeding')
+  -- log('D', 'wtf', 'moveVehicleForward proceeding')
   -- 1. find closest AT
   -- 2. if car is not within 10m of vehicle placement point for the chosen AT, then place at that AT
   -- 3. else place at next pacenote AT
@@ -354,7 +424,7 @@ local function moveVehicleForward()
   if nearestPacenote then
     local placementPos, _ = nearestPacenote:vehiclePlacementPosAndRot()
     local vdist = vPos:distance(placementPos)
-    log('D', 'wtf', 'vdist='..tostring(vdist))
+    -- log('D', 'wtf', 'vdist='..tostring(vdist))
     if vdist < 10 then
       -- go to the next one after closest
 
@@ -379,6 +449,19 @@ local function moveVehicleForward()
   end
 end
 
+local function moveVehicleToSelectedPacenote()
+  if selectedPacenote then
+    local pos, rot = selectedPacenote:vehiclePlacementPosAndRot()
+
+    if pos and rot then
+      local playerVehicle = be:getPlayerVehicle(0)
+      if playerVehicle then
+        spawn.safeTeleport(playerVehicle, pos, rot)
+      end
+    end
+  end
+end
+
 local function onUpdate(dtReal, dtSim, dtRaw)
   updateRallyManager(dtSim)
   updateVehicleCapture()
@@ -398,6 +481,9 @@ local function loadMission(newMissionId, newMissionDir)
   rallyManager:setup(100, 10)
   rallyManager:handleNoteSearch()
 
+  selectedPacenote = rallyManager:closestPacenoteToVehicle()
+  print('closest pacenote to vehicle: '..selectedPacenote.name)
+
   if missionDir then
     local recce = Recce(missionDir)
     recce:load()
@@ -410,6 +496,7 @@ local function unloadMission()
   missionDir = nil
   missionId = nil
   snaproad = nil
+  selectedPacenote = nil
   flag_NoteSearch = false
   -- flag_drawDebug = false
   -- flag_drawDebugSnaproads = false
@@ -529,34 +616,43 @@ local function onExtensionLoaded()
 end
 
 M.onExtensionLoaded = onExtensionLoaded
-
+M.onUpdate = onUpdate
+-- M.onFirstUpdate = onFirstUpdate
 M.onVehicleResetted = onVehicleResetted
 -- M.onVehicleSpawned = onVehicleSpawned
 -- M.onVehicleSwitched = onVehicleSwitched
 
+M.initRecceApp = initRecceApp
+M.refresh = refresh
+
+M.loadMission = loadMission
+M.unloadMission = unloadMission
+M.setLastMissionId = setLastMissionId
+M.setLastLoadState = setLastLoadState
+
 -- M.loadCornerAngles = loadCornerAngles
 -- M.listMissionsForLevel = listMissionsForLevel
-M.refresh = refresh
-M.desktopGetTranscripts = desktopGetTranscripts
-M.loadMission = loadMission
-M.initRecceApp = initRecceApp
-M.unloadMission = unloadMission
 -- M.clearTimeout = clearTimeout
+
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 -- M.setCornerAnglesStyleName = setCornerAnglesStyleName
-M.moveNextPacenoteATBackward = moveNextPacenoteATBackward
-M.moveNextPacenoteATForward = moveNextPacenoteATForward
+
+M.movePacenoteATBackward = movePacenoteATBackward
+M.movePacenoteATForward = movePacenoteATForward
+
+M.movePacenoteSelectionForward = movePacenoteSelectionForward
+M.movePacenoteSelectionBackward = movePacenoteSelectionBackward
+M.movePacenoteSelectionToVehicle = movePacenoteSelectionToVehicle
+
 M.moveVehicleBackward = moveVehicleBackward
 M.moveVehicleForward = moveVehicleForward
-M.onUpdate = onUpdate
--- M.onFirstUpdate = onFirstUpdate
+M.moveVehicleToSelectedPacenote = moveVehicleToSelectedPacenote
 
+M.desktopGetTranscripts = desktopGetTranscripts
 M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_start = transcribe_recording_start
 M.transcribe_clear_all = transcribe_clear_all
-M.setLastMissionId = setLastMissionId
-M.setLastLoadState = setLastLoadState
 
 return M

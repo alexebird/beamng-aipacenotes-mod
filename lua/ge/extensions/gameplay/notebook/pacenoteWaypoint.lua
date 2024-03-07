@@ -225,9 +225,10 @@ function C:drawDebug(hover, text, clr_shape, alpha_shape, alpha_text, clr_text_f
   end
 end
 
-function C:drawDebugRecce(i, nextPacenotes, note_text)
+-- function C:drawDebugRecce(i, nextPacenotes, note_text)
+function C:drawDebugRecce(i, note_text)
   local is_next_note = i == 1
-  local multiple_notes = #nextPacenotes > 1
+  -- local multiple_notes = #nextPacenotes > 1
 
   local radius_cyl = 0.1
   local height = 6
