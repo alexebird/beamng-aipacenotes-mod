@@ -55,22 +55,22 @@
          {{ drawDebug ? 'hide notes' : 'show notes' }}
         </button>
         <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !drawDebug" ng-class="{'debug-on': drawDebugSnaproads}">
-         {{ drawDebugSnaproads ? 'hide road' : 'show road' }}
+         {{ drawDebugSnaproads ? 'drive' : 'edit' }}
         </button>
 
-        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug}">MoveAT</span>
-        <button ng-click="btnMovePacenoteATForward()" class="recce-controls-btn recce-controls-shift-left pacenote-forward" ng-disabled="!drawDebug">&uarr;</button>
-        <button ng-click="btnMovePacenoteATBackward()" class="recce-controls-btn pacenote-backward" ng-disabled="!drawDebug">&darr;</button>
+        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">MoveAT</span>
+        <button ng-click="btnMovePacenoteATForward()" class="recce-controls-btn recce-controls-shift-left pacenote-forward" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
+        <button ng-click="btnMovePacenoteATBackward()" class="recce-controls-btn pacenote-backward" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
 
-        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug}">Pacenote</span>
-        <button ng-click="btnMovePacenoteSelectionForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&uarr;</button>
-        <button ng-click="btnMovePacenoteSelectionBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&darr;</button>
-        <button ng-click="btnMovePacenoteSelectionToVehicle()" class="recce-controls-btn" ng-disabled="!drawDebug">V</button>
+        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">Pacenote</span>
+        <button ng-click="btnMovePacenoteSelectionForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
+        <button ng-click="btnMovePacenoteSelectionBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
+        <button ng-click="btnMovePacenoteSelectionToVehicle()" class="recce-controls-btn" ng-disabled="!drawDebug || !drawDebugSnaproads">V</button>
 
-        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug}">Vehicle</span>
-        <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&uarr;</button>
-        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug">&darr;</button>
-        <button ng-click="btnMoveVehicleToSelectedPacenote()" class="recce-controls-btn" ng-disabled="!drawDebug">P</button>
+        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !missionIsLoaded}">Vehicle</span>
+        <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!missionIsLoaded">&uarr;</button>
+        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!missionIsLoaded">&darr;</button>
+        <button ng-click="btnMoveVehicleToSelectedPacenote()" class="recce-controls-btn" ng-disabled="!drawDebug || !drawDebugSnaproads">P</button>
 
         <!-- <md-select class="md-select-dropdown" ng-model="selectedStyleName"> -->
         <!--   <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option> -->
@@ -79,10 +79,10 @@
 
       <div class="recce-control">
         <button ng-click="btnRefreshMissions()" class="recce-controls-btn">refresh missions</button>
-        <button ng-click="btnLoadMission()" class="recce-controls-btn">load</button>
-        <button ng-click="btnUnloadMission()" class="recce-controls-btn">unload</button>
+        <button ng-click="btnLoadMission()" class="recce-controls-btn" ng-disabled="missions.length === 0">load</button>
+        <button ng-click="btnUnloadMission()" class="recce-controls-btn" ng-disabled="missions.length === 0">unload</button>
         <span>loaded mission: {{missionIsLoaded ? loadedMissionName : "none"}}</span>
-        <md-select class="md-select-dropdown" ng-model="selectedMissionName">
+        <md-select class="md-select-dropdown mission-select" ng-model="selectedMissionName">
           <md-option ng-value="missionName" ng-repeat="missionName in dropdownMissionNames">{{::missionName}}</md-option>
         </md-select>
       </div>

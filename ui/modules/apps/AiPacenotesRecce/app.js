@@ -35,6 +35,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.recordVoice = false
       $scope.pacenoteText = "TODO: pacenote text"
 
+      $scope.missions = []
+      $scope.dropdownMissionNames = []
+      $scope.selectedMission = null
+      $scope.selectedMissionName = null
+
       let transcriptInterval = null
 
       function updateCornerCall() {
@@ -168,14 +173,16 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.btnLoadMission = function() {
-        const loadedMissionId = $scope.selectedMission.missionID
-        const loadedMissionDir = $scope.selectedMission.missionDir
-        $scope.loadedMissionName = $scope.selectedMission.missionName
-        $scope.missionIsLoaded = true
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
-        $scope.drawDebug = true
-        updateLuaDrawDebug()
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
+        if ($scope.selectedMission) {
+          const loadedMissionId = $scope.selectedMission.missionID
+          const loadedMissionDir = $scope.selectedMission.missionDir
+          $scope.loadedMissionName = $scope.selectedMission.missionName
+          $scope.missionIsLoaded = true
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
+          $scope.drawDebug = true
+          updateLuaDrawDebug()
+          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
+        }
       }
 
       $scope.btnUnloadMission = function() {

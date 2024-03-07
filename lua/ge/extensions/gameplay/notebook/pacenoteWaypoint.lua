@@ -301,9 +301,9 @@ function C:drawDebugRecce(i, note_text)
   )
 end
 
-function C:lookAtMe()
-  re_util.setCameraTarget(self.pos)
-end
+-- function C:lookAtMe()
+--   re_util.setCameraTarget(self.pos)
+-- end
 
 function C:isLockable()
   return self.waypointType == waypointTypes.wpTypeCornerStart or

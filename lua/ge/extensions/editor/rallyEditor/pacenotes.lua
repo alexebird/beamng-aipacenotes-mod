@@ -193,6 +193,14 @@ function C:unselect()
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
+function C:setOrbitCameraToSelectedPacenote()
+  if self:selectedPacenote() then
+    core_camera.setByName(0, "pacenoteOrbit")
+    core_camera.setRef(0, self:selectedPacenote():getCornerStartWaypoint().pos)
+    core_camera.setDistance(0, self.rallyEditor.getPrefTopDownCameraElevation())
+  end
+end
+
 function C:selectPacenote(id)
   if not self.path then return end
   if not self.path.pacenotes then return end
@@ -201,7 +209,7 @@ function C:selectPacenote(id)
   if self.pacenote_tools_state.selected_pn_id ~= id then
     self.pacenote_tools_state.selected_wp_id = nil
     if self.pacenote_tools_state.snaproad then
-      self.pacenote_tools_state.snaproad:setFilter(nil)
+      self.pacenote_tools_state.snaproad:clearFilter()
     end
   end
 
@@ -233,25 +241,16 @@ function C:selectPacenote(id)
     local note = self.path.pacenotes.objects[id]
     pacenoteNameText = im.ArrayChar(1024, note.name)
     playbackRulesText = im.ArrayChar(1024, note.playback_rules)
-    self.pacenote_tools_state.snaproad:setPacenote(note)
+    self.pacenote_tools_state.snaproad:setPartitionToPacenote(note)
 
-    -- core_camera.setByName(0, "pacenote")
-    -- local camMode = core_camera.getGlobalCameras().pacenote
-    -- local cams = core_camera.getGlobalCameras()
-    -- print(dumps(cams))
-    -- camMode:setTarget(note:getCornerStartWaypoint().pos)
-
-    core_camera.setByName(0, "pacenoteOrbit")
-    core_camera.setRef(0, note:getCornerStartWaypoint().pos)
-    core_camera.setDistance(0, self.rallyEditor.getPrefTopDownCameraElevation())
+    -- self:setOrbitCameraToSelectedPacenote()
   else
     pacenoteNameText = im.ArrayChar(1024, "")
     playbackRulesText = im.ArrayChar(1024, "")
-    self.pacenote_tools_state.snaproad:setPacenote(nil)
+    self.pacenote_tools_state.snaproad:clearPartition()
     self.rallyEditor.setFreeCam()
   end
 end
-
 
 function C:selectWaypoint(id)
   if not self.path then return end
@@ -265,13 +264,14 @@ function C:selectWaypoint(id)
       self:updateGizmoTransform(id)
       if self.pacenote_tools_state.snaproad then
         self.pacenote_tools_state.snaproad:setFilter(waypoint)
-        -- self.pacenote_tools_state.snaproad:setPacenote(nil)
+        self.pacenote_tools_state.snaproad:setPartitionToFilter()
+        -- self.pacenote_tools_state.snaproad:clearPartition()
       end
     else
       log('E', logTag, 'expected to find waypoint with id='..id)
       if self.pacenote_tools_state.snaproad then
-        self.pacenote_tools_state.snaproad:setFilter(nil)
-        self.pacenote_tools_state.snaproad:setPacenote(self:selectedPacenote())
+        self.pacenote_tools_state.snaproad:clearFilter()
+        self.pacenote_tools_state.snaproad:setPartitionToPacenote(self:selectedPacenote())
       end
     end
   else -- deselect waypoint
@@ -281,8 +281,8 @@ function C:selectWaypoint(id)
     self:resetGizmoTransformToOrigin()
 
     if self.pacenote_tools_state.snaproad then
-      self.pacenote_tools_state.snaproad:setFilter(nil)
-      self.pacenote_tools_state.snaproad:setPacenote(self:selectedPacenote())
+      self.pacenote_tools_state.snaproad:clearFilter()
+      self.pacenote_tools_state.snaproad:setPartitionToPacenote(self:selectedPacenote())
     end
   end
 end
@@ -469,13 +469,13 @@ function C:handleMouseDown(hoveredWp)
     elseif self:selectedPacenote() and self:selectedWaypoint() and self:selectedPacenote().id ~= selectedPn.id then
       -- if the selected pacenote is different than clicked waypoint
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
-      self.pacenote_tools_state.internal_lock = true
+      -- self.pacenote_tools_state.internal_lock = true
       self:selectPacenote(selectedPn.id)
       self:selectWaypoint(hoveredWp.id)
     elseif self:selectedPacenote() and self:selectedPacenote().id ~= selectedPn.id then
       -- if the selected pacenote is different than clicked waypoint
       self.simpleDragMouseOffset = self.mouseInfo._downPos - hoveredWp.pos
-      self.pacenote_tools_state.internal_lock = true
+      -- self.pacenote_tools_state.internal_lock = true
       self:selectPacenote(selectedPn.id)
       self:selectWaypoint(nil)
     elseif not self:selectedPacenote() then
@@ -1313,9 +1313,11 @@ function C:selectPrevPacenote()
     end
   end
 
-  if self.rallyEditor.getPrefTopDownCameraFollow() then
-    self:setCameraToPacenote()
-  end
+  -- if self.rallyEditor.getPrefTopDownCameraFollow() then
+  --   self:setCameraToPacenote()
+  -- end
+
+  self:setOrbitCameraToSelectedPacenote()
 end
 
 function C:selectNextPacenote()
@@ -1361,9 +1363,10 @@ function C:selectNextPacenote()
     end
   end
 
-  if self.rallyEditor.getPrefTopDownCameraFollow() then
-    self:setCameraToPacenote()
-  end
+  -- if self.rallyEditor.getPrefTopDownCameraFollow() then
+  --   self:setCameraToPacenote()
+  -- end
+  self:setOrbitCameraToSelectedPacenote()
 end
 
 -- function C:cycleDragMode()
@@ -1617,25 +1620,25 @@ function C:drawPacenotesList(height)
 
     im.Text("Current Pacenote: #" .. self.pacenote_tools_state.selected_pn_id)
 
-    if im.Button("Focus Camera") then
-      self:setCameraToPacenote()
-    end
-    im.SameLine()
+    -- if im.Button("Focus Camera") then
+    --   self:setCameraToPacenote()
+    -- end
+    -- im.SameLine()
     if im.Button("Place Vehicle") then
       self:placeVehicleAtPacenote()
     end
     -- im.SameLine()
-    if im.Button("Move Up") then
-      editor.history:commitAction("Move Pacenote in List",
-        {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = -1},
-        movePacenoteUndo, movePacenoteRedo)
-    end
-    im.SameLine()
-    if im.Button("Move Down") then
-      editor.history:commitAction("Move Pacenote in List",
-        {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = 1},
-        movePacenoteUndo, movePacenoteRedo)
-    end
+    -- if im.Button("Move Up") then
+    --   editor.history:commitAction("Move Pacenote in List",
+    --     {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = -1},
+    --     movePacenoteUndo, movePacenoteRedo)
+    -- end
+    -- im.SameLine()
+    -- if im.Button("Move Down") then
+    --   editor.history:commitAction("Move Pacenote in List",
+    --     {index = self.pacenote_tools_state.selected_pn_id, self = self, dir = 1},
+    --     movePacenoteUndo, movePacenoteRedo)
+    -- end
     im.SameLine()
     if im.Button("Delete") then
       self:deleteSelectedPacenote()
@@ -2320,12 +2323,12 @@ end
 --   end
 -- end
 
-function C:setCameraToPacenote()
-  local pacenote = self:selectedPacenote()
-  if not pacenote then return end
-
-  pacenote:setCameraToWaypoints()
-end
+-- function C:setCameraToPacenote()
+--   local pacenote = self:selectedPacenote()
+--   if not pacenote then return end
+--
+--   pacenote:setCameraToWaypoints()
+-- end
 
 function C:_snapAll()
   if not self.path then return end

@@ -31,12 +31,23 @@ function C:init(recce)
   }
 end
 
-local function _drawDebugPoints(points, clr, alpha, radius)
+local adjustHeight = function(pos, r)
+  local newZ = core_terrain.getTerrainHeight(pos)
+  return vec3(pos.x, pos.y, newZ-(r*0.25))
+end
+
+local function _drawDebugPoints(points, clr, alpha, radius, adjustH)
+  local clr = clr or cc.snaproads_clr
   local alpha_shape = alpha or cc.snaproads_alpha
   local radius = radius or cc.snaproads_radius
 
   for _,point in ipairs(points) do
     local pos = point.pos
+
+    if adjustH then
+      pos = adjustHeight(pos, radius)
+    end
+
     debugDrawer:drawSphere(
       pos,
       radius,
@@ -63,7 +74,7 @@ function C:_drawDebugPartitionsAll()
   end
 end
 
-function C:_drawDebugPartition()
+function C:_drawDebugPartition(adjustH)
   local points = self.partition.focus_points
   local clr = nil
 
@@ -73,7 +84,7 @@ function C:_drawDebugPartition()
     clr = cc.snaproads_clr
   end
 
-  _drawDebugPoints(points, clr)
+  _drawDebugPoints(points, clr, nil, nil, adjustH)
 
   points = self.partition.before_points
   -- clr = cc.snaproads_clr
@@ -92,10 +103,9 @@ end
 --   _drawDebugPoints(points, clr)
 -- end
 
-function C:_drawDebugDefault()
+function C:_drawDebugDefault(adjustH)
   local points = self:_allPoints()
-  local clr = cc.snaproads_clr
-  _drawDebugPoints(points, clr)
+  _drawDebugPoints(points, nil, nil, nil, adjustH)
 end
 
 function C:drawDebugSnaproad()
@@ -110,25 +120,11 @@ function C:drawDebugSnaproad()
   end
 end
 
-local adjustHeight = function(pos, r)
-  local newZ = core_terrain.getTerrainHeight(pos)
-  return vec3(pos.x, pos.y, newZ-(r*0.25))
-end
-
 function C:drawDebugRecceApp()
-  local points = self:_allPoints()
-
-  local clr = cc.snaproads_clr
-  local alpha_shape = cc.snaproads_alpha_driving
-  local radius = cc.snaproads_radius_driving
-
-  for _,point in ipairs(points) do
-    local pos = point.pos
-    debugDrawer:drawSphere(
-      adjustHeight(pos, radius),
-      radius,
-      ColorF(clr[1],clr[2],clr[3], alpha_shape)
-    )
+  if self.partition.enabled then
+    self:_drawDebugPartition(true)
+  else
+    self:_drawDebugDefault(true)
   end
 end
 
@@ -478,13 +474,14 @@ function C:nextSnapPoint(srcPos)
   end
 end
 
-function C:setPacenote(pn)
-  self.partition.pacenote = pn
+function C:setPartitionToPacenote(pn)
+  if not pn then return end
+  -- if not pn then
+  --   self:clearPartition()
+  --   return
+  -- end
 
-  if not pn then
-    self:clearPartition()
-    return
-  end
+  self.partition.pacenote = pn
 
   -- find snappoints for pacenote CE and CS
   local pointAt = self:closestSnapPoint(pn:getActiveFwdAudioTrigger().pos)
@@ -496,6 +493,7 @@ end
 
 function C:clearPartition()
   self.partition.enabled = false
+  self.partition.pacenote = nil
   self.partition.before_points = {}
   self.partition.focus_points = {}
   self.partition.after_points = {}
@@ -693,12 +691,13 @@ function C:setFilterPartitionPoint(point)
 end
 
 function C:setFilter(wp)
-  if not wp then
-    self.filter.enabled = false
-    self.filter.points = {}
-    self:clearPartition()
-    return
-  end
+  if not wp then return end
+  -- if not wp then
+  --   self.filter.enabled = false
+  --   self.filter.points = {}
+  --   self:clearPartition()
+  --   return
+  -- end
 
   -- self.filter.points = {}
 
@@ -794,6 +793,12 @@ function C:setFilter(wp)
     end
   end
 
+  -- self:_partitionPoints(self.filter.points[1], self.filter.points[#self.filter.points])
+end
+
+
+function C:setPartitionToFilter()
+  if not self.filter.enabled then return end
   self:_partitionPoints(self.filter.points[1], self.filter.points[#self.filter.points])
 end
 

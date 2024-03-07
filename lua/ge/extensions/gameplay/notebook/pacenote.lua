@@ -1013,12 +1013,12 @@ function C:drawDebugPacenoteSelected(selection_state)
   self:drawDebugPacenoteHelper(drawConfig, selection_state)
 end
 
-function C:setCameraToWaypoints()
-  local cs = self:getCornerStartWaypoint()
-  if cs then
-    cs:lookAtMe()
-  end
-end
+-- function C:setCameraToWaypoints()
+--   local cs = self:getCornerStartWaypoint()
+--   if cs then
+--     cs:lookAtMe()
+--   end
+-- end
 
 function C:audioFname(codriver, missionDir)
   missionDir =  missionDir or editor_rallyEditor.getMissionDir() or 'no_mission'

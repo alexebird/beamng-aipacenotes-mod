@@ -123,6 +123,13 @@ local function refresh()
   guihooks.trigger('aiPacenotes.recceApp.refreshed', resp)
 end
 
+local function updateCameraForSelectedPacenote()
+  snaproad:setPartitionToPacenote(selectedPacenote)
+  core_camera.setByName(0, "pacenoteOrbit")
+  core_camera.setRef(0, selectedPacenote:getCornerStartWaypoint().pos)
+  core_camera.setDistance(0, 200)
+end
+
 -- local function onFirstUpdate()
   -- loadCornerAnglesFile()
 -- end
@@ -186,19 +193,23 @@ local function drawDebug()
     snaproad:drawDebugRecceApp()
 
     if #nextPacenotes > 0 then
-      local rad = 0.5
-      local alpha = 0.5
+      -- local rad = 0.5
+      -- local alpha = 0.5
+      local alpha = cc.snaproads_alpha
+      local rad_marker = cc.snaproads_radius + 0.1
+      local rad = rad_marker
 
       local nextNote = nextPacenotes[1]
-      local wp_audio_trigger = nextNote:getActiveFwdAudioTrigger()
-      local pos = wp_audio_trigger.pos
+      local wp_at = nextNote:getActiveFwdAudioTrigger()
+      local pos = wp_at.pos
       debugDrawer:drawSphere(
-        (pos),
+        pos,
         rad,
         ColorF(1,1,1,alpha)
       )
 
       local cs = nextNote:getCornerStartWaypoint()
+      rad = cs.radius * cc.pacenote_adjacent_radius_factor
       local point_cs = snaproad:closestSnapPoint(cs.pos)
       debugDrawer:drawSphere(
         cs.pos,
@@ -207,6 +218,7 @@ local function drawDebug()
       )
 
       local ce = nextNote:getCornerEndWaypoint()
+      rad = ce.radius * cc.pacenote_adjacent_radius_factor
       local point_ce = snaproad:closestSnapPoint(ce.pos)
       debugDrawer:drawSphere(
         ce.pos,
@@ -215,6 +227,7 @@ local function drawDebug()
       )
 
       local nextSnapPoint = snaproad:nextSnapPoint(pos)
+      rad = rad_marker
       if nextSnapPoint and nextSnapPoint.id ~= point_cs.id then
         debugDrawer:drawSphere(
           nextSnapPoint.pos,
@@ -224,6 +237,7 @@ local function drawDebug()
       end
 
       local prevSnapPoint = snaproad:prevSnapPoint(pos)
+      rad = rad_marker
       -- requires getting prevNote to not render the aqua gumdrop
       -- if prevSnapPoint and prevSnapPoint.id ~= point_ce.id then
       if prevSnapPoint then
@@ -250,7 +264,7 @@ local function movePacenoteATForward()
   --   end
   --
   --   local wp = nextNote:getActiveFwdAudioTrigger()
-  --   snaproad:setPacenote(nextNote)
+  --   snaproad:setPartitionToPacenote(nextNote)
   --   snaproad:setFilter(wp)
   --   nextNote:moveWaypointTowards(snaproad, wp, true)
   --   rallyManager:saveNotebook()
@@ -260,11 +274,12 @@ local function movePacenoteATForward()
   if selectedPacenote then
     local pacenote = selectedPacenote
     local wp = pacenote:getActiveFwdAudioTrigger()
-    snaproad:setPacenote(pacenote)
+    snaproad:setPartitionToPacenote(pacenote)
     snaproad:setFilter(wp)
     pacenote:moveWaypointTowards(snaproad, wp, true)
     rallyManager:saveNotebook()
-    snaproad:setFilter(nil)
+    snaproad:clearFilter()
+    snaproad:setPartitionToPacenote(pacenote)
   end
 end
 
@@ -281,7 +296,7 @@ local function movePacenoteATBackward()
   --     return
   --   end
   --   local wp = nextNote:getActiveFwdAudioTrigger()
-  --   snaproad:setPacenote(nextNote)
+  --   snaproad:setPartitionToPacenote(nextNote)
   --   snaproad:setFilter(wp)
   --   nextNote:moveWaypointTowards(snaproad, wp, false)
   --   rallyManager:saveNotebook()
@@ -296,11 +311,12 @@ local function movePacenoteATBackward()
   if selectedPacenote then
     local pacenote = selectedPacenote
     local wp = pacenote:getActiveFwdAudioTrigger()
-    snaproad:setPacenote(pacenote)
+    snaproad:setPartitionToPacenote(pacenote)
     snaproad:setFilter(wp)
     pacenote:moveWaypointTowards(snaproad, wp, false)
     rallyManager:saveNotebook()
-    snaproad:setFilter(nil)
+    snaproad:clearFilter()
+    snaproad:setPartitionToPacenote(pacenote)
   end
 end
 
@@ -312,6 +328,8 @@ local function movePacenoteSelectionForward()
   rallyManager.notebook:setAdjacentNotes(selectedPacenote.id)
   if selectedPacenote.nextNote then
     selectedPacenote = selectedPacenote.nextNote
+    snaproad:setPartitionToPacenote(selectedPacenote)
+    updateCameraForSelectedPacenote()
   end
 end
 
@@ -323,6 +341,8 @@ local function movePacenoteSelectionBackward()
   rallyManager.notebook:setAdjacentNotes(selectedPacenote.id)
   if selectedPacenote.prevNote then
     selectedPacenote = selectedPacenote.prevNote
+    snaproad:setPartitionToPacenote(selectedPacenote)
+    updateCameraForSelectedPacenote()
   end
 end
 
@@ -330,6 +350,7 @@ local function movePacenoteSelectionToVehicle()
   if not rallyManager then return end
   local pacenote = rallyManager:closestPacenoteToVehicle()
   selectedPacenote = pacenote
+  snaproad:setPartitionToPacenote(selectedPacenote)
 end
 
 local function moveVehicleBackward()
@@ -508,6 +529,12 @@ end
 
 local function setDrawDebugSnaproads(val)
   flag_drawDebugSnaproads = val
+
+  if flag_drawDebugSnaproads and selectedPacenote then
+    updateCameraForSelectedPacenote()
+  else
+    commands.setGameCamera()
+  end
 end
 
 local function onVehicleResetted()
