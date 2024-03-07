@@ -80,7 +80,6 @@ local function desktopGetTranscripts()
   end
 end
 
--- local function listMissionsForLevel()
 local function refresh()
   local level = getCurrentLevelIdentifier()
 
@@ -677,14 +676,10 @@ M.unloadMission = unloadMission
 M.setLastMissionId = setLastMissionId
 M.setLastLoadState = setLastLoadState
 
--- M.loadCornerAngles = loadCornerAngles
--- M.listMissionsForLevel = listMissionsForLevel
--- M.clearTimeout = clearTimeout
 
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setSelectedPacenoteText = setSelectedPacenoteText
--- M.setCornerAnglesStyleName = setCornerAnglesStyleName
 
 M.movePacenoteATBackward = movePacenoteATBackward
 M.movePacenoteATForward = movePacenoteATForward

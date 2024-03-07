@@ -143,7 +143,15 @@ end
 
 function C:saveNotebook()
   if self.notebook then
-    return self.notebook:save()
+    if self.notebook:save() then
+      if editor_rallyEditor then
+        local notebook = editor_rallyEditor.getCurrentPath()
+        if notebook then
+          notebook:reload()
+        end
+      end
+      return true
+    end
   end
 end
 
