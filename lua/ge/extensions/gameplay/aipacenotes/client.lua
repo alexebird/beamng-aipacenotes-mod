@@ -178,6 +178,17 @@ local function remote_audio_reset()
   return resp
 end
 
+local function remote_audio_queue_size()
+  -- log('I', logTag, 'client.remote_audio_queue_size')
+
+  local url = base_url..'/remoteAudio/queueSize'
+  local resp = jsonRequestGet(url)
+  if not resp.ok then
+    resp.client_msg = resp.error
+  end
+  return resp
+end
+
 -- local function update_next_pacenotes(data)
 --   -- log('D', 'wtf', dumps(data))
 --   --
@@ -207,6 +218,7 @@ M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_transcripts_get = transcribe_transcripts_get
 M.remote_audio_play_file = remote_audio_play_file
 M.remote_audio_reset = remote_audio_reset
+M.remote_audio_queue_size = remote_audio_queue_size
 -- M.clear_network_issue = clear_network_issue
 -- M.has_network_issue = has_network_issue
 -- M.update_next_pacenotes = update_next_pacenotes

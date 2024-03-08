@@ -20,6 +20,7 @@ local aipSettingsRoot = '/settings/aipacenotes'
 local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
 local staticPacenotesFname = aipSettingsRoot..'/static_pacenotes.json'
 local cornerAnglesFname = aipSettingsRoot..'/corner_angles.json'
+local pacenotesMetadataBasename = 'metadata.json'
 
 local transcriptsExt = 'transcripts.json'
 local missionSettingsFname = 'mission.settings.json'
@@ -98,8 +99,8 @@ local function playPacenote2(audioObj)
 
 
 
-
-
+  local x = Engine.Audio.createSource('AudioGui', ' /gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_40820133.ogg')
+  -- /gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_40820133.ogg
 
   -- paramGroupG = SFXParameterGroup()
   -- paramGroupG:setPrefixFilter('global_')
@@ -213,17 +214,49 @@ local function playPacenote(audioObj)
   -- printFields(sfxSource)
 
   -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
-  audioObj.audioLen = res.len
+  -- audioObj.audioLen = res.len
   audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
   audioObj.sourceId = res.sourceId
   log('D', logTag, 'playPacenote channel='..ch..' '..dumps(audioObj))
+end
+
+local function playPacenoteGui(audioObj)
+  -- local opts = { volume=audioObj.volume }
+  audioObj.time = getTime()
+
+  -- local ch = 'AudioGUI' -- volume is controlled by OTHER
+  -- local ch = 'AudioMusic' -- volume is controlled by MUSIC
+
+  -- local res = Engine.Audio.playOnce(ch, audioObj.pacenoteFname, opts)
+  -- printFields(res)
+
+  local req = {
+    url = audioObj.pacenoteFname,
+    volume = audioObj.volume,
+  }
+  guihooks.trigger('aiPacenotes.codriverApp.playAudio', req)
+
+  -- if not res then
+  --   log('E', logTag, 'error playing audio')
+  --   return
+  -- end
+
+  -- local sfxSource = scenetree.findObjectById(res.sourceId)
+  -- log('D', logTag, dumps(sfxSource))
+  -- printFields(sfxSource)
+
+  -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
+  -- audioObj.audioLen = res.len
+  audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
+  -- audioObj.sourceId = res.sourceId
+  log('D', logTag, 'playPacenoteGui '..dumps(audioObj))
 end
 
 local function buildAudioObjPacenote(pacenoteFname)
   local audioObj = {
     audioType = 'pacenote',
     pacenoteFname = pacenoteFname,
-    volume = 2,
+    volume = 0.5,
     created_at = getTime(),
     time = nil,
     audioLen = nil,
@@ -501,6 +534,16 @@ local function loadMissionSettings(folder)
   return settings
 end
 
+local function buildPacenotesDir(missionDir, notebook, codriver)
+  local notebookBasename = normalize_name(notebook:basenameNoExt()) or 'none'
+  local codriverName = codriver.name
+  local codriverLang = codriver.language
+  local codriverVoice = codriver.voice
+  local codriverStr = normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
+  local dirname = missionDir..'/'..notebooksPath..'/generated_pacenotes/'..notebookBasename..'/'..codriverStr
+  return dirname
+end
+
 local function getDistanceCallShorthand(dist)
   if dist <= editor_rallyEditor.getPrefLevel1Thresh() then
     return editor_rallyEditor.getPrefLevel1Text()
@@ -529,6 +572,7 @@ M.desktopTranscriptFname = desktopTranscriptFname
 M.dragModes = dragModes
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath
+M.pacenotesMetadataBasename = pacenotesMetadataBasename
 M.staticPacenotesFname = staticPacenotesFname
 M.transcriptsExt = transcriptsExt
 M.transcriptsPath = transcriptsPath
@@ -558,12 +602,14 @@ M.drivelineFile = drivelineFile
 M.cutsFile = cutsFile
 M.transcriptsFile = transcriptsFile
 
+M.buildPacenotesDir = buildPacenotesDir
 M.missionTranscriptsDir = missionTranscriptsDir
 M.normalize_name = normalize_name
 M.normalizeNoteText = normalizeNoteText
 M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
 M.playPacenote2 = playPacenote2
+M.playPacenoteGui = playPacenoteGui
 M.setCameraTarget = setCameraTarget
 M.trimString = trimString
 

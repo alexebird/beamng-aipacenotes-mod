@@ -255,7 +255,7 @@ end
 
 function C:nameForSelect()
   local txt = self.name
-  local note = self.notes[self.notebook:editingLanguage()].note
+  local note = self.notes[re_util.default_codriver_language].note
   txt = txt..' - '..(note or '')
 
   if self:is_valid() then
@@ -850,7 +850,7 @@ function C:noteTextForDrawDebug()
   --   end
   -- end
 
-  local joined = self:joinedNote(self.notebook:editingLanguage())
+  local joined = self:joinedNote(re_util.default_codriver_language)
   if joined then
     txt = joined
   end
@@ -1027,15 +1027,17 @@ end
 function C:audioFname(codriver, missionDir)
   missionDir =  missionDir or editor_rallyEditor.getMissionDir() or 'no_mission'
 
-  local notebookBasename = re_util.normalize_name(self.notebook:basenameNoExt()) or 'none'
-  local codriverName = codriver.name
+  -- local notebookBasename = re_util.normalize_name(self.notebook:basenameNoExt()) or 'none'
+  -- local codriverName = codriver.name
   local codriverLang = codriver.language
-  local codriverVoice = codriver.voice
-  local codriverStr = re_util.normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
+  -- local codriverVoice = codriver.voice
+  -- local codriverStr = re_util.normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
   local noteStr = self:joinedNote(codriverLang)
   local pacenoteHash = re_util.pacenote_hash(noteStr)
 
-  local fname = missionDir..'/'..re_util.notebooksPath..'/generated_pacenotes/'..notebookBasename..'/'..codriverStr..'/pacenote_'..pacenoteHash..'.ogg'
+  local pacenotesDir = re_util.buildPacenotesDir(missionDir, self.notebook, codriver)
+  -- local fname = missionDir..'/'..re_util.notebooksPath..'/generated_pacenotes/'..notebookBasename..'/'..codriverStr..'/pacenote_'..pacenoteHash..'.ogg'
+  local fname = pacenotesDir..'/pacenote_'..pacenoteHash..'.ogg'
 
   return fname
 end

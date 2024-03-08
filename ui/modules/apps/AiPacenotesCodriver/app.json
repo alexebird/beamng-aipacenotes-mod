@@ -1,0 +1,10 @@
+{
+  "name" : "Co-Driver (aipacenotes)",
+  "author": "birdman",
+  "version": "0.1",
+  "description": "Based on Radio-Test-v2 UI app by BeamNG.",
+  "directive": "aiPacenotesCodriver",
+  "domElement": "<ai-pacenotes-codriver></ai-pacenotes-codriver>",
+  "css": { "width": "300px", "height": "150px", "top": "200px", "left": "200px" },
+  "preserveAspectRatio": false
+}

@@ -79,6 +79,26 @@
         "english": { "note": "Thats it, bring the car to a stop." }
       },
       "oldId":6
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"firstnoteintro_1/c",
+      "notes":{
+        "english": { "note": "The first note is:" }
+      },
+      "oldId":7
+    },
+    {
+      "metadata":{
+        "static":true
+      },
+      "name":"firstnoteoutro_1/c",
+      "notes":{
+        "english": { "note": "Good luck." }
+      },
+      "oldId":8
     }
   ]
 }

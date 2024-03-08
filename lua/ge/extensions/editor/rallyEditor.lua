@@ -825,10 +825,10 @@ local function getPrefShowNextPacenote()
   return getPreference('rallyEditor.editing.showNextPacenote', true)
 end
 
-local function getPrefEditingLanguage()
-  return re_util.default_codriver_language
-  -- return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
-end
+-- local function getPrefEditingLanguage()
+--   return re_util.default_codriver_language
+--   -- return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
+-- end
 
 local function getPrefDefaultPunctuation()
   return getPreference('rallyEditor.editing.punctuation', re_util.default_punctuation)
@@ -1018,7 +1018,7 @@ M.getPacenotesWindow = function() return pacenotesWindow end
 M.getMissionDir = getMissionDir
 
 M.getPrefDefaultRadius = getPrefDefaultRadius
-M.getPrefEditingLanguage = getPrefEditingLanguage
+-- M.getPrefEditingLanguage = getPrefEditingLanguage
 M.getPrefDefaultPunctuation = getPrefDefaultPunctuation
 M.getPrefDefaultPunctuationLast = getPrefDefaultPunctuationLast
 M.getPrefLevel1Text = getPrefLevel1Text

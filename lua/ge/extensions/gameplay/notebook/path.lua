@@ -444,7 +444,7 @@ function C:loadStaticPacenotes()
 
   local fname = re_util.staticPacenotesFname
 
-  log('I', logTag, 'reading static_pacenotes file: ' .. tostring(fname))
+  -- log('I', logTag, 'reading static_pacenotes file: ' .. tostring(fname))
   local json = jsonReadFile(fname)
   if json then
     static_pn_data = json
@@ -603,13 +603,14 @@ function C:allToTerrain()
   end
 end
 
-function C:editingLanguage()
-  return editor_rallyEditor.getPrefEditingLanguage()
-end
+-- function C:editingLanguage()
+--   if editor_rallyEditor then
+--     return editor_rallyEditor.getPrefEditingLanguage()
+--   end
+-- end
 
-function C:normalizeNotes(lang)
-  lang = lang or self:editingLanguage()
-
+function C:normalizeNotes()
+  local lang = re_util.default_codriver_language
   local last = false
 
   for i,pacenote in ipairs(self.pacenotes.sorted) do
@@ -686,8 +687,8 @@ local function normalize_distance(dist)
 end
 
 function C:autofillDistanceCalls()
-  local lang = self:editingLanguage()
 
+  local lang = re_util.default_codriver_language
   -- first clear everything
   for _,pacenote in ipairs(self.pacenotes.sorted) do
     if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then

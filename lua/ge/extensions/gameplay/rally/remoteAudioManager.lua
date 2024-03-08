@@ -95,6 +95,15 @@ function C:enqueueStaticPacenoteByName(pacenote_name, addToFront)
   end
 end
 
+function C:getQueueSize()
+  local resp = extensions.gameplay_aipacenotes_client.remote_audio_queue_size()
+  if not resp.ok then
+    return 0
+  end
+
+  return resp
+end
+
 -- function C:_enqueueFile(fname, addToFront)
 --   addToFront = addToFront or false
 --   local audioObj = re_util.buildAudioObjPacenote(fname)
@@ -127,6 +136,7 @@ function C:_enqueueFileRemote(fname, addToFront)
       end
     end
     -- return audioObj
+    return true
   else
     log('E', logTag, "_enqueueFile: exists=no fname=" .. fname)
     return nil

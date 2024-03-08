@@ -69,8 +69,8 @@ function C:stopTimer()
 end
 
 function C:startTimer()
-  self.duration = self.pinIn.duration.value or 3
-  self.maxAnnounced = self.pinIn.maxAnnounced.value or 3
+  self.duration = self.pinIn.duration.value or 5
+  self.maxAnnounced = self.pinIn.maxAnnounced.value or 5
   self.timer = self.duration
   self.running = true
   self.msg = self.pinIn.finishMsg.value or "ui.scenarios.go"

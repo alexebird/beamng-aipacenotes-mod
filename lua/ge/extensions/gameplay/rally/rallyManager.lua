@@ -59,10 +59,6 @@ function C:setup(damageThresh, closestPacenotes_n)
   self.damageThresh = damageThresh
   self.closestPacenotes_n = closestPacenotes_n
 
-  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')(self)
-  self.audioManager = require('/lua/ge/extensions/gameplay/rally/remoteAudioManager')(self)
-  self.audioManager:resetAudioQueue()
-
   self:detectMissionId()
 
   self:getMissionSettings()
@@ -84,6 +80,12 @@ function C:setup(damageThresh, closestPacenotes_n)
     log('I', logTag, 'RallyManager setup no codriver')
     error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
   end
+
+  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')(self)
+  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/remoteAudioManager')(self)
+  self.audioManager = require('/lua/ge/extensions/gameplay/rally/guiAudioManager')(self)
+  -- self.audioManager:loadMetadata()
+  self.audioManager:resetAudioQueue()
 
   -- self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
   self.notebook:cachePacenoteFgData(self.missionSettings, self.codriver)
