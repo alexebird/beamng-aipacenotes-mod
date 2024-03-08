@@ -22,6 +22,7 @@ function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
   self.name = name or ("Pacenote " .. self.id)
+  self.todo = false
   self.playback_rules = nil
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
@@ -218,6 +219,10 @@ end
 function C:validate()
   self.validation_issues = {}
 
+  if self.todo then
+    table.insert(self.validation_issues, 'TODO')
+  end
+
   if not self:getCornerStartWaypoint() then
     table.insert(self.validation_issues, 'missing CornerStart waypoint')
   end
@@ -364,6 +369,7 @@ function C:onSerialize()
     oldId = self.id,
     name = self.name,
     playback_rules = self.playback_rules,
+    todo = self.todo or false,
     notes = self.notes,
     metadata = self.metadata,
     pacenoteWaypoints = self.pacenoteWaypoints:onSerialize(),
@@ -375,9 +381,18 @@ end
 function C:onDeserialized(data, oldIdMap)
   self.name = data.name
   self.playback_rules = data.playback_rules
+  self.todo = data.todo or false
   self.notes = data.notes
   self.metadata = data.metadata or {}
   self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
+end
+
+function C:markTodo()
+  self.todo = true
+end
+
+function C:clearTodo()
+  self.todo = false
 end
 
 function C:setNavgraph(navgraphName, fallback)
@@ -1159,9 +1174,9 @@ function C:moveWaypointTowards(snaproads, wp, fwd, step)
   end
 end
 
-function C:normalizeNoteText(lang, last)
+function C:normalizeNoteText(lang, last, force)
   local note = self:getNoteFieldNote(lang)
-  local newTxt = re_util.normalizeNoteText(note, last)
+  local newTxt = re_util.normalizeNoteText(note, last, force or false)
   self:setNoteFieldNote(lang, newTxt)
 end
 

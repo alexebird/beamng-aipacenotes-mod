@@ -30,15 +30,8 @@ local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
 local default_punctuation = '?'
 local default_punctuation_last = '.'
+local validPunctuation = {"?", ".", "?", "!"}
 
-
--- local dragModes = {
---   simple = 'simple',
---   simple_road_snap = 'simple_road_snap',
---   gizmo = 'gizmo',
--- }
-
---
 -- html code: #00ffdebf
 local aip_fg_color = ui_imgui.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
 
@@ -214,7 +207,7 @@ local function playPacenote(audioObj)
   -- printFields(sfxSource)
 
   -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
-  -- audioObj.audioLen = res.len
+  audioObj.audioLen = res.len
   audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
   audioObj.sourceId = res.sourceId
   log('D', logTag, 'playPacenote channel='..ch..' '..dumps(audioObj))
@@ -256,7 +249,7 @@ local function buildAudioObjPacenote(pacenoteFname)
   local audioObj = {
     audioType = 'pacenote',
     pacenoteFname = pacenoteFname,
-    volume = 0.5,
+    volume = 1,
     created_at = getTime(),
     time = nil,
     audioLen = nil,
@@ -282,20 +275,35 @@ local function buildAudioObjPause(pauseSecs)
 end
 
 local function hasPunctuation(last_char)
-  return last_char == "." or last_char == "?" or last_char == "!"
+  -- return last_char == "." or last_char == "?" or last_char == "!"
+
+  for _,char in ipairs(validPunctuation) do
+    if last_char == char then
+      return true
+    end
+  end
+
+  return false
 end
 
 local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
-local function normalizeNoteText(note, last)
+local function normalizeNoteText(note, last, force)
+  force = force or false
   note = stripWhitespace(note)
 
   if note ~= autofill_blocker then
     if note ~= '' and note ~= unknown_transcript_str then
       -- add punction if not present
       local last_char = note:sub(-1)
+
+      if force and hasPunctuation(last_char) then
+        note = string.sub(note, 1, -2)
+        last_char = note:sub(-1)
+      end
+
       if not hasPunctuation(last_char) then
 
         local punc = nil
@@ -310,6 +318,8 @@ local function normalizeNoteText(note, last)
             punc = editor_rallyEditor.getPrefDefaultPunctuation()
           end
         end
+
+        print('setting punc: '..punc)
 
         note = note..punc
       end
@@ -577,6 +587,7 @@ M.staticPacenotesFname = staticPacenotesFname
 M.transcriptsExt = transcriptsExt
 M.transcriptsPath = transcriptsPath
 M.unknown_transcript_str = unknown_transcript_str
+M.validPunctuation = validPunctuation
 
 -- funcs
 M.buildAudioObjPacenote = buildAudioObjPacenote

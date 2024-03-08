@@ -513,6 +513,9 @@ function C:handleMouseHold()
     if self.mouseInfo.rayCast then
       local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
       if new_pos then
+        local pn_sel = self:selectedPacenote()
+        pn_sel:clearTodo()
+
         wp_sel.pos = new_pos
         self:autoFillDistanceCalls()
         if normal_align_pos then
@@ -1506,43 +1509,6 @@ function C:drawPacenotesList(height)
     im.HeaderText("[!] "..tostring(#notebook.pacenotes.sorted).." Pacenotes")
   end
 
-  -- im.SameLine()
-  if im.Button("Cleanup Names") then
-    self:cleanupPacenoteNames()
-  end
-  im.tooltip("Re-name all pacenotes with increasing numbers.")
-  im.SameLine()
-  -- if im.Button("Auto-assign segments") then
-  --   self:autoAssignSegments()
-  -- end
-  -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
-  -- im.SameLine()
-  -- if im.Button("Snap All") then
-  --   self:_snapAll()
-  -- end
-  -- im.tooltip("Snap all waypoints to nearest snaproad point.")
-  -- im.SameLine()
-  -- if im.Button("All to Terrain") then
-  --   self:allToTerrain()
-  -- end
-  -- im.tooltip("Snap all waypoints to terrain.")
-  im.SameLine()
-  if im.Button("Set All Radii") then
-    self:setAllRadii()
-  end
-  im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
-  -- im.SameLine()
-  -- if im.Button("Set Punctuation") then
-  --   self:normalizeNotes()
-  -- end
-  -- im.tooltip("Add puncuation and replace digits with words.")
-  -- im.SameLine()
-  -- if im.Button("Autofill Dist Calls") then
-  --   self:autoFillDistanceCalls()
-  -- end
-  -- im.tooltip("Autofill distance calls.")
-
-  im.SameLine()
   if im.Button("Delete All") then
     im.OpenPopup("Delete All")
   end
@@ -1565,7 +1531,57 @@ function C:drawPacenotesList(height)
     im.EndPopup()
   end
 
-  local editModeLabel = nil
+  im.SameLine()
+  if im.Button("Cleanup Names") then
+    self:cleanupPacenoteNames()
+  end
+  im.tooltip("Re-name all pacenotes with increasing numbers.")
+
+  -- im.SameLine()
+  -- if im.Button("Auto-assign segments") then
+  --   self:autoAssignSegments()
+  -- end
+  -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
+  -- im.SameLine()
+  -- if im.Button("Snap All") then
+  --   self:_snapAll()
+  -- end
+  -- im.tooltip("Snap all waypoints to nearest snaproad point.")
+  -- im.SameLine()
+  -- if im.Button("All to Terrain") then
+  --   self:allToTerrain()
+  -- end
+  -- im.tooltip("Snap all waypoints to terrain.")
+  im.SameLine()
+  if im.Button("Set All Radii") then
+    self:setAllRadii()
+  end
+  im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
+  im.SameLine()
+  if im.Button("Refresh Distance Calls") then
+    self:autoFillDistanceCalls()
+  end
+  im.tooltip("Force update automatic distance calls.\n\nNot needed unless you change the Distance Call preferences.")
+  im.SameLine()
+  if im.Button("Refresh Punctuation") then
+    self:normalizeNotes(true)
+  end
+  im.tooltip("Force update automatic puncuation and text fixes.\n\nNot needed unless you change the Punctuation preferences.")
+
+  -- im.SameLine()
+  if im.Button("Mark All TODO") then
+    self.path:markAllTodo()
+  end
+  im.SameLine()
+  if im.Button("Mark Rest TODO") then
+    self.path:markRestTodo(self:selectedPacenote())
+  end
+  im.SameLine()
+  if im.Button("Clear All TODO") then
+    self.path:clearAllTodo()
+  end
+
+  local editModeLabel = '???'
   if self.pacenote_tools_state.mode == editModes.editAll then
     editModeLabel = "All"
   elseif self.pacenote_tools_state.mode == editModes.editCorners then
@@ -1574,10 +1590,16 @@ function C:drawPacenotesList(height)
     editModeLabel = "Audio Triggers"
   end
 
-  im.HeaderText("Edit Mode: "..tostring(editModeLabel or "???"))
-  if im.Button("Cycle Edit Mode") then
+  -- im.HeaderText("Edit Mode: "..)
+
+  im.PushStyleColor2(im.Col_Button, im.ImColorByRGB(0,100,100,255).Value)
+  if im.Button("Change Edit Mode") then
     self:cycleEditMode()
   end
+  im.PopStyleColor(1)
+  im.SameLine()
+  im.Text("Mode: "..editModeLabel)
+
 
   im.HeaderText("Search")
   if im.Button("Prev") then
@@ -1631,7 +1653,7 @@ function C:drawPacenotesList(height)
   -- vertical space
   -- for i = 1,5 do im.Spacing() end
 
-  local heightTopArea = 260
+  local heightTopArea = 330
   im.HeaderText("Selected Pacenote")
   im.BeginChild1("pacenotes", im.ImVec2(200*im.uiscale[0], height-heightTopArea), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
@@ -1667,18 +1689,18 @@ function C:drawPacenotesList(height)
     if not pacenote.missing then
 
     if pacenote:is_valid() then
-      im.HeaderText("Details")
+      im.HeaderText("Pacenote")
     else
-      im.HeaderText("[!] Details")
-      local issues = "Issues (".. (#pacenote.validation_issues) .."):\n"
-      for _, issue in ipairs(pacenote.validation_issues) do
-        issues = issues..'- '..issue..'\n'
-      end
-      im.Text(issues)
-      im.Separator()
+      im.HeaderText("[!] Pacenote")
+      -- local issues = "Issues (".. (#pacenote.validation_issues) .."):\n"
+      -- for _, issue in ipairs(pacenote.validation_issues) do
+      --   issues = issues..'- '..issue..'\n'
+      -- end
+      -- im.Text(issues)
+      -- im.Separator()
     end
 
-    im.Text("Current Pacenote: #" .. self.pacenote_tools_state.selected_pn_id)
+    -- im.Text("Current Pacenote: #" .. self.pacenote_tools_state.selected_pn_id)
 
     -- if im.Button("Focus Camera") then
     --   self:setCameraToPacenote()
@@ -1703,25 +1725,51 @@ function C:drawPacenotesList(height)
     if im.Button("Delete") then
       self:deleteSelectedPacenote()
     end
+    -- im.SameLine()
+    if im.Button("TODO") then
+      local pn = self:selectedPacenote()
+      if pn then
+        pn:markTodo()
+      end
+    end
+    im.SameLine()
+    if im.Button("Done") then
+      local pn = self:selectedPacenote()
+      if pn then
+        pn:clearTodo()
+      end
+    end
 
     -- if im.Button("Insert After") then
     --   self:insertNewPacenoteAfter(pacenote)
     -- end
 
-    local icon = editor.icons.play_arrow
+    -- local icon = editor.icons.play_arrow
     local paused = simTimeAuthority.getPause()
-    local camTxt = 'Play Pacenote as Camera Path'..((paused and ' (must unpause game!)') or '')
+    if paused then
+      im.Text('Unpause game to play Camera Path')
+    else
+      local camTxt = 'Play Camera Path'
+      if self:cameraPathIsPlaying() then
+        camTxt = 'Stop Camera Path'
+      end
 
-    if self:cameraPathIsPlaying() then
-      icon = editor.icons.stop
-      camTxt = 'Stop'
+      if im.Button(camTxt) then
+        self:cameraPathPlay()
+      end
     end
-    if editor.uiIconImageButton(icon, im.ImVec2(24, 24)) then
-      self:cameraPathPlay()
-    end
+
+
+    -- if editor.uiIconImageButton(icon, im.ImVec2(24, 24)) then
+      -- self:cameraPathPlay()
+    -- end
+    -- im.SameLine()
+    -- im.Text(camTxt)
+
+
+
+
     im.SameLine()
-    im.Text(camTxt)
-
     local corner_call_txt = 'Show Corner Calls'
     if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.snaproad.show_corner_calls then
       corner_call_txt = 'Hide Corner Calls'
@@ -1730,11 +1778,14 @@ function C:drawPacenotesList(height)
       self:toggleCornerCalls()
     end
 
-    for _ = 1,5 do im.Spacing() end
+    -- for _ = 1,5 do im.Spacing() end
+
+    im.HeaderText("Info")
 
     local editEnded = im.BoolPtr(false)
     editor.uiInputText("Name", pacenoteNameText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
+      pacenote:clearTodo()
       editor.history:commitAction("Change Name of Note",
         {index = self.pacenote_tools_state.selected_pn_id, self = self, old = pacenote.name, new = ffi.string(pacenoteNameText), field = 'name'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
@@ -1742,6 +1793,7 @@ function C:drawPacenotesList(height)
 
     editor.uiInputText("Playback Rules", playbackRulesText, nil, nil, nil, nil, editEnded)
     if editEnded[0] then
+      pacenote:clearTodo()
       editor.history:commitAction("Change the playback rules",
         {index = self.pacenote_tools_state.selected_pn_id, self = self, old = pacenote.playback_rules, new = ffi.string(playbackRulesText), field = 'playback_rules'},
         setPacenoteFieldUndo, setPacenoteFieldRedo)
@@ -1762,6 +1814,19 @@ Any lua code is allowed, so be careful. Examples:
 - 'currLap < maxLap' -> audio will play except for on the last lap
 ]])
 
+
+    if pacenote:is_valid() then
+      im.HeaderText("Issues (0)")
+    else
+      im.HeaderText("Issues (".. (#pacenote.validation_issues) ..")")
+      local issues = ""
+      for _, issue in ipairs(pacenote.validation_issues) do
+        issues = issues..'- '..issue..'\n'
+      end
+      im.Text(issues)
+      -- im.Separator()
+    end
+
     -- im.Text("Segment: "..note.segment)
 
     -- self:segmentSelector('Segment','segment', 'Associated Segment')
@@ -1770,7 +1835,7 @@ Any lua code is allowed, so be careful. Examples:
     --   self:drawDebugSegments()
     -- end
 
-    im.HeaderText("Languages")
+    im.HeaderText("Note Text")
     editEnded = im.BoolPtr(false)
     -- language_form_fields = {}
     for i,lang_data in ipairs(self.path:getLanguages()) do
@@ -1836,6 +1901,7 @@ Any lua code is allowed, so be careful. Examples:
       im.SetNextItemWidth(90)
       editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
+        pacenote:clearTodo()
         self:handleNoteFieldEdit(pacenote, language, 'before', fields.before)
       end
       im.SameLine()
@@ -1852,6 +1918,7 @@ Any lua code is allowed, so be careful. Examples:
 
       if editEnded[0] then
         if pacenoteUnderEdit and pacenote.id == pacenoteUnderEdit.id then
+          pacenote:clearTodo()
           self:handleNoteFieldEdit(pacenote, language, 'note', fields.note)
         end
       end
@@ -1866,6 +1933,7 @@ Any lua code is allowed, so be careful. Examples:
       im.SetNextItemWidth(150)
       editor.uiInputText('##'..language..'_after', fields.after, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
+        pacenote:clearTodo()
         self:handleNoteFieldEdit(pacenote, language, 'after', fields.after)
       end
     end -- / self.path:getLanguages()
@@ -2460,38 +2528,42 @@ end
 --   )
 -- end
 
--- function C:normalizeNotes()
---   if not self.path then return end
---
---   editor.history:commitAction("Normalize pacenote.note field",
---     {
---       notebook = self.path,
---       old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
---     },
---     function(data) -- undo
---       data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
---     end,
---     function(data) -- redo
---       data.notebook:normalizeNotes()
---     end
---   )
--- end
+function C:normalizeNotes(force)
+  if not self.path then return end
+
+  self.path:normalizeNotes(force or false)
+
+  -- editor.history:commitAction("Normalize pacenote.note field",
+  --   {
+  --     notebook = self.path,
+  --     old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+  --   },
+  --   function(data) -- undo
+  --     data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+  --   end,
+  --   function(data) -- redo
+  --     data.notebook:normalizeNotes()
+  --   end
+  -- )
+end
 
 function C:autoFillDistanceCalls()
   if not self.path then return end
 
-  editor.history:commitAction("Auto-fill distance calls",
-    {
-      notebook = self.path,
-      old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
-    },
-    function(data) -- undo
-      data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
-    end,
-    function(data) -- redo
-      data.notebook:autofillDistanceCalls()
-    end
-  )
+  self.path:autofillDistanceCalls()
+
+  -- editor.history:commitAction("Auto-fill distance calls",
+  --   {
+  --     notebook = self.path,
+  --     old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
+  --   },
+  --   function(data) -- undo
+  --     data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
+  --   end,
+  --   function(data) -- redo
+  --     data.notebook:autofillDistanceCalls()
+  --   end
+  -- )
 end
 
 -- function C:placeVehicleAtPacenote()
@@ -2604,6 +2676,7 @@ function C:_moveSelectedWaypointHelper(fwd, steps)
 
   if self.pacenote_tools_state.snaproad then
     local pn = self:selectedPacenote()
+    pn:clearTodo()
     pn:moveWaypointTowards(self.pacenote_tools_state.snaproad, wp, fwd, steps)
   end
 end

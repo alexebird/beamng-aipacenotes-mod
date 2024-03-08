@@ -340,7 +340,7 @@ local function drawEditorGui()
     focusWindow = false
   end
 
-  local topToolbarHeight = 120 * im.uiscale[0]
+  local topToolbarHeight = 130 * im.uiscale[0]
   -- local bottomToolbarHeight = 500 * im.uiscale[0]
   -- local minMiddleHeight = 300 * im.uiscale[0]
   -- local heightAdditional = 110-- * im.uiscale[0]
@@ -780,11 +780,19 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
     -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     -- {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
-    {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
-    {punctuationLast = {"string", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize.", "Punctuation for Last Note"}},
   })
 
-  prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
+  prefsRegistry:registerSubCategory("rallyEditor", "punctuation", nil, {
+    -- {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
+    -- {punctuationLast = {"string", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize.", "Punctuation for Last Note"}},
+
+    -- {iconBackgroundType = {"enum", "None", "The icon background shape type", nil, nil, nil, nil, nil, nil, {"None", "Circle", "Square"}}},
+
+    {punctuation = {"enum", re_util.default_punctuation, "Punctuation character for Normalize.", nil, nil, nil, nil, nil, nil, re_util.validPunctuation}},
+    {punctuationLast = {"enum", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize.", "Punctuation for Last Note", nil, nil, nil, nil, nil, re_util.validPunctuation}},
+  })
+
+  prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Distance Calls", {
     {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
     {level2Thresh = {"int", 20, "Threshold for level 2", nil, 0, 100}},
     {level3Thresh = {"int", 40, "Threshold for level 3", nil, 0, 100}},
@@ -841,11 +849,11 @@ end
 -- end
 
 local function getPrefDefaultPunctuation()
-  return getPreference('rallyEditor.editing.punctuation', re_util.default_punctuation)
+  return getPreference('rallyEditor.punctuation.punctuation', re_util.default_punctuation)
 end
 
 local function getPrefDefaultPunctuationLast()
-  return getPreference('rallyEditor.editing.punctuationLast', re_util.default_punctuation_last)
+  return getPreference('rallyEditor.punctuation.punctuationLast', re_util.default_punctuation_last)
 end
 
 local function getPrefDefaultRadius()

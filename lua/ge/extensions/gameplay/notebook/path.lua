@@ -605,13 +605,13 @@ end
 --   end
 -- end
 
-function C:normalizeNotes()
+function C:normalizeNotes(force)
   local lang = re_util.default_codriver_language
   local last = false
 
   for i,pacenote in ipairs(self.pacenotes.sorted) do
     last = i == #self.pacenotes.sorted
-    pacenote:normalizeNoteText(lang, last)
+    pacenote:normalizeNoteText(lang, last, force or false)
   end
 end
 
@@ -787,6 +787,32 @@ function C:setAdjacentNotes(pacenote_id)
       note:setAdjacentNotes(prevNote, nextNote)
     else
       note:clearAdjacentNotes()
+    end
+  end
+end
+
+function C:markAllTodo()
+  for _,pn in ipairs(self.pacenotes.sorted) do
+    pn:markTodo()
+  end
+end
+
+function C:clearAllTodo()
+  for _,pn in ipairs(self.pacenotes.sorted) do
+    pn:clearTodo()
+  end
+end
+
+function C:markRestTodo(pacenote)
+  if not pacenote then return end
+
+  local hitPacenote = false
+  for _,pn in ipairs(self.pacenotes.sorted) do
+    if pn.id == pacenote.id then
+      hitPacenote = true
+    end
+    if hitPacenote then
+      pn:markTodo()
     end
   end
 end
