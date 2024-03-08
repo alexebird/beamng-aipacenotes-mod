@@ -400,7 +400,7 @@ function C:onSerialize()
     created_at = self.created_at,
     codrivers = self.codrivers:onSerialize(),
     pacenotes = self.pacenotes:onSerialize(),
-    static_pacenotes = self.static_pacenotes:onSerialize(),
+    -- static_pacenotes = self.static_pacenotes:onSerialize(),
   }
 
   return ret
@@ -425,10 +425,6 @@ function C:onDeserialized(data)
   self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
 
   self:loadStaticPacenotes()
-  -- self.static_pacenotes:clear()
-  -- local static_pn_data = self:generateStaticPacenotesData()
-  -- -- log('D', 'wtf', dumps(static_pn_data))
-  -- self.static_pacenotes:onDeserialized(static_pn_data, oldIdMap)
 end
 
 function C:loadStaticPacenotes()
