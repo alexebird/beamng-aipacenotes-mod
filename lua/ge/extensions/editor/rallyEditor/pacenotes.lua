@@ -1258,8 +1258,10 @@ end
 --   )
 -- end
 
-function C:deleteSelectedPacenote()
+function C:deleteSelectedPacenote(shouldSelect)
   if not self.path then return end
+
+  shouldSelect = (shouldSelect == nil) and true
 
   local pn = self:selectedPacenote()
   local toSelect = pn.prevNote
@@ -1270,7 +1272,7 @@ function C:deleteSelectedPacenote()
   local notebook = self.path
   notebook.pacenotes:remove(self.pacenote_tools_state.selected_pn_id)
 
-  if toSelect then
+  if shouldSelect and toSelect then
     self:selectPacenote(toSelect.id)
     self:setOrbitCameraToSelectedPacenote()
   end
@@ -1725,7 +1727,11 @@ function C:drawPacenotesList(height)
     if im.Button("Delete") then
       self:deleteSelectedPacenote()
     end
-    -- im.SameLine()
+    im.SameLine()
+    if im.Button("Merge with Next") then
+      self:mergeSelectedWithNextPacenote()
+    end
+
     if im.Button("TODO") then
       local pn = self:selectedPacenote()
       if pn then
@@ -2748,6 +2754,28 @@ function C:cycleEditMode()
   else
     self:setModeEditAll()
   end
+end
+
+function C:mergeSelectedWithNextPacenote()
+  local pn = self:selectedPacenote()
+  if not pn then return end
+
+  local pnNext = pn.nextNote
+  if not pnNext then return end
+
+  local lang = re_util.default_codriver_language
+
+  local currText = pn:getNoteFieldNote(lang)
+  print(currText)
+
+  local nextText = pnNext:getNoteFieldNote(lang)
+  local mergedText = nextText..' '..currText
+
+  pnNext:setNoteFieldNote(lang, mergedText)
+  self:deleteSelectedPacenote(false)
+
+  self:selectPacenote(pnNext.id)
+  self:setOrbitCameraToSelectedPacenote()
 end
 
 return function(...)

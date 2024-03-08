@@ -42,8 +42,8 @@ function C:loadCuts()
       if obj.cutId > 0 then
         transcripts[obj.cutId] = obj
         tscCount = tscCount + 1
-      else
-        log('W', logTag, 'loadCuts: skipping transcript with cutId <= 0')
+      -- else
+        -- log('W', logTag, 'loadCuts: skipping transcript with cutId <= 0')
       end
     end
   end
