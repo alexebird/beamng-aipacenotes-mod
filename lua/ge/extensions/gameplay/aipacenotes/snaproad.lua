@@ -724,7 +724,7 @@ function C:setFilter(wp)
   -- filtering modes:
   -- * AT is selected
   --   ->  back: cant go past prev AT
-  --   ->  fwd:  cant go past self CS
+  --   ->  fwd:  cant go past self CS OR next note AT
   -- * CS is selected
   --   -> back: cant go past self AT OR cant go past prev CE
   --   -> fwd:  cant go past self CE
@@ -739,6 +739,7 @@ function C:setFilter(wp)
   local limitFwdPoint = nil
 
   if wp:isAt() then
+    -- AT backwards movement
     if pn_prev then
       local wp_at_prev = pn_prev:getActiveFwdAudioTrigger()
       if wp_at_prev then
@@ -746,12 +747,30 @@ function C:setFilter(wp)
         limitBackPoint = point
       end
     end
+
+    -- AT forwards movement
+    if pn_next then
+      local wp_at_next = pn_next:getActiveFwdAudioTrigger()
+      if wp_at_next then
+        local point = self:closestSnapPoint(wp_at_next.pos, true)
+        limitFwdPoint = point
+      end
+    end
+
     local wp_cs = pn_sel:getCornerStartWaypoint()
     if wp_cs then
       local point = self:closestSnapPoint(wp_cs.pos, true)
-      limitFwdPoint = point
+      if limitFwdPoint then
+        if point.id < limitFwdPoint.id then
+          limitFwdPoint = point
+        end
+      else
+        limitFwdPoint = point
+      end
     end
+
   elseif wp:isCs() then
+    -- CS backwards movement
     local wp_at = pn_sel:getActiveFwdAudioTrigger()
     if wp_at then
       local point = self:closestSnapPoint(wp_at.pos, true)
@@ -772,17 +791,21 @@ function C:setFilter(wp)
       end
     end
 
+    -- CS forwards movement
     local wp_ce = pn_sel:getCornerEndWaypoint()
     if wp_ce then
       local point = self:closestSnapPoint(wp_ce.pos, true)
       limitFwdPoint = point
     end
   elseif wp:isCe() then
+    -- CE backwards movement
     local wp_cs = pn_sel:getCornerStartWaypoint()
     if wp_cs then
       local point = self:closestSnapPoint(wp_cs.pos, true)
       limitBackPoint = point
     end
+
+    -- CE forwards movement
     if pn_next then
       local wp_cs_next = pn_next:getCornerStartWaypoint()
       if wp_cs_next then

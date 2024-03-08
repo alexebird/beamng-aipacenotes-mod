@@ -141,14 +141,14 @@ local function insertMode()
   pacenotesWindow:insertMode()
 end
 
-local cameraOrbitState = {
-  up = 0,
-  down = 0,
-  right = 0,
-  left = 0,
-  zoomIn = 0,
-  zoomOut = 0,
-}
+-- local cameraOrbitState = {
+--   up = 0,
+--   down = 0,
+--   right = 0,
+--   left = 0,
+--   zoomIn = 0,
+--   zoomOut = 0,
+-- }
 -- local function cameraOrbitRight(v)
   -- if currentWindow ~= pacenotesWindow then return end
   -- if pacenotesWindow:selectedPacenote() then
@@ -223,9 +223,9 @@ local function moveSelectedWaypointForward(v)
     moveWaypointState.lastMoveTs = 0
   end
 
-  if pacenotesWindow:selectedWaypoint() then
-    moveWaypointState.forward = v
-  end
+  moveWaypointState.forward = v
+  -- if pacenotesWindow:selectedWaypoint() then
+  -- end
 end
 
 local function moveSelectedWaypointBackward(v)
@@ -235,9 +235,9 @@ local function moveSelectedWaypointBackward(v)
     moveWaypointState.lastMoveTs = 0
   end
 
-  if pacenotesWindow:selectedWaypoint() then
-    moveWaypointState.backward = v
-  end
+  moveWaypointState.backward = v
+  -- if pacenotesWindow:selectedWaypoint() then
+  -- end
 end
 
 local function cameraPathPlay()
@@ -315,16 +315,16 @@ local function updateMouseInfo()
   end
 end
 
-local function newEmptyNotebook()
-    local path = require('/lua/ge/extensions/gameplay/notebook/path')()
-    editor.history:commitAction(
-      "Set path to new path.",
-      -- {path = path, filepath = previousFilepath, filename = "new.notebook.json"},
-      {path = path},
-      setNotebookUndo,
-      setNotebookRedo
-    )
-end
+-- local function newEmptyNotebook()
+--     local path = require('/lua/ge/extensions/gameplay/notebook/path')()
+--     editor.history:commitAction(
+--       "Set path to new path.",
+--       -- {path = path, filepath = previousFilepath, filename = "new.notebook.json"},
+--       {path = path},
+--       setNotebookUndo,
+--       setNotebookRedo
+--     )
+-- end
 
 local function openMission()
   editor_missionEditor.show()
@@ -341,9 +341,10 @@ local function drawEditorGui()
   end
 
   local topToolbarHeight = 120 * im.uiscale[0]
-  local bottomToolbarHeight = 200 * im.uiscale[0]
-  local minMiddleHeight = 500 * im.uiscale[0]
-  local heightAdditional = 110-- * im.uiscale[0]
+  -- local bottomToolbarHeight = 500 * im.uiscale[0]
+  -- local minMiddleHeight = 300 * im.uiscale[0]
+  -- local heightAdditional = 110-- * im.uiscale[0]
+  -- local heightAdditional = 0
 
   -- if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
   if editor.beginWindow(toolWindowName, "Rally Editor") then
@@ -436,8 +437,9 @@ local function drawEditorGui()
 
       local windowSize = im.GetWindowSize()
       local windowHeight = windowSize.y
-      local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
-      middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
+      -- local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
+      local middleChildHeight = 1000
+      -- middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
 
       im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
       if im.BeginTabBar("modes") then
@@ -587,76 +589,76 @@ local function sphericalToCartesian(radius, theta, phi)
 end
 
 local function onUpdate()
-  local u = cameraOrbitState.up == 1
-  local d = cameraOrbitState.down == 1
-  local r = cameraOrbitState.right == 1
-  local l = cameraOrbitState.left == 1
-  local zi = cameraOrbitState.zoomIn == 1
-  local zo = cameraOrbitState.zoomOut == 1
-  local orbitChanged = u or d or r or l
-  local zoomChanged = zi or zo
+  -- local u = cameraOrbitState.up == 1
+  -- local d = cameraOrbitState.down == 1
+  -- local r = cameraOrbitState.right == 1
+  -- local l = cameraOrbitState.left == 1
+  -- local zi = cameraOrbitState.zoomIn == 1
+  -- local zo = cameraOrbitState.zoomOut == 1
+  -- local orbitChanged = u or d or r or l
+  -- local zoomChanged = zi or zo
 
-  if orbitChanged then
-    local cameraPosition = core_camera.getPosition()
-    local pn = pacenotesWindow:selectedPacenote()
-    if pn then
-      local wp = pn:getCornerStartWaypoint()
-      local targetPosition = wp.pos
+  -- if orbitChanged then
+  --   local cameraPosition = core_camera.getPosition()
+  --   local pn = pacenotesWindow:selectedPacenote()
+  --   if pn then
+  --     local wp = pn:getCornerStartWaypoint()
+  --     local targetPosition = wp.pos
+  --
+  --     -- Convert to Spherical Coordinates
+  --     local radius, theta, phi = cartesianToSpherical(cameraPosition.x - targetPosition.x, cameraPosition.y - targetPosition.y, cameraPosition.z - targetPosition.z)
+  --
+  --     local orbitSpeed = 0.025
+  --
+  --     if editor.keyModifiers.shift then
+  --       -- orbitSpeed = 0.05
+  --       orbitSpeed = orbitSpeed * 2
+  --     end
+  --
+  --     -- Update theta and phi based on input
+  --     if r then theta = theta + orbitSpeed end
+  --     if l then theta = theta - orbitSpeed end
+  --     if u then phi = phi - orbitSpeed end
+  --     if d then phi = phi + orbitSpeed end
+  --
+  --     -- Ensure phi stays within bounds
+  --     phi = math.max(0.1, math.min(math.pi - 0.1, phi))
+  --
+  --     -- Convert back to Cartesian Coordinates
+  --     local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
+  --     local newPos = vec3(newX + targetPosition.x, newY + targetPosition.y, newZ + targetPosition.z)
+  --
+  --     -- Check and adjust the camera position to ensure it's above the terrain
+  --     local terrainHeight = core_terrain.getTerrainHeight(vec3(newPos.x, newPos.z, 0))
+  --     terrainHeight = terrainHeight + 5
+  --     if newPos.z < terrainHeight then
+  --       newPos.z = terrainHeight
+  --     end
+  --
+  --     -- Set the new camera position and rotation
+  --     core_camera.setPosition(0, newPos)
+  --     -- make the camera look at the center point.
+  --     core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
+  --   end
+  -- end
 
-      -- Convert to Spherical Coordinates
-      local radius, theta, phi = cartesianToSpherical(cameraPosition.x - targetPosition.x, cameraPosition.y - targetPosition.y, cameraPosition.z - targetPosition.z)
-
-      local orbitSpeed = 0.025
-
-      if editor.keyModifiers.shift then
-        -- orbitSpeed = 0.05
-        orbitSpeed = orbitSpeed * 2
-      end
-
-      -- Update theta and phi based on input
-      if r then theta = theta + orbitSpeed end
-      if l then theta = theta - orbitSpeed end
-      if u then phi = phi - orbitSpeed end
-      if d then phi = phi + orbitSpeed end
-
-      -- Ensure phi stays within bounds
-      phi = math.max(0.1, math.min(math.pi - 0.1, phi))
-
-      -- Convert back to Cartesian Coordinates
-      local newX, newY, newZ = sphericalToCartesian(radius, theta, phi)
-      local newPos = vec3(newX + targetPosition.x, newY + targetPosition.y, newZ + targetPosition.z)
-
-      -- Check and adjust the camera position to ensure it's above the terrain
-      local terrainHeight = core_terrain.getTerrainHeight(vec3(newPos.x, newPos.z, 0))
-      terrainHeight = terrainHeight + 5
-      if newPos.z < terrainHeight then
-        newPos.z = terrainHeight
-      end
-
-      -- Set the new camera position and rotation
-      core_camera.setPosition(0, newPos)
-      -- make the camera look at the center point.
-      core_camera.setRotation(0, quatFromDir(targetPosition - newPos))
-    end
-  end
-
-  if zoomChanged then
-    local zoomStep = 1.6
-    if editor.keyModifiers.shift then
-      zoomStep = zoomStep * 4
-    end
-
-    local direction = (zo and 1) or -1
-    local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
-    elevation = elevation + zoomStep*direction
-    editor_rallyEditor.setPrefTopDownCameraElevation(elevation)
-
-    local pn = pacenotesWindow:selectedPacenote()
-    if pn then
-      local wp = pn:getCornerStartWaypoint()
-      re_util.setCameraTarget(wp.pos)
-    end
-  end
+  -- if zoomChanged then
+  --   local zoomStep = 1.6
+  --   if editor.keyModifiers.shift then
+  --     zoomStep = zoomStep * 4
+  --   end
+  --
+  --   local direction = (zo and 1) or -1
+  --   local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
+  --   elevation = elevation + zoomStep*direction
+  --   editor_rallyEditor.setPrefTopDownCameraElevation(elevation)
+  --
+  --   local pn = pacenotesWindow:selectedPacenote()
+  --   if pn then
+  --     local wp = pn:getCornerStartWaypoint()
+  --     re_util.setCameraTarget(wp.pos)
+  --   end
+  -- end
 
   local wp_fwd = moveWaypointState.forward == 1
   local wp_bak = moveWaypointState.backward == 1
@@ -772,14 +774,14 @@ local function onEditorRegisterPreferences(prefsRegistry)
 
   prefsRegistry:registerSubCategory("rallyEditor", "editing", nil, {
     -- {name = {type, default value, desc, label (nil for auto Sentence Case), min, max, hidden, advanced, customUiFunc, enumLabels}}
-    {lockWaypoints = {"bool", false, "Lock position of non-AudioTrigger waypoints.", "Lock non-AudioTrigger waypoints"}},
+    {lockWaypoints = {"bool", false, "Lock position of non-AudioTrigger waypoints.", "Lock non-AudioTrigger waypoints", nil, nil, true}},
+    {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport.", nil, nil, nil, true}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
-    {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport."}},
     -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
     -- {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
     {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
-    {punctuationLast = {"string", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize."}},
+    {punctuationLast = {"string", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize.", "Punctuation for Last Note"}},
   })
 
   prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Autofill Distance Calls", {
@@ -791,10 +793,10 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {level3Text = {"string", "and", "Text for level 3."}},
   })
 
-  prefsRegistry:registerSubCategory("rallyEditor", "topDownCamera", nil, {
-    {elevation = {"int", 200, "Elevation for the top-down camera view.", nil, 1, 1000}},
-    -- {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
-  })
+  -- prefsRegistry:registerSubCategory("rallyEditor", "topDownCamera", nil, {
+  --   {elevation = {"int", 200, "Elevation for the top-down camera view.", nil, 1, 1000}},
+  --   -- {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
+  -- })
 
   prefsRegistry:registerSubCategory("rallyEditor", "waypoints", nil, {
     {defaultRadius = {"int", 8, "The default radius for waypoints.", nil, 1, 50}},
@@ -820,6 +822,9 @@ end
 
 local function getPrefShowAudioTriggers()
   return getPreference('rallyEditor.editing.showAudioTriggers', true)
+end
+local function setPrefShowAudioTriggers(val)
+  editor.setPreference("rallyEditor.editing.showAudioTriggers", val)
 end
 
 local function getPrefShowPreviousPacenote()
@@ -851,24 +856,24 @@ local function getPrefUiPacenoteNoteFieldWidth()
   return getPreference('rallyEditor.ui.pacenoteNoteFieldWidth', 300)
 end
 
-local function getPrefTopDownCameraElevation()
-  return getPreference('rallyEditor.topDownCamera.elevation', 200)
-end
+-- local function getPrefTopDownCameraElevation()
+--   return getPreference('rallyEditor.topDownCamera.elevation', 200)
+-- end
 
-local function setPrefTopDownCameraElevation(val)
-  local min = 20
-  local max = 700
-
-  if val < min then
-    val = min
-  end
-
-  if val > max then
-    val = max
-  end
-
-  editor.setPreference("rallyEditor.topDownCamera.elevation", val)
-end
+-- local function setPrefTopDownCameraElevation(val)
+--   local min = 20
+--   local max = 700
+--
+--   if val < min then
+--     val = min
+--   end
+--
+--   if val > max then
+--     val = max
+--   end
+--
+--   editor.setPreference("rallyEditor.topDownCamera.elevation", val)
+-- end
 
 local function getPrefTopDownCameraFollow()
   return true
@@ -876,7 +881,11 @@ local function getPrefTopDownCameraFollow()
 end
 
 local function getPrefLockWaypoints()
-  return getPreference('rallyEditor.editing.lockWaypoints', false)
+  return getPreference("rallyEditor.editing.lockWaypoints", false)
+end
+
+local function setPrefLockWaypoints(val)
+  editor.setPreference("rallyEditor.editing.lockWaypoints", val)
 end
 
 local function getPrefLevel1Thresh()
@@ -1019,8 +1028,8 @@ M.cameraPathPlay = cameraPathPlay
 M.toggleCornerCalls = toggleCornerCalls
 
 M.onEditorInitialized = onEditorInitialized
-M.getTranscriptsWindow = function() return recceWindow end
-M.getPacenotesWindow = function() return pacenotesWindow end
+-- M.getTranscriptsWindow = function() return recceWindow end
+-- M.getPacenotesWindow = function() return pacenotesWindow end
 M.getMissionDir = getMissionDir
 
 M.getPrefDefaultRadius = getPrefDefaultRadius
@@ -1033,13 +1042,20 @@ M.getPrefLevel2Text = getPrefLevel2Text
 M.getPrefLevel2Thresh = getPrefLevel2Thresh
 M.getPrefLevel3Text = getPrefLevel3Text
 M.getPrefLevel3Thresh = getPrefLevel3Thresh
+
 M.getPrefLockWaypoints = getPrefLockWaypoints
+M.setPrefLockWaypoints = setPrefLockWaypoints
+
 M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
+M.setPrefShowAudioTriggers = setPrefShowAudioTriggers
+
 M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
 M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
-M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
-M.setPrefTopDownCameraElevation = setPrefTopDownCameraElevation
+
+-- M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
+-- M.setPrefTopDownCameraElevation = setPrefTopDownCameraElevation
+
 M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefUiPacenoteNoteFieldWidth = getPrefUiPacenoteNoteFieldWidth
 

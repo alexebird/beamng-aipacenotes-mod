@@ -32,11 +32,11 @@ local default_punctuation = '?'
 local default_punctuation_last = '.'
 
 
-local dragModes = {
-  simple = 'simple',
-  simple_road_snap = 'simple_road_snap',
-  gizmo = 'gizmo',
-}
+-- local dragModes = {
+--   simple = 'simple',
+--   simple_road_snap = 'simple_road_snap',
+--   gizmo = 'gizmo',
+-- }
 
 --
 -- html code: #00ffdebf
@@ -498,15 +498,15 @@ local function trimString(txt)
   return txt:gsub("^%s*(.-)%s*$", "%1")
 end
 
-local function setCameraTarget(pos)
-  if pos then
-    pos = vec3(pos)
-    local cam_rot = core_camera.getForward()
-    local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
-    local newCamPos = pos + (-cam_rot:normalized() * elevation)
-    core_camera.setPosition(0, newCamPos)
-  end
-end
+-- local function setCameraTarget(pos)
+--   if pos then
+--     pos = vec3(pos)
+--     local cam_rot = core_camera.getForward()
+--     local elevation = editor_rallyEditor.getPrefTopDownCameraElevation()
+--     local newCamPos = pos + (-cam_rot:normalized() * elevation)
+--     core_camera.setPosition(0, newCamPos)
+--   end
+-- end
 
 local function matchSearchPattern(searchPattern, stringToMatch)
   -- Escape special characters in Lua patterns except '*'
@@ -569,7 +569,7 @@ M.default_notebook_name = default_notebook_name
 M.default_punctuation = default_punctuation
 M.default_punctuation_last = default_punctuation_last
 M.desktopTranscriptFname = desktopTranscriptFname
-M.dragModes = dragModes
+-- M.dragModes = dragModes
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath
 M.pacenotesMetadataBasename = pacenotesMetadataBasename
@@ -610,7 +610,7 @@ M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
 M.playPacenote2 = playPacenote2
 M.playPacenoteGui = playPacenoteGui
-M.setCameraTarget = setCameraTarget
+-- M.setCameraTarget = setCameraTarget
 M.trimString = trimString
 
 return M

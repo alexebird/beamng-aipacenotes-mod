@@ -99,14 +99,14 @@ end
 -- function C:onEditModeActivate()
 -- end
 
-function C:draw(mouseInfo, vHeight)
+function C:draw(mouseInfo, tabContentsHeight)
   -- self.mouseInfo = mouseInfo
   -- if self.rallyEditor.allowGizmo() then
     -- editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
     -- self:input()
   -- end
   -- self:drawNotebookList()
-  self:drawNotebook(vHeight)
+  self:drawNotebook(tabContentsHeight)
 end
 
 local function setNotebookFieldUndo(data)
@@ -122,7 +122,7 @@ local function setCodriverFieldRedo(data)
   data.self.path.codrivers.objects[data.index][data.field] = data.new
 end
 
-function C:drawNotebook(vHeight)
+function C:drawNotebook(tabContentsHeight)
   if not self.path then return end
 
   self:validate()
@@ -168,15 +168,15 @@ function C:drawNotebook(vHeight)
   end
 
   -- im.BeginChild1("codrivers-wrapper", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
-  self:drawCodriversList(vHeight-260)
+  self:drawCodriversList(tabContentsHeight-260)
   -- im.EndChild()
 end
 
-function C:drawCodriversList(vHeight)
+function C:drawCodriversList(tabContentsHeight)
   im.HeaderText("Co-Drivers")
 
-  vHeight = 0
-  im.BeginChild1("codrivers", im.ImVec2(125 * im.uiscale[0], vHeight), im.WindowFlags_ChildWindow)
+  tabContentsHeight = 0
+  im.BeginChild1("codrivers", im.ImVec2(125 * im.uiscale[0], tabContentsHeight), im.WindowFlags_ChildWindow)
   for i, codriver in ipairs(self.path.codrivers.sorted) do
     if im.Selectable1(codriver.name, codriver.id == self.codriver_index) then
       editor.history:commitAction("Select Codriver",
@@ -192,7 +192,7 @@ function C:drawCodriversList(vHeight)
   im.EndChild() -- codrivers list child window
 
   im.SameLine()
-  im.BeginChild1("currentCodriver", im.ImVec2(0,vHeight), im.WindowFlags_ChildWindow)
+  im.BeginChild1("currentCodriver", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow)
 
   self:drawCodriverForm(self:selectedCodriver())
 

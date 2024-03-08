@@ -680,9 +680,9 @@ function C:drawDebugPacenoteHelper(drawConfig, selection_state)
       --   text_dist = nil
       -- end
       drawWaypoint(drawConfig, selection_state, wp, text_dist)
-      if selection_state.drag_mode == re_util.dragModes.simple then
-        drawLink(drawConfig, wp, wp_cs)
-      end
+      -- if selection_state.drag_mode == re_util.dragModes.simple then
+      --   drawLink(drawConfig, wp, wp_cs)
+      -- end
     end
   end
 
@@ -691,13 +691,13 @@ function C:drawDebugPacenoteHelper(drawConfig, selection_state)
     local nextwp = wp_cs
     for _,wp in ipairs(wp_dist_before_start) do
       drawWaypoint(drawConfig, selection_state, wp, text_dist)
-      if selection_state.drag_mode == re_util.dragModes.simple then
-        drawLink(drawConfig, wp, nextwp)
-        -- distance is from distance marker to: either next distance marker, or CS
-        text_dist = prettyDistanceStringMeters(wp, nextwp)
-        drawLinkLabel(drawConfig, wp, nextwp, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
-        nextwp = wp
-      end
+      -- if selection_state.drag_mode == re_util.dragModes.simple then
+      --   drawLink(drawConfig, wp, nextwp)
+      --   -- distance is from distance marker to: either next distance marker, or CS
+      --   text_dist = prettyDistanceStringMeters(wp, nextwp)
+      --   drawLinkLabel(drawConfig, wp, nextwp, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
+      --   nextwp = wp
+      -- end
     end
   end
 
@@ -718,14 +718,14 @@ function C:drawDebugPacenoteHelper(drawConfig, selection_state)
     for _,wp in ipairs(wp_dist_between) do
       text_dist = nil
       drawWaypoint(drawConfig, selection_state, wp, text_dist)
-      if selection_state.drag_mode == re_util.dragModes.simple then
-        drawLink(drawConfig, prevwp, wp)
-        -- distance is from CS to each distance marker
-        text_dist = prettyDistanceStringMeters(prevwp, wp)
-        drawLinkLabel(drawConfig, prevwp, wp, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
-        prevwp = wp
-        prevIsCS = false
-      end
+      -- if selection_state.drag_mode == re_util.dragModes.simple then
+      --   drawLink(drawConfig, prevwp, wp)
+      --   -- distance is from CS to each distance marker
+      --   text_dist = prettyDistanceStringMeters(prevwp, wp)
+      --   drawLinkLabel(drawConfig, prevwp, wp, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
+      --   prevwp = wp
+      --   prevIsCS = false
+      -- end
     end
   end
 
@@ -740,31 +740,31 @@ function C:drawDebugPacenoteHelper(drawConfig, selection_state)
   end
 
   -- (6) draw the link into CE depending on some logic.
-  if selection_state.drag_mode == re_util.dragModes.simple then
-    if prevIsCS or not editor_rallyEditor.getPrefShowDistanceMarkers() then
-      drawLink(drawConfig, prevwp, wp_ce)
-    else
-      if drawConfig.di_middle then
-        drawLink(drawConfig, prevwp, wp_ce)
-        -- distance is from the last middle DI to CE
-        text_dist = prettyDistanceStringMeters(prevwp, wp_ce)
-        drawLinkLabel(drawConfig, prevwp, wp_ce, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
-      end
-    end
-  end
+  -- if selection_state.drag_mode == re_util.dragModes.simple then
+  --   if prevIsCS or not editor_rallyEditor.getPrefShowDistanceMarkers() then
+  --     drawLink(drawConfig, prevwp, wp_ce)
+  --   else
+  --     if drawConfig.di_middle then
+  --       drawLink(drawConfig, prevwp, wp_ce)
+  --       -- distance is from the last middle DI to CE
+  --       text_dist = prettyDistanceStringMeters(prevwp, wp_ce)
+  --       drawLinkLabel(drawConfig, prevwp, wp_ce, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
+  --     end
+  --   end
+  -- end
 
   -- -- (7) draw the distance markers after CE, links, labels.
   if drawConfig.di_after then
     prevwp = wp_ce
     for _,wp in ipairs(wp_dist_after_end) do
       drawWaypoint(drawConfig, selection_state, wp, text_dist)
-      if selection_state.drag_mode == re_util.dragModes.simple then
-        drawLink(drawConfig, prevwp, wp)
-        -- distance is from CE to each DI
-        text_dist = prettyDistanceStringMeters(prevwp, wp)
-        drawLinkLabel(drawConfig, prevwp, wp, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
-        prevwp = wp
-      end
+      -- if selection_state.drag_mode == re_util.dragModes.simple then
+      --   drawLink(drawConfig, prevwp, wp)
+      --   -- distance is from CE to each DI
+      --   text_dist = prettyDistanceStringMeters(prevwp, wp)
+      --   drawLinkLabel(drawConfig, prevwp, wp, text_dist, cc.pacenote_clr_di_txt, cc.pacenote_clr_di)
+      --   prevwp = wp
+      -- end
     end
   end
 end

@@ -39,7 +39,12 @@ local function selectWaypointRedo(data)
   data.self:selectWaypoint(data.new)
 end
 
-local dragModes = re_util.dragModes
+-- local dragModes = re_util.dragModes
+local editModes = {
+  editAll = 'edit_all',
+  editAT = 'edit_at',
+  editCorners = 'edit_corners',
+}
 
 local language_form_fields = {}
 -- language_form_fields.before = im.ArrayChar(64)
@@ -59,6 +64,7 @@ function C:init(rallyEditor)
   self.pacenote_tools_state = {
     -- drag_mode = dragModes.simple,
     snaproad = nil,
+    mode = nil,
     search = nil,
     internal_lock = false,
     hover_wp_id = nil,
@@ -159,6 +165,9 @@ end
 function C:selected()
   if not self.path then return end
 
+  if not self.pacenote_tools_state.mode then
+    self:cycleEditMode()
+  end
   self:loadSnaproad()
   self:selectPacenote(self.pacenote_tools_state.selected_pn_id)
 
@@ -197,7 +206,8 @@ function C:setOrbitCameraToSelectedPacenote()
   if self:selectedPacenote() then
     core_camera.setByName(0, "pacenoteOrbit")
     core_camera.setRef(0, self:selectedPacenote():getCornerStartWaypoint().pos)
-    core_camera.setDistance(0, self.rallyEditor.getPrefTopDownCameraElevation())
+    -- core_camera.setDistance(0, self.rallyEditor.getPrefTopDownCameraElevation())
+    -- core_camera.setDistance(0, self.rallyEditor.getPrefTopDownCameraElevation())
   end
 end
 
@@ -420,16 +430,16 @@ function C:endDragging()
   )
 end
 
-function C:getTranscripts()
-  if not self.rallyEditor then return nil end
-  local loaded_transcript = self.rallyEditor.getTranscriptsWindow().loaded_transcript
-
-  if  loaded_transcript then
-    return loaded_transcript
-  else
-    return nil
-  end
-end
+-- function C:getTranscripts()
+--   if not self.rallyEditor then return nil end
+--   local loaded_transcript = self.rallyEditor.getTranscriptsWindow().loaded_transcript
+--
+--   if  loaded_transcript then
+--     return loaded_transcript
+--   else
+--     return nil
+--   end
+-- end
 
 function C:drawDebugEntrypoint()
   if self.path then
@@ -704,7 +714,7 @@ function C:draw(mouseInfo, tabContentsHeight)
   -- self:drawPacenotesList(availableHeight * ratio)
   -- self:drawTranscriptsSection(availableHeight * (1.0 - ratio))
 
-  self:drawPacenotesList(tabContentsHeight * 0.7)
+  self:drawPacenotesList(tabContentsHeight)
   -- self:drawTranscriptsSection(tabContentsHeight * 0.15)
 end
 
@@ -1046,7 +1056,7 @@ function C:detectMouseHoverWaypoint()
           -- table.insert(waypoints, waypoint)
         if waypoint:isAt() and editor_rallyEditor.getPrefShowAudioTriggers() then
           table.insert(waypoints, waypoint)
-        elseif waypoint:isCs() or waypoint:isCe() then
+        elseif (waypoint:isCs() or waypoint:isCe()) and not waypoint:isLocked() then
           table.insert(waypoints, waypoint)
         end
       end
@@ -1068,8 +1078,10 @@ function C:detectMouseHoverWaypoint()
     if prev_i > 0 and self:selectedWaypoint() then
       local pn_prev = self.path.pacenotes.sorted[prev_i]
       for _,waypoint in ipairs(pn_prev.pacenoteWaypoints.sorted) do
-        radius_factors[waypoint.id] = cc.pacenote_adjacent_radius_factor
-        table.insert(waypoints, waypoint)
+        if not waypoint:isLocked() then
+          radius_factors[waypoint.id] = cc.pacenote_adjacent_radius_factor
+          table.insert(waypoints, waypoint)
+        end
       end
     end
   end
@@ -1080,8 +1092,10 @@ function C:detectMouseHoverWaypoint()
     if next_i <= #self.path.pacenotes.sorted and self:selectedWaypoint() then
       local pn_next = self.path.pacenotes.sorted[next_i]
       for _,waypoint in ipairs(pn_next.pacenoteWaypoints.sorted) do
-        radius_factors[waypoint.id] = cc.pacenote_adjacent_radius_factor
-        table.insert(waypoints, waypoint)
+        if not waypoint:isLocked() then
+          radius_factors[waypoint.id] = cc.pacenote_adjacent_radius_factor
+          table.insert(waypoints, waypoint)
+        end
       end
     end
   end
@@ -1490,12 +1504,6 @@ function C:drawPacenotesList(height)
     im.HeaderText(tostring(#notebook.pacenotes.sorted).." Pacenotes")
   else
     im.HeaderText("[!] "..tostring(#notebook.pacenotes.sorted).." Pacenotes")
-    local issues = "Issues (".. (#self.validation_issues) .."):\n"
-    for _, issue in ipairs(self.validation_issues) do
-      issues = issues..'- '..issue..'\n'
-    end
-    im.Text(issues)
-    im.Separator()
   end
 
   -- im.SameLine()
@@ -1557,6 +1565,21 @@ function C:drawPacenotesList(height)
     im.EndPopup()
   end
 
+  local editModeLabel = nil
+  if self.pacenote_tools_state.mode == editModes.editAll then
+    editModeLabel = "All"
+  elseif self.pacenote_tools_state.mode == editModes.editCorners then
+    editModeLabel = "Corners"
+  elseif self.pacenote_tools_state.mode == editModes.editAT then
+    editModeLabel = "Audio Triggers"
+  end
+
+  im.HeaderText("Edit Mode: "..tostring(editModeLabel or "???"))
+  if im.Button("Cycle Edit Mode") then
+    self:cycleEditMode()
+  end
+
+  im.HeaderText("Search")
   if im.Button("Prev") then
       self:selectPrevPacenote()
   end
@@ -1566,6 +1589,8 @@ function C:drawPacenotesList(height)
   end
   im.SameLine()
   local editEnded = im.BoolPtr(false)
+
+  im.SetNextItemWidth(300)
   editor.uiInputText("##SearchPn", pacenotesSearchText, nil, nil, nil, nil, editEnded)
   if editEnded[0] then
     self.pacenote_tools_state.search = ffi.string(pacenotesSearchText)
@@ -1590,11 +1615,25 @@ function C:drawPacenotesList(height)
     pacenotesSearchText = im.ArrayChar(1024, "")
   end
 
+  if self:isValid() then
+    im.HeaderText("No Issues")
+  else
+    local issuesHeading = "Issues (".. (#self.validation_issues) ..")"
+    im.HeaderText(issuesHeading)
+    local issues = ""
+    for _, issue in ipairs(self.validation_issues) do
+      issues = issues..'- '..issue..'\n'
+    end
+    im.Text(issues)
+    -- im.Separator()
+  end
 
   -- vertical space
-  for i = 1,5 do im.Spacing() end
+  -- for i = 1,5 do im.Spacing() end
 
-  im.BeginChild1("pacenotes", im.ImVec2(200*im.uiscale[0],height), im.WindowFlags_ChildWindow)
+  local heightTopArea = 260
+  im.HeaderText("Selected Pacenote")
+  im.BeginChild1("pacenotes", im.ImVec2(200*im.uiscale[0], height-heightTopArea), im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1(note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then
 
@@ -1620,7 +1659,7 @@ function C:drawPacenotesList(height)
   im.EndChild() -- pacenotes child window
 
   im.SameLine()
-  im.BeginChild1("currentPacenote", im.ImVec2(0,height), im.WindowFlags_ChildWindow)
+  im.BeginChild1("currentPacenote", im.ImVec2(0,height-heightTopArea), im.WindowFlags_ChildWindow)
 
   if self.pacenote_tools_state.selected_pn_id then
     local pacenote = notebook.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
@@ -1628,9 +1667,9 @@ function C:drawPacenotesList(height)
     if not pacenote.missing then
 
     if pacenote:is_valid() then
-      im.HeaderText("Pacenote Info")
+      im.HeaderText("Details")
     else
-      im.HeaderText("[!] Pacenote Info")
+      im.HeaderText("[!] Details")
       local issues = "Issues (".. (#pacenote.validation_issues) .."):\n"
       for _, issue in ipairs(pacenote.validation_issues) do
         issues = issues..'- '..issue..'\n'
@@ -2528,27 +2567,40 @@ function C:selectNextWaypoint()
     elseif wp_sel:isCs() then
       wp_new = pn:getCornerEndWaypoint()
     elseif wp_sel:isCe() then
-      wp_new = pn:getActiveFwdAudioTrigger()
-      if not wp_new then
-        wp_new = pn:getCornerStartWaypoint()
+      if editor_rallyEditor.getPrefShowAudioTriggers() then
+        wp_new = pn:getActiveFwdAudioTrigger()
+      else
+      wp_new = pn:getCornerStartWaypoint()
       end
+      -- if not wp_new then
+      --   wp_new = pn:getCornerStartWaypoint()
+      -- end
     end
 
-    if wp_new then
+    if wp_new and not wp_new:isLocked() then
       self:selectWaypoint(wp_new.id)
     end
   else
-    local wp = pn:getActiveFwdAudioTrigger()
-    if not wp then
+    local wp = nil
+    if editor_rallyEditor.getPrefShowAudioTriggers() then
+      wp = pn:getActiveFwdAudioTrigger()
+    else
       wp = pn:getCornerStartWaypoint()
     end
+    -- if not wp then
+    --   wp = pn:getCornerStartWaypoint()
+    -- end
     self:selectWaypoint(wp.id)
   end
 end
 
 function C:_moveSelectedWaypointHelper(fwd, steps)
   local wp = self:selectedWaypoint()
-  if not wp then return end
+  if not wp then
+    self:selectNextWaypoint()
+    wp = self:selectedWaypoint()
+    return
+  end
 
   if self.pacenote_tools_state.snaproad then
     local pn = self:selectedPacenote()
@@ -2593,13 +2645,37 @@ function C:toggleCornerCalls()
   end
 end
 
--- function C:moveSelectedWaypointForwardFast()
---   self:_moveSelectedWaypointHelper(true, 5)
--- end
---
--- function C:moveSelectedWaypointBackwardFast()
---   self:_moveSelectedWaypointHelper(false, 5)
--- end
+function C:setModeEditAll()
+  self.pacenote_tools_state.mode = editModes.editAll
+  editor_rallyEditor.setPrefLockWaypoints(false)
+  editor_rallyEditor.setPrefShowAudioTriggers(true)
+end
+
+function C:setModeEditCorners()
+  self.pacenote_tools_state.mode = editModes.editCorners
+  editor_rallyEditor.setPrefLockWaypoints(false)
+  editor_rallyEditor.setPrefShowAudioTriggers(false)
+end
+
+function C:setModeEditAudioTrigger()
+  self.pacenote_tools_state.mode = editModes.editAT
+  editor_rallyEditor.setPrefLockWaypoints(true)
+  editor_rallyEditor.setPrefShowAudioTriggers(true)
+end
+
+function C:cycleEditMode()
+  self:selectWaypoint(nil)
+
+  if self.pacenote_tools_state.mode == editModes.editAll then
+    self:setModeEditCorners()
+  elseif self.pacenote_tools_state.mode == editModes.editCorners then
+    self:setModeEditAudioTrigger()
+  elseif self.pacenote_tools_state.mode == editModes.editAT then
+    self:setModeEditAll()
+  else
+    self:setModeEditAll()
+  end
+end
 
 return function(...)
   local o = {}

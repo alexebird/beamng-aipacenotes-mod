@@ -60,9 +60,10 @@ function C:setupStuff()
   -- self.camLastRot = vec3(math.rad(self.camRot.x), math.rad(self.camRot.y), 0)
   self.camMinDist = 10
   self.camMaxDist = 700
-  self.camDist = self.distance or 200
+  local default
+  self.defaultDistance = 300
+  self.camDist = self.distance or self.defaultDistance
   -- self.camLastDist = self.distance or 5
-  self.defaultDistance = self.distance or 200
   -- self.mode = self.mode or 'ref'
   -- self.skipFovModifier = self.skipFovModifier or false
   -- self.smoothedVelocity:set(0)
