@@ -245,6 +245,11 @@ local function cameraPathPlay()
   pacenotesWindow:cameraPathPlay()
 end
 
+local function toggleCornerCalls()
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:toggleCornerCalls()
+end
+
 -- local function moveSelectedWaypointForwardFast()
 --   pacenotesWindow:moveSelectedWaypointForwardFast()
 -- end
@@ -709,10 +714,10 @@ local function onEditorInitialized()
   -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/transcripts')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/recceTab')(M))
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/missionSettings')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
+  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
 
-  notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
-  -- notebookInfoWindow, pacenotesWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4]
+  -- notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
+  notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow = windows[1], windows[2], windows[3], windows[4]
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)
@@ -1011,6 +1016,7 @@ M.moveSelectedWaypointBackward = moveSelectedWaypointBackward
 -- M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
 -- M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
 M.cameraPathPlay = cameraPathPlay
+M.toggleCornerCalls = toggleCornerCalls
 
 M.onEditorInitialized = onEditorInitialized
 M.getTranscriptsWindow = function() return recceWindow end

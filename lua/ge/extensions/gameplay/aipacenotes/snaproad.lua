@@ -10,6 +10,8 @@ function C:init(recce)
   self.recce = recce
   self.cameraPathPlayer = require('/lua/ge/extensions/gameplay/aipacenotes/cameraPathPlayer')(self)
 
+  self.show_corner_calls = false
+
   self.filter = {
     enabled = false,
     points = {},
@@ -21,6 +23,7 @@ function C:init(recce)
     before_points = {},
     focus_points = {},
     after_points = {},
+    corner_call_points = {},
   }
 
   self.partition_all_state = {
@@ -84,7 +87,12 @@ function C:_drawDebugPartition(adjustH)
     clr = cc.snaproads_clr
   end
 
-  _drawDebugPoints(points, clr, nil, nil, adjustH)
+  if self.show_corner_calls then
+    _drawDebugPoints(self.partition.corner_call_points.points_at_to_cs, clr, nil, nil, adjustH)
+    self:_drawDebugCornerCalls()
+  else
+    _drawDebugPoints(points, clr, nil, nil, adjustH)
+  end
 
   points = self.partition.before_points
   -- clr = cc.snaproads_clr
@@ -199,7 +207,7 @@ local function createGradient(steps)
   return gradient
 end
 
-function C:get_grouped_captures(points, style_data)
+function C:groupPointsByCornerCall(points)
 
   -- if editor_rallyEditor then
     -- local cornerAnglesStyle = capture_data.cornerAnglesStyle
@@ -211,8 +219,10 @@ function C:get_grouped_captures(points, style_data)
     --   end
     -- end
 
+  local styleData = self.recce.settings:getCornerCallStyle()
+
   local sortedAngles = {}
-  for i,angle in ipairs(style_data.angles) do
+  for i,angle in ipairs(styleData.angles) do
     table.insert(sortedAngles, angle)
   end
   local function sortByAngleRev(a, b)
@@ -235,7 +245,6 @@ function C:get_grouped_captures(points, style_data)
 
     local angle_data, cornerCallStr, pct = re_util.determineCornerCall(sortedAngles, point.steering)
     point.calc = {
-      -- angle_i = angle_i,
       angle_pct = pct,
       angle_data = angle_data,
       cornerCallStr = cornerCallStr,
@@ -260,35 +269,28 @@ function C:get_grouped_captures(points, style_data)
   return subgroups
 end
 
-function C:drawDebugCornerCalls()
-  local capture_data = self:capture_data()
-  if not capture_data then return end
+function C:_drawDebugCornerCalls()
+  local radius = cc.snaproads_radius
+  local shapeAlpha = cc.snaproads_alpha
+  local textAlpha = 1.0
+  local clr = nil
+  local clr_text_fg = cc.clr_black
+  local label_point = nil
+  local clr_text_bg = nil
+  local calc = nil
 
-  -- local captures = capture_data.captures
-  local cornerAnglesStyle = capture_data.cornerAnglesStyle
+  local groups = self.partition.corner_call_points.groups
 
-  local radius = 0.5
-  local shapeAlpha = 0.9
-  local clr = cc.clr_teal
-
-  local groups = self:get_grouped_captures()
-  if not groups then return end
-
-  for i_grp,grp in ipairs(groups) do
-    for _,cap in ipairs(grp.captures) do
+  for _,grp in ipairs(groups) do
+    for _,cap in ipairs(grp.points) do
       clr = cap.calc.angle_data.color
-      -- clr = cap.calc.color_within_angle
-      -- log('D', 'wtf', dumps(clr))
-
       local pos = vec3(cap.pos)
       debugDrawer:drawSphere(pos, radius, ColorF(clr[1],clr[2],clr[3],shapeAlpha))
     end
-    -- log('D', 'wtf', '---')
-    local label_point = grp.label_point
-    local calc = grp.calc
-    local clr_text_fg = cc.clr_black
-    local clr_text_bg = calc.angle_data.color
-    local textAlpha = 1.0
+
+    label_point = grp.label_point
+    calc = grp.calc
+    clr_text_bg = calc.angle_data.color
 
     debugDrawer:drawTextAdvanced(
       vec3(label_point.pos),
@@ -476,14 +478,9 @@ end
 
 function C:setPartitionToPacenote(pn)
   if not pn then return end
-  -- if not pn then
-  --   self:clearPartition()
-  --   return
-  -- end
 
   self.partition.pacenote = pn
 
-  -- find snappoints for pacenote CE and CS
   local pointAt = self:closestSnapPoint(pn:getActiveFwdAudioTrigger().pos)
   -- local pointCs = self:closestSnapPoint(pn:getCornerStartWaypoint().pos)
   local pointCe = self:closestSnapPoint(pn:getCornerEndWaypoint().pos)
@@ -509,6 +506,7 @@ function C:_partitionPoints(fromPoint, toPoint)
   self.partition.before_points = {}
   self.partition.focus_points = {}
   self.partition.after_points = {}
+  self.partition.corner_call_points = {}
   self:_clearPointCachedPartitions()
 
   -- fill the focus points
@@ -530,6 +528,28 @@ function C:_partitionPoints(fromPoint, toPoint)
     else
       break
     end
+  end
+
+  -- maybe fill the corner call points
+  if self.show_corner_calls and self.partition.pacenote then
+    self.partition.corner_call_points = {
+      points_at_to_cs = {},
+      points_cs_to_ce = {},
+      groups = {},
+    }
+
+    local wp_cs = self.partition.pacenote:getCornerStartWaypoint()
+    local point_cs = self:closestSnapPoint(wp_cs.pos)
+    for i,point in ipairs(self.partition.focus_points) do
+      if point_cs and point.id < point_cs.id then
+        table.insert(self.partition.corner_call_points.points_at_to_cs, point)
+      else
+        table.insert(self.partition.corner_call_points.points_cs_to_ce, point)
+      end
+    end
+
+    local groups = self:groupPointsByCornerCall(self.partition.corner_call_points.points_cs_to_ce)
+    self.partition.corner_call_points.groups = groups
   end
 
   -- fill the before points
@@ -796,7 +816,6 @@ function C:setFilter(wp)
   -- self:_partitionPoints(self.filter.points[1], self.filter.points[#self.filter.points])
 end
 
-
 function C:setPartitionToFilter()
   if not self.filter.enabled then return end
   self:_partitionPoints(self.filter.points[1], self.filter.points[#self.filter.points])
@@ -821,6 +840,13 @@ end
 
 function C:partitionAllEnabled()
   return self.partition_all_state.enabled
+end
+
+function C:toggleCornerCalls()
+  self.show_corner_calls = not self.show_corner_calls
+  if self.partition.pacenote then
+    self:setPartitionToPacenote(self.partition.pacenote)
+  end
 end
 
 return function(...)

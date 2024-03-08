@@ -185,21 +185,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       //   el.focus()
       // })
 
-
-      // $scope.$on('aiPacenotes.recceApp.cornerAnglesLoaded', function (event, cornerCallStyle) {
-      //   $scope.cornerCallStyle = cornerCallStyle
-      // })
-
-      // $scope.btnRefreshCornerAngles = function() {
-      //   bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadCornerAngles()')
-      //   // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadCornerAnglesFile()', (response) => {
-      //   // $scope.pacenoteStyles = response
-      //   // $scope.cornerCall = '-'
-      //   // })
-      // }
-
       $scope.btnRefreshMissions = function() {
-        // bngApi.engineLua('extensions.ui_aipacenotes_recceApp.listMissionsForLevel()')
         refreshRecceApp()
       }
 
@@ -223,11 +209,6 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.missionIsLoaded = false
         updateLuaDrawDebug()
       }
-
-      // $scope.btnRetryNetwork = function() {
-      //   $scope.transcriptsError = $sce.trustAsHtml('connecting to desktop app...')
-      //   bngApi.engineLua('extensions.ui_aipacenotes_recceApp.clearTimeout()')
-      // }
 
       $scope.btnRecordStart = function() {
         $scope.isRecording = true

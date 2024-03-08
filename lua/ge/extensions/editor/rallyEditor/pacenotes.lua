@@ -1214,52 +1214,64 @@ function C:deleteSelected()
   end
 end
 
-function C:deleteSelectedWaypoint()
-  if not self.path then return end
-
-  local wp_sel = self:selectedWaypoint()
-
-  if wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
-    return
-  elseif wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerEnd then
-    return
-  end
-
-  editor.history:commitAction(
-    "RallyEditor DeleteSelectedWaypoint",
-    {index = self.pacenote_tools_state.selected_wp_id, self = self},
-    function(data) -- undo
-      local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, nil, data.wpData.oldId)
-      wp:onDeserialized(data.wpData)
-      self:selectWaypoint(data.index)
-    end,
-    function(data) --redo
-      data.wpData = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:onSerialize()
-      data.self:selectedPacenote().pacenoteWaypoints:remove(data.index)
-      self:selectWaypoint(nil)
-    end
-  )
-end
+-- function C:deleteSelectedWaypoint()
+--   if not self.path then return end
+--
+--   local wp_sel = self:selectedWaypoint()
+--
+--   if wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
+--     return
+--   elseif wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerEnd then
+--     return
+--   end
+--
+--   editor.history:commitAction(
+--     "RallyEditor DeleteSelectedWaypoint",
+--     {index = self.pacenote_tools_state.selected_wp_id, self = self},
+--     function(data) -- undo
+--       local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, nil, data.wpData.oldId)
+--       wp:onDeserialized(data.wpData)
+--       self:selectWaypoint(data.index)
+--     end,
+--     function(data) --redo
+--       data.wpData = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:onSerialize()
+--       data.self:selectedPacenote().pacenoteWaypoints:remove(data.index)
+--       self:selectWaypoint(nil)
+--     end
+--   )
+-- end
 
 function C:deleteSelectedPacenote()
   if not self.path then return end
 
-  local notebook = self.path
+  local pn = self:selectedPacenote()
+  local toSelect = pn.prevNote
+  if not toSelect then
+    toSelect = pn.nextNote
+  end
 
-  editor.history:commitAction(
-    "RallyEditor DeleteSelectedPacenote",
-    {index = self.pacenote_tools_state.selected_pn_id, self = self},
-    function(data) -- undo
-      local note = notebook.pacenotes:create(nil, data.noteData.oldId)
-      note:onDeserialized(data.noteData, {})
-      self:selectPacenote(data.index)
-    end,
-    function(data) --redo
-      data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
-      notebook.pacenotes:remove(data.index)
-      self:selectPacenote(nil)
-    end
-  )
+  local notebook = self.path
+  notebook.pacenotes:remove(self.pacenote_tools_state.selected_pn_id)
+
+  if toSelect then
+    self:selectPacenote(toSelect.id)
+    self:setOrbitCameraToSelectedPacenote()
+  end
+
+  -- editor.history:commitAction(
+  --   "RallyEditor DeleteSelectedPacenote",
+  --   {index = self.pacenote_tools_state.selected_pn_id, self = self},
+  --   function(data) -- undo
+  --     local note = notebook.pacenotes:create(nil, data.noteData.oldId)
+  --     note:onDeserialized(data.noteData, {})
+  --     self:selectPacenote(data.index)
+  --   end,
+  --   function(data) --redo
+  --     data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
+  --     notebook.pacenotes:remove(data.index)
+  --     self:selectPacenote(nil)
+  --   end
+  -- )
 end
 
 function C:selectRecentPacenote()
@@ -1659,7 +1671,7 @@ function C:drawPacenotesList(height)
 
     local icon = editor.icons.play_arrow
     local paused = simTimeAuthority.getPause()
-    local camTxt = 'Play'..((paused and ' (must unpause game!)') or '')
+    local camTxt = 'Play Pacenote as Camera Path'..((paused and ' (must unpause game!)') or '')
 
     if self:cameraPathIsPlaying() then
       icon = editor.icons.stop
@@ -1670,6 +1682,14 @@ function C:drawPacenotesList(height)
     end
     im.SameLine()
     im.Text(camTxt)
+
+    local corner_call_txt = 'Show Corner Calls'
+    if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.snaproad.show_corner_calls then
+      corner_call_txt = 'Hide Corner Calls'
+    end
+    if im.Button(corner_call_txt) then
+      self:toggleCornerCalls()
+    end
 
     for _ = 1,5 do im.Spacing() end
 
@@ -2128,7 +2148,7 @@ function C:drawWaypointList(note)
       im.Text("Current Waypoint: #" .. self.pacenote_tools_state.selected_wp_id)
       im.SameLine()
       if im.Button("Delete") then
-        self:deleteSelectedWaypoint()
+        -- self:deleteSelectedWaypoint()
       end
       im.SameLine()
       if im.Button("Move Up") then
@@ -2565,6 +2585,12 @@ end
 
 function C:cameraPathIsPlaying()
   return core_camera.getActiveCamName() == "path"
+end
+
+function C:toggleCornerCalls()
+  if self.pacenote_tools_state.snaproad then
+    self.pacenote_tools_state.snaproad:toggleCornerCalls()
+  end
 end
 
 -- function C:moveSelectedWaypointForwardFast()

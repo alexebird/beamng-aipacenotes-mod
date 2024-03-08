@@ -8,36 +8,8 @@ local M = {}
 
 local logTag = 'aip-client'
 local base_url = 'http://localhost:27872'
--- local network_issue_msg = nil
--- local timeout_msg = 'network activity disabled due to timeout.<br>is the desktop app running?<br>click net to retry.'
-local timeout_msg = 'is the desktop app running?<br>click net to retry.'
--- local recording_disabled_msg = 'please enable recording in the desktop app.<br>click net to retry.'
-local network_issue_occurred = false
-
--- local last_transcript_cut_ts = re_util.getTime()
--- local double_tap_threshold_sec = 0.5
-
--- local function clear_network_issue()
---   network_issue_occurred = false
--- end
-
--- local function check_timeout(code)
---   if code == 'connection refused' then
---     network_issue_occurred = true
---     network_issue_msg = timeout_msg
---     log('E', logTag, 'aip client detected timeout '..dumps(code))
---   end
--- end
-
-local function has_network_issue()
-  return network_issue_occurred
-end
 
 local function jsonRequestGet(uri)
-  -- if network_issue_occurred then
-  --   return {ok = false, error = network_issue_msg}
-  -- end
-
   local respbody = {}
   local body, code, headers, status = httpClient.request {
     method = 'GET',
@@ -47,7 +19,6 @@ local function jsonRequestGet(uri)
 
   if code ~= 200 then
     log('E', logTag, 'aip client error: '..dumps(code))
-    -- check_timeout(code)
     return {ok = false, error = tostring(code)}
   else
     --print('body:' .. tostring(body))
@@ -60,10 +31,6 @@ local function jsonRequestGet(uri)
 end
 
 local function jsonRequestPost(uri, data)
-  -- if network_issue_occurred then
-  --   return {ok = false, error = network_issue_msg}
-  -- end
-
   data = data or {}
 
   local respbody = {}
@@ -84,7 +51,6 @@ local function jsonRequestPost(uri, data)
 
   if code ~= 200 then
     log('E', logTag, 'aip client error: '..dumps(code))
-    -- check_timeout(code)
     return {ok = false, error = tostring(code)}
   else
     local rv = jsonDecode(table.concat(respbody), 'json request response')
@@ -219,8 +185,6 @@ M.transcribe_transcripts_get = transcribe_transcripts_get
 M.remote_audio_play_file = remote_audio_play_file
 M.remote_audio_reset = remote_audio_reset
 M.remote_audio_queue_size = remote_audio_queue_size
--- M.clear_network_issue = clear_network_issue
--- M.has_network_issue = has_network_issue
 -- M.update_next_pacenotes = update_next_pacenotes
 
 return M

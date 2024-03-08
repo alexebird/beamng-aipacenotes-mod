@@ -45,6 +45,10 @@
     {
       "action":"rallyEditorCameraPathPlay",
       "control":"space"
+    },
+    {
+      "action":"rallyEditorToggleCornerCalls",
+      "control":"c"
     }
   ]
 }

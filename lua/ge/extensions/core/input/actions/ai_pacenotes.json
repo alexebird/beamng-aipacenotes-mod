@@ -103,6 +103,15 @@
     "desc": "If a pacenote is selected, play/stop camera path playback.",
     "onDown": "editor_rallyEditor.cameraPathPlay()"
   },
+  "rallyEditorToggleCornerCalls": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 6,
+    "actionMap": "rallyEditor",
+    "title": "Show/Hide Corner Call Labels (aip)",
+    "desc": "If a pacenote is selected, show corner calls along the driveline.",
+    "onDown": "editor_rallyEditor.toggleCornerCalls()"
+  },
   "rallyEditorSelectNextWaypoint": {
     "cat": "editor",
     "ctx": "tlua",

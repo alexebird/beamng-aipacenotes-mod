@@ -67,10 +67,6 @@ end
 --   guihooks.trigger('aiPacenotes.recceApp.cornerAnglesLoaded', style)
 -- end
 
--- local function clearTimeout()
-  -- extensions.gameplay_aipacenotes_client.clear_network_issue()
--- end
-
 local function desktopGetTranscripts()
   local resp = extensions.gameplay_aipacenotes_client.transcribe_transcripts_get(2)
   if resp.ok then
