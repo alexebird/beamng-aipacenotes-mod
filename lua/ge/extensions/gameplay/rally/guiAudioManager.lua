@@ -191,6 +191,13 @@ function C:isPlaying()
   end
 end
 
+function C:getQueueInfo()
+  return {
+    queueSize = self.queue:length(),
+    paused = not self:isPlaying(),
+  }
+end
+
 function C:playNextInQueue()
   if not self:isPlaying() then
     self.currAudioObj = self.queue:pop_left()

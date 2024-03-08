@@ -45,14 +45,14 @@ function C:work(args)
   -- end
 
   if not self.found_non_empty then
-    local qs = extensions.gameplay_aipacenotes.getRallyManager().audioManager:getQueueSize()
+    local qs = extensions.gameplay_aipacenotes.getRallyManager().audioManager:getQueueInfo()
     if qs.queueSize > 0 or not qs.paused then
       self.found_non_empty = true
     end
     self.pinOut.flow.value = false
   else
     if not self.found_empty then
-      local qs = extensions.gameplay_aipacenotes.getRallyManager().audioManager:getQueueSize()
+      local qs = extensions.gameplay_aipacenotes.getRallyManager().audioManager:getQueueInfo()
       if qs.queueSize == 0 and qs.paused then
         self.found_empty = true
         self.pinOut.flow.value = true
