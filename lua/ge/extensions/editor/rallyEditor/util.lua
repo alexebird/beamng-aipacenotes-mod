@@ -20,7 +20,7 @@ local aipSettingsRoot = '/settings/aipacenotes'
 local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
 local staticPacenotesFname = aipSettingsRoot..'/static_pacenotes.json'
 local cornerAnglesFname = aipSettingsRoot..'/corner_angles.json'
-local pacenotesMetadataBasename = 'metadata.jsonx'
+local pacenotesMetadataBasename = 'metadata.json'
 
 local transcriptsExt = 'transcripts.json'
 local missionSettingsFname = 'mission.settings.json'
@@ -243,7 +243,7 @@ local function playPacenoteGui(audioObj)
   -- audioObj.audioLen = res.len
   audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
   -- audioObj.sourceId = res.sourceId
-  log('D', logTag, 'playPacenoteGui '..dumps(audioObj))
+  -- log('D', logTag, 'playPacenoteGui '..dumps(audioObj))
 end
 
 local function buildAudioObjPacenote(pacenoteFname)

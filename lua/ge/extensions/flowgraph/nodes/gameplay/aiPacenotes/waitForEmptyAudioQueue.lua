@@ -45,20 +45,20 @@ end
 
 function C:work(args)
   if self.pinIn.reset.value then
-    print('pinIn.reset: true')
+    -- print('pinIn.reset: true')
     self:reset()
     return
   end
 
   if not self.found_empty then
-    print('not found_empty')
+    -- print('not found_empty')
     local qs = extensions.gameplay_aipacenotes.getRallyManager().audioManager:getQueueInfo()
     if qs.queueSize == 0 and qs.paused then
       self.found_empty = true
       self.pinOut.empty.value = true
     end
   else
-    print('found_empty')
+    -- print('found_empty')
     -- self.pinOut.flow.value = true
   end
 

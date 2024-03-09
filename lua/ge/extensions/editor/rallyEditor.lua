@@ -745,12 +745,16 @@ local function onWindowGotFocus(windowName)
 end
 
 local function onSerialize()
-  local data = {
-    path = currentPath:onSerialize(),
-    currentPathFname = (currentPath and currentPath.fname) or nil
-    -- previousFilepath = previousFilepath,
-    -- previousFilename = previousFilename
-  }
+  local data = {}
+
+  if currentPath then
+    data = {
+      path = currentPath:onSerialize(),
+      currentPathFname = (currentPath and currentPath.fname) or nil
+      -- previousFilepath = previousFilepath,
+      -- previousFilename = previousFilename
+    }
+  end
   return data
 end
 

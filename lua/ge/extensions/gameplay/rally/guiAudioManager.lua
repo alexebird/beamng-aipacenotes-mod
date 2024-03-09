@@ -102,9 +102,9 @@ end
 function C:enqueuePacenote(pacenote, addToFront)
   local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
   if pacenoteFgData then
-    log('D', logTag, "enqueuePacenote: pacenote='"..pacenoteFgData.note_text.."'")
+    log('D', logTag, "enqueuePacenote: name='"..pacenote.name.."' note='"..pacenoteFgData.note_text.."'")
 
-    return self:_enqueueFile(pacenote, pacenoteFgData.audioFname, addToFront)
+    return self:_enqueueFile(pacenote, pacenoteFgData, pacenoteFgData.audioFname, addToFront)
   else
     log('E', logTag, "enqueuePacenote: note is missing FGdata")
     return nil
@@ -114,7 +114,7 @@ end
 function C:enqueueStaticPacenoteByName(pacenote_name, addToFront)
   local pacenote = self.rallyManager.notebook:getStaticPacenoteByName(pacenote_name)
   if pacenote then
-    log('D', logTag, "enqueueStaticPacenoteByName: adding '"..pacenote_name.."'")
+    -- log('D', logTag, "enqueueStaticPacenoteByName: adding '"..pacenote_name.."'")
     return self:enqueuePacenote(pacenote, addToFront)
   else
     log('E', logTag, "enqueueStaticPacenoteByName: couldnt find static pacenote with name '"..pacenote_name.."'")
@@ -122,16 +122,22 @@ function C:enqueueStaticPacenoteByName(pacenote_name, addToFront)
   end
 end
 
-function C:_enqueueFile(pacenote, fname, addToFront)
+function C:_enqueueFile(pacenote, fgData, fname, addToFront)
   addToFront = addToFront or false
   local audioObj = re_util.buildAudioObjPacenote(fname)
   audioObj.note_name = pacenote.name
 
   local _, basename, _ = path.split(fname)
-  audioObj.audioLen = self.pacenote_metadata[basename].audioLen
+  local metadataVal = self.pacenote_metadata[basename]
+  if not metadataVal then
+    log('E', logTag, "_enqueueFile: cant find metadata entry for basename=" .. basename)
+    guihooks.message("Cant find audio file for pacenote '".. fgData.note_text .."'. Run RaceLink to generate audio files.", 5)
+    return nil
+  end
+  audioObj.audioLen = tonumber(metadataVal.audioLen)
 
   if re_util.fileExists(fname) then
-    log('D', logTag, "_enqueueFile: exists=yes front="..tostring(addToFront) .." fname=" .. fname)
+    -- log('D', logTag, "_enqueueFile: exists=yes front="..tostring(addToFront) .." fname=" .. fname)
     if addToFront then
       self.queue:push_left(audioObj)
     else
@@ -148,7 +154,7 @@ function C:doPause(audioObj)
   audioObj.time = re_util.getTime()
   audioObj.audioLen = audioObj.pauseTime
   audioObj.timeout = audioObj.time + audioObj.audioLen
-  log('D', logTag, 'doPause: '..dumps(audioObj))
+  -- log('D', logTag, 'doPause: '..dumps(audioObj))
 end
 
 -- function C:previousAudioIsDone()

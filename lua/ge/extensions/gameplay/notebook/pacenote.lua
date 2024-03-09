@@ -1060,11 +1060,12 @@ end
 function C:playbackAllowed(currLap, maxLap)
   -- local context = { currLap = currLap, maxLap = maxLap }
   local condition = self.playback_rules
-  log('D', logTag,
-    "playbackAllowed name='"..self.name..
-    "' condition='"..tostring(condition)..
-    "' currLap="..tostring(currLap..
-    " maxLap="..tostring(maxLap)))
+
+  -- log('D', logTag,
+  --   "playbackAllowed name='"..self.name..
+  --   "' condition='"..tostring(condition)..
+  --   "' currLap="..tostring(currLap..
+  --   " maxLap="..tostring(maxLap)))
 
   -- If condition is nil or empty/whitespace string, return true
   if condition == nil or condition:match("^%s*$") then
