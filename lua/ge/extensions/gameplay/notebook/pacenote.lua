@@ -634,14 +634,14 @@ local function formatDistanceStringMeters(dist)
   return tostring(round(dist))..'m'
 end
 
-local function formatDistanceStringMetersWithShorthand(dist)
-  local shorthand = re_util.getDistanceCallShorthand(dist)
-  if shorthand then
-    return shorthand
-  else
-    return formatDistanceStringMeters(dist)
-  end
-end
+-- local function formatDistanceStringMetersWithShorthand(dist)
+--   local shorthand = re_util.getDistanceCallShorthand(dist)
+--   if shorthand then
+--     return shorthand
+--   else
+--     return formatDistanceStringMeters(dist)
+--   end
+-- end
 
 local function prettyDistanceStringMeters(from, to)
   if not (from and to) then return "?m" end
@@ -843,17 +843,17 @@ function C:distanceCornerEndToCornerStart(toPacenote)
   return distance
 end
 
-function C:drawLinkToPacenote(drawConfig, to_pacenote)
-  local from_wp = self:waypointForAfterLink()
-  local to_wp = to_pacenote:waypointForBeforeLink()
-
-  local distStrTotal = formatDistanceStringMeters(self:distanceCornerEndToCornerStart(to_pacenote))
-  local distStr = prettyDistanceStringMeters(from_wp, to_wp)
-  distStr = distStrTotal..'('..distStr..')'
-
-  drawLink(drawConfig, from_wp, to_wp, cc.pacenote_clr_interlink, cc.pacenote_alpha_interlink)
-  drawLinkLabel(from_wp, to_wp, distStr, cc.pacenote_alpha_interlink, cc.pacenote_clr_interlink_txt, cc.pacenote_clr_interlink)
-end
+-- function C:drawLinkToPacenote(drawConfig, to_pacenote)
+--   local from_wp = self:waypointForAfterLink()
+--   local to_wp = to_pacenote:waypointForBeforeLink()
+--
+--   local distStrTotal = formatDistanceStringMeters(self:distanceCornerEndToCornerStart(to_pacenote))
+--   local distStr = prettyDistanceStringMeters(from_wp, to_wp)
+--   distStr = distStrTotal..'('..distStr..')'
+--
+--   drawLink(drawConfig, from_wp, to_wp, cc.pacenote_clr_interlink, cc.pacenote_alpha_interlink)
+--   drawLinkLabel(from_wp, to_wp, distStr, cc.pacenote_alpha_interlink, cc.pacenote_clr_interlink_txt, cc.pacenote_clr_interlink)
+-- end
 
 function C:noteTextForDrawDebug()
   -- local noteData = self.notes[self.notebook:editingLanguage()]

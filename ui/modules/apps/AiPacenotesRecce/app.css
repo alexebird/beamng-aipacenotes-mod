@@ -94,6 +94,15 @@
     margin: 0.1em;
 }
 
+.btn-disabled {
+/* .recce-controls-btn[disabled] { */
+    /* background-color: rgba(55, 55, 55, 1.0) !important; */
+    /* color: rgba(0, 0, 0, 0.43) !important; */
+    color: hsla(0, 0%, 60%, 1) !important;
+    background-color: hsla(0, 0%, 25%, 1) !important;
+    border-color: transparent !important;
+}
+
 .recce-controls-shift-left {
     margin-right: -0.5rem;
 }
@@ -215,4 +224,8 @@
 
 .pacenote-text-input {
     width: 100%;
+}
+
+.btn-drive-edit {
+    width: 66px;
 }

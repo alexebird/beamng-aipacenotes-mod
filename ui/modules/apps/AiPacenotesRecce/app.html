@@ -30,17 +30,19 @@
     </div>
 
     <div class="recce-controls">
-      <div class="recce-control" style="display: flex; flex-direction: row;">
-        <button ng-click="btnRecordStart()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">start</button>
-        <button ng-click="btnRecordStop()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">stop</button>
-        <button ng-click="btnRecordCut()" id='cut-btn' class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">cut</button>
+      <div class="recce-control">
+        <div style="display: flex; flex-direction: row;">
+          <button ng-click="btnRecordStart()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">start</button>
+          <button ng-click="btnRecordStop()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">stop</button>
+          <button ng-click="btnRecordCut()" id='cut-btn' class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">cut</button>
 
-        <md-checkbox ng-model="recordDriveline" ng-disabled="!missionIsLoaded || isRecording">driveline</md-checkbox>
-        <md-checkbox ng-model="recordVoice" ng-disabled="!missionIsLoaded || isRecording">voice</md-checkbox>
+          <md-checkbox ng-model="recordDriveline" ng-disabled="!missionIsLoaded || isRecording">driveline</md-checkbox>
+          <md-checkbox ng-model="recordVoice" ng-disabled="!missionIsLoaded || isRecording">voice</md-checkbox>
 
-        <button ng-click="btnClear1()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">{{ clear1Enabled ? "cancel" : "clear" }}</button>
+          <button ng-click="btnClear1()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">{{ clear1Enabled ? "cancel" : "clear" }}</button>
 
-        <button ng-show="clear1Enabled" ng-click="btnClearAll()" class="recce-controls-btn btn-danger" ng-disabled="!missionIsLoaded || isRecording || !clear1Enabled">clear</button>
+          <button ng-show="clear1Enabled" ng-click="btnClearAll()" class="recce-controls-btn btn-danger" ng-disabled="!missionIsLoaded || isRecording || !clear1Enabled">clear</button>
+        </div>
       </div>
 
       <div class="recce-control">
@@ -51,10 +53,10 @@
 
       <div class="recce-control">
         <!-- <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button> -->
-        <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded" ng-class="{'debug-on': drawDebug}">
+        <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || drawDebugSnaproads" ng-class="{'debug-on': drawDebug && !drawDebugSnaproads, 'btn-disabled': drawDebugSnaproads}">
          {{ drawDebug ? 'hide notes' : 'show notes' }}
         </button>
-        <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !drawDebug" ng-class="{'debug-on': drawDebugSnaproads}">
+        <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn btn-drive-edit" ng-disabled="!missionIsLoaded || !drawDebug" ng-class="{'debug-on': drawDebugSnaproads}">
          {{ drawDebugSnaproads ? 'drive' : 'edit' }}
         </button>
 

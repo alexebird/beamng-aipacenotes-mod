@@ -77,6 +77,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')
       }
 
+      function updateLuaDrawDebugSnaproads() {
+        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
+      }
+
       $scope.$on('$destroy', function () {
         StreamsManager.remove(streamsList)
         bngApi.engineLua('extensions.unload("ui_aipacenotes_recceApp")')
@@ -87,7 +91,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.$on('aiPacenotes.recceApp.refreshed', function (event, response) {
-        console.log('recce missions loaded: ' + JSON.stringify(response))
+        // console.log('recce missions loaded: ' + JSON.stringify(response))
 
         $scope.cornerCallStyle = response.corner_angles_style
 
@@ -196,7 +200,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           $scope.missionIsLoaded = true
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
           $scope.drawDebug = true
+          $scope.drawDebugSnaproads = false
           updateLuaDrawDebug()
+          updateLuaDrawDebugSnaproads()
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
         }
       }
@@ -205,9 +211,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.unloadMission()')
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(false)')
         $scope.drawDebug = false
+        $scope.drawDebugSnaproads = false
         $scope.missionIsLoaded = false
         $scope.pacenoteText = ""
         updateLuaDrawDebug()
+        updateLuaDrawDebugSnaproads()
       }
 
       $scope.btnRecordStart = function() {
@@ -261,7 +269,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.btnToggleSnaproadsDrawDebug = function() {
         $scope.drawDebugSnaproads = !$scope.drawDebugSnaproads
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
+        updateLuaDrawDebugSnaproads()
       }
 
       // NOTE these are proxying a lua call through the recce app in order to stay on one pattern.

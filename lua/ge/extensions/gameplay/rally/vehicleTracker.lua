@@ -138,9 +138,9 @@ function C:damage()
 end
 
 function C:didJustHaveDamage()
-  if self.justHadDamage then
-    log('I', logTag, 'got damage during last tick. lastDamage='..self.lastDamage ..' diff='..self.lastDamageDiff..' threshold='..self.damageThreshold)
-  end
+  -- if self.justHadDamage then
+    -- log('I', logTag, 'got damage during last tick. lastDamage='..self.lastDamage ..' diff='..self.lastDamageDiff..' threshold='..self.damageThreshold)
+  -- end
   return self.justHadDamage
 end
 

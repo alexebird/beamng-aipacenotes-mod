@@ -556,6 +556,7 @@ local function buildPacenotesDir(missionDir, notebook, codriver)
 end
 
 local function getDistanceCallShorthand(dist)
+  if not editor_rallyEditor then return nil end
   if dist <= editor_rallyEditor.getPrefLevel1Thresh() then
     return editor_rallyEditor.getPrefLevel1Text()
   elseif dist <= editor_rallyEditor.getPrefLevel2Thresh() then

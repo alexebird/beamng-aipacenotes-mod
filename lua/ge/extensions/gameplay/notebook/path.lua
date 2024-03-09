@@ -683,7 +683,6 @@ local function normalize_distance(dist)
 end
 
 function C:autofillDistanceCalls()
-
   local lang = re_util.default_codriver_language
   -- first clear everything
   for _,pacenote in ipairs(self.pacenotes.sorted) do
