@@ -653,6 +653,7 @@ local function setLastLoadState(state)
 end
 
 local function initRecceApp()
+  log('I', logTag, 'initRecceApp')
   recce_settings = RecceSettings()
   recce_settings:load()
 end

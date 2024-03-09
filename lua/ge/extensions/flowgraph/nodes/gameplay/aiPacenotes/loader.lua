@@ -34,7 +34,7 @@ function C:reset()
   extensions.unload('gameplay_aipacenotes')
   extensions.load('gameplay_aipacenotes')
 
-  extensions.gameplay_aipacenotes.helloWorld()
+  -- extensions.gameplay_aipacenotes.helloWorld()
 
   extensions.gameplay_aipacenotes.initRallyManager()
 end

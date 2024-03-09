@@ -665,7 +665,7 @@ function C:handleMouseInput()
     if not self:selectedPacenote() then
       self:createMouseDragPacenote()
     end
-  elseif self.pacenote_tools_state.snaproad.recce.driveline then
+  elseif self.pacenote_tools_state.snaproad and self.pacenote_tools_state.snaproad.recce.driveline then
     if self.pacenote_tools_state.snaproad:partitionAllEnabled() then
       self.pacenote_tools_state.snaproad:clearAll()
     end

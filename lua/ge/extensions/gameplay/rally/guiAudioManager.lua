@@ -104,7 +104,7 @@ function C:enqueuePacenote(pacenote, addToFront)
   if pacenoteFgData then
     log('D', logTag, "enqueuePacenote: pacenote='"..pacenoteFgData.note_text.."'")
 
-    return self:_enqueueFile(pacenoteFgData.audioFname, addToFront)
+    return self:_enqueueFile(pacenote, pacenoteFgData.audioFname, addToFront)
   else
     log('E', logTag, "enqueuePacenote: note is missing FGdata")
     return nil
@@ -122,9 +122,10 @@ function C:enqueueStaticPacenoteByName(pacenote_name, addToFront)
   end
 end
 
-function C:_enqueueFile(fname, addToFront)
+function C:_enqueueFile(pacenote, fname, addToFront)
   addToFront = addToFront or false
   local audioObj = re_util.buildAudioObjPacenote(fname)
+  audioObj.note_name = pacenote.name
 
   local _, basename, _ = path.split(fname)
   audioObj.audioLen = self.pacenote_metadata[basename].audioLen

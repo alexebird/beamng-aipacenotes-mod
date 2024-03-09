@@ -84,7 +84,6 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.$on('aiPacenotes.recceApp.onExtensionLoaded', function (event, response) {
         refreshRecceApp()
-        // $scope.btnRefreshMissions()
       })
 
       $scope.$on('aiPacenotes.recceApp.refreshed', function (event, response) {
@@ -207,6 +206,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(false)')
         $scope.drawDebug = false
         $scope.missionIsLoaded = false
+        $scope.pacenoteText = ""
         updateLuaDrawDebug()
       }
 

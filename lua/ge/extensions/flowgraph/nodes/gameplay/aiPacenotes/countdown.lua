@@ -54,7 +54,7 @@ end
 
 function C:reset()
   self:stopTimer()
-  extensions.gameplay_aipacenotes.getRallyManager().audioManager:resetAudioQueue()
+  -- extensions.gameplay_aipacenotes.getRallyManager().audioManager:resetAudioQueue()
   self.pinOut.flow.value = false
   self.pinOut.finished.value = false
   self.pinOut.ongoing.value = false

@@ -68,8 +68,8 @@ angular.module('beamng.apps')
           }
         }
 
-        scope.$on('aiPacenotes.codriverApp.playAudio', (event, {url, volume}) => {
-          console.log("Received playAudio event:", url, "Volume:", volume);
+        scope.$on('aiPacenotes.codriverApp.playAudio', (event, {name, url, volume}) => {
+          console.log(`Received playAudio event name=${name} url=${url} volume=${volume}`);
           playAudio(url, volume);
         });
 
@@ -77,7 +77,6 @@ angular.module('beamng.apps')
           console.log("Received stopAudio event");
           stopPlaying();
         });
-
       } // link
     } // return
   }]) // directive

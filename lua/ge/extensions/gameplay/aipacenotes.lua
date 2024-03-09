@@ -104,10 +104,6 @@ end
 local function onVehicleActiveChanged(vehicleID, active)
 end
 
-local function helloWorld()
-  log('D', logTag, 'Hello, world!')
-end
-
 -- extension hooks
 M.onUpdate = onUpdate
 -- M.onFirstUpdate = onFirstUpdate -- not used
@@ -120,7 +116,6 @@ M.onVehicleActiveChanged = onVehicleActiveChanged
 M.initRallyManager = initRallyManager
 M.clearRallyManager = clearRallyManager
 M.setDrawDebug = setDrawDebug
-M.helloWorld = helloWorld
 
 M.isReady = isReady
 M.getRallyManager = function() return rallyManager end

@@ -24,6 +24,11 @@ function C:load()
   self:_resetState()
   self.settings:load()
   self:loadDriveline()
+
+  if not self.driveline then
+    self:loadDrivelineLegacy()
+  end
+
   self:loadCuts()
   self.loaded = true
 end
@@ -53,7 +58,7 @@ function C:loadCuts()
   -- load the cuts
   fname = re_util.cutsFile(self.missionDir)
   if not FS:fileExists(fname) then
-    self.cuts = nil
+    self.cuts = {}
     return
   end
 
@@ -110,6 +115,66 @@ function C:loadDriveline()
   end
 
   log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
+  self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(points)
+end
+
+function C:loadDrivelineLegacy()
+  local missionSettings, err = re_util.getMissionSettingsHelper(self.missionDir)
+
+  if err then
+    error(err)
+  end
+
+  -- local transcriptFullCourse = missionSettings:getFullCourseTranscriptAbsPath(self.missionDir)
+  -- print(transcriptFullCourse)
+
+  local transcriptFullCourse = missionSettings:getFullCourseTranscript(self.missionDir)
+
+  if not transcriptFullCourse then
+    print('legacy full_course transcript file not found')
+    self.driveline = nil
+    return
+  end
+
+  local points = {}
+
+  for i,tsc in ipairs(transcriptFullCourse.transcripts.sorted) do
+    for j,capture in ipairs(tsc:capture_data().captures) do
+      local obj = {}
+      obj.pos = vec3(capture.pos)
+      obj.quat = quat(capture.quat)
+      obj.steering = capture.steering
+      obj.ts = capture.ts
+      obj.prev = nil
+      obj.next = nil
+      obj.id = nil
+      obj.partition = nil
+      table.insert(points, obj)
+    end
+  end
+
+  -- for line in io.lines(fname) do
+  --   local obj = jsonDecode(line)
+  --   obj.pos = vec3(obj.pos)
+  --   obj.quat = quat(obj.quat)
+  --   obj.prev = nil
+  --   obj.next = nil
+  --   obj.id = nil
+  --   obj.partition = nil
+  --   table.insert(points, obj)
+  -- end
+
+  for i,point in ipairs(points) do
+    point.id = i
+    if i > 1 then
+      point.prev = points[i-1]
+    end
+    if i < #points then
+      point.next = points[i+1]
+    end
+  end
+
+  log('I', logTag, 'loaded legacy driveline with '..tostring(#points)..' points')
   self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(points)
 end
 
@@ -192,7 +257,7 @@ end
 
 function C:createPacenotesData(notebook)
   if not self.loaded then return end
-  if not self.cuts then return end
+  -- if not self.cuts then return end
 
   log('I', logTag, 'import pacenotes to notebook')
 

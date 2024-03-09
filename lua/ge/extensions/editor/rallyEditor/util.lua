@@ -20,7 +20,7 @@ local aipSettingsRoot = '/settings/aipacenotes'
 local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
 local staticPacenotesFname = aipSettingsRoot..'/static_pacenotes.json'
 local cornerAnglesFname = aipSettingsRoot..'/corner_angles.json'
-local pacenotesMetadataBasename = 'metadata.json'
+local pacenotesMetadataBasename = 'metadata.jsonx'
 
 local transcriptsExt = 'transcripts.json'
 local missionSettingsFname = 'mission.settings.json'
@@ -224,6 +224,7 @@ local function playPacenoteGui(audioObj)
   -- printFields(res)
 
   local req = {
+    name = audioObj.note_name,
     url = audioObj.pacenoteFname,
     volume = audioObj.volume,
   }
