@@ -9,8 +9,8 @@ function C:init(vehicle, missionDir)
   log('I', logTag, 'initializing cutCapture for vehicle='..vehicle:getId())
   self.vehicle = vehicle
   core_vehicleBridge.registerValueChangeNotification(self.vehicle, steeringKey)
-  self.fname = re_util.missionReccePath(missionDir, 'primary', 'cuts.json')
-  self.fname_transcripts = re_util.missionReccePath(missionDir, 'primary', 'transcripts.json')
+  self.fname = re_util.missionReccePath(missionDir, 'cuts.json')
+  self.fname_transcripts = re_util.missionReccePath(missionDir, 'transcripts.json')
   self.cut_id = 1
   log('I', logTag, 'cutCapture init fname='..self.fname)
 end

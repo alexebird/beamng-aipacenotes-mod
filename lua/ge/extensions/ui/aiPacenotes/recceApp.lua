@@ -35,12 +35,27 @@ local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
 end
 
+local function ensureRecceDirs()
+  -- local dirname, fn, e = path.split(self.fname)
+  -- print(self.fname)
+  -- print(dirname)
+
+  local dirname = re_util.missionRecceRecordDir(missionDir)
+
+  if not FS:directoryExists(dirname) then
+    log('D', logTag, 'creating recce dirs: '..dirname)
+    FS:directoryCreate(dirname, true)
+  end
+end
+
 local function initCaptures()
   vehicleCapture = nil
   cutCapture = nil
 
   if isFreeroam() and missionDir then
     local veh = be:getPlayerVehicle(0)
+
+    ensureRecceDirs()
     vehicleCapture = require('/lua/ge/extensions/gameplay/aipacenotes/vehicleCapture')(
       veh,
       missionDir
@@ -535,7 +550,9 @@ local function loadMission(newMissionId, newMissionDir)
   rallyManager:handleNoteSearch()
 
   selectedPacenote = rallyManager:closestPacenoteToVehicle()
-  print('closest pacenote to vehicle: '..selectedPacenote.name)
+  if selectedPacenote then
+    log('D', logTag, 'closest pacenote to vehicle: '..selectedPacenote.name)
+  end
 
   if missionDir then
     local recce = Recce(missionDir)

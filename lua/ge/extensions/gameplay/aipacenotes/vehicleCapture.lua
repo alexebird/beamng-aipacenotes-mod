@@ -12,13 +12,17 @@ function C:init(vehicle, missionDir) --, cornerAngles, selectedCornerAnglesName)
   self.interval_m = 2
   self.last_dist_pos = nil
   self.capturesBuffer = {}
-  self.fname = re_util.missionReccePath(missionDir, 'primary', 'driveline.json', false)
+  self.fname = re_util.missionReccePath(missionDir, 'driveline.json')
   log('I', logTag, 'vehicleCapture init fname='..self.fname)
 end
 
 function C:truncateCapturesFile()
-  self.f = io.open(self.fname, "w")
-  self.f:close()
+  local f = io.open(self.fname, "w")
+  if f then
+    f:close()
+  else
+    log('E', logTag, 'vehicleCapture.truncateCapturesFile(): error opening file')
+  end
 end
 
 function C:writeCaptures(force)
@@ -27,13 +31,18 @@ function C:writeCaptures(force)
   end
 
   log('I', logTag, 'vehicleCapture writing '..tostring(#self.capturesBuffer)..' captures')
-  self.f = io.open(self.fname, "a")
-  for _,cap in ipairs(self.capturesBuffer) do
-    local content = jsonEncode(cap)
-    self.f:write(content.."\n")
+
+  local f = io.open(self.fname, "a")
+  if f then
+    for _,cap in ipairs(self.capturesBuffer) do
+      local content = jsonEncode(cap)
+      f:write(content.."\n")
+    end
+    f:close()
+    self.capturesBuffer = {}
+  else
+    log('E', logTag, 'vehicleCapture.writeCaptures(): error opening file')
   end
-  self.f:close()
-  self.capturesBuffer = {}
 end
 
 -- function C:getCornerCall(steering)

@@ -123,7 +123,7 @@ function C:loadDrivelineLegacy()
 
   if err then
     self.driveline = nil
-    log('I', logTag, 'error loading missionSettings: '..tostring(err))
+    log('W', logTag, 'error loading missionSettings: '..tostring(err))
     -- error(err)
     return
   end
@@ -270,10 +270,23 @@ function C:createPacenotesData(notebook)
   local snaproad = Snaproad(self)
 
   local pacenotes = {}
+  local prevPacenote = nil
+  -- local prevAtPos = nil
+  -- local prevCePos = nil
+  local prevAtPoint = nil
+  local prevCePoint = nil
+  local foundDup = false
 
-  for _,cut in ipairs(self.cuts) do
+  local cutCount = #self.cuts
+
+  for i,cut in ipairs(self.cuts) do
     local note = cut.transcript.text
-    note = normalizer.replaceEnglishWords(note)
+    if import_language == 'english' then
+      note = normalizer.replaceEnglishWords(note)
+    end
+    if note then
+      note = re_util.normalizeNoteText(note, i == cutCount)
+    end
 
     local pos = cut.pos
     local radius = editor_rallyEditor.getPrefDefaultRadius()
@@ -292,14 +305,45 @@ function C:createPacenotesData(notebook)
     -- metadata['beamng_file'] = transcript.beamng_file
     -- end
 
-    -- print(dumps(pos))
-    local pointCe = snaproad:closestSnapPoint(pos)
+    local firstSnapPoint = snaproad:firstSnapPoint()
+    local pointCe = nil
+    local pointCs = nil
+    local pointAt = nil
+
+    pointCe = snaproad:closestSnapPoint(pos)
+
+    if pointCe.id == firstSnapPoint.id then
+      pointCe = snaproad:pointsForwards(pointCe, 3)
+      pointCs = snaproad:pointsBackwards(pointCe, 1)
+      pointAt = snaproad:pointsBackwards(pointCs, 1)
+    else
+      local atLimits = {firstSnapPoint}
+      if prevAtPoint then
+        table.insert(atLimits, prevAtPoint)
+      end
+      pointAt = snaproad:distanceBackwards(pointCe, 4*radius, atLimits)
+
+      local csLimits = {firstSnapPoint, pointAt}
+      if prevCePoint then
+        table.insert(csLimits, prevCePoint)
+      end
+      pointCs = snaproad:distanceBackwards(pointCe, 2*radius, csLimits)
+    end
+
+    -- after we've determined the points, see if there is a dup.
+    if prevCePoint and pointCe.id == prevCePoint.id then
+      foundDup = true
+      if note and prevPacenote then
+        local prevTxt = prevPacenote.notes[import_language].note
+
+        local mergedTxt = prevTxt..' '..note
+
+        prevPacenote.notes[import_language].note = mergedTxt
+      end
+    end
+
     local posCe = pointCe.pos
-    -- local pointCs = snaproad:pointsBackwards(pointCe, 2)
-    local pointCs = snaproad:distanceBackwards(pointCe, 2*radius)
     local posCs = pointCs.pos
-    -- local pointAt = snaproad:pointsBackwards(pointCs, 2)
-    local pointAt = snaproad:distanceBackwards(pointCs, 2*radius)
     local posAt = pointAt.pos
 
     local normalAt = snaproad:forwardNormalVec(pointAt)
@@ -350,7 +394,17 @@ function C:createPacenotesData(notebook)
       }
     }
 
-    table.insert(pacenotes, pn)
+    -- prevAtPos = posAt
+    -- prevCePos = posCe
+
+    if not foundDup then
+      prevPacenote = pn
+      prevAtPoint = pointAt
+      prevCePoint = pointCe
+      table.insert(pacenotes, pn)
+    end
+
+    foundDup = false
   end
 
   return pacenotes

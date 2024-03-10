@@ -15,6 +15,7 @@ local aipPath = 'aipacenotes'
 local notebooksPath = aipPath..'/notebooks'
 local transcriptsPath = aipPath..'/transcripts'
 local reccePath = aipPath..'/recce'
+local recceRecordSubdir = 'primary'
 
 local aipSettingsRoot = '/settings/aipacenotes'
 local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
@@ -437,21 +438,28 @@ local function missionTranscriptPath(missionDir, basename, addExt)
   return rv
 end
 
-local function missionReccePath(missionDir, subdir, basename)
-  local rv = missionRecceDir(missionDir)..'/'..subdir..'/'..basename
+local function missionRecceRecordDir(missionDir)
+  local rv = missionRecceDir(missionDir)..'/'..recceRecordSubdir
+  return rv
+end
+
+local function missionReccePath(missionDir, basename)
+  local subdir = missionRecceRecordDir(missionDir)
+  local rv = subdir..'/'..basename
+  -- local rv = missionRecceDir(missionDir)..'/'..subdir..'/'..basename
   return rv
 end
 
 local function drivelineFile(missionDir)
-  return missionReccePath(missionDir, 'primary', 'driveline.json')
+  return missionReccePath(missionDir, 'driveline.json')
 end
 
 local function cutsFile(missionDir)
-  return missionReccePath(missionDir, 'primary', 'cuts.json')
+  return missionReccePath(missionDir, 'cuts.json')
 end
 
 local function transcriptsFile(missionDir)
-  return missionReccePath(missionDir, 'primary', 'transcripts.json')
+  return missionReccePath(missionDir, 'transcripts.json')
 end
 
 -- args are both vec3's representing a position.
@@ -609,6 +617,7 @@ M.loadCornerAnglesFile = loadCornerAnglesFile
 M.loadMissionSettings = loadMissionSettings
 M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
+M.missionRecceRecordDir = missionRecceRecordDir
 M.missionReccePath = missionReccePath
 
 M.drivelineFile = drivelineFile

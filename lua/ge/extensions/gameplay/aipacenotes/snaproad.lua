@@ -391,48 +391,87 @@ function C:pointsBackwards(fromPoint, steps)
   return toPoint
 end
 
-function C:distanceBackwards(fromPoint, meters)
+function C:pointsForwards(fromPoint, steps)
   local toPoint = fromPoint
-  local dist = 0
-  while true do
-    local prevPoint = toPoint.prev
-    if prevPoint then
-
-      dist = dist + vec3(toPoint.pos):distance(vec3(prevPoint.pos))
-      toPoint = prevPoint
-
-      if dist > meters then
-        break
-      end
-    else
-      break
+  for _ = 1,steps do
+    local nextPoint = toPoint.next
+    if nextPoint then
+      toPoint = nextPoint
     end
   end
   return toPoint
 end
 
-function C:distanceForwards(fromPoint, meters)
+function C:distanceBackwards(fromPoint, meters, limitPoints)
+  limitPoints = limitPoints or {}
   local toPoint = fromPoint
   local dist = 0
+
+  while true do
+    local prevPoint = toPoint.prev
+    if prevPoint then
+      dist = dist + vec3(toPoint.pos):distance(vec3(prevPoint.pos))
+
+      for _,lim in ipairs(limitPoints) do
+        if prevPoint.id == lim.id then
+          -- break
+          return toPoint
+        end
+      end
+
+      toPoint = prevPoint
+
+      if dist > meters then
+        -- break
+        return toPoint
+      end
+    else
+      -- break
+      return toPoint
+    end
+  end
+
+  -- return toPoint
+end
+
+function C:distanceForwards(fromPoint, meters, limitPoints)
+  limitPoints = limitPoints or {}
+  local toPoint = fromPoint
+  local dist = 0
+
   while true do
     local nextPoint = toPoint.next
     if nextPoint then
-
       dist = dist + vec3(toPoint.pos):distance(vec3(nextPoint.pos))
+
+      for _,lim in ipairs(limitPoints) do
+        if nextPoint.id == lim.id then
+          -- break
+          return toPoint
+        end
+      end
+
       toPoint = nextPoint
 
       if dist > meters then
-        break
+        -- break
+        return toPoint
       end
     else
-      break
+      -- break
+      return toPoint
     end
   end
-  return toPoint
+
+  -- return toPoint
 end
 
 -- function C:closestPointBackwards(sourcePoint, notebook)
 -- end
+
+function C:firstSnapPoint()
+  return self:_allPoints()[1]
+end
 
 function C:prevSnapPos(srcPos)
   return self:prevSnapPoint(srcPos).pos
@@ -477,7 +516,9 @@ function C:nextSnapPoint(srcPos)
 end
 
 function C:setPartitionToPacenote(pn)
-  if not pn then return end
+  if not pn or pn.missing then return end
+
+  -- print(dumps(pn))
 
   self.partition.pacenote = pn
 

@@ -27,10 +27,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // load the lua extension backing this UI app.
       bngApi.engineLua('extensions.load("ui_aipacenotes_recceApp")')
 
-      var streamsList = ['electrics']
-      StreamsManager.add(streamsList)
+      // var streamsList = ['electrics']
+      // StreamsManager.add(streamsList)
 
-      let defaultCornerCall = 'c'
+      // let defaultCornerCall = 'c'
       let transcriptRefreshIntervalMs = 250
 
       // $scope.transcripts = []
@@ -40,10 +40,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.drawDebugSnaproads = false
       // $scope.insertMode = false
 
-      $scope.cornerCall = defaultCornerCall
-      $scope.wheelDegrees =  0
+      // $scope.cornerCall = defaultCornerCall
+      // $scope.wheelDegrees =  0
 
-      $scope.cornerCallStyle = null
+      // $scope.cornerCallStyle = null
 
       $scope.missionIsLoaded = false
       $scope.loadedMissionName = null
@@ -61,13 +61,13 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       let transcriptInterval = null
 
-      function updateCornerCall() {
+      // function updateCornerCall() {
         // var textElement = document.getElementById('cornerCall')
         // textElement.textContent = $scope.cornerCall
 
-        var textElement = document.getElementById('wheelDegrees')
-        textElement.textContent =  '' + $scope.wheelDegrees + '°'
-      }
+        // var textElement = document.getElementById('wheelDegrees')
+        // textElement.textContent =  '' + $scope.wheelDegrees + '°'
+      // }
 
       function refreshRecceApp() {
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.refresh()')
@@ -82,7 +82,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.$on('$destroy', function () {
-        StreamsManager.remove(streamsList)
+        // StreamsManager.remove(streamsList)
         bngApi.engineLua('extensions.unload("ui_aipacenotes_recceApp")')
       })
 
@@ -93,7 +93,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.$on('aiPacenotes.recceApp.refreshed', function (event, response) {
         // console.log('recce missions loaded: ' + JSON.stringify(response))
 
-        $scope.cornerCallStyle = response.corner_angles_style
+        // $scope.cornerCallStyle = response.corner_angles_style
 
         let missions = response.missions
         let last_mid = response.last_mission_id
@@ -324,34 +324,34 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         }
       });
 
-      $scope.$on('streamsUpdate', function (event, streams) {
-        if (!streams.electrics) return
-        if (!$scope.cornerCallStyle) return
-
-        // console.log(JSON.stringify($scope.selectedStyle))
-
-        let steering = streams.electrics.steering
-        // let steeringUnassisted = steering-streams.electrics.steeringUnassisted
-        // let steeringInput = streams.electrics.steering_input
-
-        let steeringVal = steering
-        let absSteeringVal = Math.abs(steeringVal)
-        $scope.wheelDegrees = Math.round(steeringVal) + ''
-
-        for (let item of $scope.cornerCallStyle.angles) {
-          if (absSteeringVal >= item.fromAngleDegrees && absSteeringVal < item.toAngleDegrees) {
-            let direction = steeringVal >= 0 ? "L" : "R"
-            let cornerCallWithDirection = item.cornerCall + direction
-
-            if (item.cornerCall === "_deadzone") {
-              cornerCallWithDirection = "c"
-            }
-
-            $scope.cornerCall = cornerCallWithDirection
-            updateCornerCall()
-          }
-        }
-      }) // $scope.$on('streamsUpdate')
+      // $scope.$on('streamsUpdate', function (event, streams) {
+      //   if (!streams.electrics) return
+      //   if (!$scope.cornerCallStyle) return
+      //
+      //   // console.log(JSON.stringify($scope.selectedStyle))
+      //
+      //   let steering = streams.electrics.steering
+      //   // let steeringUnassisted = steering-streams.electrics.steeringUnassisted
+      //   // let steeringInput = streams.electrics.steering_input
+      //
+      //   let steeringVal = steering
+      //   let absSteeringVal = Math.abs(steeringVal)
+      //   // $scope.wheelDegrees = Math.round(steeringVal) + ''
+      //
+      //   for (let item of $scope.cornerCallStyle.angles) {
+      //     if (absSteeringVal >= item.fromAngleDegrees && absSteeringVal < item.toAngleDegrees) {
+      //       let direction = steeringVal >= 0 ? "L" : "R"
+      //       let cornerCallWithDirection = item.cornerCall + direction
+      //
+      //       if (item.cornerCall === "_deadzone") {
+      //         cornerCallWithDirection = "c"
+      //       }
+      //
+      //       $scope.cornerCall = cornerCallWithDirection
+      //       // updateCornerCall()
+      //     }
+      //   }
+      // }) // $scope.$on('streamsUpdate')
 
     }] // end controller
   } // end directive

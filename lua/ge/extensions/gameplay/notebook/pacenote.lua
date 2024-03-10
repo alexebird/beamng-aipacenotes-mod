@@ -261,7 +261,11 @@ end
 function C:nameForSelect()
   local txt = self.name
   local note = self.notes[re_util.default_codriver_language].note
-  txt = txt..' - '..(note or '')
+  if not note or note == '' then
+    note = '<empty>'
+  end
+
+  txt = txt..' - '..note
 
   if self:is_valid() then
     return txt

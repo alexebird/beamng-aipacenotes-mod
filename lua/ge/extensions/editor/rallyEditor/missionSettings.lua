@@ -55,6 +55,7 @@ function C:draw()
   for i = 1,5 do im.Spacing() end
 
   im.HeaderText("Recce Settings")
+  im.Text('Recce settings apply to all missions, as well as the Recce UI app.')
   self:recceSettingsSection()
 end
 

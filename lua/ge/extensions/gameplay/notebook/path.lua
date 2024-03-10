@@ -89,7 +89,7 @@ function C:save(fname)
   fname = fname or self.fname
   if not fname then
     log('W', logTag, 'couldnt save notebook because no filename was set')
-    return
+    return false
   end
 
   self:normalizeNotes()

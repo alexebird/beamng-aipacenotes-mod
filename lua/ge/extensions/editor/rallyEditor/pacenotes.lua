@@ -171,8 +171,6 @@ function C:selected()
   self:loadSnaproad()
   self:selectPacenote(self.pacenote_tools_state.selected_pn_id)
 
-  -- self:loadFullCourse(false)
-
   -- self.pacenote_tools_state.selected_pn_id = nil
   -- self.pacenote_tools_state.selected_wp_id = nil
 
@@ -798,8 +796,6 @@ function C:createMouseDragPacenote()
   )
 
   if self.mouseInfo.down then
-    print('down')
-
     local pos_down = self.mouseInfo._downPos
     if pos_down then
       local point_cs = self.pacenote_tools_state.snaproad:closestSnapPoint(pos_down)
@@ -810,7 +806,11 @@ function C:createMouseDragPacenote()
       end
 
       local pn = partition.pacenote_after
-      local sortOrder = self.path.pacenotes.sorted[#self.path.pacenotes.sorted].sortOrder + 5 -- default to end of pacenotes list
+      local lastPacenote = self.path.pacenotes.sorted[#self.path.pacenotes.sorted]
+      local sortOrder = 1
+      if lastPacenote and not lastPacenote.missing then
+        sortOrder = lastPacenote.sortOrder + 5 -- default to end of pacenotes list
+      end
       if pn then
         print(pn.sortOrder)
         sortOrder = pn.sortOrder - 0.5 -- go before the partition's pacenote_after
@@ -1497,6 +1497,9 @@ end
 function C:deleteAllPacenotes()
   if not self.path then return end
   self.path:deleteAllPacenotes()
+  self:selectPacenote(nil)
+  -- self.pacenote_tools_state.snaproad:clearFilter()
+  -- self.pacenote_tools_state.snaproad:clearPartition()
 end
 
 function C:drawPacenotesList(height)

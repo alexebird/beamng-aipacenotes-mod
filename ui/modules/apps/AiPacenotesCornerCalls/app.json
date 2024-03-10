@@ -9,9 +9,9 @@
   "css": {
     "left": "50%",
     "top": "50%",
-    "min-width": "256px",
-    "min-height": "60px",
-    "width": "520px",
-    "height": "420px"
+    "min-width": "250px",
+    "min-height": "150px",
+    "width":"600px",
+    "height":"250px"
   }
 }

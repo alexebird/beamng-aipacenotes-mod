@@ -24,6 +24,10 @@ local currentWindow = {}
 local changedWindow = false
 local programmaticTabSelect = false
 
+
+-- useful:
+-- Engine.Platform.exploreFolder("/replays/")
+
 local function select(window)
   currentWindow:unselect()
   currentWindow = window
@@ -106,6 +110,8 @@ local function ensureMissionSettingsFile()
       settings.notebook.codriver = assumedCodriverName
       jsonWriteFile(settingsFname, settings:onSerialize(), true)
     end
+  else
+    print('ensureMissionSettingsFile nil missionDir')
   end
 end
 
@@ -269,8 +275,8 @@ local function loadOrCreateNotebook(full_filename)
 
   if not FS:fileExists(full_filename) then
     log('I', logTag, 'notebook file doesnt exist, creating: '..full_filename)
-    if newPath:save() then
-      ensureMissionSettingsFile()
+    if not newPath:save() then
+      log('E', logTag, 'error saving new notebook')
     end
   else
     local json = jsonReadFile(full_filename)
@@ -281,39 +287,32 @@ local function loadOrCreateNotebook(full_filename)
     end
   end
 
-  editor.history:commitAction("Set path to " .. newPath.fname,
-    -- { path = p, filepath = dir, filename = filename },
-    { path = newPath },
-    setNotebookUndo,
-    setNotebookRedo
-  )
+  currentPath = newPath
+  ensureMissionSettingsFile()
+
+  for _, window in ipairs(windows) do
+    window:setPath(currentPath)
+  end
 end
 
 local function loadNotebook(full_filename)
   if not full_filename then
     return
   end
-  -- local dir, filename, ext = path.split(full_filename)
-  -- log('I', logTag, 'creating empty notebook file at ' .. tostring(dir))
+
   local json = jsonReadFile(full_filename)
   if not json then
     log('E', logTag, 'couldnt find notebook file')
   end
-  -- previousFilepath = dir
-  -- previousFilename = filename
+
   local newPath = require('/lua/ge/extensions/gameplay/notebook/path')()
   newPath:setFname(full_filename)
   newPath:onDeserialized(json)
-  -- p._dir = dir
-  -- local a, fn2, b = path.splitWithoutExt(previousFilename, true)
-  -- p._fnWithoutExt = fn2
 
-  editor.history:commitAction("Set path to " .. newPath.fname,
-    -- { path = p, filepath = dir, filename = filename },
-    { path = newPath },
-    setNotebookUndo,
-    setNotebookRedo
-  )
+  currentPath = newPath
+  for _, window in ipairs(windows) do
+    window:setPath(currentPath)
+  end
 end
 
 local function updateMouseInfo()

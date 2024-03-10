@@ -22,11 +22,10 @@ function C:loadPacenoteMetadata()
   local pacenotesDir = re_util.buildPacenotesDir(missionDir, notebook, codriver)
 
   local metadataFname = pacenotesDir..'/'..re_util.pacenotesMetadataBasename
-  print(metadataFname)
 
   local json = jsonReadFile(metadataFname)
   if not json then
-    log('E', logTag, 'couldnt find notebook file')
+    log('W', logTag, 'couldnt find metadata file: '..metadataFname)
   end
   self.pacenote_metadata = json
   -- print(dumps(json))
