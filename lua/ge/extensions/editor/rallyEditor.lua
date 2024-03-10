@@ -94,19 +94,7 @@ local function getMissionDir()
   return missionDir
 end
 
-local function saveNotebook()
-  if not currentPath then
-    log('W', logTag, 'cant save; no notebook loaded.')
-    return
-  end
-
-  if not currentPath:save() then
-    return
-  end
-
-  -- log('D', 'wtf', 'getMD: '..getMissionDir())
-  -- log('D', 'wtf', 'aipPath: '..re_util.aipPath)
-  -- log('D', 'wtf', 'missionSettigsFname: '..re_util.missionSettingsFname)
+local function ensureMissionSettingsFile()
   local md = getMissionDir()
   if md then
     local settingsFname = md..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
@@ -119,6 +107,19 @@ local function saveNotebook()
       jsonWriteFile(settingsFname, settings:onSerialize(), true)
     end
   end
+end
+
+local function saveNotebook()
+  if not currentPath then
+    log('W', logTag, 'cant save; no notebook loaded.')
+    return
+  end
+
+  if not currentPath:save() then
+    return
+  end
+
+  ensureMissionSettingsFile()
 end
 
 local function selectPrevPacenote()
@@ -257,6 +258,36 @@ end
 -- local function moveSelectedWaypointBackwardFast()
 --   pacenotesWindow:moveSelectedWaypointBackwardFast()
 -- end
+
+local function loadOrCreateNotebook(full_filename)
+  if not full_filename then
+    return
+  end
+
+  local newPath = require('/lua/ge/extensions/gameplay/notebook/path')()
+  newPath:setFname(full_filename)
+
+  if not FS:fileExists(full_filename) then
+    log('I', logTag, 'notebook file doesnt exist, creating: '..full_filename)
+    if newPath:save() then
+      ensureMissionSettingsFile()
+    end
+  else
+    local json = jsonReadFile(full_filename)
+    if json then
+      newPath:onDeserialized(json)
+    else
+      log('E', logTag, 'couldnt find notebook file')
+    end
+  end
+
+  editor.history:commitAction("Set path to " .. newPath.fname,
+    -- { path = p, filepath = dir, filename = filename },
+    { path = newPath },
+    setNotebookUndo,
+    setNotebookRedo
+  )
+end
 
 local function loadNotebook(full_filename)
   if not full_filename then
@@ -1007,6 +1038,7 @@ M.show = show
 M.showRallyTool = showRallyTool
 M.showPacenotesTab = showPacenotesTab
 M.loadNotebook = loadNotebook
+M.loadOrCreateNotebook = loadOrCreateNotebook
 M.saveNotebook = saveNotebook
 M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide

@@ -1,0 +1,23 @@
+<div class="bngApp md-padding" style="width: 100%; height: 100%; font-size: 1.4em;" layout="column" layout-align="center center">
+  <link type="text/css" rel="stylesheet" href="/ui/modules/apps/AiPacenotesCornerCalls/app.css" />
+  <div class="ai-pacenotes-corner-calls">
+    <div class="steering-angle" ng-style="steeringAngleStyle" ng-click="cycleColor()">
+      <span id="cornerCall"></span>
+    </div>
+
+    <div class="transcripts">
+      <div class="transcript-notes-area">
+        <div class="transcripts-error" ng-if="transcriptsError" ng-bind-html="transcriptsError"></div>
+        <ul class="recent-transcripts-list" ng-if="!transcriptsError">
+          <li ng-repeat="transcriptObj in transcripts">
+            <span>{{transcriptObj.text}}</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="indicators">
+        <span class="indicator" id="wheelDegrees">0 &deg;</span>
+      </div>
+    </div>
+  </div>
+</div>

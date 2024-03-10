@@ -1,7 +1,10 @@
 {
   "domElement": "<ai-pacenotes-recce></ai-pacenotes-recce>",
+  "directive": "aiPacenotesRecce",
   "name": "Recce (aipacenotes)",
-  "types": ["ui.apps.categories.racing"],
+  "types": ["Rally", "AI Pacenotes"],
+  "author": "Birdman",
+  "version": "0.1.0",
   "description": "Helps you do recce.",
   "css": {
     "left": "50%",
@@ -10,8 +13,5 @@
     "min-height": "60px",
     "width": "520px",
     "height": "420px"
-  },
-  "author": "Birdman",
-  "version": "0.1",
-  "directive": "aiPacenotesRecce"
+  }
 }

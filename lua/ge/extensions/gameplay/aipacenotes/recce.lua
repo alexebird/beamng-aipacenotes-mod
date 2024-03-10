@@ -122,7 +122,10 @@ function C:loadDrivelineLegacy()
   local missionSettings, err = re_util.getMissionSettingsHelper(self.missionDir)
 
   if err then
-    error(err)
+    self.driveline = nil
+    log('I', logTag, 'error loading missionSettings: '..tostring(err))
+    -- error(err)
+    return
   end
 
   -- local transcriptFullCourse = missionSettings:getFullCourseTranscriptAbsPath(self.missionDir)

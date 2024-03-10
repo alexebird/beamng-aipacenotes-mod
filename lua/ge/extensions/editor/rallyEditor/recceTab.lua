@@ -74,6 +74,7 @@ function C:import()
   if pacenotes then
     self.path:appendPacenotes(pacenotes)
     self.path:normalizeNotes()
+    self.rallyEditor.showPacenotesTab()
   end
 end
 

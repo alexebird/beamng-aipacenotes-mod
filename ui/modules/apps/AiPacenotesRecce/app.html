@@ -1,37 +1,14 @@
 <div class="bngApp md-padding" style="width: 100%; height: 100%; font-size: 1.4em;" layout="column" layout-align="center center">
   <link type="text/css" rel="stylesheet" href="/ui/modules/apps/AiPacenotesRecce/app.css" />
   <div class="ai-pacenotes-recce">
-
-    <div class="steering-angle">
-      <span id="cornerCall"></span>
-    </div>
-
-    <div class="transcripts">
-      <div class="transcript-notes-area">
-        <div class="transcripts-error" ng-if="transcriptsError" ng-bind-html="transcriptsError"></div>
-        <ul class="recent-transcripts-list" ng-if="!transcriptsError">
-          <li ng-repeat="transcriptObj in transcripts">
-            <span>{{transcriptObj.text}}</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="indicators">
-        <span class="indicator" id="wheelDegrees">0 &deg;</span>
-        <!-- <span class="indicator clickable-indicator" ng-click="btnRetryNetwork()"> -->
-        <!--   <span class="dot-indicator" ng-class="{'network-indicator-on': network_ok}"></span> -->
-        <!--   <span class="dot-indicator-label">net</span> -->
-        <!-- </span> -->
-        <span class="indicator">
-          <span class="dot-indicator" ng-class="{'recording-indicator-on': isRecording}"></span>
-          <span class="dot-indicator-label">rec</span>
-        </span>
-      </div>
-    </div>
-
     <div class="recce-controls">
       <div class="recce-control">
         <div style="display: flex; flex-direction: row;">
+          <div class="indicator" style="margin-top: 10px; margin-right: 10px;">
+            <span class="dot-indicator" ng-class="{'recording-indicator-on': isRecording}"></span>
+            <span class="dot-indicator-label">rec</span>
+          </div>
+
           <button ng-click="btnRecordStart()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">start</button>
           <button ng-click="btnRecordStop()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">stop</button>
           <button ng-click="btnRecordCut()" id='cut-btn' class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">cut</button>

@@ -1,0 +1,17 @@
+{
+  "domElement": "<ai-pacenotes-corner-calls></ai-pacenotes-corner-calls>",
+  "directive": "aiPacenotesCornerCalls",
+  "name": "Corner Calls (aipacenotes)",
+  "types": ["Rally", "AI Pacenotes"],
+  "author": "birdman",
+  "version": "0.1.0",
+  "description": "Displays the corner call for the current steering wheel angle.",
+  "css": {
+    "left": "50%",
+    "top": "50%",
+    "min-width": "256px",
+    "min-height": "60px",
+    "width": "520px",
+    "height": "420px"
+  }
+}

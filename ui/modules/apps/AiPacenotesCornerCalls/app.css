@@ -1,0 +1,67 @@
+.ai-pacenotes-corner-calls {
+    display: flex;
+    flex-direction: column;
+
+    font-family: monospace;
+
+    margin: 0.25em;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.steering-angle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 136px;
+
+    line-height: 0.75;
+    font-size: 10em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.ai-pacenotes-corner-calls .transcripts {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 97px;
+}
+
+.transcript-notes-area {
+    display: block;
+    height: 4em;
+    width: 100%
+}
+
+.transcripts-error {
+    font-style: italic;
+    color: #ff9191;
+}
+
+.recent-transcripts-list {
+    list-style-type: none;
+}
+
+.transcripts-error, .recent-transcripts-list {
+    text-align: center;
+    padding: 0px;
+    margin: 0 0.25em;
+}
+
+.transcripts li {
+    color: #CCC;
+    font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0.25em;
+}
+
+.transcripts li:nth-child(1) {
+    color: #EEE;
+    font-style: normal;
+    font-size: 1.5em;
+    font-weight: bold;
+}

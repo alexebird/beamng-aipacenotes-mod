@@ -33,7 +33,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       let defaultCornerCall = 'c'
       let transcriptRefreshIntervalMs = 250
 
-      $scope.transcripts = []
+      // $scope.transcripts = []
       $scope.isRecording = false
       // $scope.network_ok = false
       $scope.drawDebug = false
@@ -62,10 +62,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       let transcriptInterval = null
 
       function updateCornerCall() {
-        var textElement = document.getElementById('cornerCall')
-        textElement.textContent = $scope.cornerCall
+        // var textElement = document.getElementById('cornerCall')
+        // textElement.textContent = $scope.cornerCall
 
-        textElement = document.getElementById('wheelDegrees')
+        var textElement = document.getElementById('wheelDegrees')
         textElement.textContent =  '' + $scope.wheelDegrees + '°'
       }
 
@@ -130,20 +130,20 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         }
       })
 
-      $scope.$on('aiPacenotesTranscriptsLoaded', function (event, response) {
-        if (response.ok) {
-          $scope.transcripts = response.transcripts
-          $scope.transcriptsError = null
-        } else {
-          $scope.transcripts = []
-          $scope.transcriptsError = $sce.trustAsHtml(response.error)
-        }
-      })
-
-      $scope.$on('aiPacenotesInputActionDesktopCallNotOk', function (event, errMsg) {
-        // $scope.network_ok = false
-        $scope.transcriptsError = $sce.trustAsHtml(errMsg)
-      })
+      // $scope.$on('aiPacenotesTranscriptsLoaded', function (event, response) {
+      //   if (response.ok) {
+      //     $scope.transcripts = response.transcripts
+      //     $scope.transcriptsError = null
+      //   } else {
+      //     $scope.transcripts = []
+      //     $scope.transcriptsError = $sce.trustAsHtml(response.error)
+      //   }
+      // })
+      //
+      // $scope.$on('aiPacenotesInputActionDesktopCallNotOk', function (event, errMsg) {
+      //   // $scope.network_ok = false
+      //   $scope.transcriptsError = $sce.trustAsHtml(errMsg)
+      // })
 
       $scope.$on('aiPacenotesInputActionCutRecording', function (event) {
         $scope.btnRecordCut()
@@ -201,6 +201,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
           $scope.drawDebug = true
           $scope.drawDebugSnaproads = false
+          $scope.pacenoteText = ""
           updateLuaDrawDebug()
           updateLuaDrawDebugSnaproads()
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
@@ -307,11 +308,11 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       // Use vehicle reset to trigger a reload of the corner_angles.json file.
-      $scope.$on('VehicleReset', function (event, data) {
-        $scope.$evalAsync(function () {
-          // $scope.btnRefreshCornerAngles()
-        })
-      })
+      // $scope.$on('VehicleReset', function (event, data) {
+      //   $scope.$evalAsync(function () {
+      //     // $scope.btnRefreshCornerAngles()
+      //   })
+      // })
 
       $scope.$watch('selectedMissionName', function(newValue, oldValue) {
         if (newValue !== oldValue) {

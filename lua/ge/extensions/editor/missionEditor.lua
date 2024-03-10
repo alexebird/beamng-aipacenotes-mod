@@ -109,7 +109,8 @@ local function openRallyEditor(shownMission)
     end
     local notebookFname = editor_rallyEditor.detectNotebookToLoad(shownMission.missionFolder)
     log('I', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
-    editor_rallyEditor.loadNotebook(notebookFname)
+    -- editor_rallyEditor.loadNotebook(notebookFname)
+    editor_rallyEditor.loadOrCreateNotebook(notebookFname)
     editor_rallyEditor.showRallyTool()
   end
 end
