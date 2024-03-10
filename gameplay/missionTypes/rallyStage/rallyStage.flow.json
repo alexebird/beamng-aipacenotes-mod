@@ -1,8 +1,8 @@
 {
-  "activeGraphId":58,
+  "activeGraphId":17,
   "authors":"Anonymous",
-  "currentGraphID":58,
-  "date":1706057839,
+  "currentGraphID":17,
+  "date":1709965736,
   "debugEnabled":false,
   "description":"Project description.",
   "difficulty":40,
@@ -111,14 +111,14 @@
           false
         ],
         [
-          277,
+          278,
           "flow",
           113,
           "flow",
           false
         ],
         [
-          278,
+          277,
           "flow",
           113,
           "flow",
@@ -1092,6 +1092,13 @@
           true
         ],
         [
+          26,
+          "complete",
+          27,
+          "flow",
+          false
+        ],
+        [
           64,
           "flow",
           27,
@@ -1101,13 +1108,6 @@
         [
           60,
           "flow",
-          27,
-          "flow",
-          false
-        ],
-        [
-          26,
-          "complete",
           27,
           "flow",
           false
@@ -1337,14 +1337,14 @@
           true
         ],
         [
-          133,
+          4325124,
           "flow",
           60,
           "flow",
           false
         ],
         [
-          4325124,
+          133,
           "flow",
           60,
           "flow",
@@ -1527,14 +1527,14 @@
         ],
         [
           124,
-          "True",
+          "False",
           128,
           "flow",
           false
         ],
         [
           124,
-          "False",
+          "True",
           128,
           "flow",
           false
@@ -1576,14 +1576,14 @@
         ],
         [
           132,
-          "False",
+          "True",
           131,
           "flow",
           false
         ],
         [
           132,
-          "True",
+          "False",
           131,
           "flow",
           false
@@ -1744,8 +1744,8 @@
             }
           },
           "pos":[
-            -172,
-            -118
+            -200,
+            -132
           ],
           "type":"gameplay/race/filePath"
         },
@@ -1830,7 +1830,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000000000
+              "value":0.75000000000000022204
             }
           },
           "hiddenPins":{
@@ -3046,10 +3046,10 @@
         "list":{}
       },
       "viewPos":[
-        -771.08197021484375000000,
-        -312.33520507812500000000
+        -881.47711181640625000000,
+        -298.88479614257812500000
       ],
-      "viewZoom":0.25000000000000000000
+      "viewZoom":0.74999994039535522461
     },
     "31":{
       "description":"This is the description for graph New Group State",
@@ -3324,14 +3324,14 @@
           false
         ],
         [
-          1817003,
+          92,
           "flow",
           98,
           "flow",
           false
         ],
         [
-          92,
+          1817003,
           "flow",
           98,
           "flow",
@@ -3380,6 +3380,20 @@
           true
         ],
         [
+          37,
+          "enterState",
+          4325127,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          4325127,
+          "reset",
+          false
+        ],
+        [
           91,
           "True",
           146,
@@ -3419,6 +3433,20 @@
           "recoverLimit",
           47,
           "recoverMission",
+          false
+        ],
+        [
+          146,
+          "True",
+          65,
+          "flow",
+          false
+        ],
+        [
+          146,
+          "True",
+          65,
+          "reset",
           false
         ],
         [
@@ -3464,6 +3492,20 @@
           true
         ],
         [
+          98,
+          "flow",
+          908566,
+          "flow",
+          false
+        ],
+        [
+          139,
+          "value",
+          908566,
+          "txt",
+          false
+        ],
+        [
           156,
           "finished",
           46,
@@ -3485,17 +3527,17 @@
           false
         ],
         [
-          37,
-          "enterState",
-          4325127,
+          454369,
+          "flow",
+          908565,
           "flow",
           false
         ],
         [
-          37,
-          "enterState",
-          4325127,
-          "reset",
+          454369,
+          "value",
+          908565,
+          "txt",
           false
         ],
         [
@@ -3520,8 +3562,8 @@
           false
         ],
         [
-          37,
-          "flow",
+          175,
+          "empty",
           156,
           "flow",
           false
@@ -3604,30 +3646,37 @@
           false
         ],
         [
-          146,
-          "True",
-          65,
+          454362,
+          "false",
+          454369,
           "flow",
           false
         ],
         [
-          146,
-          "True",
-          65,
-          "reset",
+          1817003,
+          "count",
+          454369,
+          "value_1",
           false
         ],
         [
-          98,
+          1817003,
+          "limit",
+          454369,
+          "value_2",
+          false
+        ],
+        [
+          134,
           "flow",
-          908566,
+          454330,
           "flow",
           false
         ],
         [
-          139,
+          134,
           "value",
-          908566,
+          454330,
           "txt",
           false
         ],
@@ -3653,38 +3702,31 @@
           false
         ],
         [
-          454369,
-          "flow",
-          908565,
-          "flow",
-          false
-        ],
-        [
-          454369,
-          "value",
-          908565,
-          "txt",
-          false
-        ],
-        [
-          454362,
-          "false",
-          454369,
+          37,
+          "enterState",
+          296,
           "flow",
           false
         ],
         [
-          1817003,
-          "count",
-          454369,
-          "value_1",
+          97,
+          "flow",
+          275,
+          "flow",
           false
         ],
         [
-          1817003,
-          "limit",
-          454369,
-          "value_2",
+          97,
+          "note",
+          275,
+          "message",
+          false
+        ],
+        [
+          97,
+          "note",
+          275,
+          "category",
           false
         ],
         [
@@ -3723,39 +3765,53 @@
           false
         ],
         [
-          134,
-          "flow",
-          454330,
-          "flow",
-          false
-        ],
-        [
-          134,
-          "value",
-          454330,
-          "txt",
-          false
-        ],
-        [
-          97,
-          "flow",
-          275,
+          37,
+          "enterState",
+          175,
           "flow",
           false
         ],
         [
-          97,
-          "note",
-          275,
-          "message",
+          172,
+          "flow",
+          175,
+          "flow",
           false
         ],
         [
-          97,
-          "note",
-          275,
-          "category",
+          37,
+          "exitState",
+          175,
+          "flow",
           false
+        ],
+        [
+          37,
+          "enterState",
+          175,
+          "reset",
+          false
+        ],
+        [
+          37,
+          "exitState",
+          175,
+          "reset",
+          false
+        ],
+        [
+          92,
+          "flow",
+          103,
+          "flow",
+          false
+        ],
+        [
+          116,
+          "allowFlip",
+          103,
+          "condition",
+          true
         ],
         [
           52,
@@ -3765,7 +3821,7 @@
           false
         ],
         [
-          112,
+          54,
           "flow",
           142,
           "flow",
@@ -3779,13 +3835,6 @@
           true
         ],
         [
-          54,
-          "flow",
-          142,
-          "flow",
-          false
-        ],
-        [
           47,
           "flow",
           142,
@@ -3794,6 +3843,13 @@
         ],
         [
           46,
+          "flow",
+          142,
+          "flow",
+          false
+        ],
+        [
+          112,
           "flow",
           142,
           "flow",
@@ -3926,18 +3982,18 @@
           true
         ],
         [
-          92,
+          37,
           "flow",
-          103,
+          172,
           "flow",
           false
         ],
         [
-          116,
-          "allowFlip",
-          103,
-          "condition",
-          true
+          37,
+          "enterState",
+          172,
+          "reset",
+          false
         ],
         [
           57,
@@ -4043,8 +4099,8 @@
             }
           },
           "pos":[
-            -865,
-            92
+            -1054,
+            190
           ],
           "type":"events/onUpdate"
         },
@@ -4533,7 +4589,7 @@
             },
             "minAlpha":{
               "type":"number",
-              "value":0.14999999999999999445
+              "value":0.15000000000000004996
             },
             "minDistance":{
               "type":"number",
@@ -4946,7 +5002,7 @@
             },
             "duration":{
               "type":"number",
-              "value":4
+              "value":6
             },
             "finishMsgDuration":{
               "type":"number",
@@ -5042,6 +5098,43 @@
           ],
           "type":"gameplay/aipacenotes/setNoteSearch"
         },
+        "172":{
+          "data":{},
+          "dynamicMode":"once",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "reset":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            -536,
+            36
+          ],
+          "type":"gameplay/aipacenotes/preCountdown"
+        },
+        "175":{
+          "data":{},
+          "dynamicMode":"once",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "reset":false
+            },
+            "p_out":{
+              "empty":false,
+              "flow":false
+            }
+          },
+          "pos":[
+            -200,
+            92
+          ],
+          "type":"gameplay/aipacenotes/waitForEmptyAudioQueue"
+        },
         "209":{
           "data":{},
           "dynamicMode":"repeat",
@@ -5097,6 +5190,36 @@
             1044
           ],
           "type":"ui/message"
+        },
+        "296":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hardcodedPins":{
+            "logType":{
+              "type":"string",
+              "value":"I"
+            },
+            "value":{
+              "type":"string",
+              "value":"foo"
+            }
+          },
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "logTag":true,
+              "logType":true,
+              "value":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            -620,
+            316
+          ],
+          "type":"debug/log"
         },
         "454330":{
           "customName":"Flips Used",
@@ -5598,8 +5721,8 @@
         "list":{}
       },
       "viewPos":[
-        -158.56018066406250000000,
-        -207.01722717285156250000
+        -1054.61633300781250000000,
+        -205.11486816406250000000
       ],
       "viewZoom":1
     },
@@ -6128,14 +6251,14 @@
           false
         ],
         [
-          45492,
+          9140,
           "flow",
           8980,
           "flow",
           false
         ],
         [
-          9140,
+          45492,
           "flow",
           8980,
           "flow",
@@ -6345,14 +6468,14 @@
           false
         ],
         [
-          158,
+          81,
           "flow",
           99,
           "flow",
           false
         ],
         [
-          81,
+          158,
           "flow",
           99,
           "flow",
@@ -8539,7 +8662,7 @@
           "hardcodedPins":{
             "B":{
               "type":"number",
-              "value":0.00999999977599999937
+              "value":0.00999999977600000631
             }
           },
           "hiddenPins":{
@@ -8781,7 +8904,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000000000
+              "value":0.75000000000000022204
             }
           },
           "hiddenPins":{
@@ -9106,7 +9229,7 @@
         },
         "4324679":{
           "data":{
-            "value":0.75000000000000000000
+            "value":0.75000000000000022204
           },
           "dynamicMode":"repeat",
           "hiddenPins":{
@@ -9664,10 +9787,10 @@
         "list":{}
       },
       "viewPos":[
-        0,
-        0
+        -811.17260742187500000000,
+        -344.82757568359375000000
       ],
-      "viewZoom":1
+      "viewZoom":1.25000000000000000000
     }
   },
   "isScenario":false,
