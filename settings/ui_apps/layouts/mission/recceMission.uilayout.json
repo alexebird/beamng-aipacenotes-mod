@@ -1,5 +1,4 @@
 {
-  "type":"recceMission",
   "apps":[
     {
       "appName":"messages",
@@ -16,10 +15,10 @@
     {
       "appName":"tacho2",
       "placement":{
-        "width":"300px",
         "bottom":"20px",
         "height":"300px",
-        "right":"20px"
+        "right":"20px",
+        "width":"300px"
       },
       "settings":{
         "noCockpit":true
@@ -28,25 +27,13 @@
     {
       "appName":"forcedInduction",
       "placement":{
-        "width":"150px",
         "bottom":"320px",
         "height":"150px",
-        "right":"20px"
+        "right":"20px",
+        "width":"150px"
       },
       "settings":{
         "noCockpit":true
-      }
-    },
-    {
-      "appName":"hotlapping",
-      "placement":{
-        "bottom":"",
-        "height":"600px",
-        "left":"",
-        "position":"absolute",
-        "right":"10px",
-        "top":"10px",
-        "width":"350px"
       }
     },
     {
@@ -115,8 +102,32 @@
     {
       "appName":"aiPacenotesRecce",
       "placement":{
-        "bottom":"5px",
-        "height":"420px",
+        "bottom":"",
+        "height":"290px",
+        "left":"",
+        "position":"absolute",
+        "right":"0px",
+        "top":"0px",
+        "width":"760px"
+      }
+    },
+    {
+      "appName":"aiPacenotesCodriver",
+      "placement":{
+        "bottom":"0px",
+        "height":"80px",
+        "left":"355px",
+        "position":"absolute",
+        "right":"",
+        "top":"",
+        "width":"200px"
+      }
+    },
+    {
+      "appName":"aiPacenotesCornerCalls",
+      "placement":{
+        "bottom":"0px",
+        "height":"250px",
         "left":0,
         "margin":"auto",
         "position":"absolute",
@@ -127,5 +138,6 @@
     }
   ],
   "description":"Layout used for Rally Recce mode.",
-  "title":"[aipacenotes] Recce"
+  "title":"[aipacenotes] Recce",
+  "type":"recceMission"
 }

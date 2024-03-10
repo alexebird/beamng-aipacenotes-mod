@@ -1,5 +1,4 @@
 {
-  "type":"rallyStageMission",
   "apps":[
     {
       "appName":"messages",
@@ -16,10 +15,10 @@
     {
       "appName":"tacho2",
       "placement":{
-        "width":"300px",
         "bottom":"20px",
         "height":"300px",
-        "right":"20px"
+        "right":"20px",
+        "width":"300px"
       },
       "settings":{
         "noCockpit":true
@@ -28,10 +27,10 @@
     {
       "appName":"forcedInduction",
       "placement":{
-        "width":"150px",
         "bottom":"320px",
         "height":"150px",
-        "right":"20px"
+        "right":"20px",
+        "width":"150px"
       },
       "settings":{
         "noCockpit":true
@@ -98,8 +97,24 @@
         "top":"",
         "width":"160px"
       }
+    },
+    {
+      "appName":"aiPacenotesCodriver",
+      "placement":{
+        "bottom":"5px",
+        "height":"80px",
+        "left":"355px",
+        "position":"absolute",
+        "right":"",
+        "top":"",
+        "width":"200px"
+      },
+      "settings":{
+        "noCockpit":true
+      }
     }
   ],
   "description":"Layout used for Rally Stage Missions",
-  "title":"[aipacenotes] Rally"
+  "title":"[aipacenotes] Rally",
+  "type":"rallyStageMission"
 }
