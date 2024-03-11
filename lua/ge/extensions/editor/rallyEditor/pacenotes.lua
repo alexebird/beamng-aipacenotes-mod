@@ -1585,6 +1585,17 @@ function C:drawPacenotesList(height)
   if im.Button("Clear All TODO") then
     self.path:clearAllTodo()
   end
+  im.SameLine()
+  if im.Button("Select Closest to Vehicle") then
+
+    local playerVehicle = be:getPlayerVehicle(0)
+    if playerVehicle then
+    local pacenotes = self.path:findNClosestPacenotes(playerVehicle:getPosition(), 1)
+    if pacenotes and pacenotes[1] then
+      self:selectPacenote(pacenotes[1].id)
+    end
+    end
+  end
 
   local editModeLabel = '???'
   if self.pacenote_tools_state.mode == editModes.editAll then

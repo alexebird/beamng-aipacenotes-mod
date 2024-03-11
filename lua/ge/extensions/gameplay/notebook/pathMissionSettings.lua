@@ -56,16 +56,14 @@ end
 --   return self:getTranscript('curr')
 -- end
 --
-function C:getFullCourseTranscript()
-  return self:getTranscript('full_course')
+function C:getFullCourseTranscript(missionDir)
+  return self:getTranscript('full_course', missionDir)
 end
 --
-function C:getTranscript(settingName)
-  if not editor_rallyEditor then return nil end
-
+function C:getTranscript(settingName, missionDir)
   if self.transcripts and self.transcripts[settingName] then
     local basenameWithExt = self.transcripts[settingName]
-    local absPath = re_util.missionTranscriptPath(editor_rallyEditor.getMissionDir(), basenameWithExt)
+    local absPath = re_util.missionTranscriptPath(missionDir, basenameWithExt)
     if FS:fileExists(absPath) then
       local loaded_transcript = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(absPath)
       if not loaded_transcript:load() then

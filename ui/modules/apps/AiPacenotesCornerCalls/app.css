@@ -65,3 +65,9 @@
     font-size: 1.5em;
     font-weight: bold;
 }
+
+#wheelDegrees {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+}

@@ -52,7 +52,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.recordDriveline = false
       $scope.recordVoice = false
-      $scope.pacenoteText = ""
+      // $scope.pacenoteText = ""
 
       $scope.missions = []
       $scope.dropdownMissionNames = []
@@ -88,6 +88,13 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           return false
         }
       }
+
+      $scope.handleKeyDown = function(event) {
+        console.log(event.key)
+        // Prevent default behavior and stop propagation
+        // event.preventDefault();
+        // event.stopPropagation();
+      };
 
       $scope.$on('$destroy', function () {
         // StreamsManager.remove(streamsList)
@@ -186,7 +193,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       })
 
       $scope.$on('aiPacenotes.recceApp.pacenoteTextChanged', function (event, resp) {
-        $scope.pacenoteText = resp.pacenoteText
+        // $scope.pacenoteText = resp.pacenoteText
+
+        var pacenoteText = document.getElementById('pacenoteInput')
+        pacenoteText.value = resp.pacenoteText
       })
 
       // $scope.$on('aiPacenotes.InputAction.RecceInsertMode', function (event, resp) {
@@ -209,7 +219,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
           $scope.drawDebug = true
           $scope.drawDebugSnaproads = false
-          $scope.pacenoteText = ""
+          // $scope.pacenoteText = ""
           updateLuaDrawDebug()
           updateLuaDrawDebugSnaproads()
           bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
@@ -222,7 +232,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.drawDebug = false
         $scope.drawDebugSnaproads = false
         $scope.missionIsLoaded = false
-        $scope.pacenoteText = ""
+        // $scope.pacenoteText = ""
         updateLuaDrawDebug()
         updateLuaDrawDebugSnaproads()
       }
@@ -267,8 +277,17 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       $scope.submitPacenoteForm = function() {
-        // console.log($scope.pacenoteText)
-        bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.setSelectedPacenoteText("${$scope.pacenoteText}")`)
+        var savedNotifier = document.getElementById('savedNotifier')
+        savedNotifier.style.visibility = 'visible'
+
+        var pacenoteText = document.getElementById('pacenoteInput').value
+        // console.log(pacenoteText)
+        bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.setSelectedPacenoteText("${pacenoteText}")`)
+
+        $timeout(function() {
+          var savedNotifier = document.getElementById('savedNotifier')
+          savedNotifier.style.visibility = 'hidden'
+        }, 1000);
       }
 
       $scope.btnToggleDrawDebug = function() {
@@ -282,9 +301,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.btnToggleSnaproadsDrawDebug = function() {
         $scope.drawDebugSnaproads = !$scope.drawDebugSnaproads
-        if (!$scope.drawDebugSnaproads) {
-          $scope.pacenoteText = ""
-        }
+        // if (!$scope.drawDebugSnaproads) {
+          // $scope.pacenoteText = ""
+        // }
         updateLuaDrawDebugSnaproads()
       }
 

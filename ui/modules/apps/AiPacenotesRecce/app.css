@@ -1,33 +1,61 @@
 .ai-pacenotes-recce {
-    display: flex;
-    flex-direction: column;
-
     font-family: monospace;
-
-    margin: 0.25em;
-    padding: 0;
+    /* margin: 8px; */
+    /* padding: 0px; */
     width: 100%;
     height: 100%;
 }
 
-.recce-controls {
+.m-10 {
+    margin: 10px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.flex {
     display: flex;
+}
+
+.flex-col {
     flex-direction: column;
 }
 
-.recce-control {
-    border-bottom: 1px solid white;
-    margin: 0.5em 1em 0em 1em;
-    padding: 0.5em 0em 0em 0em;
+.align-center {
+    align-items: center
 }
 
-.recce-controls-btn {
+.small-button-widget:not(:first-child) {
+    margin-left: 10px;
+}
+
+.small-button-widget:child {
+    margin-left: 10px;
+}
+.small-button-widget > *:not(:last-child) {
+    margin-right: 4px;
+}
+
+.small-button-widget button {
     font-family: monospace;
     border: 1px solid rgba(255, 255, 255, 1.0);
     color: rgba(255, 255, 255, 1.0);
     background-color: rgba(0, 0, 0, 0.0);
-    margin: 0.1em;
 }
+
+/* .flex-row { */
+    /* flex-direction: row; */
+/* } */
+
+/* .recce-controls { */
+/* } */
+
+/* .recce-control { */
+    /* border-bottom: 1px solid white; */
+    /* margin: 0.5em 1em 0em 1em; */
+    /* padding: 0.5em 0em 0em 0em; */
+/* } */
 
 .btn-disabled {
 /* .recce-controls-btn[disabled] { */
@@ -38,8 +66,44 @@
     border-color: transparent !important;
 }
 
-.recce-controls-shift-left {
-    margin-right: -0.5rem;
+.recce-controls-btn {
+    font-family: monospace;
+    border: 1px solid rgba(255, 255, 255, 1.0);
+    color: rgba(255, 255, 255, 1.0);
+    background-color: rgba(0, 0, 0, 0.0);
+    /* margin: 1px; */
+}
+
+/* .recce-controls-btn:not(:last-child) { */
+/*     margin-right: 10px */
+/* } */
+
+.recce-toolbar {
+    margin: 4px;
+    min-height: 28px;
+    height: 28px;
+}
+
+.recce-toolbar > *:not(:last-child) {
+    margin-right: 10px
+}
+
+/* .recce-controls-shift-left { */
+    /* margin-right: -0.5rem; */
+/* } */
+
+.mission-select {
+    border: 2px solid white;
+    border-radius: 4px;
+    padding: 1px;
+    padding-bottom: 2px;
+    margin: 4px;
+    width: 450px;
+}
+
+md-select:not([disabled]):focus .md-select-value {
+    border-bottom: none;
+    padding-bottom: 2px;
 }
 
 .debug-on {
@@ -48,14 +112,16 @@
     font-weight: bold;
 }
 
-/* .debug-up-arr { */
 .pacenote-forward {
     background-color: rgba(255, 0, 255, 1.0) !important;
 }
 
-/* .debug-down-arr { */
 .pacenote-backward {
     background-color: rgba(0, 255, 255, 1.0) !important;
+}
+
+.recce-controls-btn:hover {
+    border-color: white;
 }
 
 .recce-controls-btn:focus {
@@ -90,10 +156,6 @@
     background-color: #ff2c00 !important;
 }
 
-.network-indicator-on {
-    background-color: #00ff34 !important;
-}
-
 .indicator {
     margin-left: 1px;
     margin-right: 1px;
@@ -102,51 +164,9 @@
     margin-top: 1px;
 }
 
-.clickable-indicator {
-    margin-top: 0px;
-    border: 1px solid #ffffff00;
-}
-
-.clickable-indicator:focus {
-    box-shadow: none;
-}
-
-.clickable-indicator:hover {
-    border: 1px solid white;
-    cursor: pointer;
-}
-
-.clickable-indicator:active {
-    background-color: white;
-    color: rgba(0, 0, 0, 0.43);
-}
-
-#wheelDegrees {
-    display: inline-block;
-    width: 50px;
-    text-align: right;
-}
-
-.md-select-dropdown {
-    width: 450px;
-}
-
-/* .middle-label { */
-    /* margin-left: -10px; */
-    /* margin-right: 0px; */
-/* } */
-
 .cut-fake-click {
     background-color: #ff6600;
 }
-
-/* .clear-widget-visible { */
-/*     display: block; */
-/* } */
-/**/
-/* .clear-widget-hidden { */
-/*     display: none; */
-/* } */
 
 .btn-danger {
     background-color: red;
@@ -157,10 +177,25 @@
     color: grey;
 }
 
-.pacenote-text-input {
-    width: 100%;
-}
-
 .btn-drive-edit {
     width: 66px;
+}
+
+.pacenote-text-input {
+    width: 530px;
+    border: 2px solid white;
+    border-radius: 4px;
+    transition: none;
+    padding: 2px;
+    font-size: 18px;
+}
+
+.pacenote-text-input:focus {
+    /* border-bottom-color: orange; */
+    /* border-bottom-width: 2px; */
+    border: 2px solid var(--bng-orange);
+}
+
+.pacenote-text-input:disabled {
+    border: 2px solid grey;
 }

@@ -1,71 +1,88 @@
 <div class="bngApp md-padding" style="width: 100%; height: 100%; font-size: 1.4em;" layout="column" layout-align="center center">
   <link type="text/css" rel="stylesheet" href="/ui/modules/apps/AiPacenotesRecce/app.css" />
-  <div class="ai-pacenotes-recce">
-    <div class="recce-controls">
-      <div class="recce-control">
-        <div style="display: flex; flex-direction: row;">
-          <div class="indicator" style="margin-top: 10px; margin-right: 10px;">
-            <span class="dot-indicator" ng-class="{'recording-indicator-on': isRecording}"></span>
-            <span class="dot-indicator-label">rec</span>
-          </div>
+  <div class="ai-pacenotes-recce flex flex-col">
+    <div class="flex flex-col m-10">
 
-          <button ng-click="btnRecordStart()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">start</button>
-          <button ng-click="btnRecordStop()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">stop</button>
-          <button ng-click="btnRecordCut()" id='cut-btn' class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording">cut</button>
-
-          <md-checkbox ng-model="recordDriveline" ng-disabled="!missionIsLoaded || isRecording">driveline</md-checkbox>
-          <md-checkbox ng-model="recordVoice" ng-disabled="!missionIsLoaded || isRecording">voice</md-checkbox>
-
-          <button ng-click="btnClear1()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording">{{ clear1Enabled ? "cancel" : "clear" }}</button>
-
-          <button ng-show="clear1Enabled" ng-click="btnClearAll()" class="recce-controls-btn btn-danger" ng-disabled="!missionIsLoaded || isRecording || !clear1Enabled">clear</button>
+      <div class="recce-toolbar flex align-center">
+        <div class="indicator">
+          <span class="dot-indicator" ng-class="{'recording-indicator-on': isRecording}"></span>
+          <span class="dot-indicator-label">rec</span>
         </div>
+
+        <button ng-click="btnRecordStart()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording || drawDebugSnaproads">start</button>
+        <button ng-click="btnRecordStop()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording || drawDebugSnaproads">stop</button>
+        <button ng-click="btnRecordCut()" id='cut-btn' class="recce-controls-btn" ng-disabled="!missionIsLoaded || !isRecording || drawDebugSnaproads">cut</button>
+
+        <md-checkbox ng-model="recordDriveline" ng-disabled="!missionIsLoaded || isRecording || drawDebugSnaproads">driveline</md-checkbox>
+        <md-checkbox ng-model="recordVoice" ng-disabled="!missionIsLoaded || isRecording || drawDebugSnaproads">voice</md-checkbox>
+
+        <button ng-click="btnClear1()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || isRecording || drawDebugSnaproads">{{ clear1Enabled ? "cancel" : "clear" }}</button>
+
+        <button ng-show="clear1Enabled" ng-click="btnClearAll()" class="recce-controls-btn btn-danger" ng-disabled="!missionIsLoaded || isRecording || !clear1Enabled || drawDebugSnaproads">clear</button>
       </div>
 
-      <div class="recce-control">
-        <form ng-submit="submitPacenoteForm()">
-          <input type="text" id="pacenote-input" ng-model="pacenoteText" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" />
+      <div class="recce-toolbar flex align-center">
+        <form ng-submit="submitPacenoteForm()" class="w-full">
+          <!-- <input type="text" id="pacenote-input" ng-model="pacenoteText" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" /> -->
+          <!-- <input type="text" ng-model="pacenoteText" class="pacenote-text-input" ng-keydown="handleKeyDown($event)" /> -->
+          <!-- <input type="text" /> -->
+
+          <input type="text" id="pacenoteInput" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" />
+          <span id="savedNotifier" style="visibility: hidden;">saved</span>
+
+          <!-- <input type="text" ng-model="pacenoteText" class="pacenote-text-input" /> -->
+          <!-- <button type="submit">Save</button> -->
         </form>
       </div>
 
-      <div class="recce-control">
+      <div class="recce-toolbar flex align-center">
         <!-- <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button> -->
+
         <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || drawDebugSnaproads" ng-class="{'debug-on': drawDebug && !drawDebugSnaproads, 'btn-disabled': drawDebugSnaproads}">
-         {{ drawDebug ? 'hide notes' : 'show notes' }}
+          {{ drawDebug ? 'hide notes' : 'show notes' }}
         </button>
         <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn btn-drive-edit" ng-disabled="!missionIsLoaded || !drawDebug" ng-class="{'debug-on': drawDebugSnaproads}">
-         {{ drawDebugSnaproads ? 'drive' : 'edit' }}
+          {{ drawDebugSnaproads ? 'drive' : 'edit' }}
         </button>
 
-        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">MoveAT</span>
-        <button ng-click="btnMovePacenoteATForward()" class="recce-controls-btn recce-controls-shift-left pacenote-forward" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
-        <button ng-click="btnMovePacenoteATBackward()" class="recce-controls-btn pacenote-backward" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
+        <div class="flex align-center small-button-widget">
+          <span class="" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">MoveAT</span>
+          <button ng-click="btnMovePacenoteATForward()" class="pacenote-forward" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
+          <button ng-click="btnMovePacenoteATBackward()" class="pacenote-backward" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
+        </div>
 
-        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">Pacenote</span>
-        <button ng-click="btnMovePacenoteSelectionForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
-        <button ng-click="btnMovePacenoteSelectionBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
-        <button ng-click="btnMovePacenoteSelectionToVehicle()" class="recce-controls-btn" ng-disabled="!drawDebug || !drawDebugSnaproads">P&rarr;V</button>
+        <div class="flex align-center small-button-widget">
+          <span class="" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">Pacenote</span>
+          <button ng-click="btnMovePacenoteSelectionForward()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
+          <button ng-click="btnMovePacenoteSelectionBackward()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
+          <button ng-click="btnMovePacenoteSelectionToVehicle()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">P&rarr;V</button>
+        </div>
 
-        <span class="recce-controls-shift-left" ng-class="{'disabled-label': !missionIsLoaded}">Vehicle</span>
-        <button ng-click="btnMoveVehicleForward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!missionIsLoaded">&uarr;</button>
-        <button ng-click="btnMoveVehicleBackward()" class="recce-controls-btn recce-controls-shift-left" ng-disabled="!missionIsLoaded">&darr;</button>
-        <button ng-click="btnMoveVehicleToSelectedPacenote()" class="recce-controls-btn" ng-disabled="!drawDebug || !drawDebugSnaproads">V&rarr;P</button>
+        <div class="flex align-center small-button-widget">
+          <span class="" ng-class="{'disabled-label': !missionIsLoaded}">Vehicle</span>
+          <button ng-click="btnMoveVehicleForward()" class="" ng-disabled="!missionIsLoaded">&uarr;</button>
+          <button ng-click="btnMoveVehicleBackward()" class="" ng-disabled="!missionIsLoaded">&darr;</button>
+          <button ng-click="btnMoveVehicleToSelectedPacenote()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">V&rarr;P</button>
+        </div>
 
         <!-- <md-select class="md-select-dropdown" ng-model="selectedStyleName"> -->
         <!--   <md-option ng-value="name" ng-repeat="name in dropdownStyleNames">{{::name}}</md-option> -->
         <!-- </md-select> -->
       </div>
 
-      <div class="recce-control">
-        <button ng-click="btnRefreshMissions()" class="recce-controls-btn">refresh missions</button>
+      <div class="recce-toolbar flex align-center">
         <button ng-click="btnLoadMission()" class="recce-controls-btn" ng-disabled="missions.length === 0">load</button>
         <button ng-click="btnUnloadMission()" class="recce-controls-btn" ng-disabled="missions.length === 0">unload</button>
-        <span>loaded mission: {{missionIsLoaded ? loadedMissionName : "none"}}</span>
+        <span>{{ missionIsLoaded ? "current mission: "+loadedMissionName : "no mission loaded"}}</span>
+      </div>
+
+      <div class="recce-toolbar flex align-center">
+        <button ng-click="btnRefreshMissions()" class="recce-controls-btn">refresh missions</button>
         <md-select class="md-select-dropdown mission-select" ng-model="selectedMissionName">
           <md-option ng-value="missionName" ng-repeat="missionName in dropdownMissionNames">{{::missionName}}</md-option>
         </md-select>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>
