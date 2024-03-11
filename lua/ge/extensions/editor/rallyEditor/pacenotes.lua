@@ -1722,9 +1722,9 @@ function C:drawPacenotesList(height)
     --   self:setCameraToPacenote()
     -- end
     -- im.SameLine()
-    -- if im.Button("Place Vehicle") then
-    --   self:placeVehicleAtPacenote()
-    -- end
+    if im.Button("Place Vehicle") then
+      self:placeVehicleAtPacenote()
+    end
     -- im.SameLine()
     -- if im.Button("Move Up") then
     --   editor.history:commitAction("Move Pacenote in List",
@@ -2586,16 +2586,16 @@ function C:autoFillDistanceCalls()
   -- )
 end
 
--- function C:placeVehicleAtPacenote()
---   local pos, rot = self:selectedPacenote():vehiclePlacementPosAndRot()
---
---   if pos and rot then
---     local playerVehicle = be:getPlayerVehicle(0)
---     if playerVehicle then
---       spawn.safeTeleport(playerVehicle, pos, rot)
---     end
---   end
--- end
+function C:placeVehicleAtPacenote()
+  local pos, rot = self:selectedPacenote():vehiclePlacementPosAndRot()
+
+  if pos and rot then
+    local playerVehicle = be:getPlayerVehicle(0)
+    if playerVehicle then
+      spawn.safeTeleport(playerVehicle, pos, rot)
+    end
+  end
+end
 
 function C:insertNewPacenoteAfter(note)
   if not self.path then return end
@@ -2780,10 +2780,10 @@ function C:mergeSelectedWithNextPacenote()
   local lang = re_util.default_codriver_language
 
   local currText = pn:getNoteFieldNote(lang)
-  print(currText)
+  -- print(currText)
 
   local nextText = pnNext:getNoteFieldNote(lang)
-  local mergedText = nextText..' '..currText
+  local mergedText = currText..' '..nextText
 
   pnNext:setNoteFieldNote(lang, mergedText)
   self:deleteSelectedPacenote(false)

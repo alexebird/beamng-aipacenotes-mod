@@ -336,7 +336,13 @@ function C:createPacenotesData(notebook)
       if note and prevPacenote then
         local prevTxt = prevPacenote.notes[import_language].note
 
-        local mergedTxt = prevTxt..' '..note
+        local mergedTxt = nil
+
+        if prevTxt then
+          mergedTxt = prevTxt..' '..note
+        else
+          mergedTxt = note
+        end
 
         prevPacenote.notes[import_language].note = mergedTxt
       end

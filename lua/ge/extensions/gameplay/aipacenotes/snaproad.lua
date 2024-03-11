@@ -686,7 +686,7 @@ function C:partitionAllPacenotes(notebook)
       pt_curr = pt_curr.next
     end
 
-    while pt_curr.id <= wp_ce._snap_point.id do
+    while pt_curr and pt_curr.id <= wp_ce._snap_point.id do
       table.insert(pn_partition, pt_curr)
       pt_curr = pt_curr.next
     end

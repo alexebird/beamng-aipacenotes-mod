@@ -99,7 +99,7 @@ function C:save(fname)
   if not saveOk then
     log('E', logTag, 'error saving notebook')
   end
-  -- log('I', logTag, 'saved notebook')
+  log('I', logTag, 'saved notebook: '..fname)
   return saveOk
 end
 
