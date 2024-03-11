@@ -81,6 +81,14 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
       }
 
+      $scope.allowPacenoteTextEditing = function() {
+        if ($scope.drawDebug) {
+          return $scope.drawDebugSnaproads
+        } else {
+          return false
+        }
+      }
+
       $scope.$on('$destroy', function () {
         // StreamsManager.remove(streamsList)
         bngApi.engineLua('extensions.unload("ui_aipacenotes_recceApp")')
@@ -265,11 +273,18 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
       $scope.btnToggleDrawDebug = function() {
         $scope.drawDebug = !$scope.drawDebug
+
+        // if (!$scope.drawDebug) {
+        //   $scope.pacenoteText = ""
+        // }
         updateLuaDrawDebug()
       }
 
       $scope.btnToggleSnaproadsDrawDebug = function() {
         $scope.drawDebugSnaproads = !$scope.drawDebugSnaproads
+        if (!$scope.drawDebugSnaproads) {
+          $scope.pacenoteText = ""
+        }
         updateLuaDrawDebugSnaproads()
       }
 
