@@ -199,3 +199,11 @@ md-select:not([disabled]):focus .md-select-value {
 .pacenote-text-input:disabled {
     border: 2px solid grey;
 }
+
+.f5-fix {
+    font-style: italic;
+    color: var(--bng-orange);
+    font-size: 17px;
+    width: 73%;
+    text-align: right;
+}

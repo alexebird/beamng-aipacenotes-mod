@@ -21,18 +21,21 @@
         <button ng-show="clear1Enabled" ng-click="btnClearAll()" class="recce-controls-btn btn-danger" ng-disabled="!missionIsLoaded || isRecording || !clear1Enabled || drawDebugSnaproads">clear</button>
       </div>
 
-      <div class="recce-toolbar flex align-center">
-        <form ng-submit="submitPacenoteForm()" class="w-full">
-          <!-- <input type="text" id="pacenote-input" ng-model="pacenoteText" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" /> -->
-          <!-- <input type="text" ng-model="pacenoteText" class="pacenote-text-input" ng-keydown="handleKeyDown($event)" /> -->
-          <!-- <input type="text" /> -->
+      <div class="recce-toolbar flex flex-col" style="height: 52px; min-height: 52px;">
+        <div class="flex align-center">
+          <form ng-submit="submitPacenoteForm()" class="w-full">
+            <!-- <input type="text" id="pacenote-input" ng-model="pacenoteText" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" /> -->
+            <!-- <input type="text" ng-model="pacenoteText" class="pacenote-text-input" ng-keydown="handleKeyDown($event)" /> -->
+            <!-- <input type="text" /> -->
 
-          <input type="text" id="pacenoteInput" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" />
-          <span id="savedNotifier" style="visibility: hidden;">saved</span>
+            <input type="text" id="pacenoteInput" class="pacenote-text-input" ng-disabled="!allowPacenoteTextEditing()" />
+            <span id="savedNotifier" style="visibility: hidden;">saved</span>
 
-          <!-- <input type="text" ng-model="pacenoteText" class="pacenote-text-input" /> -->
-          <!-- <button type="submit">Save</button> -->
-        </form>
+            <!-- <input type="text" ng-model="pacenoteText" class="pacenote-text-input" /> -->
+            <!-- <button type="submit">Save</button> -->
+          </form>
+        </div>
+        <div class="f5-fix">Press F5 if the text field stops working.</div>
       </div>
 
       <div class="recce-toolbar flex align-center">
