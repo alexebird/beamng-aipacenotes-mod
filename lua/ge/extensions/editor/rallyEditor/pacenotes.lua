@@ -1891,14 +1891,14 @@ Any lua code is allowed, so be careful. Examples:
       fields.note   = im.ArrayChar(1024, pacenote:getNoteFieldNote(language))
       fields.after  = im.ArrayChar(256, pacenote:getNoteFieldAfter(language))
 
-      im.Text(language..": ")
+      im.Text("language: "..language)
 
       local file_exists = false
       local voicePlayClr = nil
       local tooltipStr = nil
       local fname = nil
 
-      for _,codriver in ipairs(codrivers) do
+      for i,codriver in ipairs(codrivers) do
         fname = pacenote:audioFname(codriver)
         if re_util.fileExists(fname) then
           file_exists = true
@@ -1907,6 +1907,7 @@ Any lua code is allowed, so be careful. Examples:
           voicePlayClr = im.ImVec4(0.5, 0.5, 0.5, 1.0)
           tooltipStr = "Codriver: "..codriver.name.."\nPacenote audio file not found:\n"..fname
         end
+
         if editor.uiIconImageButton(editor.icons.play_circle_filled, im.ImVec2(20, 20), voicePlayClr) then
           if file_exists then
             local audioObj = re_util.buildAudioObjPacenote(fname)
@@ -1919,7 +1920,10 @@ Any lua code is allowed, so be careful. Examples:
           end
         end
         im.tooltip(tooltipStr)
-        im.SameLine()
+
+        if i < #codrivers then
+          im.SameLine()
+        end
       end
 
       -- voicePlayClr = nil
