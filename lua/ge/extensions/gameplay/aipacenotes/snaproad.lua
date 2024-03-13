@@ -380,10 +380,19 @@ function C:forwardNormalVec(point)
   return vec3(normVec.x, normVec.y, normVec.z)
 end
 
-function C:pointsBackwards(fromPoint, steps)
+function C:pointsBackwards(fromPoint, steps, limitPoints)
+  limitPoints = limitPoints or {}
   local toPoint = fromPoint
+
   for _ = 1,steps do
     local prevPoint = toPoint.prev
+
+    for _,limitPoint in ipairs(limitPoints) do
+      if prevPoint.id == limitPoint.id then
+        return toPoint
+      end
+    end
+
     if prevPoint then
       toPoint = prevPoint
     end
@@ -391,10 +400,19 @@ function C:pointsBackwards(fromPoint, steps)
   return toPoint
 end
 
-function C:pointsForwards(fromPoint, steps)
+function C:pointsForwards(fromPoint, steps, limitPoints)
+  limitPoints = limitPoints or {}
   local toPoint = fromPoint
+
   for _ = 1,steps do
     local nextPoint = toPoint.next
+
+    for _,lim in ipairs(limitPoints) do
+      if nextPoint.id == lim.id then
+        return toPoint
+      end
+    end
+
     if nextPoint then
       toPoint = nextPoint
     end
@@ -414,7 +432,6 @@ function C:distanceBackwards(fromPoint, meters, limitPoints)
 
       for _,lim in ipairs(limitPoints) do
         if prevPoint.id == lim.id then
-          -- break
           return toPoint
         end
       end
@@ -422,16 +439,12 @@ function C:distanceBackwards(fromPoint, meters, limitPoints)
       toPoint = prevPoint
 
       if dist > meters then
-        -- break
         return toPoint
       end
     else
-      -- break
       return toPoint
     end
   end
-
-  -- return toPoint
 end
 
 function C:distanceForwards(fromPoint, meters, limitPoints)
@@ -766,8 +779,11 @@ function C:setFilter(wp)
   -- * AT is selected
   --   ->  back: cant go past prev AT
   --   ->  fwd:  cant go past self CS OR next note AT
-  -- * CS is selected
+  -- X CS is selected v1
   --   -> back: cant go past self AT OR cant go past prev CE
+  --   -> fwd:  cant go past self CE
+  -- * CS is selected v2 - moving CS back also moves AT back
+  --   -> back: cant go past prev CE AND cant go past prev AT + 1
   --   -> fwd:  cant go past self CE
   -- * CE is selected
   --   -> back: cant go past self CS
@@ -812,11 +828,11 @@ function C:setFilter(wp)
 
   elseif wp:isCs() then
     -- CS backwards movement
-    local wp_at = pn_sel:getActiveFwdAudioTrigger()
-    if wp_at then
-      local point = self:closestSnapPoint(wp_at.pos, true)
-      limitBackPoint = point
-    end
+    -- local wp_at = pn_sel:getActiveFwdAudioTrigger()
+    -- if wp_at then
+    --   local point = self:closestSnapPoint(wp_at.pos, true)
+    --   limitBackPoint = point
+    -- end
 
     if pn_prev then
       local prev_wp_ce = pn_prev:getCornerEndWaypoint()
@@ -830,6 +846,13 @@ function C:setFilter(wp)
           limitBackPoint = point
         end
       end
+
+      -- local wp_at_prev = pn_prev:getActiveFwdAudioTrigger()
+      -- if wp_at_prev then
+      --   local point = self:closestSnapPoint(wp_at_prev.pos, true)
+      --   point = self:pointsForwards(point, 1)
+      --   limitBackPoint = point
+      -- end
     end
 
     -- CS forwards movement

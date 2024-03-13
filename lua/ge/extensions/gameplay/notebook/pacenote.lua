@@ -1152,22 +1152,46 @@ function C:matchesSearchPattern(searchPattern)
   return false
 end
 
-function C:_moveWaypointTowardsStepper(snaproads, wp, fwd)
+function C:_moveWaypointTowardsStepper(snaproad, wp, fwd)
   local newSnapPoint = nil
 
   if fwd then
-    newSnapPoint = snaproads:nextSnapPoint(wp.pos)
+    newSnapPoint = snaproad:nextSnapPoint(wp.pos)
   else
-    newSnapPoint = snaproads:prevSnapPoint(wp.pos)
+    newSnapPoint = snaproad:prevSnapPoint(wp.pos)
   end
 
   if newSnapPoint then
     wp:setPos(newSnapPoint.pos)
     wp.pacenote.notebook:autofillDistanceCalls()
-    local normalVec = snaproads:forwardNormalVec(newSnapPoint)
+    local normalVec = snaproad:forwardNormalVec(newSnapPoint)
     if normalVec then
-      -- local newNormal = re_util.calculateForwardNormal(newSnapPoint, normalAlignPos)
       wp:setNormal(normalVec)
+    end
+
+    if wp:isCs() then
+      local pn_sel = wp.pacenote
+      local wp_sel = wp
+
+      local wp_at = pn_sel:getActiveFwdAudioTrigger()
+
+      local point_cs = snaproad:closestSnapPoint(wp_sel.pos)
+      local point_at = snaproad:closestSnapPoint(wp_at.pos, true)
+
+      if point_cs.id <= point_at.id then
+        point_at = snaproad:pointsBackwards(point_cs, 1)
+        wp_at.pos = point_at.pos
+
+        local normalVec = snaproad:forwardNormalVec(point_at)
+        if normalVec then
+          wp_at:setNormal(normalVec)
+        end
+
+        -- local _, normal_toPoint = snaproads:normalAlignPoints(point_at)
+        -- local normalVec = re_util.calculateForwardNormal(wp_at.pos, wp_sel.pos)
+        -- wp_at.normal = vec3(normalVec.x, normalVec.y, normalVec.z)
+      end
+
     end
   end
 end

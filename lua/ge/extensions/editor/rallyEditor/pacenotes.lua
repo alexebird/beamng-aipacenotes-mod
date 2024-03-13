@@ -516,6 +516,7 @@ function C:handleMouseHold()
 
         wp_sel.pos = new_pos
         self:autoFillDistanceCalls()
+
         if normal_align_pos then
           local rv = re_util.calculateForwardNormal(new_pos, normal_align_pos)
           wp_sel.normal = vec3(rv.x, rv.y, rv.z)
@@ -526,6 +527,28 @@ function C:handleMouseHold()
         --     at.normal = vec3(rv.x, rv.y, rv.z)
         --   end
         end
+
+        if wp_sel:isCs() then
+          local wp_at = pn_sel:getActiveFwdAudioTrigger()
+
+          local point_cs = self.pacenote_tools_state.snaproad:closestSnapPoint(wp_sel.pos)
+          local point_at = self.pacenote_tools_state.snaproad:closestSnapPoint(wp_at.pos, true)
+
+          if point_cs.id <= point_at.id then
+            point_at = self.pacenote_tools_state.snaproad:pointsBackwards(point_cs, 1)
+            wp_at.pos = point_at.pos
+
+            local normalVec = self.pacenote_tools_state.snaproads:forwardNormalVec(point_at)
+            if normalVec then
+              wp_at:setNormal(normalVec)
+            end
+
+            -- local _, normal_toPoint = self.pacenote_tools_state.snaproad:normalAlignPoints(point_at)
+            -- local normalVec = re_util.calculateForwardNormal(wp_at.pos, wp_sel.pos)
+            -- wp_at.normal = vec3(normalVec.x, normalVec.y, normalVec.z)
+          end
+        end
+
       end
     end
   end
