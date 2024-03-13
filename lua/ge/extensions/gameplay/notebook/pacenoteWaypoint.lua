@@ -91,7 +91,9 @@ function C:intersectCorners(fromCorners, toCorners)
     if len > 0 then
       len = 1/len
       rDir:normalize()
-      local sMin, sMax = intersectsRay_Sphere(rPos, rDir, self.pos, self.radius)
+      -- local rad = self.radius
+      local rad = 10  -- set the radius to 10m always.
+      local sMin, sMax = intersectsRay_Sphere(rPos, rDir, self.pos, rad)
       --adjust for normlized rDir
       sMin = sMin * len
       sMax = sMax * len

@@ -603,20 +603,20 @@ end
 -- end
 
 -- Function to convert Cartesian coordinates to Spherical coordinates
-local function cartesianToSpherical(x, y, z)
-  local radius = math.sqrt(x*x + y*y + z*z)
-  local theta = math.atan2(y, x)
-  local phi = math.acos(z / radius)
-  return radius, theta, phi
-end
+-- local function cartesianToSpherical(x, y, z)
+--   local radius = math.sqrt(x*x + y*y + z*z)
+--   local theta = math.atan2(y, x)
+--   local phi = math.acos(z / radius)
+--   return radius, theta, phi
+-- end
 
 -- Function to convert Spherical coordinates back to Cartesian
-local function sphericalToCartesian(radius, theta, phi)
-  local x = radius * math.sin(phi) * math.cos(theta)
-  local y = radius * math.sin(phi) * math.sin(theta)
-  local z = radius * math.cos(phi)
-  return x, y, z
-end
+-- local function sphericalToCartesian(radius, theta, phi)
+--   local x = radius * math.sin(phi) * math.cos(theta)
+--   local y = radius * math.sin(phi) * math.sin(theta)
+--   local z = radius * math.cos(phi)
+--   return x, y, z
+-- end
 
 local function onUpdate()
   -- local u = cameraOrbitState.up == 1
@@ -841,7 +841,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
   -- })
 
   prefsRegistry:registerSubCategory("rallyEditor", "waypoints", nil, {
-    {defaultRadius = {"int", 8, "The default radius for waypoints.", nil, 1, 50}},
+    {defaultRadius = {"int", 8, "The radius used for displaying waypoints.", "Visual Radius", 1, 50}},
   })
 
   prefsRegistry:registerSubCategory("rallyEditor", "ui", nil, {
