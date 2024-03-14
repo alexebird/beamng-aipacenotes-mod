@@ -11,6 +11,8 @@ _The amount of time this step takes depends on the stage length, but at least yo
 
 Record the Snaproad (also called the driveline) of the entire stage using the Recce app.
 
+__A Snaproad of the entire route is required for making a stage.__
+
 Here's a preview of the end result:
 
 ![](./img/recording_preview.png)
@@ -66,8 +68,8 @@ Here's an overview of the controls for Step 3:
 - voice checkbox - enables voice recording.
 - `start` - starts recording.
 - `stop` - stops recording.
-- `cut` - records the vehicle's position & steering wheel angle,
-  - If voice is enabled, also does speech-to-text on the audio recorded since the previous cut.
+- `cut` - records corner locations. tracks the vehicle's position & steering wheel angle at the moment the cut happens.
+  - If voice is enabled, also does speech-to-text on the audio recorded since the previous cut. (ie, it "cuts" the recording)
 - `clear` - deletes all recording files. If you want to backup a recording, make a copy of this folder: `gameplay/missions/<level>/rallyStage/<mission>/aipacenotes/recce/primary/`.
 
 ### Mission Controls
@@ -79,6 +81,18 @@ The other controls will be explained after recording is done.
 
 Because recording files are stored in the mission, you must load a mission before recording.
 
+### Wheel Binding
+
+In order to place corner locations (referred to as "cuts") as you drive, you should map the `cut` keybinding to a wheel button.
+I like to map it to a button that is easy to press near my thumb.
+
+![](./img/wheel_binding.png)
+
+Hit `escape` to bring up the main menu, then go to Options, then Controls.
+Search for "aip", then under Gameplay map the "Cut Voice Transcription" to your button of choice. (note: the name includes the word "voice", but this action is not specific to voice -- needs to be renamed)
+
+You don't have to do the wheel binding, or even use the Cut button at all. You can just record the driveline.
+
 ### Recording
 
 With all that background info out of the way, it's time to record.
@@ -89,8 +103,8 @@ Make sure your vehicle is positioned a bit _before_ the start line. And drive fo
 
 Click `start`. Drive slowly along the stage, making smooth turns. Don't try to drive at race speed. (That will come soon!)
 
+As you drive, hit the `cut` binding to record a corner, or any other feature you want to note. Later, each of these cut locations will be turned into a pacenote.
+
 When you're done, click `stop`.
 
-###
-
-![](./img/open_rally_editor.png)
+Now you're done with the recording step!
