@@ -538,7 +538,7 @@ function C:handleMouseHold()
             point_at = self.pacenote_tools_state.snaproad:pointsBackwards(point_cs, 1)
             wp_at.pos = point_at.pos
 
-            local normalVec = self.pacenote_tools_state.snaproads:forwardNormalVec(point_at)
+            local normalVec = self.pacenote_tools_state.snaproad:forwardNormalVec(point_at)
             if normalVec then
               wp_at:setNormal(normalVec)
             end
