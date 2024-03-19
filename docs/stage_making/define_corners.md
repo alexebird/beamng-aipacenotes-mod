@@ -59,6 +59,14 @@ Press the aqua-colored button in Rally Editor called `Change Edit Mode`. There a
 
 You can use the Corners edit mode while doing this.
 
+### Create, Merge, Delete Pacenotes
+
+To create a new pacenote, `ctrl+left mouse button` on the snaproad with no pacenote selected.
+
+To merge the selected pacenote into the next pacenote, use the `Merge with Next` button in the Rally Editor.
+
+To delete a pacenote, press `delete`, or use the Delete button in the Rally Editor.
+
 ### Update Pacenote Text
 
 As you go, you can fill in the pacenote text by using the CornerCall and CameraPath tools mentioned above. This is where voice recording saves a lot of time.
