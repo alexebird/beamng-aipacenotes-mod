@@ -14,6 +14,6 @@ This guide will get you up and running with the mod.
 
 1. Install the latest release of RaceLink from [https://github.com/alexebird/racelink/releases](https://github.com/alexebird/racelink/releases){:target="_blank"}.
 
-   _RaceLink is a desktop app that powers the mod. It generates audio files for from pacenote text and provides optional voice recording._
+   _RaceLink is a desktop app that powers the mod. It generates audio files from pacenote text and provides optional voice recording._
 
    ![RaceLink](./img/racelink1.png)
