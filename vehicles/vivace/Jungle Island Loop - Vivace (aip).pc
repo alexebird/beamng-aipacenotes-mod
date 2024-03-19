@@ -1,6 +1,6 @@
 {
   "format":2,
-  "licenseName":"TRDMFN",
+  "licenseName":"FDGMFN",
   "mainPartName":"vivace",
   "model":"vivace",
   "paints":[
