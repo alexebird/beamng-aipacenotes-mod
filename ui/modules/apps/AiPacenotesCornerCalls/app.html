@@ -10,13 +10,13 @@
         <div class="transcripts-error" ng-if="transcriptsError" ng-bind-html="transcriptsError"></div>
         <ul class="recent-transcripts-list" ng-if="!transcriptsError">
           <li ng-repeat="transcriptObj in transcripts">
-            <span>{{transcriptObj.text}}</span>
+            <span ng-class="{'tsc-loading': !!transcriptObj.loading}">{{transcriptObj.text}}</span>
           </li>
         </ul>
       </div>
 
       <div class="indicators">
-        <span class="indicator" id="wheelDegrees">0 &deg;</span>
+        <span class="indicator" id="wheelDegrees">{{wheelDegrees}} &deg;</span>
       </div>
     </div>
   </div>

@@ -56,16 +56,16 @@
 
         <div class="flex align-center small-button-widget">
           <span class="" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">Pacenote</span>
-          <button ng-click="btnMovePacenoteSelectionForward()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
-          <button ng-click="btnMovePacenoteSelectionBackward()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
-          <button ng-click="btnMovePacenoteSelectionToVehicle()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">P&rarr;V</button>
+          <button ng-click="btnMovePacenoteSelectionForward()" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
+          <button ng-click="btnMovePacenoteSelectionBackward()" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
+          <button ng-click="btnMovePacenoteSelectionToVehicle()" ng-disabled="!drawDebug || !drawDebugSnaproads">P&rarr;V</button>
         </div>
 
         <div class="flex align-center small-button-widget">
           <span class="" ng-class="{'disabled-label': !missionIsLoaded}">Vehicle</span>
-          <button ng-click="btnMoveVehicleForward()" class="" ng-disabled="!missionIsLoaded">&uarr;</button>
-          <button ng-click="btnMoveVehicleBackward()" class="" ng-disabled="!missionIsLoaded">&darr;</button>
-          <button ng-click="btnMoveVehicleToSelectedPacenote()" class="" ng-disabled="!drawDebug || !drawDebugSnaproads">V&rarr;P</button>
+          <button ng-click="btnMoveVehicleForward()" ng-disabled="!missionIsLoaded">&uarr;</button>
+          <button ng-click="btnMoveVehicleBackward()" ng-disabled="!missionIsLoaded">&darr;</button>
+          <button ng-click="btnMoveVehicleToSelectedPacenote()" ng-disabled="!drawDebug || !drawDebugSnaproads">V&rarr;P</button>
         </div>
 
         <!-- <md-select class="md-select-dropdown" ng-model="selectedStyleName"> -->

@@ -1,7 +1,7 @@
 local httpClient = require("socket.http")
 -- local socket = require("socket")
 -- socket.TIMEOUT = 0
-httpClient.TIMEOUT = 0.1
+httpClient.TIMEOUT = 0.5
 
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 

@@ -21,6 +21,11 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+
+.steering-angle:focus {
+    box-shadow: none !important;
+}
+
 .ai-pacenotes-corner-calls .transcripts {
     display: flex;
     flex-direction: column;
@@ -64,6 +69,13 @@
     font-style: normal;
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.transcripts li:nth-child(1) .tsc-loading {
+    color: #EEE;
+    font-style: italic;
+    /* font-size: 1.5em; */
+    /* font-weight: bold; */
 }
 
 #wheelDegrees {
