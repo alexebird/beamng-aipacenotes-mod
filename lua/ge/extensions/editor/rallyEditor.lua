@@ -109,7 +109,7 @@ local function ensureMissionSettingsFile()
     local settingsFname = md..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
     if not FS:fileExists(settingsFname) then
       log('I', logTag, 'creating mission.settings.json at '..settingsFname)
-      local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
+      local settings = require('/lua/ge/extensions/gameplay/notebook/missionSettings')(settingsFname)
       settings.notebook.filename = currentPath:basename()
       local assumedCodriverName = currentPath.codrivers.sorted[1].name
       settings.notebook.codriver = assumedCodriverName
