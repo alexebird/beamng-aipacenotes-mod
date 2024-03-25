@@ -162,9 +162,6 @@ function C:selected()
   self:loadSnaproad()
   self:selectPacenote(self.pacenote_tools_state.selected_pn_id)
 
-  -- self.pacenote_tools_state.selected_pn_id = nil
-  -- self.pacenote_tools_state.selected_wp_id = nil
-
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add waypoint to current pacenote"
   editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Create new pacenote"
   -- editor.editModes.notebookEditMode.auxShortcuts[editor.AuxControl_Alt] = "Free Edit with Gizmo"

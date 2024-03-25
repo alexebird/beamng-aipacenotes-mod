@@ -27,6 +27,7 @@ local flag_drawDebugSnaproads = false
 local vehicleCapture = nil
 local cutCapture = nil
 -- recording settings state
+local isRecording = false
 local shouldRecordDriveline = false
 local shouldRecordVoice = false
 
@@ -92,6 +93,8 @@ local function desktopGetTranscripts()
 end
 
 local function refresh()
+  isRecording = false
+
   local level = getCurrentLevelIdentifier()
 
   local filterFn = function (mission)
@@ -177,10 +180,12 @@ local function updateRallyManager(dtSim)
     rallyManager:handleNoteSearch()
   end
 
-  rallyManager:update(dtSim)
+  if not isRecording then
+    rallyManager:update(dtSim)
 
-  if rallyManager.audioManager then
-    rallyManager.audioManager:playNextInQueue()
+    if rallyManager.audioManager then
+      rallyManager.audioManager:playNextInQueue()
+    end
   end
 end
 
@@ -613,6 +618,7 @@ end
 local function transcribe_recording_start(recordDriveline, recordVoice)
   log('I', logTag, 'transcribe_recording_start')
 
+  isRecording = true
   shouldRecordDriveline = recordDriveline
   shouldRecordVoice = recordVoice
 
@@ -621,6 +627,9 @@ end
 
 local function transcribe_recording_stop()
   log('I', logTag, 'transcribe_recording_stop')
+
+  isRecording = false
+
   if vehicleCapture and shouldRecordDriveline then
     vehicleCapture:writeCaptures(true)
   end
@@ -635,6 +644,7 @@ local function transcribe_recording_stop()
 end
 
 local function transcribe_clear_all()
+  isRecording = false
   initCaptures()
   vehicleCapture:truncateCapturesFile()
   cutCapture:truncateCapturesFile()
