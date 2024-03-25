@@ -85,8 +85,7 @@ function C:setup(damageThresh, closestPacenotes_n)
   self.audioManager = require('/lua/ge/extensions/gameplay/rally/guiAudioManager')(self)
   self.audioManager:resetAudioQueue()
 
-  -- self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
-  self.notebook:cachePacenoteFgData(self.missionSettings, self.codriver)
+  self.notebook:cachePacenoteFgData(self.codriver)
 
   self:reset()
   self.setup_complete = true
@@ -142,11 +141,7 @@ end
 
 function C:saveNotebook()
   if self.notebook then
-    -- self.notebook:normalizeNotes()
     if self.notebook:save() then
-      -- self.notebook:reload()
-      -- self.notebook:cachePacenoteFgData(self.missionSettings, self.codriver)
-
       if editor_rallyEditor then
         local notebook = editor_rallyEditor.getCurrentPath()
         if notebook then
@@ -194,13 +189,6 @@ end
 
 function C:update(dtSim)
   if not self.setup_complete then return end
-
-  -- if self.nextPacenotes then
-  --   for i,pacenote in ipairs(self.nextPacenotes) do
-  --     local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-  --     wp_audio_trigger:drawDebugRecce(i, self.nextPacenotes, pacenote._cached_fgData.note_text)
-  --   end
-  -- end
 
   if self.vehicleTracker then
     self.vehicleTracker:onUpdate(dtSim)
