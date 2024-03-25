@@ -603,8 +603,33 @@ end
 --   end
 -- end
 
+function C:setMissionSettings(missionSettings)
+  self.missionSettings = missionSettings
+  self.mainSettings:setLanguage(self:selectedCodriverLanguage())
+end
+
+function C:selectedCodriver()
+  if not self.missionSettings then
+    error('must set mission settings on notebook')
+  end
+
+  local codriver = self:getCodriverByName(self.missionSettings.notebook.codriver)
+
+  if not codriver then
+    log('I', logTag, 'RallyManager setup no codriver')
+    error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
+  end
+
+  return codriver
+end
+
+function C:selectedCodriverLanguage()
+  local codriver = self:selectedCodriver()
+  return codriver.language
+end
+
 function C:normalizeNotes(force)
-  local lang = re_util.default_codriver_language
+  local lang = self:selectedCodriverLanguage()
   local last = false
 
   for i,pacenote in ipairs(self.pacenotes.sorted) do
@@ -655,7 +680,8 @@ local function findNextNonIsolated(pacenotes, i)
 end
 
 function C:autofillDistanceCalls()
-  local lang = re_util.default_codriver_language
+  local lang = self:selectedCodriverLanguage()
+
   -- first clear everything
   for _,pacenote in ipairs(self.pacenotes.sorted) do
     if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker and pacenote:getNoteFieldBefore(lang) ~= re_util.autodist_internal_level1 then
@@ -703,15 +729,16 @@ function C:getCodriverByName(codriver_name)
   for _,cd in ipairs(self.codrivers.sorted) do
     if cd.name == codriver_name then
       codriver = cd
+      break
     end
   end
 
   return codriver
 end
 
-function C:cachePacenoteFgData(missionSettings, codriver)
+function C:cachePacenoteFgData(codriver)
   for _,pn in ipairs(self.pacenotes.sorted) do
-    pn:asFlowgraphData(missionSettings, codriver)
+    pn:asFlowgraphData(self.missionSettings, codriver)
   end
 end
 

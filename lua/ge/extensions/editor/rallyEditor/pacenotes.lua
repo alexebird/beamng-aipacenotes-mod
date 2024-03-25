@@ -1325,6 +1325,8 @@ function C:drawPacenotesList(height)
       --   {old = self.pacenote_tools_state.selected_pn_id, new = note.id, self = self},
       --   selectPacenoteUndo, selectPacenoteRedo)
     end
+
+    local lang = self.path:selectedCodriverLanguage()
     if note:is_valid() then
       im.tooltip(note:getNoteFieldNote(lang))
     else
@@ -2123,7 +2125,7 @@ function C:mergeSelectedWithNextPacenote()
   local pnNext = pn.nextNote
   if not pnNext then return end
 
-  local lang = re_util.default_codriver_language
+  local lang = self.path:selectedCodriverLanguage()
 
   local currText = pn:getNoteFieldNote(lang)
   -- print(currText)

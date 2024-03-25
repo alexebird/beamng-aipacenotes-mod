@@ -263,7 +263,8 @@ end
 
 function C:nameForSelect()
   local txt = self.name
-  local note = self.notes[re_util.default_codriver_language].note
+  local lang = self.notebook:selectedCodriverLanguage()
+  local note = self.notes[lang].note
   if not note or note == '' then
     note = '<empty>'
   end
@@ -685,16 +686,10 @@ function C:distanceCornerEndToCornerStart(toPacenote)
 end
 
 function C:noteTextForDrawDebug()
-  -- local noteData = self.notes[self.notebook:editingLanguage()]
   local txt = '<empty note>'
-  -- if noteData then
-  --   local nd = noteData[self.noteFields.note]
-  --   if nd and nd ~= '' then
-  --     txt = nd
-  --   end
-  -- end
 
-  local joined = self:joinedNote(re_util.default_codriver_language)
+  local lang = self.notebook:selectedCodriverLanguage()
+  local joined = self:joinedNote(lang)
   if joined then
     txt = joined
   end
