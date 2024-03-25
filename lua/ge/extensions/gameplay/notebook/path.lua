@@ -11,6 +11,7 @@ end
 
 function C:init(name)
   self._uid = 0
+
   self.name = name or re_util.default_notebook_name
   self.description = ""
   self.authors = ""
@@ -612,27 +613,26 @@ function C:allToTerrain()
   end
 end
 
--- function C:editingLanguage()
---   if editor_rallyEditor then
---     return editor_rallyEditor.getPrefEditingLanguage()
---   end
--- end
+-- TODO proxy to settingsManager
+function C:missionSettings()
+  return nil
+end
 
-function C:setMissionSettings(missionSettings)
-  self.missionSettings = missionSettings
-  self.mainSettings:setLanguage(self:selectedCodriverLanguage())
+-- TODO proxy to settingsManager
+function C:mainSettings()
+  return nil
 end
 
 function C:selectedCodriver()
-  if not self.missionSettings then
+  if not self:missionSettings() then
     error('must set mission settings on notebook')
   end
 
-  local codriver = self:getCodriverByName(self.missionSettings.notebook.codriver)
+  local codriver = self:getCodriverByName(self:missionSettings().notebook.codriver)
 
   if not codriver then
     log('I', logTag, 'RallyManager setup no codriver')
-    error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
+    error('couldnt load codriver: '..self:missionSettings().notebook.codriver)
   end
 
   return codriver
@@ -739,7 +739,7 @@ function C:autofillDistanceCalls()
       local dist_str = distance_to_string(dist)
 
       -- Decide what to do based on the distance
-      local shorthand = getDistanceCallShorthand(self.mainSettings, dist)
+      local shorthand = getDistanceCallShorthand(self:mainSettings(), dist)
       if shorthand then
         next_prepend = shorthand
       else
@@ -766,7 +766,7 @@ end
 
 function C:cachePacenoteFgData(codriver)
   for _,pn in ipairs(self.pacenotes.sorted) do
-    pn:asFlowgraphData(self.missionSettings, codriver)
+    pn:asFlowgraphData(self:missionSettings(), codriver)
   end
 end
 

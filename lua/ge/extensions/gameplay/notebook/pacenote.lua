@@ -983,7 +983,7 @@ end
 
 function C:normalizeNoteText(lang, last, force)
   local note = self:getNoteFieldNote(lang)
-  local mainSettings = self.notebook.mainSettings
+  local mainSettings = self.notebook:mainSettings()
 
   force = force or false
   note = re_util.stripWhitespace(note)
