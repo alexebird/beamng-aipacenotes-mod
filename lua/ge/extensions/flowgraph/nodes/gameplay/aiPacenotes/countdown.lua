@@ -110,7 +110,7 @@ function C:countdown()
   self.timer = self.timer - self.mgr.dtSim
   if self.timer <= 0 then
     local forceVisual = false
-    if not self:enqueueStaticPacenoteByName('go_1/c') then
+    if not self:enqueueStaticPacenoteByName('go_1') then
       forceVisual = true
       if self.data.playSounds then
         Engine.Audio.playOnce('AudioGui', 'event:UI_CountdownGo')
@@ -129,7 +129,7 @@ function C:countdown()
       local bigMsg = self.countdownMsg == "%d"
 
       local forceVisual = false
-      if not self:enqueueStaticPacenoteByName('countdown_'..countdownMsg..'/c') then
+      if not self:enqueueStaticPacenoteByName('countdown_'..countdownMsg) then
         forceVisual = true
         if self.data.playSounds  then
           Engine.Audio.playOnce('AudioGui', 'event:UI_Countdown1')

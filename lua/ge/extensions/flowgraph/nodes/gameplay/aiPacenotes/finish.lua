@@ -13,9 +13,10 @@ C.pinSchema = {
 }
 
 function C:workOnce()
-  extensions.gameplay_aipacenotes.getRallyManager().audioManager:enqueuePauseSecs(0.75)
-  extensions.gameplay_aipacenotes.getRallyManager().audioManager:enqueueStaticPacenoteByName('finish_1/c')
-  -- self.pinOut.flow.value = true
+  local rallyManager = extensions.gameplay_aipacenotes.getRallyManager()
+  rallyManager.audioManager:enqueuePauseSecs(0.75)
+  local pnName = rallyManager:getRandomStaticPacenote('finish')
+  rallyManager.audioManager:enqueueStaticPacenoteByName(pnName)
 end
 
 return _flowgraph_createNode(C)

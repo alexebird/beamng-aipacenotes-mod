@@ -15,40 +15,16 @@ C.pinSchema = {
 function C:workOnce()
   local rallyManager = extensions.gameplay_aipacenotes.getRallyManager()
   rallyManager.audioManager:enqueuePauseSecs(0.5)
-  rallyManager.audioManager:enqueueStaticPacenoteByName('firstnoteintro_1/c')
+
+  local pnName = rallyManager:getRandomStaticPacenote('firstnoteintro')
+  rallyManager.audioManager:enqueueStaticPacenoteByName(pnName)
+
   local pacenote = extensions.gameplay_aipacenotes.getRallyManager().notebook.pacenotes.sorted[1]
   rallyManager.audioManager:enqueuePacenote(pacenote)
-  rallyManager.audioManager:enqueueStaticPacenoteByName('firstnoteoutro_1/c')
-  -- self.pinOut.flow.value = true
-  -- self.pinOut.done.value = true
-end
 
--- function C:work()
---   if self.pinIn.reset.value then
---     self:reset()
---   end
---
---   if not self.workDone then
---     local loaded = extensions.isExtensionLoaded("gameplay_aipacenotes")
---     if loaded and extensions.gameplay_aipacenotes.isReady() then
---       local rallyManager = extensions.gameplay_aipacenotes.getRallyManager()
---
---       rallyManager.audioManager:enqueuePauseSecs(0.5)
---       rallyManager.audioManager:enqueueStaticPacenoteByName('firstnoteintro_1/c')
---       local pacenote = extensions.gameplay_aipacenotes.getRallyManager().notebook.pacenotes.sorted[1]
---       rallyManager.audioManager:enqueuePacenote(pacenote)
---       rallyManager.audioManager:enqueueStaticPacenoteByName('firstnoteoutro_1/c')
---       self.workDone = true
---       self.pinOut.flow.value = true
---     else
---       self.pinOut.flow.value = false
---     end
---     -- else
---       -- self.pinOut.flow.value = false
---     -- end
---   else
---     self.pinOut.flow.value = true
---   end
--- end
+  pnName = rallyManager:getRandomStaticPacenote('firstnoteoutro')
+  rallyManager.audioManager:enqueueStaticPacenoteByName(pnName)
+
+end
 
 return _flowgraph_createNode(C)

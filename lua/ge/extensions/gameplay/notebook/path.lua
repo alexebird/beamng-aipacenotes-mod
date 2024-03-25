@@ -622,74 +622,48 @@ end
 
 -- Function to round the distance based on given rules
 local function round_distance(dist)
-  if dist >= 1000 then
-    return custom_round(dist, 250)/1000, "kilometers"
-  elseif dist >= 100 then
-    return custom_round(dist, 50)
-  -- elseif dist >= 100 then
-    -- return custom_round(dist, 10)
+  if dist >= re_util.dist_km_threshold then
+    return custom_round(dist, re_util.dist_round_km) / re_util.dist_km_threshold, re_util.kilo_unit_str
+  elseif dist >= re_util.dist_large_threshold then
+    return custom_round(dist, re_util.dist_round_large)
   else
-    return custom_round(dist, 10)
+    return custom_round(dist, re_util.dist_round_small)
   end
 end
 
 local function distance_to_string(dist)
+  dist = math.floor(dist)
   local rounded_dist, unit = round_distance(dist)
   local dist_str = tostring(rounded_dist)
 
-  if unit == "kilometers" then
+  if unit == re_util.kilo_unit_str then
     dist_str = dist_str .. " " .. unit
-  elseif rounded_dist >= 100 then
-    -- dist_str = dist_str:sub(1, 1) .. " " .. dist_str:sub(2)
+  elseif rounded_dist >= re_util.dist_large_threshold and rounded_dist % re_util.dist_large_threshold ~= 0 then
+    -- separate digits if not a multiple of 100
+    dist_str = dist_str:sub(1, 1) .. " " .. dist_str:sub(2)
   end
 
   return dist_str
 end
 
-local written_out_numbers = {
-  ["10"] = "ten",
-  ["20"] = "twenty",
-  ["30"] = "thirty",
-  ["40"] = "forty",
-  ["50"] = "fifty",
-  ["60"] = "sixty",
-  ["70"] = "seventy",
-  ["80"] = "eighty",
-  ["90"] = "ninety",
-  ["100"] = "one hundred",
-  ["150"] = "one fifty",
-  ["200"] = "two hundred",
-  ["250"] = "two fifty",
-  ["300"] = "three hundred",
-  ["350"] = "three fifty",
-  ["400"] = "four hundred",
-  ["450"] = "four fifty",
-  ["500"] = "five hundred",
-  ["550"] = "five fifty",
-  ["600"] = "six hundred",
-  ["650"] = "six fifty",
-  ["700"] = "seven hundred",
-  ["750"] = "seven fifty",
-  ["800"] = "eight hundred",
-  ["850"] = "eight fifty",
-  ["900"] = "nine hundred",
-  ["950"] = "nine fifty",
-}
-
--- Function to convert numeric distances to their written-out form
-local function normalize_distance(dist)
-  local dist_str = tostring(dist)
-  return written_out_numbers[dist_str] or dist_str
+local function findNextNonIsolated(pacenotes, i)
+  i = i + 1
+  local pn_next = pacenotes[i]
+  while pn_next and pn_next.isolate do
+    pn_next = pacenotes[i]
+    i = i+1
+  end
+  return pn_next
 end
 
 function C:autofillDistanceCalls()
   local lang = re_util.default_codriver_language
   -- first clear everything
   for _,pacenote in ipairs(self.pacenotes.sorted) do
-    if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then
+    if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker and pacenote:getNoteFieldBefore(lang) ~= re_util.autodist_internal_level1 then
       pacenote:setNoteFieldBefore(lang, '')
     end
-    if pacenote:getNoteFieldAfter(lang) ~= re_util.autofill_blocker then
+    if pacenote:getNoteFieldAfter(lang) ~= re_util.autofill_blocker and pacenote:getNoteFieldAfter(lang) ~= re_util.autodist_internal_level1 then
       pacenote:setNoteFieldAfter(lang, '')
     end
   end
@@ -698,21 +672,22 @@ function C:autofillDistanceCalls()
 
   for i,pacenote in ipairs(self.pacenotes.sorted) do
     -- Apply any prepended text from the previous iteration
-    if next_prepend ~= '' then
+    if not pacenote.isolate and next_prepend ~= '' then
       if pacenote:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then
         pacenote:setNoteFieldBefore(lang, next_prepend)
       end
       next_prepend = ''
     end
 
-    local pn_next = self.pacenotes.sorted[i + 1]
-    if pn_next and not pn_next.missing then
+    -- local pn_next = self.pacenotes.sorted[i + 1]
+    local pn_next = findNextNonIsolated(self.pacenotes.sorted, i)
+
+    if not pacenote.isolate and pn_next and not pn_next.missing then
       local dist = pacenote:distanceCornerEndToCornerStart(pn_next)
-      local dist_str = distance_to_string(math.floor(dist))
-      dist_str = normalize_distance(dist_str) .. '.'
+      local dist_str = distance_to_string(dist)
 
       -- Decide what to do based on the distance
-      local shorthand = re_util.getDistanceCallShorthand(dist)
+      local shorthand = re_util.getDistanceCallShorthand(self.mainSettings, dist)
       if shorthand then
         next_prepend = shorthand
       else
@@ -775,6 +750,74 @@ function C:getStaticPacenoteByName(name)
   end
 
   return nil
+end
+
+local function normalizeWeights(list)
+  local sum = 0.0
+  for _, item in ipairs(list) do
+    local w = item[3]
+    sum = sum + w
+  end
+
+  for _, item in ipairs(list) do
+    local newW = item[3] / sum
+    -- print('('..tostring(item[3])..' - '..tostring(minWeight)..') / ('..tostring(maxWeight)..' - '..tostring(minWeight)..')')
+    -- print(tostring(newW))
+    item[3] = newW
+  end
+end
+
+local function fillRemainingWeights(list)
+  for _, item in ipairs(list) do
+    if not item[3] then
+      item[3] = 0.5
+    end
+  end
+end
+
+function C:getRandomStaticPacenote(desiredPrefix)
+  local weightedNotes = {}
+
+  for _,spn in ipairs(self.static_pacenotes.sorted) do
+    local prefix, id = string.match(spn.name, "^([^_]+)_([%d]+)$")
+
+    if prefix == desiredPrefix then
+      local w = nil
+      if spn.metadata and spn.metadata.weight then
+        w = tonumber(spn.metadata.weight)
+        if not w then
+          log('W', logTag, 'weight of "'..spn.metadata.weight..'" could not be parsed. setting to 0.')
+          w = 0
+        end
+      end
+
+      id = tonumber(id)
+      table.insert(weightedNotes, { prefix, id, w} )
+    end
+  end
+
+  fillRemainingWeights(weightedNotes)
+  normalizeWeights(weightedNotes)
+
+  for i,e in ipairs(weightedNotes) do
+    local prefix, id, w = e[1], e[2], e[3]
+    print(prefix .. ', ' .. tostring(id) .. ', w='..tostring(w))
+  end
+
+  local rand = math.random()
+  print('rand: '..tostring(rand))
+  local cumulativeWeight = 0
+  local rv = weightedNotes[1]
+
+  for _, item in ipairs(weightedNotes) do
+    cumulativeWeight = cumulativeWeight + item[3]
+    if rand <= cumulativeWeight then
+      rv = item
+      break
+    end
+  end
+
+  return rv[1]..'_'..tostring(rv[2])
 end
 
 function C:setAdjacentNotes(pacenote_id)

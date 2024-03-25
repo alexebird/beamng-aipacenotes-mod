@@ -22,6 +22,7 @@ local desktopTranscriptFname = aipSettingsRoot..'/desktop.transcripts.json'
 local staticPacenotesFname = aipSettingsRoot..'/static_pacenotes.json'
 local cornerAnglesFname = aipSettingsRoot..'/corner_angles.json'
 local pacenotesMetadataBasename = 'metadata.json'
+local notebookFileExt = 'notebook.json'
 
 local transcriptsExt = 'transcripts.json'
 local missionSettingsFname = 'mission.settings.json'
@@ -29,9 +30,21 @@ local default_notebook_name = 'primary'
 local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
+
 local default_punctuation = '?'
 local default_punctuation_last = '.'
+local default_punctuation_distance_call = '.'
 local validPunctuation = {"?", ".", "?", "!"}
+
+local dist_km_threshold = 1000
+local dist_large_threshold = 100
+local kilo_unit_str = "km"
+local dist_round_small = 10
+local dist_round_large = 50
+local dist_round_km = 250
+
+local var_dl = '{dl}'
+local var_dt = '{dt}'
 
 -- html code: #00ffdebf
 local aip_fg_color = ui_imgui.ImVec4(0, 1, 0.87, 0.75) -- rgba cyan
@@ -310,15 +323,9 @@ local function normalizeNoteText(note, last, force)
 
         local punc = nil
         if last then
-          punc = default_punctuation_last
-          if editor_rallyEditor then
-            punc = editor_rallyEditor.getPrefDefaultPunctuationLast()
-          end
+          punc = mainSettings:getPunctuationLastNote()
         else
-          punc = default_punctuation
-          if editor_rallyEditor then
-            punc = editor_rallyEditor.getPrefDefaultPunctuation()
-          end
+          punc = mainSettings:getPunctuationDefault()
         end
 
         print('setting punc: '..punc)
@@ -563,14 +570,13 @@ local function buildPacenotesDir(missionDir, notebook, codriver)
   return dirname
 end
 
-local function getDistanceCallShorthand(dist)
-  if not editor_rallyEditor then return nil end
-  if dist <= editor_rallyEditor.getPrefLevel1Thresh() then
-    return editor_rallyEditor.getPrefLevel1Text()
-  elseif dist <= editor_rallyEditor.getPrefLevel2Thresh() then
-    return editor_rallyEditor.getPrefLevel2Text()
-  elseif dist <= editor_rallyEditor.getPrefLevel3Thresh() then
-    return editor_rallyEditor.getPrefLevel3Text()
+local function getDistanceCallShorthand(mainSettings, dist)
+  if dist <= mainSettings:getDistanceCallLevel1Threshold() then
+    return mainSettings:getDistanceCallLevel1Text()
+  elseif dist <= mainSettings:getDistanceCallLevel2Threshold() then
+    return mainSettings:getDistanceCallLevel2Text()
+  elseif dist <= mainSettings:getDistanceCallLevel3Threshold() then
+    return mainSettings:getDistanceCallLevel3Text()
   else
     return nil
   end
@@ -588,16 +594,26 @@ M.default_codriver_voice = default_codriver_voice
 M.default_notebook_name = default_notebook_name
 M.default_punctuation = default_punctuation
 M.default_punctuation_last = default_punctuation_last
+M.default_punctuation_distance_call = default_punctuation_distance_call
 M.desktopTranscriptFname = desktopTranscriptFname
 -- M.dragModes = dragModes
 M.missionSettingsFname = missionSettingsFname
 M.notebooksPath = notebooksPath
 M.pacenotesMetadataBasename = pacenotesMetadataBasename
+M.notebookFileExt = notebookFileExt
 M.staticPacenotesFname = staticPacenotesFname
 M.transcriptsExt = transcriptsExt
 M.transcriptsPath = transcriptsPath
 M.unknown_transcript_str = unknown_transcript_str
 M.validPunctuation = validPunctuation
+M.dist_km_threshold = dist_km_threshold
+M.dist_large_threshold = dist_large_threshold
+M.kilo_unit_str = kilo_unit_str
+M.dist_round_small = dist_round_small
+M.dist_round_large = dist_round_large
+M.dist_round_km = dist_round_km
+M.var_dl = var_dl
+M.var_dt = var_dt
 
 -- funcs
 M.buildAudioObjPacenote = buildAudioObjPacenote

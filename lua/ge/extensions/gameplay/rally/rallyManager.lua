@@ -319,6 +319,10 @@ end
 function C:updateRaceData(raceData)
 end
 
+function C:getRandomStaticPacenote(prefix)
+  return self.notebook:getRandomStaticPacenote(prefix)
+end
+
 return function(...)
   local o = {}
   setmetatable(o, C)
