@@ -1,7 +1,6 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 
--- local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local Recce = require('/lua/ge/extensions/gameplay/aipacenotes/recce')
 
