@@ -73,7 +73,7 @@ function C:import()
   local pacenotes = self.recce:createPacenotesData(self.path)
   if pacenotes then
     self.path:appendPacenotes(pacenotes)
-    self.path:normalizeNotes()
+    -- self.path:normalizeNotes(false)
     self.rallyEditor.showPacenotesTab()
   end
 end

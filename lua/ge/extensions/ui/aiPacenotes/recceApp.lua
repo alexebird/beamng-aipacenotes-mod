@@ -148,7 +148,7 @@ local function setSelectedPacenoteText(newText)
   local codriver = rallyManager.codriver
   local lang = codriver.language
   selectedPacenote:setNoteFieldNote(lang, newText)
-  selectedPacenote:normalizeNoteText(lang)
+  selectedPacenote:normalizeNoteText(lang, false, false)
   sendSelectedPacenoteText()
   selectedPacenote:clearCachedFgData()
   rallyManager:saveNotebook()

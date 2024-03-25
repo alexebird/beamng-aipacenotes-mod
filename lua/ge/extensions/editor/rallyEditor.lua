@@ -126,6 +126,7 @@ local function saveNotebook()
     return
   end
 
+  -- currentPath:normalizeNotes()
   if not currentPath:save() then
     return
   end

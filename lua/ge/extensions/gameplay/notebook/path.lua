@@ -92,8 +92,6 @@ function C:save(fname)
     return false
   end
 
-  self:normalizeNotes()
-
   local json = self:onSerialize()
   local saveOk = jsonWriteFile(fname, json, true)
   if not saveOk then

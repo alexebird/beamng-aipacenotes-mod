@@ -135,7 +135,6 @@ end
 
 function C:loadNotebook()
   local notebook, err = re_util.getNotebookHelper(self.missionDir, self.missionSettings)
-
   if err then
     error(err)
   end
@@ -145,6 +144,7 @@ end
 
 function C:saveNotebook()
   if self.notebook then
+    -- self.notebook:normalizeNotes()
     if self.notebook:save() then
       -- self.notebook:reload()
       -- self.notebook:cachePacenoteFgData(self.missionSettings, self.codriver)
