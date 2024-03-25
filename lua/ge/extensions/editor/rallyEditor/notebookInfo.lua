@@ -31,7 +31,7 @@ function C:selectCodriver(id)
 
   if codriver then
     codriverNameText = im.ArrayChar(1024, codriver.name)
-    codriverVoiceText = im.ArrayChar(1024, codriver.voice)
+    -- codriverVoiceText = im.ArrayChar(1024, codriver.voice)
     codriverLanguageText = im.ArrayChar(1024, codriver.language)
   end
 end

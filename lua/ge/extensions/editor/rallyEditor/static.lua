@@ -77,7 +77,6 @@ function C:draw(mouseInfo)
       im.Text(lang)
       im.NextColumn()
 
-      -- im.Text(spn:joinedNote(lang))
       im.Text(langData.note)
       im.NextColumn()
 

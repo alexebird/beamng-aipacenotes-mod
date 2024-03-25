@@ -1329,9 +1329,9 @@ function C:drawPacenotesList(height)
       --   selectPacenoteUndo, selectPacenoteRedo)
     end
     if note:is_valid() then
-      im.tooltip("No issues")
+      im.tooltip(note:getNoteFieldNote(lang))
     else
-      im.tooltip("[!] Found "..(#note.validation_issues).." issue(s).\nCheck pacenote for details ")
+      im.tooltip("[!] Found "..(#note.validation_issues).." issue(s).\n"..note:getNoteFieldNote(lang))
     end
   end
   -- im.Separator()
@@ -1386,6 +1386,10 @@ function C:drawPacenotesList(height)
     -- im.SameLine()
     if im.Button("Delete") then
       self:deleteSelectedPacenote()
+    end
+    im.SameLine()
+    if im.Button("Merge with Prev") then
+      self:mergeSelectedWithPrevPacenote()
     end
     im.SameLine()
     if im.Button("Merge with Next") then
@@ -1568,13 +1572,16 @@ Any lua code is allowed, so be careful. Examples:
       -- im.tooltip(tooltipStr)
       -- im.SameLine()
 
-      im.SetNextItemWidth(90)
+      -- im.SetNextItemWidth(150)
+      im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         pacenote:clearTodo()
         self:handleNoteFieldEdit(pacenote, language, 'before', fields.before)
       end
       im.SameLine()
+      im.Text('Leading distance call '..re_util.var_dl)
+      -- im.Text('Leading distance call: '..ffi.string(fields.before))
 
       if self._insertMode then
         if i == 1 then
@@ -1592,6 +1599,8 @@ Any lua code is allowed, so be careful. Examples:
           self:handleNoteFieldEdit(pacenote, language, 'note', fields.note)
         end
       end
+      im.SameLine()
+      im.Text('Pacenote text')
 
       if editingNote and not pacenoteUnderEdit then
         pacenoteUnderEdit = pacenote
@@ -1599,13 +1608,27 @@ Any lua code is allowed, so be careful. Examples:
         pacenoteUnderEdit = nil
       end
 
-      im.SameLine()
-      im.SetNextItemWidth(150)
+      -- im.SameLine()
+      -- im.SetNextItemWidth(150)
+      im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       editor.uiInputText('##'..language..'_after', fields.after, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         pacenote:clearTodo()
         self:handleNoteFieldEdit(pacenote, language, 'after', fields.after)
       end
+      im.SameLine()
+      im.Text('Trailing distance call '..re_util.var_dt)
+      -- im.Text('Trailing distance call: '..ffi.string(fields.after))
+
+      if im.Checkbox("Isolate", im.BoolPtr(pacenote.isolate)) then
+        pacenote:toggleIsolate()
+        self:autofillDistanceCalls()
+      end
+      im.Text('Isolate removes pacenote from automatic distance calls.')
+
+      local lang = self.path:selectedCodriverLanguage()
+      im.Text('output note text: '..pacenote:joinedNote(lang))
+
     end -- / self.path:getLanguages()
 
     -- self:drawWaypointList(note)
@@ -2061,6 +2084,28 @@ function C:cycleEditMode()
   else
     self:setModeEditAll()
   end
+end
+
+function C:mergeSelectedWithPrevPacenote()
+  local pn = self:selectedPacenote()
+  if not pn then return end
+
+  local pnPrev = pn.prevNote
+  if not pnPrev then return end
+
+  local lang = self.path:selectedCodriverLanguage()
+
+  local currText = pn:getNoteFieldNote(lang)
+  -- print(currText)
+
+  local prevText = pnPrev:getNoteFieldNote(lang)
+  local mergedText = prevText..' '..currText
+
+  pnPrev:setNoteFieldNote(lang, mergedText)
+  self:deleteSelectedPacenote(false)
+
+  self:selectPacenote(pnPrev.id)
+  self:setOrbitCameraToSelectedPacenote()
 end
 
 function C:mergeSelectedWithNextPacenote()

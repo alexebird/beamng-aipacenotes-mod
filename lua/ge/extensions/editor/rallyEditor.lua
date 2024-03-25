@@ -350,16 +350,17 @@ local function updateMouseInfo()
   end
 end
 
--- local function newEmptyNotebook()
---     local path = require('/lua/ge/extensions/gameplay/notebook/path')()
---     editor.history:commitAction(
---       "Set path to new path.",
---       -- {path = path, filepath = previousFilepath, filename = "new.notebook.json"},
---       {path = path},
---       setNotebookUndo,
---       setNotebookRedo
---     )
--- end
+local function newEmptyNotebook()
+  local missionDir = getMissionDir()
+  local notebooksFullPath = missionDir..'/'..re_util.notebooksPath
+
+  local ts = math.floor(re_util.getTime()) -- convert float to int
+
+  local basename = 'roadbook_'..ts..'.'..re_util.notebookFileExt
+  local notebookFname = notebooksFullPath..'/'..basename
+
+  loadOrCreateNotebook(notebookFname)
+end
 
 local function openMission()
   editor_missionEditor.show()
@@ -381,15 +382,15 @@ local function drawEditorGui()
   -- local heightAdditional = 110-- * im.uiscale[0]
   -- local heightAdditional = 0
 
-  -- if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
+  if editor.beginWindow(toolWindowName, "Rally Editor", im.WindowFlags_MenuBar) then
   if editor.beginWindow(toolWindowName, "Rally Editor") then
-    -- if im.BeginMenuBar() then
-      -- if im.BeginMenu("File") then
+    if im.BeginMenuBar() then
+      if im.BeginMenu("File") then
         -- im.Text(previousFilepath .. previousFilename)
         -- im.Separator()
-        -- if im.MenuItem1("New Notebook") then
-        --   newEmptyNotebook()
-        -- end
+        if im.MenuItem1("New Notebook") then
+          newEmptyNotebook()
+        end
         -- local defaultFileDialogPath = '/gameplay/missions'
         -- if im.MenuItem1("Load...") then
         --   editor_fileDialog.openFile(
@@ -419,11 +420,11 @@ local function drawEditorGui()
         --     false,
         --     (currentPath and currentPath:dir()) or defaultFileDialogPath
         --   )
-        -- end
-        -- im.EndMenu()
-      -- end
-      -- im.EndMenuBar()
-    -- end
+      end
+      im.EndMenu()
+    end
+    im.EndMenuBar()
+  end
 
     if currentPath then
       im.BeginChild1("##top-toolbar", im.ImVec2(0,topToolbarHeight), im.WindowFlags_ChildWindow)
@@ -908,8 +909,9 @@ local function detectNotebookToLoad(folder)
 
   if settings and settings.notebook and settings.notebook.filename then
     local settingsAbsName = notebooksFullPath..'/'..settings.notebook.filename
-    log('D', logTag, 'step 1: '..tostring(settingsAbsName))
+    -- log('D', logTag, 'step 1: '..tostring(settingsAbsName))
     if FS:fileExists(settingsAbsName) then
+      log('D', logTag, 'step 1: file exists '..tostring(settingsAbsName))
       notebookFname = settingsAbsName
     end
   end

@@ -24,6 +24,7 @@ function C:init(notebook, name, forceId)
   self.name = name or ("Pacenote " .. self.id)
   self.todo = false
   self.playback_rules = nil
+  self.isolate = false
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
     lang = lang.language
@@ -101,19 +102,37 @@ function C:joinedNote(lang)
       text ~= re_util.autodist_internal_level1
   end
 
-  local before = lang_data[self.noteFields.before]
-  if useNote(before) then
-    txt = txt .. before
-  end
-
   local note = lang_data[self.noteFields.note]
+  local before = lang_data[self.noteFields.before]
+  local after = lang_data[self.noteFields.after]
+
   if useNote(note) then
-    txt = txt .. ' ' .. note
+    -- txt = txt .. ' ' .. note
+    txt = note
+  else
+    -- if theres no note, dont bother with distance calls
+    return txt
   end
 
-  local after = lang_data[self.noteFields.after]
+  if not string.find(txt, re_util.var_dl) then
+    txt = re_util.var_dl..' '..txt
+  end
+
+  if useNote(before) then
+    -- txt = txt .. before
+    txt = string.gsub(txt, re_util.var_dl, before)
+  else
+    txt = string.gsub(txt, re_util.var_dl, '')
+  end
+
   if useNote(after) then
-    txt = txt .. ' ' .. after
+    if not string.find(txt, re_util.var_dt) then
+      txt = txt .. ' ' .. re_util.var_dt .. re_util.default_punctuation_distance_call
+    end
+    -- txt = txt .. ' ' .. after
+    txt = string.gsub(txt, re_util.var_dt, after)
+  else
+    txt = string.gsub(txt, re_util.var_dt, '')
   end
 
   -- trim string
@@ -357,6 +376,7 @@ function C:onSerialize()
     oldId = self.id,
     name = self.name,
     playback_rules = self.playback_rules,
+    isolate = self.isolate or false,
     todo = self.todo or false,
     notes = self.notes,
     metadata = self.metadata,
@@ -369,6 +389,7 @@ end
 function C:onDeserialized(data, oldIdMap)
   self.name = data.name
   self.playback_rules = data.playback_rules
+  self.isolate = data.isolate or false
   self.todo = data.todo or false
   self.notes = data.notes
   self.metadata = data.metadata or {}
@@ -812,11 +833,7 @@ end
 function C:audioFname(codriver, missionDir)
   missionDir =  missionDir or editor_rallyEditor.getMissionDir() or 'no_mission'
 
-  -- local notebookBasename = re_util.normalize_name(self.notebook:basenameNoExt()) or 'none'
-  -- local codriverName = codriver.name
   local codriverLang = codriver.language
-  -- local codriverVoice = codriver.voice
-  -- local codriverStr = re_util.normalize_name(codriverName..'_'..codriverLang..'_'..codriverVoice)
   local noteStr = self:joinedNote(codriverLang)
   local pacenoteHash = re_util.pacenote_hash(noteStr)
   local pacenotesDir = re_util.buildPacenotesDir(missionDir, self.notebook, codriver)
@@ -965,8 +982,30 @@ end
 
 function C:normalizeNoteText(lang, last, force)
   local note = self:getNoteFieldNote(lang)
-  local newTxt = re_util.normalizeNoteText(note, last, force or false)
+  local newTxt = re_util.normalizeNoteText(self.notebook.mainSettings, note, last, force or false)
   self:setNoteFieldNote(lang, newTxt)
+end
+
+function C:toggleIsolate()
+  self.isolate = not self.isolate
+
+  local lang = self.notebook:selectedCodriverLanguage()
+
+  if self.isolate then
+    if self:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then
+      self:setNoteFieldBefore(lang, re_util.autodist_internal_level1)
+    end
+    if self:getNoteFieldAfter(lang) ~= re_util.autofill_blocker then
+      self:setNoteFieldAfter(lang, re_util.autodist_internal_level1)
+    end
+  else
+    if self:getNoteFieldBefore(lang) ~= re_util.autofill_blocker then
+      self:setNoteFieldBefore(lang, '')
+    end
+    if self:getNoteFieldAfter(lang) ~= re_util.autofill_blocker then
+      self:setNoteFieldAfter(lang, '')
+    end
+  end
 end
 
 return function(...)
