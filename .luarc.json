@@ -6,6 +6,7 @@
       "getCurrentLevelIdentifier",
       "Engine",
       "FS",
+      "tableMergeRecursive",
       "Point2F",
       "QuatF",
       "String",

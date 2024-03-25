@@ -31,7 +31,7 @@ main() {
 
     cat gitsha.txt
 
-    zip -r ../aipacenotes.zip ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh'
+    zip -r ../aipacenotes.zip ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh' -x 'dev.txt'
     rm -fv gitsha.txt
 }
 
