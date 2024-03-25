@@ -277,16 +277,16 @@ function C:createPacenotesData(notebook)
   local prevCePoint = nil
   local foundDup = false
 
-  local cutCount = #self.cuts
+  -- local cutCount = #self.cuts
 
   for i,cut in ipairs(self.cuts) do
     local note = cut.transcript.text
     if import_language == 'english' then
       note = normalizer.replaceEnglishWords(note)
     end
-    if note then
-      note = re_util.normalizeNoteText(note, i == cutCount)
-    end
+    -- if note then
+    --   note = re_util.normalizeNoteText(self.mainSettings, note, i == cutCount, false)
+    -- end
 
     local pos = cut.pos
     local radius = editor_rallyEditor.getPrefDefaultRadius()

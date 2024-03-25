@@ -305,39 +305,6 @@ local function stripWhitespace(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
-local function normalizeNoteText(note, last, force)
-  force = force or false
-  note = stripWhitespace(note)
-
-  if note ~= autofill_blocker then
-    if note ~= '' and note ~= unknown_transcript_str then
-      -- add punction if not present
-      local last_char = note:sub(-1)
-
-      if force and hasPunctuation(last_char) then
-        note = string.sub(note, 1, -2)
-        last_char = note:sub(-1)
-      end
-
-      if not hasPunctuation(last_char) then
-
-        local punc = nil
-        if last then
-          punc = mainSettings:getPunctuationLastNote()
-        else
-          punc = mainSettings:getPunctuationDefault()
-        end
-
-        print('setting punc: '..punc)
-
-        note = note..punc
-      end
-    end
-  end
-
-  return note
-end
-
 local function detectMissionManagerMissionId()
   if gameplay_missions_missionManager then
     return gameplay_missions_missionManager.getForegroundMissionId()
@@ -638,7 +605,6 @@ M.getNotebookHelper = getNotebookHelper
 M.getTime = getTime
 M.hasPunctuation = hasPunctuation
 M.loadCornerAnglesFile = loadCornerAnglesFile
--- M.loadMissionSettings = loadMissionSettings
 M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
 M.missionRecceRecordDir = missionRecceRecordDir
@@ -651,10 +617,9 @@ M.transcriptsFile = transcriptsFile
 M.buildPacenotesDir = buildPacenotesDir
 M.missionTranscriptsDir = missionTranscriptsDir
 M.normalize_name = normalize_name
-M.normalizeNoteText = normalizeNoteText
+M.stripWhitespace = stripWhitespace
 M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
--- M.playPacenote2 = playPacenote2
 M.playPacenoteGui = playPacenoteGui
 M.trimString = trimString
 

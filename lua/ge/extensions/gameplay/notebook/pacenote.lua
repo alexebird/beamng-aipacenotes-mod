@@ -982,7 +982,41 @@ end
 
 function C:normalizeNoteText(lang, last, force)
   local note = self:getNoteFieldNote(lang)
-  local newTxt = re_util.normalizeNoteText(self.notebook.mainSettings, note, last, force or false)
+  local mainSettings = self.notebook.mainSettings
+
+  force = force or false
+  note = re_util.stripWhitespace(note)
+
+  if note ~= re_util.autofill_blocker then
+    if note ~= '' and note ~= re_util.unknown_transcript_str then
+      -- add punction if not present
+      local last_char = note:sub(-1)
+
+      if force and re_util.hasPunctuation(last_char) then
+        note = string.sub(note, 1, -2)
+        last_char = note:sub(-1)
+      end
+
+      if not re_util.hasPunctuation(last_char) then
+
+        local punc = nil
+        if last then
+          punc = mainSettings:getPunctuationLastNote()
+        else
+          punc = mainSettings:getPunctuationDefault()
+        end
+
+        print('setting punc: '..punc)
+
+        note = note..punc
+      end
+    end
+  end
+
+  local newTxt = note
+
+  -- local newTxt = re_util.normalizeNoteText(self.notebook.mainSettings, note, last, force or false)
+
   self:setNoteFieldNote(lang, newTxt)
 end
 

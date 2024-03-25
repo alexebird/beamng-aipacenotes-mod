@@ -1654,15 +1654,26 @@ function C:handleNoteFieldEdit(note, language, subfield, buf)
   local newVal = note.notes
   local lang_data = newVal[language] or {}
   local val = re_util.trimString(ffi.string(buf))
-  if subfield == 'note' then
-    local last = note.id == self.path.pacenotes.sorted[#self.path.pacenotes.sorted].id
-    val = re_util.normalizeNoteText(val, last)
-  end
+
+  -- if subfield == 'note' then
+  --   local last = note.id == self.path.pacenotes.sorted[#self.path.pacenotes.sorted].id
+  --   val = re_util.normalizeNoteText(self.path.mainSettings, val, last, false)
+  -- end
+
   lang_data[subfield] = val
   newVal[language] = lang_data
+
   editor.history:commitAction("Change Notes of Pacenote",
-    {index = self.pacenote_tools_state.selected_pn_id, self = self, old = note.notes, new = newVal, field = 'notes'},
-    setPacenoteFieldUndo, setPacenoteFieldRedo)
+    {
+      index = self.pacenote_tools_state.selected_pn_id,
+      self = self,
+      old = note.notes,
+      new = newVal,
+      field = 'notes'
+    },
+    setPacenoteFieldUndo,
+    setPacenoteFieldRedo
+  )
 end
 
 function C:drawWaypointList(note)
