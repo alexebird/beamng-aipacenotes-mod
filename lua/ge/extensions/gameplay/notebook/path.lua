@@ -1,6 +1,5 @@
 local logTag = 'aipacenotes'
 local C = {}
-local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local currentVersion = "2"

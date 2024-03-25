@@ -373,6 +373,12 @@ function C:getDistanceMarkerWaypoints()
 end
 
 function C:onSerialize()
+  for lang,langData in pairs(self.notes) do
+    langData._out = self:joinedNote(lang)
+  end
+
+  -- print(dumps(self.notes))
+
   local ret = {
     oldId = self.id,
     name = self.name,
