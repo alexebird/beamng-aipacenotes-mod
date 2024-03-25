@@ -41,70 +41,55 @@ local function select(window)
   changedWindow = true
 end
 
-local function setNotebookRedo(data)
-  data.previous = currentPath
-  -- data.previousFilepath = previousFilepath
-  -- data.previousFilename = previousFilename
+-- local function setNotebookRedo(data)
+--   data.previous = currentPath
+--   -- data.previousFilepath = previousFilepath
+--   -- data.previousFilename = previousFilename
+--
+--   -- previousFilename = data.filename
+--   -- previousFilepath = data.filepath
+--   currentPath = data.path
+--   -- currentPath._dir = previousFilepath
+--   -- local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
+--   -- currentPath._fnWithoutExt = filename
+--   for _, window in ipairs(windows) do
+--     window:setPath(currentPath)
+--     -- window:unselect()
+--   end
+--   -- currentWindow:selected()
+--   -- select(notebookInfoWindow)
+-- end
 
-  -- previousFilename = data.filename
-  -- previousFilepath = data.filepath
-  currentPath = data.path
-  -- currentPath._dir = previousFilepath
-  -- local dir, filename, ext = path.splitWithoutExt(previousFilename, true)
-  -- currentPath._fnWithoutExt = filename
-  for _, window in ipairs(windows) do
-    window:setPath(currentPath)
-    -- window:unselect()
-  end
-  -- currentWindow:selected()
-  -- select(notebookInfoWindow)
-end
+-- local function setNotebookUndo(data)
+--   currentPath = data.previous
+--   -- previousFilename = data.previousFilename
+--   -- previousFilepath = data.previousFilepath
+--   for _, window in ipairs(windows) do
+--     window:setPath(currentPath)
+--     -- window:unselect()
+--   end
+--   -- currentWindow:selected()
+--   -- select(notebookInfoWindow)
+-- end
 
-local function setNotebookUndo(data)
-  currentPath = data.previous
-  -- previousFilename = data.previousFilename
-  -- previousFilepath = data.previousFilepath
-  for _, window in ipairs(windows) do
-    window:setPath(currentPath)
-    -- window:unselect()
-  end
-  -- currentWindow:selected()
-  -- select(notebookInfoWindow)
-end
-
-local function strip_basename(thepath)
-  if not thepath then return nil end
-
-  if thepath:sub(-1) == "/" then
-    thepath = thepath:sub(1, -2)
-  end
-  local dirname, fn, e = path.split(thepath)
-
-  if dirname:sub(-1) == "/" then
-    dirname = dirname:sub(1, -2)
-  end
-  return dirname
-end
-
-local function getMissionDir()
-  if not currentPath then return nil end
-  -- log('D', 'wtf', 'has currentPath')
-
-  -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
-  local notebooksDir = currentPath:dir()
-  -- log('D', 'wtf', 'notebooksDir: '..notebooksDir)
-  local aipDir = strip_basename(notebooksDir)
-  -- log('D', 'wtf', 'aipDir: '..aipDir)
-  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
-  local missionDir = strip_basename(aipDir)
-  -- log('D', 'wtf', 'missionDir: '..missionDir)
-  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
-
-  return missionDir
-end
+-- local function getMissionDir()
+--   if not currentPath then return nil end
+--
+--   -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
+--   local notebooksDir = currentPath:dir()
+--   -- log('D', 'wtf', 'notebooksDir: '..notebooksDir)
+--   local aipDir = re_util.stripBasename(notebooksDir)
+--   -- log('D', 'wtf', 'aipDir: '..aipDir)
+--   -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
+--   local missionDir = re_util.stripBasename(aipDir)
+--   -- log('D', 'wtf', 'missionDir: '..missionDir)
+--   -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
+--
+--   return missionDir
+-- end
 
 local function ensureMissionSettingsFile()
-  local md = getMissionDir()
+  local md = currentPath:getMissionDir()
   if md then
     local settingsFname = md..'/'..re_util.aipPath..'/'..re_util.missionSettingsFname
     if not FS:fileExists(settingsFname) then
@@ -352,7 +337,7 @@ local function updateMouseInfo()
 end
 
 local function newEmptyNotebook()
-  local missionDir = getMissionDir()
+  local missionDir = currentPath:getMissionDir()
   local notebooksFullPath = missionDir..'/'..re_util.notebooksPath
 
   local ts = math.floor(re_util.getTime()) -- convert float to int
@@ -878,7 +863,7 @@ end
 
 local function listNotebooks(folder)
   if not folder then
-    folder = getMissionDir()
+    folder = currentPath:getMissionDir()
   end
   local notebooksFullPath = folder..'/'..re_util.notebooksPath
   local paths = {}
@@ -897,7 +882,7 @@ end
 local function detectNotebookToLoad(folder)
   log('D', 'wtf', 'detectNotebookToLoad folder param: '..tostring(folder))
   if not folder then
-    folder = getMissionDir()
+    folder = currentPath:getMissionDir()
   end
   log('D', 'wtf', 'detectNotebookToLoad folder: '..folder)
   local settings, err = re_util.getMissionSettingsHelper(folder)
@@ -992,7 +977,6 @@ M.toggleCornerCalls = toggleCornerCalls
 M.onEditorInitialized = onEditorInitialized
 -- M.getTranscriptsWindow = function() return recceWindow end
 -- M.getPacenotesWindow = function() return pacenotesWindow end
-M.getMissionDir = getMissionDir
 
 M.getPrefDefaultRadius = getPrefDefaultRadius
 

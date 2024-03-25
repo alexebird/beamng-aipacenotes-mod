@@ -99,31 +99,6 @@ function C:getTranscript(settingName, missionDir)
   end
 end
 
--- function C:selectedCodriverLanguage()
--- end
-
--- function C:getFullCourseTranscriptAbsPath(missionDir)
---   return self:getTranscriptAbsPath(missionDir, 'full_course')
--- end
-
--- function C:getTranscriptAbsPath(missionDir, settingName)
---   if not editor_rallyEditor then return nil end
---
---   if self.transcripts and self.transcripts[settingName] then
---     local basenameWithExt = self.transcripts[settingName]
---     missionDir =  missionDir or editor_rallyEditor.getMissionDir()
---     local absPath = re_util.missionTranscriptPath(missionDir, basenameWithExt)
---     if not FS:fileExists(absPath) then
---       log('W', logTag, 'getTranscriptAbsPath absPath file doesnt exist: '..absPath)
---       return nil
---     else
---       return absPath
---     end
---   else
---     return nil
---   end
--- end
-
 return function(...)
   local o = {}
   setmetatable(o, C)

@@ -64,7 +64,7 @@ function C:drawSectionV3()
 end
 
 function C:refresh()
-  self.recce = Recce(self.rallyEditor.getMissionDir())
+  self.recce = Recce(self.path:getMissionDir())
   self.recce:load()
 end
 

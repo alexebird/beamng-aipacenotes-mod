@@ -14,12 +14,12 @@ function C:init(rallyEditor)
 end
 
 function C:setPath(path)
-  -- self.path = path
+  self.path = path
 end
 
 function C:load()
   local err
-  self.settings, err = re_util.getMissionSettingsHelper(self.rallyEditor.getMissionDir())
+  self.settings, err = re_util.getMissionSettingsHelper(self.path:getMissionDir())
   print(err)
   self.notebookFilenamesSorted = self.rallyEditor.listNotebooks()
 
@@ -62,7 +62,7 @@ function C:draw()
 end
 
 function C:loadCodrivers()
-  local folder = self.rallyEditor.getMissionDir()
+  local folder = self.path:getMissionDir()
   local full_filename = folder..'/'..re_util.notebooksPath..'/'..self.settings.notebook.filename
   local json = jsonReadFile(full_filename)
   if not json then

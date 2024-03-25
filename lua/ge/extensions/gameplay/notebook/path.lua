@@ -61,6 +61,22 @@ function C:missionId()
   return segment
 end
 
+function C:getMissionDir()
+  if not self.fname then return nil end
+
+  -- looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes\notebooks\
+  local notebooksDir = self:dir()
+  -- log('D', 'wtf', 'notebooksDir: '..notebooksDir)
+  local aipDir = re_util.stripBasename(notebooksDir)
+  -- log('D', 'wtf', 'aipDir: '..aipDir)
+  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2\aipacenotes
+  local missionDir = re_util.stripBasename(aipDir)
+  -- log('D', 'wtf', 'missionDir: '..missionDir)
+  -- now looks like: C:\...gameplay\missions\pikespeak\rallyStage\aip-pikes-peak-2
+
+  return missionDir
+end
+
 function C:dir()
   if not self.fname then return nil end
   local dir, filename, ext = path.split(self.fname)
@@ -678,6 +694,19 @@ local function findNextNonIsolated(pacenotes, i)
   return pn_next
 end
 
+local function getDistanceCallShorthand(mainSettings, dist)
+  if dist <= mainSettings:getDistanceCallLevel1Threshold() then
+    return mainSettings:getDistanceCallLevel1Text()
+  elseif dist <= mainSettings:getDistanceCallLevel2Threshold() then
+    return mainSettings:getDistanceCallLevel2Text()
+  elseif dist <= mainSettings:getDistanceCallLevel3Threshold() then
+    return mainSettings:getDistanceCallLevel3Text()
+  else
+    return nil
+  end
+end
+
+
 function C:autofillDistanceCalls()
   local lang = self:selectedCodriverLanguage()
 
@@ -710,7 +739,7 @@ function C:autofillDistanceCalls()
       local dist_str = distance_to_string(dist)
 
       -- Decide what to do based on the distance
-      local shorthand = re_util.getDistanceCallShorthand(self.mainSettings, dist)
+      local shorthand = getDistanceCallShorthand(self.mainSettings, dist)
       if shorthand then
         next_prepend = shorthand
       else

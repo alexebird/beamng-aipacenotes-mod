@@ -496,6 +496,20 @@ local function trimString(txt)
   return txt:gsub("^%s*(.-)%s*$", "%1")
 end
 
+local function stripBasename(thepath)
+  if not thepath then return nil end
+
+  if thepath:sub(-1) == "/" then
+    thepath = thepath:sub(1, -2)
+  end
+  local dirname, fn, e = path.split(thepath)
+
+  if dirname:sub(-1) == "/" then
+    dirname = dirname:sub(1, -2)
+  end
+  return dirname
+end
+
 -- local function setCameraTarget(pos)
 --   if pos then
 --     pos = vec3(pos)
@@ -542,18 +556,6 @@ local function buildPacenotesDir(missionDir, notebook, codriver)
   return dirname
 end
 
-local function getDistanceCallShorthand(mainSettings, dist)
-  if dist <= mainSettings:getDistanceCallLevel1Threshold() then
-    return mainSettings:getDistanceCallLevel1Text()
-  elseif dist <= mainSettings:getDistanceCallLevel2Threshold() then
-    return mainSettings:getDistanceCallLevel2Text()
-  elseif dist <= mainSettings:getDistanceCallLevel3Threshold() then
-    return mainSettings:getDistanceCallLevel3Text()
-  else
-    return nil
-  end
-end
-
 -- vars
 M.aipPath = aipPath
 M.aipSettingsRoot = aipSettingsRoot
@@ -596,7 +598,6 @@ M.detectMissionIdHelper = detectMissionIdHelper
 M.detectMissionManagerMissionId = detectMissionManagerMissionId
 M.determineCornerCall = determineCornerCall
 M.fileExists = fileExists
-M.getDistanceCallShorthand = getDistanceCallShorthand
 M.getMissionSettingsHelper = getMissionSettingsHelper
 M.getNotebookHelper = getNotebookHelper
 M.getTime = getTime
@@ -619,5 +620,6 @@ M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
 M.playPacenoteGui = playPacenoteGui
 M.trimString = trimString
+M.stripBasename = stripBasename
 
 return M

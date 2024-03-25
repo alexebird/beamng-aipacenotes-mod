@@ -145,7 +145,7 @@ function C:selectedWaypoint()
 end
 
 function C:loadSnaproad()
-  local recce = Recce(self.rallyEditor.getMissionDir())
+  local recce = Recce(self.path:getMissionDir())
   recce:load()
   self.pacenote_tools_state.snaproad = Snaproad(recce)
 

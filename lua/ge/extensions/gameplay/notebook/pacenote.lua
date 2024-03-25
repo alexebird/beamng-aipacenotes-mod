@@ -832,7 +832,7 @@ function C:drawDebugPacenoteSelected(selection_state)
 end
 
 function C:audioFname(codriver, missionDir)
-  missionDir =  missionDir or editor_rallyEditor.getMissionDir() or 'no_mission'
+  missionDir =  missionDir or self.notebook:getMissionDir() or 'no_mission'
 
   local codriverLang = codriver.language
   local noteStr = self:joinedNote(codriverLang)
