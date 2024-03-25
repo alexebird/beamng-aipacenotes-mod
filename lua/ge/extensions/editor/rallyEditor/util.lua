@@ -359,28 +359,6 @@ local function detectMissionIdHelper()
   return missionId, missionDir, nil
 end
 
-local function getMissionSettingsHelper(missionDir)
-  local settingsFname = missionDir..'/'..aipPath..'/'..missionSettingsFname
-
-  -- if not FS:fileExists(settingsFname) then
-  --   return nil, "mission settings file not found: "..settingsFname
-  -- end
-  --
-  -- log('I', logTag, 'reading settings file: ' .. tostring(settingsFname))
-  -- local json = jsonReadFile(settingsFname)
-  -- if not json then
-  --   return nil, 'unable to read settings file at: ' .. tostring(settingsFname)
-  -- end
-
-  local settings = MissionSettings(settingsFname)
-  if settings:load() then
-    return settings, nil
-  end
-  -- settings:onDeserialized(json)
-
-  return nil, "error loading mission settings"
-end
-
 local function getNotebookHelper(missionDir, missionSettings)
   local notebookFname = missionDir..'/'..notebooksPath..'/'..missionSettings.notebook.filename
   if not FS:fileExists(notebookFname) then
@@ -598,7 +576,6 @@ M.detectMissionIdHelper = detectMissionIdHelper
 M.detectMissionManagerMissionId = detectMissionManagerMissionId
 M.determineCornerCall = determineCornerCall
 M.fileExists = fileExists
-M.getMissionSettingsHelper = getMissionSettingsHelper
 M.getNotebookHelper = getNotebookHelper
 M.getTime = getTime
 M.hasPunctuation = hasPunctuation

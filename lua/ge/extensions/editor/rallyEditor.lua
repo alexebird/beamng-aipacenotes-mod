@@ -1,6 +1,7 @@
 local im = ui_imgui
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local prefsCopy = require('/lua/ge/extensions/editor/rallyEditor/prefsCopy')
+local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
 
 local M = {}
 local logTag = 'rally_editor'
@@ -36,6 +37,7 @@ end
 local function select(window)
   currentWindow:unselect()
   currentWindow = window
+  SettingsManager.load(currentPath)
   currentWindow:setPath(currentPath)
   currentWindow:selected()
   changedWindow = true
@@ -885,7 +887,7 @@ local function detectNotebookToLoad(folder)
     folder = currentPath:getMissionDir()
   end
   log('D', 'wtf', 'detectNotebookToLoad folder: '..folder)
-  local settings, err = re_util.getMissionSettingsHelper(folder)
+  local settings, err = SettingsManager.loadMissionSettingsForMissionDir(folder)
   if err then
     log('D', 'wtf', err)
   end

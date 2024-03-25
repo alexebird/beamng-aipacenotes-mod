@@ -1,4 +1,5 @@
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
 
 local C = {}
 local logTag = 'aipacenotes'
@@ -121,7 +122,7 @@ function C:detectMissionId()
 end
 
 function C:getMissionSettings()
-  local settings, err = re_util.getMissionSettingsHelper(self.missionDir)
+  local settings, err = SettingsManager.loadMissionSettingsForMissionDir(self.missionDir)
 
   if err then
     error(err)

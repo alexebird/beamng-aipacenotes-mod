@@ -5,6 +5,7 @@ local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
+local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
 local RecceSettings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')
 local Snaproad = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad')
 
@@ -119,7 +120,7 @@ function C:loadDriveline()
 end
 
 function C:loadDrivelineLegacy()
-  local missionSettings, err = re_util.getMissionSettingsHelper(self.missionDir)
+  local missionSettings, err = SettingsManager.loadMissionSettingsForMissionDir(self.missionDir)
 
   if err then
     self.driveline = nil

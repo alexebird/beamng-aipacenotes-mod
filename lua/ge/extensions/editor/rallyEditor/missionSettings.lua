@@ -1,6 +1,7 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
 local RecceSettings = require('/lua/ge/extensions/gameplay/aipacenotes/recceSettings')
 
 local C = {}
@@ -19,7 +20,7 @@ end
 
 function C:load()
   local err
-  self.settings, err = re_util.getMissionSettingsHelper(self.path:getMissionDir())
+  self.settings, err = SettingsManager.loadMissionSettingsForMissionDir(self.path:getMissionDir())
   print(err)
   self.notebookFilenamesSorted = self.rallyEditor.listNotebooks()
 
