@@ -361,9 +361,6 @@ end
 
 local function getMissionSettingsHelper(missionDir)
   local settingsFname = missionDir..'/'..aipPath..'/'..missionSettingsFname
-  if not FS:fileExists(settingsFname) then
-    return nil, "mission settings file not found: "..settingsFname
-  end
 
   -- if not FS:fileExists(settingsFname) then
   --   return nil, "mission settings file not found: "..settingsFname
