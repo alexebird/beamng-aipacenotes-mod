@@ -81,10 +81,7 @@ function C:setup(damageThresh, closestPacenotes_n)
     error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
   end
 
-  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/audioManager')(self)
-  -- self.audioManager = require('/lua/ge/extensions/gameplay/rally/remoteAudioManager')(self)
   self.audioManager = require('/lua/ge/extensions/gameplay/rally/guiAudioManager')(self)
-  -- self.audioManager:loadMetadata()
   self.audioManager:resetAudioQueue()
 
   -- self.fgPacenotes = self.notebook:getFlowgraphPacenotes(self.missionSettings, self.codriver)
