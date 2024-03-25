@@ -2,7 +2,8 @@
   "static_pacenotes":[
     {
       "metadata":{
-        "static":true
+        "static":true,
+        "chill": false
       },
       "name":"damage_1",
       "notes":{

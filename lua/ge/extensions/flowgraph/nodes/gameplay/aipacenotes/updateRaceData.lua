@@ -24,10 +24,10 @@ C.pinSchema = {
 -- end
 
 function C:work()
-  extensions.gameplay_aipacenotes.getRallyManager():updateRaceData(
-    -- self.mgr.dtSim,
-    self.pinIn.raceData.value
-  )
+  -- extensions.gameplay_aipacenotes.getRallyManager():updateRaceData(
+  --   -- self.mgr.dtSim,
+  --   self.pinIn.raceData.value
+  -- )
 end
 
 return _flowgraph_createNode(C)

@@ -86,14 +86,14 @@ local function normalize_name(name)
 end
 
 -- assumes that the file exists.
-local function playPacenote2(audioObj)
-  local opts = { volume=audioObj.volume }
-  audioObj.time = getTime()
+-- local function playPacenote2(audioObj)
+--   local opts = { volume=audioObj.volume }
+--   audioObj.time = getTime()
 
 
 
 
-  local x = Engine.Audio.createSource('AudioGui', ' /gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_40820133.ogg')
+  -- local x = Engine.Audio.createSource('AudioGui', ' /gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_40820133.ogg')
   -- /gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_40820133.ogg
 
   -- paramGroupG = SFXParameterGroup()
@@ -126,66 +126,66 @@ local function playPacenote2(audioObj)
   --   soundParams:addSource(snd.obj)
   -- end
 
-  local paramGroupA = SFXParameterGroup('foo')
-  paramGroupA:setPrefixFilter('foo_')
-  -- print(dumps(paramGroupA))
-  print(dumps(paramGroupA.__index))
-  -- print(dumps(getmetatable(paramGroupA)))
-  -- paramGroupA:registerObject('')
-  paramGroupA:setParameterValue('foo_CabinFilterReverbStrength', 0)
-  paramGroupA:setParameterValue('c_CabinFilterReverbStrength', 0)
-
-
-  local globalParams = Engine.Audio.getGlobalParams()
-  print(dumps(globalParams))
-  local providers = Engine.Audio.getInfo()
-  print(dumps(providers))
-
-  local fname = "/gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_1394115997.ogg"
-  -- local fname = 'event:>Music>credits'
-
-  local soundId = Engine.Audio.createSource('AudioGui', fname)
-  local snd = scenetree.findObjectById(soundId)
-  paramGroupA:addSource(snd.obj)
-  snd:play(-1)
-
-
-
-
-
-  local paramGroupA = SFXParameterGroup('foo')
-  paramGroupA:setPrefixFilter('foo_')
-  paramGroupA:setParameterValue('foo_CabinFilterReverbStrength', 0)
-  local fname = "/gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_1394115997.ogg"
-  local soundId = Engine.Audio.createSource('AudioGui', fname)
-  local snd = scenetree.findObjectById(soundId)
-  paramGroupA:addSource(snd.obj)
-  snd:play(-1)
-
-
-
-
-
-  -- local ch = 'AudioGUI'
-
-  -- local res = Engine.Audio.playOnce(ch, audioObj.pacenoteFname, opts)
-  -- printFields(res)
-
-  -- if not res then
-  --   log('E', logTag, 'error playing audio')
-  --   return
-  -- end
-
-  -- local sfxSource = scenetree.findObjectById(res.sourceId)
-  -- log('D', logTag, dumps(sfxSource))
-  -- printFields(sfxSource)
-
-  -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
-  -- audioObj.audioLen = res.len
-  -- audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
-  -- audioObj.sourceId = res.sourceId
-  -- log('D', logTag, 'playPacenote channel='..ch..' '..dumps(audioObj))
-end
+--   local paramGroupA = SFXParameterGroup('foo')
+--   paramGroupA:setPrefixFilter('foo_')
+--   -- print(dumps(paramGroupA))
+--   print(dumps(paramGroupA.__index))
+--   -- print(dumps(getmetatable(paramGroupA)))
+--   -- paramGroupA:registerObject('')
+--   paramGroupA:setParameterValue('foo_CabinFilterReverbStrength', 0)
+--   paramGroupA:setParameterValue('c_CabinFilterReverbStrength', 0)
+--
+--
+--   local globalParams = Engine.Audio.getGlobalParams()
+--   print(dumps(globalParams))
+--   local providers = Engine.Audio.getInfo()
+--   print(dumps(providers))
+--
+--   local fname = "/gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_1394115997.ogg"
+--   -- local fname = 'event:>Music>credits'
+--
+--   local soundId = Engine.Audio.createSource('AudioGui', fname)
+--   local snd = scenetree.findObjectById(soundId)
+--   paramGroupA:addSource(snd.obj)
+--   snd:play(-1)
+--
+--
+--
+--
+--
+--   local paramGroupA = SFXParameterGroup('foo')
+--   paramGroupA:setPrefixFilter('foo_')
+--   paramGroupA:setParameterValue('foo_CabinFilterReverbStrength', 0)
+--   local fname = "/gameplay/missions/driver_training/rallyStage/aip-test3/aipacenotes/notebooks/generated_pacenotes/primary/Sophia_english_british_female/pacenote_1394115997.ogg"
+--   local soundId = Engine.Audio.createSource('AudioGui', fname)
+--   local snd = scenetree.findObjectById(soundId)
+--   paramGroupA:addSource(snd.obj)
+--   snd:play(-1)
+--
+--
+--
+--
+--
+--   -- local ch = 'AudioGUI'
+--
+--   -- local res = Engine.Audio.playOnce(ch, audioObj.pacenoteFname, opts)
+--   -- printFields(res)
+--
+--   -- if not res then
+--   --   log('E', logTag, 'error playing audio')
+--   --   return
+--   -- end
+--
+--   -- local sfxSource = scenetree.findObjectById(res.sourceId)
+--   -- log('D', logTag, dumps(sfxSource))
+--   -- printFields(sfxSource)
+--
+--   -- set these fields, so that the next time flow triggers audio playing, the timeout will be respected.
+--   -- audioObj.audioLen = res.len
+--   -- audioObj.timeout = audioObj.time + audioObj.audioLen + audioObj.breathSuffixTime
+--   -- audioObj.sourceId = res.sourceId
+--   -- log('D', logTag, 'playPacenote channel='..ch..' '..dumps(audioObj))
+-- end
 
 -- assumes that the file exists.
 local function playPacenote(audioObj)
@@ -630,9 +630,8 @@ M.normalize_name = normalize_name
 M.normalizeNoteText = normalizeNoteText
 M.pacenote_hash = pacenote_hash
 M.playPacenote = playPacenote
-M.playPacenote2 = playPacenote2
+-- M.playPacenote2 = playPacenote2
 M.playPacenoteGui = playPacenoteGui
--- M.setCameraTarget = setCameraTarget
 M.trimString = trimString
 
 return M

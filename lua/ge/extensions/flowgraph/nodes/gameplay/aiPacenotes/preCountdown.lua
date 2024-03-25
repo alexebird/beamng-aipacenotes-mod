@@ -10,18 +10,7 @@ C.tags = {'aipacenotes'}
 C.category = 'once_instant'
 
 C.pinSchema = {
-  -- { dir = 'in', type = 'flow', name = 'flow', description = 'Inflow for this node.' },
-  -- { dir = 'in', type = 'flow', name = 'reset', description = 'Reset the countdown.', impulse = true },
-  -- { dir = 'out', type = 'flow', name = 'flow', description = 'Outflow for this node.' },
-
-  -- { dir = 'out', type = 'flow', name = 'done', description = 'Outflow for this node.', impulse = true },
 }
-
--- function C:reset()
---   self.workDone = false
---   self.pinOut.flow.value = false
---   self.pinIn.reset.value = false
--- end
 
 function C:workOnce()
   local rallyManager = extensions.gameplay_aipacenotes.getRallyManager()

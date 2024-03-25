@@ -19,10 +19,15 @@ local currentPath = nil
 -- currentPath._dir = previousFilepath
 
 local windows = {}
-local notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow, staticPacenotesWindow
+local pacenotesWindow, recceWindow
 local currentWindow = {}
 local changedWindow = false
 local programmaticTabSelect = false
+local isDev = false
+
+local function devTxtExists()
+  return FS:fileExists('dev.txt')
+end
 
 
 -- useful:
@@ -723,6 +728,9 @@ end
 
 -- this is called after you Ctrl+L to reload lua.
 local function onEditorInitialized()
+  isDev = devTxtExists()
+  print('isDev='..tostring(isDev))
+
   editor.editModes.notebookEditMode =
   {
     displayName = editModeName,
@@ -742,14 +750,19 @@ local function onEditorInitialized()
   prefsCopy.setupCopy()
 
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/notebookInfo')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/transcripts')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/recceTab')(M))
-  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/missionSettings')(M))
-  -- table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
 
-  -- notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow, staticPacenotesWindow = windows[1], windows[2], windows[3], windows[4], windows[5]
-  notebookInfoWindow, pacenotesWindow, recceWindow, missionSettingsWindow = windows[1], windows[2], windows[3], windows[4]
+  pacenotesWindow = require('/lua/ge/extensions/editor/rallyEditor/pacenotes')(M)
+  table.insert(windows, pacenotesWindow)
+
+  recceWindow = require('/lua/ge/extensions/editor/rallyEditor/recceTab')(M)
+  table.insert(windows, recceWindow)
+
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/missionSettings')(M))
+  table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
+
+  if isDev then
+    table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/testTab')(M))
+  end
 
   for _,win in pairs(windows) do
     win:setPath(currentPath)
@@ -758,7 +771,6 @@ local function onEditorInitialized()
   pacenotesWindow:attemptToFixMapEdgeIssue()
 
   currentWindow = pacenotesWindow
-  -- currentWindow:setPath(currentPath) -- redundant?
   currentWindow:selected()
 end
 
@@ -812,33 +824,7 @@ local function onEditorRegisterPreferences(prefsRegistry)
     {showAudioTriggers = {"bool", true, "Render audio triggers in the viewport.", nil, nil, nil, true}},
     {showPreviousPacenote = {"bool", true, "When a pacenote is selected, also render the previous pacenote for reference."}},
     {showNextPacenote = {"bool", true, "When a pacenote is selected, also render the next pacenote for reference."}},
-    -- {showDistanceMarkers = {"bool", true, "Render distance markers in the viewport."}},
-    -- {language = {"string", re_util.default_codriver_language, "Language for rally editor display and debug."}},
   })
-
-  prefsRegistry:registerSubCategory("rallyEditor", "punctuation", nil, {
-    -- {punctuation = {"string", re_util.default_punctuation, "Punctuation character for Normalize."}},
-    -- {punctuationLast = {"string", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize.", "Punctuation for Last Note"}},
-
-    -- {iconBackgroundType = {"enum", "None", "The icon background shape type", nil, nil, nil, nil, nil, nil, {"None", "Circle", "Square"}}},
-
-    {punctuation = {"enum", re_util.default_punctuation, "Punctuation character for Normalize.", nil, nil, nil, nil, nil, nil, re_util.validPunctuation}},
-    {punctuationLast = {"enum", re_util.default_punctuation_last, "Punctuation character for last pacenote for Normalize.", "Punctuation for Last Note", nil, nil, nil, nil, nil, re_util.validPunctuation}},
-  })
-
-  prefsRegistry:registerSubCategory("rallyEditor", "distanceCalls", "Distance Calls", {
-    {level1Thresh = {"int", 10, "Threshold for level 1", nil, 0, 100}},
-    {level2Thresh = {"int", 20, "Threshold for level 2", nil, 0, 100}},
-    {level3Thresh = {"int", 40, "Threshold for level 3", nil, 0, 100}},
-    {level1Text = {"string", re_util.autodist_internal_level1, "Text for level 1."}},
-    {level2Text = {"string", "into", "Text for level 2."}},
-    {level3Text = {"string", "and", "Text for level 3."}},
-  })
-
-  -- prefsRegistry:registerSubCategory("rallyEditor", "topDownCamera", nil, {
-  --   {elevation = {"int", 200, "Elevation for the top-down camera view.", nil, 1, 1000}},
-  --   -- {shouldFollow = {"bool", true, "Make the camera follow pacenote selection with a top-down view."}},
-  -- })
 
   prefsRegistry:registerSubCategory("rallyEditor", "waypoints", nil, {
     {defaultRadius = {"int", 8, "The radius used for displaying waypoints.", "Visual Radius", 1, 50}},
@@ -857,11 +843,6 @@ local function getPreference(key, default)
   end
 end
 
-local function getPrefShowDistanceMarkers()
-  return false
-  -- return getPreference('rallyEditor.editing.showDistanceMarkers', true)
-end
-
 local function getPrefShowAudioTriggers()
   return getPreference('rallyEditor.editing.showAudioTriggers', true)
 end
@@ -877,19 +858,6 @@ local function getPrefShowNextPacenote()
   return getPreference('rallyEditor.editing.showNextPacenote', true)
 end
 
--- local function getPrefEditingLanguage()
---   return re_util.default_codriver_language
---   -- return getPreference('rallyEditor.editing.language', re_util.default_codriver_language)
--- end
-
-local function getPrefDefaultPunctuation()
-  return getPreference('rallyEditor.punctuation.punctuation', re_util.default_punctuation)
-end
-
-local function getPrefDefaultPunctuationLast()
-  return getPreference('rallyEditor.punctuation.punctuationLast', re_util.default_punctuation_last)
-end
-
 local function getPrefDefaultRadius()
   return getPreference('rallyEditor.waypoints.defaultRadius', 8)
 end
@@ -898,59 +866,12 @@ local function getPrefUiPacenoteNoteFieldWidth()
   return getPreference('rallyEditor.ui.pacenoteNoteFieldWidth', 300)
 end
 
--- local function getPrefTopDownCameraElevation()
---   return getPreference('rallyEditor.topDownCamera.elevation', 200)
--- end
-
--- local function setPrefTopDownCameraElevation(val)
---   local min = 20
---   local max = 700
---
---   if val < min then
---     val = min
---   end
---
---   if val > max then
---     val = max
---   end
---
---   editor.setPreference("rallyEditor.topDownCamera.elevation", val)
--- end
-
-local function getPrefTopDownCameraFollow()
-  return true
-  -- return getPreference('rallyEditor.topDownCamera.shouldFollow', true)
-end
-
 local function getPrefLockWaypoints()
   return getPreference("rallyEditor.editing.lockWaypoints", false)
 end
 
 local function setPrefLockWaypoints(val)
   editor.setPreference("rallyEditor.editing.lockWaypoints", val)
-end
-
-local function getPrefLevel1Thresh()
-  return getPreference('rallyEditor.distanceCalls.level1Thresh', 10)
-end
-local function getPrefLevel2Thresh()
-  return getPreference('rallyEditor.distanceCalls.level2Thresh', 20)
-end
-local function getPrefLevel3Thresh()
-  return getPreference('rallyEditor.distanceCalls.level3Thresh', 40)
-end
-local function getPrefLevel1Text()
-  return getPreference('rallyEditor.distanceCalls.level1Text', re_util.autodist_internal_level1)
-end
-local function getPrefLevel2Text()
-  return getPreference('rallyEditor.distanceCalls.level2Text', 'into')
-end
-local function getPrefLevel3Text()
-  return getPreference('rallyEditor.distanceCalls.level3Text', 'and')
-end
-
-local function loadMissionSettings(folder)
-  return re_util.loadMissionSettings(folder)
 end
 
 local function listNotebooks(folder)
@@ -1043,7 +964,6 @@ M.onEditorGui = onEditorGui
 M.onEditorToolWindowHide = onEditorToolWindowHide
 M.onWindowGotFocus = onWindowGotFocus
 
-M.loadMissionSettings = loadMissionSettings
 M.detectNotebookToLoad = detectNotebookToLoad
 M.listNotebooks = listNotebooks
 
@@ -1051,13 +971,6 @@ M.selectPrevPacenote = selectPrevPacenote
 M.selectNextPacenote = selectNextPacenote
 -- M.cycleDragMode = cycleDragMode
 M.insertMode = insertMode
-
--- M.cameraOrbitRight = cameraOrbitRight
--- M.cameraOrbitLeft = cameraOrbitLeft
--- M.cameraOrbitUp = cameraOrbitUp
--- M.cameraOrbitDown = cameraOrbitDown
--- M.cameraOrbitZoomIn = cameraOrbitZoomIn
--- M.cameraOrbitZoomOut = cameraOrbitZoomOut
 
 M.setFreeCam = setFreeCam
 
@@ -1076,15 +989,6 @@ M.onEditorInitialized = onEditorInitialized
 M.getMissionDir = getMissionDir
 
 M.getPrefDefaultRadius = getPrefDefaultRadius
--- M.getPrefEditingLanguage = getPrefEditingLanguage
-M.getPrefDefaultPunctuation = getPrefDefaultPunctuation
-M.getPrefDefaultPunctuationLast = getPrefDefaultPunctuationLast
-M.getPrefLevel1Text = getPrefLevel1Text
-M.getPrefLevel1Thresh = getPrefLevel1Thresh
-M.getPrefLevel2Text = getPrefLevel2Text
-M.getPrefLevel2Thresh = getPrefLevel2Thresh
-M.getPrefLevel3Text = getPrefLevel3Text
-M.getPrefLevel3Thresh = getPrefLevel3Thresh
 
 M.getPrefLockWaypoints = getPrefLockWaypoints
 M.setPrefLockWaypoints = setPrefLockWaypoints
@@ -1092,14 +996,9 @@ M.setPrefLockWaypoints = setPrefLockWaypoints
 M.getPrefShowAudioTriggers = getPrefShowAudioTriggers
 M.setPrefShowAudioTriggers = setPrefShowAudioTriggers
 
-M.getPrefShowDistanceMarkers = getPrefShowDistanceMarkers
 M.getPrefShowNextPacenote = getPrefShowNextPacenote
 M.getPrefShowPreviousPacenote = getPrefShowPreviousPacenote
 
--- M.getPrefTopDownCameraElevation = getPrefTopDownCameraElevation
--- M.setPrefTopDownCameraElevation = setPrefTopDownCameraElevation
-
-M.getPrefTopDownCameraFollow = getPrefTopDownCameraFollow
 M.getPrefUiPacenoteNoteFieldWidth = getPrefUiPacenoteNoteFieldWidth
 
 return M

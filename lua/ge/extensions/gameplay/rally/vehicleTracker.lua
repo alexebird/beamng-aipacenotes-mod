@@ -3,8 +3,9 @@ local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local C = {}
 local logTag = 'aipacenotes'
 
-function C:init(damageThreshold, raceData)
-  raceData = nil
+-- function C:init(damageThreshold, raceData)
+function C:init(damageThreshold)
+  -- raceData = nil
 
   -- self.rallyManager = rallyManager
 
@@ -21,11 +22,11 @@ function C:init(damageThreshold, raceData)
   self.currentCorners = {}
   self.previousCorners = {}
 
-  if raceData then
-    local vehId = self:getVehicleId()
-    self.currentCorners = raceData.states[vehId].currentCorners
-    self.previousCorners = raceData.states[vehId].previousCorners
-  else
+  -- if raceData then
+  --   local vehId = self:getVehicleId()
+  --   self.currentCorners = raceData.states[vehId].currentCorners
+  --   self.previousCorners = raceData.states[vehId].previousCorners
+  -- else
     local vehicle = self:getVehicle()
     local wCount = vehicle:getWheelCount()-1
     if wCount > 0 then
@@ -41,7 +42,7 @@ function C:init(damageThreshold, raceData)
         table.insert(self.previousCorners, vRot*pos + vehiclePos)
       end
     end
-  end
+  -- end
 end
 
 function C:getVehicleId()
@@ -62,24 +63,26 @@ function C:getCurrentCorners()
   return self.currentCorners
 end
 
-function C:onUpdate(dt, raceData)
+-- function C:onUpdate(dt, raceData)
+function C:onUpdate(dt)
   local vehId = self:getVehicleId()
   local vehicle = self:getVehicle()
-  raceData = nil
+  -- raceData = nil
 
   -- log('D', logTag, 'VehicleTracker.onUpdate vehId='..vehId)
 
   self:updateVehicleData(vehId)
-  self:updateVehicleCorners(vehicle, raceData)
+  -- self:updateVehicleCorners(vehicle, raceData)
+  self:updateVehicleCorners(vehicle)
   self:updateVehicleDamage()
 end
 
-function C:updateVehicleCorners(vehicle, raceData)
+function C:updateVehicleCorners(vehicle)
   -- local vehId = self:getVehicleId()
-  if raceData and raceData.states[vehId] then
-    self.currentCorners = raceData.states[vehId].currentCorners
-    self.previousCorners = raceData.states[vehId].previousCorners
-  else
+  -- if raceData and raceData.states[vehId] then
+    -- self.currentCorners = raceData.states[vehId].currentCorners
+    -- self.previousCorners = raceData.states[vehId].previousCorners
+  -- else
     if vehicle then
       local vPos = vehicle:getPosition()
       local vRot = quatFromDir(vehicle:getDirectionVector(), vehicle:getDirectionVectorUp())
@@ -90,7 +93,7 @@ function C:updateVehicleCorners(vehicle, raceData)
     else
       log('E', logTag, 'updateVehicleCorners: vehicle was null')
     end
-  end
+  -- end
 end
 
 function C:updateVehicleDamage()

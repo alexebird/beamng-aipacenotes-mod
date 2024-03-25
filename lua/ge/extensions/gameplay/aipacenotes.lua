@@ -1,7 +1,7 @@
 -- extension name: gameplay_aipacenotes
 
-local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
-local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+-- local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
+-- local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 
 local logTag = 'aipacenotes'
 
@@ -29,17 +29,6 @@ local function updateRallyManager(dtSim)
     rallyManager.audioManager:playNextInQueue()
   end
 end
-
--- local function drawDebug()
---   if not rallyManager then return end
---
---   local nextPacenotes = rallyManager:getNextPacenotes()
---
---   for i,pacenote in ipairs(nextPacenotes) do
---     local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
---     wp_audio_trigger:drawDebugRecce(i, nextPacenotes, pacenote._cached_fgData.note_text)
---   end
--- end
 
 local function initRallyManager(missionId, missionDir)
   flag_NoteSearch = false

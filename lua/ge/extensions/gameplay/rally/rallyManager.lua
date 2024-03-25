@@ -194,7 +194,7 @@ function C:shouldPlay(pacenote)
   return allowed and self:intersectCorners(pacenote)
 end
 
-function C:update(dtSim, raceData)
+function C:update(dtSim)
   if not self.setup_complete then return end
 
   -- if self.nextPacenotes then
@@ -205,7 +205,7 @@ function C:update(dtSim, raceData)
   -- end
 
   if self.vehicleTracker then
-    self.vehicleTracker:onUpdate(dtSim, raceData)
+    self.vehicleTracker:onUpdate(dtSim)
   end
 
   if self.vehicleTracker:didJustHaveDamage() then

@@ -301,35 +301,20 @@ local function drawDebug()
   end
 end
 
-local function checkForRallyEditor()
-  if not editor_rallyEditor then
-    guihooks.message("You must open the mission in Rally Editor to make Recce changes.", 5)
-    return false
-  end
-
-  return true
-end
+-- local function checkForRallyEditor()
+--   if not editor_rallyEditor then
+--     guihooks.message("You must open the mission in Rally Editor to make Recce changes.", 5)
+--     return false
+--   end
+--
+--   return true
+-- end
 
 local function movePacenoteATForward()
   -- log('D', 'wtf', 'movePacenoteATForward')
   if not rallyManager then return end
   if not snaproad then return end
-  if not checkForRallyEditor() then return end
-
-  -- local nextPacenotes = rallyManager:getNextPacenotes()
-  -- if nextPacenotes and #nextPacenotes > 0 then
-  --   local nextNote = nextPacenotes[1]
-  --   if not nextNote then
-  --     return
-  --   end
-  --
-  --   local wp = nextNote:getActiveFwdAudioTrigger()
-  --   snaproad:setPartitionToPacenote(nextNote)
-  --   snaproad:setFilter(wp)
-  --   nextNote:moveWaypointTowards(snaproad, wp, true)
-  --   rallyManager:saveNotebook()
-  --   snaproad:setFilter(nil)
-  -- end
+  -- if not checkForRallyEditor() then return end
 
   if selectedPacenote then
     local pacenote = selectedPacenote
@@ -347,28 +332,7 @@ local function movePacenoteATBackward()
   -- log('D', 'wtf', 'movePacenoteATBackward')
   if not rallyManager then return end
   if not snaproad then return end
-  if not checkForRallyEditor() then return end
-
-
-  -- local nextPacenotes = rallyManager:getNextPacenotes()
-  -- if nextPacenotes and #nextPacenotes > 0 then
-  --   local nextNote = nextPacenotes[1]
-  --   local veh = be:getPlayerVehicle(0)
-  --   if not nextNote or not veh then
-  --     return
-  --   end
-  --   local wp = nextNote:getActiveFwdAudioTrigger()
-  --   snaproad:setPartitionToPacenote(nextNote)
-  --   snaproad:setFilter(wp)
-  --   nextNote:moveWaypointTowards(snaproad, wp, false)
-  --   rallyManager:saveNotebook()
-  --   snaproad:setFilter(nil)
-  -- end
-
-
-  -- local nextPacenotes = rallyManager:getNextPacenotes()
-  -- if nextPacenotes and #nextPacenotes > 0 then
-
+  -- if not checkForRallyEditor() then return end
 
   if selectedPacenote then
     local pacenote = selectedPacenote

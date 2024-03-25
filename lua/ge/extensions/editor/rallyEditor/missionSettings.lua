@@ -59,35 +59,6 @@ function C:draw()
   self:recceSettingsSection()
 end
 
--- function C:loadTranscripts()
---   local tscPath = re_util.missionTranscriptsDir(self.rallyEditor.getMissionDir())
---   log('D', logTag, 'refreshing transcript files: '..tscPath)
---   local files = FS:findFiles(tscPath, '*.'..re_util.transcriptsExt, -1, true, false)
---   local basenames = {}
---   for i,fname in ipairs(files) do
---     local dir, filename, ext = path.splitWithoutExt(fname, true)
---     fname = filename..'.'..ext
---     table.insert(basenames, fname)
---   end
---   table.sort(basenames)
---   return basenames
--- end
---
--- function C:transcriptSettingsSection(name, fieldName)
---   if im.BeginCombo(name..'##filename', self.settings.transcripts[fieldName] or '') then
---
---     for _, fname in ipairs(transcriptFilenamesSorted) do
---       local current = self.settings.transcripts[fieldName] == fname
---       if im.Selectable1(((current and '[current] ') or '')..fname, current) then
---         self.settings.transcripts[fieldName] = fname
---         self.settings:write()
---       end
---     end
---
---     im.EndCombo()
---   end
--- end
-
 function C:loadCodrivers()
   local folder = self.rallyEditor.getMissionDir()
   local full_filename = folder..'/'..re_util.notebooksPath..'/'..self.settings.notebook.filename

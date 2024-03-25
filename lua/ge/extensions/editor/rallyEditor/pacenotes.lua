@@ -144,15 +144,6 @@ function C:selectedWaypoint()
   end
 end
 
--- function C:selectedTranscript()
---   if not self:getTranscripts() then return nil end
---   if self.transcript_tools_state.selected_id then
---     return self:getTranscripts().transcripts.objects[self.transcript_tools_state.selected_id]
---   else
---     return nil
---   end
--- end
-
 function C:loadSnaproad()
   local recce = Recce(self.rallyEditor.getMissionDir())
   recce:load()
@@ -230,18 +221,6 @@ function C:selectPacenote(id)
 
   self.pacenote_tools_state.selected_pn_id = id
 
-  -- find the pacenotes before and after the selected one.
-  -- local pacenotesSorted = self.path.pacenotes.sorted
-  -- for i, note in ipairs(pacenotesSorted) do
-  --   if self.pacenote_tools_state.selected_pn_id == note.id then
-  --     local prevNote = pacenotesSorted[i-1]
-  --     local nextNote = pacenotesSorted[i+1]
-  --     note:setAdjacentNotes(prevNote, nextNote)
-  --   else
-  --     note:clearAdjacentNotes()
-  --   end
-  -- end
-
   self.path:setAdjacentNotes(self.pacenote_tools_state.selected_pn_id)
 
   -- select the pacenote
@@ -306,14 +285,6 @@ function C:deselect()
     self:selectPacenote(nil)
   end
 end
-
--- function C:selectTranscript(id)
---   if not self:getTranscripts() then return end
---   self.transcript_tools_state.selected_id = id
---   -- if id then
---   -- else
---   -- end
--- end
 
 function C:attemptToFixMapEdgeIssue()
   self:resetGizmoTransformToOrigin()
@@ -428,17 +399,6 @@ function C:endDragging()
   )
 end
 
--- function C:getTranscripts()
---   if not self.rallyEditor then return nil end
---   local loaded_transcript = self.rallyEditor.getTranscriptsWindow().loaded_transcript
---
---   if  loaded_transcript then
---     return loaded_transcript
---   else
---     return nil
---   end
--- end
-
 function C:drawDebugEntrypoint()
   if self.path then
     if not self.pacenote_tools_state.snaproad:partitionAllEnabled() then
@@ -515,17 +475,11 @@ function C:handleMouseHold()
         pn_sel:clearTodo()
 
         wp_sel.pos = new_pos
-        self:autoFillDistanceCalls()
+        self:autofillDistanceCalls()
 
         if normal_align_pos then
           local rv = re_util.calculateForwardNormal(new_pos, normal_align_pos)
           wp_sel.normal = vec3(rv.x, rv.y, rv.z)
-        -- elseif wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
-        --   local note = wp_sel.pacenote
-        --   for _,at in ipairs(note:getAudioTriggerWaypoints()) do
-        --     local rv = re_util.calculateForwardNormal(at.pos, wp_sel.pos)
-        --     at.normal = vec3(rv.x, rv.y, rv.z)
-        --   end
         end
 
         if wp_sel:isCs() then
@@ -542,10 +496,6 @@ function C:handleMouseHold()
             if normalVec then
               wp_at:setNormal(normalVec)
             end
-
-            -- local _, normal_toPoint = self.pacenote_tools_state.snaproad:normalAlignPoints(point_at)
-            -- local normalVec = re_util.calculateForwardNormal(wp_at.pos, wp_sel.pos)
-            -- wp_at.normal = vec3(normalVec.x, normalVec.y, normalVec.z)
           end
         end
 
@@ -557,54 +507,38 @@ end
 function C:handleMouseUp()
   self.pacenote_tools_state.internal_lock = false
 
-  -- if self.pacenote_tools_state.drag_mode == dragModes.simple or self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
-    local wp_sel = self:selectedWaypoint()
-    if wp_sel and not wp_sel.missing then
-      editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
-        {
-          self = self, -- the rallyEditor pacenotes tab
-          pacenote_idx = self.pacenote_tools_state.selected_pn_id,
-          wp_id = self.pacenote_tools_state.selected_wp_id,
-          old = self.beginSimpleDragNoteData,
-          new = wp_sel:onSerialize(),
-          wasPWselection = self.wasWPSelected,
-        },
-        function(data) -- undo
-          local notebook = data.self.path
-          local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-          local wp = pacenote.pacenoteWaypoints.objects[data.wp_id]
-          wp:onDeserialized(data.old)
-          -- if data.wasWPSelected then
-            data.self:selectWaypoint(data.wp_id)
-          -- else
-            -- data.self:selectWaypoint(nil)
-          -- end
-        end,
-        function(data) --redo
-          local notebook = data.self.path
-          local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
-          local wp = pacenote.pacenoteWaypoints.objects[data.wp_id]
-          wp:onDeserialized(data.new)
-          -- if data.wasWPSelected then
-            data.self:selectWaypoint(data.wp_id)
-          -- else
-            -- data.self:selectWaypoint(nil)
-          -- end
-        end
-      )
-    end
-  -- end
+  local wp_sel = self:selectedWaypoint()
+  if wp_sel and not wp_sel.missing then
+    editor.history:commitAction("Manipulated Note Waypoint via SimpleDrag",
+      {
+        self = self, -- the rallyEditor pacenotes tab
+        pacenote_idx = self.pacenote_tools_state.selected_pn_id,
+        wp_id = self.pacenote_tools_state.selected_wp_id,
+        old = self.beginSimpleDragNoteData,
+        new = wp_sel:onSerialize(),
+        wasPWselection = self.wasWPSelected,
+      },
+      function(data) -- undo
+        local notebook = data.self.path
+        local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+        local wp = pacenote.pacenoteWaypoints.objects[data.wp_id]
+        wp:onDeserialized(data.old)
+        data.self:selectWaypoint(data.wp_id)
+      end,
+      function(data) --redo
+        local notebook = data.self.path
+        local pacenote = notebook.pacenotes.objects[data.pacenote_idx]
+        local wp = pacenote.pacenoteWaypoints.objects[data.wp_id]
+        wp:onDeserialized(data.new)
+        data.self:selectWaypoint(data.wp_id)
+      end
+    )
+  end
 end
 
 function C:setHover(wp)
-  -- local tscs = self:getTranscripts()
-  -- if tscs and self.transcript_tools_state.show then
-  --   tscs._draw_debug_hover_tsc_id = nil
-  -- end
   self.pacenote_tools_state.hover_wp_id = nil
 
-  -- if tscs and self.transcript_tools_state.show and tsc then
-    -- tscs._draw_debug_hover_tsc_id = tsc.id
   if wp then
     self.pacenote_tools_state.hover_wp_id = wp.id
   end
@@ -695,36 +629,6 @@ function C:handleMouseInput()
   end
   -- end
 end
-
--- function C:isNothingSelected()
---   local states = self:getSelectionLayerStates()
---   if states.pacenotesLayer == 'none' and states.transcriptsLayer == 'none' then
---     return true
---   else
---     return false
---   end
--- end
-
--- function C:getSelectionLayerStates()
---   local pacenoteLayerState = 'none'
---   if self:selectedPacenote() then
---     if self:selectedWaypoint() then
---       pacenoteLayerState = 'waypoint'
---     else
---       pacenoteLayerState = 'pacenote'
---     end
---   end
---
---   -- local transcriptsLayerState = 'none'
---   -- if self:selectedTranscript() then
---   --   transcriptsLayerState = 'transcript'
---   -- end
---
---   return {
---     pacenotesLayer = pacenoteLayerState,
---     -- transcriptsLayer = transcriptsLayerState,
---   }
--- end
 
 function C:draw(mouseInfo, tabContentsHeight)
   self.mouseInfo = mouseInfo
@@ -879,187 +783,11 @@ function C:createMouseDragPacenote()
 
       self.pacenote_tools_state.snaproad:clearAll()
 
-      self:autoFillDistanceCalls()
+      self:autofillDistanceCalls()
       self:selectPacenote(newPacenote.id)
-
-      -- editor.history:commitAction("Create pacenote with mouse",
-      --   {
-      --     self = self,
-      --     pacenote_data = newPacenote:onSerialize(),
-      --     pacenote_id = newPacenote.id,
-      --     sortOrder = newPacenote.sortOrder,
-      --   },
-      --   function(data) -- undo
-      --     self.path.pacenotes:remove(data.pacenote_id)
-      --     self:selectPacenote(nil)
-      --   end,
-      --   function(data) -- redo
-      --     local note = self.path.pacenotes:create(nil, data.pacenote_data.oldId)
-      --     note.sortOrder = data.sortOrder
-      --     data.self.path.pacenotes:sort()
-      --     -- data.self.path:sortPacenotesByName()
-      --     note:onDeserialized(data.pacenote_data, {})
-      --     self:selectPacenote(data.pacenote_id)
-      --   end
-      -- )
     end
   end
-
-  if self.mouseInfo.hold then
-    -- self:debugDrawNewPacenote2(pos_cs, pos_ce)
-  elseif self.mouseInfo.up then
-    -- local newPacenote = self.path.pacenotes:create(nil, nil)
-    -- newPacenote.pacenoteWaypoints:create('corner start', pos_cs)
-    -- local point_ce = self.pacenote_tools_state.snaproad:distanceForwards(point_cs, 10)
-    -- newPacenote.pacenoteWaypoints:create('corner end', point_ce.pos)
-    -- local point_at = self.pacenote_tools_state.snaproad:distanceBackwards(point_cs, 10)
-    -- newPacenote.pacenoteWaypoints:create('audio trigger', point_at.pos)
-
-
-    -- self.path:sortPacenotesByName()
-    -- self:selectPacenote(newPacenote.id)
-    -- for i,pn in ipairs(self.path.pacenotes.sorted) do
-    --   local cs = pn:getCornerStartWaypoint()
-    --   cs._snap_point = self.pacenote_tools_state.snaproad:closestSnapPoint(cs.pos)
-    -- end
-
-    -- editor.history:commitAction("Create pacenote with mouse",
-    --   {
-    --     self = self,
-    --     pacenote_data = newPacenote:onSerialize(),
-    --     pacenote_id = newPacenote.id,
-    --   },
-    --   function(data) -- undo
-    --     self.path.pacenotes:remove(data.pacenote_id)
-    --     self:selectPacenote(nil)
-    --   end,
-    --   function(data) -- redo
-    --     local note = self.path.pacenotes:create(nil, data.pacenote_data.oldId)
-    --     note:onDeserialized(data.pacenote_data, {})
-    --     self:selectPacenote(data.pacenote_id)
-    --   end
-    -- )
-  end
 end
-
--- function C:addMouseWaypointToPacenote()
---   if not self.path then return end
---   if not self.mouseInfo.rayCast then return end
---
---   local pacenote = self:selectedPacenote()
---   if not pacenote then return end
---
---   local nextType = pacenote:getNextWaypointType()
---   local txt = "Add ".. nextType .." Waypoint to '".. (pacenote.name) .."'"
---
---   local pos_rayCast = self.mouseInfo.rayCast.pos
---
---   -- if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
---   if self.pacenote_tools_state.snaproad then
---     pos_rayCast = self.pacenote_tools_state.snaproad:closestSnapPos(pos_rayCast)
---   end
---
---   -- draw the cursor text
---   debugDrawer:drawTextAdvanced(
---     vec3(pos_rayCast),
---     String(txt),
---     ColorF(1,1,1,1),
---     true,
---     false,
---     ColorI(0,0,0,255)
---   )
---
---   if self.mouseInfo.down then
---     self.wasWPSelected = not not self:selectedWaypoint()
---
---     editor.history:commitAction("Add waypoint to pacenote '".. pacenote.name .."'",
---       {
---         self = self,
---         pos = pos_rayCast,
---         wp_data = nil,
---         wp_id = nil,
---         pacenote_id = pacenote.id,
---       },
---       function(data) -- undo
---         local note = self.path.pacenotes.objects[data.pacenote_id]
---         note.pacenoteWaypoints:remove(data.wp_id)
---         self:selectPacenote(data.pacenote_id)
---       end,
---       function(data) -- redo
---         local note = self.path.pacenotes.objects[data.pacenote_id]
---         local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
---
---         if waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
---           if self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
---             self:_snapOneHelper(waypoint)
---           elseif self.pacenote_tools_state.drag_mode == dragModes.simple then
---             local cs = note:getCornerStartWaypoint()
---             if cs then
---               local rv = re_util.calculateForwardNormal(data.pos, cs.pos)
---               waypoint.normal = vec3(rv.x, rv.y, rv.z)
---             end
---           end
---         end
---
---         if not data.wp_data then
---           data.wp_data = waypoint:onSerialize()
---         else
---           waypoint:onDeserialized(data.wp_data)
---         end
---
---         data.wp_id = waypoint.id
---         self:selectWaypoint(waypoint.id)
---       end
---     )
---
---   elseif self.mouseInfo.hold then
---     -- local note = self.path.pacenotes.objects[data.pacenote_id]
---     -- local waypoint = note.pacenoteWaypoints:create(nil, data.pos, data.wp_data and data.wp_data.oldId or nil)
---     local note = self:selectedPacenote()
---     local waypoint = self:selectedWaypoint()
---
---     if waypoint and waypoint.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
---       if self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
---         self:_snapOneHelper(waypoint)
---       elseif self.pacenote_tools_state.drag_mode == dragModes.simple then
---         local cs = note:getCornerStartWaypoint()
---         if cs then
---           local rv = re_util.calculateForwardNormal(waypoint.pos, cs.pos)
---           waypoint.normal = vec3(rv.x, rv.y, rv.z)
---         end
---       end
---     end
---   elseif self.mouseInfo.up then
---     if not self.wasWPSelected then
---       self:selectWaypoint(nil)
---     end
---   end
--- end
-
--- function C:detectMouseHoverTranscript()
---   local transcripts = self:getTranscripts()
---   if not transcripts then return end
---   if not self.transcript_tools_state.show then return end
---
---   local min_dist = 4294967295
---   local hover_tsc = nil
---
---   for _,tsc in ipairs(transcripts.transcripts.sorted) do
---     local vpos = tsc:vehiclePos()
---     if vpos and tsc.show then
---       local distNoteToCam = (vpos - self.mouseInfo.camPos):length()
---       local noteRayDistance = (vpos - self.mouseInfo.camPos):cross(self.mouseInfo.rayDir):length() / self.mouseInfo.rayDir:length()
---       if noteRayDistance <= transcripts.selection_sphere_r then
---         if distNoteToCam < min_dist then
---           min_dist = distNoteToCam
---           hover_tsc = tsc
---         end
---       end
---     end
---   end
---
---   return hover_tsc
--- end
 
 -- figures out which pacenote to select with the mouse in the 3D scene.
 function C:detectMouseHoverWaypoint()
@@ -1078,8 +806,6 @@ function C:detectMouseHoverWaypoint()
     if self:selectedPacenote() and self:selectedPacenote().id == pacenote.id then
       selected_pacenote_i = i
       for _,waypoint in ipairs(pacenote.pacenoteWaypoints.sorted) do
-        -- if waypoint.waypointType == waypointTypes.wpTypeDistanceMarker and editor_rallyEditor.getPrefShowDistanceMarkers() then
-          -- table.insert(waypoints, waypoint)
         if waypoint:isAt() and editor_rallyEditor.getPrefShowAudioTriggers() then
           table.insert(waypoints, waypoint)
         elseif (waypoint:isCs() or waypoint:isCe()) and not waypoint:isLocked() then
@@ -1156,20 +882,6 @@ end
 
 -- returns new position for the drag, and another position for orienting the normal perpendicularly.
 function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
-  -- if self.pacenote_tools_state.drag_mode == dragModes.simple then
-  --   if wp.waypointType == waypointTypes.wpTypeFwdAudioTrigger then
-  --     local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-  --     local otherWp = wp.pacenote:getCornerStartWaypoint()
-  --     if otherWp then
-  --       return newPos, otherWp.pos
-  --     else
-  --       return newPos, nil
-  --     end
-  --   else
-  --     local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
-  --     return newPos, nil
-  --   end
-  -- if self.pacenote_tools_state.snaproad and self.pacenote_tools_state.drag_mode == dragModes.simple_road_snap then
   if self.pacenote_tools_state.snaproad then
     if self.mouseInfo.rayCast then
       local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
@@ -1190,13 +902,6 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
   end
 end
 
--- for pacenote 'Move Up'/'Move Down' buttons, I think?
--- local function moveNotebookUndo(data)
---   data.self.path.notebooks:move(data.index, -data.dir)
--- end
--- local function moveNotebookRedo(data)
---   data.self.path.notebooks:move(data.index,  data.dir)
--- end
 local function movePacenoteUndo(data)
   data.self.path.pacenotes:move(data.index, -data.dir)
 end
@@ -1210,12 +915,6 @@ local function moveWaypointRedo(data)
   data.self:selectedPacenote().pacenoteWaypoints:move(data.index,  data.dir)
 end
 
--- local function setNotebookFieldUndo(data)
---   data.self.path.notebooks.objects[data.index][data.field] = data.old
--- end
--- local function setNotebookFieldRedo(data)
---   data.self.path.notebooks.objects[data.index][data.field] = data.new
--- end
 local function setPacenoteFieldUndo(data)
   data.self.path.pacenotes.objects[data.index][data.field] = data.old
   data.self.path:sortPacenotesByName()
@@ -1254,33 +953,6 @@ function C:deleteSelected()
   end
 end
 
--- function C:deleteSelectedWaypoint()
---   if not self.path then return end
---
---   local wp_sel = self:selectedWaypoint()
---
---   if wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerStart then
---     return
---   elseif wp_sel and wp_sel.waypointType == waypointTypes.wpTypeCornerEnd then
---     return
---   end
---
---   editor.history:commitAction(
---     "RallyEditor DeleteSelectedWaypoint",
---     {index = self.pacenote_tools_state.selected_wp_id, self = self},
---     function(data) -- undo
---       local wp = data.self:selectedPacenote().pacenoteWaypoints:create(nil, nil, data.wpData.oldId)
---       wp:onDeserialized(data.wpData)
---       self:selectWaypoint(data.index)
---     end,
---     function(data) --redo
---       data.wpData = data.self:selectedPacenote().pacenoteWaypoints.objects[data.index]:onSerialize()
---       data.self:selectedPacenote().pacenoteWaypoints:remove(data.index)
---       self:selectWaypoint(nil)
---     end
---   )
--- end
-
 function C:deleteSelectedPacenote(shouldSelect)
   if not self.path then return end
 
@@ -1299,21 +971,6 @@ function C:deleteSelectedPacenote(shouldSelect)
     self:selectPacenote(toSelect.id)
     self:setOrbitCameraToSelectedPacenote()
   end
-
-  -- editor.history:commitAction(
-  --   "RallyEditor DeleteSelectedPacenote",
-  --   {index = self.pacenote_tools_state.selected_pn_id, self = self},
-  --   function(data) -- undo
-  --     local note = notebook.pacenotes:create(nil, data.noteData.oldId)
-  --     note:onDeserialized(data.noteData, {})
-  --     self:selectPacenote(data.index)
-  --   end,
-  --   function(data) --redo
-  --     data.noteData = notebook.pacenotes.objects[data.index]:onSerialize()
-  --     notebook.pacenotes:remove(data.index)
-  --     self:selectPacenote(nil)
-  --   end
-  -- )
 end
 
 function C:selectRecentPacenote()
@@ -1370,10 +1027,6 @@ function C:selectPrevPacenote()
     end
   end
 
-  -- if self.rallyEditor.getPrefTopDownCameraFollow() then
-  --   self:setCameraToPacenote()
-  -- end
-
   self:setOrbitCameraToSelectedPacenote()
 end
 
@@ -1421,9 +1074,6 @@ function C:selectNextPacenote()
     end
   end
 
-  -- if self.rallyEditor.getPrefTopDownCameraFollow() then
-  --   self:setCameraToPacenote()
-  -- end
   self:setOrbitCameraToSelectedPacenote()
 end
 
@@ -1445,34 +1095,6 @@ function C:insertMode()
   if self:cameraPathIsPlaying() then return end
   self._insertMode = true
 end
-
--- function C:drawDebugSegments()
---   local racePath = self:getRacePath()
---   local pathnodes = racePath.pathnodes.objects
---   for _, seg in pairs(racePath.segments.objects) do
---     -- seg._drawMode = note.segment == -1 and 'normal' or (note.segment == seg.id and 'normal' or 'faded')
---
---     local from = pathnodes[seg.from]
---     local to = pathnodes[seg.to]
---     local pn_sel = self:selectedPacenote()
---
---     local clr = nil
---
---     if pn_sel and seg.id == pn_sel.segment then
---       clr = cc.segments_clr_assigned
---     else
---       clr = cc.segments_clr
---     end
---
---     debugDrawer:drawSquarePrism(
---       from.pos,
---       to.pos,
---       Point2F(10, 1),
---       Point2F(10, 0.25),
---       ColorF(clr[1], clr[2], clr[3], cc.segments_alpha)
---     )
---   end
--- end
 
 function C:validate()
   self.validation_issues = {}
@@ -1580,6 +1202,7 @@ function C:drawPacenotesList(height)
   --   self:allToTerrain()
   -- end
   -- im.tooltip("Snap all waypoints to terrain.")
+
   im.SameLine()
   if im.Button("Set All Radii") then
     self:setAllRadii()
@@ -1587,12 +1210,12 @@ function C:drawPacenotesList(height)
   im.tooltip("Force the radius of all waypoints to the default value set in Edit > Preferences.")
   im.SameLine()
   if im.Button("Refresh Distance Calls") then
-    self:autoFillDistanceCalls()
+    self:autofillDistanceCalls()
   end
   im.tooltip("Force update automatic distance calls.\n\nNot needed unless you change the Distance Call preferences.")
   im.SameLine()
   if im.Button("Refresh Punctuation") then
-    self:normalizeNotes(true)
+    self:btnNormalizeNotes(true)
   end
   im.tooltip("Force update automatic puncuation and text fixes.\n\nNot needed unless you change the Punctuation preferences.")
 
@@ -1994,258 +1617,9 @@ Any lua code is allowed, so be careful. Examples:
   -- for i = 1,3 do im.Spacing() end
 end
 
--- function C:drawTranscriptsSection(height)
---   -- im.BeginChild1("transcriptsSection", im.ImVec2(0, height*im.uiscale[0]), im.WindowFlags_ChildWindow)
---   im.BeginChild1("transcriptsSection", nil, im.WindowFlags_ChildWindow)
---
---   local tscs = self:getTranscripts()
---   im.BeginChild1("transcriptsList", im.ImVec2(200*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
---   if tscs then
---     for _,tsc in ipairs(tscs.transcripts.sorted) do
---       if tsc:isUsable() then
---         if im.Selectable1((tsc.text)..'##'..(tsc.id), tsc.id == self.transcript_tools_state.selected_id) then
---           self.transcript_tools_state.selected_id = tsc.id
---           self.transcript_tools_state.show = true
---         end
---       end
---     end
---   end
---   im.EndChild() -- transcripts section child window
---
---   im.SameLine()
---
---   im.BeginChild1("transcriptDetail", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
---   im.HeaderText('Transcript Tools')
---
---   -- im.SameLine()
---   -- if im.Button("Load") then
---     -- self.recording_state.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/recording/driveline')(self.rallyEditor.getMissionDir())
---     -- self.recording_state.driveline:load()
---   -- end
---
---   -- im.SameLine()
---   -- if im.Button("Clear") then
---   --   self.rallyEditor.getTranscriptsWindow():clearSelection()
---   --   self.pacenote_tools_state.snaproads = nil
---   --   self.transcript_tools_state.search = nil
---   --   self.transcript_tools_state.show = true
---   --   transcriptsSearchText = im.ArrayChar(1024, "")
---   --   self.pacenote_tools_state.drag_mode = dragModes.simple
---   -- end
---   -- im.SameLine()
---   -- if im.Button("Load Curr") then
---   --   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
---   --   if settings then
---   --     self.transcript_tools_state.search = nil
---   --     transcriptsSearchText = im.ArrayChar(1024, "")
---   --     local abspath = settings:getCurrTranscriptAbsPath()
---   --     self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
---   --     self:selectFirstTranscript()
---   --   end
---   -- end
---   -- im.SameLine()
---   -- if im.Button("Load Full Course") then
---   --   self:loadFullCourse(true)
---   -- end
---   im.SameLine()
---   if im.Checkbox("Show/Hide Transcripts##show_tscs", im.BoolPtr(self.transcript_tools_state.show)) then
---     self.transcript_tools_state.show = not self.transcript_tools_state.show
---   end
---
---   if im.Button("Prev") then
---     -- if self.transcript_tools_state.search then
---       -- self:searchForTranscript()
---     -- else
---       self:selectPrevTranscript()
---     -- end
---   end
---   im.SameLine()
---   if im.Button("Next") then
---     -- if self.transcript_tools_state.search then
---       -- self:searchForTranscript()
---     -- else
---       self:selectNextTranscript()
---     -- end
---   end
---   im.SameLine()
---   local editEnded = im.BoolPtr(false)
---   editor.uiInputText("##SearchTsc", transcriptsSearchText, nil, nil, nil, nil, editEnded)
---   if editEnded[0] then
---     self.transcript_tools_state.search = ffi.string(transcriptsSearchText)
---     if re_util.trimString(self.transcript_tools_state.search) == '' then
---       self.transcript_tools_state.search = nil
---     end
---
---     if self.transcript_tools_state.search then
---       log('D', logTag, 'searching transcripts: '..self.transcript_tools_state.search)
---       local tsc = self:selectedTranscript()
---       if tsc then
---         if not self:transcriptSearchMatches(tsc.text) then
---           self:selectNextTranscript()
---         end
---       end
---     end
---   end
---   im.SameLine()
---   if im.Button("X") then
---     self.transcript_tools_state.search = nil
---     self.transcript_tools_state.playbackLastCameraPos = nil
---     transcriptsSearchText = im.ArrayChar(1024, "")
---   end
---
---   if not tscs then
---     im.Text('Click one of the Load buttons above, or select a Transcript in the Transcripts tab.')
---   else
---     local tsc = self:selectedTranscript()
---     if tsc then
---       if editor.uiIconImageButton(editor.icons.content_copy, im.ImVec2(24, 24)) then
---         im.SetClipboardText(tsc.text)
---       end
---       -- im.tooltip('Copy to clipboard')
---       im.SameLine()
---       im.Text('Copy to Clipboard')
---
---       if core_camera.getActiveCamName() == "path" then
---         if editor.uiIconImageButton(editor.icons.stop, im.ImVec2(24, 24)) then
---           core_paths.stopCurrentPath()
---           self.transcript_tools_state.playbackLastCameraPos = core_camera.getPosition()
---           core_camera.setPosition(0, self.transcript_tools_state.last_camera.pos)
---           core_camera.setRotation(0, self.transcript_tools_state.last_camera.quat)
---         end
---         im.SameLine()
---         im.Text('Stop Camera Path')
---       else
---         if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(24, 24)) then
---           self.transcript_tools_state.last_camera.pos = core_camera.getPosition()
---           self.transcript_tools_state.last_camera.quat = core_camera.getQuat()
---           tsc:playCameraPath()
---         end
---         im.SameLine()
---         local paused = simTimeAuthority.getPause()
---         im.Text('Play Camera Path'..((paused and ' (must unpause game!)') or ''))
---       end
---
---       if editor.uiIconImageButton(editor.icons.location_searching, im.ImVec2(24, 24)) then
---         tsc:lookAtMe()
---       end
---       -- im.tooltip('')
---       im.SameLine()
---       im.Text('Look at')
---     end
---   end
---   im.EndChild() -- transcript detail section child window
---
---   im.EndChild() -- transcripts section child window
--- end
-
--- function C:loadFullCourse(show)
---   local settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
---   if settings then
---     self.transcript_tools_state.search = nil
---     self.transcript_tools_state.show = show
---     transcriptsSearchText = im.ArrayChar(1024, "")
---     local abspath = settings:getFullCourseTranscriptAbsPath()
---     self.rallyEditor.getTranscriptsWindow():selectTranscriptFile(abspath)
---     -- self:selectFirstTranscript()
---
---     self.pacenote_tools_state.snaproads = require('/lua/ge/extensions/editor/rallyEditor/snapVC')(self.rallyEditor.getMissionDir())
---     self.pacenote_tools_state.snaproads.radius = 0.5
---     if not self.pacenote_tools_state.snaproads:load() then
---       self.pacenote_tools_state.snaproads = nil
---       self.pacenote_tools_state.drag_mode = dragModes.simple
---     else
---       self.pacenote_tools_state.drag_mode = dragModes.simple_road_snap
---     end
---   end
--- end
-
--- function C:selectFirstTranscript()
---   local transcripts_path = self:getTranscripts()
---   if not transcripts_path then return end
---
---   -- local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
---   local sorted = transcripts_path.transcripts.sorted
---
---   for i = 1,#sorted do
---     local tsc = sorted[i]
---     if tsc and not tsc.missing and tsc:isUsable() then
---       self:selectTranscript(tsc.id)
---       break
---     end
---   end
---
---   if self.rallyEditor.getPrefTopDownCameraFollow() then
---     self:setCameraToTranscript()
---   end
--- end
-
--- function C:searchTranscriptMatchFn(tsc)
---   -- return tsc and not tsc.missing and tsc:isUsable()
---   return tsc and not tsc.missing and tsc:isUsable() and self:transcriptSearchMatches(tsc.text)
--- end
-
 function C:searchPacenoteMatchFn(pacenote)
-  -- return pacenote and not pacenote.missing and pacenote:isUsable()
   return pacenote and not pacenote.missing and self:pacenoteSearchMatches(pacenote)
 end
-
--- function C:selectPrevTranscript()
---   local transcripts_path = self:getTranscripts()
---   if not transcripts_path then return end
---
---   self.transcript_tools_state.show = true
---
---   local curr = transcripts_path.transcripts.objects[self.transcript_tools_state.selected_id]
---   local sorted = transcripts_path.transcripts.sorted
---
---   if curr and not curr.missing then
---     local prev = nil
---     for i = curr.sortOrder-1,1,-1 do
---       local tsc = sorted[i]
---       if self:searchTranscriptMatchFn(tsc) then
---         prev = tsc
---         break
---       end
---     end
---
---     if not prev then
---       for i = #sorted,1,-1 do
---         local tsc = sorted[i]
---         if self:searchTranscriptMatchFn(tsc) then
---           prev = tsc
---           break
---         end
---       end
---     end
---
---     if prev then
---       self:selectTranscript(prev.id)
---     end
---   else
---     -- if no curr, that means no pacenote was selected, so then select the last one.
---     for i = 1,#sorted do
---       local tsc = sorted[i]
---       if self:searchTranscriptMatchFn(tsc) then
---         self:selectTranscript(tsc.id)
---         break
---       end
---     end
---   end
---
---   if self.rallyEditor.getPrefTopDownCameraFollow() then
---     self:setCameraToTranscript()
---   end
--- end
---
--- function C:transcriptSearchMatches(stringToMatch)
---   if not self.transcript_tools_state.search then return true end
---
---   local searchPattern = re_util.trimString(self.transcript_tools_state.search)
---   if searchPattern == '' then return true end
---   log('D', logTag, 'transcriptSearchMatches: search="'..searchPattern..'" input="'..stringToMatch..'"')
---
---   return re_util.matchSearchPattern(searchPattern, stringToMatch)
--- end
 
 function C:pacenoteSearchMatches(pacenote)
   if not self.pacenote_tools_state.search then return true end
@@ -2373,36 +1747,6 @@ function C:drawWaypointList(note)
   im.EndChild() -- currentWaypoint child window
 end
 
--- function C:segmentSelector(name, fieldName, tt)
---   if not self.path then return end
---
---   local _seg_name = function(seg)
---     return '#'..seg.id .. " - '" .. seg.name.."'"
---   end
---
---   local racePath = self:getRacePath()
---   local selected_pacenote = self.path.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
---   local segments = racePath.segments.objects
---
---   if im.BeginCombo(name..'##'..fieldName, _seg_name(segments[selected_pacenote[fieldName]])) then
---     if im.Selectable1('#'..0 .. " - None", selected_pacenote[fieldName] == -1) then
---       editor.history:commitAction("Removed Segment for pacenote",
---         {index = self.pacenote_tools_state.selected_pn_id, self = self, old = selected_pacenote[fieldName], new = -1, field = fieldName},
---         setPacenoteFieldUndo, setPacenoteFieldRedo)
---     end
---     for i, sp in ipairs(racePath.segments.sorted) do
---       if im.Selectable1(_seg_name(sp), selected_pacenote[fieldName] == sp.id) then
---               editor.history:commitAction("Changed Segment for pacenote",
---         {index = self.pacenote_tools_state.selected_pn_id, self = self, old = selected_pacenote[fieldName], new = sp.id, field = fieldName},
---         setPacenoteFieldUndo, setPacenoteFieldRedo)
---       end
---     end
---     im.EndCombo()
---   end
---
---   im.tooltip(tt or "")
--- end
-
 function C:waypointTypeSelector(note)
   if not self:selectedWaypoint() then return end
 
@@ -2435,39 +1779,6 @@ function C:waypointTypeSelector(note)
 
   im.tooltip(tt)
 end
-
--- function C:loadVoices()
---   local voices = jsonReadFile(voiceFname)
---   voiceNamesSorted = {}
---
---   if not voices then
---     log('E', logTag, 'unable to load voices file from ' .. tostring(filename))
---     voices = {"can't load voices file from "..voiceFname}
---     return
---   end
---
---   for voiceName, _ in pairs(voices) do
---     table.insert(voiceNamesSorted, voiceName)
---   end
---
---   table.sort(voiceNamesSorted)
---
---   log('I', logTag, 'reloaded voices from '..voiceFname)
--- end
-
--- function C:setCameraToTranscript()
---   local tsc = self:selectedTranscript()
---   if tsc then
---     tsc:lookAtMe()
---   end
--- end
-
--- function C:setCameraToPacenote()
---   local pacenote = self:selectedPacenote()
---   if not pacenote then return end
---
---   pacenote:setCameraToWaypoints()
--- end
 
 function C:_snapAll()
   if not self.path then return end
@@ -2557,60 +1868,15 @@ function C:cleanupPacenoteNames()
   )
 end
 
--- function C:autoAssignSegments()
---   if not self.path then return end
---
---   editor.history:commitAction("Auto-assign segments to pacenotes",
---     {
---       racePath = self:getRacePath(),
---       notebook = self.path,
---       old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
---     },
---     function(data) -- undo
---       data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
---     end,
---     function(data) -- redo
---       data.notebook:autoAssignSegments(data.racePath)
---     end
---   )
--- end
-
-function C:normalizeNotes(force)
+function C:btnNormalizeNotes(force)
   if not self.path then return end
-
   self.path:normalizeNotes(force or false)
-
-  -- editor.history:commitAction("Normalize pacenote.note field",
-  --   {
-  --     notebook = self.path,
-  --     old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
-  --   },
-  --   function(data) -- undo
-  --     data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
-  --   end,
-  --   function(data) -- redo
-  --     data.notebook:normalizeNotes()
-  --   end
-  -- )
 end
 
-function C:autoFillDistanceCalls()
+function C:autofillDistanceCalls()
   if not self.path then return end
 
   self.path:autofillDistanceCalls()
-
-  -- editor.history:commitAction("Auto-fill distance calls",
-  --   {
-  --     notebook = self.path,
-  --     old_pacenotes = deepcopy(self.path.pacenotes:onSerialize()),
-  --   },
-  --   function(data) -- undo
-  --     data.notebook.pacenotes:onDeserialized(data.old_pacenotes, {})
-  --   end,
-  --   function(data) -- redo
-  --     data.notebook:autofillDistanceCalls()
-  --   end
-  -- )
 end
 
 function C:placeVehicleAtPacenote()
