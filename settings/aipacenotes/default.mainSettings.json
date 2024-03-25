@@ -1,0 +1,24 @@
+{
+    "default": {
+        "punctuation": {
+            "default": "?",
+            "last_note": ".",
+            "distance_calls": "."
+        },
+        "distance_calls": {
+            "separate_digits": false,
+            "level1": {
+                "threshold": 5,
+                "text": "<none>"
+            },
+            "level2": {
+                "threshold": 20,
+                "text": "into"
+            },
+            "level3": {
+                "threshold": 40,
+                "text": "and"
+            }
+        }
+    }
+}
