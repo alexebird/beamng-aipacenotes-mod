@@ -398,15 +398,23 @@ local function getMissionSettingsHelper(missionDir)
     return nil, "mission settings file not found: "..settingsFname
   end
 
-  log('I', logTag, 'reading settings file: ' .. tostring(settingsFname))
-  local json = jsonReadFile(settingsFname)
-  if not json then
-    return nil, 'unable to read settings file at: ' .. tostring(settingsFname)
-  end
+  -- if not FS:fileExists(settingsFname) then
+  --   return nil, "mission settings file not found: "..settingsFname
+  -- end
+  --
+  -- log('I', logTag, 'reading settings file: ' .. tostring(settingsFname))
+  -- local json = jsonReadFile(settingsFname)
+  -- if not json then
+  --   return nil, 'unable to read settings file at: ' .. tostring(settingsFname)
+  -- end
 
-  local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
-  settings:onDeserialized(json)
-  return settings, nil
+  local settings = MissionSettings(settingsFname)
+  if settings:load() then
+    return settings, nil
+  end
+  -- settings:onDeserialized(json)
+
+  return nil, "error loading mission settings"
 end
 
 local function getNotebookHelper(missionDir, missionSettings)
@@ -543,22 +551,22 @@ local function matchSearchPattern(searchPattern, stringToMatch)
   return stringToMatch:match(searchPattern) ~= nil
 end
 
-local function loadMissionSettings(folder)
-  local settingsFname = folder..'/'..aipPath..'/'..missionSettingsFname
-  local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
-
-  if FS:fileExists(settingsFname) then
-    local json = jsonReadFile(settingsFname)
-    if not json then
-      log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
-      return nil
-    else
-      settings:onDeserialized(json)
-    end
-  end
-
-  return settings
-end
+-- local function loadMissionSettings(folder)
+--   local settingsFname = folder..'/'..aipPath..'/'..missionSettingsFname
+--   local settings = require('/lua/ge/extensions/gameplay/notebook/pathMissionSettings')(settingsFname)
+--
+--   if FS:fileExists(settingsFname) then
+--     local json = jsonReadFile(settingsFname)
+--     if not json then
+--       log('E', 'aipacenotes', 'error reading mission.settings.json file: ' .. tostring(settingsFname))
+--       return nil
+--     else
+--       settings:onDeserialized(json)
+--     end
+--   end
+--
+--   return settings
+-- end
 
 local function buildPacenotesDir(missionDir, notebook, codriver)
   local notebookBasename = normalize_name(notebook:basenameNoExt()) or 'none'
@@ -630,7 +638,7 @@ M.getNotebookHelper = getNotebookHelper
 M.getTime = getTime
 M.hasPunctuation = hasPunctuation
 M.loadCornerAnglesFile = loadCornerAnglesFile
-M.loadMissionSettings = loadMissionSettings
+-- M.loadMissionSettings = loadMissionSettings
 M.matchSearchPattern = matchSearchPattern
 M.missionTranscriptPath = missionTranscriptPath
 M.missionRecceRecordDir = missionRecceRecordDir

@@ -899,7 +899,10 @@ local function detectNotebookToLoad(folder)
     folder = getMissionDir()
   end
   log('D', 'wtf', 'detectNotebookToLoad folder: '..folder)
-  local settings = loadMissionSettings(folder)
+  local settings, err = re_util.getMissionSettingsHelper(folder)
+  if err then
+    log('D', 'wtf', err)
+  end
 
   -- step 1: detect the notebook name from settings file
   -- if mission.settings.json exists, then read it and use the specified notebook fname.

@@ -22,7 +22,7 @@ end
 function C:selected()
   if not self.path then return end
 
-  self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+  self.settings, err = re_util.getMissionSettingsHelper(self.rallyEditor.getMissionDir())
 
   -- force redraw of shortcutLegend window
   extensions.hook("onEditorEditModeChanged", nil, nil)

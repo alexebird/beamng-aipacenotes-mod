@@ -18,7 +18,9 @@ function C:setPath(path)
 end
 
 function C:load()
-  self.settings = self.rallyEditor.loadMissionSettings(self.rallyEditor.getMissionDir())
+  local err
+  self.settings, err = re_util.getMissionSettingsHelper(self.rallyEditor.getMissionDir())
+  print(err)
   self.notebookFilenamesSorted = self.rallyEditor.listNotebooks()
 
   self.recce_settings = RecceSettings()
