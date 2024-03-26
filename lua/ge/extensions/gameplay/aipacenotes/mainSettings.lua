@@ -4,15 +4,12 @@ local C = {}
 
 local logTag = 'aipacenotes-mainSettings'
 
-function C:init()
+function C:init(language)
   self.fname_default = re_util.aipSettingsRoot..'/default.mainSettings.json'
   self.fname_languages = re_util.aipSettingsRoot..'/languages.mainSettings.json'
-  self.language = nil
-  self:_reset()
-end
-
-function C:setLanguage(language)
   self.language = language
+  log('I', logTag, 'MainSettings language set to "'..self.language..'"')
+  self:_reset()
 end
 
 function C:_reset()

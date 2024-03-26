@@ -74,12 +74,14 @@ function C:setup(damageThresh, closestPacenotes_n)
     return
   end
 
-  self.missionSettings.dynamic = { missionDir = self.missionDir }
+  -- self.missionSettings.dynamic = { missionDir = self.missionDir }
 
-  self.codriver = self.notebook:getCodriverByName(self.missionSettings.notebook.codriver)
+  -- self.codriver = self.notebook:getCodriverByName(self.missionSettings.notebook.codriver)
+  self.codriver = self.notebook:selectedCodriver()
   if not self.codriver then
     log('I', logTag, 'RallyManager setup no codriver')
-    error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
+    -- error('couldnt load codriver: '..self.missionSettings.notebook.codriver)
+    error('couldnt load codriver: '..self.notebook:getMissionSettings().notebook.codriver)
   end
 
   self.audioManager = require('/lua/ge/extensions/gameplay/rally/guiAudioManager')(self)
@@ -128,6 +130,7 @@ function C:getMissionSettings()
   end
 
   self.missionSettings = settings
+  -- self.missionSettings = self.notebook:getMissionSettings()
 end
 
 function C:loadNotebook()
@@ -261,7 +264,7 @@ function C:nextPacenotesUpdated()
   end
 
   for i,pacenote in ipairs(pacenotes) do
-    local noteData = pacenote:asFlowgraphData(self.missionSettings, self.codriver)
+    local noteData = pacenote:asFlowgraphData(self.codriver)
     local entry = {
       pacenote = noteData.note_text
     }

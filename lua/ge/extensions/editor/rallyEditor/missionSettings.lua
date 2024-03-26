@@ -105,6 +105,7 @@ function C:notebookFilenameSelector()
         self.codrivers = self:loadCodrivers()
         self.settings.notebook.codriver = self.codrivers[1] or '<none>'
         self.settings:write()
+        SettingsManager.reset()
 
         local notebookFname = editor_rallyEditor.detectNotebookToLoad()
         log('I', logTag, 'opening RallyEditor with notebookFname='..notebookFname)
@@ -130,6 +131,7 @@ function C:codriverSelector()
       if im.Selectable1(((current and '[current] ') or '')..codriver, current) then
         self.settings.notebook.codriver = codriver
         self.settings:write()
+        SettingsManager.reset()
       end
     end
 

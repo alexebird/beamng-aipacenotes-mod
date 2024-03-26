@@ -193,13 +193,15 @@ function C:clearCachedFgData()
   self._cached_fgData = nil
 end
 
-function C:asFlowgraphData(missionSettings, codriver)
+function C:asFlowgraphData(codriver)
   -- TODO reuse validations here.
   if self._cached_fgData then
     return self._cached_fgData
   end
 
-  local fname = self:audioFname(codriver, missionSettings.dynamic.missionDir)
+  -- local missionSettings = self.notebook:missionSettings()
+
+  local fname = self:audioFname(codriver, self.notebook:getMissionDir())
 
   local wp_trigger = self:getActiveFwdAudioTrigger()
   if not wp_trigger and not self.metadata.static then

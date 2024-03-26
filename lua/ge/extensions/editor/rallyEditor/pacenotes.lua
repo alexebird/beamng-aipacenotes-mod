@@ -20,17 +20,17 @@ local waypointRadius = im.FloatPtr(0)
 local pacenotesSearchText = im.ArrayChar(1024, "")
 
 local editingNote = false
-local pacenoteUnderEdit = false
+local pacenoteUnderEdit = nil
 
 local C = {}
 C.windowDescription = 'Pacenotes'
 
-local function selectPacenoteUndo(data)
-  data.self:selectPacenote(data.old)
-end
-local function selectPacenoteRedo(data)
-  data.self:selectPacenote(data.new)
-end
+-- local function selectPacenoteUndo(data)
+--   data.self:selectPacenote(data.old)
+-- end
+-- local function selectPacenoteRedo(data)
+--   data.self:selectPacenote(data.new)
+-- end
 
 local function selectWaypointUndo(data)
   data.self:selectWaypoint(data.old)
@@ -1504,12 +1504,15 @@ Any lua code is allowed, so be careful. Examples:
     --   self:drawDebugSegments()
     -- end
 
+    local codriver = self.path:selectedCodriver()
+    local language = codriver.language
+
     im.HeaderText("Note Text")
     editEnded = im.BoolPtr(false)
     -- language_form_fields = {}
-    for i,lang_data in ipairs(self.path:getLanguages()) do
-      local language = lang_data.language
-      local codrivers = lang_data.codrivers
+    -- for i,lang_data in ipairs(self.path:getLanguages()) do
+      -- local language = lang_data.language
+      -- local codrivers = lang_data.codrivers
       language_form_fields[language] = language_form_fields[language] or {}
       local fields = language_form_fields[language]
 
@@ -1524,7 +1527,7 @@ Any lua code is allowed, so be careful. Examples:
       local tooltipStr = nil
       local fname = nil
 
-      for i,codriver in ipairs(codrivers) do
+      -- for i,codriver in ipairs(codrivers) do
         fname = pacenote:audioFname(codriver)
         if re_util.fileExists(fname) then
           file_exists = true
@@ -1547,10 +1550,10 @@ Any lua code is allowed, so be careful. Examples:
         end
         im.tooltip(tooltipStr)
 
-        if i < #codrivers then
-          im.SameLine()
-        end
-      end
+        -- if i < #codrivers then
+          -- im.SameLine()
+        -- end
+      -- end -- / ipairs(codrivers)
 
       -- voicePlayClr = nil
       -- file_exists = false
@@ -1583,9 +1586,9 @@ Any lua code is allowed, so be careful. Examples:
       -- im.Text('Leading distance call: '..ffi.string(fields.before))
 
       if self._insertMode then
-        if i == 1 then
-          im.SetKeyboardFocusHere()
-        end
+        -- if i == 1 then
+        im.SetKeyboardFocusHere()
+        -- end
         self._insertMode = false
       end
       im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
@@ -1628,7 +1631,7 @@ Any lua code is allowed, so be careful. Examples:
       local lang = self.path:selectedCodriverLanguage()
       im.Text('output note text: '..pacenote:joinedNote(lang))
 
-    end -- / self.path:getLanguages()
+    -- end -- / self.path:getLanguages()
 
     -- self:drawWaypointList(note)
 

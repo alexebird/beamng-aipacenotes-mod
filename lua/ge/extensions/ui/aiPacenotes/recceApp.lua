@@ -212,14 +212,14 @@ local function drawDebug()
   if flag_drawDebugSnaproads and selectedPacenote then
     local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
     nextPacenotes = rallyManager:getPacenotesNearPos(wp_audio_trigger.pos)
-    local noteData = selectedPacenote:asFlowgraphData(rallyManager.missionSettings, rallyManager.codriver)
+    local noteData = selectedPacenote:asFlowgraphData(rallyManager.codriver)
     wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
 
     for i,pacenote in ipairs(nextPacenotes) do
       if pacenote.id ~= selectedPacenote.id then
         local wp_at = pacenote:getActiveFwdAudioTrigger()
 
-        noteData = pacenote:asFlowgraphData(rallyManager.missionSettings, rallyManager.codriver)
+        noteData = pacenote:asFlowgraphData(rallyManager.codriver)
         wp_at:drawDebugRecce(i, noteData.note_text)
       end
     end
@@ -230,7 +230,7 @@ local function drawDebug()
     -- draw all the nearest notes
     for i,pacenote in ipairs(nextPacenotes) do
       local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-      local noteData = pacenote:asFlowgraphData(rallyManager.missionSettings, rallyManager.codriver)
+      local noteData = pacenote:asFlowgraphData(rallyManager.codriver)
       wp_audio_trigger:drawDebugRecce(i, noteData.note_text)
     end
   else
@@ -239,7 +239,7 @@ local function drawDebug()
     local pacenote = nextPacenotes[1]
     if pacenote then
       local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
-      local noteData = pacenote:asFlowgraphData(rallyManager.missionSettings, rallyManager.codriver)
+      local noteData = pacenote:asFlowgraphData(rallyManager.codriver)
       wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
     end
   end

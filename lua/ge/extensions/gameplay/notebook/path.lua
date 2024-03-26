@@ -1,6 +1,7 @@
 local logTag = 'aipacenotes'
 local C = {}
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
 
 local currentVersion = "2"
 
@@ -11,6 +12,8 @@ end
 
 function C:init(name)
   self._uid = 0
+
+  SettingsManager.reset()
 
   self.name = name or re_util.default_notebook_name
   self.description = ""
@@ -613,14 +616,22 @@ function C:allToTerrain()
   end
 end
 
--- TODO proxy to settingsManager
 function C:missionSettings()
-  return nil
+  local ms = SettingsManager.getMissionSettings()
+  if not ms then
+    SettingsManager.load(self)
+    ms = SettingsManager.getMissionSettings()
+  end
+  return ms
 end
 
--- TODO proxy to settingsManager
 function C:mainSettings()
-  return nil
+  local ms = SettingsManager.getMainSettings()
+  if not ms then
+    SettingsManager.load(self)
+    ms = SettingsManager.getMainSettings()
+  end
+  return ms
 end
 
 function C:selectedCodriver()
@@ -766,7 +777,7 @@ end
 
 function C:cachePacenoteFgData(codriver)
   for _,pn in ipairs(self.pacenotes.sorted) do
-    pn:asFlowgraphData(self:missionSettings(), codriver)
+    pn:asFlowgraphData(codriver)
   end
 end
 

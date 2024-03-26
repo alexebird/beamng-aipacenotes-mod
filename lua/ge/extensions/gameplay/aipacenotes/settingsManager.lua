@@ -28,6 +28,14 @@ local function loadMissionSettingsForNotebook(notebook)
   return loadMissionSettingsForMissionDir(notebook:getMissionDir())
 end
 
+local function getMissionSettings()
+  return missionSettings
+end
+
+local function getMainSettings()
+  return mainSettings
+end
+
 -- MainSettings can be a function of the selected codriver's language, if there
 -- are settings set for that language in languages.mainSettings.json.
 --
@@ -35,16 +43,27 @@ end
 --
 -- The MissionSettings tracks the selected codriver.
 local function load(notebook)
-  missionSettings = MissionSettings()
+  local missionSettingsPath = buildMissionSettingsPath(notebook:getMissionDir())
+  missionSettings = MissionSettings(missionSettingsPath)
   missionSettings:load()
 
-  mainSettings = MainSettings()
+  mainSettings = MainSettings(notebook:selectedCodriverLanguage())
   mainSettings:load()
 
   -- recceSettings = RecceSettings()
   -- recceSettings:load()
 end
 
+
+local function reset()
+  mainSettings = nil
+  missionSettings = nil
+end
+
+M.getMissionSettings = getMissionSettings
+M.getMainSettings = getMainSettings
+
+M.reset = reset
 M.load = load
 M.loadMissionSettingsForMissionDir = loadMissionSettingsForMissionDir
 M.loadMissionSettingsForNotebook = loadMissionSettingsForNotebook

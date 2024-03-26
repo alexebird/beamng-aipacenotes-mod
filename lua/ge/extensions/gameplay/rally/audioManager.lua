@@ -73,7 +73,7 @@ function C:enqueuePauseSecs(secs, addToFront)
 end
 
 function C:enqueuePacenote(pacenote, addToFront)
-  local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.missionSettings, self.rallyManager.codriver)
+  local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.codriver)
   if pacenoteFgData then
     log('D', logTag, "enqueuePacenote: pacenote='"..pacenoteFgData.note_text.."'")
     return self:_enqueueFile(pacenoteFgData.audioFname, addToFront)
