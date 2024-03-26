@@ -1,7 +1,13 @@
 {
     "english": {
         "distance_calls": {
-            "separate_digits": true
+            "separate_digits": true,
+            "level2": {
+                "text": "into"
+            },
+            "level3": {
+                "text": "and"
+            }
         }
     }
 }

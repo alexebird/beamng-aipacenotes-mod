@@ -13,11 +13,11 @@
             },
             "level2": {
                 "threshold": 20,
-                "text": "into"
+                "text": "<SET FOR YOUR LANGUAGE>"
             },
             "level3": {
                 "threshold": 40,
-                "text": "and"
+                "text": "<SET FOR YOUR LANGUAGE>"
             }
         }
     }

@@ -1,6 +1,5 @@
 local im  = ui_imgui
 local logTag = 'aipacenotes'
--- local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 
 -- notebook form fields
 local notebookNameText = im.ArrayChar(1024, "")
@@ -12,8 +11,6 @@ local codriverNameText = im.ArrayChar(1024, "")
 local codriverLanguageText = im.ArrayChar(1024, "")
 -- local codriverVoiceText = im.ArrayChar(1024, "")
 
--- local voiceFname = "/settings/aipacenotes/default.voices.json"
--- local voices = {}
 local voiceNamesSorted = {}
 
 local C = {}
@@ -80,6 +77,8 @@ function C:selected()
   notebookNameText = im.ArrayChar(1024, self.path.name)
   notebookAuthorsText = im.ArrayChar(1024, self.path.authors)
   notebookDescText = im.ArrayChar(1024, self.path.description)
+
+  self:selectCodriver(self.path:selectedCodriver().id)
 
   -- editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Shift] = "Add new waypoint for current pacenote"
   -- editor.editModes.raceEditMode.auxShortcuts[editor.AuxControl_Ctrl] = "Add new waypoint for new pacenote"

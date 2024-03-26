@@ -244,7 +244,9 @@ function C:validate()
     table.insert(self.validation_issues, 'missing pacenote name')
   end
 
-  for note_lang, note_data in pairs(self.notes) do
+  local note_lang = self.notebook:selectedCodriverLanguage()
+
+  -- for note_lang, note_data in pairs(self.notes) do
     local note_field = self:getNoteFieldNote(note_lang)
     if note_field ~= re_util.autofill_blocker then
       local last_char = note_field:sub(-1)
@@ -256,7 +258,7 @@ function C:validate()
         table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Set Puncuation' button)")
       end
     end
-  end
+  -- end
 end
 
 function C:is_valid()
@@ -266,9 +268,13 @@ end
 function C:nameForSelect()
   local txt = self.name
   local lang = self.notebook:selectedCodriverLanguage()
-  local note = self.notes[lang].note
-  if not note or note == '' then
+  local langData = self.notes[lang]
+
+  local note
+  if not langData or not langData.note or langData.note == '' then
     note = '<empty>'
+  else
+    note = langData.note
   end
 
   txt = txt..' - '..note
@@ -1008,8 +1014,6 @@ function C:normalizeNoteText(lang, last, force)
         else
           punc = mainSettings:getPunctuationDefault()
         end
-
-        print('setting punc: '..punc)
 
         note = note..punc
       end

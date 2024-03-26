@@ -50,23 +50,26 @@ function C:load()
     return false
   end
 
-  -- print(dumps(self.settingsData_default))
-  -- print(dumps(self.settingsData_languages))
-
   return true
 end
 
--- function C:save()
--- end
-
 function C:_mergedSettingsData()
   local languageData = self.settingsData_languages[self.language]
-  local settingsData_merged = tableMergeRecursive(self.settingsData_default.default, languageData)
+  local settingsData_merged = self.settingsData_default.default
+  if languageData then
+    settingsData_merged = tableMergeRecursive(settingsData_merged, languageData)
+  else
+    log('W', logTag, 'no language.mainSettings.json entry for '..self.language)
+  end
+  -- print(dumps(settingsData_merged))
   return settingsData_merged
 end
 
+function C:getSeparateDigits()
+  return self:_mergedSettingsData().distance_calls.separate_digits or false
+end
+
 function C:getPunctuationLastNote()
-  -- print(dumps(self:_mergedSettingsData()))
   return self:_mergedSettingsData().punctuation.last_note or re_util.default_punctuation_last
 end
 

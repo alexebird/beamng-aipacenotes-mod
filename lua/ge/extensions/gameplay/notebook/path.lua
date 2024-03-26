@@ -680,14 +680,14 @@ local function round_distance(dist)
   end
 end
 
-local function distance_to_string(dist)
+local function distance_to_string(separateDigits, dist)
   dist = math.floor(dist)
   local rounded_dist, unit = round_distance(dist)
   local dist_str = tostring(rounded_dist)
 
   if unit == re_util.kilo_unit_str then
     dist_str = dist_str .. " " .. unit
-  elseif rounded_dist >= re_util.dist_large_threshold and rounded_dist % re_util.dist_large_threshold ~= 0 then
+  elseif separateDigits and rounded_dist >= re_util.dist_large_threshold and rounded_dist % re_util.dist_large_threshold ~= 0 then
     -- separate digits if not a multiple of 100
     dist_str = dist_str:sub(1, 1) .. " " .. dist_str:sub(2)
   end
@@ -747,7 +747,7 @@ function C:autofillDistanceCalls()
 
     if not pacenote.isolate and pn_next and not pn_next.missing then
       local dist = pacenote:distanceCornerEndToCornerStart(pn_next)
-      local dist_str = distance_to_string(dist)
+      local dist_str = distance_to_string(self:mainSettings():getSeparateDigits(), dist)
 
       -- Decide what to do based on the distance
       local shorthand = getDistanceCallShorthand(self:mainSettings(), dist)

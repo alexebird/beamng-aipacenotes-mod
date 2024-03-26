@@ -1286,6 +1286,10 @@ function C:drawPacenotesList(height)
       if pn then
         if not self:pacenoteSearchMatches(pn) then
           self:selectNextPacenote()
+          local pn2 = self:selectedPacenote()
+          if pn2 and pn.id == pn2.id then
+            self:selectPrevPacenote()
+          end
         end
       end
     end
