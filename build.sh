@@ -31,8 +31,9 @@ main() {
 
     cat gitsha.txt
 
-    zip -r ../aipacenotes.zip ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh' -x 'dev.txt'
+    zip -r "${BIRD}/build/aipacenotes.zip" ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh' -x 'dev.txt'
     rm -fv gitsha.txt
+    ls -ltrh "${BIRD}/build/"
 }
 
 main "$@"
