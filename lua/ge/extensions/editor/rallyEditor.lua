@@ -920,7 +920,7 @@ local function detectNotebookToLoad(folder)
   -- step 3: if mission settings file doesnt exist, then use the dir-listed name and create the settings file, including reading the first co-driver name.
   -- although, that should be done after the notebook file is read, so maybe this should be done in the rally editor.
   if not notebookFname then
-    local defaultNotebookBasename = settings:defaultSettings().notebook.filename
+    local defaultNotebookBasename = re_util.default_notebook_basename
     notebookFname = notebooksFullPath..'/'..defaultNotebookBasename
   end
 
