@@ -4,13 +4,13 @@
     {
       "language":"english",
       "name":"Sophia",
-      "oldId":13,
+      "oldId":18,
       "voice":"british_female"
     },
     {
       "language":"english",
       "name":"Pria",
-      "oldId":14,
+      "oldId":19,
       "voice":"indian female"
     }
   ],
@@ -24,12 +24,13 @@
       "name":"Import_A 41",
       "notes":{
         "english":{
-          "after":"seventy",
+          "_out":"small crest, five left bumpy exit? 70.",
+          "after":"70",
           "before":"",
           "note":"small crest, five left bumpy exit?"
         }
       },
-      "oldId":15,
+      "oldId":20,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -38,7 +39,7 @@
             -0.6446731288,
             0.0814862266
           ],
-          "oldId":16,
+          "oldId":21,
           "pos":[
             -378.7527466,
             91.56381226,
@@ -54,7 +55,7 @@
             -0.7159719209,
             0.02483603976
           ],
-          "oldId":17,
+          "oldId":22,
           "pos":[
             -397.3954468,
             75.11810303,
@@ -70,7 +71,7 @@
             1,
             0
           ],
-          "oldId":18,
+          "oldId":23,
           "pos":[
             -426.4493408,
             15.38711739,
@@ -88,12 +89,13 @@
       "name":"Import_A 45",
       "notes":{
         "english":{
+          "_out":"small jump dont?",
           "after":"",
           "before":"",
           "note":"small jump dont?"
         }
       },
-      "oldId":19,
+      "oldId":24,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -102,7 +104,7 @@
             -0.8754993888,
             -0.02431999227
           ],
-          "oldId":20,
+          "oldId":25,
           "pos":[
             -413.5122375,
             53.80448532,
@@ -118,7 +120,7 @@
             -0.9929734835,
             0.1176964336
           ],
-          "oldId":21,
+          "oldId":26,
           "pos":[
             -428.568634,
             -50.07883072,
@@ -134,7 +136,7 @@
             1,
             0
           ],
-          "oldId":22,
+          "oldId":27,
           "pos":[
             -430.1595764,
             -85.55172729,
@@ -152,12 +154,13 @@
       "name":"Import_A 49",
       "notes":{
         "english":{
+          "_out":"into five left?",
           "after":"",
           "before":"into",
           "note":"five left?"
         }
       },
-      "oldId":23,
+      "oldId":28,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -166,7 +169,7 @@
             -0.9804286255,
             -0.1042934222
           ],
-          "oldId":24,
+          "oldId":29,
           "pos":[
             -426.0831909,
             17.53696823,
@@ -182,7 +185,7 @@
             -0.9970664053,
             0.05522508282
           ],
-          "oldId":25,
+          "oldId":30,
           "pos":[
             -430.421814,
             -93.86738586,
@@ -198,7 +201,7 @@
             1,
             0
           ],
-          "oldId":26,
+          "oldId":31,
           "pos":[
             -414.2174988,
             -139.5327454,
@@ -216,12 +219,13 @@
       "name":"Import_A 53",
       "notes":{
         "english":{
+          "_out":"into five right opens? bumpy?",
           "after":"",
           "before":"into",
           "note":"five right opens? bumpy?"
         }
       },
-      "oldId":27,
+      "oldId":32,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -230,7 +234,7 @@
             -0.9949714027,
             0.100034384
           ],
-          "oldId":28,
+          "oldId":33,
           "pos":[
             -428.524292,
             -54.32998276,
@@ -246,7 +250,7 @@
             -0.8344835188,
             -0.007948687472
           ],
-          "oldId":29,
+          "oldId":34,
           "pos":[
             -407.1863708,
             -150.0628052,
@@ -262,7 +266,7 @@
             -0.9942236775,
             -0.002700541226
           ],
-          "oldId":30,
+          "oldId":35,
           "pos":[
             -387.543457,
             -210.2521973,
@@ -280,12 +284,13 @@
       "name":"Import_A 57",
       "notes":{
         "english":{
-          "after":"ninety",
+          "_out":"and send it over jump? bumpy over 90?",
+          "after":"90",
           "before":"and",
-          "note":"send it over jump? bumpy over {dt}."
+          "note":"send it over jump? bumpy over {dt}?"
         }
       },
-      "oldId":31,
+      "oldId":36,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -294,7 +299,7 @@
             -0.8390466833,
             -0.01457551241
           ],
-          "oldId":32,
+          "oldId":37,
           "pos":[
             -414.2174988,
             -139.5327454,
@@ -310,7 +315,7 @@
             -0.9969128168,
             0.06619477267
           ],
-          "oldId":33,
+          "oldId":38,
           "pos":[
             -385.3424072,
             -242.7282715,
@@ -326,7 +331,7 @@
             -0.996064763,
             -0.0811255216
           ],
-          "oldId":34,
+          "oldId":39,
           "pos":[
             -384.4389038,
             -265.7434998,
@@ -344,12 +349,13 @@
       "name":"Import_A 65",
       "notes":{
         "english":{
-          "after":"ninety",
+          "_out":"full send over jump? bumpy Landing? 90.",
+          "after":"90",
           "before":"",
           "note":"full send over jump? bumpy Landing?"
         }
       },
-      "oldId":35,
+      "oldId":40,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -358,7 +364,7 @@
             -0.9989338448,
             -0.02071822344
           ],
-          "oldId":36,
+          "oldId":41,
           "pos":[
             -384.9685669,
             -251.5571289,
@@ -374,7 +380,7 @@
             -0.9975550034,
             0.06988236255
           ],
-          "oldId":37,
+          "oldId":42,
           "pos":[
             -383.4747009,
             -350.762085,
@@ -390,7 +396,7 @@
             -0.9999472488,
             -0.00811348089
           ],
-          "oldId":38,
+          "oldId":43,
           "pos":[
             -383.1487732,
             -384.835907,
@@ -408,12 +414,13 @@
       "name":"Import_A 69",
       "notes":{
         "english":{
+          "_out":"five left?",
           "after":"",
           "before":"",
           "note":"five left?"
         }
       },
-      "oldId":39,
+      "oldId":44,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -422,7 +429,7 @@
             -0.999795052,
             0.009235416177
           ],
-          "oldId":40,
+          "oldId":45,
           "pos":[
             -383.3903809,
             -365.8730774,
@@ -438,7 +445,7 @@
             -0.998181962,
             0.05092139308
           ],
-          "oldId":41,
+          "oldId":46,
           "pos":[
             -383.8622131,
             -474.2312012,
@@ -454,7 +461,7 @@
             -0.9049370713,
             0.1489621783
           ],
-          "oldId":42,
+          "oldId":47,
           "pos":[
             -373.5546875,
             -519.262146,
@@ -472,12 +479,13 @@
       "name":"Import_A 73",
       "notes":{
         "english":{
-          "after":"fifty",
+          "_out":"into Crest into six right? 50.",
+          "after":"50",
           "before":"into",
           "note":"Crest into six right?"
         }
       },
-      "oldId":43,
+      "oldId":48,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -486,7 +494,7 @@
             -0.9996597233,
             0.02412365405
           ],
-          "oldId":44,
+          "oldId":49,
           "pos":[
             -383.3597412,
             -425.312439,
@@ -502,7 +510,7 @@
             -0.9238634003,
             0.1208551965
           ],
-          "oldId":45,
+          "oldId":50,
           "pos":[
             -365.9055481,
             -536.2561646,
@@ -518,7 +526,7 @@
             -0.9874750838,
             0.06222124611
           ],
-          "oldId":46,
+          "oldId":51,
           "pos":[
             -358.4550476,
             -565.2167358,
@@ -536,12 +544,13 @@
       "name":"Import_A 77",
       "notes":{
         "english":{
+          "_out":"four left?",
           "after":"",
           "before":"",
           "note":"four left?"
         }
       },
-      "oldId":47,
+      "oldId":52,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -550,7 +559,7 @@
             -0.9097399399,
             0.149318143
           ],
-          "oldId":48,
+          "oldId":53,
           "pos":[
             -374.3868103,
             -517.3080444,
@@ -566,7 +575,7 @@
             -0.9572083755,
             0.1055302526
           ],
-          "oldId":49,
+          "oldId":54,
           "pos":[
             -350.717865,
             -618.3296509,
@@ -582,7 +591,7 @@
             -0.5168010662,
             0.007439301062
           ],
-          "oldId":50,
+          "oldId":55,
           "pos":[
             -324.9987183,
             -652.3122559,
@@ -600,12 +609,13 @@
       "name":"Import_A 81",
       "notes":{
         "english":{
+          "_out":"into Crest downhill five left opens?",
           "after":"",
           "before":"into",
           "note":"Crest downhill five left opens?"
         }
       },
-      "oldId":51,
+      "oldId":56,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -614,7 +624,7 @@
             -0.9880905712,
             0.09654368603
           ],
-          "oldId":52,
+          "oldId":57,
           "pos":[
             -357.6036987,
             -571.385498,
@@ -630,7 +640,7 @@
             -0.2858552108,
             -0.1052854175
           ],
-          "oldId":53,
+          "oldId":58,
           "pos":[
             -309.922821,
             -659.1851807,
@@ -646,7 +656,7 @@
             0.2306406196,
             -0.1127419962
           ],
-          "oldId":54,
+          "oldId":59,
           "pos":[
             -258.7406311,
             -660.9133911,
@@ -664,12 +674,13 @@
       "name":"Import_A 85",
       "notes":{
         "english":{
+          "_out":"into slight right?",
           "after":"",
           "before":"into",
           "note":"slight right?"
         }
       },
-      "oldId":55,
+      "oldId":60,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -678,7 +689,7 @@
             -0.7159521374,
             0.07896756404
           ],
-          "oldId":56,
+          "oldId":61,
           "pos":[
             -338.0392151,
             -641.7801514,
@@ -694,7 +705,7 @@
             0.2931788089,
             -0.1196036611
           ],
-          "oldId":57,
+          "oldId":62,
           "pos":[
             -250.5978394,
             -658.7410889,
@@ -710,7 +721,7 @@
             0.2444901032,
             -0.06609329054
           ],
-          "oldId":58,
+          "oldId":63,
           "pos":[
             -218.1576385,
             -649.0969849,
@@ -728,12 +739,13 @@
       "name":"Import_A 89",
       "notes":{
         "english":{
-          "after":"two hundred",
+          "_out":"and five right over small crest? 200.",
+          "after":"200",
           "before":"and",
           "note":"five right over small crest?"
         }
       },
-      "oldId":59,
+      "oldId":64,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -742,7 +754,7 @@
             -0.2858552108,
             -0.1052854175
           ],
-          "oldId":60,
+          "oldId":65,
           "pos":[
             -309.922821,
             -659.1851807,
@@ -758,7 +770,7 @@
             0.2172707449,
             -0.05391868928
           ],
-          "oldId":61,
+          "oldId":66,
           "pos":[
             -192.5492859,
             -642.9037476,
@@ -774,7 +786,7 @@
             -0.1891085375,
             -0.04781054188
           ],
-          "oldId":62,
+          "oldId":67,
           "pos":[
             -124.4026871,
             -643.7166748,
@@ -792,12 +804,13 @@
       "name":"Import_A 97",
       "notes":{
         "english":{
+          "_out":"brake at big left tree?",
           "after":"<none>",
           "before":"<none>",
           "note":"brake at big left tree?"
         }
       },
-      "oldId":63,
+      "oldId":68,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -806,7 +819,7 @@
             0.1321284837,
             -0.006121058884
           ],
-          "oldId":64,
+          "oldId":69,
           "pos":[
             -178.2764435,
             -640.137146,
@@ -822,7 +835,7 @@
             -0.2629978425,
             -0.02408047374
           ],
-          "oldId":65,
+          "oldId":70,
           "pos":[
             -22.60892868,
             -671.3339844,
@@ -838,7 +851,7 @@
             -0.2726401863,
             -0.01462858269
           ],
-          "oldId":66,
+          "oldId":71,
           "pos":[
             -12.67292118,
             -674.0622559,
@@ -856,12 +869,13 @@
       "name":"Import_A 101",
       "notes":{
         "english":{
+          "_out":"caution three left dont? rocks inside?",
           "after":"",
           "before":"",
           "note":"caution three left dont? rocks inside?"
         }
       },
-      "oldId":67,
+      "oldId":72,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -870,7 +884,7 @@
             -0.1537591089,
             -0.03130749757
           ],
-          "oldId":68,
+          "oldId":73,
           "pos":[
             -134.6182556,
             -641.9824219,
@@ -886,7 +900,7 @@
             -0.1875418048,
             0.06063766912
           ],
-          "oldId":69,
+          "oldId":74,
           "pos":[
             60.57328796,
             -694.2050171,
@@ -902,7 +916,7 @@
             0.6435354255,
             0.07092420494
           ],
-          "oldId":70,
+          "oldId":75,
           "pos":[
             104.8546066,
             -682.8793945,
@@ -920,12 +934,13 @@
       "name":"Import_A 105",
       "notes":{
         "english":{
+          "_out":"into three right?",
           "after":"",
           "before":"into",
           "note":"three right?"
         }
       },
-      "oldId":71,
+      "oldId":76,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -934,7 +949,7 @@
             -0.2031696279,
             0.05941425919
           ],
-          "oldId":72,
+          "oldId":77,
           "pos":[
             58.53183746,
             -693.7806396,
@@ -950,7 +965,7 @@
             0.6665415468,
             0.008802026942
           ],
-          "oldId":73,
+          "oldId":78,
           "pos":[
             115.6781235,
             -673.1165161,
@@ -966,7 +981,7 @@
             0.09801187858,
             0.004610695537
           ],
-          "oldId":74,
+          "oldId":79,
           "pos":[
             143.2083893,
             -659.690918,
@@ -984,12 +999,13 @@
       "name":"Import_A 109",
       "notes":{
         "english":{
+          "_out":"into one right dont? onto tarmac?",
           "after":"",
           "before":"into",
           "note":"one right dont? onto tarmac?"
         }
       },
-      "oldId":75,
+      "oldId":80,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -998,7 +1014,7 @@
             0.5445490884,
             0.09362376437
           ],
-          "oldId":76,
+          "oldId":81,
           "pos":[
             98.26679993,
             -687.6522217,
@@ -1014,7 +1030,7 @@
             -0.07208188655,
             -0.002631140291
           ],
-          "oldId":77,
+          "oldId":82,
           "pos":[
             155.740097,
             -659.3127441,
@@ -1030,7 +1046,7 @@
             -0.896014907,
             0.02917413806
           ],
-          "oldId":78,
+          "oldId":83,
           "pos":[
             172.4129791,
             -669.1820679,
@@ -1048,12 +1064,13 @@
       "name":"Import_A 113",
       "notes":{
         "english":{
+          "_out":"and one right maybe?",
           "after":"",
           "before":"and",
           "note":"one right maybe?"
         }
       },
-      "oldId":79,
+      "oldId":84,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1062,7 +1079,7 @@
             0.0151560319,
             0.004575646915
           ],
-          "oldId":80,
+          "oldId":85,
           "pos":[
             149.4571381,
             -659.2247925,
@@ -1078,7 +1095,7 @@
             -0.9813606536,
             0.03927094413
           ],
-          "oldId":81,
+          "oldId":86,
           "pos":[
             181.4806519,
             -692.1369629,
@@ -1094,7 +1111,7 @@
             -0.8083932812,
             0.1034261814
           ],
-          "oldId":82,
+          "oldId":87,
           "pos":[
             178.0397034,
             -709.8164063,
@@ -1112,12 +1129,13 @@
       "name":"Import_A 117",
       "notes":{
         "english":{
+          "_out":"into one left?",
           "after":"",
           "before":"into",
           "note":"one left?"
         }
       },
-      "oldId":83,
+      "oldId":88,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1126,7 +1144,7 @@
             -0.9142417931,
             0.03424954486
           ],
-          "oldId":84,
+          "oldId":89,
           "pos":[
             173.3252563,
             -671.0269775,
@@ -1142,7 +1160,7 @@
             -0.7928786,
             0.06426507655
           ],
-          "oldId":85,
+          "oldId":90,
           "pos":[
             174.3209534,
             -714.6213989,
@@ -1158,7 +1176,7 @@
             -0.983542869,
             0.01054152557
           ],
-          "oldId":86,
+          "oldId":91,
           "pos":[
             169.0329437,
             -731.6253662,
@@ -1176,12 +1194,13 @@
       "name":"Import_A 121",
       "notes":{
         "english":{
+          "_out":"into slight right?",
           "after":"",
           "before":"into",
           "note":"slight right?"
         }
       },
-      "oldId":87,
+      "oldId":92,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1190,7 +1209,7 @@
             -0.9637048948,
             0.03971484933
           ],
-          "oldId":88,
+          "oldId":93,
           "pos":[
             180.9322662,
             -690.1351318,
@@ -1206,7 +1225,7 @@
             -0.9751545517,
             0.1217148409
           ],
-          "oldId":89,
+          "oldId":94,
           "pos":[
             170.6083832,
             -739.803894,
@@ -1222,7 +1241,7 @@
             -0.9838440784,
             0.1110240714
           ],
-          "oldId":90,
+          "oldId":95,
           "pos":[
             173.2555847,
             -758.5337524,
@@ -1240,12 +1259,13 @@
       "name":"Import_A 125",
       "notes":{
         "english":{
+          "_out":"into two left opens?",
           "after":"",
           "before":"into",
           "note":"two left opens?"
         }
       },
-      "oldId":91,
+      "oldId":96,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1254,7 +1274,7 @@
             -0.8150017188,
             0.03756861326
           ],
-          "oldId":92,
+          "oldId":97,
           "pos":[
             173.1008759,
             -716.2177734,
@@ -1270,7 +1290,7 @@
             -0.9293215737,
             0.09699963186
           ],
-          "oldId":93,
+          "oldId":98,
           "pos":[
             174.9564514,
             -766.4944458,
@@ -1286,7 +1306,7 @@
             0.2669296339,
             -0.05985019426
           ],
-          "oldId":94,
+          "oldId":99,
           "pos":[
             206.4794922,
             -778.6724854,
@@ -1304,12 +1324,13 @@
       "name":"Import_A 129",
       "notes":{
         "english":{
+          "_out":"and four right?",
           "after":"",
           "before":"and",
           "note":"four right?"
         }
       },
-      "oldId":95,
+      "oldId":100,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1318,7 +1339,7 @@
             -0.9838440784,
             0.1110240714
           ],
-          "oldId":96,
+          "oldId":101,
           "pos":[
             173.2555847,
             -758.5337524,
@@ -1334,7 +1355,7 @@
             0.4720248057,
             0.003700777351
           ],
-          "oldId":97,
+          "oldId":102,
           "pos":[
             233.8612366,
             -763.7880249,
@@ -1350,7 +1371,7 @@
             -0.4845253286,
             -0.0005841868636
           ],
-          "oldId":98,
+          "oldId":103,
           "pos":[
             282.422821,
             -763.1582031,
@@ -1368,21 +1389,22 @@
       "name":"Import_A 133",
       "notes":{
         "english":{
+          "_out":"into long one left?",
           "after":"",
           "before":"into",
           "note":"long one left?"
         }
       },
-      "oldId":99,
+      "oldId":104,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
           "normal":[
-            0.8336071212,
+            0.8336071211,
             0.5519872844,
             -0.02022882775
           ],
-          "oldId":100,
+          "oldId":105,
           "pos":[
             225.0377197,
             -769.3599243,
@@ -1398,7 +1420,7 @@
             -0.4270093135,
             -0.006130623201
           ],
-          "oldId":101,
+          "oldId":106,
           "pos":[
             298.307251,
             -773.1609497,
@@ -1414,7 +1436,7 @@
             0.6321261737,
             -0.07230794453
           ],
-          "oldId":102,
+          "oldId":107,
           "pos":[
             313.879303,
             -742.8434448,
@@ -1432,12 +1454,13 @@
       "name":"Import_A 145",
       "notes":{
         "english":{
-          "after":"one fifty",
+          "_out":"and open hairpin right? onto tarmac? 1 50.",
+          "after":"1 50",
           "before":"and",
           "note":"open hairpin right? onto tarmac?"
         }
       },
-      "oldId":103,
+      "oldId":108,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1446,7 +1469,7 @@
             0.9668724258,
             0.003031679984
           ],
-          "oldId":104,
+          "oldId":109,
           "pos":[
             320.2541809,
             -765.5477295,
@@ -1462,7 +1485,7 @@
             0.6283413521,
             -0.1036983309
           ],
-          "oldId":105,
+          "oldId":110,
           "pos":[
             291.3306885,
             -728.4884033,
@@ -1478,7 +1501,7 @@
             0.4553704252,
             -0.001653472978
           ],
-          "oldId":106,
+          "oldId":111,
           "pos":[
             292.5252075,
             -705.9951782,
@@ -1496,21 +1519,22 @@
       "name":"Import_A 149",
       "notes":{
         "english":{
-          "after":"sixty",
+          "_out":"Square left over small crest? 60.",
+          "after":"60",
           "before":"",
           "note":"Square left over small crest?"
         }
       },
-      "oldId":107,
+      "oldId":112,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
           "normal":[
-            0.87402587,
+            0.8740258701,
             0.4858792499,
             0.0003646463649
           ],
-          "oldId":108,
+          "oldId":113,
           "pos":[
             313.0168457,
             -695.6315918,
@@ -1526,7 +1550,7 @@
             0.4936222175,
             0.09441266127
           ],
-          "oldId":109,
+          "oldId":114,
           "pos":[
             410.8728027,
             -640.8786011,
@@ -1542,7 +1566,7 @@
             0.8203420884,
             -0.003024307658
           ],
-          "oldId":110,
+          "oldId":115,
           "pos":[
             416.0756531,
             -607.8988037,
@@ -1560,12 +1584,13 @@
       "name":"Import_A 153",
       "notes":{
         "english":{
+          "_out":"short six right?",
           "after":"",
           "before":"",
           "note":"short six right?"
         }
       },
-      "oldId":111,
+      "oldId":116,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1574,7 +1599,7 @@
             0.4437062267,
             0.08928225974
           ],
-          "oldId":112,
+          "oldId":117,
           "pos":[
             405.4623108,
             -643.6203003,
@@ -1590,7 +1615,7 @@
             0.8595249021,
             0.0006830807176
           ],
-          "oldId":113,
+          "oldId":118,
           "pos":[
             383.7033081,
             -561.6621094,
@@ -1606,7 +1631,7 @@
             0.9095094903,
             0.02290772522
           ],
-          "oldId":114,
+          "oldId":119,
           "pos":[
             367.1199646,
             -530.0906982,
@@ -1624,12 +1649,13 @@
       "name":"Import_A 157",
       "notes":{
         "english":{
+          "_out":"and Crest into six left?",
           "after":"",
           "before":"and",
           "note":"Crest into six left?"
         }
       },
-      "oldId":115,
+      "oldId":120,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1638,7 +1664,7 @@
             0.7948624724,
             0.0129222584
           ],
-          "oldId":116,
+          "oldId":121,
           "pos":[
             406.1365967,
             -594.4454956,
@@ -1654,7 +1680,7 @@
             0.9054122316,
             -0.01178843254
           ],
-          "oldId":117,
+          "oldId":122,
           "pos":[
             352.365387,
             -496.6974182,
@@ -1670,7 +1696,7 @@
             0.7871591636,
             -0.07973429234
           ],
-          "oldId":118,
+          "oldId":123,
           "pos":[
             326.0945129,
             -451.6916504,
@@ -1688,12 +1714,13 @@
       "name":"Import_A 161",
       "notes":{
         "english":{
+          "_out":"and five right onto dirt into crest?",
           "after":"",
           "before":"and",
           "note":"five right onto dirt into crest?"
         }
       },
-      "oldId":119,
+      "oldId":124,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1702,7 +1729,7 @@
             0.8748451454,
             -0.0008096695391
           ],
-          "oldId":120,
+          "oldId":125,
           "pos":[
             378.4250183,
             -552.5155029,
@@ -1718,7 +1745,7 @@
             0.7929836965,
             -0.01446156064
           ],
-          "oldId":121,
+          "oldId":126,
           "pos":[
             304.1535339,
             -425.7147217,
@@ -1734,7 +1761,7 @@
             0.8873360191,
             0.06512358755
           ],
-          "oldId":122,
+          "oldId":127,
           "pos":[
             287.6051331,
             -399.0550537,
@@ -1752,12 +1779,13 @@
       "name":"Import_A 165",
       "notes":{
         "english":{
+          "_out":"and six left?",
           "after":"",
           "before":"and",
           "note":"six left?"
         }
       },
-      "oldId":123,
+      "oldId":128,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1766,7 +1794,7 @@
             0.9020307734,
             -0.01279326515
           ],
-          "oldId":124,
+          "oldId":129,
           "pos":[
             351.4252625,
             -494.6916199,
@@ -1782,7 +1810,7 @@
             0.8777435299,
             -0.01056209801
           ],
-          "oldId":125,
+          "oldId":130,
           "pos":[
             271.531189,
             -366.3458252,
@@ -1798,7 +1826,7 @@
             0.8092347791,
             -0.06561537246
           ],
-          "oldId":126,
+          "oldId":131,
           "pos":[
             254.312912,
             -338.4963074,
@@ -1816,12 +1844,13 @@
       "name":"Import_A 169",
       "notes":{
         "english":{
-          "after":"ninety",
+          "_out":"and five left? 90.",
+          "after":"90",
           "before":"and",
           "note":"five left?"
         }
       },
-      "oldId":127,
+      "oldId":132,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1830,7 +1859,7 @@
             0.8266368848,
             -0.1209916483
           ],
-          "oldId":128,
+          "oldId":133,
           "pos":[
             333.2826233,
             -461.7931519,
@@ -1846,7 +1875,7 @@
             0.7283990291,
             -0.002269094964
           ],
-          "oldId":129,
+          "oldId":134,
           "pos":[
             230.8634338,
             -309.3505554,
@@ -1862,7 +1891,7 @@
             0.5234800331,
             0.05412143363
           ],
-          "oldId":130,
+          "oldId":135,
           "pos":[
             207.5814514,
             -290.5151672,
@@ -1880,12 +1909,13 @@
       "name":"Import_A 177",
       "notes":{
         "english":{
-          "after":"seventy",
+          "_out":"bumpy up hill? crest into four right? nip tree? 70.",
+          "after":"70",
           "before":"",
           "note":"bumpy up hill? crest into four right? nip tree?"
         }
       },
-      "oldId":131,
+      "oldId":136,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1894,7 +1924,7 @@
             0.9021311763,
             0.0901816075
           ],
-          "oldId":132,
+          "oldId":137,
           "pos":[
             282.2688904,
             -388.0643311,
@@ -1910,7 +1940,7 @@
             0.618997502,
             0.08871093225
           ],
-          "oldId":133,
+          "oldId":138,
           "pos":[
             132.5110321,
             -239.1798096,
@@ -1926,7 +1956,7 @@
             0.9450127555,
             0.03878231912
           ],
-          "oldId":134,
+          "oldId":139,
           "pos":[
             98.53941345,
             -195.5046692,
@@ -1944,12 +1974,13 @@
       "name":"Import_A 181",
       "notes":{
         "english":{
-          "after":"sixty",
+          "_out":"six left into crest? slowing over 60?",
+          "after":"60",
           "before":"",
-          "note":"six left into crest? slowing over {dt}."
+          "note":"six left into crest? slowing over {dt}?"
         }
       },
-      "oldId":135,
+      "oldId":140,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -1958,7 +1989,7 @@
             0.5827777786,
             0.1377626554
           ],
-          "oldId":136,
+          "oldId":141,
           "pos":[
             143.9344025,
             -247.7730713,
@@ -1974,7 +2005,7 @@
             0.8884607564,
             -0.0338604084
           ],
-          "oldId":137,
+          "oldId":142,
           "pos":[
             72.56134033,
             -133.5825958,
@@ -1990,7 +2021,7 @@
             0.8050200259,
             -0.0314222804
           ],
-          "oldId":138,
+          "oldId":143,
           "pos":[
             48.39721298,
             -94.78572083,
@@ -2008,12 +2039,13 @@
       "name":"Import_A 185",
       "notes":{
         "english":{
+          "_out":"caution long five right? tightens keep in?",
           "after":"",
           "before":"",
           "note":"caution long five right? tightens keep in?"
         }
       },
-      "oldId":139,
+      "oldId":144,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2022,7 +2054,7 @@
             0.8147913946,
             0.007292747092
           ],
-          "oldId":140,
+          "oldId":145,
           "pos":[
             108.7394104,
             -216.071228,
@@ -2038,7 +2070,7 @@
             0.7519725354,
             -0.06922098046
           ],
-          "oldId":141,
+          "oldId":146,
           "pos":[
             11.01662827,
             -48.07152939,
@@ -2054,7 +2086,7 @@
             0.9990151174,
             -0.04295386947
           ],
-          "oldId":142,
+          "oldId":147,
           "pos":[
             -33.49328232,
             47.01766205,
@@ -2072,12 +2104,13 @@
       "name":"Import_A 189",
       "notes":{
         "english":{
+          "_out":"into Square left don't? tree inside?",
           "after":"",
           "before":"into",
           "note":"Square left don't? tree inside?"
         }
       },
-      "oldId":143,
+      "oldId":148,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2086,7 +2119,7 @@
             0.8431691126,
             -0.0426469959
           ],
-          "oldId":144,
+          "oldId":149,
           "pos":[
             61.18688965,
             -113.4818573,
@@ -2102,7 +2135,7 @@
             0.9976187012,
             -0.0140686955
           ],
-          "oldId":145,
+          "oldId":150,
           "pos":[
             -33.30650711,
             61.43442535,
@@ -2118,7 +2151,7 @@
             0.6811311937,
             -0.04615703997
           ],
-          "oldId":146,
+          "oldId":151,
           "pos":[
             -41.91096115,
             76.87319946,
@@ -2136,12 +2169,13 @@
       "name":"Import_A 193",
       "notes":{
         "english":{
+          "_out":"into short four right?",
           "after":"",
           "before":"into",
           "note":"short four right?"
         }
       },
-      "oldId":147,
+      "oldId":152,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2150,7 +2184,7 @@
             0.9913231108,
             -0.0499225353
           ],
-          "oldId":148,
+          "oldId":153,
           "pos":[
             -32.48945999,
             34.46640396,
@@ -2166,7 +2200,7 @@
             0.7630252154,
             -0.04552630711
           ],
-          "oldId":149,
+          "oldId":154,
           "pos":[
             -46.2053566,
             81.14102173,
@@ -2182,7 +2216,7 @@
             0.9147991026,
             -0.03766213529
           ],
-          "oldId":150,
+          "oldId":155,
           "pos":[
             -57.7604866,
             100.7881775,
@@ -2200,12 +2234,13 @@
       "name":"Import_A 197",
       "notes":{
         "english":{
+          "_out":"into slight left?",
           "after":"",
           "before":"into",
           "note":"slight left?"
         }
       },
-      "oldId":151,
+      "oldId":156,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2214,7 +2249,7 @@
             0.8539942514,
             0.01476680242
           ],
-          "oldId":152,
+          "oldId":157,
           "pos":[
             -35.1904335,
             69.26526642,
@@ -2230,7 +2265,7 @@
             0.9030774615,
             0.0001399766012
           ],
-          "oldId":153,
+          "oldId":158,
           "pos":[
             -64.68891907,
             115.8527374,
@@ -2246,7 +2281,7 @@
             0.8899688331,
             -0.01809846368
           ],
-          "oldId":154,
+          "oldId":159,
           "pos":[
             -75.90950012,
             138.3752899,
@@ -2264,12 +2299,13 @@
       "name":"Import_A 201",
       "notes":{
         "english":{
+          "_out":"into short six right downhill?",
           "after":"",
           "before":"into",
           "note":"short six right downhill?"
         }
       },
-      "oldId":155,
+      "oldId":160,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2278,7 +2314,7 @@
             0.8819416021,
             -0.05166464143
           ],
-          "oldId":156,
+          "oldId":161,
           "pos":[
             -53.21089554,
             91.28379822,
@@ -2294,7 +2330,7 @@
             0.8912584069,
             -0.03249981311
           ],
-          "oldId":157,
+          "oldId":162,
           "pos":[
             -83.66029358,
             153.4159393,
@@ -2310,7 +2346,7 @@
             0.9501344918,
             -0.04950228721
           ],
-          "oldId":158,
+          "oldId":163,
           "pos":[
             -99.40319061,
             190.7408905,
@@ -2328,12 +2364,13 @@
       "name":"Import_A 205",
       "notes":{
         "english":{
+          "_out":"and five left dip?",
           "after":"",
           "before":"and",
           "note":"five left dip?"
         }
       },
-      "oldId":159,
+      "oldId":164,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2342,7 +2379,7 @@
             0.9001917128,
             -0.002232517505
           ],
-          "oldId":160,
+          "oldId":165,
           "pos":[
             -66.49629211,
             119.6417084,
@@ -2358,7 +2395,7 @@
             0.925214157,
             -0.08620689771
           ],
-          "oldId":161,
+          "oldId":166,
           "pos":[
             -112.1509018,
             227.69487,
@@ -2374,7 +2411,7 @@
             0.7355366296,
             -0.03247043032
           ],
-          "oldId":162,
+          "oldId":167,
           "pos":[
             -143.32724,
             278.6346436,
@@ -2392,12 +2429,13 @@
       "name":"Import_A 209",
       "notes":{
         "english":{
+          "_out":"into short five left?",
           "after":"",
           "before":"into",
           "note":"short five left?"
         }
       },
-      "oldId":163,
+      "oldId":168,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2406,7 +2444,7 @@
             0.9410716633,
             -0.05586005098
           ],
-          "oldId":164,
+          "oldId":169,
           "pos":[
             -96.66051483,
             182.6793823,
@@ -2422,7 +2460,7 @@
             0.6858440291,
             0.03940425554
           ],
-          "oldId":165,
+          "oldId":170,
           "pos":[
             -155.3564301,
             290.9118652,
@@ -2438,7 +2476,7 @@
             0.4842860373,
             0.05724852839
           ],
-          "oldId":166,
+          "oldId":171,
           "pos":[
             -182.8031921,
             310.8092041,
@@ -2456,12 +2494,13 @@
       "name":"Import_A 217",
       "notes":{
         "english":{
+          "_out":"into bumpy? long three right?",
           "after":"",
           "before":"into",
           "note":"bumpy? long three right?"
         }
       },
-      "oldId":167,
+      "oldId":172,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2470,7 +2509,7 @@
             0.9275563049,
             -0.08680325925
           ],
-          "oldId":168,
+          "oldId":173,
           "pos":[
             -111.3465881,
             225.6422577,
@@ -2486,7 +2525,7 @@
             0.5256129925,
             0.06407167033
           ],
-          "oldId":169,
+          "oldId":174,
           "pos":[
             -195.6013641,
             318.0741882,
@@ -2502,7 +2541,7 @@
             0.5233875649,
             -0.02241209541
           ],
-          "oldId":170,
+          "oldId":175,
           "pos":[
             -193.7179871,
             399.7989197,
@@ -2520,12 +2559,13 @@
       "name":"Import_A 221",
       "notes":{
         "english":{
-          "after":"forty",
+          "_out":"and slight left over bump and jumps? 40.",
+          "after":"40",
           "before":"and",
           "note":"slight left over bump and jumps?"
         }
       },
-      "oldId":171,
+      "oldId":176,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2534,7 +2574,7 @@
             0.9957003686,
             0.009343448238
           ],
-          "oldId":172,
+          "oldId":177,
           "pos":[
             -219.5312195,
             352.7074585,
@@ -2550,7 +2590,7 @@
             0.5151125472,
             0.02106179248
           ],
-          "oldId":173,
+          "oldId":178,
           "pos":[
             -173.6892242,
             411.3295593,
@@ -2566,7 +2606,7 @@
             0.5840646464,
             0.04677821601
           ],
-          "oldId":174,
+          "oldId":179,
           "pos":[
             -116.7282791,
             449.9489746,
@@ -2584,12 +2624,13 @@
       "name":"Import_A 229",
       "notes":{
         "english":{
-          "after":"ninety",
+          "_out":"short five right over small crest? 90.",
+          "after":"90",
           "before":"",
           "note":"short five right over small crest?"
         }
       },
-      "oldId":179,
+      "oldId":180,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2598,7 +2639,7 @@
             0.535887953,
             0.02446208444
           ],
-          "oldId":180,
+          "oldId":181,
           "pos":[
             -166.5648804,
             415.7038574,
@@ -2614,7 +2655,7 @@
             0.5703417589,
             -0.03273785345
           ],
-          "oldId":181,
+          "oldId":182,
           "pos":[
             -83.8960495,
             473.981781,
@@ -2630,7 +2671,7 @@
             0.3288720761,
             -0.05260361683
           ],
-          "oldId":182,
+          "oldId":183,
           "pos":[
             -26.2287178,
             502.3152771,
@@ -2648,12 +2689,13 @@
       "name":"Import_A 233",
       "notes":{
         "english":{
-          "after":"one hundred",
+          "_out":"bump? 100.",
+          "after":"100",
           "before":"",
           "note":"bump?"
         }
       },
-      "oldId":183,
+      "oldId":184,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2662,7 +2704,7 @@
             0.4227868245,
             -0.01005811225
           ],
-          "oldId":184,
+          "oldId":185,
           "pos":[
             -57.6300354,
             489.2965088,
@@ -2678,7 +2720,7 @@
             0.2452430677,
             -0.02949795445
           ],
-          "oldId":185,
+          "oldId":186,
           "pos":[
             63.79013062,
             529.1483765,
@@ -2694,7 +2736,7 @@
             0.2987451237,
             0.0005949186055
           ],
-          "oldId":186,
+          "oldId":187,
           "pos":[
             86.74833679,
             535.4344482,
@@ -2712,12 +2754,13 @@
       "name":"Import_A 237",
       "notes":{
         "english":{
+          "_out":"twisty up hill?",
           "after":"<none>",
           "before":"<none>",
           "note":"twisty up hill?"
         }
       },
-      "oldId":187,
+      "oldId":188,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2726,7 +2769,7 @@
             0.2977764582,
             -0.06422798004
           ],
-          "oldId":188,
+          "oldId":189,
           "pos":[
             1.631032348,
             511.4841309,
@@ -2742,7 +2785,7 @@
             0.3305367538,
             0.03721206876
           ],
-          "oldId":189,
+          "oldId":190,
           "pos":[
             121.2625351,
             546.5872192,
@@ -2758,7 +2801,7 @@
             0.1893871218,
             0.256052607
           ],
-          "oldId":190,
+          "oldId":191,
           "pos":[
             171.2780304,
             560.8059692,
@@ -2776,12 +2819,13 @@
       "name":"Import_A 241",
       "notes":{
         "english":{
-          "after":"seventy",
+          "_out":"care five left over crest? 70.",
+          "after":"70",
           "before":"",
           "note":"care five left over crest?"
         }
       },
-      "oldId":191,
+      "oldId":192,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2790,7 +2834,7 @@
             0.2495536084,
             -0.02499422891
           ],
-          "oldId":192,
+          "oldId":193,
           "pos":[
             61.64295197,
             528.5948486,
@@ -2806,7 +2850,7 @@
             0.230426078,
             0.2376943095
           ],
-          "oldId":193,
+          "oldId":194,
           "pos":[
             189.3004456,
             564.6126709,
@@ -2822,7 +2866,7 @@
             0.6029264317,
             0.129908624
           ],
-          "oldId":194,
+          "oldId":195,
           "pos":[
             233.0835571,
             585.2445068,
@@ -2840,12 +2884,13 @@
       "name":"Import_A 245",
       "notes":{
         "english":{
+          "_out":"slight right?",
           "after":"",
           "before":"",
           "note":"slight right?"
         }
       },
-      "oldId":195,
+      "oldId":196,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2854,7 +2899,7 @@
             0.1893871218,
             0.256052607
           ],
-          "oldId":196,
+          "oldId":197,
           "pos":[
             171.2780304,
             560.8059692,
@@ -2870,7 +2915,7 @@
             0.5386514953,
             -0.04255869304
           ],
-          "oldId":197,
+          "oldId":198,
           "pos":[
             293.482605,
             629.03302,
@@ -2886,7 +2931,7 @@
             0.4726141011,
             -0.02971190351
           ],
-          "oldId":198,
+          "oldId":199,
           "pos":[
             315.4425659,
             641.7518921,
@@ -2904,12 +2949,13 @@
       "name":"Import_A 249",
       "notes":{
         "english":{
+          "_out":"and Crest and bumpy five left downhill?",
           "after":"",
           "before":"and",
           "note":"Crest and bumpy five left downhill?"
         }
       },
-      "oldId":199,
+      "oldId":200,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2918,7 +2964,7 @@
             0.6114450324,
             0.06328747334
           ],
-          "oldId":200,
+          "oldId":201,
           "pos":[
             242.8979492,
             592.8352051,
@@ -2934,7 +2980,7 @@
             0.4764693709,
             -0.03096664432
           ],
-          "oldId":201,
+          "oldId":202,
           "pos":[
             339.1883545,
             654.6075439,
@@ -2950,7 +2996,7 @@
             0.6121066071,
             -0.2161432195
           ],
-          "oldId":202,
+          "oldId":203,
           "pos":[
             376.448761,
             679.3234863,
@@ -2968,12 +3014,13 @@
       "name":"Import_A 253",
       "notes":{
         "english":{
-          "after":"seventy",
+          "_out":"into big dip three right up hill? tightens bumpy? 70.",
+          "after":"70",
           "before":"into",
           "note":"big dip three right up hill? tightens bumpy?"
         }
       },
-      "oldId":203,
+      "oldId":204,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -2982,7 +3029,7 @@
             0.4904293211,
             -0.03313798893
           ],
-          "oldId":204,
+          "oldId":205,
           "pos":[
             306.1289063,
             636.6617432,
@@ -2998,7 +3045,7 @@
             0.6074690782,
             -0.1636505164
           ],
-          "oldId":205,
+          "oldId":206,
           "pos":[
             385.879303,
             686.9537964,
@@ -3014,7 +3061,7 @@
             1,
             0
           ],
-          "oldId":206,
+          "oldId":207,
           "pos":[
             442.1159973,
             665.5863647,
@@ -3032,12 +3079,13 @@
       "name":"Import_A 257",
       "notes":{
         "english":{
-          "after":"fifty",
+          "_out":"four left nip pink flowers? slight crest tight exit? 50.",
+          "after":"50",
           "before":"",
           "note":"four left nip pink flowers? slight crest tight exit?"
         }
       },
-      "oldId":207,
+      "oldId":208,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -3046,7 +3094,7 @@
             -0.4953704549,
             0.1820375262
           ],
-          "oldId":208,
+          "oldId":209,
           "pos":[
             429.3804932,
             693.9963989,
@@ -3062,7 +3110,7 @@
             -0.9944502202,
             0.0840887028
           ],
-          "oldId":209,
+          "oldId":210,
           "pos":[
             432.4472656,
             600.4124146,
@@ -3078,7 +3126,7 @@
             -0.8022118636,
             0.0003149668118
           ],
-          "oldId":210,
+          "oldId":211,
           "pos":[
             446.099762,
             554.7687378,
@@ -3096,12 +3144,13 @@
       "name":"Import_A 261",
       "notes":{
         "english":{
+          "_out":"five right opens?",
           "after":"",
           "before":"",
           "note":"five right opens?"
         }
       },
-      "oldId":211,
+      "oldId":212,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -3110,7 +3159,7 @@
             -0.9894335261,
             0.08429582353
           ],
-          "oldId":212,
+          "oldId":213,
           "pos":[
             433.770752,
             612.8042603,
@@ -3126,7 +3175,7 @@
             -0.8211067094,
             -0.003113652799
           ],
-          "oldId":213,
+          "oldId":214,
           "pos":[
             480.5671387,
             512.0813599,
@@ -3142,7 +3191,7 @@
             -0.946074091,
             0.04720386257
           ],
-          "oldId":214,
+          "oldId":215,
           "pos":[
             500.301178,
             472.4031372,
@@ -3160,12 +3209,13 @@
       "name":"Import_A 265",
       "notes":{
         "english":{
-          "after":"eighty",
+          "_out":"and big jump? 80.",
+          "after":"80",
           "before":"and",
           "note":"big jump?"
         }
       },
-      "oldId":215,
+      "oldId":216,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -3174,7 +3224,7 @@
             -0.8219595065,
             -0.002639409201
           ],
-          "oldId":216,
+          "oldId":217,
           "pos":[
             443.5726624,
             558.3430176,
@@ -3190,7 +3240,7 @@
             -0.9434690954,
             0.09522737094
           ],
-          "oldId":217,
+          "oldId":218,
           "pos":[
             509.2711792,
             445.8576355,
@@ -3206,7 +3256,7 @@
             -0.9462357273,
             -0.02691377248
           ],
-          "oldId":218,
+          "oldId":219,
           "pos":[
             516.8897095,
             423.6098328,
@@ -3224,12 +3274,13 @@
       "name":"Import_A 269",
       "notes":{
         "english":{
-          "after":"fifty",
+          "_out":"very long five right slight tightens? 50.",
+          "after":"50",
           "before":"",
           "note":"very long five right slight tightens?"
         }
       },
-      "oldId":219,
+      "oldId":220,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -3238,7 +3289,7 @@
             -0.856747774,
             -0.01040255313
           ],
-          "oldId":220,
+          "oldId":221,
           "pos":[
             485.4096069,
             504.7344055,
@@ -3254,7 +3305,7 @@
             -0.977954724,
             -0.02593072689
           ],
-          "oldId":221,
+          "oldId":222,
           "pos":[
             539.0129395,
             350.103363,
@@ -3270,7 +3321,7 @@
             -0.5087483815,
             0.02176008922
           ],
-          "oldId":222,
+          "oldId":223,
           "pos":[
             482.6617432,
             217.4029846,
@@ -3288,12 +3339,13 @@
       "name":"Import_A 273",
       "notes":{
         "english":{
+          "_out":"flying finish?",
           "after":"<none>",
           "before":"<none>",
           "note":"flying finish?"
         }
       },
-      "oldId":223,
+      "oldId":224,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -3302,7 +3354,7 @@
             -0.9740536422,
             -0.02133403656
           ],
-          "oldId":224,
+          "oldId":225,
           "pos":[
             538.7242432,
             294.535675,
@@ -3318,7 +3370,7 @@
             -0.4571661297,
             0.0521343358
           ],
-          "oldId":225,
+          "oldId":226,
           "pos":[
             450.6189575,
             199.2299042,
@@ -3334,7 +3386,7 @@
             -0.4283120115,
             0.03242770167
           ],
-          "oldId":226,
+          "oldId":227,
           "pos":[
             442.7181091,
             195.2747955,
@@ -3352,12 +3404,13 @@
       "name":"Import_A 277",
       "notes":{
         "english":{
+          "_out":"six right.",
           "after":"",
           "before":"",
           "note":"six right."
         }
       },
-      "oldId":227,
+      "oldId":228,
       "pacenoteWaypoints":[
         {
           "name":"audio trigger",
@@ -3366,7 +3419,7 @@
             -0.699622535,
             0.02150883294
           ],
-          "oldId":228,
+          "oldId":229,
           "pos":[
             509.3196106,
             237.5279388,
@@ -3382,7 +3435,7 @@
             -0.414282282,
             0.02779470777
           ],
-          "oldId":229,
+          "oldId":230,
           "pos":[
             438.7237549,
             193.3973083,
@@ -3398,7 +3451,7 @@
             -0.2071003981,
             -0.03160887232
           ],
-          "oldId":230,
+          "oldId":231,
           "pos":[
             396.4267578,
             179.0909576,

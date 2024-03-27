@@ -4,7 +4,7 @@
     {
       "language":"english",
       "name":"Sophia",
-      "oldId":13,
+      "oldId":18,
       "voice":"british_female"
     }
   ],
@@ -13,6 +13,7 @@
   "name":"v2",
   "pacenotes":[
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gwiyh176.wav",
         "success":true
@@ -20,12 +21,13 @@
       "name":"Pacenote 1",
       "notes":{
         "english":{
+          "_out":"start thirty. six right into slight left over crest?",
           "after":"",
           "before":"",
           "note":"start thirty. six right into slight left over crest?"
         }
       },
-      "oldId":14,
+      "oldId":19,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -34,7 +36,7 @@
             -0.9706257529,
             -0.08171947049
           ],
-          "oldId":15,
+          "oldId":20,
           "pos":[
             -765.5220947,
             178.7626343,
@@ -50,7 +52,7 @@
             -0.9208519625,
             -0.09182421368
           ],
-          "oldId":16,
+          "oldId":21,
           "pos":[
             -790.3696289,
             115.0152435,
@@ -66,7 +68,7 @@
             -0.9828877273,
             -0.05244026081
           ],
-          "oldId":17,
+          "oldId":22,
           "pos":[
             -757.9908447,
             225.4725342,
@@ -79,6 +81,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_j9rihkxq.wav",
         "success":true
@@ -86,12 +89,13 @@
       "name":"Pacenote 2",
       "notes":{
         "english":{
+          "_out":"and four right narrows over bridge?",
           "after":"",
           "before":"and",
           "note":"four right narrows over bridge?"
         }
       },
-      "oldId":18,
+      "oldId":23,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -100,7 +104,7 @@
             -0.7811627503,
             -0.07780672739
           ],
-          "oldId":19,
+          "oldId":24,
           "pos":[
             -807.2653809,
             81.35678864,
@@ -116,7 +120,7 @@
             0.5996411364,
             0.1071653008
           ],
-          "oldId":20,
+          "oldId":25,
           "pos":[
             -890.5680542,
             69.96690369,
@@ -132,7 +136,7 @@
             -0.9881399138,
             -0.06623625569
           ],
-          "oldId":21,
+          "oldId":26,
           "pos":[
             -761.1026001,
             205.1447906,
@@ -145,6 +149,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_6diu9kpw.wav",
         "success":true
@@ -152,12 +157,13 @@
       "name":"Pacenote 3",
       "notes":{
         "english":{
+          "_out":"into five right over crest?",
           "after":"",
           "before":"into",
           "note":"five right over crest?"
         }
       },
-      "oldId":22,
+      "oldId":27,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -166,7 +172,7 @@
             0.7727426033,
             0.1077488985
           ],
-          "oldId":23,
+          "oldId":28,
           "pos":[
             -903.9190674,
             82.57433319,
@@ -182,7 +188,7 @@
             0.9823648655,
             0.01178586035
           ],
-          "oldId":24,
+          "oldId":29,
           "pos":[
             -918.9946289,
             181.7521515,
@@ -198,7 +204,7 @@
             -0.9195986842,
             -0.08790037
           ],
-          "oldId":25,
+          "oldId":30,
           "pos":[
             -789.562439,
             116.9538498,
@@ -211,6 +217,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_t5yf6t35.wav",
         "success":true
@@ -218,12 +225,13 @@
       "name":"Pacenote 4",
       "notes":{
         "english":{
+          "_out":"and five left into crest?",
           "after":"",
           "before":"and",
           "note":"five left into crest?"
         }
       },
-      "oldId":26,
+      "oldId":31,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -232,7 +240,7 @@
             0.9950593487,
             0.0117397554
           ],
-          "oldId":27,
+          "oldId":32,
           "pos":[
             -915.7540283,
             202.2333374,
@@ -248,7 +256,7 @@
             0.9049155146,
             0.01417277318
           ],
-          "oldId":28,
+          "oldId":33,
           "pos":[
             -928.6741943,
             259.819397,
@@ -264,7 +272,7 @@
             0.7188275728,
             0.1239681363
           ],
-          "oldId":29,
+          "oldId":34,
           "pos":[
             -899.8502808,
             78.05683136,
@@ -277,6 +285,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_w5sn7ca5.wav",
         "success":true
@@ -284,12 +293,13 @@
       "name":"Pacenote 5",
       "notes":{
         "english":{
+          "_out":"into five right over crest keep in, bump?",
           "after":"",
           "before":"into",
           "note":"five right over crest keep in, bump?"
         }
       },
-      "oldId":30,
+      "oldId":35,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -298,7 +308,7 @@
             0.9615618608,
             0.0505175797
           ],
-          "oldId":31,
+          "oldId":36,
           "pos":[
             -935.6699829,
             277.2719727,
@@ -314,7 +324,7 @@
             0.7506069213,
             -0.07400541973
           ],
-          "oldId":32,
+          "oldId":37,
           "pos":[
             -914.6767578,
             361.4095459,
@@ -330,7 +340,7 @@
             0.9812003776,
             0.003028926912
           ],
-          "oldId":33,
+          "oldId":38,
           "pos":[
             -921.0289917,
             171.3328247,
@@ -343,6 +353,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hhix5htz.wav",
         "success":true
@@ -350,12 +361,13 @@
       "name":"Pacenote 6",
       "notes":{
         "english":{
+          "_out":"into five left tightens cut?",
           "after":"",
           "before":"into",
           "note":"five left tightens cut?"
         }
       },
-      "oldId":34,
+      "oldId":39,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -364,7 +376,7 @@
             0.7956457601,
             -0.07690306942
           ],
-          "oldId":35,
+          "oldId":40,
           "pos":[
             -905.578186,
             372.2229614,
@@ -380,7 +392,7 @@
             0.9967640442,
             -0.01672043767
           ],
-          "oldId":36,
+          "oldId":41,
           "pos":[
             -888.6638794,
             433.3063049,
@@ -396,7 +408,7 @@
             0.9057099001,
             0.05061028715
           ],
-          "oldId":37,
+          "oldId":42,
           "pos":[
             -922.3884277,
             246.6600189,
@@ -409,6 +421,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_vvu1u2cl.wav",
         "success":true
@@ -416,12 +429,13 @@
       "name":"Pacenote 7",
       "notes":{
         "english":{
+          "_out":"and four right cut?",
           "after":"",
           "before":"and",
           "note":"four right cut?"
         }
       },
-      "oldId":38,
+      "oldId":43,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -430,7 +444,7 @@
             0.967795502,
             -0.008828976654
           ],
-          "oldId":39,
+          "oldId":44,
           "pos":[
             -892.7139893,
             458.6405945,
@@ -446,7 +460,7 @@
             0.9402619183,
             0.07073482358
           ],
-          "oldId":40,
+          "oldId":45,
           "pos":[
             -896.1947632,
             513.5012207,
@@ -462,7 +476,7 @@
             0.8683675266,
             -0.04698812892
           ],
-          "oldId":41,
+          "oldId":46,
           "pos":[
             -929.0825806,
             341.912262,
@@ -475,6 +489,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_5cq0i7a6.wav",
         "success":true
@@ -482,12 +497,13 @@
       "name":"Pacenote 8",
       "notes":{
         "english":{
+          "_out":"into six left cut?",
           "after":"",
           "before":"into",
           "note":"six left cut?"
         }
       },
-      "oldId":42,
+      "oldId":47,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -496,7 +512,7 @@
             0.9546474645,
             0.07835516971
           ],
-          "oldId":43,
+          "oldId":48,
           "pos":[
             -890.0237427,
             531.0009766,
@@ -512,7 +528,7 @@
             0.999564456,
             0.02616862547
           ],
-          "oldId":44,
+          "oldId":49,
           "pos":[
             -883.2183228,
             582.5185547,
@@ -528,7 +544,7 @@
             0.9040248801,
             -0.0512801312
           ],
-          "oldId":45,
+          "oldId":50,
           "pos":[
             -895.5054932,
             388.2966309,
@@ -541,6 +557,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_rkf5opz1.wav",
         "success":true
@@ -548,12 +565,13 @@
       "name":"Pacenote 9",
       "notes":{
         "english":{
+          "_out":"into five right cut?",
           "after":"",
           "before":"into",
           "note":"five right cut?"
         }
       },
-      "oldId":46,
+      "oldId":51,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -562,7 +580,7 @@
             0.9945137814,
             0.07617293524
           ],
-          "oldId":47,
+          "oldId":52,
           "pos":[
             -882.7264404,
             599.0718994,
@@ -578,7 +596,7 @@
             0.903993589,
             0.03217234747
           ],
-          "oldId":48,
+          "oldId":53,
           "pos":[
             -869.2236328,
             641.8859863,
@@ -594,7 +612,7 @@
             0.9924529269,
             0.08383599347
           ],
-          "oldId":49,
+          "oldId":54,
           "pos":[
             -899.7049561,
             497.5281372,
@@ -607,6 +625,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_nqfe4uok.wav",
         "success":true
@@ -614,12 +633,13 @@
       "name":"Pacenote 10",
       "notes":{
         "english":{
+          "_out":"into four left tightens cut?",
           "after":"",
           "before":"into",
           "note":"four left tightens cut?"
         }
       },
-      "oldId":50,
+      "oldId":55,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -628,7 +648,7 @@
             0.9571016206,
             0.01508045069
           ],
-          "oldId":51,
+          "oldId":56,
           "pos":[
             -863.7492065,
             655.5359497,
@@ -644,7 +664,7 @@
             0.9463789225,
             -0.004913105663
           ],
-          "oldId":52,
+          "oldId":57,
           "pos":[
             -862.8323975,
             692.0825806,
@@ -660,7 +680,7 @@
             0.999105047,
             0.03960115652
           ],
-          "oldId":53,
+          "oldId":58,
           "pos":[
             -883.25,
             580.388916,
@@ -673,6 +693,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_atml9iud.wav",
         "success":true
@@ -680,12 +701,13 @@
       "name":"Pacenote 11",
       "notes":{
         "english":{
+          "_out":"and two right long big cut?",
           "after":"",
           "before":"and",
           "note":"two right long big cut?"
         }
       },
-      "oldId":54,
+      "oldId":59,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -694,7 +716,7 @@
             0.9129219483,
             -0.01861883052
           ],
-          "oldId":55,
+          "oldId":60,
           "pos":[
             -870.932312,
             710.8166504,
@@ -710,7 +732,7 @@
             -0.2345537345,
             -0.01090777206
           ],
-          "oldId":56,
+          "oldId":61,
           "pos":[
             -837.3601685,
             752.8811646,
@@ -726,7 +748,7 @@
             0.957626924,
             0.08258919236
           ],
-          "oldId":57,
+          "oldId":62,
           "pos":[
             -879.9095459,
             617.4053955,
@@ -739,6 +761,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__6edx2xa.wav",
         "success":true
@@ -746,12 +769,13 @@
       "name":"Pacenote 12",
       "notes":{
         "english":{
-          "after":"eighty.",
+          "_out":"and three left cut? 80.",
+          "after":"80",
           "before":"and",
           "note":"three left cut?"
         }
       },
-      "oldId":58,
+      "oldId":63,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -760,7 +784,7 @@
             -0.2181949614,
             -0.001409675713
           ],
-          "oldId":59,
+          "oldId":64,
           "pos":[
             -805.6491089,
             743.3412476,
@@ -776,7 +800,7 @@
             0.4308398608,
             0.0423238978
           ],
-          "oldId":60,
+          "oldId":65,
           "pos":[
             -769.822937,
             748.3498535,
@@ -792,7 +816,7 @@
             0.9826099109,
             -0.01605309024
           ],
-          "oldId":61,
+          "oldId":66,
           "pos":[
             -874.7807007,
             730.7113037,
@@ -805,6 +829,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1vqsuyej.wav",
         "success":true
@@ -812,12 +837,13 @@
       "name":"Pacenote 13",
       "notes":{
         "english":{
+          "_out":"five left, brake over crest, tightens cut?",
           "after":"",
           "before":"",
           "note":"five left, brake over crest, tightens cut?"
         }
       },
-      "oldId":62,
+      "oldId":67,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -826,7 +852,7 @@
             0.7099395194,
             0.07023849931
           ],
-          "oldId":63,
+          "oldId":68,
           "pos":[
             -708.6582031,
             797.4246826,
@@ -842,7 +868,7 @@
             0.8789241528,
             -0.01208846369
           ],
-          "oldId":64,
+          "oldId":69,
           "pos":[
             -669.4345703,
             847.7366943,
@@ -858,7 +884,7 @@
             -0.0848730503,
             0.00773089344
           ],
-          "oldId":65,
+          "oldId":70,
           "pos":[
             -797.4778442,
             741.9158936,
@@ -871,6 +897,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xhvh4k8r.wav",
         "success":true
@@ -878,12 +905,13 @@
       "name":"Pacenote 14",
       "notes":{
         "english":{
+          "_out":"into two right big cut?",
           "after":"",
           "before":"into",
           "note":"two right big cut?"
         }
       },
-      "oldId":66,
+      "oldId":71,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -892,7 +920,7 @@
             0.8522542608,
             -0.01761779276
           ],
-          "oldId":67,
+          "oldId":72,
           "pos":[
             -664.4771729,
             856.6446533,
@@ -908,7 +936,7 @@
             -0.6038957002,
             -0.05106258715
           ],
-          "oldId":68,
+          "oldId":73,
           "pos":[
             -612.5645142,
             868.5429077,
@@ -924,7 +952,7 @@
             0.4138740491,
             0.0387122072
           ],
-          "oldId":69,
+          "oldId":74,
           "pos":[
             -771.6655884,
             747.5113525,
@@ -937,6 +965,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_r6t5uuz3.wav",
         "success":true
@@ -944,12 +973,13 @@
       "name":"Pacenote 15",
       "notes":{
         "english":{
-          "after":"forty.",
+          "_out":"into four left cut? 40.",
+          "after":"40",
           "before":"into",
           "note":"four left cut?"
         }
       },
-      "oldId":70,
+      "oldId":75,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -958,7 +988,7 @@
             -0.5135772663,
             -0.03371070654
           ],
-          "oldId":71,
+          "oldId":76,
           "pos":[
             -602.6863403,
             861.3323364,
@@ -974,7 +1004,7 @@
             -0.09139987946,
             -0.01205751823
           ],
-          "oldId":72,
+          "oldId":77,
           "pos":[
             -570.8063965,
             852.0061035,
@@ -990,7 +1020,7 @@
             0.6415950475,
             -0.04536837671
           ],
-          "oldId":73,
+          "oldId":78,
           "pos":[
             -655.595459,
             867.6987305,
@@ -1003,6 +1033,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_y0hy5ecw.wav",
         "success":true
@@ -1010,12 +1041,13 @@
       "name":"Pacenote 16",
       "notes":{
         "english":{
+          "_out":"crest into six left cut?",
           "after":"",
           "before":"",
           "note":"crest into six left cut?"
         }
       },
-      "oldId":74,
+      "oldId":79,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1024,7 +1056,7 @@
             0.1575747097,
             -0.04537574323
           ],
-          "oldId":75,
+          "oldId":80,
           "pos":[
             -526.909729,
             853.2974243,
@@ -1040,7 +1072,7 @@
             0.3740791373,
             -0.02650985972
           ],
-          "oldId":76,
+          "oldId":81,
           "pos":[
             -488.9608765,
             863.7120361,
@@ -1056,7 +1088,7 @@
             -0.6078792189,
             -0.04495211575
           ],
-          "oldId":77,
+          "oldId":82,
           "pos":[
             -609.3724976,
             866.0975342,
@@ -1069,6 +1101,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_81_c6f7w.wav",
         "success":true
@@ -1076,12 +1109,13 @@
       "name":"Pacenote 17",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "_out":"into four right cut? 50.",
+          "after":"50",
           "before":"into",
           "note":"four right cut?"
         }
       },
-      "oldId":78,
+      "oldId":83,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1090,7 +1124,7 @@
             0.378051971,
             0.05044775489
           ],
-          "oldId":79,
+          "oldId":84,
           "pos":[
             -477.3237305,
             868.6224976,
@@ -1106,7 +1140,7 @@
             -0.2509082049,
             0.04699954776
           ],
-          "oldId":80,
+          "oldId":85,
           "pos":[
             -426.2344666,
             872.0033569,
@@ -1122,7 +1156,7 @@
             -0.1230259589,
             -0.0159869432
           ],
-          "oldId":81,
+          "oldId":86,
           "pos":[
             -574.963501,
             852.4873657,
@@ -1135,6 +1169,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hajdbaww.wav",
         "success":true
@@ -1142,12 +1177,13 @@
       "name":"Pacenote 18",
       "notes":{
         "english":{
+          "_out":"slight left into four right cut?",
           "after":"",
           "before":"",
           "note":"slight left into four right cut?"
         }
       },
-      "oldId":82,
+      "oldId":87,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1156,7 +1192,7 @@
             -0.303078384,
             0.04902561125
           ],
-          "oldId":83,
+          "oldId":88,
           "pos":[
             -382.706665,
             857.6792603,
@@ -1172,7 +1208,7 @@
             -0.8373211764,
             0.002835052548
           ],
-          "oldId":84,
+          "oldId":89,
           "pos":[
             -346.0028381,
             832.8717651,
@@ -1188,7 +1224,7 @@
             0.3091154703,
             -0.08776023759
           ],
-          "oldId":85,
+          "oldId":90,
           "pos":[
             -500.9382324,
             859.4316406,
@@ -1201,6 +1237,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_oh_lcqof.wav",
         "success":true
@@ -1208,12 +1245,13 @@
       "name":"Pacenote 19",
       "notes":{
         "english":{
+          "_out":"into long four left, slight tightens late?",
           "after":"",
           "before":"into",
           "note":"long four left, slight tightens late?"
         }
       },
-      "oldId":86,
+      "oldId":91,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1222,7 +1260,7 @@
             -0.7650130465,
             -0.05228260332
           ],
-          "oldId":87,
+          "oldId":92,
           "pos":[
             -338.9648132,
             822.56604,
@@ -1238,7 +1276,7 @@
             0.9944054361,
             0.002152014329
           ],
-          "oldId":88,
+          "oldId":93,
           "pos":[
             -231.8826294,
             863.4063721,
@@ -1254,7 +1292,7 @@
             -0.1056057702,
             0.06698827134
           ],
-          "oldId":89,
+          "oldId":94,
           "pos":[
             -440.8800354,
             874.5769043,
@@ -1267,6 +1305,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_znp4a6ch.wav",
         "success":true
@@ -1274,12 +1313,13 @@
       "name":"Pacenote 20",
       "notes":{
         "english":{
-          "after":"sixty.",
+          "_out":"into early three right cut? 60.",
+          "after":"60",
           "before":"into",
           "note":"early three right cut?"
         }
       },
-      "oldId":90,
+      "oldId":95,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1288,7 +1328,7 @@
             0.98280866,
             -0.01297721258
           ],
-          "oldId":91,
+          "oldId":96,
           "pos":[
             -230.2329865,
             875.6382446,
@@ -1304,7 +1344,7 @@
             0.3393050502,
             0.01312699272
           ],
-          "oldId":92,
+          "oldId":97,
           "pos":[
             -193.4553986,
             918.7261963,
@@ -1320,7 +1360,7 @@
             0.07755907079,
             -0.009724030573
           ],
-          "oldId":93,
+          "oldId":98,
           "pos":[
             -288.4673462,
             803.239502,
@@ -1333,6 +1373,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ii9zpfhk.wav",
         "success":true
@@ -1340,12 +1381,13 @@
       "name":"Pacenote 21",
       "notes":{
         "english":{
+          "_out":"short five right nip?",
           "after":"",
           "before":"",
           "note":"short five right nip?"
         }
       },
-      "oldId":94,
+      "oldId":99,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1354,7 +1396,7 @@
             -0.1546757403,
             -0.02102888964
           ],
-          "oldId":95,
+          "oldId":100,
           "pos":[
             -129.2823792,
             924.4716187,
@@ -1370,7 +1412,7 @@
             -0.6115135225,
             0.007611904281
           ],
-          "oldId":96,
+          "oldId":101,
           "pos":[
             -87.15407562,
             905.4779053,
@@ -1386,7 +1428,7 @@
             0.9293808914,
             -0.006689858394
           ],
-          "oldId":97,
+          "oldId":102,
           "pos":[
             -226.6341553,
             889.7664185,
@@ -1399,6 +1441,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_w9e3ency.wav",
         "success":true
@@ -1406,12 +1449,13 @@
       "name":"Pacenote 22",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "_out":"and five left cut, care rock exit? 50.",
+          "after":"50",
           "before":"and",
           "note":"five left cut, care rock exit?"
         }
       },
-      "oldId":98,
+      "oldId":103,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1420,7 +1464,7 @@
             -0.4843299676,
             -0.0001796902282
           ],
-          "oldId":99,
+          "oldId":104,
           "pos":[
             -65.59423828,
             889.9136963,
@@ -1436,7 +1480,7 @@
             -0.2381908679,
             0.0004231992221
           ],
-          "oldId":100,
+          "oldId":105,
           "pos":[
             -41.86375427,
             880.6860352,
@@ -1452,7 +1496,7 @@
             0.4160425273,
             0.0192729889
           ],
-          "oldId":101,
+          "oldId":106,
           "pos":[
             -199.2631836,
             916.267395,
@@ -1465,6 +1509,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_jgiqbzxm.wav",
         "success":true
@@ -1472,12 +1517,13 @@
       "name":"Pacenote 23",
       "notes":{
         "english":{
-          "after":"forty.",
+          "_out":"slowing, four left cut, into two right big cut? 40.",
+          "after":"40",
           "before":"",
           "note":"slowing, four left cut, into two right big cut?"
         }
       },
-      "oldId":102,
+      "oldId":107,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1486,7 +1532,7 @@
             0.04053335577,
             -0.001159748999
           ],
-          "oldId":103,
+          "oldId":108,
           "pos":[
             11.73097897,
             872.5941162,
@@ -1502,7 +1548,7 @@
             -0.7308562979,
             0.005963388239
           ],
-          "oldId":104,
+          "oldId":109,
           "pos":[
             68.12155151,
             867.9366455,
@@ -1516,9 +1562,9 @@
           "normal":[
             0.7970374659,
             -0.603876335,
-            0.008040513308
+            0.008040513309
           ],
-          "oldId":105,
+          "oldId":110,
           "pos":[
             -88.92378235,
             906.8187256,
@@ -1531,6 +1577,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_5jt1rxdv.wav",
         "success":true
@@ -1538,12 +1585,13 @@
       "name":"Pacenote 24",
       "notes":{
         "english":{
+          "_out":"short five right over crest?",
           "after":"",
           "before":"",
           "note":"short five right over crest?"
         }
       },
-      "oldId":106,
+      "oldId":111,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1552,7 +1600,7 @@
             -0.94492866,
             -0.006776434325
           ],
-          "oldId":107,
+          "oldId":112,
           "pos":[
             90.61873627,
             830.6205444,
@@ -1568,7 +1616,7 @@
             -0.9551014555,
             -0.1261684481
           ],
-          "oldId":108,
+          "oldId":113,
           "pos":[
             92.20184326,
             745.7971802,
@@ -1584,7 +1632,7 @@
             -0.1958348289,
             0.004004927703
           ],
-          "oldId":109,
+          "oldId":114,
           "pos":[
             50.44865036,
             877.8200073,
@@ -1597,6 +1645,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_3e40vng3.wav",
         "success":true
@@ -1604,12 +1653,13 @@
       "name":"Pacenote 25",
       "notes":{
         "english":{
+          "_out":"into slight left, double caution cliff?",
           "after":"",
           "before":"into",
           "note":"slight left, double caution cliff?"
         }
       },
-      "oldId":110,
+      "oldId":115,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1618,7 +1668,7 @@
             -0.9434433038,
             -0.09561825998
           ],
-          "oldId":111,
+          "oldId":116,
           "pos":[
             87.29730225,
             730.3121948,
@@ -1634,7 +1684,7 @@
             -0.985260029,
             0.0001727060714
           ],
-          "oldId":112,
+          "oldId":117,
           "pos":[
             77.9691391,
             696.5515137,
@@ -1650,7 +1700,7 @@
             -0.8391863789,
             0.001646151268
           ],
-          "oldId":113,
+          "oldId":118,
           "pos":[
             78.1029892,
             854.65979,
@@ -1663,6 +1713,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_6nt74qm0.wav",
         "success":true
@@ -1670,12 +1721,13 @@
       "name":"Pacenote 26",
       "notes":{
         "english":{
+          "_out":"into one left?",
           "after":"",
-          "before":"<none>",
+          "before":"into",
           "note":"one left?"
         }
       },
-      "oldId":114,
+      "oldId":119,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1684,7 +1736,7 @@
             -0.9999873495,
             -0.0047434364
           ],
-          "oldId":115,
+          "oldId":120,
           "pos":[
             76.97963715,
             688.3109741,
@@ -1700,7 +1752,7 @@
             -0.2706652931,
             -0.0002703868336
           ],
-          "oldId":116,
+          "oldId":121,
           "pos":[
             98.89715576,
             660.2064209,
@@ -1716,7 +1768,7 @@
             -0.9647981929,
             -0.006849079938
           ],
-          "oldId":117,
+          "oldId":122,
           "pos":[
             92.57762146,
             824.5213623,
@@ -1729,6 +1781,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tj5y81fn.wav",
         "success":true
@@ -1736,12 +1789,13 @@
       "name":"Pacenote 27",
       "notes":{
         "english":{
+          "_out":"and two left long, tightens cut?",
           "after":"",
           "before":"and",
           "note":"two left long, tightens cut?"
         }
       },
-      "oldId":118,
+      "oldId":123,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1750,7 +1804,7 @@
             -0.03494771599,
             0.001412792865
           ],
-          "oldId":119,
+          "oldId":124,
           "pos":[
             119.0452042,
             656.6994019,
@@ -1766,7 +1820,7 @@
             0.9818458897,
             0.08892044482
           ],
-          "oldId":120,
+          "oldId":125,
           "pos":[
             157.3961029,
             703.1807251,
@@ -1782,7 +1836,7 @@
             -0.9716692157,
             0.001799092589
           ],
-          "oldId":121,
+          "oldId":126,
           "pos":[
             80.16110992,
             706.6067505,
@@ -1795,6 +1849,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ckrc1g_y.wav",
         "success":true
@@ -1802,12 +1857,13 @@
       "name":"Pacenote 28",
       "notes":{
         "english":{
+          "_out":"into three right big cut?",
           "after":"",
           "before":"into",
           "note":"three right big cut?"
         }
       },
-      "oldId":122,
+      "oldId":127,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1816,7 +1872,7 @@
             0.9946137668,
             0.1028840497
           ],
-          "oldId":123,
+          "oldId":128,
           "pos":[
             155.8663177,
             717.4325562,
@@ -1832,7 +1888,7 @@
             0.4390929347,
             -0.001246199666
           ],
-          "oldId":124,
+          "oldId":129,
           "pos":[
             179.7557068,
             763.4597778,
@@ -1848,7 +1904,7 @@
             0.3601413388,
             -0.007464738959
           ],
-          "oldId":125,
+          "oldId":130,
           "pos":[
             135.2472229,
             658.8126831,
@@ -1861,6 +1917,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_vtjm28nc.wav",
         "success":true
@@ -1868,12 +1925,13 @@
       "name":"Pacenote 29",
       "notes":{
         "english":{
-          "after":"forty.",
+          "_out":"into two left cut? 40.",
+          "after":"40",
           "before":"into",
           "note":"two left cut?"
         }
       },
-      "oldId":126,
+      "oldId":131,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1882,7 +1940,7 @@
             0.6350922056,
             -0.003957772159
           ],
-          "oldId":127,
+          "oldId":132,
           "pos":[
             196.0897522,
             772.1270142,
@@ -1898,7 +1956,7 @@
             0.9580140885,
             0.002364111105
           ],
-          "oldId":128,
+          "oldId":133,
           "pos":[
             203.2329712,
             803.8398438,
@@ -1914,7 +1972,7 @@
             0.984052581,
             0.09546665881
           ],
-          "oldId":129,
+          "oldId":134,
           "pos":[
             157.0581055,
             705.161438,
@@ -1927,6 +1985,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_y15p6vkc.wav",
         "success":true
@@ -1934,12 +1993,13 @@
       "name":"Pacenote 30",
       "notes":{
         "english":{
-          "after":"seventy.",
+          "_out":"three right long opens nip? 70.",
+          "after":"70",
           "before":"",
           "note":"three right long opens nip?"
         }
       },
-      "oldId":130,
+      "oldId":135,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -1948,7 +2008,7 @@
             0.9232957948,
             -0.001401463349
           ],
-          "oldId":131,
+          "oldId":136,
           "pos":[
             184.7576752,
             843.2390747,
@@ -1964,7 +2024,7 @@
             -0.03401297296,
             -0.0003192407168
           ],
-          "oldId":132,
+          "oldId":137,
           "pos":[
             236.3583374,
             920.0754395,
@@ -1980,7 +2040,7 @@
             0.7724617151,
             0.001267777359
           ],
-          "oldId":133,
+          "oldId":138,
           "pos":[
             199.1465149,
             774.887085,
@@ -1993,6 +2053,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_mbb3tgbo.wav",
         "success":true
@@ -2000,12 +2061,13 @@
       "name":"Pacenote 31",
       "notes":{
         "english":{
+          "_out":"six left nip?",
           "after":"",
           "before":"",
           "note":"six left nip?"
         }
       },
-      "oldId":134,
+      "oldId":139,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2014,7 +2076,7 @@
             0.0003276846658,
             -0.001087303989
           ],
-          "oldId":135,
+          "oldId":140,
           "pos":[
             302.7010498,
             914.0131836,
@@ -2030,7 +2092,7 @@
             0.3015700659,
             -0.002951535133
           ],
-          "oldId":136,
+          "oldId":141,
           "pos":[
             359.7225342,
             923.8311768,
@@ -2046,7 +2108,7 @@
             0.5398906366,
             0.000916510294
           ],
-          "oldId":137,
+          "oldId":142,
           "pos":[
             196.778595,
             910.0736694,
@@ -2059,6 +2121,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8gpf810v.wav",
         "success":true
@@ -2066,12 +2129,13 @@
       "name":"Pacenote 32",
       "notes":{
         "english":{
+          "_out":"into six right cut?",
           "after":"",
           "before":"into",
           "note":"six right cut?"
         }
       },
-      "oldId":138,
+      "oldId":143,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2080,7 +2144,7 @@
             0.3401690281,
             0.001458185898
           ],
-          "oldId":139,
+          "oldId":144,
           "pos":[
             375.5431824,
             929.177124,
@@ -2096,7 +2160,7 @@
             0.04214288643,
             0.02982264634
           ],
-          "oldId":140,
+          "oldId":145,
           "pos":[
             441.061676,
             942.3040161,
@@ -2112,7 +2176,7 @@
             -0.1190148678,
             0.0001175259807
           ],
-          "oldId":141,
+          "oldId":146,
           "pos":[
             256.9662476,
             918.3348999,
@@ -2125,6 +2189,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_abh0sc8n.wav",
         "success":true
@@ -2132,12 +2197,13 @@
       "name":"Pacenote 33",
       "notes":{
         "english":{
+          "_out":"into bump?",
           "after":"",
-          "before":"<none>",
+          "before":"into",
           "note":"bump?"
         }
       },
-      "oldId":142,
+      "oldId":147,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2146,7 +2212,7 @@
             0.03069263354,
             -0.03274935034
           ],
-          "oldId":143,
+          "oldId":148,
           "pos":[
             449.5610046,
             942.6211548,
@@ -2162,7 +2228,7 @@
             0.02296766068,
             -0.00567327615
           ],
-          "oldId":144,
+          "oldId":149,
           "pos":[
             495.5445251,
             943.7596436,
@@ -2178,7 +2244,7 @@
             0.2403888876,
             -0.00158114885
           ],
-          "oldId":145,
+          "oldId":150,
           "pos":[
             341.5345764,
             918.7351685,
@@ -2191,6 +2257,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_q4tb3qsu.wav",
         "success":true
@@ -2198,12 +2265,13 @@
       "name":"Pacenote 34",
       "notes":{
         "english":{
+          "_out":"and small jump, send it?",
           "after":"",
           "before":"and",
           "note":"small jump, send it?"
         }
       },
-      "oldId":146,
+      "oldId":151,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2212,7 +2280,7 @@
             0.01153052529,
             -0.07433198757
           ],
-          "oldId":147,
+          "oldId":152,
           "pos":[
             522.2766724,
             944.2924194,
@@ -2228,7 +2296,7 @@
             0.005976140968,
             -0.1439820835
           ],
-          "oldId":148,
+          "oldId":153,
           "pos":[
             553.7706299,
             944.5405884,
@@ -2244,7 +2312,7 @@
             0.2395384264,
             2.815481848e-05
           ],
-          "oldId":149,
+          "oldId":154,
           "pos":[
             399.7948914,
             937.3059692,
@@ -2257,6 +2325,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kxxr8v0w.wav",
         "success":true
@@ -2264,12 +2333,13 @@
       "name":"Pacenote 35",
       "notes":{
         "english":{
+          "_out":"and slight right?",
           "after":"",
           "before":"and",
           "note":"slight right?"
         }
       },
-      "oldId":150,
+      "oldId":155,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2278,7 +2348,7 @@
             -0.01791170377,
             -0.07483889634
           ],
-          "oldId":151,
+          "oldId":156,
           "pos":[
             587.0839233,
             944.4411011,
@@ -2294,7 +2364,7 @@
             -0.1168954486,
             0.01341025599
           ],
-          "oldId":152,
+          "oldId":157,
           "pos":[
             630.4107666,
             941.4116211,
@@ -2310,7 +2380,7 @@
             0.03124682251,
             -0.01545942171
           ],
-          "oldId":153,
+          "oldId":158,
           "pos":[
             466.4970398,
             943.1447144,
@@ -2323,6 +2393,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8eh_wn0t.wav",
         "success":true
@@ -2330,12 +2401,13 @@
       "name":"Pacenote 36",
       "notes":{
         "english":{
-          "after":"seventy.",
+          "_out":"and six left cut? 70.",
+          "after":"70",
           "before":"and",
           "note":"six left cut?"
         }
       },
-      "oldId":154,
+      "oldId":159,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2344,7 +2416,7 @@
             -0.06052885891,
             0.01886066046
           ],
-          "oldId":155,
+          "oldId":160,
           "pos":[
             650.6251221,
             939.3637085,
@@ -2360,7 +2432,7 @@
             0.2040434219,
             0.03106096688
           ],
-          "oldId":156,
+          "oldId":161,
           "pos":[
             731.5797729,
             946.8567505,
@@ -2376,7 +2448,7 @@
             0.01747433767,
             -0.05515707418
           ],
-          "oldId":157,
+          "oldId":162,
           "pos":[
             514.0184326,
             944.1688232,
@@ -2389,6 +2461,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_v4n6euwe.wav",
         "success":true
@@ -2396,12 +2469,13 @@
       "name":"Pacenote 37",
       "notes":{
         "english":{
+          "_out":"brake over crest?",
           "after":"",
           "before":"",
           "note":"brake over crest?"
         }
       },
-      "oldId":158,
+      "oldId":163,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2410,7 +2484,7 @@
             0.1535649676,
             0.01203939302
           ],
-          "oldId":159,
+          "oldId":164,
           "pos":[
             796.2228394,
             960.2564087,
@@ -2426,7 +2500,7 @@
             -0.00312319745,
             0.01291735706
           ],
-          "oldId":160,
+          "oldId":165,
           "pos":[
             870.2546997,
             966.9671631,
@@ -2442,7 +2516,7 @@
             -0.09578319903,
             0.01938652139
           ],
-          "oldId":161,
+          "oldId":166,
           "pos":[
             642.5811768,
             940.0377808,
@@ -2455,6 +2529,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_x9ql10eg.wav",
         "success":true
@@ -2462,12 +2537,13 @@
       "name":"Pacenote 38",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "_out":"and very late three right cut? 50.",
+          "after":"50",
           "before":"and",
           "note":"very late three right cut?"
         }
       },
-      "oldId":162,
+      "oldId":167,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2476,7 +2552,7 @@
             -0.2992320652,
             0.009685300828
           ],
-          "oldId":163,
+          "oldId":168,
           "pos":[
             907.7358398,
             962.3557739,
@@ -2492,7 +2568,7 @@
             -0.9510869944,
             0.003132638579
           ],
-          "oldId":164,
+          "oldId":169,
           "pos":[
             952.9220581,
             905.7042236,
@@ -2508,7 +2584,7 @@
             0.2034008058,
             0.03862483546
           ],
-          "oldId":165,
+          "oldId":170,
           "pos":[
             771.8101196,
             955.6810913,
@@ -2521,6 +2597,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ptcx9k64.wav",
         "success":true
@@ -2528,12 +2605,13 @@
       "name":"Pacenote 39",
       "notes":{
         "english":{
+          "_out":"crest into sudden five left down hill big cut?",
           "after":"",
           "before":"",
           "note":"crest into sudden five left down hill big cut?"
         }
       },
-      "oldId":166,
+      "oldId":171,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2542,7 +2620,7 @@
             -0.9508536734,
             -0.1748093677
           ],
-          "oldId":167,
+          "oldId":172,
           "pos":[
             935.9550781,
             861.8078613,
@@ -2558,7 +2636,7 @@
             -0.8786782708,
             -0.1830604015
           ],
-          "oldId":168,
+          "oldId":173,
           "pos":[
             942.6842651,
             788.6685791,
@@ -2574,7 +2652,7 @@
             -0.705484484,
             -0.002133931961
           ],
-          "oldId":169,
+          "oldId":174,
           "pos":[
             941.4424438,
             942.65625,
@@ -2587,6 +2665,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hb1dhx5_.wav",
         "success":true
@@ -2594,12 +2673,13 @@
       "name":"Pacenote 40",
       "notes":{
         "english":{
-          "after":"ninety.",
+          "_out":"into short five right cut? brake? 90.",
+          "after":"90",
           "before":"into",
-          "note":"short five right cut? brake."
+          "note":"short five right cut? brake?"
         }
       },
-      "oldId":170,
+      "oldId":175,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2608,7 +2688,7 @@
             -0.8761059413,
             -0.1510399077
           ],
-          "oldId":171,
+          "oldId":176,
           "pos":[
             949.4733276,
             775.6727905,
@@ -2624,7 +2704,7 @@
             -0.9983712086,
             -0.0570264557
           ],
-          "oldId":172,
+          "oldId":177,
           "pos":[
             963.859375,
             714.4248657,
@@ -2640,7 +2720,7 @@
             -0.9178808105,
             0.0005853793743
           ],
-          "oldId":173,
+          "oldId":178,
           "pos":[
             947.6784058,
             892.3222046,
@@ -2653,6 +2733,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_em85j456.wav",
         "success":false
@@ -2660,12 +2741,13 @@
       "name":"Pacenote 42",
       "notes":{
         "english":{
+          "_out":"long 1 right slight cut, rocks inside?",
           "after":"",
           "before":"",
           "note":"long 1 right slight cut, rocks inside?"
         }
       },
-      "oldId":174,
+      "oldId":179,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2674,7 +2756,7 @@
             -0.9225945031,
             -0.1405250549
           ],
-          "oldId":175,
+          "oldId":180,
           "pos":[
             956.725769,
             628.7006836,
@@ -2690,7 +2772,7 @@
             0.942774899,
             -0.1290311852
           ],
-          "oldId":176,
+          "oldId":181,
           "pos":[
             933.2875366,
             631.9005737,
@@ -2706,7 +2788,7 @@
             -0.8713872093,
             -0.1709287959
           ],
-          "oldId":177,
+          "oldId":182,
           "pos":[
             945.5544434,
             783.0604248,
@@ -2719,6 +2801,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_e036qcne.wav",
         "success":true
@@ -2726,12 +2809,13 @@
       "name":"Pacenote 43",
       "notes":{
         "english":{
+          "_out":"into one left cut?",
           "after":"",
-          "before":"<none>",
+          "before":"into",
           "note":"one left cut?"
         }
       },
-      "oldId":178,
+      "oldId":183,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2740,7 +2824,7 @@
             0.8490686117,
             -0.1257856833
           ],
-          "oldId":179,
+          "oldId":184,
           "pos":[
             936.8197021,
             639.1010742,
@@ -2756,7 +2840,7 @@
             0.6678942668,
             -0.1724859006
           ],
-          "oldId":180,
+          "oldId":185,
           "pos":[
             933.1765747,
             665.8666382,
@@ -2772,7 +2856,7 @@
             -0.5046924101,
             -0.1688003667
           ],
-          "oldId":181,
+          "oldId":186,
           "pos":[
             950.131958,
             618.7522583,
@@ -2785,6 +2869,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ceqi1uic.wav",
         "success":true
@@ -2792,12 +2877,13 @@
       "name":"Pacenote 44",
       "notes":{
         "english":{
-          "after":"forty.",
+          "_out":"and short five right cut? 40.",
+          "after":"40",
           "before":"and",
           "note":"short five right cut?"
         }
       },
-      "oldId":182,
+      "oldId":187,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2806,7 +2892,7 @@
             0.5693218123,
             -0.1735772676
           ],
-          "oldId":183,
+          "oldId":188,
           "pos":[
             908.7856445,
             683.921936,
@@ -2822,7 +2908,7 @@
             0.8164263942,
             -0.1586598554
           ],
-          "oldId":184,
+          "oldId":189,
           "pos":[
             881.5316162,
             710.6367798,
@@ -2838,7 +2924,7 @@
             0.9767858012,
             -0.1491538438
           ],
-          "oldId":185,
+          "oldId":190,
           "pos":[
             941.0800781,
             652.2628784,
@@ -2851,6 +2937,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__em_vwm3.wav",
         "success":true
@@ -2858,12 +2945,13 @@
       "name":"Pacenote 45",
       "notes":{
         "english":{
+          "_out":"five right tightens cut?",
           "after":"",
           "before":"",
           "note":"five right tightens cut?"
         }
       },
-      "oldId":186,
+      "oldId":191,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2872,7 +2960,7 @@
             0.9227539891,
             -0.102810728
           ],
-          "oldId":187,
+          "oldId":192,
           "pos":[
             861.4866333,
             746.1116943,
@@ -2888,7 +2976,7 @@
             0.8806442137,
             -0.01185579405
           ],
-          "oldId":188,
+          "oldId":193,
           "pos":[
             862.8609009,
             806.1679077,
@@ -2904,7 +2992,7 @@
             0.5577988671,
             -0.1713011101
           ],
-          "oldId":189,
+          "oldId":194,
           "pos":[
             920.5258789,
             675.8327637,
@@ -2917,6 +3005,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_swuam474.wav",
         "success":true
@@ -2924,12 +3013,13 @@
       "name":"Pacenote 46",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "_out":"and two left long cut? opens over crest? 50.",
+          "after":"50",
           "before":"and",
           "note":"two left long cut? opens over crest?"
         }
       },
-      "oldId":190,
+      "oldId":195,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -2938,7 +3028,7 @@
             0.9362585114,
             -0.02543736406
           ],
-          "oldId":191,
+          "oldId":196,
           "pos":[
             880.0810547,
             836.590332,
@@ -2954,7 +3044,7 @@
             -0.1846622555,
             -0.05643865103
           ],
-          "oldId":192,
+          "oldId":197,
           "pos":[
             839.899292,
             874.0575562,
@@ -2970,7 +3060,7 @@
             0.845837234,
             -0.1475164738
           ],
-          "oldId":193,
+          "oldId":198,
           "pos":[
             874.9346924,
             720.9003296,
@@ -2983,6 +3073,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_rzl0zr__.wav",
         "success":true
@@ -2990,12 +3081,13 @@
       "name":"Pacenote 47",
       "notes":{
         "english":{
-          "after":"forty.",
+          "_out":"send it over small jump? and bump? 40.",
+          "after":"40",
           "before":"",
           "note":"send it over small jump? and bump?"
         }
       },
-      "oldId":194,
+      "oldId":199,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3004,7 +3096,7 @@
             -0.3607889216,
             -0.13761279
           ],
-          "oldId":195,
+          "oldId":200,
           "pos":[
             792.4581909,
             858.6599121,
@@ -3020,7 +3112,7 @@
             -0.3717818749,
             -0.05577845206
           ],
-          "oldId":196,
+          "oldId":201,
           "pos":[
             722.1630249,
             830.5200195,
@@ -3036,7 +3128,7 @@
             0.4882340101,
             0.0008279237688
           ],
-          "oldId":197,
+          "oldId":202,
           "pos":[
             870.1868286,
             870.6817627,
@@ -3049,6 +3141,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kojn_hej.wav",
         "success":true
@@ -3056,12 +3149,13 @@
       "name":"Pacenote 49",
       "notes":{
         "english":{
-          "after":"ninety.",
+          "_out":"into five left plus nip? narrows over bridge? 90.",
+          "after":"90",
           "before":"",
           "note":"into five left plus nip? narrows over bridge?"
         }
       },
-      "oldId":198,
+      "oldId":203,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3070,7 +3164,7 @@
             -0.4434797005,
             -0.1112085768
           ],
-          "oldId":199,
+          "oldId":204,
           "pos":[
             684.5056763,
             814.9467163,
@@ -3086,7 +3180,7 @@
             -0.7312800626,
             -0.01246432333
           ],
-          "oldId":200,
+          "oldId":205,
           "pos":[
             642.7652588,
             783.8387451,
@@ -3102,7 +3196,7 @@
             -0.3136764482,
             -0.1106914471
           ],
-          "oldId":201,
+          "oldId":206,
           "pos":[
             819.8969727,
             868.7301025,
@@ -3115,6 +3209,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_jpb7lt39.wav",
         "success":true
@@ -3122,12 +3217,13 @@
       "name":"Pacenote 50",
       "notes":{
         "english":{
+          "_out":"send it over big jump, keep left?",
           "after":"",
           "before":"",
           "note":"send it over big jump, keep left?"
         }
       },
-      "oldId":202,
+      "oldId":207,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3136,7 +3232,7 @@
             -0.7460119628,
             0.1718089106
           ],
-          "oldId":203,
+          "oldId":208,
           "pos":[
             583.8359375,
             715.0765381,
@@ -3152,7 +3248,7 @@
             -0.74663536,
             -0.01304968088
           ],
-          "oldId":204,
+          "oldId":209,
           "pos":[
             521.6655273,
             643.9761963,
@@ -3168,7 +3264,7 @@
             -0.3630112222,
             -0.1017527436
           ],
-          "oldId":205,
+          "oldId":210,
           "pos":[
             705.9242554,
             824.1251831,
@@ -3181,6 +3277,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_k7pebi9k.wav",
         "success":true
@@ -3188,12 +3285,13 @@
       "name":"Pacenote 51",
       "notes":{
         "english":{
-          "after":"ninety.",
+          "_out":"into six left? slowing? 90.",
+          "after":"90",
           "before":"into",
           "note":"six left? slowing?"
         }
       },
-      "oldId":206,
+      "oldId":211,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3202,7 +3300,7 @@
             -0.7543497741,
             -0.04727748444
           ],
-          "oldId":207,
+          "oldId":212,
           "pos":[
             510.4661865,
             631.3193359,
@@ -3218,7 +3316,7 @@
             -0.9358963327,
             -0.1031631278
           ],
-          "oldId":208,
+          "oldId":213,
           "pos":[
             435.3870544,
             507.2260132,
@@ -3234,7 +3332,7 @@
             -0.5742850945,
             -0.0797456884
           ],
-          "oldId":209,
+          "oldId":214,
           "pos":[
             665.9312744,
             804.0870972,
@@ -3247,6 +3345,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__09vffxz.wav",
         "success":true
@@ -3254,12 +3353,13 @@
       "name":"Pacenote 52",
       "notes":{
         "english":{
+          "_out":"brake five right down hill?",
           "after":"",
           "before":"",
           "note":"brake five right down hill?"
         }
       },
-      "oldId":210,
+      "oldId":215,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3268,7 +3368,7 @@
             -0.9451069269,
             -0.1014459539
           ],
-          "oldId":211,
+          "oldId":216,
           "pos":[
             409.9387207,
             425.2902832,
@@ -3284,7 +3384,7 @@
             -0.7727173,
             -0.1702469064
           ],
-          "oldId":212,
+          "oldId":217,
           "pos":[
             378.5416565,
             364.8900146,
@@ -3300,7 +3400,7 @@
             -0.7864170655,
             -0.05326410744
           ],
-          "oldId":213,
+          "oldId":218,
           "pos":[
             492.6950989,
             609.8678589,
@@ -3313,6 +3413,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_s0p462pj.wav",
         "success":true
@@ -3320,12 +3421,13 @@
       "name":"Pacenote 53",
       "notes":{
         "english":{
+          "_out":"into four left cut?",
           "after":"",
           "before":"into",
           "note":"four left cut?"
         }
       },
-      "oldId":214,
+      "oldId":219,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3334,7 +3436,7 @@
             -0.809084312,
             -0.08948018006
           ],
-          "oldId":215,
+          "oldId":220,
           "pos":[
             366.9919434,
             350.0455627,
@@ -3350,7 +3452,7 @@
             -0.9989303211,
             -0.04623370293
           ],
-          "oldId":216,
+          "oldId":221,
           "pos":[
             349.0349731,
             296.1187744,
@@ -3366,7 +3468,7 @@
             -0.9504551961,
             -0.08199095047
           ],
-          "oldId":217,
+          "oldId":222,
           "pos":[
             427.2709961,
             483.1615906,
@@ -3379,6 +3481,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_qk12x93u.wav",
         "success":true
@@ -3386,12 +3489,13 @@
       "name":"Pacenote 54",
       "notes":{
         "english":{
+          "_out":"into square right opens? nip stop sign?",
           "after":"",
           "before":"into",
           "note":"square right opens? nip stop sign?"
         }
       },
-      "oldId":218,
+      "oldId":223,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3400,7 +3504,7 @@
             -0.9971817972,
             -0.04736631487
           ],
-          "oldId":219,
+          "oldId":224,
           "pos":[
             349.3086853,
             285.7511292,
@@ -3416,7 +3520,7 @@
             -0.5658343856,
             -0.01306911128
           ],
-          "oldId":220,
+          "oldId":225,
           "pos":[
             333.2828674,
             237.7172546,
@@ -3432,7 +3536,7 @@
             -0.9451069269,
             -0.1014459539
           ],
-          "oldId":221,
+          "oldId":226,
           "pos":[
             409.9387207,
             425.2902832,
@@ -3445,6 +3549,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_64rl56kx.wav",
         "success":false
@@ -3452,12 +3557,13 @@
       "name":"Pacenote 55",
       "notes":{
         "english":{
-          "after":"ninety.",
+          "_out":"and late six left long? 90.",
+          "after":"90",
           "before":"and",
           "note":"late six left long?"
         }
       },
-      "oldId":222,
+      "oldId":227,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3466,7 +3572,7 @@
             -0.7155108752,
             -0.0224580671
           ],
-          "oldId":223,
+          "oldId":228,
           "pos":[
             309.0676575,
             218.1669464,
@@ -3482,7 +3588,7 @@
             -0.9838913365,
             -0.02852613196
           ],
-          "oldId":224,
+          "oldId":229,
           "pos":[
             251.6164246,
             55.78138351,
@@ -3498,7 +3604,7 @@
             -0.9924533377,
             -0.01776609659
           ],
-          "oldId":225,
+          "oldId":230,
           "pos":[
             350.6296997,
             259.035614,
@@ -3511,6 +3617,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1j60jesp.wav",
         "success":true
@@ -3518,12 +3625,13 @@
       "name":"Pacenote 56",
       "notes":{
         "english":{
-          "after":"one fifty.",
+          "_out":"long five right opens keep in? 1 50.",
+          "after":"1 50",
           "before":"",
           "note":"long five right opens keep in?"
         }
       },
-      "oldId":226,
+      "oldId":231,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3532,7 +3640,7 @@
             -0.9981904692,
             -0.02371203335
           ],
-          "oldId":227,
+          "oldId":232,
           "pos":[
             275.3965454,
             -34.37569427,
@@ -3548,7 +3656,7 @@
             -0.2660000645,
             -0.0405972696
           ],
-          "oldId":228,
+          "oldId":233,
           "pos":[
             185.0680084,
             -135.1021729,
@@ -3564,7 +3672,7 @@
             -0.8193356207,
             -0.04376062344
           ],
-          "oldId":229,
+          "oldId":234,
           "pos":[
             286.1782227,
             190.8099213,
@@ -3577,6 +3685,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_3gh9038n.wav",
         "success":true
@@ -3584,12 +3693,13 @@
       "name":"Pacenote 57",
       "notes":{
         "english":{
-          "after":"four hundred.",
+          "_out":"six left plus? 400.",
+          "after":"400",
           "before":"",
           "note":"six left plus?"
         }
       },
-      "oldId":230,
+      "oldId":235,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3598,7 +3708,7 @@
             -0.2043660488,
             -0.01212884195
           ],
-          "oldId":231,
+          "oldId":236,
           "pos":[
             48.12678528,
             -155.2237549,
@@ -3614,7 +3724,7 @@
             -0.531703748,
             -0.001991973057
           ],
-          "oldId":232,
+          "oldId":237,
           "pos":[
             -50.07398605,
             -193.935379,
@@ -3630,7 +3740,7 @@
             -0.3710149341,
             -0.05399878659
           ],
-          "oldId":233,
+          "oldId":238,
           "pos":[
             215.1323242,
             -124.9326248,
@@ -3643,6 +3753,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_l0m1nbb7.wav",
         "success":true
@@ -3650,12 +3761,13 @@
       "name":"Pacenote 59",
       "notes":{
         "english":{
-          "after":"fifty.",
+          "_out":"six left? 50.",
+          "after":"50",
           "before":"",
           "note":"six left?"
         }
       },
-      "oldId":234,
+      "oldId":239,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3664,7 +3776,7 @@
             -0.6277595487,
             -0.01535466378
           ],
-          "oldId":235,
+          "oldId":240,
           "pos":[
             -377.8530884,
             -444.2410583,
@@ -3680,7 +3792,7 @@
             -0.8295394668,
             0.1600839871
           ],
-          "oldId":236,
+          "oldId":241,
           "pos":[
             -443.9220276,
             -514.2211914,
@@ -3696,7 +3808,7 @@
             -0.6234306906,
             -0.01584694197
           ],
-          "oldId":237,
+          "oldId":242,
           "pos":[
             -187.5158997,
             -302.0344238,
@@ -3709,6 +3821,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_71gg80ho.wav",
         "success":true
@@ -3716,12 +3829,13 @@
       "name":"Pacenote 60",
       "notes":{
         "english":{
-          "after":"seventy.",
+          "_out":"five right minus over crest, tightens? 70.",
+          "after":"70",
           "before":"",
           "note":"five right minus over crest, tightens?"
         }
       },
-      "oldId":238,
+      "oldId":243,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3730,7 +3844,7 @@
             -0.903353635,
             0.1709513614
           ],
-          "oldId":239,
+          "oldId":244,
           "pos":[
             -466.994751,
             -558.4848022,
@@ -3746,7 +3860,7 @@
             -0.3930468193,
             0.1696254219
           ],
-          "oldId":240,
+          "oldId":245,
           "pos":[
             -516.2790527,
             -611.2972412,
@@ -3762,7 +3876,7 @@
             -0.6050153085,
             -0.01660094498
           ],
-          "oldId":241,
+          "oldId":246,
           "pos":[
             -367.6336975,
             -436.2779541,
@@ -3775,6 +3889,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_q87hoogw.wav",
         "success":true
@@ -3782,12 +3897,13 @@
       "name":"Pacenote 61",
       "notes":{
         "english":{
+          "_out":"two right, nip stop sign?",
           "after":"",
           "before":"",
           "note":"two right, nip stop sign?"
         }
       },
-      "oldId":242,
+      "oldId":247,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3796,7 +3912,7 @@
             -0.2002805724,
             0.005117130005
           ],
-          "oldId":243,
+          "oldId":248,
           "pos":[
             -584.0099487,
             -629.8668213,
@@ -3812,7 +3928,7 @@
             0.8841933245,
             0.136315677
           ],
-          "oldId":244,
+          "oldId":249,
           "pos":[
             -626.6856079,
             -611.4466553,
@@ -3828,7 +3944,7 @@
             -0.751078359,
             0.1628667649
           ],
-          "oldId":245,
+          "oldId":250,
           "pos":[
             -483.0435791,
             -587.5946655,
@@ -3841,6 +3957,7 @@
       "todo":false
     },
     {
+      "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gvq8fi20.wav",
         "success":true
@@ -3848,12 +3965,13 @@
       "name":"Pacenote 62",
       "notes":{
         "english":{
+          "_out":"and six left over finish? into long 4 right.",
           "after":"",
           "before":"and",
           "note":"six left over finish? into long 4 right."
         }
       },
-      "oldId":246,
+      "oldId":251,
       "pacenoteWaypoints":[
         {
           "name":"corner start",
@@ -3862,7 +3980,7 @@
             0.8974474685,
             0.1544737156
           ],
-          "oldId":247,
+          "oldId":252,
           "pos":[
             -635.8779297,
             -590.9161377,
@@ -3878,7 +3996,7 @@
             0.6581074629,
             0.1212585197
           ],
-          "oldId":248,
+          "oldId":253,
           "pos":[
             -673.8765259,
             -540.5864258,
@@ -3894,7 +4012,7 @@
             -0.1486798886,
             0.007290582522
           ],
-          "oldId":249,
+          "oldId":254,
           "pos":[
             -590.2076416,
             -631.0604858,

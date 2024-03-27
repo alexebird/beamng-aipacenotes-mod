@@ -40,14 +40,6 @@
     "desc": "Move the next vehicle towards vehicle along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_backward()"
   },
-  "toggle_recce_drawDebug": {
-    "cat": "gameplay",
-    "ctx": "tlua",
-    "order": 6,
-    "title": "Toggle Recce Pacenotes Visualization (aip)",
-    "desc": "Toggle the drawing of visual markers for pacenotes.",
-    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_toggle_recce_drawDebug()"
-  },
 
   "rallyEditorSave": {
     "cat": "editor",
