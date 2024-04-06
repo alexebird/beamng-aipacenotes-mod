@@ -1,6 +1,8 @@
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
+local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
 
 local C = {}
 local logTag = 'aipacenotes_pacenote'
@@ -137,6 +139,9 @@ function C:joinedNote(lang)
 
   -- trim string
   txt = txt:gsub("^%s*(.-)%s*$", "%1")
+
+  local word_map = SettingsManager.getMainSettings():getVoiceWordMap()
+  txt = normalizer.replaceWords(word_map, txt)
 
   return txt
 end

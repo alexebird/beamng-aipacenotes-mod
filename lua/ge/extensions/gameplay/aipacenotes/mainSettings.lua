@@ -15,6 +15,7 @@ end
 function C:_reset()
   self.settingsData_default = nil
   self.settingsData_languages = nil
+  self.settingsData_merged = nil
 end
 
 local function loadFname(settingsFname)
@@ -54,15 +55,19 @@ function C:load()
 end
 
 function C:_mergedSettingsData()
+  if self.settingsData_merged then
+    return self.settingsData_merged
+  end
+
   local languageData = self.settingsData_languages[self.language]
-  local settingsData_merged = self.settingsData_default.default
+  self.settingsData_merged = self.settingsData_default.default
   if languageData then
-    settingsData_merged = tableMergeRecursive(settingsData_merged, languageData)
+    self.settingsData_merged = tableMergeRecursive(self.settingsData_merged, languageData)
   else
     log('W', logTag, 'no language.mainSettings.json entry for '..self.language)
   end
   -- print(dumps(settingsData_merged))
-  return settingsData_merged
+  return self.settingsData_merged
 end
 
 function C:getSeparateDigits()
@@ -96,6 +101,19 @@ function C:getDistanceCallLevel3Threshold()
 end
 function C:getDistanceCallLevel3Text()
   return self:_mergedSettingsData().distance_calls.level3.text or 'and'
+end
+
+function C:getVoiceWordMap()
+  return self:_mergedSettingsData().voice.word_map or {}
+end
+
+function C:getWordMapForLanguage(lang)
+  local word_map = self.settingsData_languages[lang]
+  if word_map then
+    return word_map.voice.word_map or {}
+  else
+    return {}
+  end
 end
 
 return function(...)

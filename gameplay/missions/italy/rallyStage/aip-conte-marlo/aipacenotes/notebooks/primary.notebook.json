@@ -21,7 +21,7 @@
       "name":"Import_A 1",
       "notes":{
         "english":{
-          "_out":"start into big bumps down hill? 60.",
+          "_out":"start into big bumps down hill? sixty.",
           "after":"60",
           "before":"",
           "note":"start into big bumps down hill?"
@@ -225,7 +225,7 @@
       "name":"Import_A 4",
       "notes":{
         "english":{
-          "_out":"and five left keep right narrow exit? 300.",
+          "_out":"and five left keep right narrow exit? three hundred.",
           "after":"300",
           "before":"and",
           "note":"five left keep right narrow exit?"
@@ -293,7 +293,7 @@
       "name":"Import_A 5",
       "notes":{
         "english":{
-          "_out":"big bump into six right? 50.",
+          "_out":"big bump into six right? fifty.",
           "after":"50",
           "before":"",
           "note":"big bump into six right?"
@@ -429,7 +429,7 @@
       "name":"Import_A 7",
       "notes":{
         "english":{
-          "_out":"and six left? 80.",
+          "_out":"and six left? eighty.",
           "after":"80",
           "before":"and",
           "note":"six left?"
@@ -633,8 +633,8 @@
       "name":"Import_A 10",
       "notes":{
         "english":{
-          "_out":"into crest? 1 50.",
-          "after":"1 50",
+          "_out":"into crest? one fifty.",
+          "after":"150",
           "before":"into",
           "note":"crest?"
         }
@@ -701,7 +701,7 @@
       "name":"Import_A 11",
       "notes":{
         "english":{
-          "_out":"3 left? 60.",
+          "_out":"three left? sixty.",
           "after":"60",
           "before":"",
           "note":"3 left?"
@@ -1174,7 +1174,7 @@
       "name":"Import_A 18",
       "notes":{
         "english":{
-          "_out":"and five left? 70.",
+          "_out":"and five left? seventy.",
           "after":"70",
           "before":"and",
           "note":"five left?"
@@ -1378,7 +1378,7 @@
       "name":"Import_A 21",
       "notes":{
         "english":{
-          "_out":"into six left? into flat six right down hill? 50.",
+          "_out":"into six left? into flat six right down hill? fifty.",
           "after":"50",
           "before":"into",
           "note":"six left? into flat six right down hill?"
@@ -1446,7 +1446,7 @@
       "name":"Import_A 22",
       "notes":{
         "english":{
-          "_out":"flat left? 70.",
+          "_out":"flat left? seventy.",
           "after":"70",
           "before":"",
           "note":"flat left?"
@@ -1514,8 +1514,8 @@
       "name":"Import_A 23",
       "notes":{
         "english":{
-          "_out":"flat left? 1 50.",
-          "after":"1 50",
+          "_out":"flat left? one fifty.",
+          "after":"150",
           "before":"",
           "note":"flat left?"
         }
@@ -1715,7 +1715,7 @@
       "name":"Import_A 26",
       "notes":{
         "english":{
-          "_out":"into six right, down hill? 100.",
+          "_out":"into six right, down hill? one hundred.",
           "after":"100",
           "before":"into",
           "note":"six right, down hill?"
@@ -1783,7 +1783,7 @@
       "name":"Import_A 27",
       "notes":{
         "english":{
-          "_out":"five right? 50.",
+          "_out":"five right? fifty.",
           "after":"50",
           "before":"",
           "note":"five right?"
@@ -1851,7 +1851,7 @@
       "name":"Import_B 28",
       "notes":{
         "english":{
-          "_out":"six right minus? 60.",
+          "_out":"six right minus? sixty.",
           "after":"60",
           "before":"",
           "note":"six right minus?"
@@ -1919,7 +1919,7 @@
       "name":"Import_B 29",
       "notes":{
         "english":{
-          "_out":"six right opens? 100.",
+          "_out":"six right opens? one hundred.",
           "after":"100",
           "before":"",
           "note":"six right opens?"
@@ -2120,8 +2120,8 @@
       "name":"Import_B 32",
       "notes":{
         "english":{
-          "_out":"and four left over crest? 1 50.",
-          "after":"1 50",
+          "_out":"and four left over crest? one fifty.",
+          "after":"150",
           "before":"and",
           "note":"four left over crest?"
         }
@@ -2256,7 +2256,7 @@
       "name":"Import_B 34",
       "notes":{
         "english":{
-          "_out":"and over bumps and jump maybe? 80.",
+          "_out":"and over bumps and jump maybe? eighty.",
           "after":"80",
           "before":"and",
           "note":"over bumps and jump maybe?"
@@ -2324,7 +2324,7 @@
       "name":"Import_B 35",
       "notes":{
         "english":{
-          "_out":"slowing over big jump caution? 60.",
+          "_out":"slowing over big jump caution? sixty.",
           "after":"60",
           "before":"",
           "note":"slowing over big jump caution?"
@@ -2460,7 +2460,7 @@
       "name":"Import_B 37",
       "notes":{
         "english":{
-          "_out":"into five left? 40.",
+          "_out":"into five left? forty.",
           "after":"40",
           "before":"into",
           "note":"five left?"
@@ -2596,7 +2596,7 @@
       "name":"Import_B 39",
       "notes":{
         "english":{
-          "_out":"and three right plus? 70.",
+          "_out":"and three right plus? seventy.",
           "after":"70",
           "before":"and",
           "note":"three right plus?"
@@ -2732,7 +2732,7 @@
       "name":"Import_B 41",
       "notes":{
         "english":{
-          "_out":"and square left? 200.",
+          "_out":"and square left? two hundred.",
           "after":"200",
           "before":"and",
           "note":"square left?"
@@ -2800,7 +2800,7 @@
       "name":"Import_B 42",
       "notes":{
         "english":{
-          "_out":"5 left?",
+          "_out":"five left?",
           "after":"",
           "before":"",
           "note":"5 left?"
@@ -3004,7 +3004,7 @@
       "name":"Import_B 45",
       "notes":{
         "english":{
-          "_out":"into four left downhill? 50.",
+          "_out":"into four left down hill? fifty.",
           "after":"50",
           "before":"into",
           "note":"four left downhill?"
@@ -3072,7 +3072,7 @@
       "name":"Import_B 46",
       "notes":{
         "english":{
-          "_out":"six left opens? 70.",
+          "_out":"six left opens? seventy.",
           "after":"70",
           "before":"",
           "note":"six left opens?"
@@ -3140,8 +3140,8 @@
       "name":"Import_B 47",
       "notes":{
         "english":{
-          "_out":"small crest into left hairpin? 1 50.",
-          "after":"1 50",
+          "_out":"small crest into left hairpin? one fifty.",
+          "after":"150",
           "before":"",
           "note":"small crest into left hairpin?"
         }
@@ -3208,7 +3208,7 @@
       "name":"Import_B 48",
       "notes":{
         "english":{
-          "_out":"crest into six right crest tightens? 60.",
+          "_out":"crest into six right crest tightens? sixty.",
           "after":"60",
           "before":"",
           "note":"crest into six right crest tightens?"
@@ -3276,7 +3276,7 @@
       "name":"Import_B 49",
       "notes":{
         "english":{
-          "_out":"five left into right hairpin? 100.",
+          "_out":"five left into right hairpin? one hundred.",
           "after":"100",
           "before":"",
           "note":"five left into right hairpin?"
@@ -3548,7 +3548,7 @@
       "name":"Import_B 53",
       "notes":{
         "english":{
-          "_out":"and long three right? 40.",
+          "_out":"and long three right? forty.",
           "after":"40",
           "before":"and",
           "note":"long three right?"
@@ -3616,7 +3616,7 @@
       "name":"Import_B 54",
       "notes":{
         "english":{
-          "_out":"tight hairpin left? narrows? 50.",
+          "_out":"tight hairpin left? narrows? fifty.",
           "after":"50",
           "before":"",
           "note":"tight hairpin left? narrows?"
@@ -3684,7 +3684,7 @@
       "name":"Import_B 56",
       "notes":{
         "english":{
-          "_out":"three left? 50.",
+          "_out":"three left? fifty.",
           "after":"50",
           "before":"",
           "note":"three left?"
@@ -3820,7 +3820,7 @@
       "name":"Import_B 58",
       "notes":{
         "english":{
-          "_out":"and five right opens uphill?",
+          "_out":"and five right opens up hill?",
           "after":"",
           "before":"and",
           "note":"five right opens uphill?"
@@ -4024,7 +4024,7 @@
       "name":"Import_B 61",
       "notes":{
         "english":{
-          "_out":"and short early three right opens? 50.",
+          "_out":"and short early three right opens? fifty.",
           "after":"50",
           "before":"and",
           "note":"short early three right opens?"
@@ -4092,7 +4092,7 @@
       "name":"Import_B 62",
       "notes":{
         "english":{
-          "_out":"five right? 60.",
+          "_out":"five right? sixty.",
           "after":"60",
           "before":"",
           "note":"five right?"
@@ -4160,7 +4160,7 @@
       "name":"Import_B 63",
       "notes":{
         "english":{
-          "_out":"crest into five left? 70.",
+          "_out":"crest into five left? seventy.",
           "after":"70",
           "before":"",
           "note":"crest into five left?"
@@ -4364,7 +4364,7 @@
       "name":"Import_B 66",
       "notes":{
         "english":{
-          "_out":"and five right plus? 70.",
+          "_out":"and five right plus? seventy.",
           "after":"70",
           "before":"and",
           "note":"five right plus?"
@@ -5384,7 +5384,7 @@
       "name":"Import_B 81",
       "notes":{
         "english":{
-          "_out":"into six left? 50.",
+          "_out":"into six left? fifty.",
           "after":"50",
           "before":"into",
           "note":"six left?"
@@ -5928,7 +5928,7 @@
       "name":"Import_B 89",
       "notes":{
         "english":{
-          "_out":"into six right? 50.",
+          "_out":"into six right? fifty.",
           "after":"50",
           "before":"into",
           "note":"six right?"
@@ -6064,7 +6064,7 @@
       "name":"Import_B 91",
       "notes":{
         "english":{
-          "_out":"and three right? 50.",
+          "_out":"and three right? fifty.",
           "after":"50",
           "before":"and",
           "note":"three right?"
@@ -6336,7 +6336,7 @@
       "name":"Import_B 95",
       "notes":{
         "english":{
-          "_out":"into four right? 50.",
+          "_out":"into four right? fifty.",
           "after":"50",
           "before":"into",
           "note":"four right?"
@@ -6608,7 +6608,7 @@
       "name":"Import_B 99",
       "notes":{
         "english":{
-          "_out":"and four left? 70.",
+          "_out":"and four left? seventy.",
           "after":"70",
           "before":"and",
           "note":"four left?"
@@ -6744,7 +6744,7 @@
       "name":"Import_B 101",
       "notes":{
         "english":{
-          "_out":"into six right? 50.",
+          "_out":"into six right? fifty.",
           "after":"50",
           "before":"into",
           "note":"six right?"
@@ -6880,7 +6880,7 @@
       "name":"Import_B 103",
       "notes":{
         "english":{
-          "_out":"and tight hairpin left? 70.",
+          "_out":"and tight hairpin left? seventy.",
           "after":"70",
           "before":"and",
           "note":"tight hairpin left?"
@@ -6948,8 +6948,8 @@
       "name":"Import_B 104",
       "notes":{
         "english":{
-          "_out":"crest into six right? 1 50.",
-          "after":"1 50",
+          "_out":"crest into six right? one fifty.",
+          "after":"150",
           "before":"",
           "note":"crest into six right?"
         }
@@ -7288,7 +7288,7 @@
       "name":"Import_B 109",
       "notes":{
         "english":{
-          "_out":"and five left minus? 50.",
+          "_out":"and five left minus? fifty.",
           "after":"50",
           "before":"and",
           "note":"five left minus?"
@@ -7492,7 +7492,7 @@
       "name":"Import_B 112",
       "notes":{
         "english":{
-          "_out":"into jump? 80.",
+          "_out":"into jump? eighty.",
           "after":"80",
           "before":"into",
           "note":"jump?"
@@ -7560,7 +7560,7 @@
       "name":"Import_B 113",
       "notes":{
         "english":{
-          "_out":"tight hairpin right? 80.",
+          "_out":"tight hairpin right? eighty.",
           "after":"80",
           "before":"",
           "note":"tight hairpin right?"
@@ -7832,7 +7832,7 @@
       "name":"Import_B 117",
       "notes":{
         "english":{
-          "_out":"into five right minus? 40.",
+          "_out":"into five right minus? forty.",
           "after":"40",
           "before":"into",
           "note":"five right minus?"
@@ -7900,7 +7900,7 @@
       "name":"Import_B 118",
       "notes":{
         "english":{
-          "_out":"six left tightens late? 40.",
+          "_out":"six left tightens late? forty.",
           "after":"40",
           "before":"",
           "note":"six left tightens late?"
@@ -7968,7 +7968,7 @@
       "name":"Import_B 119",
       "notes":{
         "english":{
-          "_out":"slight right? 80.",
+          "_out":"slight right? eighty.",
           "after":"80",
           "before":"",
           "note":"slight right?"
@@ -8580,7 +8580,7 @@
       "name":"Import_B 128",
       "notes":{
         "english":{
-          "_out":"and long one right? 40.",
+          "_out":"and long one right? forty.",
           "after":"40",
           "before":"and",
           "note":"long one right?"

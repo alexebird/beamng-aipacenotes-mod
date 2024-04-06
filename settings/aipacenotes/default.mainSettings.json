@@ -6,7 +6,6 @@
             "distance_calls": "."
         },
         "distance_calls": {
-            "separate_digits": false,
             "level1": {
                 "threshold": 5,
                 "text": "<none>"
@@ -19,6 +18,9 @@
                 "threshold": 40,
                 "text": "<SET FOR YOUR LANGUAGE>"
             }
+        },
+        "voice": {
+            "word_map": []
         }
     }
 }

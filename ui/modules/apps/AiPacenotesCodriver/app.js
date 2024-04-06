@@ -11,7 +11,7 @@ angular.module('beamng.apps')
       restrict: 'EA',
       link: function (scope, element, attrs) {
         let currentSource = null; // Track the currently playing source
-        scope.volumeSetting = 0.5
+        scope.volumeSetting = 0.8
 
         async function playAudio(url, volume) {
           if (currentSource) {

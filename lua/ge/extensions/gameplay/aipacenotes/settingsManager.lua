@@ -54,6 +54,12 @@ local function load(notebook)
   -- recceSettings:load()
 end
 
+local function loadMainSettingsWithLanguage(lang)
+  local oneOff_mainSettings = MainSettings(lang)
+  oneOff_mainSettings:load()
+  return oneOff_mainSettings
+end
+
 
 local function reset()
   mainSettings = nil
@@ -65,6 +71,7 @@ M.getMainSettings = getMainSettings
 
 M.reset = reset
 M.load = load
+M.loadMainSettingsWithLanguage = loadMainSettingsWithLanguage
 M.loadMissionSettingsForMissionDir = loadMissionSettingsForMissionDir
 M.loadMissionSettingsForNotebook = loadMissionSettingsForNotebook
 

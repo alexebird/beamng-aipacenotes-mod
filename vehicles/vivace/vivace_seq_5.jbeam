@@ -1,0 +1,128 @@
+{
+"vivace_transmission_5M_SQ": {
+    "information":{
+        "authors":"birdman",
+        "name":"Race 5-Speed Sequential Transmission",
+        "value":9500,
+    },
+    "slotType" : "vivace_transmission",
+    "slots": [
+        ["type", "default", "description"],
+        ["vivace_flywheel","vivace_flywheel_race","Flywheel", {"coreSlot":true}],
+        ["vivace_transfer_case","vivace_transfer_case_AWD", "Transfer Case"],
+        ["vivace_differential_F","vivace_differential_F", "Front Differential"],
+    ],
+    "variables": [
+        ["name", "type", "unit", "category", "default", "min", "max", "title", "description"],
+        ["$gear_R", "range", ":1", "Transmission", 2.00, 0.5, 5, "Reverse Gear Ratio", "Torque multiplication ratio", {"stepDis":0.01}],
+        ["$gear_1", "range", ":1", "Transmission", 2.92, 0.5, 5, "1st Gear Ratio",     "Torque multiplication ratio", {"stepDis":0.01}],
+        ["$gear_2", "range", ":1", "Transmission", 2.13, 0.5, 5, "2nd Gear Ratio",     "Torque multiplication ratio", {"stepDis":0.01}],
+        ["$gear_3", "range", ":1", "Transmission", 1.67, 0.5, 5, "3rd Gear Ratio",     "Torque multiplication ratio", {"stepDis":0.01}],
+        ["$gear_4", "range", ":1", "Transmission", 1.33, 0.5, 5, "4th Gear Ratio",     "Torque multiplication ratio", {"stepDis":0.01}],
+        ["$gear_5", "range", ":1", "Transmission", 1.09, 0.5, 5, "5th Gear Ratio",     "Torque multiplication ratio", {"stepDis":0.01}],
+    ],
+    "powertrain": [
+        ["type", "name", "inputName", "inputIndex"],
+        ["frictionClutch", "clutch", "mainEngine", 1, {"deformGroups":["gearbox"]}],
+        ["sequentialGearbox", "gearbox", "clutch", 1, {"deformGroups":["gearbox"]}],
+    ],
+    "gearbox": {
+        "uiName":"Gearbox",
+        "gearRatios":["$=-$gear_R", 0, "$gear_1", "$gear_2", "$gear_3", "$gear_4", "$gear_5"],
+        "friction":1.822,
+        "dynamicFriction":0.00183,
+        "torqueLossCoef": 0.013,
+        "gearboxNode:":["tra1l"],
+
+        "gearWhineCoefsInput":  [0.66, 0.00, 0.33, 0.33, 0.33, 0.33, 0.33, 0.33, 0.33, 0.33],
+        "gearWhineCoefsOutput": [0.00, 0.00, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66],
+        "gearWhineInputEvent": "event:>Vehicle>Transmission>straight_01>twine_in_race_sq",
+        "gearWhineOutputEvent": "event:>Vehicle>Transmission>straight_01>twine_out_race_sq",
+
+        //"forwardInputPitchCoef":1
+        //"forwardOutputPitchCoef":1
+        //"reverseInputPitchCoef":0.7
+        //"reverseOutputPitchCoef":0.7
+
+        //"gearWhineInputPitchCoefSmoothing":50
+        //"gearWhineOutputPitchCoefSmoothing":50
+        //"gearWhineInputVolumeCoefSmoothing":10
+        //"gearWhineOutputVolumeCoefSmoothing":10
+
+        //"gearWhineFixedCoefOutput": 0.7
+        //"gearWhineFixedCoefInput": 0.4
+    },
+    "clutch": {
+        "clutchFreePlay":0.75,
+        "lockSpringCoef":0.3,
+    },
+    "vehicleController": {
+        "calculateOptimalLoadShiftPoints": true,
+        "shiftDownRPMOffsetCoef":1.20,
+        "aggressionHoldOffThrottleDelay":3,
+        "lowShiftDownRPM":[0,0,0,2000,2200,2200,2200,2200],
+        "lowShiftUpRPM":[0,0,3900,3800,3700,3700,3700],
+        "clutchLaunchStartRPM": 3000,
+        "clutchLaunchTargetRPM": 2000,
+        "ignitionCutTime": 0.09
+        //"wheelSlipUpThreshold":200,
+    },
+    "flexbodies": [
+         ["mesh", "[group]:", "nonFlexMaterials"],
+         ["vivace_transmission", ["vivace_engine","vivace_transmission"]],
+    ],
+    "props": [
+        ["func"      , "mesh"              , "idRef:", "idX:", "idY:"            , "baseRotation"        , "rotation"                 , "translation"        , "min", "max", "offset", "multiplier"],
+        //manual transmission
+        //["clutch", "vivace_clutchpedal", "f1l","f1r","f6l", {"x":5, "y":0, "z":180}, {"x":-25, "y":0, "z":0}, {"x":0.0, "y":0, "z":0}, 0, 1, 0, 1],
+    ],
+     "nodes": [
+         ["id", "posX", "posY", "posZ"],
+         {"selfCollision":false},
+         {"collision":true},
+         {"nodeMaterial":"|NM_METAL"},
+         {"frictionCoef":0.5},
+         {"group":"vivace_transmission"},
+         {"nodeWeight":5},
+         ["tra1r",-0.29, -1.35, 0.35],
+         ["tra1l", 0.29, -1.35, 0.35],
+         {"group":""},
+         //transmission mount node
+         ["em1l", 0.37, -1.5, 0.53, {"nodeWeight":3}],
+    ],
+    "beams": [
+          ["id1:", "id2:"],
+          //--TRANSMISSION CONE--
+          {"beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+          {"beamSpring":7001000,"beamDamp":300},
+          {"beamDeform":175000,"beamStrength":"FLT_MAX"},
+          {"deformGroup":"gearbox", "deformationTriggerRatio":0.001},
+          ["tra1l", "e1r"],
+          ["tra1l", "e3l"],
+          ["tra1l", "e1l"],
+          ["tra1l", "e3r"],
+          ["tra1r", "e2r"],
+          ["tra1r", "e4l"],
+          ["tra1r", "e1r"],
+          ["tra1r", "e3l"],
+          ["tra1r", "e2l"],
+          ["tra1r", "e4r"],
+          ["tra1r", "tra1l"],
+          {"deformGroup":""},
+
+          //transmission mount node
+          {"beamSpring":4400000,"beamDamp":150},
+          {"beamDeform":90000,"beamStrength":"FLT_MAX"},
+          ["em1l","e3l"],
+          ["em1l","e3r"],
+          ["em1l","e4l"],
+          ["em1l","e4r"],
+          ["em1l", "e1r"],
+          ["em1l", "e1l"],
+          ["em1l", "e2l"],
+          ["em1l", "e2r"],
+          ["em1l", "tra1l"],
+          {"beamPrecompression":1, "beamType":"|NORMAL", "beamLongBound":1.0, "beamShortBound":1.0},
+    ],
+},
+}

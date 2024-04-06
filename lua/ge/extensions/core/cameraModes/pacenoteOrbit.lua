@@ -59,7 +59,7 @@ function C:setupStuff()
   if not self.camRot then self.camRot = vec3(self.defaultRotation) end
   -- self.camLastRot = vec3(math.rad(self.camRot.x), math.rad(self.camRot.y), 0)
   self.camMinDist = 10
-  self.camMaxDist = 700
+  self.camMaxDist = 1500
   local default
   self.defaultDistance = 300
   self.camDist = self.distance or self.defaultDistance

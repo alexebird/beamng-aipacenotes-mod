@@ -1189,11 +1189,11 @@ function C:drawPacenotesList(height)
   --   self:autoAssignSegments()
   -- end
   -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
-  -- im.SameLine()
-  -- if im.Button("Snap All") then
-  --   self:_snapAll()
-  -- end
-  -- im.tooltip("Snap all waypoints to nearest snaproad point.")
+  im.SameLine()
+  if im.Button("Snap All") then
+    self:_snapAll()
+  end
+  im.tooltip("Snap all waypoints to nearest snaproad point.")
   -- im.SameLine()
   -- if im.Button("All to Terrain") then
   --   self:allToTerrain()

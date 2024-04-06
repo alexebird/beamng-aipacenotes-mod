@@ -38,6 +38,8 @@ function C:loadCuts()
   -- load the transcripts
   local fname = re_util.transcriptsFile(self.missionDir)
 
+  local import_language = re_util.default_codriver_language
+  local word_map = SettingsManager.loadMainSettingsWithLanguage(import_language):getWordMapForLanguage(import_language)
 
   local transcripts = {}
   local tscCount = 0
@@ -71,9 +73,14 @@ function C:loadCuts()
     obj.quat = quat(obj.quat)
     local tsc = transcripts[obj.id]
     if tsc then
+      local txt = tsc.resp.text
+      if txt then
+        txt = normalizer.replaceWords(word_map, txt)
+      end
+
       obj.transcript = {
         error = tsc.resp.error,
-        text = tsc.resp.text,
+        text = txt,
       }
     else
       obj.transcript = {}
@@ -192,10 +199,13 @@ function C:drawDebugCuts()
   for _,point in ipairs(self.cuts) do
     local pos = point.pos
     local quat = point.quat
-    local txt = nil
-    if point.transcript.text then
-      txt = point.transcript.text
-    end
+    local txt = point.transcript.text
+    -- local txt = nil
+    -- if point.transcript.text then
+      -- txt = point.transcript.text
+      -- local word_map = SettingsManager.getMainSettings():getVoiceWordMap()
+      -- txt = normalizer.replaceWords(word_map, txt)
+    -- end
     self:drawLittleCar(pos, quat, txt)
   end
 end
@@ -282,11 +292,9 @@ function C:createPacenotesData(notebook)
 
   for i,cut in ipairs(self.cuts) do
     local note = cut.transcript.text
-    if import_language == 'english' then
-      note = normalizer.replaceEnglishWords(note)
-    end
-    -- if note then
-    --   note = re_util.normalizeNoteText(self.mainSettings, note, i == cutCount, false)
+    -- local word_map = SettingsManager.getMainSettings():getWordMapForLanguage(import_language)
+    -- if import_language == 'english' then
+      -- note = normalizer.replaceWords(word_map, note)
     -- end
 
     local pos = cut.pos
