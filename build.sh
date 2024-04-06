@@ -10,10 +10,10 @@ main() {
         tag=$(git describe --tags --exact-match HEAD 2> /dev/null)
         if [ -n "$tag" ]; then
             # If there is a tag exactly on HEAD, append it to the SHA
-            echo "${sha} (${tag})" > gitsha.txt
+            echo "${sha} (${tag})" > version.txt
         else
             # If no tag on HEAD, just write the SHA
-            echo "$sha" > gitsha.txt
+            echo "$sha" > version.txt
         fi
     else
         # Working tree is not clean
@@ -22,17 +22,17 @@ main() {
         tag=$(git describe --tags --exact-match HEAD 2> /dev/null)
         if [ -n "$tag" ]; then
             # If there is a tag exactly on HEAD, append it to the SHA and mark as dirty
-            echo "${sha}+dirty (${tag})" > gitsha.txt
+            echo "${sha}+dirty (${tag})" > version.txt
         else
             # If no tag on HEAD, just write the SHA and mark as dirty
-            echo "${sha}+dirty" > gitsha.txt
+            echo "${sha}+dirty" > version.txt
         fi
     fi
 
-    cat gitsha.txt
+    cat version.txt
 
     zip -r "${BIRD}/build/aipacenotes.zip" ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh' -x 'dev.txt'
-    rm -fv gitsha.txt
+    rm -fv version.txt
     ls -ltrh "${BIRD}/build/"
 }
 
