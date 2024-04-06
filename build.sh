@@ -31,6 +31,7 @@ main() {
 
     cat version.txt
 
+    rm -fv "${BIRD}/build/aipacenotes.zip"
     zip -r "${BIRD}/build/aipacenotes.zip" ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh' -x 'dev.txt'
     rm -fv version.txt
     ls -ltrh "${BIRD}/build/"

@@ -769,7 +769,7 @@
       "name":"Pacenote 12",
       "notes":{
         "english":{
-          "_out":"and three left cut? 80.",
+          "_out":"and three left cut? eighty.",
           "after":"80",
           "before":"and",
           "note":"three left cut?"
@@ -973,7 +973,7 @@
       "name":"Pacenote 15",
       "notes":{
         "english":{
-          "_out":"into four left cut? 40.",
+          "_out":"into four left cut? forty.",
           "after":"40",
           "before":"into",
           "note":"four left cut?"
@@ -1109,7 +1109,7 @@
       "name":"Pacenote 17",
       "notes":{
         "english":{
-          "_out":"into four right cut? 50.",
+          "_out":"into four right cut? fifty.",
           "after":"50",
           "before":"into",
           "note":"four right cut?"
@@ -1313,7 +1313,7 @@
       "name":"Pacenote 20",
       "notes":{
         "english":{
-          "_out":"into early three right cut? 60.",
+          "_out":"into early three right cut? sixty.",
           "after":"60",
           "before":"into",
           "note":"early three right cut?"
@@ -1449,7 +1449,7 @@
       "name":"Pacenote 22",
       "notes":{
         "english":{
-          "_out":"and five left cut, care rock exit? 50.",
+          "_out":"and five left cut, care rock exit? fifty.",
           "after":"50",
           "before":"and",
           "note":"five left cut, care rock exit?"
@@ -1517,7 +1517,7 @@
       "name":"Pacenote 23",
       "notes":{
         "english":{
-          "_out":"slowing, four left cut, into two right big cut? 40.",
+          "_out":"slowing, four left cut, into two right big cut? forty.",
           "after":"40",
           "before":"",
           "note":"slowing, four left cut, into two right big cut?"
@@ -1562,7 +1562,7 @@
           "normal":[
             0.7970374659,
             -0.603876335,
-            0.008040513309
+            0.00804051331
           ],
           "oldId":110,
           "pos":[
@@ -1925,7 +1925,7 @@
       "name":"Pacenote 29",
       "notes":{
         "english":{
-          "_out":"into two left cut? 40.",
+          "_out":"into two left cut? forty.",
           "after":"40",
           "before":"into",
           "note":"two left cut?"
@@ -1993,7 +1993,7 @@
       "name":"Pacenote 30",
       "notes":{
         "english":{
-          "_out":"three right long opens nip? 70.",
+          "_out":"three right long opens nip? seventy.",
           "after":"70",
           "before":"",
           "note":"three right long opens nip?"
@@ -2401,7 +2401,7 @@
       "name":"Pacenote 36",
       "notes":{
         "english":{
-          "_out":"and six left cut? 70.",
+          "_out":"and six left cut? seventy.",
           "after":"70",
           "before":"and",
           "note":"six left cut?"
@@ -2537,7 +2537,7 @@
       "name":"Pacenote 38",
       "notes":{
         "english":{
-          "_out":"and very late three right cut? 50.",
+          "_out":"and very late three right cut? fifty.",
           "after":"50",
           "before":"and",
           "note":"very late three right cut?"
@@ -2673,7 +2673,7 @@
       "name":"Pacenote 40",
       "notes":{
         "english":{
-          "_out":"into short five right cut? brake? 90.",
+          "_out":"into short five right cut? brake? ninety.",
           "after":"90",
           "before":"into",
           "note":"short five right cut? brake?"
@@ -2741,7 +2741,7 @@
       "name":"Pacenote 42",
       "notes":{
         "english":{
-          "_out":"long 1 right slight cut, rocks inside?",
+          "_out":"long one right slight cut, rocks inside?",
           "after":"",
           "before":"",
           "note":"long 1 right slight cut, rocks inside?"
@@ -2877,7 +2877,7 @@
       "name":"Pacenote 44",
       "notes":{
         "english":{
-          "_out":"and short five right cut? 40.",
+          "_out":"and short five right cut? forty.",
           "after":"40",
           "before":"and",
           "note":"short five right cut?"
@@ -3013,7 +3013,7 @@
       "name":"Pacenote 46",
       "notes":{
         "english":{
-          "_out":"and two left long cut? opens over crest? 50.",
+          "_out":"and two left long cut? opens over crest? fifty.",
           "after":"50",
           "before":"and",
           "note":"two left long cut? opens over crest?"
@@ -3081,7 +3081,7 @@
       "name":"Pacenote 47",
       "notes":{
         "english":{
-          "_out":"send it over small jump? and bump? 40.",
+          "_out":"send it over small jump? and bump? forty.",
           "after":"40",
           "before":"",
           "note":"send it over small jump? and bump?"
@@ -3149,7 +3149,7 @@
       "name":"Pacenote 49",
       "notes":{
         "english":{
-          "_out":"into five left plus nip? narrows over bridge? 90.",
+          "_out":"into five left plus nip? narrows over bridge? ninety.",
           "after":"90",
           "before":"",
           "note":"into five left plus nip? narrows over bridge?"
@@ -3285,7 +3285,7 @@
       "name":"Pacenote 51",
       "notes":{
         "english":{
-          "_out":"into six left? slowing? 90.",
+          "_out":"into six left? slowing? ninety.",
           "after":"90",
           "before":"into",
           "note":"six left? slowing?"
@@ -3557,7 +3557,7 @@
       "name":"Pacenote 55",
       "notes":{
         "english":{
-          "_out":"and late six left long? 90.",
+          "_out":"and late six left long? ninety.",
           "after":"90",
           "before":"and",
           "note":"late six left long?"
@@ -3625,8 +3625,8 @@
       "name":"Pacenote 56",
       "notes":{
         "english":{
-          "_out":"long five right opens keep in? 1 50.",
-          "after":"1 50",
+          "_out":"long five right opens keep in? one fifty.",
+          "after":"150",
           "before":"",
           "note":"long five right opens keep in?"
         }
@@ -3693,7 +3693,7 @@
       "name":"Pacenote 57",
       "notes":{
         "english":{
-          "_out":"six left plus? 400.",
+          "_out":"six left plus? four hundred.",
           "after":"400",
           "before":"",
           "note":"six left plus?"
@@ -3761,7 +3761,7 @@
       "name":"Pacenote 59",
       "notes":{
         "english":{
-          "_out":"six left? 50.",
+          "_out":"six left? fifty.",
           "after":"50",
           "before":"",
           "note":"six left?"
@@ -3829,7 +3829,7 @@
       "name":"Pacenote 60",
       "notes":{
         "english":{
-          "_out":"five right minus over crest, tightens? 70.",
+          "_out":"five right minus over crest, tightens? seventy.",
           "after":"70",
           "before":"",
           "note":"five right minus over crest, tightens?"
@@ -3965,7 +3965,7 @@
       "name":"Pacenote 62",
       "notes":{
         "english":{
-          "_out":"and six left over finish? into long 4 right.",
+          "_out":"and six left over finish? into long four right.",
           "after":"",
           "before":"and",
           "note":"six left over finish? into long 4 right."
