@@ -50,6 +50,7 @@ function C:load()
 
   for i,point in ipairs(points) do
     point.normal = snaproadNormals.forwardNormalVec(point)
+    point.pacenoteDistances = {}
   end
 
   log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
@@ -63,7 +64,7 @@ function C:drawDebugDriveline()
 
   local clr = cc.recce_driveline_clr
   -- local alpha_shape = cc.recce_alpha
-  local alpha_shape = 0.5
+  local alpha_shape = 0.3
 
   local clr_shape = cc.clr_red
   local plane_radius = self.radius
@@ -105,6 +106,78 @@ function C:findNearestPoint(srcPos)
   end
 
   return closestPoint
+end
+
+function C:preCalculatePacenoteDistances(notebook, numPacenotes)
+  local pacenotes = notebook.pacenotes.sorted
+  local pacenotePointMap = self:mapPacenotesToPoints(notebook)
+  print(dumps(pacenotePointMap))
+
+  for _,point in ipairs(self.points) do
+    point.pacenoteDistances = {}
+  end
+
+  local pacenoteIndex = 1
+
+  -- Loop over each driveline point
+  for i,point in ipairs(self.points) do
+    -- Calculate distance to the next 'numPacenotes' pacenotes from this point
+    for j = 1, numPacenotes do
+      if pacenoteIndex <= #pacenotes then
+        local pacenote = pacenotes[pacenoteIndex]
+        local pacenotePoint = pacenotePointMap[pacenote.name]
+        if pacenotePoint then
+          local distance = self:calculatePathDistance(point, pacenotePoint)
+          point.pacenoteDistances[pacenote.name] = distance
+        end
+      else
+        -- Break the loop if there are no more pacenotes to process
+        break
+      end
+    end
+  end
+end
+
+function C:mapPacenotesToPoints(notebook)
+  local pacenotes = notebook.pacenotes.sorted
+  local pacenotePointMap = {}
+
+  -- Loop over each pacenote and map it to the nearest driveline point
+  for _, pacenote in ipairs(pacenotes) do
+    local pacenotePos = pacenote:getCornerStartWaypoint().pos
+    local nearestPoint = self:findNearestPoint(pacenotePos)
+    if nearestPoint then
+      -- Map pacenote name to the point's ID
+      pacenotePointMap[pacenote.name] = self.points[nearestPoint.id]
+    end
+  end
+
+  return pacenotePointMap
+end
+
+-- Calculate the distance along the points line from startIndex to pacenoteIndex
+function C:calculatePathDistance(startPoint, pacenotePoint)
+  local distance = 0
+  local currPoint = startPoint
+  while currPoint do
+    if currPoint.next then
+      distance = distance + self:calculateDistance(currPoint, currPoint.next)
+      currPoint = currPoint.next
+      if currPoint.id == pacenotePoint.id then
+        break
+      end
+    else
+      break
+    end
+  end
+  return distance
+end
+
+-- Calculate the distance between two consecutive points using the vec3 object method
+function C:calculateDistance(point1, point2)
+  local pos1 = vec3(point1.pos)
+  local pos2 = vec3(point2.pos)
+  return (pos2 - pos1):length()
 end
 
 return function(...)

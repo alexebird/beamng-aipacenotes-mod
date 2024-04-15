@@ -109,7 +109,11 @@ function C:reset()
   self.currLap = -1
   self.maxLap = -1
 
-  self.drivelineTracker = DrivelineTracker(self.missionDir, self.vehicleTracker)
+  self.drivelineTracker = DrivelineTracker(
+    self.missionDir,
+    self.vehicleTracker,
+    self.notebook
+  )
 end
 
 function C:detectMissionId()

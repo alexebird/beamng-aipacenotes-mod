@@ -132,6 +132,11 @@ function C:pos()
   return vehicle:getPosition()
 end
 
+function C:velocity()
+  local vehicle = self:getVehicle()
+  return vehicle:getVelocity()
+end
+
 function C:damage()
   if self.vehicleData then
     return self.vehicleData.damage or 0

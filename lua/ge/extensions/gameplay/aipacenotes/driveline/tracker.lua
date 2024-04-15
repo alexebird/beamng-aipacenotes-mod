@@ -4,8 +4,9 @@ local Driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')
 local C = {}
 local logTag = 'aipacenotes'
 
-function C:init(missionDir, vehicleTracker)
+function C:init(missionDir, vehicleTracker, notebook)
   self.vehicleTracker = vehicleTracker
+  self.notebook = notebook
 
   self.driveline = Driveline(missionDir)
   if not self.driveline:load() then
@@ -16,6 +17,7 @@ function C:init(missionDir, vehicleTracker)
   self.currPoint = nil
 
   self:detectCurrPoint()
+  self.driveline:preCalculatePacenoteDistances(self.notebook, 1)
 end
 
 function C:detectCurrPoint()
@@ -45,6 +47,40 @@ function C:drawDebug()
       1.0,
       ColorF(clr[1], clr[2], clr[3], alpha_shape)
     )
+
+    local alpha_text = 1.0
+    local clr_text_fg = cc.clr_white
+    local clr_text_bg = cc.clr_black
+
+    local txt = ''
+
+    for pnName,dist in pairs(self.currPoint.pacenoteDistances) do
+      local distStr = string.format("%.1f", dist)
+
+      local vel = self.vehicleTracker:velocity()
+      local speed_ms = vel:length()
+      -- local speed_mph = speed_ms * 2.23694
+      -- print(dumps(speed_mph))
+      local velStr = string.format("%.1f", speed_ms)
+
+      local timeToPacenote = (speed_ms ~= 0) and (dist / speed_ms) or -1
+      if timeToPacenote > 30 then
+        timeToPacenote = -1
+      end
+      local timeStr = string.format("%.1f", timeToPacenote)
+
+      txt = txt..pnName..": "..distStr.."m | speed: "..velStr.."m/s | t: "..timeStr.."s"
+    end
+
+    debugDrawer:drawTextAdvanced(
+      self.currPoint.pos,
+      String(txt),
+      ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
+      true,
+      false,
+      ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
+    )
+
   end
 end
 
