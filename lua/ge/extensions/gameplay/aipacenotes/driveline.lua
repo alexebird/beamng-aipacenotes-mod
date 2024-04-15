@@ -111,7 +111,10 @@ end
 function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   local pacenotes = notebook.pacenotes.sorted
   local pacenotePointMap = self:mapPacenotesToPoints(notebook)
-  print(dumps(pacenotePointMap))
+
+  for name,point in pairs(pacenotePointMap) do
+    print(name..' -> '..tostring(point.id))
+  end
 
   for _,point in ipairs(self.points) do
     point.pacenoteDistances = {}
@@ -121,11 +124,24 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
 
   -- Loop over each driveline point
   for i,point in ipairs(self.points) do
+
+    -- see if we need to advance the pacenoteIndex by checking if the current
+    -- point is the same as the pacenote's point.
+    if pacenoteIndex <= #pacenotes then
+      local pacenote = pacenotes[pacenoteIndex]
+      local pacenotePoint = pacenotePointMap[pacenote.name]
+
+      if point.id == pacenotePoint.id then
+        pacenoteIndex = pacenoteIndex + 1
+      end
+    end
+
     -- Calculate distance to the next 'numPacenotes' pacenotes from this point
     for j = 1, numPacenotes do
       if pacenoteIndex <= #pacenotes then
         local pacenote = pacenotes[pacenoteIndex]
         local pacenotePoint = pacenotePointMap[pacenote.name]
+
         if pacenotePoint then
           local distance = self:calculatePathDistance(point, pacenotePoint)
           point.pacenoteDistances[pacenote.name] = distance

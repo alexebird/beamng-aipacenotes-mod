@@ -15,6 +15,8 @@ function C:init(missionDir, vehicleTracker, notebook)
   end
 
   self.currPoint = nil
+  self.nextPacenote = nil
+  self.threshold_sec = 2
 
   self:detectCurrPoint()
   self.driveline:preCalculatePacenoteDistances(self.notebook, 1)
@@ -24,13 +26,45 @@ function C:detectCurrPoint()
   self.currPoint = self.driveline:findNearestPoint(self.vehicleTracker:pos())
 end
 
-function C:onUpdate()
+function C:onUpdate(nextPacenote)
+  self.nextPacenote = nextPacenote
   self:drawDebug()
 
   if self:intersectCorners() then
     local nextPoint = self.currPoint.next
     self.currPoint = nextPoint
   end
+end
+
+function C:isUnderThreshold()
+  local timeToPacenote = self:timeToNextPacenote()
+  if timeToPacenote and timeToPacenote <= self.threshold_sec then
+    return true
+  end
+
+  return false
+end
+
+function C:timeToNextPacenote()
+  local vel = self.vehicleTracker:velocity()
+  local speed_ms = vel:length()
+
+  local dist = self.currPoint.pacenoteDistances[self.nextPacenote.name]
+
+  if not dist then
+    return nil
+  end
+
+  local timeToPacenote = (speed_ms ~= 0) and (dist / speed_ms) or -1
+  if timeToPacenote > 30 then
+    timeToPacenote = -1
+  end
+
+  if timeToPacenote == -1 then
+    return nil
+  end
+
+  return timeToPacenote
 end
 
 function C:drawDebug()
@@ -69,7 +103,7 @@ function C:drawDebug()
       end
       local timeStr = string.format("%.1f", timeToPacenote)
 
-      txt = txt..pnName..": "..distStr.."m | speed: "..velStr.."m/s | t: "..timeStr.."s"
+      txt = txt..pnName..": "..distStr.."m | speed: "..velStr.."m/s | t: "..timeStr.."s || "
     end
 
     debugDrawer:drawTextAdvanced(
@@ -80,7 +114,16 @@ function C:drawDebug()
       false,
       ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
     )
+  end
 
+  if self.nextPacenote then
+    local pos = self.nextPacenote:getCornerStartWaypoint().pos
+    clr = cc.clr_blue
+    debugDrawer:drawSphere(
+      pos,
+      10.0,
+      ColorF(clr[1], clr[2], clr[3], alpha_shape)
+    )
   end
 end
 

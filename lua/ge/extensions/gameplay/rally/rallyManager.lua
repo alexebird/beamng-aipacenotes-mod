@@ -21,6 +21,7 @@ function C:init()
   self.vehicleTracker = nil
 
   self.drivelineTracker = nil
+  self.useDriveline = true
 
   self.missionId = nil
   self.missionDir = nil
@@ -199,6 +200,15 @@ function C:shouldPlay(pacenote)
   return allowed and self:intersectCorners(pacenote)
 end
 
+function C:playbackAllowed(pacenote)
+  local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
+  if err then
+    log('E', logTag, 'error in pacenote:playbackAllowed(): '..err)
+    allowed = true
+  end
+  return allowed
+end
+
 function C:updateForClosestPacenotes()
   -- log('D', 'wtf', 'has closestPacenotes ('..#self.closestPacenotes..')')
   for _,closePacenote in ipairs(self.closestPacenotes) do
@@ -252,20 +262,36 @@ function C:update(dtSim)
     self.audioManager:handleDamage()
   end
 
-  if self.drivelineTracker then
-    self.drivelineTracker:onUpdate()
-  end
+  if self.useDriveline then
+    if self.drivelineTracker then
+      local pacenote = self.notebook.pacenotes.sorted[self.nextId]
+      if pacenote then
+        self.drivelineTracker:onUpdate(pacenote)
+        if self.drivelineTracker:isUnderThreshold() then
+          if self:playbackAllowed(pacenote) then
+            self.audioManager:enqueuePacenote(pacenote)
+          end
 
-  -- look for the next pacenote to trigger audio for
-  if self.closestPacenotes then
-    -- In this case, there is a vehicle position reset and we need to find where
-    -- in the pacenotes list we are.
-    self:updateForClosestPacenotes()
+          -- advance the pacenote even if we dont play the audio.
+          self.nextId = self.nextId + 1
+          -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
+          self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+          self:nextPacenotesUpdated()
+        end
+      end
+    end
   else
-    -- in the normal case, we assume the next pacenote is nextId+1.
-    -- yes, this won't support skipping pacenotes, but I don't think
-    -- that should be expected.
-    self:updateForNextPacenote()
+    -- look for the next pacenote to trigger audio for
+    if self.closestPacenotes then
+      -- In this case, there is a vehicle position reset and we need to find where
+      -- in the pacenotes list we are.
+      self:updateForClosestPacenotes()
+    else
+      -- in the normal case, we assume the next pacenote is nextId+1.
+      -- yes, this won't support skipping pacenotes, but I don't think
+      -- that should be expected.
+      self:updateForNextPacenote()
+    end
   end
 end
 
