@@ -581,7 +581,7 @@ local function onVehicleResetted()
   if rallyManager then
     flag_NoteSearch = true
     rallyManager.audioManager:resetAudioQueue()
-    -- self.rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
+    rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
   end
 end
 

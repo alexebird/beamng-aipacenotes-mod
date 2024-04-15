@@ -20,7 +20,7 @@ local currentPath = nil
 -- currentPath._dir = previousFilepath
 
 local windows = {}
-local pacenotesWindow, recceWindow
+local pacenotesWindow, recceWindow, testWindow
 local currentWindow = {}
 local changedWindow = false
 local programmaticTabSelect = false
@@ -517,6 +517,8 @@ local function drawEditorGui()
           pacenotesWindow:drawDebugEntrypoint()
         elseif currentWindow == recceWindow then
           recceWindow:drawDebugEntrypoint()
+        elseif currentWindow == testWindow then
+          testWindow:drawDebugEntrypoint()
         end
       else
         if currentWindow == pacenotesWindow then
@@ -750,7 +752,8 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
 
   if isDev then
-    table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/testTab')(M))
+    testWindow = require('/lua/ge/extensions/editor/rallyEditor/testTab')(M)
+    table.insert(windows, testWindow)
   end
 
   for _,win in pairs(windows) do
