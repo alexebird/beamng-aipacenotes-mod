@@ -12,6 +12,49 @@ angular.module('beamng.apps')
       link: function (scope, element, attrs) {
         let currentSource = null; // Track the currently playing source
         scope.volumeSetting = 0.8
+        scope.timingSetting = 10.0
+
+        scope.$watch('timingSetting', function(value) {
+          // console.log(scope.timingSetting)
+          bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.setTimingSetting(${scope.timingSetting})`)
+        })
+
+        scope.$on('aiPacenotesInputActionCodriverVolumeUp', function (event) {
+          // if (scope.volumeSetting < 1.0) {
+          let curr = scope.volumeSetting
+          curr += 0.1
+          scope.volumeSetting = Math.min(curr, 1.0)
+          // }
+        })
+
+        scope.$on('aiPacenotesInputActionCodriverVolumeDown', function (event) {
+          // if (scope.volumeSetting > 0.0) {
+          let curr = scope.volumeSetting
+          curr -= 0.1
+          scope.volumeSetting = Math.max(curr, 0.1)
+          // }
+        })
+
+        scope.$on('aiPacenotesInputActionCodriverTimingEarlier', function (event) {
+          // if (scope.timingSetting < 10.0) {
+          let curr = scope.timingSetting
+          curr += 0.5
+          scope.timingSetting = Math.min(curr, 20.0)
+          // }
+        })
+
+        scope.$on('aiPacenotesInputActionCodriverTimingLater', function (event) {
+          // if (scope.timingSetting > 0.1) {
+          let curr = scope.timingSetting
+          curr -= 0.5
+          scope.timingSetting = Math.max(curr, 1.0)
+          // }
+        })
+
+        scope.$on('aiPacenotesSetCodriverTimingThreshold', function (event, resp) {
+          console.log(`timingSetting=${resp}`)
+          scope.timingSetting = resp
+        })
 
         async function playAudio(url, volume) {
           if (currentSource) {

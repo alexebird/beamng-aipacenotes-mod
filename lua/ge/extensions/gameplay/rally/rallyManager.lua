@@ -38,11 +38,20 @@ function C:init()
 
   self.currLap = -1
   self.maxLap = -1
+
+  -- reset flag is used to skip a single update tick after a reset.
+  -- that way the vehicle velocity is ignored when it jumps to the reset location.
+  self.reset_flag = false
 end
 
 function C:setOverrideMission(missionId, missionDir)
   self.overrideMissionId = missionId
   self.overrideMissionDir = missionDir
+end
+
+function C:setDrivelineTrackerThreshold(val)
+  if not self.drivelineTracker then return end
+  self.drivelineTracker:setThreshold(val)
 end
 
 -- function C:toString()
@@ -100,6 +109,11 @@ end
 
 function C:reset()
   log('I', logTag, 'RallyManager reset')
+
+  self.reset_flag = true
+
+  self.audioManager:resetAudioQueue()
+
   self.vehicleTracker = require('/lua/ge/extensions/gameplay/rally/vehicleTracker')(
     self.damageThresh
   )
@@ -115,6 +129,7 @@ function C:reset()
     self.vehicleTracker,
     self.notebook
   )
+  self.drivelineTracker:notifyThreshold()
 end
 
 function C:detectMissionId()
@@ -266,17 +281,23 @@ function C:update(dtSim)
     if self.drivelineTracker then
       local pacenote = self.notebook.pacenotes.sorted[self.nextId]
       if pacenote then
-        self.drivelineTracker:onUpdate(pacenote)
-        if self.drivelineTracker:isUnderThreshold() then
-          if self:playbackAllowed(pacenote) then
-            self.audioManager:enqueuePacenote(pacenote)
-          end
+        if self.reset_flag then
+          self.reset_flag = false
+        else
+          self.drivelineTracker:onUpdate(pacenote)
 
-          -- advance the pacenote even if we dont play the audio.
-          self.nextId = self.nextId + 1
-          -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
-          self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
-          self:nextPacenotesUpdated()
+          if self.drivelineTracker:isUnderThreshold() then
+
+            if self:playbackAllowed(pacenote) then
+              self.audioManager:enqueuePacenote(pacenote)
+            end
+
+            -- advance the pacenote even if we dont play the audio.
+            self.nextId = self.nextId + 1
+            -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
+            self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+            self:nextPacenotesUpdated()
+          end
         end
       end
     end
@@ -336,6 +357,14 @@ end
 function C:handleNoteSearch()
   self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
   self.nextPacenotes = self.closestPacenotes
+  self:nextPacenotesUpdated()
+end
+
+function C:drivelineTrackerNoteSearch()
+  local nextPacenoteData = self.drivelineTracker:findNextPacenote()
+  local pacenote_i = nextPacenoteData.i
+  self.nextId = pacenote_i
+  self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
   self:nextPacenotesUpdated()
 end
 

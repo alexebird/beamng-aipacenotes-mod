@@ -178,6 +178,7 @@ local function updateRallyManager(dtSim)
   if flag_NoteSearch then
     flag_NoteSearch = false
     rallyManager:handleNoteSearch()
+    rallyManager:drivelineTrackerNoteSearch()
   end
 
   if not isRecording then
@@ -210,17 +211,21 @@ local function drawDebug()
   -- end
 
   if flag_drawDebugSnaproads and selectedPacenote then
-    local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
-    nextPacenotes = rallyManager:getPacenotesNearPos(wp_audio_trigger.pos)
+    -- local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
+    local wp_cs = selectedPacenote:getCornerStartWaypoint()
+    local render_wp = wp_cs
+    nextPacenotes = rallyManager:getPacenotesNearPos(render_wp.pos)
     local noteData = selectedPacenote:asFlowgraphData(rallyManager.codriver)
-    wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
+    render_wp:drawDebugRecce(1, noteData.note_text)
 
     for i,pacenote in ipairs(nextPacenotes) do
       if pacenote.id ~= selectedPacenote.id then
-        local wp_at = pacenote:getActiveFwdAudioTrigger()
+        -- local wp_at = pacenote:getActiveFwdAudioTrigger()
+        local wp_cs = pacenote:getCornerStartWaypoint()
+        local render_wp = wp_cs
 
         noteData = pacenote:asFlowgraphData(rallyManager.codriver)
-        wp_at:drawDebugRecce(i, noteData.note_text)
+        render_wp:drawDebugRecce(i, noteData.note_text)
       end
     end
   elseif flag_drawDebugSnaproads then
@@ -229,18 +234,22 @@ local function drawDebug()
 
     -- draw all the nearest notes
     for i,pacenote in ipairs(nextPacenotes) do
-      local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      -- local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      local wp_cs = pacenote:getCornerStartWaypoint()
+      local render_wp = wp_cs
       local noteData = pacenote:asFlowgraphData(rallyManager.codriver)
-      wp_audio_trigger:drawDebugRecce(i, noteData.note_text)
+      render_wp:drawDebugRecce(i, noteData.note_text)
     end
   else
     -- just draw the nearest
     nextPacenotes = rallyManager:getNextPacenotes()
     local pacenote = nextPacenotes[1]
     if pacenote then
-      local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      -- local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      local wp_cs = pacenote:getCornerStartWaypoint()
+      local render_wp = wp_cs
       local noteData = pacenote:asFlowgraphData(rallyManager.codriver)
-      wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
+      render_wp:drawDebugRecce(1, noteData.note_text)
     end
   end
 
@@ -255,8 +264,10 @@ local function drawDebug()
       local rad = rad_marker
 
       local nextNote = nextPacenotes[1]
-      local wp_at = nextNote:getActiveFwdAudioTrigger()
-      local pos = wp_at.pos
+      -- local wp_at = nextNote:getActiveFwdAudioTrigger()
+      local wp_cs = nextNote:getActiveFwdAudioTrigger()
+      local render_wp = wp_cs
+      local pos = render_wp.pos
       debugDrawer:drawSphere(
         pos,
         rad,
@@ -580,7 +591,7 @@ local function onVehicleResetted()
 
   if rallyManager then
     flag_NoteSearch = true
-    rallyManager.audioManager:resetAudioQueue()
+    -- rallyManager.audioManager:resetAudioQueue()
     rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
   end
 end
@@ -674,6 +685,12 @@ local function setLastLoadState(state)
   end
 end
 
+local function setTimingSetting(val)
+  if not rallyManager then return end
+
+  rallyManager:setDrivelineTrackerThreshold(val)
+end
+
 local function initRecceApp()
   log('I', logTag, 'initRecceApp')
   recce_settings = RecceSettings()
@@ -722,5 +739,7 @@ M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_start = transcribe_recording_start
 M.transcribe_clear_all = transcribe_clear_all
+
+M.setTimingSetting = setTimingSetting
 
 return M

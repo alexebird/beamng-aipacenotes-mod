@@ -250,7 +250,10 @@ function C:drawDebugRecce(i, note_text)
   local alpha_text = 0.5
 
   -- local clr_cyl = cc.clr_red
-  local clr_cyl = cc.waypoint_clr_at
+
+  -- local clr_cyl = cc.waypoint_clr_at
+  local clr_cyl = cc.waypoint_clr_cs
+
   local alpha_cyl = 0.2
   -- local cyl_alpha = 0.5 * ((#nextPacenotes - (i-1)) / #nextPacenotes) -- scale the alpha by distance.
 

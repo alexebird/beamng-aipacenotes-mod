@@ -3,6 +3,7 @@ local Driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')
 
 local C = {}
 local logTag = 'aipacenotes'
+local infiniteTimeToPacenote = 1000000
 
 function C:init(missionDir, vehicleTracker, notebook)
   self.vehicleTracker = vehicleTracker
@@ -16,10 +17,30 @@ function C:init(missionDir, vehicleTracker, notebook)
 
   self.currPoint = nil
   self.nextPacenote = nil
-  self.threshold_sec = 2
+  self.default_threshold_sec = 8
+  self:setThreshold(self.default_threshold_sec)
+
+  self.nextPointSearchLimit = 10
 
   self:detectCurrPoint()
-  self.driveline:preCalculatePacenoteDistances(self.notebook, 1)
+  self.driveline:preCalculatePacenoteDistances(self.notebook, 5)
+end
+
+function C:setThreshold(newThresh)
+  self.threshold_sec = newThresh
+  log('D', logTag, 'set threshold_sec to '..self.threshold_sec)
+end
+
+function C:getThreshold()
+  if not self.threshold_sec then
+    return self.default_threshold_sec
+  else
+    return self.threshold_sec
+  end
+end
+
+function C:notifyThreshold()
+  guihooks.trigger('aiPacenotesSetCodriverTimingThreshold', self.threshold_sec)
 end
 
 function C:detectCurrPoint()
@@ -27,8 +48,10 @@ function C:detectCurrPoint()
 end
 
 function C:onUpdate(nextPacenote)
+  if not self.driveline then return end
+
   self.nextPacenote = nextPacenote
-  self:drawDebug()
+  -- self:drawDebug()
 
   if self:intersectCorners() then
     local nextPoint = self.currPoint.next
@@ -38,30 +61,29 @@ end
 
 function C:isUnderThreshold()
   local timeToPacenote = self:timeToNextPacenote()
-  if timeToPacenote and timeToPacenote <= self.threshold_sec then
+  local thresh = self:getThreshold()
+  if thresh and timeToPacenote <= thresh then
+    if self.nextPacenote then
+      local timestr = string.format("%.1f", timeToPacenote)
+      log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..thresh)
+    end
     return true
+  else
+    return false
   end
-
-  return false
 end
 
 function C:timeToNextPacenote()
+  local timeToPacenote = infiniteTimeToPacenote
   local vel = self.vehicleTracker:velocity()
   local speed_ms = vel:length()
-
+  if not self.currPoint then return timeToPacenote end
   local dist = self.currPoint.pacenoteDistances[self.nextPacenote.name]
 
-  if not dist then
-    return nil
-  end
-
-  local timeToPacenote = (speed_ms ~= 0) and (dist / speed_ms) or -1
-  if timeToPacenote > 30 then
-    timeToPacenote = -1
-  end
-
-  if timeToPacenote == -1 then
-    return nil
+  if dist then
+    if speed_ms ~= 0 then
+      timeToPacenote = dist / speed_ms
+    end
   end
 
   return timeToPacenote
@@ -118,7 +140,7 @@ function C:drawDebug()
 
   if self.nextPacenote then
     local pos = self.nextPacenote:getCornerStartWaypoint().pos
-    clr = cc.clr_blue
+    clr = cc.clr_green
     debugDrawer:drawSphere(
       pos,
       10.0,
@@ -169,6 +191,16 @@ function C:_intersectCornersHelper(fromCorners, toCorners)
   end
 
   return minT <= 1, minT
+end
+
+function C:findNextPacenote()
+  local curr = self.currPoint
+  while curr do
+    if curr.pacenote then
+      return curr.pacenote
+    end
+    curr = curr.next
+  end
 end
 
 return function(...)

@@ -51,6 +51,7 @@ function C:load()
   for i,point in ipairs(points) do
     point.normal = snaproadNormals.forwardNormalVec(point)
     point.pacenoteDistances = {}
+    point.pacenote = nil
   end
 
   log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
@@ -88,7 +89,6 @@ function C:drawDebugDriveline()
       Point2F(0, 0),
       ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
     )
-
   end
 end
 
@@ -112,6 +112,9 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   local pacenotes = notebook.pacenotes.sorted
   local pacenotePointMap = self:mapPacenotesToPoints(notebook)
 
+  local printLimit = 2
+  local printCount = 0
+
   for name,point in pairs(pacenotePointMap) do
     print(name..' -> '..tostring(point.id))
   end
@@ -123,10 +126,17 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   local pacenoteIndex = 1
 
   -- Loop over each driveline point
-  for i,point in ipairs(self.points) do
+  for _,point in ipairs(self.points) do
+
+    if printCount <= printLimit then
+      print('point id='..tostring(point.id))
+      printCount = printCount + 1
+    end
 
     -- see if we need to advance the pacenoteIndex by checking if the current
     -- point is the same as the pacenote's point.
+    --
+    -- basically once you pass a pacenote, you dont need to calc the distance anymore.
     if pacenoteIndex <= #pacenotes then
       local pacenote = pacenotes[pacenoteIndex]
       local pacenotePoint = pacenotePointMap[pacenote.name]
@@ -136,14 +146,25 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
       end
     end
 
+    if printCount <= printLimit then
+      print('pacenoteIndex='..tostring(pacenoteIndex))
+    end
+
     -- Calculate distance to the next 'numPacenotes' pacenotes from this point
     for j = 1, numPacenotes do
-      if pacenoteIndex <= #pacenotes then
-        local pacenote = pacenotes[pacenoteIndex]
+       -- subtract 1 so that the pacenote at pacenoteIndex is used
+      local currIdx = pacenoteIndex + (j - 1)
+
+      if currIdx <= #pacenotes then
+        local pacenote = pacenotes[currIdx]
         local pacenotePoint = pacenotePointMap[pacenote.name]
 
         if pacenotePoint then
           local distance = self:calculatePathDistance(point, pacenotePoint)
+
+          if printCount <= printLimit then
+            print('point.pacenoteDistances['..pacenote.name..']='..tostring(distance))
+          end
           point.pacenoteDistances[pacenote.name] = distance
         end
       else
@@ -154,17 +175,18 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   end
 end
 
+-- Loop over each pacenote and map it to the nearest driveline point
 function C:mapPacenotesToPoints(notebook)
   local pacenotes = notebook.pacenotes.sorted
   local pacenotePointMap = {}
 
-  -- Loop over each pacenote and map it to the nearest driveline point
-  for _, pacenote in ipairs(pacenotes) do
+  for i, pacenote in ipairs(pacenotes) do
     local pacenotePos = pacenote:getCornerStartWaypoint().pos
     local nearestPoint = self:findNearestPoint(pacenotePos)
     if nearestPoint then
       -- Map pacenote name to the point's ID
       pacenotePointMap[pacenote.name] = self.points[nearestPoint.id]
+      nearestPoint.pacenote = { pn=pacenote, i=i }
     end
   end
 
