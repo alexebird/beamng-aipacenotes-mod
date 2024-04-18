@@ -8,7 +8,7 @@ function C:init(rallyManager)
   self.rallyManager = rallyManager
   self.pacenote_metadata = nil
 
-  self.backend = 'gui'
+  -- comment to use gui-based backend
   -- self.backend = 'lua'
 
   self:resetAudioQueue()
@@ -212,10 +212,10 @@ function C:playNextInQueue()
     self.currAudioObj = self.queue:pop_left()
     if self.currAudioObj then
       if self.currAudioObj.audioType == 'pacenote' then
-        if self.backend == 'gui' then
-          re_util.playPacenoteGui(self.currAudioObj)
-        else
+        if self.backend == 'lua' then
           re_util.playPacenote(self.currAudioObj)
+        else
+          re_util.playPacenoteGui(self.currAudioObj)
         end
       elseif self.currAudioObj.audioType == 'pause' then
         self:doPause(self.currAudioObj)

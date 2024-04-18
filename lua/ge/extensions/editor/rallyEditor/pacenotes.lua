@@ -1632,6 +1632,16 @@ Any lua code is allowed, so be careful. Examples:
       end
       im.Text('Isolate removes pacenote from automatic distance calls.')
 
+      local currCodriverWait = pacenote.codriverWait
+      if im.BeginCombo('##codriverWait', currCodriverWait) then
+        for _, waitVal in ipairs({'none', 'small', 'medium', 'large'}) do
+          if im.Selectable1(waitVal, waitVal == currCodriverWait) then
+            pacenote:setCodriverWait(waitVal)
+          end
+        end
+        im.EndCombo()
+      end
+
       local lang = self.path:selectedCodriverLanguage()
       im.Text('output note text: '..pacenote:joinedNote(lang))
 
@@ -1664,10 +1674,11 @@ function C:handleNoteFieldEdit(note, language, subfield, buf)
   local lang_data = newVal[language] or {}
   local val = re_util.trimString(ffi.string(buf))
 
-  -- if subfield == 'note' then
-  --   local last = note.id == self.path.pacenotes.sorted[#self.path.pacenotes.sorted].id
-  --   val = re_util.normalizeNoteText(self.path.mainSettings, val, last, false)
-  -- end
+  if subfield == 'note' then
+    local last = note.id == self.path.pacenotes.sorted[#self.path.pacenotes.sorted].id
+    -- val = re_util.normalizeNoteText(self.path.mainSettings, val, last, false)
+    val = note:normalizeNoteText(language, last, false, val)
+  end
 
   lang_data[subfield] = val
   newVal[language] = lang_data

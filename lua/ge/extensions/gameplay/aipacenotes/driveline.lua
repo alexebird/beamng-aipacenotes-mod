@@ -82,13 +82,13 @@ function C:drawDebugDriveline()
     local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
 
     -- this square prism is the intersection "plane" of the point.
-    debugDrawer:drawSquarePrism(
-      point.pos + side,
-      point.pos + 0.25 * point.normal + side,
-      Point2F(5, midWidth),
-      Point2F(0, 0),
-      ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
-    )
+  --   debugDrawer:drawSquarePrism(
+  --     point.pos + side,
+  --     point.pos + 0.25 * point.normal + side,
+  --     Point2F(5, midWidth),
+  --     Point2F(0, 0),
+  --     ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
+  --   )
   end
 end
 
@@ -110,12 +110,12 @@ end
 
 function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   local pacenotes = notebook.pacenotes.sorted
-  local pacenotePointMap = self:mapPacenotesToPoints(notebook)
+  local pacenotePointMapCs = self:mapPacenotesCsToPoints(notebook)
 
   local printLimit = 2
   local printCount = 0
 
-  for name,point in pairs(pacenotePointMap) do
+  for name,point in pairs(pacenotePointMapCs) do
     print(name..' -> '..tostring(point.id))
   end
 
@@ -139,7 +139,7 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
     -- basically once you pass a pacenote, you dont need to calc the distance anymore.
     if pacenoteIndex <= #pacenotes then
       local pacenote = pacenotes[pacenoteIndex]
-      local pacenotePoint = pacenotePointMap[pacenote.name]
+      local pacenotePoint = pacenotePointMapCs[pacenote.name]
 
       if point.id == pacenotePoint.id then
         pacenoteIndex = pacenoteIndex + 1
@@ -157,7 +157,7 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
 
       if currIdx <= #pacenotes then
         local pacenote = pacenotes[currIdx]
-        local pacenotePoint = pacenotePointMap[pacenote.name]
+        local pacenotePoint = pacenotePointMapCs[pacenote.name]
 
         if pacenotePoint then
           local distance = self:calculatePathDistance(point, pacenotePoint)
@@ -176,18 +176,41 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
 end
 
 -- Loop over each pacenote and map it to the nearest driveline point
-function C:mapPacenotesToPoints(notebook)
+function C:mapPacenotesCsToPoints(notebook)
   local pacenotes = notebook.pacenotes.sorted
   local pacenotePointMap = {}
 
   for i, pacenote in ipairs(pacenotes) do
-    local pacenotePos = pacenote:getCornerStartWaypoint().pos
-    local nearestPoint = self:findNearestPoint(pacenotePos)
-    if nearestPoint then
+    local wp_cs = pacenote:getCornerStartWaypoint()
+    local pos_cs = wp_cs.pos
+    local point_cs = self:findNearestPoint(pos_cs)
+    if point_cs then
       -- Map pacenote name to the point's ID
-      pacenotePointMap[pacenote.name] = self.points[nearestPoint.id]
-      nearestPoint.pacenote = { pn=pacenote, i=i }
+      pacenotePointMap[pacenote.name] = self.points[point_cs.id]
+      point_cs.pacenote = { pn=pacenote, wp=wp_cs } --, i=i }
     end
+
+    local wp_ce = pacenote:getCornerEndWaypoint()
+    local pos_ce = wp_ce.pos
+    local point_ce = self:findNearestPoint(pos_ce)
+    if point_ce then
+      -- dont add to the pacenotePointMap.
+      -- but we still want to mark that the point has a CE on it.
+      point_ce.pacenote = { pn=pacenote, wp=wp_ce } -- , i=i }
+    end
+
+    -- mark some intermediate points
+    if point_cs and point_ce then
+      local i_cs = point_cs.id
+      local i_ce = point_ce.id
+      local diff = i_ce - i_cs
+      local half = round(diff / 2)
+      local i_half = i_cs + half
+      local point_half = self.points[i_half]
+      -- print('point_half id='..tostring(point_half.id)..' pos='..dumps(point_half.pos))
+      point_half.pacenote = { pn=pacenote, intermediate='half' }
+    end
+
   end
 
   return pacenotePointMap

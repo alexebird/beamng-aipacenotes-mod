@@ -27,6 +27,7 @@ function C:init(notebook, name, forceId)
   self.todo = false
   self.playback_rules = nil
   self.isolate = false
+  self.codriverWait = 'none'
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
     lang = lang.language
@@ -397,6 +398,7 @@ function C:onSerialize()
     name = self.name,
     playback_rules = self.playback_rules,
     isolate = self.isolate or false,
+    codriverWait = self.codriverWait or 'none',
     todo = self.todo or false,
     notes = self.notes,
     metadata = self.metadata,
@@ -410,6 +412,7 @@ function C:onDeserialized(data, oldIdMap)
   self.name = data.name
   self.playback_rules = data.playback_rules
   self.isolate = data.isolate or false
+  self.codriverWait = data.codriverWait or 'none'
   self.todo = data.todo or false
   self.notes = data.notes
   self.metadata = data.metadata or {}
@@ -994,8 +997,8 @@ function C:moveWaypointTowards(snaproads, wp, fwd, step)
   end
 end
 
-function C:normalizeNoteText(lang, last, force)
-  local note = self:getNoteFieldNote(lang)
+function C:normalizeNoteText(lang, last, force, noteVal)
+  local note = noteVal or self:getNoteFieldNote(lang)
   local mainSettings = self.notebook:mainSettings()
 
   force = force or false
@@ -1030,6 +1033,7 @@ function C:normalizeNoteText(lang, last, force)
   -- local newTxt = re_util.normalizeNoteText(self.notebook.mainSettings, note, last, force or false)
 
   self:setNoteFieldNote(lang, newTxt)
+  return newTxt
 end
 
 function C:toggleIsolate()
@@ -1052,6 +1056,10 @@ function C:toggleIsolate()
       self:setNoteFieldAfter(lang, '')
     end
   end
+end
+
+function C:setCodriverWait(val)
+  self.codriverWait = val
 end
 
 return function(...)

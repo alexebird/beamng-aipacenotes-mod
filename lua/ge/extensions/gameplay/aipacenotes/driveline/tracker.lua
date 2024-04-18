@@ -4,6 +4,8 @@ local Driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')
 local C = {}
 local logTag = 'aipacenotes'
 local infiniteTimeToPacenote = 1000000
+local msToMph = 2.236936
+local mphToMs = 0.44704
 
 function C:init(missionDir, vehicleTracker, notebook)
   self.vehicleTracker = vehicleTracker
@@ -17,13 +19,30 @@ function C:init(missionDir, vehicleTracker, notebook)
 
   self.currPoint = nil
   self.nextPacenote = nil
-  self.default_threshold_sec = 8
+  self.default_threshold_sec = 10.0
+  self.max_threshold_scaling_factor = 2.0
   self:setThreshold(self.default_threshold_sec)
+
+  self.inFlightPacenotes = {}
+  self.inFlightPacenotesCount = 0
 
   self.nextPointSearchLimit = 10
 
   self:detectCurrPoint()
   self.driveline:preCalculatePacenoteDistances(self.notebook, 5)
+end
+
+function C:getInFlightPacenotesCount()
+  return self.inFlightPacenotesCount
+end
+
+function C:putInFlightPacenote(pacenote)
+  if self.inFlightPacenotes[pacenote.name] then
+    error("pacenote already in flight: "..pacenote.name)
+  end
+
+  self.inFlightPacenotes[pacenote.name] = true
+  self.inFlightPacenotesCount = self.inFlightPacenotesCount + 1
 end
 
 function C:setThreshold(newThresh)
@@ -50,19 +69,99 @@ end
 function C:onUpdate(nextPacenote)
   if not self.driveline then return end
 
-  self.nextPacenote = nextPacenote
-  -- self:drawDebug()
+  if not self.nextPacenote or nextPacenote.id ~= self.nextPacenote.id then
+    self.nextPacenote = nextPacenote
+  end
+
+  self:drawDebug()
 
   if self:intersectCorners() then
-    local nextPoint = self.currPoint.next
-    self.currPoint = nextPoint
+    local intersectedPacenoteData = self.currPoint.pacenote
+    if intersectedPacenoteData then
+      local pnName = intersectedPacenoteData.pn.name
+      local wp = intersectedPacenoteData.wp
+      local intermediate = intersectedPacenoteData.intermediate
+
+      -- print(dumps(self.inFlightPacenotes))
+      -- if wp then
+      --   print("pnName="..pnName..' isCs='..tostring(wp:isCs())..' isCe='..tostring(wp:isCe()))
+      -- end
+      -- if intermediate then
+      --   print("pnName="..pnName..' intermediate='..tostring(intermediate))
+      -- end
+
+      if self.inFlightPacenotes[pnName] then
+        -- if wp:isCe() then
+          -- remove the in-flight note when you hit the CE.
+        if intermediate == 'half' then
+          -- remove the in-flight note when you hit an intermediate point.
+          self.inFlightPacenotes[pnName] = nil
+          self.inFlightPacenotesCount = self.inFlightPacenotesCount - 1
+        end
+      elseif wp and not wp:isCe() then
+        -- this block is a sanity check.
+        -- if we are using an intermediate point to remove the in-flight state for a note,
+        -- then by the time we hit CE, the note should be gone from in-flight.
+        --
+        -- therefore the sanity check is only needed when not isCe.
+        log('E', logTag, 'expected inFlightPacenotes entry for '..pnName)
+      end
+    end
+
+    self.currPoint = self.currPoint.next
   end
 end
 
+function C:speedMetersPerSecond()
+  local vel = self.vehicleTracker:velocity()
+  local speed_ms = vel:length()
+  return speed_ms
+end
+
+function C:getSpeedScaledThreshold()
+  local speed_ms = self:speedMetersPerSecond()
+  local minScalingSpeedMs = 30 * mphToMs
+  local maxScalingSpeedMs = 70 * mphToMs
+  local minThresh = self.threshold_sec
+  local maxThresh = minThresh * self.max_threshold_scaling_factor
+
+  local scaledThresh = nil
+
+  if speed_ms < minScalingSpeedMs then
+    scaledThresh = minThresh
+  elseif speed_ms > maxScalingSpeedMs then
+    scaledThresh = maxThresh
+  else
+    local speedScale = (speed_ms - minScalingSpeedMs) / (maxScalingSpeedMs - minScalingSpeedMs)
+    scaledThresh = minThresh + ((maxThresh - minThresh) * speedScale)
+  end
+
+  return scaledThresh
+end
+
+local codriverWaitTable = {
+  -- broken up by thirds
+  ['none'] = 1.0,
+  ['small'] = 0.9,
+  ['medium'] = 0.8,
+  ['large'] = 0.7,
+}
+
 function C:isUnderThreshold()
   local timeToPacenote = self:timeToNextPacenote()
-  local thresh = self:getThreshold()
-  if thresh and timeToPacenote <= thresh then
+  -- local thresh = self:getThreshold()
+  local thresh = self:getSpeedScaledThreshold()
+
+  if self.nextPacenote then
+    local codriverWait = self.nextPacenote.codriverWait or 'none'
+    local codriverWaitFactor = codriverWaitTable[codriverWait]
+    thresh = thresh * codriverWaitFactor
+  end
+
+  -- local speed_mph = self:speedMetersPerSecond() * msToMph
+  -- print("scaledThresh="..string.format("%.1f", thresh).."@"..string.format("%.1f", speed_mph).."mph")
+
+  if timeToPacenote <= thresh then
     if self.nextPacenote then
       local timestr = string.format("%.1f", timeToPacenote)
       log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..thresh)
@@ -75,9 +174,9 @@ end
 
 function C:timeToNextPacenote()
   local timeToPacenote = infiniteTimeToPacenote
-  local vel = self.vehicleTracker:velocity()
-  local speed_ms = vel:length()
   if not self.currPoint then return timeToPacenote end
+
+  local speed_ms = self:speedMetersPerSecond()
   local dist = self.currPoint.pacenoteDistances[self.nextPacenote.name]
 
   if dist then
@@ -92,7 +191,7 @@ end
 function C:drawDebug()
   if not self.driveline then return end
 
-  self.driveline:drawDebugDriveline()
+  -- self.driveline:drawDebugDriveline()
 
   local clr = cc.clr_white
   local alpha_shape = 0.9
@@ -108,14 +207,24 @@ function C:drawDebug()
     local clr_text_fg = cc.clr_white
     local clr_text_bg = cc.clr_black
 
-    local txt = ''
+    -- local txt = ''
 
+    local sortedDistances = {}
     for pnName,dist in pairs(self.currPoint.pacenoteDistances) do
+      table.insert(sortedDistances, pnName)
+    end
+
+    table.sort(sortedDistances)
+
+    -- for pnName,dist in pairs(self.currPoint.pacenoteDistances) do
+    for i,pnName in ipairs(sortedDistances) do
+      local dist = self.currPoint.pacenoteDistances[pnName]
+      local txt = ''
       local distStr = string.format("%.1f", dist)
 
       local vel = self.vehicleTracker:velocity()
       local speed_ms = vel:length()
-      -- local speed_mph = speed_ms * 2.23694
+      -- local speed_mph = speed_ms * msToMph
       -- print(dumps(speed_mph))
       local velStr = string.format("%.1f", speed_ms)
 
@@ -125,17 +234,25 @@ function C:drawDebug()
       end
       local timeStr = string.format("%.1f", timeToPacenote)
 
-      txt = txt..pnName..": "..distStr.."m | speed: "..velStr.."m/s | t: "..timeStr.."s || "
+      txt = pnName.." | t="..timeStr.."s d="  ..distStr.."m speed="..velStr.."m/s"
+      debugDrawer:drawTextAdvanced(
+        self.currPoint.pos,
+        String(txt),
+        ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
+        true,
+        false,
+        ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
+      )
     end
 
-    debugDrawer:drawTextAdvanced(
-      self.currPoint.pos,
-      String(txt),
-      ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
-      true,
-      false,
-      ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
-    )
+    -- debugDrawer:drawTextAdvanced(
+    --   self.currPoint.pos,
+    --   String(txt),
+    --   ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
+    --   true,
+    --   false,
+    --   ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
+    -- )
   end
 
   if self.nextPacenote then
@@ -144,6 +261,16 @@ function C:drawDebug()
     debugDrawer:drawSphere(
       pos,
       10.0,
+      ColorF(clr[1], clr[2], clr[3], alpha_shape)
+    )
+  end
+
+  for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
+    local pos = pacenote:getCornerStartWaypoint().pos
+    clr = cc.clr_blue
+    debugDrawer:drawSphere(
+      pos,
+      7.0,
       ColorF(clr[1], clr[2], clr[3], alpha_shape)
     )
   end

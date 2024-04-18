@@ -100,10 +100,9 @@ function C:notebookFilenameSelector()
   if im.BeginCombo(name..'##filename', self.settings.notebook.filename or '') then
     for _, notebookData in ipairs(self.missionSettingsFormData.notebooks) do
       local notebookBasename = notebookData.basename
+      self.codrivers = notebookData.codrivers
       local current = self.settings.notebook.filename == notebookBasename
       if im.Selectable1(notebookBasename, current) then
-        self.codrivers = notebookData.codrivers
-
         if self.settings.notebook.filename ~= notebookBasename then
           self.settings.notebook.filename = notebookBasename
           if #self.codrivers > 0 and self.settings.notebook.codriver ~= self.codrivers[1] then
@@ -127,7 +126,6 @@ function C:notebookFilenameSelector()
 
   im.SetNextItemWidth(400)
   if im.BeginCombo(name..'##codriver', (self.settings.notebook.codriver) or '') then
-
     for _, codriver in ipairs(self.codrivers) do
       local current = self.settings.notebook.codriver == codriver
       if im.Selectable1(codriver, current) then

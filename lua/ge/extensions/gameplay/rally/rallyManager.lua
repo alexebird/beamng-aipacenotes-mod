@@ -285,13 +285,17 @@ function C:update(dtSim)
           self.reset_flag = false
         else
           self.drivelineTracker:onUpdate(pacenote)
+          local cnt = self.drivelineTracker:getInFlightPacenotesCount()
 
-          if self.drivelineTracker:isUnderThreshold() then
+          if cnt <= 1 and self.drivelineTracker:isUnderThreshold() then
+            print('inFlight='..tostring(cnt))
 
             if self:playbackAllowed(pacenote) then
               self.audioManager:enqueuePacenote(pacenote)
             end
 
+            -- add the in-flight note at the same time the audio enqueue decision is made.
+            self.drivelineTracker:putInFlightPacenote(pacenote)
             -- advance the pacenote even if we dont play the audio.
             self.nextId = self.nextId + 1
             -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
