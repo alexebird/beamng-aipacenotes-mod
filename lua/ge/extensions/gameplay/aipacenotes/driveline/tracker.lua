@@ -191,7 +191,7 @@ end
 function C:drawDebug()
   if not self.driveline then return end
 
-  -- self.driveline:drawDebugDriveline()
+  self.driveline:drawDebugDriveline()
 
   local clr = cc.clr_white
   local alpha_shape = 0.9

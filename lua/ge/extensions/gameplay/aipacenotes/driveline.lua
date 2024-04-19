@@ -82,13 +82,13 @@ function C:drawDebugDriveline()
     local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
 
     -- this square prism is the intersection "plane" of the point.
-  --   debugDrawer:drawSquarePrism(
-  --     point.pos + side,
-  --     point.pos + 0.25 * point.normal + side,
-  --     Point2F(5, midWidth),
-  --     Point2F(0, 0),
-  --     ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
-  --   )
+    debugDrawer:drawSquarePrism(
+      point.pos + side,
+      point.pos + 0.25 * point.normal + side,
+      Point2F(5, midWidth),
+      Point2F(0, 0),
+      ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
+    )
   end
 end
 
@@ -115,9 +115,9 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   local printLimit = 2
   local printCount = 0
 
-  for name,point in pairs(pacenotePointMapCs) do
-    print(name..' -> '..tostring(point.id))
-  end
+  -- for name,point in pairs(pacenotePointMapCs) do
+  --   print(name..' -> '..tostring(point.id))
+  -- end
 
   for _,point in ipairs(self.points) do
     point.pacenoteDistances = {}
@@ -129,7 +129,7 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   for _,point in ipairs(self.points) do
 
     if printCount <= printLimit then
-      print('point id='..tostring(point.id))
+      -- print('point id='..tostring(point.id))
       printCount = printCount + 1
     end
 
@@ -146,9 +146,9 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
       end
     end
 
-    if printCount <= printLimit then
-      print('pacenoteIndex='..tostring(pacenoteIndex))
-    end
+    -- if printCount <= printLimit then
+    --   print('pacenoteIndex='..tostring(pacenoteIndex))
+    -- end
 
     -- Calculate distance to the next 'numPacenotes' pacenotes from this point
     for j = 1, numPacenotes do
@@ -162,9 +162,9 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
         if pacenotePoint then
           local distance = self:calculatePathDistance(point, pacenotePoint)
 
-          if printCount <= printLimit then
-            print('point.pacenoteDistances['..pacenote.name..']='..tostring(distance))
-          end
+          -- if printCount <= printLimit then
+          --   print('point.pacenoteDistances['..pacenote.name..']='..tostring(distance))
+          -- end
           point.pacenoteDistances[pacenote.name] = distance
         end
       else
@@ -187,7 +187,7 @@ function C:mapPacenotesCsToPoints(notebook)
     if point_cs then
       -- Map pacenote name to the point's ID
       pacenotePointMap[pacenote.name] = self.points[point_cs.id]
-      point_cs.pacenote = { pn=pacenote, wp=wp_cs } --, i=i }
+      point_cs.pacenote = { pn=pacenote, wp=wp_cs, pacenote_i=i }
     end
 
     local wp_ce = pacenote:getCornerEndWaypoint()
@@ -196,7 +196,7 @@ function C:mapPacenotesCsToPoints(notebook)
     if point_ce then
       -- dont add to the pacenotePointMap.
       -- but we still want to mark that the point has a CE on it.
-      point_ce.pacenote = { pn=pacenote, wp=wp_ce } -- , i=i }
+      point_ce.pacenote = { pn=pacenote, wp=wp_ce, pacenote_i=i }
     end
 
     -- mark some intermediate points
@@ -208,7 +208,7 @@ function C:mapPacenotesCsToPoints(notebook)
       local i_half = i_cs + half
       local point_half = self.points[i_half]
       -- print('point_half id='..tostring(point_half.id)..' pos='..dumps(point_half.pos))
-      point_half.pacenote = { pn=pacenote, intermediate='half' }
+      point_half.pacenote = { pn=pacenote, intermediate='half', pacenote_i=i }
     end
 
   end

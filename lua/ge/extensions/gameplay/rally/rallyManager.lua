@@ -359,14 +359,17 @@ function C:closestPacenoteToVehicle()
 end
 
 function C:handleNoteSearch()
+  log('I', logTag, 'RallyManager handleNoteSearch')
   self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
   self.nextPacenotes = self.closestPacenotes
   self:nextPacenotesUpdated()
 end
 
 function C:drivelineTrackerNoteSearch()
+  log('I', logTag, 'RallyManager drivelineTrackerNoteSearch')
   local nextPacenoteData = self.drivelineTracker:findNextPacenote()
-  local pacenote_i = nextPacenoteData.i
+  print('nextPacenote')
+  local pacenote_i = nextPacenoteData.pacenote_i
   self.nextId = pacenote_i
   self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
   self:nextPacenotesUpdated()

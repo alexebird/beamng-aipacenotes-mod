@@ -177,7 +177,7 @@ local function updateRallyManager(dtSim)
 
   if flag_NoteSearch then
     flag_NoteSearch = false
-    rallyManager:handleNoteSearch()
+    -- rallyManager:handleNoteSearch()
     rallyManager:drivelineTrackerNoteSearch()
   end
 
