@@ -1,15 +1,13 @@
 -- extension name: gameplay_aipacenotes
 
--- local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
--- local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local RallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')
 
 local logTag = 'aipacenotes'
 
 local M = {}
 
 local rallyManager = nil
-local flag_NoteSearch = false
-local flag_drawDebug = false
+-- local flag_NoteSearch = false
 
 local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
@@ -18,32 +16,28 @@ end
 local function updateRallyManager(dtSim)
   if not rallyManager then return end
 
-  if flag_NoteSearch then
-    flag_NoteSearch = false
-    rallyManager:handleNoteSearch()
-  end
+  -- if flag_NoteSearch then
+  --   flag_NoteSearch = false
+  --   rallyManager:handleNoteSearch()
+  -- end
 
   rallyManager:update(dtSim)
 
-  if rallyManager.audioManager then
-    rallyManager.audioManager:playNextInQueue()
-  end
+  -- if rallyManager.audioManager then
+  --   rallyManager.audioManager:playNextInQueue()
+  -- end
 end
 
 local function initRallyManager(missionId, missionDir)
-  flag_NoteSearch = false
-  rallyManager = require('/lua/ge/extensions/gameplay/rally/rallyManager')()
+  -- flag_NoteSearch = false
+  rallyManager = RallyManager()
   rallyManager:setOverrideMission(missionId, missionDir)
   rallyManager:setup(100, 5)
-  rallyManager:handleNoteSearch()
+  -- rallyManager:handleNoteSearch()
 end
 
 local function clearRallyManager()
   rallyManager = nil
-end
-
-local function setDrawDebug(val)
-  flag_drawDebug = val
 end
 
 local function isReady()
@@ -54,10 +48,6 @@ local function isReady()
   return false
 end
 
--- local function onFirstUpdate()
---   log('D', logTag, 'onFirstUpdate')
--- end
-
 local function onUpdate(dtReal, dtSim, dtRaw)
   if isFreeroam() then
     clearRallyManager()
@@ -65,46 +55,39 @@ local function onUpdate(dtReal, dtSim, dtRaw)
   end
 
   updateRallyManager(dtSim)
-  -- updateVehicleCapture()
-
-  -- if flag_drawDebug and not (editor and editor.isEditorActive()) then
-    -- drawDebug()
-  -- end
 end
 
 local function onVehicleResetted(vehicleID)
   log('I', logTag, 'aipacenotes onVehicleResetted')
 
   if rallyManager then
-    flag_NoteSearch = true
-    rallyManager.audioManager:resetAudioQueue()
-    -- rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
+    -- flag_NoteSearch = true
+    -- rallyManager.audioManager:resetAudioQueue()
+    rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
   end
 end
 
-local function onVehicleSwitched(oid, nid, player)
-  log('D', logTag, 'onVehicleSwitched')
-end
-
-local function onVehicleSpawned(vid, v)
-  log('D', logTag, 'onVehicleSpawned')
-end
-
-local function onVehicleActiveChanged(vehicleID, active)
-end
+-- local function onVehicleSwitched(oid, nid, player)
+--   log('D', logTag, 'onVehicleSwitched')
+-- end
+--
+-- local function onVehicleSpawned(vid, v)
+--   log('D', logTag, 'onVehicleSpawned')
+-- end
+--
+-- local function onVehicleActiveChanged(vehicleID, active)
+-- end
 
 -- extension hooks
 M.onUpdate = onUpdate
--- M.onFirstUpdate = onFirstUpdate -- not used
 M.onVehicleResetted = onVehicleResetted
-M.onVehicleSpawned = onVehicleSpawned
-M.onVehicleSwitched = onVehicleSwitched
-M.onVehicleActiveChanged = onVehicleActiveChanged
+-- M.onVehicleSpawned = onVehicleSpawned
+-- M.onVehicleSwitched = onVehicleSwitched
+-- M.onVehicleActiveChanged = onVehicleActiveChanged
 
 -- aipacenotes API
 M.initRallyManager = initRallyManager
 M.clearRallyManager = clearRallyManager
-M.setDrawDebug = setDrawDebug
 
 M.isReady = isReady
 M.getRallyManager = function() return rallyManager end

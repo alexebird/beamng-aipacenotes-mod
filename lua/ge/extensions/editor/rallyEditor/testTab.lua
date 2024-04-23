@@ -52,6 +52,7 @@ function C:draw()
     extensions.unload("ui_aipacenotes_recceApp")
     extensions.load("ui_aipacenotes_recceApp")
     ui_aipacenotes_recceApp.loadMission(mid, missionDir)
+    ui_aipacenotes_recceApp.setDrawDebug(true)
   end
 
   if im.Button("Unload Recce Mission") then

@@ -19,7 +19,8 @@ local missionId = nil
 local rallyManager = nil
 local snaproad = nil
 local selectedPacenote = nil
-local flag_NoteSearch = false
+-- local flag_NoteSearch = false
+local flag_showNotes = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
 
@@ -30,6 +31,8 @@ local cutCapture = nil
 local isRecording = false
 local shouldRecordDriveline = false
 local shouldRecordVoice = false
+
+-- local inWorldEditor = false
 
 
 local function isFreeroam()
@@ -175,18 +178,18 @@ end
 local function updateRallyManager(dtSim)
   if not rallyManager then return end
 
-  if flag_NoteSearch then
-    flag_NoteSearch = false
-    -- rallyManager:handleNoteSearch()
-    rallyManager:drivelineTrackerNoteSearch()
-  end
+  -- if flag_NoteSearch then
+  --   flag_NoteSearch = false
+  --   -- rallyManager:handleNoteSearch()
+  --   rallyManager:drivelineTrackerNoteSearch()
+  -- end
 
   if not isRecording then
     rallyManager:update(dtSim)
 
-    if rallyManager.audioManager then
-      rallyManager.audioManager:playNextInQueue()
-    end
+    -- if rallyManager.audioManager then
+    --   rallyManager.audioManager:playNextInQueue()
+    -- end
   end
 end
 
@@ -532,21 +535,23 @@ end
 local function onUpdate(dtReal, dtSim, dtRaw)
   updateRallyManager(dtSim)
   updateVehicleCapture()
-  if flag_drawDebug and not (editor and editor.isEditorActive()) then
+  if flag_showNotes and not (editor and editor.isEditorActive()) then
     drawDebug()
   end
 end
 
 local function loadMission(newMissionId, newMissionDir)
+  log('D', logTag, 'recceApp.loadMission')
+
   missionDir = newMissionDir
   missionId = newMissionId
-  flag_NoteSearch = false
-  -- flag_drawDebug = false
+  -- flag_NoteSearch = false
+  -- flag_showNotes = false
   -- flag_drawDebugSnaproads = false
   rallyManager = RallyManager()
   rallyManager:setOverrideMission(missionId, missionDir)
   rallyManager:setup(100, 10)
-  rallyManager:handleNoteSearch()
+  -- rallyManager:handleNoteSearch()
 
   selectedPacenote = rallyManager:closestPacenoteToVehicle()
   if selectedPacenote then
@@ -561,18 +566,27 @@ local function loadMission(newMissionId, newMissionDir)
 end
 
 local function unloadMission()
+  log('D', logTag, 'recceApp.unloadMission')
+
   rallyManager = nil
   missionDir = nil
   missionId = nil
   snaproad = nil
   selectedPacenote = nil
-  flag_NoteSearch = false
-  -- flag_drawDebug = false
+  -- flag_NoteSearch = false
+  -- flag_showNotes = false
   -- flag_drawDebugSnaproads = false
 end
 
 local function setDrawDebug(val)
   flag_drawDebug = val
+  if rallyManager then
+    rallyManager:enableDrawDebug(flag_drawDebug)
+  end
+end
+
+local function setShowNotes(val)
+  flag_showNotes = val
 end
 
 local function setDrawDebugSnaproads(val)
@@ -590,9 +604,10 @@ local function onVehicleResetted()
   log('I', 'aipacenotes', 'recceApp detected vehicle reset')
 
   if rallyManager then
-    flag_NoteSearch = true
+    -- flag_NoteSearch = true
     -- rallyManager.audioManager:resetAudioQueue()
     rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
+    rallyManager:enableDrawDebug(flag_drawDebug)
   end
 end
 
@@ -692,13 +707,13 @@ local function setTimingSetting(val)
 end
 
 local function initRecceApp()
-  log('I', logTag, 'initRecceApp')
+  log('D', logTag, 'recceApp.initRecceApp')
   recce_settings = RecceSettings()
   recce_settings:load()
 end
 
 local function onExtensionLoaded()
-  print('recceApp.onExtensionLoaded')
+  log('D', logTag, 'recceApp.onExtensionLoaded')
   initRecceApp()
   guihooks.trigger('aiPacenotes.recceApp.onExtensionLoaded', {})
 end
@@ -710,7 +725,7 @@ M.onVehicleResetted = onVehicleResetted
 -- M.onVehicleSpawned = onVehicleSpawned
 -- M.onVehicleSwitched = onVehicleSwitched
 
-M.initRecceApp = initRecceApp
+-- M.initRecceApp = initRecceApp
 M.refresh = refresh
 
 M.loadMission = loadMission
@@ -719,6 +734,7 @@ M.setLastMissionId = setLastMissionId
 M.setLastLoadState = setLastLoadState
 
 
+M.setShowNotes = setShowNotes
 M.setDrawDebug = setDrawDebug
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setSelectedPacenoteText = setSelectedPacenoteText

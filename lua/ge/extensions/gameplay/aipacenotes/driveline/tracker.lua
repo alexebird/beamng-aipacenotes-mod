@@ -28,8 +28,14 @@ function C:init(missionDir, vehicleTracker, notebook)
 
   self.nextPointSearchLimit = 10
 
+  self.drawDebugEnabled = false
+
   self:detectCurrPoint()
   self.driveline:preCalculatePacenoteDistances(self.notebook, 5)
+end
+
+function C:enableDrawDebug(val)
+  self.drawDebugEnabled = val
 end
 
 function C:getInFlightPacenotesCount()
@@ -73,7 +79,9 @@ function C:onUpdate(nextPacenote)
     self.nextPacenote = nextPacenote
   end
 
-  self:drawDebug()
+  if self.drawDebugEnabled then
+    self:drawDebug()
+  end
 
   if self:intersectCorners() then
     local intersectedPacenoteData = self.currPoint.pacenote

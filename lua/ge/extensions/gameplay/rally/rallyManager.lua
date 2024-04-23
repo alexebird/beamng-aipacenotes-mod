@@ -42,6 +42,15 @@ function C:init()
   -- reset flag is used to skip a single update tick after a reset.
   -- that way the vehicle velocity is ignored when it jumps to the reset location.
   self.reset_flag = false
+
+  -- set this to trigger a search for the next pacenote upon next update.
+  self.flag_NoteSearch = false
+end
+
+function C:enableDrawDebug(val)
+  if self.drivelineTracker then
+    self.drivelineTracker:enableDrawDebug(val)
+  end
 end
 
 function C:setOverrideMission(missionId, missionDir)
@@ -111,6 +120,7 @@ function C:reset()
   log('I', logTag, 'RallyManager reset')
 
   self.reset_flag = true
+  self.flag_NoteSearch = true
 
   self.audioManager:resetAudioQueue()
 
@@ -266,6 +276,12 @@ end
 function C:update(dtSim)
   if not self.setup_complete then return end
 
+  if self.flag_NoteSearch then
+    self.flag_NoteSearch = false
+    -- self:handleNoteSearch()
+    self:drivelineTrackerNoteSearch()
+  end
+
   -- get the latest vehicle position data
   if self.vehicleTracker then
     self.vehicleTracker:onUpdate(dtSim)
@@ -317,6 +333,10 @@ function C:update(dtSim)
       -- that should be expected.
       self:updateForNextPacenote()
     end
+  end
+
+  if self.audioManager then
+    self.audioManager:playNextInQueue()
   end
 end
 
