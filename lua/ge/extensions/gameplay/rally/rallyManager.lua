@@ -53,6 +53,12 @@ function C:enableDrawDebug(val)
   end
 end
 
+function C:setLuaAudioBackend(val)
+  if self.audioManager then
+    self.audioManager:setLuaAudioBackend(val)
+  end
+end
+
 function C:setOverrideMission(missionId, missionDir)
   self.overrideMissionId = missionId
   self.overrideMissionDir = missionDir
@@ -216,14 +222,14 @@ function C:intersectCorners(pacenote)
   end
 end
 
-function C:shouldPlay(pacenote)
-  local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
-  if err then
-    log('E', logTag, 'error in pacenote:playbackAllowed(): '..err)
-    allowed = true
-  end
-  return allowed and self:intersectCorners(pacenote)
-end
+-- function C:shouldPlay(pacenote)
+--   local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
+--   if err then
+--     log('E', logTag, 'error in pacenote:playbackAllowed(): '..err)
+--     allowed = true
+--   end
+--   return allowed and self:intersectCorners(pacenote)
+-- end
 
 function C:playbackAllowed(pacenote)
   local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
@@ -234,44 +240,44 @@ function C:playbackAllowed(pacenote)
   return allowed
 end
 
-function C:updateForClosestPacenotes()
-  -- log('D', 'wtf', 'has closestPacenotes ('..#self.closestPacenotes..')')
-  for _,closePacenote in ipairs(self.closestPacenotes) do
-    if self:intersectCorners(closePacenote) then
-      if self:shouldPlay(closePacenote) then
-        self.audioManager:enqueuePacenote(closePacenote)
-      end
-      -- nextId is not the pacenote.id, its the index in the ordered list of pacenotes.
-      for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
-        if pacenote.id == closePacenote.id then
-          -- log('D', 'wtf', 'found pn match at i='..tostring(i))
-          self.nextId = i+1
-          -- log('D', 'wtf', 'nextId update,closestPacenotes: incremented to '..tostring(self.nextId))
-          self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
-          self:nextPacenotesUpdated()
-          break
-        end
-      end
-      self.closestPacenotes = nil
-      break
-    end
-  end
-end
-
-function C:updateForNextPacenote()
-  -- log('D', 'wtf', 'nextId='..tostring(self.nextId))
-  local pacenote = self.notebook.pacenotes.sorted[self.nextId]
-  if pacenote and self:intersectCorners(pacenote) then
-    if self:shouldPlay(pacenote) then
-      self.audioManager:enqueuePacenote(pacenote)
-    end
-    -- advance the pacenote even if we dont play the audio.
-    self.nextId = self.nextId + 1
-    -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
-    self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
-    self:nextPacenotesUpdated()
-  end
-end
+-- function C:updateForClosestPacenotes()
+--   -- log('D', 'wtf', 'has closestPacenotes ('..#self.closestPacenotes..')')
+--   for _,closePacenote in ipairs(self.closestPacenotes) do
+--     if self:intersectCorners(closePacenote) then
+--       if self:shouldPlay(closePacenote) then
+--         self.audioManager:enqueuePacenote(closePacenote)
+--       end
+--       -- nextId is not the pacenote.id, its the index in the ordered list of pacenotes.
+--       for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
+--         if pacenote.id == closePacenote.id then
+--           -- log('D', 'wtf', 'found pn match at i='..tostring(i))
+--           self.nextId = i+1
+--           -- log('D', 'wtf', 'nextId update,closestPacenotes: incremented to '..tostring(self.nextId))
+--           self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+--           self:nextPacenotesUpdated()
+--           break
+--         end
+--       end
+--       self.closestPacenotes = nil
+--       break
+--     end
+--   end
+-- end
+--
+-- function C:updateForNextPacenote()
+--   -- log('D', 'wtf', 'nextId='..tostring(self.nextId))
+--   local pacenote = self.notebook.pacenotes.sorted[self.nextId]
+--   if pacenote and self:intersectCorners(pacenote) then
+--     if self:shouldPlay(pacenote) then
+--       self.audioManager:enqueuePacenote(pacenote)
+--     end
+--     -- advance the pacenote even if we dont play the audio.
+--     self.nextId = self.nextId + 1
+--     -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
+--     self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+--     self:nextPacenotesUpdated()
+--   end
+-- end
 
 function C:update(dtSim)
   if not self.setup_complete then return end
@@ -301,17 +307,11 @@ function C:update(dtSim)
           self.reset_flag = false
         else
           self.drivelineTracker:onUpdate(pacenote)
-          local cnt = self.drivelineTracker:getInFlightPacenotesCount()
-
-          if cnt <= 1 and self.drivelineTracker:isUnderThreshold() then
-            print('inFlight='..tostring(cnt))
-
+          if self.drivelineTracker:shouldPlayNextPacenote() then
             if self:playbackAllowed(pacenote) then
               self.audioManager:enqueuePacenote(pacenote)
             end
 
-            -- add the in-flight note at the same time the audio enqueue decision is made.
-            self.drivelineTracker:putInFlightPacenote(pacenote)
             -- advance the pacenote even if we dont play the audio.
             self.nextId = self.nextId + 1
             -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
@@ -321,18 +321,18 @@ function C:update(dtSim)
         end
       end
     end
-  else
-    -- look for the next pacenote to trigger audio for
-    if self.closestPacenotes then
-      -- In this case, there is a vehicle position reset and we need to find where
-      -- in the pacenotes list we are.
-      self:updateForClosestPacenotes()
-    else
-      -- in the normal case, we assume the next pacenote is nextId+1.
-      -- yes, this won't support skipping pacenotes, but I don't think
-      -- that should be expected.
-      self:updateForNextPacenote()
-    end
+  -- else
+  --   -- look for the next pacenote to trigger audio for
+  --   if self.closestPacenotes then
+  --     -- In this case, there is a vehicle position reset and we need to find where
+  --     -- in the pacenotes list we are.
+  --     self:updateForClosestPacenotes()
+  --   else
+  --     -- in the normal case, we assume the next pacenote is nextId+1.
+  --     -- yes, this won't support skipping pacenotes, but I don't think
+  --     -- that should be expected.
+  --     self:updateForNextPacenote()
+  --   end
   end
 
   if self.audioManager then

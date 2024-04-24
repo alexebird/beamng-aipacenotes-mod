@@ -31,6 +31,7 @@ local default_notebook_basename = default_notebook_name..'.'..notebookFileExt
 local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
+local default_waypoint_intersect_radius = 10
 
 local default_punctuation = '?'
 local default_punctuation_last = '.'
@@ -43,6 +44,7 @@ local kilo_unit_str = "km"
 local dist_round_small = 10
 local dist_round_large = 50
 local dist_round_km = 250
+
 
 local var_dl = '{dl}'
 local var_dt = '{dt}'
@@ -542,6 +544,7 @@ M.aip_fg_color = aip_fg_color
 M.autodist_internal_level1 = autodist_internal_level1
 M.autofill_blocker = autofill_blocker
 M.default_codriver_language = default_codriver_language
+M.default_waypoint_intersect_radius = default_waypoint_intersect_radius
 M.default_codriver_name = default_codriver_name
 M.default_codriver_voice = default_codriver_voice
 M.default_notebook_name = default_notebook_name

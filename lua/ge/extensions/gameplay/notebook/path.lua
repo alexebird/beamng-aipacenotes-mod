@@ -18,6 +18,7 @@ function C:init(name)
   self.name = name or re_util.default_notebook_name
   self.description = ""
   self.authors = ""
+  self.forceManualATs = false
   self.version = currentVersion
   self.created_at = os.time()
   self.updated_at = self.created_at
@@ -411,6 +412,7 @@ end
 function C:onSerialize()
   local ret = {
     name = self.name,
+    forceManualATs = self.forceManualATs,
     description = self.description,
     authors = self.authors,
     updated_at = self.updated_at,
@@ -427,6 +429,7 @@ function C:onDeserialized(data)
   if not data then return end
 
   self.version = data.version or currentVersion
+  self.forceManualATs = data.forceManualATs or false
   self.name = data.name or ""
   self.description = string.gsub(data.description or "", "\\n", "\n")
   self.authors = data.authors or ""
@@ -921,6 +924,10 @@ function C:markRestTodo(pacenote)
       pn:markTodo()
     end
   end
+end
+
+function C:forceManualAudioTriggers()
+  return self.forceManualATs
 end
 
 return function(...)

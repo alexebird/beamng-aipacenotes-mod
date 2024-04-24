@@ -21,13 +21,15 @@ function C:init(pacenote, name, pos, forceId)
 
   self.normal = vec3(0,1,0)
   self.pos = pos
-  self.radius = (editor_rallyEditor and editor_rallyEditor.getPrefDefaultRadius()) or 10
+  self.radius = (editor_rallyEditor and editor_rallyEditor.getPrefDefaultRadius()) or re_util.default_waypoint_intersect_radius
+  self.intersectRadius = re_util.default_waypoint_intersect_radius
 
   self.sortOrder = 999999
   self.mode = nil
   -- self.validation_issues = {}
 
   self._snap_point = nil
+  self._driveline_point = nil
 end
 
 -- function C:validate()
@@ -91,8 +93,7 @@ function C:intersectCorners(fromCorners, toCorners)
     if len > 0 then
       len = 1/len
       rDir:normalize()
-      -- local rad = self.radius
-      local rad = 10  -- set the radius to 10m always.
+      local rad = self.intersectRadius
       local sMin, sMax = intersectsRay_Sphere(rPos, rDir, self.pos, rad)
       --adjust for normlized rDir
       sMin = sMin * len
@@ -101,11 +102,13 @@ function C:intersectCorners(fromCorners, toCorners)
       if sMin <= 0 and sMax >= 1 then
         -- check both directions of the plane so we dont have to worry about having the normal in the right direction when editing pacenoteWaypoints.
         local t1 = intersectsRay_Plane(rPos, rDir, self.pos, self.normal)
-        local t2 = intersectsRay_Plane(rPos, rDir, self.pos, -self.normal)
+        -- local t2 = intersectsRay_Plane(rPos, rDir, self.pos, -self.normal)
         t1 = t1*len
-        t2 = t2*len
-        if (t1<=1 and t1>=0) or (t2<=1 and t2>=0) then
-          minT = math.min(t1, t2, minT)
+        -- t2 = t2*len
+        -- if (t1<=1 and t1>=0) or (t2<=1 and t2>=0) then
+        if (t1<=1 and t1>=0) then
+          -- minT = math.min(t1, t2, minT)
+          minT = math.min(t1, minT)
         end
       end
     end

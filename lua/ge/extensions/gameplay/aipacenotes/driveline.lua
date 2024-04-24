@@ -11,7 +11,7 @@ function C:init(missionDir)
   self.missionDir = missionDir
   self.points = nil
 
-  self.radius = 10  -- set the radius to 10m always.
+  self.radius = re_util.default_waypoint_intersect_radius
 end
 
 function C:setPoints(points)
@@ -79,16 +79,16 @@ function C:drawDebugDriveline()
       ColorF(clr[1], clr[2], clr[3], alpha_shape)
     )
 
-    local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
-
-    -- this square prism is the intersection "plane" of the point.
-    debugDrawer:drawSquarePrism(
-      point.pos + side,
-      point.pos + 0.25 * point.normal + side,
-      Point2F(5, midWidth),
-      Point2F(0, 0),
-      ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
-    )
+    -- local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
+    --
+    -- -- this square prism is the intersection "plane" of the point.
+    -- debugDrawer:drawSquarePrism(
+    --   point.pos + side,
+    --   point.pos + 0.25 * point.normal + side,
+    --   Point2F(5, midWidth),
+    --   Point2F(0, 0),
+    --   ColorF(clr_shape[1], clr_shape[2], clr_shape[3], alpha_shape)
+    -- )
   end
 end
 
@@ -108,8 +108,12 @@ function C:findNearestPoint(srcPos)
   return closestPoint
 end
 
+-- This method takes the driveline points and the pacenotes (and waypoints),
+-- and merges the data together so that the location of the waypoints are
+-- associated with the desired driveline points.
 function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   local pacenotes = notebook.pacenotes.sorted
+  self:cacheNearestPoints(notebook)
   local pacenotePointMapCs = self:mapPacenotesCsToPoints(notebook)
 
   local printLimit = 2
@@ -175,31 +179,78 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
   end
 end
 
--- Loop over each pacenote and map it to the nearest driveline point
+function C:cacheNearestPoints(notebook)
+  local pacenotes = notebook.pacenotes.sorted
+  for i, pacenote in ipairs(pacenotes) do
+    local wp_cs = pacenote:getCornerStartWaypoint()
+    wp_cs._driveline_point = self:findNearestPoint(wp_cs.pos)
+
+    local wp_ce = pacenote:getCornerEndWaypoint()
+    wp_ce._driveline_point = self:findNearestPoint(wp_ce.pos)
+
+    local wp_at = pacenote:getActiveFwdAudioTrigger()
+    wp_at._driveline_point = self:findNearestPoint(wp_at.pos)
+  end
+end
+
+-- Loop over each pacenote and map it to the nearest driveline point.
+--
+-- Returns a map of pacenote name to the closest point. The map is a cache that
+-- is used for distance calculations in another function.
 function C:mapPacenotesCsToPoints(notebook)
   local pacenotes = notebook.pacenotes.sorted
-  local pacenotePointMap = {}
+  local pacenoteCsPointMap = {}
 
   for i, pacenote in ipairs(pacenotes) do
     local wp_cs = pacenote:getCornerStartWaypoint()
-    local pos_cs = wp_cs.pos
-    local point_cs = self:findNearestPoint(pos_cs)
+    -- local pos_cs = wp_cs.pos
+    -- local point_cs = self:findNearestPoint(pos_cs)
+    local point_cs = wp_cs._driveline_point
     if point_cs then
       -- Map pacenote name to the point's ID
-      pacenotePointMap[pacenote.name] = self.points[point_cs.id]
-      point_cs.pacenote = { pn=pacenote, wp=wp_cs, pacenote_i=i }
+      pacenoteCsPointMap[pacenote.name] = self.points[point_cs.id]
+      point_cs.pacenote = {
+        pn=pacenote,
+        point_type="cs",
+        -- wp=wp_cs,
+        pacenote_i=i,
+      }
     end
 
     local wp_ce = pacenote:getCornerEndWaypoint()
-    local pos_ce = wp_ce.pos
-    local point_ce = self:findNearestPoint(pos_ce)
+    -- local pos_ce = wp_ce.pos
+    -- local point_ce = self:findNearestPoint(pos_ce)
+    local point_ce = wp_ce._driveline_point
     if point_ce then
-      -- dont add to the pacenotePointMap.
+      -- dont add to the pacenoteCsPointMap.
       -- but we still want to mark that the point has a CE on it.
-      point_ce.pacenote = { pn=pacenote, wp=wp_ce, pacenote_i=i }
+      point_ce.pacenote = {
+        pn=pacenote,
+        point_type="ce",
+        -- wp=wp_ce,
+        pacenote_i=i,
+      }
     end
 
-    -- mark some intermediate points
+    local wp_at = pacenote:getActiveFwdAudioTrigger()
+    -- local pos_at = wp_at.pos
+    -- local point_at = self:findNearestPoint(pos_at)
+    local point_at = wp_at._driveline_point
+    if point_at then
+      -- dont add to the pacenoteCsPointMap.
+      -- but we still want to mark that the point has an AT on it.
+      point_at.pacenote = {
+        pn=pacenote,
+        point_type="at",
+        -- wp=wp_at,
+        pacenote_i=i,
+      }
+    end
+
+    -- Mark some intermediate points -- such as the drivline point halfway between the CS and CE.
+    -- This is just to give some more options for granularity for which
+    -- driveline points to use for triggering when a pacenote is considered no
+    -- longer in-flight.
     if point_cs and point_ce then
       local i_cs = point_cs.id
       local i_ce = point_ce.id
@@ -207,13 +258,16 @@ function C:mapPacenotesCsToPoints(notebook)
       local half = round(diff / 2)
       local i_half = i_cs + half
       local point_half = self.points[i_half]
-      -- print('point_half id='..tostring(point_half.id)..' pos='..dumps(point_half.pos))
-      point_half.pacenote = { pn=pacenote, intermediate='half', pacenote_i=i }
+      point_half.pacenote = {
+        pn=pacenote,
+        point_type="half",
+        pacenote_i=i,
+      }
     end
 
   end
 
-  return pacenotePointMap
+  return pacenoteCsPointMap
 end
 
 -- Calculate the distance along the points line from startIndex to pacenoteIndex

@@ -8,12 +8,21 @@ function C:init(rallyManager)
   self.rallyManager = rallyManager
   self.pacenote_metadata = nil
 
-  -- comment to use gui-based backend
-  -- self.backend = 'lua'
+  self.backend = nil
 
   self:resetAudioQueue()
+
   -- self.damageAudioPlayedAt = nil
   -- self.damageTimeoutSecs = 1.5
+end
+
+-- tell the audiomanager to play audio through lua game engine audio backend
+function C:setLuaAudioBackend(val)
+  if val then
+    self.backend = 'lua'
+  else
+    self.backend = nil
+  end
 end
 
 function C:loadPacenoteMetadata()

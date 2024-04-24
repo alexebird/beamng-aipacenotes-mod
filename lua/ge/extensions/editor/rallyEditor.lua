@@ -851,7 +851,7 @@ local function getPrefShowNextPacenote()
 end
 
 local function getPrefDefaultRadius()
-  return getPreference('rallyEditor.waypoints.defaultRadius', 8)
+  return getPreference('rallyEditor.waypoints.defaultRadius', re_util.default_waypoint_intersect_radius)
 end
 
 local function getPrefUiPacenoteNoteFieldWidth()

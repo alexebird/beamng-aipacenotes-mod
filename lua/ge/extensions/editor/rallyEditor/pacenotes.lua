@@ -1642,6 +1642,16 @@ Any lua code is allowed, so be careful. Examples:
         im.EndCombo()
       end
 
+      local currAtType = pacenote.audioTriggerType
+      if im.BeginCombo('##audioTriggerType', currAtType) then
+        for _, val in ipairs(pacenote.atTypes) do
+          if im.Selectable1(val, val == currAtType) then
+            pacenote:setAudioTriggerType(val)
+          end
+        end
+        im.EndCombo()
+      end
+
       local lang = self.path:selectedCodriverLanguage()
       im.Text('output note text: '..pacenote:joinedNote(lang))
 

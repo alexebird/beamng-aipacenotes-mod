@@ -20,6 +20,13 @@ C.noteFields = {
   after = 'after',
 }
 
+local atTypes = {
+  auto = 'auto',
+  manual = 'manual'
+}
+
+C.atTypes = {'auto', 'manual'}
+
 function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
@@ -28,6 +35,7 @@ function C:init(notebook, name, forceId)
   self.playback_rules = nil
   self.isolate = false
   self.codriverWait = 'none'
+  self.audioTriggerType = atTypes.auto
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
     lang = lang.language
@@ -399,6 +407,7 @@ function C:onSerialize()
     playback_rules = self.playback_rules,
     isolate = self.isolate or false,
     codriverWait = self.codriverWait or 'none',
+    audioTriggerType = self.audioTriggerType or atTypes.auto,
     todo = self.todo or false,
     notes = self.notes,
     metadata = self.metadata,
@@ -413,6 +422,7 @@ function C:onDeserialized(data, oldIdMap)
   self.playback_rules = data.playback_rules
   self.isolate = data.isolate or false
   self.codriverWait = data.codriverWait or 'none'
+  self.audioTriggerType = data.audioTriggerType or atTypes.auto
   self.todo = data.todo or false
   self.notes = data.notes
   self.metadata = data.metadata or {}
@@ -1060,6 +1070,18 @@ end
 
 function C:setCodriverWait(val)
   self.codriverWait = val
+end
+
+function C:setAudioTriggerType(val)
+  self.audioTriggerType = val
+end
+
+function C:isAudioTriggerTypeAuto()
+  return self.audioTriggerType == atTypes.auto
+end
+
+function C:isAudioTriggerTypeManual()
+  return self.audioTriggerType == atTypes.manual
 end
 
 return function(...)

@@ -53,6 +53,7 @@ function C:draw()
     extensions.load("ui_aipacenotes_recceApp")
     ui_aipacenotes_recceApp.loadMission(mid, missionDir)
     ui_aipacenotes_recceApp.setDrawDebug(true)
+    ui_aipacenotes_recceApp.setLuaAudioBackend(true)
   end
 
   if im.Button("Unload Recce Mission") then
@@ -74,9 +75,6 @@ function C:test1()
 end
 
 function C:drawDebugEntrypoint()
-  -- if self.driveline then
-  --   self.driveline:drawDebugDriveline()
-  -- end
 end
 
 return function(...)
