@@ -10,38 +10,44 @@ angular.module('beamng.apps')
       replace: true,
       restrict: 'EA',
       link: function (scope, element, attrs) {
-        bngApi.engineLua('extensions.load("ui_aipacenotes_codriverApp")')
-
-
         let currentSource = null; // Track the currently playing source
-        scope.volumeSetting = 0.8
-        scope.timingSetting = 10.0
+        scope.volumeSetting = 0.0
+        scope.timingSetting = 0.0
 
-        scope.$watch('timingSetting', function(value) {
-          // console.log(scope.timingSetting)
-          bngApi.engineLua(`ui_aipacenotes_codriverApp.setTimingSetting(${scope.timingSetting})`)
-          // bngApi.engineLua(`gameplay_aipacenotes and gameplay_aipacenotes.setTimingSetting(${scope.timingSetting})`)
-        })
+        // scope.$watch('timingSetting', function(value) {
+        //   // console.log(scope.timingSetting)
+        //   bngApi.engineLua(`ui_aipacenotes_codriverApp.setTimingSetting(${scope.timingSetting})`)
+        //   // bngApi.engineLua(`gameplay_aipacenotes and gameplay_aipacenotes.setTimingSetting(${scope.timingSetting})`)
+        // })
+        //
+        // scope.$watch('volumeSetting', function(value) {
+        //   // console.log(scope.timingSetting)
+        //   bngApi.engineLua(`ui_aipacenotes_codriverApp.setVolumeSetting(${scope.volumeSetting})`)
+        //   // bngApi.engineLua(`gameplay_aipacenotes and gameplay_aipacenotes.setTimingSetting(${scope.timingSetting})`)
+        // })
 
-        scope.$watch('volumeSetting', function(value) {
-          // console.log(scope.timingSetting)
-          bngApi.engineLua(`ui_aipacenotes_codriverApp.setVolumeSetting(${scope.volumeSetting})`)
-          // bngApi.engineLua(`gameplay_aipacenotes and gameplay_aipacenotes.setTimingSetting(${scope.timingSetting})`)
-        })
+        // scope.$on('aiPacenotes.codriverApp.onExtensionLoaded', function (event, resp) {
+        //   // console.log(event)
+        //   // console.log(resp)
+        //   scope.volumeSetting = resp.volume
+        //   scope.timingSetting = resp.timing
+        // })
 
         scope.$on('aiPacenotesInputActionCodriverVolumeUp', function (event) {
           // if (scope.volumeSetting < 1.0) {
           let curr = scope.volumeSetting
-          curr += 0.1
+          curr += 0.05
           scope.volumeSetting = Math.min(curr, 1.0)
+          scope.applyVolumeChange()
           // }
         })
 
         scope.$on('aiPacenotesInputActionCodriverVolumeDown', function (event) {
           // if (scope.volumeSetting > 0.0) {
           let curr = scope.volumeSetting
-          curr -= 0.1
-          scope.volumeSetting = Math.max(curr, 0.1)
+          curr -= 0.05
+          scope.volumeSetting = Math.max(curr, 0.05)
+          scope.applyVolumeChange()
           // }
         })
 
@@ -50,6 +56,7 @@ angular.module('beamng.apps')
           let curr = scope.timingSetting
           curr += 0.5
           scope.timingSetting = Math.min(curr, 20.0)
+          scope.applyTimingChange()
           // }
         })
 
@@ -58,13 +65,24 @@ angular.module('beamng.apps')
           let curr = scope.timingSetting
           curr -= 0.5
           scope.timingSetting = Math.max(curr, 1.0)
+          scope.applyTimingChange()
           // }
         })
 
-        scope.$on('aiPacenotesSetCodriverTimingThreshold', function (event, resp) {
-          console.log(`timingSetting=${resp}`)
-          scope.timingSetting = resp
-        })
+        // scope.$on('aiPacenotesSetCodriverTimingThreshold', function (event, resp) {
+        //   console.log(`timingSetting=${resp}`)
+        //   scope.timingSetting = resp
+        // })
+
+        scope.applyVolumeChange = function() {
+          console.log("applyVolumeChange")
+          bngApi.engineLua(`ui_aipacenotes_codriverApp.setVolumeSetting(${scope.volumeSetting})`)
+        }
+
+        scope.applyTimingChange = function() {
+          console.log("applyTimingChange")
+          bngApi.engineLua(`ui_aipacenotes_codriverApp.setTimingSetting(${scope.timingSetting})`)
+        }
 
         async function playAudio(url, volume) {
           if (currentSource) {
@@ -130,6 +148,19 @@ angular.module('beamng.apps')
           console.log("Received stopAudio event");
           stopPlaying();
         });
+
+        scope.$on('$destroy', function () {
+          bngApi.engineLua('extensions.unload("ui_aipacenotes_codriverApp")')
+        })
+
+        bngApi.engineLua('extensions.load("ui_aipacenotes_codriverApp")')
+
+        bngApi.engineLua('ui_aipacenotes_codriverApp.getCurrentSettings()', (resp) => {
+          // console.log(resp)
+          scope.volumeSetting = resp.volume
+          scope.timingSetting = resp.timing
+        })
+
       } // link
     } // return
   }]) // directive

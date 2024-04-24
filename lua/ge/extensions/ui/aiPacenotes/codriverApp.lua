@@ -41,11 +41,31 @@ end
 
 local function onExtensionLoaded()
   log('I', logTag, 'codriverApp.onExtensionLoaded')
+
+  -- local settings = loadCodriverSettings()
+  -- guihooks.trigger('aiPacenotes.codriverApp.onExtensionLoaded', {
+    -- volume = settings:getVolume(),
+    -- timing = settings:getTiming(),
+  -- })
+end
+
+local function getCurrentSettings()
+  local settings = loadCodriverSettings()
+  -- guihooks.trigger('aiPacenotes.codriverApp.onExtensionLoaded', {
+  --   volume = settings:getVolume(),
+  --   timing = settings:getTiming(),
+  -- })
+
+  return {
+    volume = settings:getVolume(),
+    timing = settings:getTiming(),
+  }
 end
 
 M.onExtensionLoaded = onExtensionLoaded
 
 M.setTimingSetting = setTimingSetting
 M.setVolumeSetting = setVolumeSetting
+M.getCurrentSettings = getCurrentSettings
 
 return M

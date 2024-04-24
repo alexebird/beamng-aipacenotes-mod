@@ -1,6 +1,7 @@
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local Driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')
+local CodriverSettings = require('/lua/ge/extensions/gameplay/aipacenotes/codriverSettings')
 
 local C = {}
 local logTag = 'aipacenotes'
@@ -39,7 +40,9 @@ function C:init(missionDir, vehicleTracker, notebook)
 
   -- base params
   self.default_threshold_sec = 8.0
-  self.threshold_sec = nil
+  local settings = CodriverSettings()
+  settings:load()
+  self.threshold_sec = settings:getTiming()
 
   -- CodriverWait params
   self.codriver_wait_scaling_amount = 3.0
@@ -68,7 +71,7 @@ function C:init(missionDir, vehicleTracker, notebook)
   -- setup
   --
 
-  self:setThreshold(self.default_threshold_sec)
+  -- self:setThreshold(self.default_threshold_sec)
   self:detectCurrPoint()
   self.driveline:preCalculatePacenoteDistances(self.notebook, 5)
 end
@@ -104,9 +107,9 @@ function C:getThreshold()
   end
 end
 
-function C:notifyThreshold()
-  guihooks.trigger('aiPacenotesSetCodriverTimingThreshold', self.threshold_sec)
-end
+-- function C:notifyThreshold()
+--   guihooks.trigger('aiPacenotesSetCodriverTimingThreshold', self.threshold_sec)
+-- end
 
 function C:detectCurrPoint()
   -- local currCorners = self.vehicleTracker:getCurrentCorners()
@@ -236,7 +239,14 @@ function C:getCodriverWaitScaledThreshold()
     return nil
   else
     local codriverWaitFactor = self.codriverWaitTable[codriverWait]
-    local adjustAmount = self.codriver_wait_scaling_amount * codriverWaitFactor
+    local adjustAmount = 0
+    if self.threshold_sec <= self.codriver_wait_scaling_amount then
+      -- switch to proportional scaling when the threshold gets small.
+      -- not expecting this too much, as small threshold_sec values are not useful, but dont want it to be buggy.
+      adjustAmount = (self.threshold_sec * 0.5) * codriverWaitFactor
+    else
+      adjustAmount = self.codriver_wait_scaling_amount * codriverWaitFactor
+    end
     return self.threshold_sec - adjustAmount
   end
 end

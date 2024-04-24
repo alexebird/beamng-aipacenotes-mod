@@ -145,7 +145,7 @@ function C:reset()
     self.vehicleTracker,
     self.notebook
   )
-  self.drivelineTracker:notifyThreshold()
+  -- self.drivelineTracker:notifyThreshold()
 end
 
 function C:detectMissionId()
