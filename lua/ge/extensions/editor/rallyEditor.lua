@@ -459,13 +459,14 @@ local function drawEditorGui()
 
       for i = 1,3 do im.Spacing() end
 
-      local windowSize = im.GetWindowSize()
-      local windowHeight = windowSize.y
+      -- local windowSize = im.GetWindowSize()
+      -- local windowHeight = windowSize.y
       -- local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
-      local middleChildHeight = 1000
+      -- local middleChildHeight = 1000
       -- middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
 
-      im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
+      -- im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
+      im.BeginChild1("##tabs-child", nil, im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
       if im.BeginTabBar("modes") then
         for _, window in ipairs(windows) do
 
@@ -494,17 +495,21 @@ local function drawEditorGui()
         im.EndTabBar()
       end -- tab bar
 
-      local tabsHeight = 25 * im.uiscale[0]
-      local tabContentsHeight = middleChildHeight - tabsHeight
-      im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
-      currentWindow:draw(mouseInfo, tabContentsHeight)
+      -- local tabsHeight = 25 * im.uiscale[0]
+      -- local tabContentsHeight = middleChildHeight - tabsHeight
+      -- im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+      im.BeginChild1("##tab-contents-child-window", nil, im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+      -- currentWindow:draw(mouseInfo, tabContentsHeight)
+      currentWindow:draw(mouseInfo)
       im.EndChild() -- end top-toolbar
 
       im.EndChild() -- end tabs-child
 
       -- im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
       -- im.BeginChild1("##bottom-toolbar", nil, im.WindowFlags_ChildWindow)
-      prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
+
+      -- prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
+
       -- im.EndChild() -- end bottom-toolbar
 
       local fg_mgr = editor_flowgraphEditor.getManager()

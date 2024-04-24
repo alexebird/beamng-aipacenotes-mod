@@ -627,7 +627,7 @@ function C:handleMouseInput()
   -- end
 end
 
-function C:draw(mouseInfo, tabContentsHeight)
+function C:draw(mouseInfo)
   self.mouseInfo = mouseInfo
   if self.rallyEditor.allowGizmo() then
     self:handleMouseInput()
@@ -639,7 +639,7 @@ function C:draw(mouseInfo, tabContentsHeight)
   -- self:drawPacenotesList(availableHeight * ratio)
   -- self:drawTranscriptsSection(availableHeight * (1.0 - ratio))
 
-  self:drawPacenotesList(tabContentsHeight)
+  self:drawPacenotesList()
   -- self:drawTranscriptsSection(tabContentsHeight * 0.15)
 end
 
@@ -1144,7 +1144,7 @@ function C:deleteAllPacenotes()
   -- self.pacenote_tools_state.snaproad:clearPartition()
 end
 
-function C:drawPacenotesList(height)
+function C:drawPacenotesList()
   if not self.path then return end
 
   local notebook = self.path
@@ -1318,7 +1318,8 @@ function C:drawPacenotesList(height)
 
   local heightTopArea = 330
   im.HeaderText("Selected Pacenote")
-  im.BeginChild1("pacenotes", im.ImVec2(200*im.uiscale[0], height-heightTopArea), im.WindowFlags_ChildWindow)
+  im.BeginChild1("pacenotes", im.ImVec2(230*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
+  -- im.BeginChild1("pacenotes", nil, im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1(note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then
 
@@ -1346,7 +1347,8 @@ function C:drawPacenotesList(height)
   im.EndChild() -- pacenotes child window
 
   im.SameLine()
-  im.BeginChild1("currentPacenote", im.ImVec2(0,height-heightTopArea), im.WindowFlags_ChildWindow)
+  -- im.BeginChild1("currentPacenote", im.ImVec2(0,height-heightTopArea), im.WindowFlags_ChildWindow)
+  im.BeginChild1("currentPacenote", nil, im.WindowFlags_ChildWindow)
 
   if self.pacenote_tools_state.selected_pn_id then
     local pacenote = notebook.pacenotes.objects[self.pacenote_tools_state.selected_pn_id]
@@ -1512,6 +1514,18 @@ Any lua code is allowed, so be careful. Examples:
     local language = codriver.language
 
     im.HeaderText("Note Text")
+
+
+    -- im.Text('final note text:')
+    im.PushFont3("cairo_semibold_large")
+    local lang = self.path:selectedCodriverLanguage()
+    im.Text(pacenote:joinedNote(lang))
+    im.PopFont()
+
+    -- im.Spacing()
+    -- im.Separator()
+    -- im.Spacing()
+
     editEnded = im.BoolPtr(false)
     -- language_form_fields = {}
     -- for i,lang_data in ipairs(self.path:getLanguages()) do
@@ -1523,6 +1537,8 @@ Any lua code is allowed, so be careful. Examples:
       fields.before = im.ArrayChar(256, pacenote:getNoteFieldBefore(language))
       fields.note   = im.ArrayChar(1024, pacenote:getNoteFieldNote(language))
       fields.after  = im.ArrayChar(256, pacenote:getNoteFieldAfter(language))
+
+      im.HeaderText("Edit")
 
       im.Text("language: "..language)
 
@@ -1579,7 +1595,7 @@ Any lua code is allowed, so be careful. Examples:
       -- im.SameLine()
 
       -- im.SetNextItemWidth(150)
-      im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
+      -- im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       editor.uiInputText('##'..language..'_before', fields.before, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         pacenote:clearTodo()
@@ -1595,7 +1611,7 @@ Any lua code is allowed, so be careful. Examples:
         -- end
         self._insertMode = false
       end
-      im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
+      -- im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       -- editor.uiInputTextMultiline('##'..language..'_note', fields.note, nil, im.ImVec2(300, 2 * im.GetTextLineHeightWithSpacing()), nil, nil, nil, editEnded)
       editingNote = editor.uiInputText('##'..language..'_note', fields.note, nil, nil, nil, nil, editEnded)
 
@@ -1616,7 +1632,7 @@ Any lua code is allowed, so be careful. Examples:
 
       -- im.SameLine()
       -- im.SetNextItemWidth(150)
-      im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
+      -- im.SetNextItemWidth(self.rallyEditor.getPrefUiPacenoteNoteFieldWidth())
       editor.uiInputText('##'..language..'_after', fields.after, nil, nil, nil, nil, editEnded)
       if editEnded[0] then
         pacenote:clearTodo()
@@ -1626,13 +1642,25 @@ Any lua code is allowed, so be careful. Examples:
       im.Text('Trailing distance call '..re_util.var_dt)
       -- im.Text('Trailing distance call: '..ffi.string(fields.after))
 
+      im.HeaderText("Tweaks")
+      -- im.Spacing()
+      -- im.Separator()
+      -- im.Spacing()
+      -- for _ = 1,5 do im.Spacing() end
+
+      im.Text('Isolate - Removes pacenote from automatic distance calls.')
       if im.Checkbox("Isolate", im.BoolPtr(pacenote.isolate)) then
         pacenote:toggleIsolate()
         self:autofillDistanceCalls()
       end
-      im.Text('Isolate removes pacenote from automatic distance calls.')
 
+      im.Spacing()
+      im.Separator()
+      im.Spacing()
+
+      im.Text("CodriverWait - Makes this pacenote's timing later")
       local currCodriverWait = pacenote.codriverWait
+      im.SetNextItemWidth(150)
       if im.BeginCombo('##codriverWait', currCodriverWait) then
         for _, waitVal in ipairs({'none', 'small', 'medium', 'large'}) do
           if im.Selectable1(waitVal, waitVal == currCodriverWait) then
@@ -1642,7 +1670,14 @@ Any lua code is allowed, so be careful. Examples:
         im.EndCombo()
       end
 
+      im.Spacing()
+      im.Separator()
+      im.Spacing()
+
+      im.PushTextWrapPos(im.GetFontSize() * 25.0)
+      im.Text("AudioTriggerType - Use manually set AudioTrigger waypoint, or automatic speed and distance based calcuation.")
       local currAtType = pacenote.audioTriggerType
+      im.SetNextItemWidth(150)
       if im.BeginCombo('##audioTriggerType', currAtType) then
         for _, val in ipairs(pacenote.atTypes) do
           if im.Selectable1(val, val == currAtType) then
@@ -1651,9 +1686,6 @@ Any lua code is allowed, so be careful. Examples:
         end
         im.EndCombo()
       end
-
-      local lang = self.path:selectedCodriverLanguage()
-      im.Text('output note text: '..pacenote:joinedNote(lang))
 
     -- end -- / self.path:getLanguages()
 
