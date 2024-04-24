@@ -149,7 +149,8 @@ function C:shouldDrawIntersectPlane()
   elseif self.waypointType == waypointTypes.wpTypeRevAudioTrigger then
     return true
   else
-    return false
+    return true
+    -- return false
   end
 end
 

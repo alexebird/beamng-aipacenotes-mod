@@ -1894,11 +1894,12 @@ end
 function C:_snapOneHelper(wp)
   if not self.pacenote_tools_state.snaproad then return end
 
-  local newPos, normalAlignPos = self.pacenote_tools_state.snaproad:closestSnapPos(wp.pos)
-  wp.pos = newPos
-  if normalAlignPos then
-    local rv = re_util.calculateForwardNormal(newPos, normalAlignPos)
-    wp.normal = vec3(rv.x, rv.y, rv.z)
+  local newPoint = self.pacenote_tools_state.snaproad:closestSnapPoint(wp.pos)
+  local normalVec = self.pacenote_tools_state.snaproad:forwardNormalVec(newPoint)
+
+  wp.pos = newPoint.pos
+  if normalVec then
+    wp.normal = normalVec
   end
 end
 
