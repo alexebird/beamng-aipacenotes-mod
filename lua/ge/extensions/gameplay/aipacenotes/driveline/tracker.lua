@@ -18,6 +18,9 @@ function C:init(missionDir, vehicleTracker, notebook)
     return
   end
 
+  --
+  -- state tracking
+  --
   -- These are set across multiple ticks.
   self.currPoint = nil
   self.nextPacenote = nil
@@ -25,21 +28,47 @@ function C:init(missionDir, vehicleTracker, notebook)
   -- This is set only for one tick.
   self.intersectedPacenoteData = nil
 
-
-  self.default_threshold_sec = 10.0
-  self.max_threshold_scaling_factor = 2.0
-  self:setThreshold(self.default_threshold_sec)
-
   self.inFlightPacenotes = {}
   self.inFlightPacenotesCount = 0
-
   self.nextPointSearchLimit = 10
-
   self.drawDebugEnabled = false
 
+  --
+  -- logic paramters
+  --
+
+  -- base params
+  self.default_threshold_sec = 8.0
+  self.threshold_sec = nil
+
+  -- CodriverWait params
+  self.codriver_wait_scaling_amount = 3.0
+  -- each step is a multiplier against codriver_wait_scaling_amount
+  self.codriverWaitTable = {
+    -- broken up by thirds
+    -- ['none'] = 0.0,
+    ['small'] = 0.33,
+    ['medium'] = 0.66,
+    ['large'] = 1.0,
+  }
+
+  -- speed-scaling params
+  -- self.max_threshold_scaling_factor = 2.0
+  self.speed_scaling_start_mph = 30
+  self.speed_scaling_end_mph = 70
+  self.max_threshold_scaling_amount = 3.0
+
+
+  -- in-flight params
   self.inFlightRemovalPointType = 'half'
   self.inFlightAllowed = 2
 
+
+  --
+  -- setup
+  --
+
+  self:setThreshold(self.default_threshold_sec)
   self:detectCurrPoint()
   self.driveline:preCalculatePacenoteDistances(self.notebook, 5)
 end
@@ -64,6 +93,7 @@ end
 function C:setThreshold(newThresh)
   self.threshold_sec = newThresh
   log('D', logTag, 'set threshold_sec to '..self.threshold_sec)
+  -- self:notifyThreshold()
 end
 
 function C:getThreshold()
@@ -179,10 +209,11 @@ end
 
 function C:getSpeedScaledThreshold()
   local speed_ms = self:speedMetersPerSecond()
-  local minScalingSpeedMs = 30 * mphToMs
-  local maxScalingSpeedMs = 70 * mphToMs
+  local minScalingSpeedMs = self.speed_scaling_start_mph * mphToMs
+  local maxScalingSpeedMs = self.speed_scaling_end_mph * mphToMs
   local minThresh = self.threshold_sec
-  local maxThresh = minThresh * self.max_threshold_scaling_factor
+  -- local maxThresh = minThresh * self.max_threshold_scaling_factor
+  local maxThresh = minThresh + self.max_threshold_scaling_amount
 
   local scaledThresh = nil
 
@@ -198,33 +229,35 @@ function C:getSpeedScaledThreshold()
   return scaledThresh
 end
 
-local codriverWaitTable = {
-  -- broken up by thirds
-  ['none'] = 1.0,
-  ['small'] = 0.9,
-  ['medium'] = 0.8,
-  ['large'] = 0.7,
-}
+function C:getCodriverWaitScaledThreshold()
+  local codriverWait = self.nextPacenote.codriverWait or 'none'
+
+  if codriverWait == 'none' then
+    return nil
+  else
+    local codriverWaitFactor = self.codriverWaitTable[codriverWait]
+    local adjustAmount = self.codriver_wait_scaling_amount * codriverWaitFactor
+    return self.threshold_sec - adjustAmount
+  end
+end
 
 function C:isUnderTimeThreshold()
-  local timeToPacenote = self:timeToNextPacenote()
-  -- local thresh = self:getThreshold()
-  local thresh = self:getSpeedScaledThreshold()
+  if not self.nextPacenote then return false end
 
-  if self.nextPacenote then
-    local codriverWait = self.nextPacenote.codriverWait or 'none'
-    local codriverWaitFactor = codriverWaitTable[codriverWait]
-    thresh = thresh * codriverWaitFactor
+  local thresh = self:getCodriverWaitScaledThreshold()
+  if not thresh then
+    -- codriverwait scaling and speed scaling are mutually exclusive.
+    thresh = self:getSpeedScaledThreshold()
   end
 
   -- local speed_mph = self:speedMetersPerSecond() * msToMph
   -- print("scaledThresh="..string.format("%.1f", thresh).."@"..string.format("%.1f", speed_mph).."mph")
 
+  local timeToPacenote = self:timeToNextPacenote()
+
   if timeToPacenote <= thresh then
-    if self.nextPacenote then
-      local timestr = string.format("%.1f", timeToPacenote)
-      log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..thresh)
-    end
+    local timestr = string.format("%.1f", timeToPacenote)
+    log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..thresh)
     return true
   else
     return false

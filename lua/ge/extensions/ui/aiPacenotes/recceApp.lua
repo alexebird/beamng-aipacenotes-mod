@@ -706,12 +706,6 @@ local function setLastLoadState(state)
   end
 end
 
-local function setTimingSetting(val)
-  if not rallyManager then return end
-
-  rallyManager:setDrivelineTrackerThreshold(val)
-end
-
 local function initRecceApp()
   log('D', logTag, 'recceApp.initRecceApp')
   recce_settings = RecceSettings()
@@ -763,6 +757,6 @@ M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_start = transcribe_recording_start
 M.transcribe_clear_all = transcribe_clear_all
 
-M.setTimingSetting = setTimingSetting
+M.getRallyManager = function() return rallyManager end
 
 return M

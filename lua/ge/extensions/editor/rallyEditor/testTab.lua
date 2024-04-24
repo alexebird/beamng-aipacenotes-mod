@@ -50,6 +50,12 @@ function C:draw()
     local mid = self.path:missionId()
     local missionDir = self.path:getMissionDir()
     extensions.unload("ui_aipacenotes_recceApp")
+
+    -- if extensions.isExtensionLoaded("ui_aipacenotes_recceApp") then
+    --   print('loaded')
+    --   ui_aipacenotes_recceApp.setDrawDebug(true)
+    -- end
+
     extensions.load("ui_aipacenotes_recceApp")
     ui_aipacenotes_recceApp.loadMission(mid, missionDir)
     ui_aipacenotes_recceApp.setDrawDebug(true)

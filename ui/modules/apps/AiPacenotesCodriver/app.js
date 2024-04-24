@@ -10,13 +10,23 @@ angular.module('beamng.apps')
       replace: true,
       restrict: 'EA',
       link: function (scope, element, attrs) {
+        bngApi.engineLua('extensions.load("ui_aipacenotes_codriverApp")')
+
+
         let currentSource = null; // Track the currently playing source
         scope.volumeSetting = 0.8
         scope.timingSetting = 10.0
 
         scope.$watch('timingSetting', function(value) {
           // console.log(scope.timingSetting)
-          bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.setTimingSetting(${scope.timingSetting})`)
+          bngApi.engineLua(`ui_aipacenotes_codriverApp.setTimingSetting(${scope.timingSetting})`)
+          // bngApi.engineLua(`gameplay_aipacenotes and gameplay_aipacenotes.setTimingSetting(${scope.timingSetting})`)
+        })
+
+        scope.$watch('volumeSetting', function(value) {
+          // console.log(scope.timingSetting)
+          bngApi.engineLua(`ui_aipacenotes_codriverApp.setVolumeSetting(${scope.volumeSetting})`)
+          // bngApi.engineLua(`gameplay_aipacenotes and gameplay_aipacenotes.setTimingSetting(${scope.timingSetting})`)
         })
 
         scope.$on('aiPacenotesInputActionCodriverVolumeUp', function (event) {
