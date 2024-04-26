@@ -143,7 +143,10 @@ local function sendSelectedPacenoteText()
   local codriver = rallyManager.codriver
   local lang = codriver.language
   local noteText = selectedPacenote:getNoteFieldNote(lang)
-  guihooks.trigger('aiPacenotes.recceApp.pacenoteTextChanged', {pacenoteText = noteText})
+  guihooks.trigger('aiPacenotes.recceApp.pacenoteTextChanged', {
+    pacenoteText = noteText,
+    pacenoteCodriverWait = selectedPacenote.codriverWait,
+  })
 end
 
 local function setSelectedPacenoteText(newText)
@@ -154,6 +157,17 @@ local function setSelectedPacenoteText(newText)
   selectedPacenote:normalizeNoteText(lang, false, false)
   sendSelectedPacenoteText()
   selectedPacenote:clearCachedFgData()
+  rallyManager:saveNotebook()
+end
+
+local function setSelectedPacenoteCodriverWait(newVal)
+  if not selectedPacenote then return end
+  -- local codriver = rallyManager.codriver
+  -- local lang = codriver.language
+  selectedPacenote:setCodriverWait(newVal)
+  -- selectedPacenote:normalizeNoteText(lang, false, false)
+  -- sendSelectedPacenoteText()
+  -- selectedPacenote:clearCachedFgData()
   rallyManager:saveNotebook()
 end
 
@@ -268,7 +282,7 @@ local function drawDebug()
 
       local nextNote = nextPacenotes[1]
       -- local wp_at = nextNote:getActiveFwdAudioTrigger()
-      local wp_cs = nextNote:getActiveFwdAudioTrigger()
+      local wp_cs = nextNote:getCornerStartWaypoint()
       local render_wp = wp_cs
       local pos = render_wp.pos
       debugDrawer:drawSphere(
@@ -420,8 +434,9 @@ local function moveVehicleBackward()
   local col = rallyManager.notebook.pacenotes.sorted
 
   for i,pn in ipairs(col) do
-    local at = pn:getActiveFwdAudioTrigger()
-    if at then
+    -- local wp = pn:getActiveFwdAudioTrigger()
+    local wp = pn:getCornerStartWaypoint()
+    if wp then
       local placementPos, _ = pn:vehiclePlacementPosAndRot()
       local dist = vPos:distance(placementPos)
       if dist < nearestPacenoteDist then
@@ -479,8 +494,9 @@ local function moveVehicleForward()
   local col = rallyManager.notebook.pacenotes.sorted
 
   for i,pn in ipairs(col) do
-    local at = pn:getActiveFwdAudioTrigger()
-    if at then
+    -- local wp = pn:getActiveFwdAudioTrigger()
+    local wp = pn:getCornerStartWaypoint()
+    if wp then
       local placementPos, _ = pn:vehiclePlacementPosAndRot()
       local dist = vPos:distance(placementPos)
       if dist < nearestPacenoteDist then
@@ -739,6 +755,7 @@ M.setDrawDebug = setDrawDebug
 M.setLuaAudioBackend = setLuaAudioBackend
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setSelectedPacenoteText = setSelectedPacenoteText
+M.setSelectedPacenoteCodriverWait = setSelectedPacenoteCodriverWait
 
 M.movePacenoteATBackward = movePacenoteATBackward
 M.movePacenoteATForward = movePacenoteATForward

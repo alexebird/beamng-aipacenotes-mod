@@ -81,7 +81,7 @@ end
 
 function C:enqueueStaticPacenoteByName(pacenote_name)
   if self.data.playSounds then
-    return extensions.gameplay_aipacenotes.getRallyManager().audioManager:enqueueStaticPacenoteByName(pacenote_name)
+    return gameplay_aipacenotes.getRallyManager().audioManager:enqueueStaticPacenoteByName(pacenote_name)
   else
     return nil
   end

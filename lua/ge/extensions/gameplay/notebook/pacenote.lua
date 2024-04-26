@@ -916,24 +916,28 @@ function C:playbackAllowed(currLap, maxLap)
 end
 
 function C:vehiclePlacementPosAndRot()
+  -- local at = self:getActiveFwdAudioTrigger()
   local cs = self:getCornerStartWaypoint()
-  local at = self:getActiveFwdAudioTrigger()
+  local ce = self:getCornerEndWaypoint()
 
-  if cs and at then
+  local wp_pos = cs
+  local wp_dir = ce
+
+  if wp_dir and wp_pos then
     -- local distAway = wp2.radius * 2
     local distAway = 7
 
-    local pos1 = at.pos + (at.normal * distAway)
-    local pos2 = at.pos + (-at.normal * distAway)
+    local pos1 = wp_pos.pos + (wp_pos.normal * distAway)
+    local pos2 = wp_pos.pos + (-wp_pos.normal * distAway)
     local pos = nil
 
-    if cs.pos:distance(pos1) > cs.pos:distance(pos2) then
+    if wp_dir.pos:distance(pos1) > wp_dir.pos:distance(pos2) then
       pos = pos1
     else
       pos = pos2
     end
 
-    local fwd = at.pos - pos
+    local fwd = wp_pos.pos - pos
     local up = vec3(0,0,1)
     local rot = quatFromDir(fwd, up):normalized()
 

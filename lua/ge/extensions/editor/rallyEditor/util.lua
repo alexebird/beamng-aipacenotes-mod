@@ -243,7 +243,7 @@ local function playPacenoteGui(audioObj)
   local req = {
     name = audioObj.note_name,
     url = audioObj.pacenoteFname,
-    volume = audioObj.volume,
+    -- volume = audioObj.volume,
   }
   guihooks.trigger('aiPacenotes.codriverApp.playAudio', req)
 

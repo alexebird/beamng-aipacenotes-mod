@@ -112,9 +112,13 @@ end
 -- and merges the data together so that the location of the waypoints are
 -- associated with the desired driveline points.
 function C:preCalculatePacenoteDistances(notebook, numPacenotes)
+  local t_start_precalc = re_util.getTime()
+
+  local t_start_caching = re_util.getTime()
   local pacenotes = notebook.pacenotes.sorted
   self:cacheNearestPoints(notebook)
   local pacenotePointMapCs = self:mapPacenotesCsToPoints(notebook)
+  log('D', logTag, 't_caching='..(re_util.getTime() - t_start_caching)..' sec')
 
   local printLimit = 2
   local printCount = 0
@@ -129,6 +133,7 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
 
   local pacenoteIndex = 1
 
+  local t_start_outerloop = re_util.getTime()
   -- Loop over each driveline point
   for _,point in ipairs(self.points) do
 
@@ -154,6 +159,7 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
     --   print('pacenoteIndex='..tostring(pacenoteIndex))
     -- end
 
+    -- local t_start_innerloop = re_util.getTime()
     -- Calculate distance to the next 'numPacenotes' pacenotes from this point
     for j = 1, numPacenotes do
        -- subtract 1 so that the pacenote at pacenoteIndex is used
@@ -164,7 +170,9 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
         local pacenotePoint = pacenotePointMapCs[pacenote.name]
 
         if pacenotePoint then
+          -- local t_start_dist = re_util.getTime()
           local distance = self:calculatePathDistance(point, pacenotePoint)
+          -- log('D', logTag, 't_dist='..(re_util.getTime() - t_start_dist)..' sec')
 
           -- if printCount <= printLimit then
           --   print('point.pacenoteDistances['..pacenote.name..']='..tostring(distance))
@@ -176,7 +184,11 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
         break
       end
     end
+    -- log('D', logTag, 't_innerloop='..(re_util.getTime() - t_start_innerloop)..' sec')
   end
+  log('D', logTag, 't_outerloop='..(re_util.getTime() - t_start_outerloop)..' sec')
+
+  log('D', logTag, 't_preCalc='..(re_util.getTime() - t_start_precalc)..' sec')
 end
 
 function C:cacheNearestPoints(notebook)

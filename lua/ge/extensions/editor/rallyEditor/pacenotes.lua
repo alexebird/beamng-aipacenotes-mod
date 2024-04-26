@@ -1898,6 +1898,7 @@ function C:_snapOneHelper(wp)
   local normalVec = self.pacenote_tools_state.snaproad:forwardNormalVec(newPoint)
 
   wp.pos = newPoint.pos
+
   if normalVec then
     wp.normal = normalVec
   end

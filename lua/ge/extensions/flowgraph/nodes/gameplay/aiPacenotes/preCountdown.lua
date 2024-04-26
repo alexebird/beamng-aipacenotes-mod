@@ -13,13 +13,13 @@ C.pinSchema = {
 }
 
 function C:workOnce()
-  local rallyManager = extensions.gameplay_aipacenotes.getRallyManager()
+  local rallyManager = gameplay_aipacenotes.getRallyManager()
   rallyManager.audioManager:enqueuePauseSecs(0.5)
 
   local pnName = rallyManager:getRandomStaticPacenote('firstnoteintro')
   rallyManager.audioManager:enqueueStaticPacenoteByName(pnName)
 
-  local pacenote = extensions.gameplay_aipacenotes.getRallyManager().notebook.pacenotes.sorted[1]
+  local pacenote = gameplay_aipacenotes.getRallyManager().notebook.pacenotes.sorted[1]
   rallyManager.audioManager:enqueuePacenote(pacenote)
 
   pnName = rallyManager:getRandomStaticPacenote('firstnoteoutro')

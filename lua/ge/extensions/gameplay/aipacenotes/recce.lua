@@ -41,6 +41,8 @@ function C:loadCuts()
   local import_language = re_util.default_codriver_language
   local word_map = SettingsManager.loadMainSettingsWithLanguage(import_language):getWordMapForLanguage(import_language)
 
+  print(dumps(word_map))
+
   local transcripts = {}
   local tscCount = 0
 
@@ -75,7 +77,9 @@ function C:loadCuts()
     if tsc then
       local txt = tsc.resp.text
       if txt then
+        -- print(txt)
         txt = normalizer.replaceWords(word_map, txt)
+        -- print(txt)
       end
 
       obj.transcript = {

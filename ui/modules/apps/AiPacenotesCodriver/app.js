@@ -84,7 +84,9 @@ angular.module('beamng.apps')
           bngApi.engineLua(`ui_aipacenotes_codriverApp.setTimingSetting(${scope.timingSetting})`)
         }
 
-        async function playAudio(url, volume) {
+        async function playAudio(url, name) {
+          console.log(`playAudio name=${name} volume=${scope.volumeSetting} url=${url}`);
+
           if (currentSource) {
             currentSource.stop();
           }
@@ -139,9 +141,8 @@ angular.module('beamng.apps')
           }
         }
 
-        scope.$on('aiPacenotes.codriverApp.playAudio', (event, {name, url, volume}) => {
-          console.log(`Received playAudio event name=${name} url=${url} volume=${volume}`);
-          playAudio(url, volume);
+        scope.$on('aiPacenotes.codriverApp.playAudio', (event, {name, url}) => {
+          playAudio(url, name);
         });
 
         scope.$on('aiPacenotes.codriverApp.stopAudio', () => {

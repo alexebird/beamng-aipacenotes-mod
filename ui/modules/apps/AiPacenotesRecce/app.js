@@ -59,6 +59,14 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.selectedMission = null
       $scope.selectedMissionName = null
 
+      $scope.codriverWaitValues = [
+        'none',
+        'small',
+        'medium',
+        'large',
+      ]
+      $scope.selectedCodriverWait = 'none'
+
       let transcriptInterval = null
 
       // function updateCornerCall() {
@@ -197,6 +205,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
         var pacenoteText = document.getElementById('pacenoteInput')
         pacenoteText.value = resp.pacenoteText
+
+        // console.log(resp.pacenoteCodriverWait)
+        $scope.selectedCodriverWait = resp.pacenoteCodriverWait
       })
 
       // $scope.$on('aiPacenotes.InputAction.RecceInsertMode', function (event, resp) {
@@ -233,6 +244,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.drawDebugSnaproads = false
         $scope.missionIsLoaded = false
         // $scope.pacenoteText = ""
+        var pacenoteText = document.getElementById('pacenoteInput')
+        pacenoteText.value = ""
+        $scope.selectedCodriverWait = "none"
         updateLuaShowNotes()
         updateLuaDrawDebugSnaproads()
       }
@@ -241,7 +255,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.isRecording = true
 
         transcriptInterval = $interval(() => {
-          bngApi.engineLua('ui_aipacenotes_recceApp.desktopGetTranscripts()')
+          bngApi.engineLua('ui_aipacenotes_recceApp and ui_aipacenotes_recceApp.desktopGetTranscripts()')
         }, transcriptRefreshIntervalMs)
 
         bngApi.engineLua(`ui_aipacenotes_recceApp.transcribe_recording_start(${$scope.recordDriveline}, ${$scope.recordVoice})`)
@@ -355,6 +369,14 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
             let missionId = $scope.selectedMission.missionID
             bngApi.engineLua('ui_aipacenotes_recceApp.setLastMissionId("'+missionId+'")')
           }
+        }
+      });
+
+      $scope.$watch('selectedCodriverWait', function(newValue, oldValue) {
+        console.log(newValue)
+        if (newValue !== oldValue) {
+          $scope.selectedCodriverWait = newValue
+          bngApi.engineLua('ui_aipacenotes_recceApp.setSelectedPacenoteCodriverWait("'+$scope.selectedCodriverWait+'")')
         }
       });
 

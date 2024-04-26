@@ -52,7 +52,7 @@ function C:work(args)
 
   if not self.found_empty then
     -- print('not found_empty')
-    local qs = extensions.gameplay_aipacenotes.getRallyManager().audioManager:getQueueInfo()
+    local qs = gameplay_aipacenotes.getRallyManager().audioManager:getQueueInfo()
     if qs.queueSize == 0 and qs.paused then
       self.found_empty = true
       self.pinOut.empty.value = true

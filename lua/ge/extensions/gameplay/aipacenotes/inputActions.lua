@@ -68,22 +68,18 @@ end
 
 local function action_codriver_volume_up()
   log('I', logTag, 'action_codriver_volume_up')
-  if not is_recceApp_loaded() then return end
   guihooks.trigger('aiPacenotesInputActionCodriverVolumeUp')
 end
 local function action_codriver_volume_down()
   log('I', logTag, 'action_codriver_volume_down')
-  if not is_recceApp_loaded() then return end
   guihooks.trigger('aiPacenotesInputActionCodriverVolumeDown')
 end
 local function action_codriver_calls_earlier()
   log('I', logTag, 'action_codriver_calls_earlier')
-  if not is_recceApp_loaded() then return end
   guihooks.trigger('aiPacenotesInputActionCodriverTimingEarlier')
 end
 local function action_codriver_calls_later()
   log('I', logTag, 'action_codriver_calls_later')
-  if not is_recceApp_loaded() then return end
   guihooks.trigger('aiPacenotesInputActionCodriverTimingLater')
 end
 

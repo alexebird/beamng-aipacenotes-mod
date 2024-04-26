@@ -75,13 +75,21 @@
     margin-right: 10px
 }
 
-.mission-select {
+.mission-select, .codriver-wait {
     border: 2px solid white;
     border-radius: 4px;
     padding: 1px;
     padding-bottom: 2px;
     margin: 4px;
     width: 450px;
+}
+
+.codriver-wait[disabled] {
+    border: 2px solid grey;
+}
+
+.codriver-wait[disabled] .md-select-value {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 md-select:not([disabled]):focus .md-select-value {

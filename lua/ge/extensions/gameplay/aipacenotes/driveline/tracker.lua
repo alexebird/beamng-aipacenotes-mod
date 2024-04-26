@@ -19,6 +19,12 @@ function C:init(missionDir, vehicleTracker, notebook)
     return
   end
 
+  self.logFile = io.open('aipdebug.txt', "a")
+  if not self.logFile then
+  -- f:close()
+    log('E', logTag, 'error opening file')
+  end
+
   --
   -- state tracking
   --
@@ -39,13 +45,13 @@ function C:init(missionDir, vehicleTracker, notebook)
   --
 
   -- base params
-  self.default_threshold_sec = 8.0
+  self.default_threshold_sec = 5.0
   local settings = CodriverSettings()
   settings:load()
   self.threshold_sec = settings:getTiming()
 
   -- CodriverWait params
-  self.codriver_wait_scaling_amount = 3.0
+  self.codriver_wait_scaling_amount = 2.0
   -- each step is a multiplier against codriver_wait_scaling_amount
   self.codriverWaitTable = {
     -- broken up by thirds
@@ -57,9 +63,10 @@ function C:init(missionDir, vehicleTracker, notebook)
 
   -- speed-scaling params
   -- self.max_threshold_scaling_factor = 2.0
-  self.speed_scaling_start_mph = 30
-  self.speed_scaling_end_mph = 70
-  self.max_threshold_scaling_amount = 3.0
+  self.speed_scaling_start_mph = 40
+  self.speed_scaling_end_mph = 100
+  self.max_threshold_scaling_amount = 2.0
+  -- self.max_threshold_scaling_amount = 0.0
 
 
   -- in-flight params
@@ -122,6 +129,14 @@ function C:detectCurrPoint()
   -- so, advance the point, in hopes that the car isn't too long and the point still isnt out front.
   -- definitely could use a more robust solution.
   self.currPoint = self.currPoint.next
+  log('D', logTag, 'currPoint id='..self.currPoint.id)
+end
+
+function C:writeLog(msg)
+  local t = re_util.getTime()
+  local ts = string.format("%f", t)
+  self.logFile:write(ts..': '..msg.."\n")
+  self.logFile:flush()
 end
 
 function C:onUpdate(nextPacenote)
@@ -136,33 +151,43 @@ function C:onUpdate(nextPacenote)
   end
 
   if self:intersectCorners() then
+    -- self:writeLog('currPoint['..tostring(self.currPoint.id)..'] past intersectCorners')
+    --
     self.intersectedPacenoteData = self.currPoint.pacenote
-    if self.intersectedPacenoteData then
-      local pnName = self.intersectedPacenoteData.pn.name
-      local point_type = self.intersectedPacenoteData.point_type
-      -- local wp = intersectedPacenoteData.wp
-
-      -- print(dumps(self.inFlightPacenotes))
-      -- if wp then
-      --   print("pnName="..pnName..' isCs='..tostring(wp:isCs())..' isCe='..tostring(wp:isCe()))
-      -- end
-
-      if self.inFlightPacenotes[pnName] then
-        if point_type == self.inFlightRemovalPointType then
-          -- remove the in-flight note when you hit an intermediate point.
-          self.inFlightPacenotes[pnName] = nil
-          self.inFlightPacenotesCount = self.inFlightPacenotesCount - 1
-        end
-      -- elseif wp and not wp:isCe() then
-        -- this block is a sanity check.
-        -- if we are using an intermediate point to remove the in-flight state for a note,
-        -- then by the time we hit CE, the note should be gone from in-flight.
-        --
-        -- therefore the sanity check is only needed when not isCe.
-        -- log('E', logTag, 'expected inFlightPacenotes entry for '..pnName)
-      end
-
-    end
+    --
+    -- if self.intersectedPacenoteData then
+    --   self:writeLog('currPoint['..tostring(self.currPoint.id)..'] past intersectedPacenoteData')
+    --
+    --   local pnName = self.intersectedPacenoteData.pn.name
+    --   local point_type = self.intersectedPacenoteData.point_type
+    --   -- local wp = intersectedPacenoteData.wp
+    --
+    --   -- print(dumps(self.inFlightPacenotes))
+    --   -- if wp then
+    --   --   print("pnName="..pnName..' isCs='..tostring(wp:isCs())..' isCe='..tostring(wp:isCe()))
+    --   -- end
+    --
+    --   if self.inFlightPacenotes[pnName] then
+    --     self:writeLog('currPoint['..tostring(self.currPoint.id)..']['..pnName..'] past inFlightPacenotes[pnName]')
+    --
+    --     if point_type == self.inFlightRemovalPointType then
+    --       self:writeLog('currPoint['..tostring(self.currPoint.id)..']['..pnName..'] past inFlightRemovalPointType '..point_type..' == '..self.inFlightRemovalPointType)
+    --       -- remove the in-flight note when you hit an intermediate point.
+    --       self.inFlightPacenotes[pnName] = nil
+    --       self.inFlightPacenotesCount = self.inFlightPacenotesCount - 1
+    --     end
+    --   else
+    --     self:writeLog('currPoint['..tostring(self.currPoint.id)..']['..pnName..'] '..dumps(self.inFlightPacenotes))
+    --     -- elseif wp and not wp:isCe() then
+    --     -- this block is a sanity check.
+    --     -- if we are using an intermediate point to remove the in-flight state for a note,
+    --     -- then by the time we hit CE, the note should be gone from in-flight.
+    --     --
+    --     -- therefore the sanity check is only needed when not isCe.
+    --     -- log('E', logTag, 'expected inFlightPacenotes entry for '..pnName)
+    --   end
+    --
+    -- end
 
     self.currPoint = self.currPoint.next
   else
@@ -172,11 +197,18 @@ function C:onUpdate(nextPacenote)
 end
 
 function C:shouldPlayNextPacenote()
+  -- self:writeLog('shouldPlayNextPacenote start')
   local shouldPlay = false
   local forceManual = self.notebook:forceManualAudioTriggers()
 
+  if not self.nextPacenote then return false end
+  -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] has nextPacenote')
+  -- print(self.nextPacenote.audioTriggerType)
+
   if forceManual or self.nextPacenote:isAudioTriggerTypeManual() then
+    -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] type=manual')
     if self.intersectedPacenoteData then
+      print('manual')
       local pnId = self.intersectedPacenoteData.pn.id
       local pnName = self.intersectedPacenoteData.pn.name
       local point_type = self.intersectedPacenoteData.point_type
@@ -187,8 +219,16 @@ function C:shouldPlayNextPacenote()
       end
     end
   elseif self.nextPacenote:isAudioTriggerTypeAuto() then
+    print('auto')
+    -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] type=auto')
     local cnt = self:getInFlightPacenotesCount()
-    if cnt < self.inFlightAllowed and self:isUnderTimeThreshold() then
+    local underCount = cnt < self.inFlightAllowed
+    local underTime = self:isUnderTimeThreshold()
+
+    -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] underCount='..tostring(underCount)..' underTime='..tostring(underTime)..' inFlight='..cnt..' < '..self.inFlightAllowed)
+
+    -- if underCount and underTime then
+    if underTime then
       -- print('inFlight='..tostring(cnt))
       shouldPlay = true
     end
@@ -199,6 +239,7 @@ function C:shouldPlayNextPacenote()
   -- add the in-flight note at the same time the audio enqueue decision is made.
   if shouldPlay then
     self:putInFlightPacenote(self.nextPacenote)
+    self:writeLog('shouldPlayNextPacenote name='..self.nextPacenote.name)
   end
 
   return shouldPlay
@@ -266,8 +307,11 @@ function C:isUnderTimeThreshold()
   local timeToPacenote = self:timeToNextPacenote()
 
   if timeToPacenote <= thresh then
-    local timestr = string.format("%.1f", timeToPacenote)
-    log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..thresh)
+    -- local timestr = string.format("%.2f", timeToPacenote)
+    -- local threshstr = string.format("%.2f", thresh)
+    -- local speed_mph = self:speedMetersPerSecond() * msToMph
+    -- local speed_mph_s = string.format("%.1f", speed_mph)
+    -- log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..threshstr..' @ '..speed_mph_s..'mph')
     return true
   else
     return false
