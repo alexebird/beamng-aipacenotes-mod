@@ -255,7 +255,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.isRecording = true
 
         transcriptInterval = $interval(() => {
-          bngApi.engineLua('ui_aipacenotes_recceApp and ui_aipacenotes_recceApp.desktopGetTranscripts()')
+          bngApi.engineLua('if ui_aipacenotes_recceApp then ui_aipacenotes_recceApp.desktopGetTranscripts() end')
         }, transcriptRefreshIntervalMs)
 
         bngApi.engineLua(`ui_aipacenotes_recceApp.transcribe_recording_start(${$scope.recordDriveline}, ${$scope.recordVoice})`)

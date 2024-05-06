@@ -80,7 +80,7 @@ function C:init(missionDir, vehicleTracker, notebook)
 
   -- self:setThreshold(self.default_threshold_sec)
   self:detectCurrPoint()
-  self.driveline:preCalculatePacenoteDistances(self.notebook, 5)
+  self.driveline:preCalculatePacenoteDistances(self.notebook)
 end
 
 function C:enableDrawDebug(val)
@@ -208,7 +208,7 @@ function C:shouldPlayNextPacenote()
   if forceManual or self.nextPacenote:isAudioTriggerTypeManual() then
     -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] type=manual')
     if self.intersectedPacenoteData then
-      print('manual')
+      -- print('manual')
       local pnId = self.intersectedPacenoteData.pn.id
       local pnName = self.intersectedPacenoteData.pn.name
       local point_type = self.intersectedPacenoteData.point_type
@@ -219,7 +219,7 @@ function C:shouldPlayNextPacenote()
       end
     end
   elseif self.nextPacenote:isAudioTriggerTypeAuto() then
-    print('auto')
+    -- print('auto')
     -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] type=auto')
     local cnt = self:getInFlightPacenotesCount()
     local underCount = cnt < self.inFlightAllowed
@@ -429,8 +429,6 @@ function C:drawDebug()
     local clr_text_fg = cc.clr_white
     local clr_text_bg = cc.clr_black
 
-    -- local txt = ''
-
     local sortedDistances = {}
     for pnName,dist in pairs(self.currPoint.pacenoteDistances) do
       table.insert(sortedDistances, pnName)
@@ -531,8 +529,10 @@ function C:drawDebug()
 
   clr = cc.recce_driveline_clr
 
+  -- draw the rest of the driveline points
   for _,point in ipairs(self.driveline.points) do
     if not drawnCache.points[point.id] then
+    -- if true then
       local pos = point.pos
       debugDrawer:drawSphere(
         (pos),
@@ -549,9 +549,36 @@ function C:drawDebug()
       --   Point2F(0, 0),
       --   ColorF(clr[1], clr[2], clr[3], alpha_shape)
       -- )
+
+      -- draw the text of the pacenoteDistances data
+      -- local alpha_text = 1.0
+      -- local clr_text_fg = cc.clr_white
+      -- local clr_text_bg = cc.clr_black
+      --
+      -- local sortedDistances = {}
+      -- for pnName,dist in pairs(point.pacenoteDistances) do
+      --   table.insert(sortedDistances, pnName)
+      -- end
+      -- table.sort(sortedDistances)
+      --
+      -- local txt = ""
+      --
+      -- for i,pnName in ipairs(sortedDistances) do
+      --   local dist = point.pacenoteDistances[pnName]
+      --   local dist_s = string.format("%.1fm", dist)
+      --   txt = txt..pnName.."="..dist_s..", "
+      -- end
+      --
+      -- debugDrawer:drawTextAdvanced(
+      --   pos,
+      --   String(txt),
+      --   ColorF(clr_text_fg[1], clr_text_fg[2], clr_text_fg[3], alpha_text),
+      --   true,
+      --   false,
+      --   ColorI(clr_text_bg[1]*255, clr_text_bg[2]*255, clr_text_bg[3]*255, alpha_text*255)
+      -- )
     end
   end
-
 end
 
 return function(...)

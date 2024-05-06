@@ -1,3 +1,4 @@
+local dequeue = require('dequeue')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local snaproadNormals = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad/normals')
@@ -10,6 +11,8 @@ local startingMinDist = 4294967295
 function C:init(missionDir)
   self.missionDir = missionDir
   self.points = nil
+
+  self._cached_dist = nil
 
   self.radius = re_util.default_waypoint_intersect_radius
 end
@@ -92,11 +95,27 @@ function C:drawDebugDriveline()
   end
 end
 
-function C:findNearestPoint(srcPos)
+function C:findNearestPoint(srcPos, startPoint_i, reverse)
+  startPoint_i = startPoint_i or 1
+  reverse = reverse or false
+
   local minDist = startingMinDist
   local closestPoint = nil
 
-  for _,point in ipairs(self.points) do
+  -- for _,point in ipairs(self.points) do
+  --   local pos = vec3(point.pos)
+  --   local dist = (pos - srcPos):length()
+  --   if dist < minDist then
+  --     minDist = dist
+  --     closestPoint = point
+  --   end
+  -- end
+
+  local incr = (reverse and -1) or 1
+  local end_i = (reverse and 1) or #self.points
+
+  for i=startPoint_i,end_i,incr do
+    local point = self.points[i]
     local pos = vec3(point.pos)
     local dist = (pos - srcPos):length()
     if dist < minDist then
@@ -108,32 +127,82 @@ function C:findNearestPoint(srcPos)
   return closestPoint
 end
 
--- This method takes the driveline points and the pacenotes (and waypoints),
--- and merges the data together so that the location of the waypoints are
--- associated with the desired driveline points.
-function C:preCalculatePacenoteDistances(notebook, numPacenotes)
-  local t_start_precalc = re_util.getTime()
-
-  local t_start_caching = re_util.getTime()
-  local pacenotes = notebook.pacenotes.sorted
-  self:cacheNearestPoints(notebook)
-  local pacenotePointMapCs = self:mapPacenotesCsToPoints(notebook)
-  log('D', logTag, 't_caching='..(re_util.getTime() - t_start_caching)..' sec')
-
-  local printLimit = 2
-  local printCount = 0
-
-  -- for name,point in pairs(pacenotePointMapCs) do
-  --   print(name..' -> '..tostring(point.id))
-  -- end
-
+function C:resetDistancesCache()
   for _,point in ipairs(self.points) do
     point.pacenoteDistances = {}
   end
 
-  local pacenoteIndex = 1
+  self:setupEmptyDistanceCache()
+end
+
+function C:setupEmptyDistanceCache()
+  local qLimit = 5
+  local queue = dequeue.new()
+  local currPoint = nil
+
+  for i=#self.points,1,-1 do
+    currPoint = self.points[i]
+
+    for _,pacenoteName in ipairs(queue:contents()) do
+      currPoint.pacenoteDistances[pacenoteName] = 0.0
+    end
+
+    local pacenoteData = currPoint.pacenote
+    if pacenoteData and pacenoteData.point_type == 'cs' then
+      queue:push_right(pacenoteData.pn.name)
+    end
+
+    if queue:length() > qLimit then
+      local _ = queue:pop_left()
+    end
+  end
+end
+
+-- This method takes the driveline points and the pacenotes (and waypoints),
+-- and merges the data together so that the location of the waypoints are
+-- associated with the desired driveline points.
+function C:preCalculatePacenoteDistances(notebook)
+  local t_start_precalc = re_util.getTime()
+
+  local t_start_caching = re_util.getTime()
+  local pacenotePointMapCs = self:mapPacenotesCsToPoints(notebook)
+  log('D', logTag, 't_caching='..(re_util.getTime() - t_start_caching)..' sec')
+
+  self:resetDistancesCache()
 
   local t_start_outerloop = re_util.getTime()
+  -- self:cacheDistances1(notebook, pacenotePointMapCs)
+  self:cacheDistances2()
+
+  log('D', logTag, 't_outerloop='..(re_util.getTime() - t_start_outerloop)..' sec')
+  log('D', logTag, 't_preCalc='..(re_util.getTime() - t_start_precalc)..' sec')
+end
+
+function C:cacheDistances2()
+  local prevPoint = self.points[#self.points]
+  local currPoint = prevPoint
+  local currDist = nil
+
+  for i=#self.points,1,-1 do
+    currPoint = self.points[i]
+    currDist = self:calculateDistance(prevPoint, currPoint)
+
+    for pnName,_ in pairs(currPoint.pacenoteDistances) do
+      local prevDist = prevPoint.pacenoteDistances[pnName] or 0
+      currPoint.pacenoteDistances[pnName] = prevDist + currDist
+    end
+
+    prevPoint = currPoint
+  end
+end
+
+function C:cacheDistances1(notebook, pacenotePointMapCs)
+  local numPacenotes = 5 -- number of pacenotes to lookahead for
+  local printLimit = 2
+  local printCount = 0
+  local pacenotes = notebook.pacenotes.sorted
+  local pacenoteIndex = 1
+
   -- Loop over each driveline point
   for _,point in ipairs(self.points) do
 
@@ -186,9 +255,6 @@ function C:preCalculatePacenoteDistances(notebook, numPacenotes)
     end
     -- log('D', logTag, 't_innerloop='..(re_util.getTime() - t_start_innerloop)..' sec')
   end
-  log('D', logTag, 't_outerloop='..(re_util.getTime() - t_start_outerloop)..' sec')
-
-  log('D', logTag, 't_preCalc='..(re_util.getTime() - t_start_precalc)..' sec')
 end
 
 function C:cacheNearestPoints(notebook)
@@ -198,10 +264,10 @@ function C:cacheNearestPoints(notebook)
     wp_cs._driveline_point = self:findNearestPoint(wp_cs.pos)
 
     local wp_ce = pacenote:getCornerEndWaypoint()
-    wp_ce._driveline_point = self:findNearestPoint(wp_ce.pos)
+    wp_ce._driveline_point = self:findNearestPoint(wp_ce.pos, wp_cs._driveline_point.id)
 
     local wp_at = pacenote:getActiveFwdAudioTrigger()
-    wp_at._driveline_point = self:findNearestPoint(wp_at.pos)
+    wp_at._driveline_point = self:findNearestPoint(wp_at.pos, wp_cs._driveline_point.id, true)
   end
 end
 
@@ -210,13 +276,12 @@ end
 -- Returns a map of pacenote name to the closest point. The map is a cache that
 -- is used for distance calculations in another function.
 function C:mapPacenotesCsToPoints(notebook)
+  self:cacheNearestPoints(notebook)
   local pacenotes = notebook.pacenotes.sorted
   local pacenoteCsPointMap = {}
 
   for i, pacenote in ipairs(pacenotes) do
     local wp_cs = pacenote:getCornerStartWaypoint()
-    -- local pos_cs = wp_cs.pos
-    -- local point_cs = self:findNearestPoint(pos_cs)
     local point_cs = wp_cs._driveline_point
     if point_cs then
       -- Map pacenote name to the point's ID
@@ -224,14 +289,11 @@ function C:mapPacenotesCsToPoints(notebook)
       point_cs.pacenote = {
         pn=pacenote,
         point_type="cs",
-        -- wp=wp_cs,
         pacenote_i=i,
       }
     end
 
     local wp_ce = pacenote:getCornerEndWaypoint()
-    -- local pos_ce = wp_ce.pos
-    -- local point_ce = self:findNearestPoint(pos_ce)
     local point_ce = wp_ce._driveline_point
     if point_ce then
       -- dont add to the pacenoteCsPointMap.
@@ -239,14 +301,11 @@ function C:mapPacenotesCsToPoints(notebook)
       point_ce.pacenote = {
         pn=pacenote,
         point_type="ce",
-        -- wp=wp_ce,
         pacenote_i=i,
       }
     end
 
     local wp_at = pacenote:getActiveFwdAudioTrigger()
-    -- local pos_at = wp_at.pos
-    -- local point_at = self:findNearestPoint(pos_at)
     local point_at = wp_at._driveline_point
     if point_at then
       -- dont add to the pacenoteCsPointMap.
@@ -254,7 +313,6 @@ function C:mapPacenotesCsToPoints(notebook)
       point_at.pacenote = {
         pn=pacenote,
         point_type="at",
-        -- wp=wp_at,
         pacenote_i=i,
       }
     end
@@ -278,6 +336,10 @@ function C:mapPacenotesCsToPoints(notebook)
     end
 
   end
+
+  -- for name,point in pairs(pacenoteCsPointMap) do
+  --   print(name..' -> '..tostring(point.id))
+  -- end
 
   return pacenoteCsPointMap
 end
@@ -305,6 +367,22 @@ function C:calculateDistance(point1, point2)
   local pos1 = vec3(point1.pos)
   local pos2 = vec3(point2.pos)
   return (pos2 - pos1):length()
+end
+
+function C:length()
+  if self._cached_dist then
+    return self._cached_dist
+  end
+
+  self._cached_dist = 0
+  local prevPoint = self.points[1]
+
+  for _,point in ipairs(self.points) do
+    self._cached_dist = self._cached_dist + self:calculateDistance(prevPoint, point)
+    prevPoint = point
+  end
+
+  return self._cached_dist
 end
 
 return function(...)

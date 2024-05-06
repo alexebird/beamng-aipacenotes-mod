@@ -44,7 +44,16 @@ function C:drawSectionV3()
   end
 
   if self.recce.driveline then
-    im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points (the red line)')
+    local dist = self.recce.driveline:length()
+    local unit = 'm'
+    if dist > 950 then
+      dist = dist / 1000.0
+      unit = 'km'
+    end
+
+    local dist_str = string.format("%.1f"..unit, dist)
+
+    im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points, '..dist_str)
     im.Text('cuts: '..tostring(#self.recce.cuts)..' (the little green cars)')
   else
     im.Text('Recorded driveline was not found.')
