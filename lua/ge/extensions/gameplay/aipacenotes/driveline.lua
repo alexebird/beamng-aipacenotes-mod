@@ -95,9 +95,14 @@ function C:drawDebugDriveline()
   end
 end
 
-function C:findNearestPoint(srcPos, startPoint_i, reverse)
+function C:findNearestPoint(srcPos, startPoint_i, reverse, limit)
   startPoint_i = startPoint_i or 1
   reverse = reverse or false
+  limit = limit or false
+
+  -- if the consecutive number of points, when compared, have increasing distance, call it quits.
+  local searchConfidenceThreshold = 100
+  local increasingDistSearches = 0
 
   local minDist = startingMinDist
   local closestPoint = nil
@@ -121,6 +126,12 @@ function C:findNearestPoint(srcPos, startPoint_i, reverse)
     if dist < minDist then
       minDist = dist
       closestPoint = point
+    else
+      increasingDistSearches = increasingDistSearches + 1
+    end
+
+    if limit and increasingDistSearches > searchConfidenceThreshold then
+      break
     end
   end
 
@@ -259,15 +270,20 @@ end
 
 function C:cacheNearestPoints(notebook)
   local pacenotes = notebook.pacenotes.sorted
+  -- track the previous CS point and use it as the current one's starting point.
+  local prevCSPointId = nil
+
   for i, pacenote in ipairs(pacenotes) do
     local wp_cs = pacenote:getCornerStartWaypoint()
-    wp_cs._driveline_point = self:findNearestPoint(wp_cs.pos)
+    wp_cs._driveline_point = self:findNearestPoint(wp_cs.pos, prevCSPointId, false, false)
+
+    prevCSPointId = wp_cs._driveline_point.id
 
     local wp_ce = pacenote:getCornerEndWaypoint()
-    wp_ce._driveline_point = self:findNearestPoint(wp_ce.pos, wp_cs._driveline_point.id)
+    wp_ce._driveline_point = self:findNearestPoint(wp_ce.pos, wp_cs._driveline_point.id, false, true)
 
     local wp_at = pacenote:getActiveFwdAudioTrigger()
-    wp_at._driveline_point = self:findNearestPoint(wp_at.pos, wp_cs._driveline_point.id, true)
+    wp_at._driveline_point = self:findNearestPoint(wp_at.pos, wp_cs._driveline_point.id, true, true)
   end
 end
 

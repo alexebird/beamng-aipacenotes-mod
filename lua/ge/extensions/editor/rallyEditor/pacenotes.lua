@@ -1318,7 +1318,7 @@ function C:drawPacenotesList()
 
   local heightTopArea = 330
   im.HeaderText("Selected Pacenote")
-  im.BeginChild1("pacenotes", im.ImVec2(230*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
+  im.BeginChild1("pacenotes", im.ImVec2(270*im.uiscale[0], 0), im.WindowFlags_ChildWindow)
   -- im.BeginChild1("pacenotes", nil, im.WindowFlags_ChildWindow)
   for i, note in ipairs(notebook.pacenotes.sorted) do
     if im.Selectable1(note:nameForSelect(), note.id == self.pacenote_tools_state.selected_pn_id) then

@@ -123,7 +123,7 @@ function C:detectCurrPoint()
   -- print(dumps(currCorners))
 
   -- find the point nearest the vehicle center, I presume.
-  self.currPoint = self.driveline:findNearestPoint(self.vehicleTracker:pos())
+  self.currPoint = self.driveline:findNearestPoint(self.vehicleTracker:pos(), nil, false, false)
   -- that point probably wont be in front of the front wheels.
 
   -- so, advance the point, in hopes that the car isn't too long and the point still isnt out front.
@@ -383,7 +383,7 @@ end
 function C:findNextPacenote()
   local curr = self.currPoint
   while curr do
-    if curr.pacenote then
+    if curr.pacenote and curr.pacenote.point_type == "cs" then
       return curr.pacenote
     end
     curr = curr.next
