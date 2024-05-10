@@ -54,7 +54,12 @@ function C:load()
   for i,point in ipairs(points) do
     point.normal = snaproadNormals.forwardNormalVec(point)
     point.pacenoteDistances = {}
-    point.pacenote = nil
+    point.cachedPacenotes = {
+      cs = nil,
+      ce = nil,
+      at = nil,
+      half = nil,
+    }
   end
 
   log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
@@ -151,15 +156,34 @@ function C:setupEmptyDistanceCache()
   local queue = dequeue.new()
   local currPoint = nil
 
+  -- local pint = true
+
   for i=#self.points,1,-1 do
     currPoint = self.points[i]
+    -- if pint then
+    --   -- print('currPoint i='..i..' id='..currPoint.id)
+    -- end
 
     for _,pacenoteName in ipairs(queue:contents()) do
       currPoint.pacenoteDistances[pacenoteName] = 0.0
     end
 
-    local pacenoteData = currPoint.pacenote
-    if pacenoteData and pacenoteData.point_type == 'cs' then
+    local pacenoteData = currPoint.cachedPacenotes.cs
+
+    -- if pacenoteData and pacenoteData.pn.name == 'Import_A 10' and pacenoteData.point_type == 'cs' then
+    -- if pacenoteData and pacenoteData.pn.name == 'Import_A 10' then
+    --   print(pacenoteData.point_type)
+    --   print('currPoint i='..i..' id='..currPoint.id)
+    --   print('found 10 by name')
+    -- end
+
+    if pacenoteData then
+      -- if pint then
+      --   -- print(pacenoteData.pn.name)
+      -- end
+      -- if pacenoteData.pn.name == "Import_A 9" then
+      --   pint = false
+      -- end
       queue:push_right(pacenoteData.pn.name)
     end
 
@@ -194,6 +218,7 @@ function C:cacheDistances2()
   local currPoint = prevPoint
   local currDist = nil
 
+  -- iterate backwards
   for i=#self.points,1,-1 do
     currPoint = self.points[i]
     currDist = self:calculateDistance(prevPoint, currPoint)
@@ -276,6 +301,12 @@ function C:cacheNearestPoints(notebook)
   for i, pacenote in ipairs(pacenotes) do
     local wp_cs = pacenote:getCornerStartWaypoint()
     wp_cs._driveline_point = self:findNearestPoint(wp_cs.pos, prevCSPointId, false, false)
+    -- wp_cs._driveline_point = self:findNearestPoint(wp_cs.pos, nil, false, false)
+
+    -- if pacenote.name == "Import_A 10" then
+    --   print('found 10')
+    --   print(wp_cs._driveline_point.id)
+    -- end
 
     prevCSPointId = wp_cs._driveline_point.id
 
@@ -297,16 +328,28 @@ function C:mapPacenotesCsToPoints(notebook)
   local pacenoteCsPointMap = {}
 
   for i, pacenote in ipairs(pacenotes) do
+    -- print('mapPacenotesCsToPoints main loop '..pacenote.name)
     local wp_cs = pacenote:getCornerStartWaypoint()
     local point_cs = wp_cs._driveline_point
     if point_cs then
       -- Map pacenote name to the point's ID
-      pacenoteCsPointMap[pacenote.name] = self.points[point_cs.id]
-      point_cs.pacenote = {
+      -- pacenoteCsPointMap[pacenote.name] = self.points[point_cs.id]
+
+      -- if point_cs.pacenote then
+      --   print('point_cs id='..point_cs.id..' already has a pacenote')
+      -- end
+
+      point_cs.cachedPacenotes.cs = {
         pn=pacenote,
-        point_type="cs",
+        -- point_type="cs",
         pacenote_i=i,
       }
+
+    --   if pacenote.name == "Import_A 10" then
+    --     print("set 10, point.id="..point_cs.id.." pacenote_i="..point_cs.cachedPacenotes.cs.pacenote_i)
+    --   end
+    -- else
+    --   print('['.. pacenote.name ..'] couldnt find point_cs')
     end
 
     local wp_ce = pacenote:getCornerEndWaypoint()
@@ -314,11 +357,13 @@ function C:mapPacenotesCsToPoints(notebook)
     if point_ce then
       -- dont add to the pacenoteCsPointMap.
       -- but we still want to mark that the point has a CE on it.
-      point_ce.pacenote = {
+      point_ce.cachedPacenotes.ce = {
         pn=pacenote,
-        point_type="ce",
+        -- point_type="ce",
         pacenote_i=i,
       }
+    -- else
+      -- print('['.. pacenote.name ..'] couldnt find point_ce')
     end
 
     local wp_at = pacenote:getActiveFwdAudioTrigger()
@@ -326,11 +371,13 @@ function C:mapPacenotesCsToPoints(notebook)
     if point_at then
       -- dont add to the pacenoteCsPointMap.
       -- but we still want to mark that the point has an AT on it.
-      point_at.pacenote = {
+      point_at.cachedPacenotes.at = {
         pn=pacenote,
-        point_type="at",
+        -- point_type="at",
         pacenote_i=i,
       }
+    -- else
+      -- print('['.. pacenote.name ..'] couldnt find point_at')
     end
 
     -- Mark some intermediate points -- such as the drivline point halfway between the CS and CE.
@@ -344,9 +391,9 @@ function C:mapPacenotesCsToPoints(notebook)
       local half = round(diff / 2)
       local i_half = i_cs + half
       local point_half = self.points[i_half]
-      point_half.pacenote = {
+      point_half.cachedPacenotes.half = {
         pn=pacenote,
-        point_type="half",
+        -- point_type="half",
         pacenote_i=i,
       }
     end

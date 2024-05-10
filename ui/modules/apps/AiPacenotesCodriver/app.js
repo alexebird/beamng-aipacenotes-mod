@@ -46,7 +46,7 @@ angular.module('beamng.apps')
           // if (scope.volumeSetting > 0.0) {
           let curr = scope.volumeSetting
           curr -= 0.05
-          scope.volumeSetting = Math.max(curr, 0.05)
+          scope.volumeSetting = Math.max(curr, 0.0)
           scope.applyVolumeChange()
           // }
         })
@@ -99,7 +99,11 @@ angular.module('beamng.apps')
             currentSource.buffer = audioBuffer;
 
             const gainNode = audioCtx.createGain();
-            gainNode.gain.value = scope.volumeSetting || 0.5;
+            if (scope.volumeSetting !== null) {
+              gainNode.gain.value = scope.volumeSetting;
+            } else {
+              gainNode.gain.value = 0.5;
+            }
 
             currentSource.connect(gainNode).connect(audioCtx.destination);
             currentSource.start(0);

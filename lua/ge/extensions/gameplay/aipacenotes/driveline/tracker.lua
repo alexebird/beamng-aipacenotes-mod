@@ -9,6 +9,8 @@ local infiniteTimeToPacenote = 1000000
 local msToMph = 2.236936
 local mphToMs = 0.44704
 
+local printTripWire = false
+
 function C:init(missionDir, vehicleTracker, notebook)
   self.vehicleTracker = vehicleTracker
   self.notebook = notebook
@@ -65,7 +67,7 @@ function C:init(missionDir, vehicleTracker, notebook)
   -- self.max_threshold_scaling_factor = 2.0
   self.speed_scaling_start_mph = 40
   self.speed_scaling_end_mph = 100
-  self.max_threshold_scaling_amount = 2.0
+  self.max_threshold_scaling_amount = 0.0
   -- self.max_threshold_scaling_amount = 0.0
 
 
@@ -153,7 +155,7 @@ function C:onUpdate(nextPacenote)
   if self:intersectCorners() then
     -- self:writeLog('currPoint['..tostring(self.currPoint.id)..'] past intersectCorners')
     --
-    self.intersectedPacenoteData = self.currPoint.pacenote
+    self.intersectedPacenoteData = self.currPoint.cachedPacenotes.at
     --
     -- if self.intersectedPacenoteData then
     --   self:writeLog('currPoint['..tostring(self.currPoint.id)..'] past intersectedPacenoteData')
@@ -210,22 +212,28 @@ function C:shouldPlayNextPacenote()
     if self.intersectedPacenoteData then
       -- print('manual')
       local pnId = self.intersectedPacenoteData.pn.id
-      local pnName = self.intersectedPacenoteData.pn.name
-      local point_type = self.intersectedPacenoteData.point_type
+      -- local pnName = self.intersectedPacenoteData.pn.name
+      -- local point_type = self.intersectedPacenoteData.point_type
 
-      if pnId == self.nextPacenote.id and point_type == "at" then
-        print('manual AT for '..tostring(pnName))
+      if pnId == self.nextPacenote.id then
+        -- print('manual AT for '..tostring(pnName))
         shouldPlay = true
       end
     end
   elseif self.nextPacenote:isAudioTriggerTypeAuto() then
     -- print('auto')
     -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] type=auto')
-    local cnt = self:getInFlightPacenotesCount()
-    local underCount = cnt < self.inFlightAllowed
+    -- local cnt = self:getInFlightPacenotesCount()
+    -- local underCount = cnt < self.inFlightAllowed
     local underTime = self:isUnderTimeThreshold()
 
     -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] underCount='..tostring(underCount)..' underTime='..tostring(underTime)..' inFlight='..cnt..' < '..self.inFlightAllowed)
+    -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] underTime='..tostring(underTime))
+
+    -- if self.nextPacenote.name == "Import_A 10" and not printTripWire then
+    --   -- self:writeLog(dumps(self.intersectedPacenoteData))
+    --   printTripWire = true
+    -- end
 
     -- if underCount and underTime then
     if underTime then
@@ -239,7 +247,7 @@ function C:shouldPlayNextPacenote()
   -- add the in-flight note at the same time the audio enqueue decision is made.
   if shouldPlay then
     self:putInFlightPacenote(self.nextPacenote)
-    self:writeLog('shouldPlayNextPacenote name='..self.nextPacenote.name)
+    -- self:writeLog('shouldPlayNextPacenote name='..self.nextPacenote.name)
   end
 
   return shouldPlay
@@ -301,17 +309,18 @@ function C:isUnderTimeThreshold()
     thresh = self:getSpeedScaledThreshold()
   end
 
-  -- local speed_mph = self:speedMetersPerSecond() * msToMph
-  -- print("scaledThresh="..string.format("%.1f", thresh).."@"..string.format("%.1f", speed_mph).."mph")
+  local speed_mph = self:speedMetersPerSecond() * msToMph
+  self:writeLog('isUnderTimeThreshold['..self.nextPacenote.name..'] scaledThresh='..string.format('%.1f', thresh)..'@'..string.format('%.1f', speed_mph)..'mph')
 
   local timeToPacenote = self:timeToNextPacenote()
+  -- self:writeLog('isUnderTimeThreshold['..self.nextPacenote.name..'] timeToPacenote='..string.format('%.1f', timeToPacenote))
 
   if timeToPacenote <= thresh then
-    -- local timestr = string.format("%.2f", timeToPacenote)
-    -- local threshstr = string.format("%.2f", thresh)
+    local timestr = string.format("%.2f", timeToPacenote)
+    local threshstr = string.format("%.2f", thresh)
     -- local speed_mph = self:speedMetersPerSecond() * msToMph
-    -- local speed_mph_s = string.format("%.1f", speed_mph)
-    -- log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..threshstr..' @ '..speed_mph_s..'mph')
+    local speed_mph_s = string.format("%.1f", speed_mph)
+    log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..threshstr..' @ '..speed_mph_s..'mph')
     return true
   else
     return false
@@ -321,9 +330,11 @@ end
 function C:timeToNextPacenote()
   local timeToPacenote = infiniteTimeToPacenote
   if not self.currPoint then return timeToPacenote end
+  -- self:writeLog('timeToNextPacenote['..self.nextPacenote.name..'] passed not self.currPoint')
 
   local speed_ms = self:speedMetersPerSecond()
   local dist = self.currPoint.pacenoteDistances[self.nextPacenote.name]
+  -- self:writeLog('timeToNextPacenote['..self.nextPacenote.name..'] dist='..tostring(dist))
 
   if dist then
     if speed_ms ~= 0 then
@@ -383,8 +394,8 @@ end
 function C:findNextPacenote()
   local curr = self.currPoint
   while curr do
-    if curr.pacenote and curr.pacenote.point_type == "cs" then
-      return curr.pacenote
+    if curr.cachedPacenotes.cs then
+      return curr.cachedPacenotes.cs
     end
     curr = curr.next
   end
@@ -541,7 +552,7 @@ function C:drawDebug()
       )
 
       -- local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
-
+      --
       -- debugDrawer:drawSquarePrism(
       --   point.pos + side,
       --   point.pos + 0.25 * point.normal + side,
@@ -549,8 +560,8 @@ function C:drawDebug()
       --   Point2F(0, 0),
       --   ColorF(clr[1], clr[2], clr[3], alpha_shape)
       -- )
-
-      -- draw the text of the pacenoteDistances data
+      --
+      -- -- draw the text of the pacenoteDistances data
       -- local alpha_text = 1.0
       -- local clr_text_fg = cc.clr_white
       -- local clr_text_bg = cc.clr_black

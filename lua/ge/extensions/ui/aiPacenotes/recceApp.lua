@@ -609,6 +609,7 @@ end
 
 local function setShowNotes(val)
   flag_showNotes = val
+  -- setDrawDebug(val) -- uncomment this for visual debugging in recce mode
 end
 
 local function setDrawDebugSnaproads(val)
