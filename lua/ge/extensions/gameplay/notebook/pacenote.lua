@@ -35,6 +35,7 @@ function C:init(notebook, name, forceId)
   self.playback_rules = nil
   self.isolate = false
   self.codriverWait = 'none'
+  self.auto_at = false
   self.audioTriggerType = atTypes.auto
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
@@ -1086,6 +1087,10 @@ end
 
 function C:isAudioTriggerTypeManual()
   return self.audioTriggerType == atTypes.manual
+end
+
+function C:isAudioTriggerTypeAutoAT()
+  return self.auto_at
 end
 
 return function(...)

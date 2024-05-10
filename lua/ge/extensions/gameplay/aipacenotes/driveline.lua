@@ -327,6 +327,9 @@ function C:mapPacenotesCsToPoints(notebook)
   local pacenotes = notebook.pacenotes.sorted
   local pacenoteCsPointMap = {}
 
+  local prevHalfPoint = nil
+  local foundCodriverWait = false
+
   for i, pacenote in ipairs(pacenotes) do
     -- print('mapPacenotesCsToPoints main loop '..pacenote.name)
     local wp_cs = pacenote:getCornerStartWaypoint()
@@ -366,8 +369,19 @@ function C:mapPacenotesCsToPoints(notebook)
       -- print('['.. pacenote.name ..'] couldnt find point_ce')
     end
 
+    local point_at = nil
+
+    if foundCodriverWait then
+      foundCodriverWait = false
+      pacenote.auto_at = true
+      prevHalfPoint.cachedPacenotes.auto_at = {
+        pn=pacenote,
+        pacenote_i=i,
+      }
+    end
+
     local wp_at = pacenote:getActiveFwdAudioTrigger()
-    local point_at = wp_at._driveline_point
+    point_at = wp_at._driveline_point
     if point_at then
       -- dont add to the pacenoteCsPointMap.
       -- but we still want to mark that the point has an AT on it.
@@ -396,6 +410,12 @@ function C:mapPacenotesCsToPoints(notebook)
         -- point_type="half",
         pacenote_i=i,
       }
+      prevHalfPoint = point_half
+    end
+
+    if pacenote.codriverWait == 'large' then
+      -- print('foundCodriverWait == large')
+      foundCodriverWait = true
     end
 
   end

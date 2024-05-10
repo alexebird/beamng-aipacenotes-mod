@@ -9,7 +9,7 @@ local infiniteTimeToPacenote = 1000000
 local msToMph = 2.236936
 local mphToMs = 0.44704
 
-local printTripWire = false
+-- local printTripWire = false
 
 function C:init(missionDir, vehicleTracker, notebook)
   self.vehicleTracker = vehicleTracker
@@ -35,7 +35,8 @@ function C:init(missionDir, vehicleTracker, notebook)
   self.nextPacenote = nil
 
   -- This is set only for one tick.
-  self.intersectedPacenoteData = nil
+  self.intersectedPacenoteData_at = nil
+  self.intersectedPacenoteData_auto_at = nil
 
   self.inFlightPacenotes = {}
   self.inFlightPacenotesCount = 0
@@ -155,7 +156,8 @@ function C:onUpdate(nextPacenote)
   if self:intersectCorners() then
     -- self:writeLog('currPoint['..tostring(self.currPoint.id)..'] past intersectCorners')
     --
-    self.intersectedPacenoteData = self.currPoint.cachedPacenotes.at
+    self.intersectedPacenoteData_at = self.currPoint.cachedPacenotes.at
+    self.intersectedPacenoteData_auto_at = self.currPoint.cachedPacenotes.auto_at
     --
     -- if self.intersectedPacenoteData then
     --   self:writeLog('currPoint['..tostring(self.currPoint.id)..'] past intersectedPacenoteData')
@@ -194,7 +196,8 @@ function C:onUpdate(nextPacenote)
     self.currPoint = self.currPoint.next
   else
     -- clear for ticks where there is no intersection.
-    self.intersectedPacenoteData = nil
+    self.intersectedPacenoteData_at = nil
+    self.intersectedPacenoteData_auto_at = nil
   end
 end
 
@@ -209,16 +212,28 @@ function C:shouldPlayNextPacenote()
 
   if forceManual or self.nextPacenote:isAudioTriggerTypeManual() then
     -- self:writeLog('shouldPlayNextPacenote['..self.nextPacenote.name..'] type=manual')
-    if self.intersectedPacenoteData then
+    if self.intersectedPacenoteData_at then
       -- print('manual')
-      local pnId = self.intersectedPacenoteData.pn.id
-      -- local pnName = self.intersectedPacenoteData.pn.name
+      local pnId = self.intersectedPacenoteData_at.pn.id
+      local pnName = self.intersectedPacenoteData_at.pn.name
       -- local point_type = self.intersectedPacenoteData.point_type
 
       if pnId == self.nextPacenote.id then
-        -- print('manual AT for '..tostring(pnName))
+        print('manual AT for '..tostring(pnName))
         shouldPlay = true
       end
+    end
+  elseif self.nextPacenote:isAudioTriggerTypeAutoAT() then
+    if self.intersectedPacenoteData_auto_at then
+      local pnId = self.intersectedPacenoteData_auto_at.pn.id
+      local pnName = self.intersectedPacenoteData_auto_at.pn.name
+
+      if pnId == self.nextPacenote.id then
+        print('autoAT for '..tostring(pnName))
+        shouldPlay = true
+      end
+    else
+      -- print('auto_at was set on pacenote, but no auto_at data on the point.')
     end
   elseif self.nextPacenote:isAudioTriggerTypeAuto() then
     -- print('auto')
@@ -237,6 +252,7 @@ function C:shouldPlayNextPacenote()
 
     -- if underCount and underTime then
     if underTime then
+        print('auto for '..tostring(self.nextPacenote.name))
       -- print('inFlight='..tostring(cnt))
       shouldPlay = true
     end
@@ -310,17 +326,17 @@ function C:isUnderTimeThreshold()
   end
 
   local speed_mph = self:speedMetersPerSecond() * msToMph
-  self:writeLog('isUnderTimeThreshold['..self.nextPacenote.name..'] scaledThresh='..string.format('%.1f', thresh)..'@'..string.format('%.1f', speed_mph)..'mph')
+  -- self:writeLog('isUnderTimeThreshold['..self.nextPacenote.name..'] scaledThresh='..string.format('%.1f', thresh)..'@'..string.format('%.1f', speed_mph)..'mph')
 
   local timeToPacenote = self:timeToNextPacenote()
   -- self:writeLog('isUnderTimeThreshold['..self.nextPacenote.name..'] timeToPacenote='..string.format('%.1f', timeToPacenote))
 
   if timeToPacenote <= thresh then
-    local timestr = string.format("%.2f", timeToPacenote)
-    local threshstr = string.format("%.2f", thresh)
+    -- local timestr = string.format("%.2f", timeToPacenote)
+    -- local threshstr = string.format("%.2f", thresh)
     -- local speed_mph = self:speedMetersPerSecond() * msToMph
-    local speed_mph_s = string.format("%.1f", speed_mph)
-    log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..threshstr..' @ '..speed_mph_s..'mph')
+    -- local speed_mph_s = string.format("%.1f", speed_mph)
+    -- log('D', logTag, self.nextPacenote.name..' under threshhold: '..timestr..' <= '..threshstr..' @ '..speed_mph_s..'mph')
     return true
   else
     return false
