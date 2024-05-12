@@ -1,0 +1,90 @@
+{
+  "additionalAttributes":{
+    "vehicle":"own"
+  },
+  "author":"Bardaff - SPittlebug",
+  "careerSetup":{
+    "branch":"(none)",
+    "defaultStarKeys":{},
+    "showInFreeroam":true,
+    "skill":"(none)",
+    "starOutroTexts":{
+      "noStarUnlocked":"Well done! You can try the reverse layout from here."
+    },
+    "starRewards":{},
+    "starsActive":{}
+  },
+  "customAdditionalAttributes":{},
+  "date":1704284131,
+  "description":"Alternative stage, reverse.\n57% Tarmac / 43% Gravel",
+  "devMission":false,
+  "grouping":{
+    "id":"",
+    "label":""
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowFlip":true,
+    "allowRecover":true,
+    "allowRollingStart":false,
+    "bronzeTime":180,
+    "bronzeTimePenalty":20,
+    "bronzeTimeTotal":180,
+    "closed":false,
+    "defaultLaps":1,
+    "endScreenText":"Well done! You can try the reverse layout from here.",
+    "flipLimit":99,
+    "flipPenalty":10,
+    "goldTime":60,
+    "goldTimePenalty":0,
+    "goldTimeTotal":60,
+    "justFinishPenalty":30,
+    "mapPreviewMode":"none",
+    "recoverLimit":99,
+    "recoverPenalty":60,
+    "reversible":false,
+    "silverTime":120,
+    "silverTimePenalty":10,
+    "silverTimeTotal":120,
+    "startScreenText":"Get ready. Checkpoints markers are invisible but somewhat functionnal so you have to pass clean through the gates. Good luck!"
+  },
+  "name":"[4.3km] Mediterranean SS2 - Alt Layout - Reverse with Codriver (aip)",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":false
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "enabled":true,
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "vehicles":{}
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"ms_s2",
+    "pos":[
+      -454.5494385,
+      292.3932495,
+      22.57958603
+    ],
+    "radius":3,
+    "rot":[
+      0,
+      0,
+      0,
+      1
+    ],
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}
