@@ -25,6 +25,8 @@ local pacenoteUnderEdit = nil
 local C = {}
 C.windowDescription = 'Pacenotes'
 
+local codriverWaitVals = {'none', 'small', 'medium', 'large'}
+
 -- local function selectPacenoteUndo(data)
 --   data.self:selectPacenote(data.old)
 -- end
@@ -1189,11 +1191,13 @@ function C:drawPacenotesList()
   --   self:autoAssignSegments()
   -- end
   -- im.tooltip("Requires race to be loaded in Race Tool.\n\nAssign pacenote to nearest segment.")
-  im.SameLine()
-  if im.Button("Snap All") then
-    self:_snapAll()
-  end
-  im.tooltip("Snap all waypoints to nearest snaproad point.")
+
+  -- im.SameLine()
+  -- if im.Button("Snap All") then
+  --   self:_snapAll()
+  -- end
+  -- im.tooltip("Snap all waypoints to nearest snaproad point.")
+
   -- im.SameLine()
   -- if im.Button("All to Terrain") then
   --   self:allToTerrain()
@@ -1662,7 +1666,7 @@ Any lua code is allowed, so be careful. Examples:
       local currCodriverWait = pacenote.codriverWait
       im.SetNextItemWidth(150)
       if im.BeginCombo('##codriverWait', currCodriverWait) then
-        for _, waitVal in ipairs({'none', 'small', 'medium', 'large'}) do
+        for _, waitVal in ipairs(codriverWaitVals) do
           if im.Selectable1(waitVal, waitVal == currCodriverWait) then
             pacenote:setCodriverWait(waitVal)
           end
@@ -2155,6 +2159,23 @@ function C:cycleEditMode()
     self:setModeEditAll()
   else
     self:setModeEditAll()
+  end
+end
+
+function C:cycleCodriverWait()
+  local pn = self:selectedPacenote()
+  if not pn then return end
+
+  if pn.codriverWait == 'large' then
+    pn:setCodriverWait('medium')
+  elseif pn.codriverWait == 'medium' then
+    pn:setCodriverWait('small')
+  elseif pn.codriverWait == 'small' then
+    pn:setCodriverWait('none')
+  elseif pn.codriverWait == 'none' then
+    pn:setCodriverWait('large')
+  else
+    pn:setCodriverWait('none')
   end
 end
 

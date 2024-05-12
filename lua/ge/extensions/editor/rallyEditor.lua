@@ -224,8 +224,6 @@ local function moveSelectedWaypointForward(v)
   end
 
   moveWaypointState.forward = v
-  -- if pacenotesWindow:selectedWaypoint() then
-  -- end
 end
 
 local function moveSelectedWaypointBackward(v)
@@ -236,8 +234,11 @@ local function moveSelectedWaypointBackward(v)
   end
 
   moveWaypointState.backward = v
-  -- if pacenotesWindow:selectedWaypoint() then
-  -- end
+end
+
+local function cycleCodriverWait()
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:cycleCodriverWait()
 end
 
 local function cameraPathPlay()
@@ -979,6 +980,7 @@ M.deselect = deselect
 M.selectNextWaypoint = selectNextWaypoint
 M.moveSelectedWaypointForward = moveSelectedWaypointForward
 M.moveSelectedWaypointBackward = moveSelectedWaypointBackward
+M.cycleCodriverWait = cycleCodriverWait
 -- M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
 -- M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
 M.cameraPathPlay = cameraPathPlay

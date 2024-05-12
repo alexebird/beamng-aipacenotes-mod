@@ -31,7 +31,7 @@ local default_notebook_basename = default_notebook_name..'.'..notebookFileExt
 local default_codriver_name = 'Sophia'
 local default_codriver_voice = 'british_female'
 local default_codriver_language = 'english'
-local default_waypoint_intersect_radius = 10
+local default_waypoint_intersect_radius = 40
 
 local default_punctuation = '?'
 local default_punctuation_last = '.'

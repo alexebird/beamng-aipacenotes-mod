@@ -163,5 +163,14 @@
     "title": "Move Waypoint Backward (aip)",
     "desc": "If a waypoint is selected, move backward along snaproad.",
     "onChange": "editor_rallyEditor.moveSelectedWaypointBackward(VALUE)"
+  },
+  "rallyEditorCycleCodriverWait": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 23,
+    "actionMap": "rallyEditor",
+    "title": "Cycle Codriver Wait (aip)",
+    "desc": "Cycle the selected pacenote's CodriverWait value.",
+    "onDown": "editor_rallyEditor.cycleCodriverWait()"
   }
 }

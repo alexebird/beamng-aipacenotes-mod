@@ -13,6 +13,7 @@ function C:init(missionDir)
   self.points = nil
 
   self._cached_dist = nil
+  self._cached_dist_race = nil
 
   self.radius = re_util.default_waypoint_intersect_radius
 end
@@ -466,6 +467,41 @@ function C:length()
   end
 
   return self._cached_dist
+end
+
+function C:raceDistance(missionFolder)
+  if self._cached_dist_race then
+    return self._cached_dist_race
+  end
+
+  local race = require('/lua/ge/extensions/gameplay/race/path')("New Path")
+  race:onDeserialized(jsonReadFile(missionFolder.."/race.race.json"))
+  race:autoConfig()
+
+  local startPosition = race.startPositions.objects[race.defaultStartPosition]
+  if not startPosition then
+    return 0
+  end
+  local point_sp = self:findNearestPoint(startPosition.pos)
+
+  local endNode = race.pathnodes.objects[race.endNode]
+  if not endNode then
+    return 0
+  end
+  local point_endNode = self:findNearestPoint(endNode.pos)
+
+  self._cached_dist_race = 0
+  local prevPoint = point_sp
+
+  for _,point in ipairs(self.points) do
+    self._cached_dist_race = self._cached_dist_race + self:calculateDistance(prevPoint, point)
+    if point.id == point_endNode.id then
+      break
+    end
+    prevPoint = point
+  end
+
+  return self._cached_dist_race
 end
 
 return function(...)

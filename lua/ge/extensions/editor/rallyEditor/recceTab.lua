@@ -32,6 +32,17 @@ function C:unselect()
   extensions.hook("onEditorEditModeChanged", nil, nil)
 end
 
+function C:formatDistance(dist)
+  local unit = 'm'
+  if dist > 950 then
+    dist = dist / 1000.0
+    unit = 'km'
+  end
+
+  local dist_str = string.format("%.3f"..unit, dist)
+  return dist_str
+end
+
 function C:drawSectionV3()
   im.HeaderText("Recce Recording")
   -- if im.Button("Refresh") then
@@ -45,16 +56,12 @@ function C:drawSectionV3()
 
   if self.recce.driveline then
     local dist = self.recce.driveline:length()
-    local unit = 'm'
-    if dist > 950 then
-      dist = dist / 1000.0
-      unit = 'km'
-    end
 
-    local dist_str = string.format("%.1f"..unit, dist)
-
-    im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points, '..dist_str)
+    im.Text('driveline: '..tostring(#self.recce.driveline.points)..' points, '..self:formatDistance(dist))
     im.Text('cuts: '..tostring(#self.recce.cuts)..' (the little green cars)')
+
+    local dist_race = self.recce.driveline:raceDistance(self.path:getMissionDir())
+    im.Text('race distance: '..self:formatDistance(dist_race))
   else
     im.Text('Recorded driveline was not found.')
     im.Text(

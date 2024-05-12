@@ -576,7 +576,7 @@ function C:drawDebug()
       --   Point2F(0, 0),
       --   ColorF(clr[1], clr[2], clr[3], alpha_shape)
       -- )
-      --
+
       -- -- draw the text of the pacenoteDistances data
       -- local alpha_text = 1.0
       -- local clr_text_fg = cc.clr_white
