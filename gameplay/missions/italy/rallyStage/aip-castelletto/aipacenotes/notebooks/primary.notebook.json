@@ -18,74 +18,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Pacenote 1",
-      "notes":{
-        "english":{
-          "_out":"Test?",
-          "after":"",
-          "before":"",
-          "note":"Test?"
-        }
-      },
-      "oldId":19,
-      "pacenoteWaypoints":[
-        {
-          "name":"corner start",
-          "normal":[
-            0,
-            1,
-            0
-          ],
-          "oldId":20,
-          "pos":[
-            -981.5410156,
-            927.7133789,
-            391.0447388
-          ],
-          "radius":8,
-          "waypointType":"cornerStart"
-        },
-        {
-          "name":"corner end",
-          "normal":[
-            0,
-            1,
-            0
-          ],
-          "oldId":21,
-          "pos":[
-            -981.5340576,
-            937.8662109,
-            391.9403992
-          ],
-          "radius":8,
-          "waypointType":"cornerEnd"
-        },
-        {
-          "name":"curr",
-          "normal":[
-            -0.00603194948,
-            0.9996668035,
-            -0.02509775965
-          ],
-          "oldId":22,
-          "pos":[
-            -981.5297852,
-            917.46521,
-            391.3423767
-          ],
-          "radius":8,
-          "waypointType":"fwdAudioTrigger"
-        }
-      ],
-      "todo":false
-    },
-    {
-      "audioTriggerType":"auto",
-      "codriverWait":"none",
-      "isolate":false,
-      "metadata":{},
-      "name":"Import_A 2",
+      "name":"Import_A 1",
       "notes":{
         "english":{
           "_out":"into Sharp Left. forty.",
@@ -152,7 +85,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 3",
+      "name":"Import_A 2",
       "notes":{
         "english":{
           "_out":"Sharp left?",
@@ -219,7 +152,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 4",
+      "name":"Import_A 3",
       "notes":{
         "english":{
           "_out":"into Shicane?",
@@ -286,7 +219,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 5",
+      "name":"Import_A 4",
       "notes":{
         "english":{
           "_out":"and Sharp Right.",
@@ -354,7 +287,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 6",
+      "name":"Import_A 5",
       "notes":{
         "english":{
           "_out":"into One Left. forty.",
@@ -421,7 +354,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 7",
+      "name":"Import_A 6",
       "notes":{
         "english":{
           "_out":"One Right? sixty.",
@@ -488,7 +421,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 8",
+      "name":"Import_A 7",
       "notes":{
         "english":{
           "_out":"Three Left?",
@@ -555,7 +488,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 9",
+      "name":"Import_A 8",
       "notes":{
         "english":{
           "_out":"into Two Left.",
@@ -622,7 +555,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 10",
+      "name":"Import_A 9",
       "notes":{
         "english":{
           "_out":"and Right Hairpin?",
@@ -689,7 +622,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 11",
+      "name":"Import_A 10",
       "notes":{
         "english":{
           "_out":"and Left Hairpin?",
@@ -756,7 +689,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 12",
+      "name":"Import_A 11",
       "notes":{
         "english":{
           "_out":"into Slight Right?",
@@ -823,7 +756,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 13",
+      "name":"Import_A 12",
       "notes":{
         "english":{
           "_out":"and Five Left?",
@@ -890,7 +823,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 14",
+      "name":"Import_A 13",
       "notes":{
         "english":{
           "_out":"into Six Right? ninety.",
@@ -957,7 +890,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 15",
+      "name":"Import_A 14",
       "notes":{
         "english":{
           "_out":"Right Hairpin. fifty.",
@@ -1024,7 +957,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 16",
+      "name":"Import_A 15",
       "notes":{
         "english":{
           "_out":"Left Five?",
@@ -1091,7 +1024,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 17",
+      "name":"Import_A 16",
       "notes":{
         "english":{
           "_out":"into Five Right. Cut. one hundred.",
@@ -1158,7 +1091,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 18",
+      "name":"Import_A 17",
       "notes":{
         "english":{
           "_out":"Four Left Through Bush onto Gravel?",
@@ -1225,7 +1158,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 19",
+      "name":"Import_A 18",
       "notes":{
         "english":{
           "_out":"into Three Left?",
@@ -1292,7 +1225,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 20",
+      "name":"Import_A 19",
       "notes":{
         "english":{
           "_out":"into Two Right over crest. Cut. one hundred.",
@@ -1359,7 +1292,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 21",
+      "name":"Import_A 20",
       "notes":{
         "english":{
           "_out":"Four Left Tightens into Two.",
@@ -1426,7 +1359,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 22",
+      "name":"Import_A 21",
       "notes":{
         "english":{
           "_out":"into Three Left. forty.",
@@ -1493,7 +1426,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 23",
+      "name":"Import_A 22",
       "notes":{
         "english":{
           "_out":"Cliff. One Right Opens. one fifty.",
@@ -1560,7 +1493,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 24",
+      "name":"Import_A 23",
       "notes":{
         "english":{
           "_out":"One Left? sixty.",
@@ -1627,7 +1560,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 25",
+      "name":"Import_A 24",
       "notes":{
         "english":{
           "_out":"Two Right?",
@@ -1694,7 +1627,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 26",
+      "name":"Import_A 25",
       "notes":{
         "english":{
           "_out":"and Two Right. one fifty.",
@@ -1761,7 +1694,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 27",
+      "name":"Import_A 26",
       "notes":{
         "english":{
           "_out":"One Left.",
@@ -1828,7 +1761,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 28",
+      "name":"Import_A 27",
       "notes":{
         "english":{
           "_out":"into One Right. fifty.",
@@ -1895,7 +1828,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 29",
+      "name":"Import_A 28",
       "notes":{
         "english":{
           "_out":"One Left.",
@@ -1962,7 +1895,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 30",
+      "name":"Import_A 29",
       "notes":{
         "english":{
           "_out":"into Slight Right. fifty.",
@@ -2029,7 +1962,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 31",
+      "name":"Import_A 30",
       "notes":{
         "english":{
           "_out":"Slight Left.",
@@ -2096,7 +2029,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 32",
+      "name":"Import_A 31",
       "notes":{
         "english":{
           "_out":"and Two Right.",
@@ -2163,7 +2096,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 33",
+      "name":"Import_A 32",
       "notes":{
         "english":{
           "_out":"into One Right.",
@@ -2230,7 +2163,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 34",
+      "name":"Import_A 33",
       "notes":{
         "english":{
           "_out":"and One Left.",
@@ -2297,7 +2230,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 35",
+      "name":"Import_A 34",
       "notes":{
         "english":{
           "_out":"One Right.",
@@ -2364,7 +2297,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Pacenote 36",
+      "name":"Pacenote 35",
       "notes":{
         "english":{
           "_out":"into Three Left. one fifty.",
@@ -2431,7 +2364,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 37",
+      "name":"Import_A 36",
       "notes":{
         "english":{
           "_out":"Shicane?",
@@ -2498,7 +2431,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 38",
+      "name":"Import_A 37",
       "notes":{
         "english":{
           "_out":"into One Right. sixty.",
@@ -2565,7 +2498,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 39",
+      "name":"Import_A 38",
       "notes":{
         "english":{
           "_out":"Three Right. fifty.",
@@ -2632,7 +2565,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 40",
+      "name":"Import_A 39",
       "notes":{
         "english":{
           "_out":"One Right.",
@@ -2699,7 +2632,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 41",
+      "name":"Import_A 40",
       "notes":{
         "english":{
           "_out":"into Left Hairpin. sixty.",
@@ -2766,7 +2699,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 42",
+      "name":"Import_A 41",
       "notes":{
         "english":{
           "_out":"Five Left.",
@@ -2833,7 +2766,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 43",
+      "name":"Import_A 42",
       "notes":{
         "english":{
           "_out":"into One Right. fifty.",
@@ -2900,7 +2833,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 44",
+      "name":"Import_A 43",
       "notes":{
         "english":{
           "_out":"Three Right. sixty.",
@@ -2967,7 +2900,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 45",
+      "name":"Import_A 44",
       "notes":{
         "english":{
           "_out":"Four Right.",
@@ -3034,7 +2967,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 46",
+      "name":"Import_A 45",
       "notes":{
         "english":{
           "_out":"and Left Hairpin. ninety.",
@@ -3101,7 +3034,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 47",
+      "name":"Import_A 46",
       "notes":{
         "english":{
           "_out":"Three Left.",
@@ -3168,7 +3101,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 48",
+      "name":"Import_A 47",
       "notes":{
         "english":{
           "_out":"and One Left.",
@@ -3235,7 +3168,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 49",
+      "name":"Import_A 48",
       "notes":{
         "english":{
           "_out":"into One Right.",
@@ -3302,7 +3235,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 50",
+      "name":"Import_A 49",
       "notes":{
         "english":{
           "_out":"into Three Left. sixty.",
@@ -3369,7 +3302,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 51",
+      "name":"Import_A 50",
       "notes":{
         "english":{
           "_out":"Three Left.",
@@ -3436,7 +3369,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 52",
+      "name":"Import_A 51",
       "notes":{
         "english":{
           "_out":"into One left.",
@@ -3503,7 +3436,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 53",
+      "name":"Import_A 52",
       "notes":{
         "english":{
           "_out":"into Two Right. sixty.",
@@ -3570,7 +3503,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 54",
+      "name":"Import_A 53",
       "notes":{
         "english":{
           "_out":"Right Hairpin? one fifty.",
@@ -3637,7 +3570,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 55",
+      "name":"Import_A 54",
       "notes":{
         "english":{
           "_out":"Four Left.",
@@ -3704,7 +3637,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 56",
+      "name":"Import_A 55",
       "notes":{
         "english":{
           "_out":"into Four Right. Cut. sixty.",
@@ -3771,7 +3704,7 @@
       "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 57",
+      "name":"Import_A 56",
       "notes":{
         "english":{
           "_out":"Sharp Right Onto Asphalt.",
@@ -3838,7 +3771,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 58",
+      "name":"Import_A 57",
       "notes":{
         "english":{
           "_out":"into Full Right.",
@@ -3905,7 +3838,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 59",
+      "name":"Import_A 58",
       "notes":{
         "english":{
           "_out":"and Five Left. two fifty.",
@@ -3972,7 +3905,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 60",
+      "name":"Import_A 59",
       "notes":{
         "english":{
           "_out":"Sharp Right. seventy.",
@@ -4039,7 +3972,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 61",
+      "name":"Import_A 60",
       "notes":{
         "english":{
           "_out":"Sharp Left.",
@@ -4106,7 +4039,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 62",
+      "name":"Import_A 61",
       "notes":{
         "english":{
           "_out":"and One Left. fifty.",
@@ -4173,7 +4106,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 63",
+      "name":"Import_A 62",
       "notes":{
         "english":{
           "_out":"Five Left.",
@@ -4240,7 +4173,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 64",
+      "name":"Import_A 63",
       "notes":{
         "english":{
           "_out":"into One Right.",
@@ -4307,7 +4240,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 65",
+      "name":"Import_A 64",
       "notes":{
         "english":{
           "_out":"into Sharp Left.",
@@ -4374,7 +4307,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 66",
+      "name":"Import_A 65",
       "notes":{
         "english":{
           "_out":"and Sharp Left.",
@@ -4441,7 +4374,7 @@
       "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Pacenote 67",
+      "name":"Pacenote 66",
       "notes":{
         "english":{
           "_out":"Bump into Bump into Finish.",
