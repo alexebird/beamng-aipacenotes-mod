@@ -2902,10 +2902,10 @@
       "name":"Import_B 44",
       "notes":{
         "english":{
-          "_out":"slowing six left, late tightens to two?",
+          "_out":"slowing six left, late tightens to one?",
           "after":"",
           "before":"",
-          "note":"slowing six left, late tightens to two?"
+          "note":"slowing six left, late tightens to one?"
         }
       },
       "oldId":191,
@@ -2969,10 +2969,10 @@
       "name":"Pacenote 45",
       "notes":{
         "english":{
-          "_out":"repeat tightens to two?",
+          "_out":"repeat tightens to one?",
           "after":"<none>",
           "before":"<none>",
-          "note":"repeat tightens to two?"
+          "note":"repeat tightens to one?"
         }
       },
       "oldId":195,
@@ -12684,10 +12684,10 @@
       "name":"Import_B 190",
       "notes":{
         "english":{
-          "_out":"and handbrake open hairpin right?",
+          "_out":"and handbrake open hairpin left?",
           "after":"",
           "before":"and",
-          "note":"handbrake open hairpin right?"
+          "note":"handbrake open hairpin left?"
         }
       },
       "oldId":775,
