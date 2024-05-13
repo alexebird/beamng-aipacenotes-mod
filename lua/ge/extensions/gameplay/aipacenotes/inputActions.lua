@@ -66,6 +66,23 @@ local function action_recce_move_vehicle_backward()
   guihooks.trigger('aiPacenotesInputActionRecceMoveVehicleBackward')
 end
 
+local function action_codriver_volume_up()
+  log('I', logTag, 'action_codriver_volume_up')
+  guihooks.trigger('aiPacenotesInputActionCodriverVolumeUp')
+end
+local function action_codriver_volume_down()
+  log('I', logTag, 'action_codriver_volume_down')
+  guihooks.trigger('aiPacenotesInputActionCodriverVolumeDown')
+end
+local function action_codriver_calls_earlier()
+  log('I', logTag, 'action_codriver_calls_earlier')
+  guihooks.trigger('aiPacenotesInputActionCodriverTimingEarlier')
+end
+local function action_codriver_calls_later()
+  log('I', logTag, 'action_codriver_calls_later')
+  guihooks.trigger('aiPacenotesInputActionCodriverTimingLater')
+end
+
 -- local function action_recce_insert_mode()
   -- log('I', logTag, 'action_recce_insert_mode')
   -- if not is_recceApp_loaded() then return end
@@ -81,5 +98,10 @@ M.action_recce_move_pacenote_forward = action_recce_move_pacenote_forward
 M.action_recce_move_pacenote_backward = action_recce_move_pacenote_backward
 M.action_recce_move_vehicle_forward = action_recce_move_vehicle_forward
 M.action_recce_move_vehicle_backward = action_recce_move_vehicle_backward
+
+M.action_codriver_volume_up = action_codriver_volume_up
+M.action_codriver_volume_down = action_codriver_volume_down
+M.action_codriver_calls_earlier = action_codriver_calls_earlier
+M.action_codriver_calls_later = action_codriver_calls_later
 
 return M

@@ -7,7 +7,7 @@ local wpTypeCornerEnd = "cornerEnd"
 local wpTypeDistanceMarker = "distanceMarker"
 
 local shortener_map = {
-  [wpTypeFwdAudioTrigger] = "Af",
+  [wpTypeFwdAudioTrigger] = "At",
   [wpTypeRevAudioTrigger] = "Ar",
   [wpTypeCornerStart] = "Cs",
   [wpTypeCornerEnd] = "Ce",

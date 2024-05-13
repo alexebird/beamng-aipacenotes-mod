@@ -4,8 +4,10 @@
   },
   "author":"birdman",
   "careerSetup":{
+    "branch":"(none)",
     "defaultStarKeys":{},
     "showInFreeroam":true,
+    "skill":"(none)",
     "starOutroTexts":{
       "bronzeTime":"",
       "goldTime":"Way to go!",
@@ -41,7 +43,7 @@
     "silverTime":120,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Echo Canyon (aip)",
+  "name":"[6.6km] Echo Canyon (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -53,7 +55,7 @@
     "vehicles":{
       "enabled":true,
       "includePlayerVehicle":true,
-      "prioritizePlayerVehicle":false,
+      "prioritizePlayerVehicle":true,
       "vehicles":[
         {
           "config":"Echo Canyon - Vivace (aip)",

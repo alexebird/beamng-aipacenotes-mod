@@ -16,12 +16,15 @@
   ],
   "created_at":1711073032,
   "description":"",
+  "forceManualATs":false,
   "name":"primary",
   "pacenotes":[
     {
+      "audioTriggerType":"manual",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 41",
+      "name":"Import_A 1",
       "notes":{
         "english":{
           "_out":"small crest, five left bumpy exit? seventy.",
@@ -35,15 +38,15 @@
         {
           "name":"audio trigger",
           "normal":[
-            -0.7601029877,
-            -0.6446731288,
-            0.0814862266
+            -0.7464014672,
+            -0.6618859046,
+            0.06922354409
           ],
           "oldId":21,
           "pos":[
-            -378.7527466,
-            91.56381226,
-            33.66701508
+            -391.2528687,
+            80.79847717,
+            35.00136948
           ],
           "radius":5,
           "waypointType":"fwdAudioTrigger"
@@ -84,9 +87,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 45",
+      "name":"Import_A 2",
       "notes":{
         "english":{
           "_out":"small jump dont?",
@@ -149,9 +154,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 49",
+      "name":"Import_A 3",
       "notes":{
         "english":{
           "_out":"into five left?",
@@ -214,9 +221,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 53",
+      "name":"Import_A 4",
       "notes":{
         "english":{
           "_out":"into five right opens? bumpy?",
@@ -279,9 +288,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 57",
+      "name":"Import_A 5",
       "notes":{
         "english":{
           "_out":"and send it over jump? bumpy over ninety?",
@@ -344,9 +355,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 65",
+      "name":"Import_A 6",
       "notes":{
         "english":{
           "_out":"full send over jump? bumpy Landing? ninety.",
@@ -409,9 +422,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 69",
+      "name":"Import_A 7",
       "notes":{
         "english":{
           "_out":"five left?",
@@ -474,9 +489,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 73",
+      "name":"Import_A 8",
       "notes":{
         "english":{
           "_out":"into crest into six right? fifty.",
@@ -539,9 +556,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 77",
+      "name":"Import_A 9",
       "notes":{
         "english":{
           "_out":"four left?",
@@ -604,9 +623,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 81",
+      "name":"Import_A 10",
       "notes":{
         "english":{
           "_out":"into crest down hill five left opens?",
@@ -669,9 +690,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 85",
+      "name":"Import_A 11",
       "notes":{
         "english":{
           "_out":"into slight right?",
@@ -734,9 +757,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 89",
+      "name":"Import_A 12",
       "notes":{
         "english":{
           "_out":"and five right over small crest? two hundred.",
@@ -799,9 +824,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":true,
       "metadata":{},
-      "name":"Import_A 97",
+      "name":"Import_A 13",
       "notes":{
         "english":{
           "_out":"brake at big left tree?",
@@ -864,9 +891,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 101",
+      "name":"Import_A 14",
       "notes":{
         "english":{
           "_out":"caution three left dont? rocks inside?",
@@ -929,9 +958,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 105",
+      "name":"Import_A 15",
       "notes":{
         "english":{
           "_out":"into three right?",
@@ -994,9 +1025,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 109",
+      "name":"Import_A 16",
       "notes":{
         "english":{
           "_out":"into one right dont? onto tarmac?",
@@ -1059,9 +1092,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 113",
+      "name":"Import_A 17",
       "notes":{
         "english":{
           "_out":"and one right maybe?",
@@ -1124,9 +1159,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 117",
+      "name":"Import_A 18",
       "notes":{
         "english":{
           "_out":"into one left?",
@@ -1189,9 +1226,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 121",
+      "name":"Import_A 19",
       "notes":{
         "english":{
           "_out":"into slight right?",
@@ -1254,9 +1293,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 125",
+      "name":"Import_A 20",
       "notes":{
         "english":{
           "_out":"into two left opens?",
@@ -1319,9 +1360,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 129",
+      "name":"Import_A 21",
       "notes":{
         "english":{
           "_out":"and four right?",
@@ -1384,9 +1427,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 133",
+      "name":"Import_A 22",
       "notes":{
         "english":{
           "_out":"into long one left?",
@@ -1449,9 +1494,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 145",
+      "name":"Import_A 23",
       "notes":{
         "english":{
           "_out":"and open hairpin right? onto tarmac? one fifty.",
@@ -1514,9 +1561,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"large",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 149",
+      "name":"Import_A 24",
       "notes":{
         "english":{
           "_out":"Square left over small crest? sixty.",
@@ -1579,9 +1628,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 153",
+      "name":"Import_A 25",
       "notes":{
         "english":{
           "_out":"short six right?",
@@ -1644,9 +1695,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 157",
+      "name":"Import_A 26",
       "notes":{
         "english":{
           "_out":"and crest into six left?",
@@ -1709,9 +1762,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 161",
+      "name":"Import_A 27",
       "notes":{
         "english":{
           "_out":"and five right onto dirt into crest?",
@@ -1774,9 +1829,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 165",
+      "name":"Import_A 28",
       "notes":{
         "english":{
           "_out":"and six left?",
@@ -1839,9 +1896,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 169",
+      "name":"Import_A 29",
       "notes":{
         "english":{
           "_out":"and five left? ninety.",
@@ -1904,9 +1963,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 177",
+      "name":"Import_A 30",
       "notes":{
         "english":{
           "_out":"bumpy up hill? crest into four right? nip tree? seventy.",
@@ -1969,9 +2030,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 181",
+      "name":"Import_A 31",
       "notes":{
         "english":{
           "_out":"six left into crest? slowing over sixty?",
@@ -2034,9 +2097,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 185",
+      "name":"Import_A 32",
       "notes":{
         "english":{
           "_out":"caution long five right? tightens keep in?",
@@ -2099,9 +2164,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 189",
+      "name":"Import_A 33",
       "notes":{
         "english":{
           "_out":"into Square left don't? tree inside?",
@@ -2164,9 +2231,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 193",
+      "name":"Import_A 34",
       "notes":{
         "english":{
           "_out":"into short four right?",
@@ -2229,9 +2298,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 197",
+      "name":"Import_A 35",
       "notes":{
         "english":{
           "_out":"into slight left?",
@@ -2294,9 +2365,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 201",
+      "name":"Import_A 36",
       "notes":{
         "english":{
           "_out":"into short six right down hill?",
@@ -2359,9 +2432,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 205",
+      "name":"Import_A 37",
       "notes":{
         "english":{
           "_out":"and five left dip?",
@@ -2424,9 +2499,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 209",
+      "name":"Import_A 38",
       "notes":{
         "english":{
           "_out":"into short five left?",
@@ -2489,9 +2566,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 217",
+      "name":"Import_A 39",
       "notes":{
         "english":{
           "_out":"into bumpy? long three right?",
@@ -2554,9 +2633,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 221",
+      "name":"Import_A 40",
       "notes":{
         "english":{
           "_out":"and slight left over bump and jumps? forty.",
@@ -2619,9 +2700,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 229",
+      "name":"Import_A 41",
       "notes":{
         "english":{
           "_out":"short five right over small crest? ninety.",
@@ -2684,9 +2767,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 233",
+      "name":"Import_A 42",
       "notes":{
         "english":{
           "_out":"bump? one hundred.",
@@ -2749,9 +2834,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":true,
       "metadata":{},
-      "name":"Import_A 237",
+      "name":"Import_A 43",
       "notes":{
         "english":{
           "_out":"twisty up hill?",
@@ -2814,9 +2901,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 241",
+      "name":"Import_A 44",
       "notes":{
         "english":{
           "_out":"care five left over crest? seventy.",
@@ -2879,9 +2968,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 245",
+      "name":"Import_A 45",
       "notes":{
         "english":{
           "_out":"slight right?",
@@ -2944,9 +3035,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 249",
+      "name":"Import_A 46",
       "notes":{
         "english":{
           "_out":"and crest and bumpy five left down hill?",
@@ -3009,9 +3102,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 253",
+      "name":"Import_A 47",
       "notes":{
         "english":{
           "_out":"into big dip three right up hill? tightens bumpy? seventy.",
@@ -3074,9 +3169,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 257",
+      "name":"Import_A 48",
       "notes":{
         "english":{
           "_out":"four left nip pink flowers? slight crest tight exit? fifty.",
@@ -3139,9 +3236,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 261",
+      "name":"Import_A 49",
       "notes":{
         "english":{
           "_out":"five right opens?",
@@ -3204,9 +3303,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 265",
+      "name":"Import_A 50",
       "notes":{
         "english":{
           "_out":"and big jump? eighty.",
@@ -3269,9 +3370,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 269",
+      "name":"Import_A 51",
       "notes":{
         "english":{
           "_out":"very long five right slight tightens? fifty.",
@@ -3334,9 +3437,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":true,
       "metadata":{},
-      "name":"Import_A 273",
+      "name":"Import_A 52",
       "notes":{
         "english":{
           "_out":"flying finish?",
@@ -3399,9 +3504,11 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
-      "name":"Import_A 277",
+      "name":"Import_A 53",
       "notes":{
         "english":{
           "_out":"six right.",

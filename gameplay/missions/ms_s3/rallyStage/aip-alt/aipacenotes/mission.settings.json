@@ -1,0 +1,10 @@
+{
+  "notebook":{
+    "codriver":"Sophia",
+    "filename":"primary.notebook.json"
+  },
+  "transcripts":{
+    "curr":"curr.transcripts.json",
+    "full_course":"full_course.transcripts.json"
+  }
+}

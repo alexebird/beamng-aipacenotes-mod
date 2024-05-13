@@ -1,4 +1,37 @@
 {
+  "codriver_volume_up": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": -10,
+    "title": "Co-driver Volume Up (aip)",
+    "desc": "Increase Co-driver volume.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_codriver_volume_up()"
+  },
+  "codriver_volume_down": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": -9,
+    "title": "Co-driver Volume Down (aip)",
+    "desc": "Decrease Co-driver volume.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_codriver_volume_down()"
+  },
+  "codriver_timing_earlier": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": -8,
+    "title": "Co-driver Timing Earlier (aip)",
+    "desc": "Make co-driver give calls earlier.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_codriver_calls_earlier()"
+  },
+  "codriver_timing_later": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": -7,
+    "title": "Co-driver Timing Later (aip)",
+    "desc": "Make co-driver give calls later.",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_codriver_calls_later()"
+  },
+
   "cut_voice_transcription": {
     "cat": "gameplay",
     "ctx": "tlua",
@@ -130,5 +163,14 @@
     "title": "Move Waypoint Backward (aip)",
     "desc": "If a waypoint is selected, move backward along snaproad.",
     "onChange": "editor_rallyEditor.moveSelectedWaypointBackward(VALUE)"
+  },
+  "rallyEditorCycleCodriverWait": {
+    "cat": "editor",
+    "ctx": "tlua",
+    "order": 23,
+    "actionMap": "rallyEditor",
+    "title": "Cycle Codriver Wait (aip)",
+    "desc": "Cycle the selected pacenote's CodriverWait value.",
+    "onDown": "editor_rallyEditor.cycleCodriverWait()"
   }
 }

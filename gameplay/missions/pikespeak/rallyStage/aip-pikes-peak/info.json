@@ -4,8 +4,10 @@
   },
   "author":"birdman",
   "careerSetup":{
+    "branch":"(none)",
     "defaultStarKeys":{},
     "showInFreeroam":true,
+    "skill":"(none)",
     "starOutroTexts":{},
     "starRewards":{},
     "starsActive":{}
@@ -45,7 +47,7 @@
     "silverTimeTotal":120,
     "startScreenText":""
   },
-  "name":"Pikes Peak (aip)",
+  "name":"[19.6km] Pikes Peak (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -57,7 +59,7 @@
     "vehicles":{
       "enabled":true,
       "includePlayerVehicle":true,
-      "prioritizePlayerVehicle":false,
+      "prioritizePlayerVehicle":true,
       "vehicles":[
         {
           "config":"Pikes Peak - SBR (aip)",

@@ -20,6 +20,13 @@ C.noteFields = {
   after = 'after',
 }
 
+local atTypes = {
+  auto = 'auto',
+  manual = 'manual'
+}
+
+C.atTypes = {'auto', 'manual'}
+
 function C:init(notebook, name, forceId)
   self.notebook = notebook
   self.id = forceId or notebook:getNextUniqueIdentifier()
@@ -27,6 +34,9 @@ function C:init(notebook, name, forceId)
   self.todo = false
   self.playback_rules = nil
   self.isolate = false
+  self.codriverWait = 'none'
+  self.auto_at = false
+  self.audioTriggerType = atTypes.auto
   self.notes = {}
   for _,lang in ipairs(self.notebook:getLanguages()) do
     lang = lang.language
@@ -397,6 +407,8 @@ function C:onSerialize()
     name = self.name,
     playback_rules = self.playback_rules,
     isolate = self.isolate or false,
+    codriverWait = self.codriverWait or 'none',
+    audioTriggerType = self.audioTriggerType or atTypes.auto,
     todo = self.todo or false,
     notes = self.notes,
     metadata = self.metadata,
@@ -410,6 +422,8 @@ function C:onDeserialized(data, oldIdMap)
   self.name = data.name
   self.playback_rules = data.playback_rules
   self.isolate = data.isolate or false
+  self.codriverWait = data.codriverWait or 'none'
+  self.audioTriggerType = data.audioTriggerType or atTypes.auto
   self.todo = data.todo or false
   self.notes = data.notes
   self.metadata = data.metadata or {}
@@ -903,24 +917,28 @@ function C:playbackAllowed(currLap, maxLap)
 end
 
 function C:vehiclePlacementPosAndRot()
+  -- local at = self:getActiveFwdAudioTrigger()
   local cs = self:getCornerStartWaypoint()
-  local at = self:getActiveFwdAudioTrigger()
+  local ce = self:getCornerEndWaypoint()
 
-  if cs and at then
+  local wp_pos = cs
+  local wp_dir = ce
+
+  if wp_dir and wp_pos then
     -- local distAway = wp2.radius * 2
     local distAway = 7
 
-    local pos1 = at.pos + (at.normal * distAway)
-    local pos2 = at.pos + (-at.normal * distAway)
+    local pos1 = wp_pos.pos + (wp_pos.normal * distAway)
+    local pos2 = wp_pos.pos + (-wp_pos.normal * distAway)
     local pos = nil
 
-    if cs.pos:distance(pos1) > cs.pos:distance(pos2) then
+    if wp_dir.pos:distance(pos1) > wp_dir.pos:distance(pos2) then
       pos = pos1
     else
       pos = pos2
     end
 
-    local fwd = at.pos - pos
+    local fwd = wp_pos.pos - pos
     local up = vec3(0,0,1)
     local rot = quatFromDir(fwd, up):normalized()
 
@@ -994,8 +1012,8 @@ function C:moveWaypointTowards(snaproads, wp, fwd, step)
   end
 end
 
-function C:normalizeNoteText(lang, last, force)
-  local note = self:getNoteFieldNote(lang)
+function C:normalizeNoteText(lang, last, force, noteVal)
+  local note = noteVal or self:getNoteFieldNote(lang)
   local mainSettings = self.notebook:mainSettings()
 
   force = force or false
@@ -1030,6 +1048,7 @@ function C:normalizeNoteText(lang, last, force)
   -- local newTxt = re_util.normalizeNoteText(self.notebook.mainSettings, note, last, force or false)
 
   self:setNoteFieldNote(lang, newTxt)
+  return newTxt
 end
 
 function C:toggleIsolate()
@@ -1052,6 +1071,26 @@ function C:toggleIsolate()
       self:setNoteFieldAfter(lang, '')
     end
   end
+end
+
+function C:setCodriverWait(val)
+  self.codriverWait = val
+end
+
+function C:setAudioTriggerType(val)
+  self.audioTriggerType = val
+end
+
+function C:isAudioTriggerTypeAuto()
+  return self.audioTriggerType == atTypes.auto
+end
+
+function C:isAudioTriggerTypeManual()
+  return self.audioTriggerType == atTypes.manual
+end
+
+function C:isAudioTriggerTypeAutoAT()
+  return self.auto_at
 end
 
 return function(...)

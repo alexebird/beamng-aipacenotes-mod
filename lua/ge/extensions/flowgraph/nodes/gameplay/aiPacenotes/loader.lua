@@ -36,7 +36,7 @@ function C:reset()
 
   -- extensions.gameplay_aipacenotes.helloWorld()
 
-  extensions.gameplay_aipacenotes.initRallyManager()
+  gameplay_aipacenotes.initRallyManager()
 end
 
 function C:workOnce()
@@ -47,7 +47,7 @@ end
 function C:work()
   if not readyHit then
     local loaded = extensions.isExtensionLoaded("gameplay_aipacenotes")
-    if loaded and extensions.gameplay_aipacenotes.isReady() then
+    if loaded and gameplay_aipacenotes.isReady() then
       log('D', logTag, 'extension is ready')
       readyHit = true
     end

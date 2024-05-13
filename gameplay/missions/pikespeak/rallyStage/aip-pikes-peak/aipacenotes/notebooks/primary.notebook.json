@@ -10,15 +10,18 @@
   ],
   "created_at":1697525376,
   "description":"created using aipacenotes voice transcription.",
+  "forceManualATs":false,
   "name":"Pikes Peak",
   "pacenotes":[
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 1",
       "notes":{
         "english":{
-          "_out":"start five right? two hundred.",
+          "_out":"start 5 right? 200.",
           "after":"200",
           "before":"",
           "note":"start 5 right?"
@@ -29,9 +32,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.1534569324,
+            -0.9880555247,
+            -0.01404457498
           ],
           "oldId":20,
           "pos":[
@@ -45,9 +48,9 @@
         {
           "name":"corner end",
           "normal":[
-            -0.3317662979,
-            -0.9425883604,
-            0.03818777824
+            -0.2713373796,
+            -0.9616811528,
+            0.03931140685
           ],
           "oldId":21,
           "pos":[
@@ -61,9 +64,9 @@
         {
           "name":"Waypoint 910",
           "normal":[
-            0.2499392917,
-            -0.9680591657,
-            -0.01979399357
+            0.2124285474,
+            -0.9769182899,
+            -0.02246702169
           ],
           "oldId":22,
           "pos":[
@@ -78,12 +81,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 2",
       "notes":{
         "english":{
-          "_out":"five right? eighty.",
+          "_out":"five right? 80.",
           "after":"80",
           "before":"",
           "note":"five right?"
@@ -94,9 +99,9 @@
         {
           "name":"Waypoint 911",
           "normal":[
-            -0.3712592394,
-            -0.9268216364,
-            0.05628704526
+            -0.3461276441,
+            -0.9365329455,
+            0.05569287122
           ],
           "oldId":24,
           "pos":[
@@ -110,9 +115,9 @@
         {
           "name":"corner start",
           "normal":[
-            -0.5161561458,
-            -0.8543721194,
-            0.06025873162
+            -0.6041657932,
+            -0.7950117399,
+            0.054222023
           ],
           "oldId":25,
           "pos":[
@@ -143,6 +148,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 3",
@@ -208,12 +215,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 4",
       "notes":{
         "english":{
-          "_out":"and five left? one fifty.",
+          "_out":"and five left? 150.",
           "after":"150",
           "before":"and",
           "note":"five left?"
@@ -224,9 +233,9 @@
         {
           "name":"Waypoint 896",
           "normal":[
-            -0.9529587189,
-            -0.3029139012,
-            0.01062302223
+            -0.9366186769,
+            -0.3500544719,
+            0.01439863786
           ],
           "oldId":32,
           "pos":[
@@ -240,9 +249,9 @@
         {
           "name":"corner start",
           "normal":[
-            -0.9704994938,
-            0.2331089401,
-            -0.06157072847
+            -0.9746802965,
+            0.2158461556,
+            -0.05838455828
           ],
           "oldId":33,
           "pos":[
@@ -256,9 +265,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8749870402,
+            -0.4821369125,
+            0.0440644646
           ],
           "oldId":34,
           "pos":[
@@ -273,12 +282,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 5",
       "notes":{
         "english":{
-          "_out":"five left? one hundred.",
+          "_out":"five left? 100.",
           "after":"100",
           "before":"",
           "note":"five left?"
@@ -289,9 +300,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7209984126,
+            -0.6912943581,
+            0.04768017832
           ],
           "oldId":36,
           "pos":[
@@ -305,9 +316,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.2024692473,
+            -0.9789053697,
+            0.02739490998
           ],
           "oldId":37,
           "pos":[
@@ -321,9 +332,9 @@
         {
           "name":"Waypoint 897",
           "normal":[
-            -0.9923055328,
-            0.1150106159,
-            -0.04585071279
+            -0.9992659064,
+            0.01515924733,
+            -0.03518302919
           ],
           "oldId":38,
           "pos":[
@@ -338,6 +349,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 6",
@@ -354,9 +367,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1297769086,
+            -0.9915076821,
+            0.008394660172
           ],
           "oldId":40,
           "pos":[
@@ -370,9 +383,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8857587962,
+            -0.463607359,
+            0.02235109888
           ],
           "oldId":41,
           "pos":[
@@ -386,9 +399,9 @@
         {
           "name":"Waypoint 898",
           "normal":[
-            -0.7980991427,
-            -0.6020055898,
-            0.02504053325
+            -0.1798666907,
+            -0.9834568388,
+            0.02146205424
           ],
           "oldId":42,
           "pos":[
@@ -403,6 +416,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 7",
@@ -419,9 +434,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.930837086,
+            -0.3634162143,
+            0.03835328525
           ],
           "oldId":44,
           "pos":[
@@ -435,9 +450,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.9681794014,
+            0.2475999781,
+            0.03637165762
           ],
           "oldId":45,
           "pos":[
@@ -451,9 +466,9 @@
         {
           "name":"Waypoint 899",
           "normal":[
-            -0.1427596985,
-            -0.9896949385,
-            0.01111742459
+            -0.03367691808,
+            -0.9993374787,
+            0.01380104875
           ],
           "oldId":46,
           "pos":[
@@ -468,12 +483,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 8",
       "notes":{
         "english":{
-          "_out":"into four left? seventy.",
+          "_out":"into four left? 70.",
           "after":"70",
           "before":"into",
           "note":"four left?"
@@ -484,9 +501,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9875973184,
+            0.1546308478,
+            0.02721833278
           ],
           "oldId":48,
           "pos":[
@@ -500,9 +517,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8706167998,
+            -0.4889704279,
+            0.05416925871
           ],
           "oldId":49,
           "pos":[
@@ -516,9 +533,9 @@
         {
           "name":"Waypoint 900",
           "normal":[
-            -0.640680088,
-            -0.7675627909,
-            0.01940069504
+            -0.8901235589,
+            -0.4548680974,
+            0.02783997042
           ],
           "oldId":50,
           "pos":[
@@ -533,6 +550,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 9",
@@ -549,9 +568,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9355851008,
+            -0.3517314049,
+            0.03107310809
           ],
           "oldId":52,
           "pos":[
@@ -565,9 +584,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.5611305391,
+            -0.8275546279,
+            0.01690727449
           ],
           "oldId":53,
           "pos":[
@@ -581,9 +600,9 @@
         {
           "name":"Waypoint 901",
           "normal":[
-            -0.9338737935,
-            -0.3557784209,
-            0.03607565687
+            -0.9693613641,
+            0.2430211944,
+            0.03576653129
           ],
           "oldId":54,
           "pos":[
@@ -598,12 +617,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 10",
       "notes":{
         "english":{
-          "_out":"and five right minus? fifty.",
+          "_out":"and five right minus? 50.",
           "after":"50",
           "before":"and",
           "note":"five right minus?"
@@ -614,9 +635,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.5651758173,
+            -0.8249411713,
+            0.00695408937
           ],
           "oldId":56,
           "pos":[
@@ -630,9 +651,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.9358001483,
+            -0.3525242666,
+            -0.002173473188
           ],
           "oldId":57,
           "pos":[
@@ -646,9 +667,9 @@
         {
           "name":"Waypoint 902",
           "normal":[
-            -0.9823982149,
-            0.178218782,
-            0.05596260529
+            -0.8646466426,
+            -0.4999922237,
+            0.04892810758
           ],
           "oldId":58,
           "pos":[
@@ -663,6 +684,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 11",
@@ -679,8 +702,8 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
+            -0.8903638035,
+            -0.4552497088,
             0
           ],
           "oldId":60,
@@ -695,9 +718,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.1309951068,
+            -0.9913725558,
+            -0.004553855432
           ],
           "oldId":61,
           "pos":[
@@ -711,9 +734,9 @@
         {
           "name":"Waypoint 903",
           "normal":[
-            -0.8421280629,
-            -0.5386175156,
-            0.02667391223
+            -0.8263391361,
+            -0.5627565147,
+            0.02165034133
           ],
           "oldId":62,
           "pos":[
@@ -728,12 +751,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 12",
       "notes":{
         "english":{
-          "_out":"into five right? sixty.",
+          "_out":"into five right? 60.",
           "after":"60",
           "before":"into",
           "note":"five right?"
@@ -744,9 +769,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1440032667,
+            -0.9895653221,
+            -0.004851021307
           ],
           "oldId":64,
           "pos":[
@@ -760,9 +785,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.3824077764,
+            -0.923990941,
+            -0.002243559459
           ],
           "oldId":65,
           "pos":[
@@ -776,9 +801,9 @@
         {
           "name":"Waypoint 904",
           "normal":[
-            -0.7310718279,
-            -0.6817548685,
-            0.02728152777
+            -0.8380471053,
+            -0.5455977191,
+            0.0004222892545
           ],
           "oldId":66,
           "pos":[
@@ -793,12 +818,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 13",
       "notes":{
         "english":{
-          "_out":"five right? fifty.",
+          "_out":"five right? 50.",
           "after":"50",
           "before":"",
           "note":"five right?"
@@ -809,9 +836,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.5583957198,
+            -0.829574651,
+            0.0003441914572
           ],
           "oldId":68,
           "pos":[
@@ -825,9 +852,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.703391226,
+            -0.7107784004,
+            0.005903272159
           ],
           "oldId":69,
           "pos":[
@@ -841,9 +868,9 @@
         {
           "name":"Waypoint 905",
           "normal":[
-            -0.9155018578,
-            -0.4022835333,
-            0.004930226958
+            -0.7887163353,
+            -0.6147372917,
+            -0.004960301827
           ],
           "oldId":70,
           "pos":[
@@ -858,6 +885,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 14",
@@ -874,9 +903,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7012365278,
+            -0.7128095532,
+            0.01303353007
           ],
           "oldId":72,
           "pos":[
@@ -890,9 +919,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.2024101147,
+            -0.97915454,
+            0.01692726288
           ],
           "oldId":73,
           "pos":[
@@ -906,9 +935,9 @@
         {
           "name":"Waypoint 906",
           "normal":[
-            0.03154192989,
-            -0.9995001564,
-            -0.002131682614
+            -0.3969132926,
+            -0.9178540667,
+            -0.001936608981
           ],
           "oldId":74,
           "pos":[
@@ -923,12 +952,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 15",
       "notes":{
         "english":{
-          "_out":"into five right long? sixty.",
+          "_out":"into five right long? 60.",
           "after":"60",
           "before":"into",
           "note":"five right long?"
@@ -939,9 +970,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.02628118892,
+            -0.9996482877,
+            0.003549638649
           ],
           "oldId":76,
           "pos":[
@@ -955,9 +986,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8201152798,
+            -0.5707304137,
+            0.04096001434
           ],
           "oldId":77,
           "pos":[
@@ -971,9 +1002,9 @@
         {
           "name":"Waypoint 907",
           "normal":[
-            -0.6090985356,
-            -0.7930678147,
-            0.006512700768
+            -0.7433537413,
+            -0.6687553601,
+            0.01383776062
           ],
           "oldId":78,
           "pos":[
@@ -988,12 +1019,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 16",
       "notes":{
         "english":{
-          "_out":"five left over crest? forty.",
+          "_out":"five left over crest? 40.",
           "after":"40",
           "before":"",
           "note":"five left over crest?"
@@ -1004,9 +1037,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9710230928,
+            -0.2205734378,
+            0.09198647601
           ],
           "oldId":80,
           "pos":[
@@ -1020,9 +1053,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6115953906,
+            -0.7899349973,
+            0.04420156336
           ],
           "oldId":81,
           "pos":[
@@ -1036,9 +1069,9 @@
         {
           "name":"Waypoint 908",
           "normal":[
-            -0.09064043191,
-            -0.9955200897,
-            0.02690842185
+            -0.1176617064,
+            -0.9930419553,
+            0.004837124157
           ],
           "oldId":82,
           "pos":[
@@ -1053,12 +1086,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 17",
       "notes":{
         "english":{
-          "_out":"four left minus, into long five right? one fifty.",
+          "_out":"four left minus, into long five right? 150.",
           "after":"150",
           "before":"",
           "note":"four left minus, into long five right?"
@@ -1069,9 +1104,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.2713836273,
+            -0.9623033164,
+            0.0179792675
           ],
           "oldId":84,
           "pos":[
@@ -1085,9 +1120,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8949720067,
+            -0.4459644496,
+            0.0118666283
           ],
           "oldId":85,
           "pos":[
@@ -1101,9 +1136,9 @@
         {
           "name":"Waypoint 909",
           "normal":[
-            -0.7268189883,
-            -0.6862516851,
-            0.02815640176
+            -0.9647359788,
+            -0.2497035712,
+            0.08326234276
           ],
           "oldId":86,
           "pos":[
@@ -1118,6 +1153,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 18",
@@ -1134,9 +1171,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9024330938,
+            -0.4233817357,
+            0.07976476071
           ],
           "oldId":88,
           "pos":[
@@ -1150,9 +1187,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.1295549404,
+            -0.9888731631,
+            0.07311213818
           ],
           "oldId":89,
           "pos":[
@@ -1166,9 +1203,9 @@
         {
           "name":"Waypoint 910",
           "normal":[
-            -0.258043558,
-            -0.9660542961,
-            0.01235391491
+            -0.808487746,
+            -0.5883406302,
+            0.01424315297
           ],
           "oldId":90,
           "pos":[
@@ -1183,12 +1220,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 19",
       "notes":{
         "english":{
-          "_out":"and five right? two fifty.",
+          "_out":"and five right? 250.",
           "after":"250",
           "before":"and",
           "note":"five right?"
@@ -1215,9 +1254,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.5316805366,
+            -0.8427085497,
+            0.0846055982
           ],
           "oldId":93,
           "pos":[
@@ -1231,9 +1270,9 @@
         {
           "name":"Waypoint 911",
           "normal":[
-            -0.9644493814,
-            -0.2588854104,
-            0.05306349993
+            -0.9441641616,
+            -0.3187459573,
+            0.08339694671
           ],
           "oldId":94,
           "pos":[
@@ -1248,6 +1287,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 20",
@@ -1280,9 +1321,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.996256372,
+            0.04319118424,
+            0.07488499689
           ],
           "oldId":97,
           "pos":[
@@ -1296,9 +1337,9 @@
         {
           "name":"Waypoint 912",
           "normal":[
-            0.08525545152,
-            -0.9931795675,
-            0.07953524191
+            -0.3815712359,
+            -0.9205934524,
+            0.08313295008
           ],
           "oldId":98,
           "pos":[
@@ -1313,6 +1354,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 21",
@@ -1329,9 +1372,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9955528322,
+            0.02893118158,
+            0.08965235704
           ],
           "oldId":100,
           "pos":[
@@ -1345,9 +1388,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.9398414799,
+            -0.3275823739,
+            0.09689056129
           ],
           "oldId":101,
           "pos":[
@@ -1361,9 +1404,9 @@
         {
           "name":"Waypoint 913",
           "normal":[
-            -0.7769324537,
-            -0.6263504776,
-            0.06372630242
+            -0.8634846083,
+            -0.501508767,
+            0.05369625496
           ],
           "oldId":102,
           "pos":[
@@ -1378,6 +1421,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 22",
@@ -1394,9 +1439,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9177207535,
+            -0.3864469342,
+            0.09190966014
           ],
           "oldId":104,
           "pos":[
@@ -1410,9 +1455,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9577145729,
+            -0.2772493211,
+            0.07691300758
           ],
           "oldId":105,
           "pos":[
@@ -1426,9 +1471,9 @@
         {
           "name":"Waypoint 914",
           "normal":[
-            -0.914673711,
-            -0.4003866772,
-            0.05533995927
+            -0.940323096,
+            -0.3387795554,
+            0.03195133758
           ],
           "oldId":106,
           "pos":[
@@ -1443,12 +1488,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 23",
       "notes":{
         "english":{
-          "_out":"into four right tightens? seventy.",
+          "_out":"into four right tightens? 70.",
           "after":"70",
           "before":"into",
           "note":"four right tightens?"
@@ -1459,9 +1506,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.860219508,
+            -0.5010148766,
+            0.09490253645
           ],
           "oldId":108,
           "pos":[
@@ -1475,9 +1522,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.3192544361,
+            -0.9434571631,
+            0.0892478928
           ],
           "oldId":109,
           "pos":[
@@ -1491,9 +1538,9 @@
         {
           "name":"Waypoint 915",
           "normal":[
-            -0.8980028678,
-            -0.4295279187,
-            0.09537618415
+            -0.3385477467,
+            -0.9371997964,
+            0.0839164158
           ],
           "oldId":110,
           "pos":[
@@ -1508,12 +1555,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 24",
       "notes":{
         "english":{
-          "_out":"five right? fifty.",
+          "_out":"five right? 50.",
           "after":"50",
           "before":"",
           "note":"five right?"
@@ -1524,9 +1573,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.5871296797,
+            -0.8036579185,
+            0.09701901446
           ],
           "oldId":112,
           "pos":[
@@ -1540,9 +1589,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.9620434476,
+            -0.2550782688,
+            0.09699217392
           ],
           "oldId":113,
           "pos":[
@@ -1556,9 +1605,9 @@
         {
           "name":"Waypoint 916",
           "normal":[
-            0.8995533227,
-            -0.4300900216,
-            0.07633081237
+            0.4243185019,
+            -0.9004401953,
+            0.0957144904
           ],
           "oldId":114,
           "pos":[
@@ -1573,12 +1622,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 25",
       "notes":{
         "english":{
-          "_out":"right over crest? into five left long? opens over four hundred.",
+          "_out":"right over crest? into five left long? opens over 400.",
           "after":"400",
           "before":"",
           "note":"right over crest? into five left long? opens over {dt}."
@@ -1589,9 +1640,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9847659383,
+            -0.1468734899,
+            0.09308181756
           ],
           "oldId":116,
           "pos":[
@@ -1605,9 +1656,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.7154191231,
+            -0.6927618956,
+            0.09086492282
           ],
           "oldId":117,
           "pos":[
@@ -1621,9 +1672,9 @@
         {
           "name":"Waypoint 917",
           "normal":[
-            -0.5793964594,
-            -0.8114089102,
-            0.07691113933
+            -0.4265228128,
+            -0.8984288844,
+            0.1044214051
           ],
           "oldId":118,
           "pos":[
@@ -1638,6 +1689,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 26",
@@ -1654,9 +1707,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.2157861516,
+            -0.9716097559,
+            0.09700937609
           ],
           "oldId":120,
           "pos":[
@@ -1670,9 +1723,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.7978595688,
+            -0.5952637551,
+            0.09529517457
           ],
           "oldId":121,
           "pos":[
@@ -1686,9 +1739,9 @@
         {
           "name":"Waypoint 918",
           "normal":[
-            -0.7651080527,
-            -0.6386974414,
-            0.08170217885
+            -0.3500512262,
+            -0.9312227774,
+            0.1014311489
           ],
           "oldId":122,
           "pos":[
@@ -1703,6 +1756,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 27",
@@ -1719,9 +1774,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.853724464,
+            -0.5103224631,
+            0.103564102
           ],
           "oldId":124,
           "pos":[
@@ -1735,9 +1790,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.186549812,
+            -0.9778915,
+            0.09448482353
           ],
           "oldId":125,
           "pos":[
@@ -1751,9 +1806,9 @@
         {
           "name":"Waypoint 919",
           "normal":[
-            -0.3428963373,
-            -0.9340603742,
-            0.0997663229
+            0.1782857414,
+            -0.9802812099,
+            0.08522290732
           ],
           "oldId":126,
           "pos":[
@@ -1768,6 +1823,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 28",
@@ -1784,9 +1841,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.1429992062,
+            -0.9849440831,
+            0.09714103296
           ],
           "oldId":128,
           "pos":[
@@ -1800,9 +1857,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.7324761184,
+            -0.6742513968,
+            0.09414770248
           ],
           "oldId":129,
           "pos":[
@@ -1816,9 +1873,9 @@
         {
           "name":"Waypoint 920",
           "normal":[
-            0.920923924,
-            -0.3787285515,
-            0.09199897037
+            0.7592181782,
+            -0.6424737246,
+            0.103996496
           ],
           "oldId":130,
           "pos":[
@@ -1833,12 +1890,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 29",
       "notes":{
         "english":{
-          "_out":"into six right? fifty.",
+          "_out":"into six right? 50.",
           "after":"50",
           "before":"into",
           "note":"six right?"
@@ -1849,9 +1908,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.737206001,
+            -0.6684240252,
+            0.09867438699
           ],
           "oldId":132,
           "pos":[
@@ -1865,9 +1924,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.5625091609,
+            -0.8195559667,
+            0.1091396413
           ],
           "oldId":133,
           "pos":[
@@ -1881,9 +1940,9 @@
         {
           "name":"Waypoint 921",
           "normal":[
-            0.5794452159,
-            -0.8079974568,
-            0.1066927905
+            0.2931783944,
+            -0.9504872953,
+            0.1030549878
           ],
           "oldId":134,
           "pos":[
@@ -1898,12 +1957,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 30",
       "notes":{
         "english":{
-          "_out":"five left tightens to one right? sixty.",
+          "_out":"five left tightens to one right? 60.",
           "after":"60",
           "before":"",
           "note":"five left tightens to one right?"
@@ -1914,9 +1975,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.7424689749,
+            -0.6648461745,
+            0.08197185887
           ],
           "oldId":136,
           "pos":[
@@ -1930,9 +1991,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.9689579591,
+            -0.2322864385,
+            0.0846373673
           ],
           "oldId":137,
           "pos":[
@@ -1946,9 +2007,9 @@
         {
           "name":"Waypoint 922",
           "normal":[
-            0.4646256044,
-            -0.8786321596,
-            0.1101298138
+            0.6615991157,
+            -0.7436659562,
+            0.09616421186
           ],
           "oldId":138,
           "pos":[
@@ -1963,15 +2024,17 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 31",
       "notes":{
         "english":{
-          "_out":"six right? sixty.",
+          "_out":"slight right into long six left? 60.",
           "after":"60",
           "before":"",
-          "note":"six right?"
+          "note":"slight right into long six left?"
         }
       },
       "oldId":139,
@@ -1979,9 +2042,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9944544051,
+            -0.02342628233,
+            0.1025263164
           ],
           "oldId":140,
           "pos":[
@@ -1995,9 +2058,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.4026784114,
+            -0.9103379437,
+            0.09557680318
           ],
           "oldId":141,
           "pos":[
@@ -2011,9 +2074,9 @@
         {
           "name":"Waypoint 923",
           "normal":[
-            -0.8966777129,
-            -0.4375173738,
-            0.06743609476
+            -0.9535164351,
+            -0.2905342759,
+            0.07997651197
           ],
           "oldId":142,
           "pos":[
@@ -2028,12 +2091,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 32",
       "notes":{
         "english":{
-          "_out":"six right? one hundred.",
+          "_out":"six right? 100.",
           "after":"100",
           "before":"",
           "note":"six right?"
@@ -2044,9 +2109,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.4642852476,
+            -0.8802906604,
+            0.09760923134
           ],
           "oldId":144,
           "pos":[
@@ -2060,9 +2125,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6700984437,
+            -0.7350305807,
+            0.1034317226
           ],
           "oldId":145,
           "pos":[
@@ -2076,9 +2141,9 @@
         {
           "name":"Waypoint 924",
           "normal":[
-            -0.9835136781,
-            -0.1516951634,
-            0.09843486395
+            -0.9935582848,
+            0.04870118164,
+            0.1023236508
           ],
           "oldId":146,
           "pos":[
@@ -2093,12 +2158,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 33",
       "notes":{
         "english":{
-          "_out":"four right minus don't cut? ninety.",
+          "_out":"four right minus don't cut? 90.",
           "after":"90",
           "before":"",
           "note":"four right minus don't cut?"
@@ -2109,9 +2176,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7771435193,
+            -0.6209169082,
+            0.1025189911
           ],
           "oldId":148,
           "pos":[
@@ -2125,9 +2192,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.7583925974,
+            0.6451696219,
+            0.09271907624
           ],
           "oldId":149,
           "pos":[
@@ -2141,9 +2208,9 @@
         {
           "name":"Waypoint 925",
           "normal":[
-            -0.3507488504,
-            -0.9319502749,
-            0.09189085373
+            -0.5948314953,
+            -0.7961272956,
+            0.1111612405
           ],
           "oldId":150,
           "pos":[
@@ -2158,6 +2225,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 34",
@@ -2174,9 +2243,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.6166817962,
+            0.7806013711,
+            0.1018089467
           ],
           "oldId":152,
           "pos":[
@@ -2190,9 +2259,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.04184743683,
+            -0.994226876,
+            0.09880137194
           ],
           "oldId":153,
           "pos":[
@@ -2206,9 +2275,9 @@
         {
           "name":"Waypoint 926",
           "normal":[
-            -0.9946270048,
-            0.07864970512,
-            0.06731526778
+            -0.7429762057,
+            0.6626576135,
+            0.09418728651
           ],
           "oldId":154,
           "pos":[
@@ -2223,6 +2292,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 35",
@@ -2239,9 +2310,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.4231766945,
+            -0.901679972,
+            0.08885219919
           ],
           "oldId":156,
           "pos":[
@@ -2255,9 +2326,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9354739463,
+            -0.3411876752,
+            0.09208401624
           ],
           "oldId":157,
           "pos":[
@@ -2271,9 +2342,9 @@
         {
           "name":"Waypoint 928",
           "normal":[
-            -0.7986035209,
-            -0.5918200118,
-            0.1094599932
+            -0.9024346327,
+            -0.4197342795,
+            0.09713325079
           ],
           "oldId":158,
           "pos":[
@@ -2288,6 +2359,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 36",
@@ -2304,9 +2377,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9121375931,
+            -0.3982416408,
+            0.09699797339
           ],
           "oldId":160,
           "pos":[
@@ -2320,9 +2393,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.2364563891,
+            -0.9671922726,
+            0.09288425009
           ],
           "oldId":161,
           "pos":[
@@ -2336,9 +2409,9 @@
         {
           "name":"Waypoint 929",
           "normal":[
-            0.09025612107,
-            -0.990058175,
-            0.1078825411
+            -0.2323791609,
+            -0.9671620676,
+            0.1029439683
           ],
           "oldId":162,
           "pos":[
@@ -2353,6 +2426,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 37",
@@ -2369,9 +2444,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.3064822357,
+            -0.9478420519,
+            0.08754475307
           ],
           "oldId":164,
           "pos":[
@@ -2385,9 +2460,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8009444038,
+            -0.5929506232,
+            0.08305191358
           ],
           "oldId":165,
           "pos":[
@@ -2401,9 +2476,9 @@
         {
           "name":"Waypoint 930",
           "normal":[
-            0.985224751,
-            -0.1581149163,
-            0.06581689251
+            0.9364461521,
+            -0.3384078101,
+            0.09245949584
           ],
           "oldId":166,
           "pos":[
@@ -2418,12 +2493,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 38",
       "notes":{
         "english":{
-          "_out":"and one right? ninety.",
+          "_out":"and one right? 90.",
           "after":"90",
           "before":"and",
           "note":"one right?"
@@ -2434,9 +2511,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.8651000024,
+            -0.4929928365,
+            0.09252053321
           ],
           "oldId":168,
           "pos":[
@@ -2450,9 +2527,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8685749356,
+            0.4863215705,
+            0.09523083141
           ],
           "oldId":169,
           "pos":[
@@ -2466,9 +2543,9 @@
         {
           "name":"Waypoint 931",
           "normal":[
-            0.8976910095,
-            -0.4287106578,
-            0.1017743745
+            0.2358481102,
+            -0.9671054301,
+            0.09530349462
           ],
           "oldId":170,
           "pos":[
@@ -2483,6 +2560,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 39",
@@ -2499,9 +2578,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9362721425,
+            0.3391853454,
+            0.09136616821
           ],
           "oldId":172,
           "pos":[
@@ -2515,9 +2594,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.4663080731,
+            -0.8785856329,
+            0.1031700858
           ],
           "oldId":173,
           "pos":[
@@ -2531,9 +2610,9 @@
         {
           "name":"Waypoint 932",
           "normal":[
-            -0.9977865689,
-            -0.0005925184199,
-            0.06649520231
+            -0.9726290175,
+            0.2172268216,
+            0.08249425587
           ],
           "oldId":174,
           "pos":[
@@ -2548,12 +2627,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 40",
       "notes":{
         "english":{
-          "_out":"and six left into five right plus? one fifty.",
+          "_out":"and six left into five right plus? 150.",
           "after":"150",
           "before":"and",
           "note":"six left into five right plus?"
@@ -2564,9 +2645,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.3771615599,
+            -0.9211180701,
+            0.09638806274
           ],
           "oldId":176,
           "pos":[
@@ -2580,9 +2661,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6276402894,
+            -0.7719127074,
+            0.1010862966
           ],
           "oldId":177,
           "pos":[
@@ -2596,9 +2677,9 @@
         {
           "name":"Waypoint 933",
           "normal":[
-            -0.9323434684,
-            0.3484329908,
-            0.09659248345
+            -0.9965586582,
+            -0.01562950667,
+            0.08140368057
           ],
           "oldId":178,
           "pos":[
@@ -2613,6 +2694,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 41",
@@ -2629,9 +2712,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7504010252,
+            -0.6521864339,
+            0.107476308
           ],
           "oldId":180,
           "pos":[
@@ -2645,9 +2728,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.7980003772,
+            -0.5953478459,
+            0.09357531966
           ],
           "oldId":181,
           "pos":[
@@ -2661,9 +2744,9 @@
         {
           "name":"Waypoint 934",
           "normal":[
-            -0.7081659631,
-            -0.699942367,
-            0.09263720398
+            -0.5948388306,
+            -0.7972974011,
+            0.1023895494
           ],
           "oldId":182,
           "pos":[
@@ -2678,12 +2761,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 42",
       "notes":{
         "english":{
-          "_out":"and six left? sixty.",
+          "_out":"and six left? 60.",
           "after":"60",
           "before":"and",
           "note":"six left?"
@@ -2694,9 +2779,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7999909078,
+            -0.5917630067,
+            0.09915186014
           ],
           "oldId":184,
           "pos":[
@@ -2710,9 +2795,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6548801539,
+            -0.7487056215,
+            0.10281963
           ],
           "oldId":185,
           "pos":[
@@ -2726,9 +2811,9 @@
         {
           "name":"Waypoint 935",
           "normal":[
-            -0.7760876566,
-            -0.6238646838,
-            0.09209128907
+            -0.6905508548,
+            -0.7159675394,
+            0.1026157858
           ],
           "oldId":186,
           "pos":[
@@ -2743,6 +2828,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 43",
@@ -2759,9 +2846,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7248337844,
+            -0.6811722402,
+            0.1030551511
           ],
           "oldId":188,
           "pos":[
@@ -2775,9 +2862,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.5968430625,
+            0.7993549275,
+            0.06935458562
           ],
           "oldId":189,
           "pos":[
@@ -2791,9 +2878,9 @@
         {
           "name":"Waypoint 936",
           "normal":[
-            -0.6707068957,
-            -0.7350215764,
-            0.09947634013
+            -0.7286104473,
+            -0.6771191242,
+            0.1031334461
           ],
           "oldId":190,
           "pos":[
@@ -2808,6 +2895,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 44",
@@ -2824,9 +2913,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9043536774,
+            0.4183892383,
+            0.08423106013
           ],
           "oldId":192,
           "pos":[
@@ -2840,9 +2929,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9549247941,
+            0.2787429387,
+            0.1020833565
           ],
           "oldId":193,
           "pos":[
@@ -2856,9 +2945,9 @@
         {
           "name":"Waypoint 937",
           "normal":[
-            0.992608433,
-            0.07975553202,
-            0.09147433434
+            0.9599139193,
+            0.2675012795,
+            0.08371578754
           ],
           "oldId":194,
           "pos":[
@@ -2873,12 +2962,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 45",
       "notes":{
         "english":{
-          "_out":"into one right plus? one hundred.",
+          "_out":"into one right plus? 100.",
           "after":"100",
           "before":"into",
           "note":"one right plus?"
@@ -2889,9 +2980,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9626519667,
+            0.2511026443,
+            0.1012356313
           ],
           "oldId":196,
           "pos":[
@@ -2905,9 +2996,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.2462723143,
+            -0.9650344142,
+            0.08976929717
           ],
           "oldId":197,
           "pos":[
@@ -2921,9 +3012,9 @@
         {
           "name":"Waypoint 938",
           "normal":[
-            0.8760971797,
-            0.4750784888,
-            0.08218370421
+            0.5955208761,
+            0.8001512435,
+            0.07150436134
           ],
           "oldId":198,
           "pos":[
@@ -2938,6 +3029,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 46",
@@ -2954,9 +3047,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1886877199,
+            -0.9766889844,
+            0.102350242
           ],
           "oldId":200,
           "pos":[
@@ -2970,9 +3063,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.375394676,
+            -0.9224448324,
+            0.09041221419
           ],
           "oldId":201,
           "pos":[
@@ -2986,9 +3079,9 @@
         {
           "name":"Waypoint 939",
           "normal":[
-            -0.326221486,
-            -0.9414791295,
-            0.08483272221
+            -0.2688684165,
+            -0.9587801273,
+            0.09192628579
           ],
           "oldId":202,
           "pos":[
@@ -3003,12 +3096,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 47",
       "notes":{
         "english":{
-          "_out":"into five left? and six left? one fifty.",
+          "_out":"into five left? and 6 left? 150.",
           "after":"150",
           "before":"into",
           "note":"five left? and 6 left?"
@@ -3019,9 +3114,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.3649590161,
+            -0.9262281372,
+            0.09437348403
           ],
           "oldId":204,
           "pos":[
@@ -3035,9 +3130,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.009500955893,
+            -0.9960543558,
+            0.08823520878
           ],
           "oldId":205,
           "pos":[
@@ -3051,9 +3146,9 @@
         {
           "name":"Waypoint 940",
           "normal":[
-            -0.1432959473,
-            -0.9841548537,
-            0.1044293804
+            0.4208093155,
+            -0.9027737106,
+            0.08898959176
           ],
           "oldId":206,
           "pos":[
@@ -3068,6 +3163,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 48",
@@ -3084,9 +3181,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.1156729467,
+            -0.9887627087,
+            0.0946999225
           ],
           "oldId":208,
           "pos":[
@@ -3100,9 +3197,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.08637402157,
+            0.9936134251,
+            0.07260778119
           ],
           "oldId":209,
           "pos":[
@@ -3116,9 +3213,9 @@
         {
           "name":"Waypoint 941",
           "normal":[
-            -0.4053139712,
-            -0.9099714102,
-            0.08759347821
+            -0.02680964003,
+            -0.9957240475,
+            0.08840172142
           ],
           "oldId":210,
           "pos":[
@@ -3133,6 +3230,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 49",
@@ -3149,9 +3248,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1424698675,
+            0.9878520947,
+            0.06205300888
           ],
           "oldId":212,
           "pos":[
@@ -3165,9 +3264,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.5282760742,
+            -0.843091077,
+            0.1006072825
           ],
           "oldId":213,
           "pos":[
@@ -3181,9 +3280,9 @@
         {
           "name":"Waypoint 942",
           "normal":[
-            -0.9299138971,
-            -0.355529263,
-            0.09412272382
+            -0.9184456754,
+            -0.3907004126,
+            0.0617311014
           ],
           "oldId":214,
           "pos":[
@@ -3198,6 +3297,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 50",
@@ -3214,9 +3315,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.5681205054,
+            -0.8162196224,
+            0.1049981876
           ],
           "oldId":216,
           "pos":[
@@ -3230,9 +3331,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.1406964143,
+            -0.9846763602,
+            0.1030387534
           ],
           "oldId":217,
           "pos":[
@@ -3246,9 +3347,9 @@
         {
           "name":"Waypoint 943",
           "normal":[
-            -0.9718511645,
-            -0.2046466602,
-            -0.1167264258
+            -0.8592276865,
+            -0.5078031466,
+            0.06215904693
           ],
           "oldId":218,
           "pos":[
@@ -3263,6 +3364,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 51",
@@ -3279,9 +3382,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1016243582,
+            -0.9898239518,
+            0.09960438917
           ],
           "oldId":220,
           "pos":[
@@ -3295,9 +3398,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.2970445553,
+            -0.9501588597,
+            0.09467139762
           ],
           "oldId":221,
           "pos":[
@@ -3311,9 +3414,9 @@
         {
           "name":"Waypoint 944",
           "normal":[
-            0.2657905972,
-            -0.9606947449,
-            0.08013092814
+            0.5629931224,
+            -0.8203499753,
+            0.10032279
           ],
           "oldId":222,
           "pos":[
@@ -3328,12 +3431,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 52",
       "notes":{
         "english":{
-          "_out":"into six right? forty.",
+          "_out":"into six right? 40.",
           "after":"40",
           "before":"into",
           "note":"six right?"
@@ -3344,9 +3449,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.256259025,
+            -0.9622137614,
+            0.09206513721
           ],
           "oldId":224,
           "pos":[
@@ -3360,9 +3465,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.04723535224,
+            -0.9939243886,
+            0.09941393904
           ],
           "oldId":225,
           "pos":[
@@ -3376,9 +3481,9 @@
         {
           "name":"Waypoint 945",
           "normal":[
-            -0.1933733785,
-            -0.9761660425,
-            0.09852204781
+            -0.1133613922,
+            -0.9882821018,
+            0.1022139028
           ],
           "oldId":226,
           "pos":[
@@ -3393,6 +3498,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 53",
@@ -3409,9 +3516,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.1446641937,
+            -0.9837752042,
+            0.1061066378
           ],
           "oldId":228,
           "pos":[
@@ -3425,9 +3532,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.2575671901,
+            0.9612394264,
+            0.09837635734
           ],
           "oldId":229,
           "pos":[
@@ -3441,9 +3548,9 @@
         {
           "name":"Waypoint 946",
           "normal":[
-            0.2779860433,
-            -0.9558710755,
-            0.09504865486
+            0.0103570403,
+            -0.9944452222,
+            0.1047446021
           ],
           "oldId":230,
           "pos":[
@@ -3458,6 +3565,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 54",
@@ -3474,9 +3583,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.3675543928,
+            0.9251056625,
+            0.09530625111
           ],
           "oldId":232,
           "pos":[
@@ -3490,9 +3599,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.5670731644,
+            -0.8181756862,
+            0.0949556357
           ],
           "oldId":233,
           "pos":[
@@ -3506,9 +3615,9 @@
         {
           "name":"Waypoint 947",
           "normal":[
-            -0.871022809,
-            0.480469143,
-            0.1023165132
+            -0.9891457365,
+            -0.1151446396,
+            0.09128211208
           ],
           "oldId":234,
           "pos":[
@@ -3523,12 +3632,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 55",
       "notes":{
         "english":{
-          "_out":"and six left into four right? fifty.",
+          "_out":"and six left into four right? 50.",
           "after":"50",
           "before":"and",
           "note":"six left into four right?"
@@ -3539,9 +3650,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.4159874402,
+            -0.9025842191,
+            0.1108881282
           ],
           "oldId":236,
           "pos":[
@@ -3555,9 +3666,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.04792830866,
+            -0.9933430692,
+            0.1047493396
           ],
           "oldId":237,
           "pos":[
@@ -3571,9 +3682,9 @@
         {
           "name":"Waypoint 948",
           "normal":[
-            0.0193709915,
-            -0.9976052236,
-            0.06639715815
+            -0.3216829229,
+            -0.9422422447,
+            0.09327191162
           ],
           "oldId":238,
           "pos":[
@@ -3588,12 +3699,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 56",
       "notes":{
         "english":{
-          "_out":"five left into five right? ninety.",
+          "_out":"five left into five right? 90.",
           "after":"90",
           "before":"",
           "note":"five left into five right?"
@@ -3604,9 +3717,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.08402928235,
+            -0.990236488,
+            0.1112239969
           ],
           "oldId":240,
           "pos":[
@@ -3620,9 +3733,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.03111367131,
+            -0.9972345728,
+            0.06749182322
           ],
           "oldId":241,
           "pos":[
@@ -3636,9 +3749,9 @@
         {
           "name":"Waypoint 949",
           "normal":[
-            0.532625453,
-            -0.8385880058,
-            0.1143690664
+            0.5471328935,
+            -0.8312586679,
+            0.0982579453
           ],
           "oldId":242,
           "pos":[
@@ -3653,12 +3766,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 57",
       "notes":{
         "english":{
-          "_out":"keep left at the center median? sixty.",
+          "_out":"keep left at the center median? 60.",
           "after":"60",
           "before":"",
           "note":"keep left at the center median?"
@@ -3669,9 +3784,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.007969083039,
+            -0.997720472,
+            0.06701009977
           ],
           "oldId":244,
           "pos":[
@@ -3685,9 +3800,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.08145685744,
+            -0.9935327635,
+            0.07910390831
           ],
           "oldId":245,
           "pos":[
@@ -3701,9 +3816,9 @@
         {
           "name":"Waypoint 950",
           "normal":[
-            0.1911576164,
-            -0.9747762161,
-            0.1151958952
+            0.3927615729,
+            -0.914480252,
+            0.09728420025
           ],
           "oldId":246,
           "pos":[
@@ -3718,6 +3833,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 58",
@@ -3734,9 +3851,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.07793565033,
+            -0.9910596028,
+            0.1082908032
           ],
           "oldId":248,
           "pos":[
@@ -3750,9 +3867,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8531062939,
+            -0.5118404658,
+            0.1011384639
           ],
           "oldId":249,
           "pos":[
@@ -3766,9 +3883,9 @@
         {
           "name":"Waypoint 951",
           "normal":[
-            -0.2583260899,
-            -0.9646649784,
-            0.05185663698
+            0.03326824665,
+            -0.9975275832,
+            0.06190270181
           ],
           "oldId":250,
           "pos":[
@@ -3783,12 +3900,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 59",
       "notes":{
         "english":{
-          "_out":"into six left? sixty.",
+          "_out":"into six left? 60.",
           "after":"60",
           "before":"into",
           "note":"six left?"
@@ -3799,9 +3918,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.8493628629,
+            -0.5179974875,
+            0.1012982236
           ],
           "oldId":252,
           "pos":[
@@ -3815,9 +3934,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8039078412,
+            -0.5863822556,
+            0.09943858955
           ],
           "oldId":253,
           "pos":[
@@ -3831,9 +3950,9 @@
         {
           "name":"Waypoint 952",
           "normal":[
-            0.1003024272,
-            -0.9918278571,
-            0.07884747918
+            -0.06097549213,
+            -0.9940688956,
+            0.09005009807
           ],
           "oldId":254,
           "pos":[
@@ -3848,6 +3967,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 60",
@@ -3864,9 +3985,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.850834357,
+            -0.5178391413,
+            0.08901415999
           ],
           "oldId":256,
           "pos":[
@@ -3880,9 +4001,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.7441120416,
+            0.667385363,
+            0.02990061454
           ],
           "oldId":257,
           "pos":[
@@ -3896,9 +4017,9 @@
         {
           "name":"Waypoint 953",
           "normal":[
-            -0.5680724438,
-            -0.8160122658,
-            0.1068535475
+            -0.6004998711,
+            -0.7915370501,
+            0.1134416289
           ],
           "oldId":258,
           "pos":[
@@ -3913,12 +4034,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 61",
       "notes":{
         "english":{
-          "_out":"and six right minus? ninety.",
+          "_out":"and six right minus? 90.",
           "after":"90",
           "before":"and",
           "note":"six right minus?"
@@ -3929,9 +4052,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.8277812587,
+            0.5601525067,
+            0.03173888717
           ],
           "oldId":260,
           "pos":[
@@ -3945,9 +4068,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9829657257,
+            -0.1654004703,
+            0.08013155805
           ],
           "oldId":261,
           "pos":[
@@ -3961,9 +4084,9 @@
         {
           "name":"Waypoint 954",
           "normal":[
-            0.9558274407,
-            0.2892366105,
-            0.0523076162
+            0.9979840699,
+            -0.000897575308,
+            0.06345857453
           ],
           "oldId":262,
           "pos":[
@@ -3978,6 +4101,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 62",
@@ -3994,9 +4119,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.945975493,
+            -0.3132185339,
+            0.08381238915
           ],
           "oldId":264,
           "pos":[
@@ -4010,9 +4135,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.7336829159,
+            -0.6736697472,
+            0.08876063661
           ],
           "oldId":265,
           "pos":[
@@ -4026,9 +4151,9 @@
         {
           "name":"Waypoint 955",
           "normal":[
-            0.9233559009,
-            0.3811284941,
-            0.04642145268
+            0.9239094297,
+            0.3806630435,
+            0.03856180754
           ],
           "oldId":266,
           "pos":[
@@ -4043,12 +4168,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 63",
       "notes":{
         "english":{
-          "_out":"and five left tightens long? sixty.",
+          "_out":"and five left tightens long? 60.",
           "after":"60",
           "before":"and",
           "note":"five left tightens long?"
@@ -4059,9 +4186,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.7079231508,
+            -0.699658151,
+            0.09655715558
           ],
           "oldId":268,
           "pos":[
@@ -4075,9 +4202,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.4219609662,
+            0.9021802413,
+            0.08955308636
           ],
           "oldId":269,
           "pos":[
@@ -4091,9 +4218,9 @@
         {
           "name":"Waypoint 956",
           "normal":[
-            0.9931883435,
-            -0.07677740764,
-            0.08764784077
+            0.9891119981,
+            -0.1183582055,
+            0.08745736383
           ],
           "oldId":270,
           "pos":[
@@ -4108,6 +4235,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 64",
@@ -4124,9 +4253,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.1282943584,
+            0.9869596614,
+            0.09721720181
           ],
           "oldId":272,
           "pos":[
@@ -4140,9 +4269,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8779253242,
+            -0.4704847862,
+            0.08883237629
           ],
           "oldId":273,
           "pos":[
@@ -4156,9 +4285,9 @@
         {
           "name":"Waypoint 957",
           "normal":[
-            0.9425357103,
-            0.3238313485,
-            0.08221734918
+            0.9436424911,
+            0.3168216902,
+            0.09572285802
           ],
           "oldId":274,
           "pos":[
@@ -4173,6 +4302,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 65",
@@ -4189,9 +4320,9 @@
         {
           "name":"Waypoint 1001",
           "normal":[
-            -0.4463899188,
-            -0.8784732171,
-            0.1703550623
+            0.769111611,
+            -0.6319188933,
+            0.09563389625
           ],
           "oldId":276,
           "pos":[
@@ -4205,9 +4336,9 @@
         {
           "name":"Waypoint 1002",
           "normal":[
-            -0.4463899188,
-            -0.8784732171,
-            0.1703550623
+            -0.9070626354,
+            0.4125877266,
+            0.08371823715
           ],
           "oldId":277,
           "pos":[
@@ -4221,9 +4352,9 @@
         {
           "name":"Waypoint 1003",
           "normal":[
-            0.9827400234,
-            0.1475413601,
-            0.1115956697
+            0.9319216354,
+            0.3494706133,
+            0.09691416763
           ],
           "oldId":278,
           "pos":[
@@ -4238,12 +4369,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 66",
       "notes":{
         "english":{
-          "_out":"and six left? forty.",
+          "_out":"and six left? 40.",
           "after":"40",
           "before":"and",
           "note":"six left?"
@@ -4254,9 +4387,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9804838697,
+            0.1682993811,
+            0.1016203699
           ],
           "oldId":280,
           "pos":[
@@ -4270,9 +4403,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.7999320434,
+            -0.5903934796,
+            0.1074442423
           ],
           "oldId":281,
           "pos":[
@@ -4286,9 +4419,9 @@
         {
           "name":"Waypoint 963",
           "normal":[
-            -0.986539207,
-            -0.1178798186,
-            0.1133346437
+            -0.9946010606,
+            0.003015196702,
+            0.1037286786
           ],
           "oldId":282,
           "pos":[
@@ -4303,12 +4436,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 67",
       "notes":{
         "english":{
-          "_out":"four left minus? three hundred.",
+          "_out":"four left minus? 300.",
           "after":"300",
           "before":"",
           "note":"four left minus?"
@@ -4319,9 +4454,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7296351105,
+            -0.6768348314,
+            0.09760746119
           ],
           "oldId":284,
           "pos":[
@@ -4335,9 +4470,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.05898883436,
+            -0.9933574281,
+            0.09879948068
           ],
           "oldId":285,
           "pos":[
@@ -4351,9 +4486,9 @@
         {
           "name":"Waypoint 964",
           "normal":[
-            -0.9508883198,
-            -0.2950619085,
-            0.09354075845
+            -0.9846114529,
+            -0.1423707336,
+            0.1013452564
           ],
           "oldId":286,
           "pos":[
@@ -4368,6 +4503,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 68",
@@ -4384,9 +4521,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.2588787098,
+            -0.960966551,
+            0.09759662631
           ],
           "oldId":288,
           "pos":[
@@ -4400,9 +4537,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6814764461,
+            -0.7230107264,
+            0.1133372973
           ],
           "oldId":289,
           "pos":[
@@ -4416,9 +4553,9 @@
         {
           "name":"Waypoint 965",
           "normal":[
-            -0.2484067621,
-            -0.9640779234,
-            0.09406294735
+            0.1346854671,
+            -0.9859488196,
+            0.09881675031
           ],
           "oldId":290,
           "pos":[
@@ -4433,6 +4570,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 69",
@@ -4449,9 +4588,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7219272488,
+            -0.6838417764,
+            0.1057424811
           ],
           "oldId":292,
           "pos":[
@@ -4465,9 +4604,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8597460522,
+            0.5086001949,
+            0.04650341443
           ],
           "oldId":293,
           "pos":[
@@ -4481,9 +4620,9 @@
         {
           "name":"Waypoint 966",
           "normal":[
-            -0.1504623852,
-            -0.9828945336,
-            0.1062045502
+            0.1376811713,
+            -0.9850369909,
+            0.1036630195
           ],
           "oldId":294,
           "pos":[
@@ -4498,6 +4637,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 70",
@@ -4514,9 +4655,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.7961080314,
+            0.6031311343,
+            0.04944529436
           ],
           "oldId":296,
           "pos":[
@@ -4530,9 +4671,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.6401309917,
+            0.7649648307,
+            0.07114155762
           ],
           "oldId":297,
           "pos":[
@@ -4546,9 +4687,9 @@
         {
           "name":"Waypoint 967",
           "normal":[
-            0.9963138502,
-            0.003158798383,
-            0.08572475655
+            0.9927579209,
+            -0.07713202154,
+            0.09209973781
           ],
           "oldId":298,
           "pos":[
@@ -4563,6 +4704,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 71",
@@ -4579,9 +4722,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.5720724446,
+            0.8155767373,
+            0.08699254907
           ],
           "oldId":300,
           "pos":[
@@ -4595,9 +4738,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.07024042716,
+            -0.9957000372,
+            0.06039634422
           ],
           "oldId":301,
           "pos":[
@@ -4611,9 +4754,9 @@
         {
           "name":"Waypoint 968",
           "normal":[
-            0.7869523496,
-            0.6155272836,
-            0.042803768
+            0.9000043171,
+            0.4331687111,
+            0.04854994283
           ],
           "oldId":302,
           "pos":[
@@ -4628,6 +4771,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 72",
@@ -4644,9 +4789,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.2005021375,
+            -0.9754905373,
+            0.09064824565
           ],
           "oldId":304,
           "pos":[
@@ -4660,9 +4805,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.402919123,
+            -0.909648839,
+            0.1009711347
           ],
           "oldId":305,
           "pos":[
@@ -4676,9 +4821,9 @@
         {
           "name":"Waypoint 969",
           "normal":[
-            0.6685153613,
-            -0.7397570705,
-            0.07646364031
+            0.6397720366,
+            -0.7675394102,
+            0.03968620618
           ],
           "oldId":306,
           "pos":[
@@ -4693,6 +4838,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 73",
@@ -4709,9 +4856,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.4622831514,
+            -0.880901802,
+            0.1015199645
           ],
           "oldId":308,
           "pos":[
@@ -4725,9 +4872,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.903031893,
+            0.4210961861,
+            0.08491997547
           ],
           "oldId":309,
           "pos":[
@@ -4741,9 +4888,9 @@
         {
           "name":"Waypoint 970",
           "normal":[
-            0.06358412711,
-            -0.9963043709,
-            0.05774650867
+            0.6397720366,
+            -0.7675394102,
+            0.03968620618
           ],
           "oldId":310,
           "pos":[
@@ -4758,12 +4905,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 74",
       "notes":{
         "english":{
-          "_out":"into six right tightens? one fifty.",
+          "_out":"into six right tightens? 150.",
           "after":"150",
           "before":"into",
           "note":"six right tightens?"
@@ -4774,9 +4923,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9395116081,
+            0.3296931296,
+            0.09284599398
           ],
           "oldId":312,
           "pos":[
@@ -4790,9 +4939,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8817454502,
+            -0.461411953,
+            0.0981018385
           ],
           "oldId":313,
           "pos":[
@@ -4806,9 +4955,9 @@
         {
           "name":"Waypoint 971",
           "normal":[
-            0.9846632889,
-            0.1744654911,
-            0
+            0.9793869185,
+            -0.1849906849,
+            0.08111541434
           ],
           "oldId":314,
           "pos":[
@@ -4823,12 +4972,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 75",
       "notes":{
         "english":{
-          "_out":"six right? one hundred.",
+          "_out":"six right? 100.",
           "after":"100",
           "before":"",
           "note":"six right?"
@@ -4839,9 +4990,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.7760079436,
+            -0.6242082787,
+            0.09041955706
           ],
           "oldId":316,
           "pos":[
@@ -4855,9 +5006,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.643917682,
+            -0.7578688214,
+            0.1049040916
           ],
           "oldId":317,
           "pos":[
@@ -4871,9 +5022,9 @@
         {
           "name":"Waypoint 972",
           "normal":[
-            0.9520791777,
-            -0.2887074948,
-            0.1009614864
+            0.8984593215,
+            -0.4282729204,
+            0.09671170144
           ],
           "oldId":318,
           "pos":[
@@ -4888,12 +5039,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 76",
       "notes":{
         "english":{
-          "_out":"brake, left entry into one right long? two fifty.",
+          "_out":"brake, left entry into one right long? 250.",
           "after":"250",
           "before":"",
           "note":"brake, left entry into one right long?"
@@ -4904,9 +5057,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.7170195256,
+            -0.6916801723,
+            0.08638020112
           ],
           "oldId":320,
           "pos":[
@@ -4920,9 +5073,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.7824928042,
+            0.6158911495,
+            0.09155928807
           ],
           "oldId":321,
           "pos":[
@@ -4936,9 +5089,9 @@
         {
           "name":"Waypoint 973",
           "normal":[
-            0.7493746436,
-            -0.654969765,
-            0.09722268479
+            0.7838005141,
+            -0.6121647268,
+            0.104456217
           ],
           "oldId":322,
           "pos":[
@@ -4953,12 +5106,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 77",
       "notes":{
         "english":{
-          "_out":"six left into brake, one left long? one fifty.",
+          "_out":"six left into brake, one left long? 150.",
           "after":"150",
           "before":"",
           "note":"six left into brake, one left long?"
@@ -4969,9 +5124,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9877536724,
+            -0.1399101071,
+            0.06904958104
           ],
           "oldId":324,
           "pos":[
@@ -4985,9 +5140,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8671319333,
+            0.4866603035,
+            0.1060375369
           ],
           "oldId":325,
           "pos":[
@@ -5001,9 +5156,9 @@
         {
           "name":"Waypoint 974",
           "normal":[
-            -0.8333643929,
-            0.552710597,
-            -0.003845069455
+            -0.7457561851,
+            0.6623502139,
+            0.0716931412
           ],
           "oldId":326,
           "pos":[
@@ -5018,12 +5173,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 78",
       "notes":{
         "english":{
-          "_out":"six right tightens? one hundred.",
+          "_out":"six right tightens? 100.",
           "after":"100",
           "before":"",
           "note":"six right tightens?"
@@ -5034,9 +5191,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.979877062,
+            -0.1828546353,
+            0.08003202881
           ],
           "oldId":328,
           "pos":[
@@ -5050,9 +5207,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.6622637593,
+            -0.7431952376,
+            0.09522369438
           ],
           "oldId":329,
           "pos":[
@@ -5066,9 +5223,9 @@
         {
           "name":"Waypoint 975",
           "normal":[
-            0.9085723788,
-            -0.4110694748,
-            0.07428404491
+            0.7867382776,
+            -0.6119902569,
+            0.08068957851
           ],
           "oldId":330,
           "pos":[
@@ -5083,6 +5240,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 79",
@@ -5099,9 +5258,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.5868779539,
+            -0.8038596682,
+            0.09687053749
           ],
           "oldId":332,
           "pos":[
@@ -5115,9 +5274,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6924199111,
+            0.7157142757,
+            0.09114681641
           ],
           "oldId":333,
           "pos":[
@@ -5131,9 +5290,9 @@
         {
           "name":"Waypoint 976",
           "normal":[
-            0.8196218454,
-            -0.567683684,
-            0.07717036649
+            0.9459141156,
+            -0.3123194306,
+            0.08776707379
           ],
           "oldId":334,
           "pos":[
@@ -5148,6 +5307,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 80",
@@ -5164,9 +5325,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.8045853887,
+            0.5841419274,
+            0.1068670248
           ],
           "oldId":336,
           "pos":[
@@ -5180,9 +5341,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.4999331432,
+            -0.8601522853,
+            0.1010192974
           ],
           "oldId":337,
           "pos":[
@@ -5196,9 +5357,9 @@
         {
           "name":"Waypoint 977",
           "normal":[
-            -0.9425511746,
-            -0.3234616842,
-            0.08348546068
+            -0.9861042402,
+            0.1444525479,
+            0.08204808896
           ],
           "oldId":338,
           "pos":[
@@ -5213,12 +5374,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 81",
       "notes":{
         "english":{
-          "_out":"into five right? eighty.",
+          "_out":"into five right? 80.",
           "after":"80",
           "before":"into",
           "note":"five right?"
@@ -5229,9 +5392,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.5354885056,
+            -0.8379688763,
+            0.1051675938
           ],
           "oldId":340,
           "pos":[
@@ -5245,9 +5408,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.936035386,
+            -0.3360521941,
+            0.1044350464
           ],
           "oldId":341,
           "pos":[
@@ -5261,9 +5424,9 @@
         {
           "name":"Waypoint 978",
           "normal":[
-            -0.9626218976,
-            0.2601454971,
-            0.07538834533
+            -0.9891171166,
+            0.1053612242,
+            0.1026953852
           ],
           "oldId":342,
           "pos":[
@@ -5278,6 +5441,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 82",
@@ -5294,9 +5459,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.943808792,
+            -0.3154923495,
+            0.09843546923
           ],
           "oldId":344,
           "pos":[
@@ -5310,9 +5475,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8660105806,
+            -0.4871773073,
+            0.1126230243
           ],
           "oldId":345,
           "pos":[
@@ -5326,9 +5491,9 @@
         {
           "name":"Waypoint 979",
           "normal":[
-            -0.5972943089,
-            -0.7952744392,
-            0.1038175078
+            -0.5186678899,
+            -0.8487186504,
+            0.1032485959
           ],
           "oldId":346,
           "pos":[
@@ -5343,12 +5508,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 83",
       "notes":{
         "english":{
-          "_out":"and brake, one left long? one hundred.",
+          "_out":"and brake, one left long? 100.",
           "after":"100",
           "before":"and",
           "note":"brake, one left long?"
@@ -5359,9 +5526,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.8850110285,
+            -0.454128602,
+            0.1025801747
           ],
           "oldId":348,
           "pos":[
@@ -5375,9 +5542,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9609554424,
+            0.2681519962,
+            0.06825792799
           ],
           "oldId":349,
           "pos":[
@@ -5391,9 +5558,9 @@
         {
           "name":"Waypoint 980",
           "normal":[
-            -0.7186369432,
-            -0.6889906551,
-            0.09408943105
+            -0.8855724619,
+            -0.4521905669,
+            0.106231379
           ],
           "oldId":350,
           "pos":[
@@ -5408,6 +5575,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 84",
@@ -5424,9 +5593,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9848935107,
+            0.1505023104,
+            0.08563776763
           ],
           "oldId":352,
           "pos":[
@@ -5440,9 +5609,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.8304385437,
+            -0.5515158727,
+            0.07875320453
           ],
           "oldId":353,
           "pos":[
@@ -5456,9 +5625,9 @@
         {
           "name":"Waypoint 981",
           "normal":[
-            0.8792807732,
-            0.4740582108,
-            0.04619669517
+            0.984279015,
+            0.1646916405,
+            0.06380818244
           ],
           "oldId":354,
           "pos":[
@@ -5473,12 +5642,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 85",
       "notes":{
         "english":{
-          "_out":"into five left opens? one fifty.",
+          "_out":"into five left opens? 150.",
           "after":"150",
           "before":"into",
           "note":"five left opens?"
@@ -5489,9 +5660,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7858515118,
+            -0.6114201107,
+            0.09275154743
           ],
           "oldId":356,
           "pos":[
@@ -5505,9 +5676,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.3180853872,
+            -0.9478782192,
+            0.01866997715
           ],
           "oldId":357,
           "pos":[
@@ -5521,9 +5692,9 @@
         {
           "name":"Waypoint 982",
           "normal":[
-            -0.280710982,
-            -0.9556840568,
-            0.08870923369
+            -0.4523317754,
+            -0.8884655627,
+            0.07762028636
           ],
           "oldId":358,
           "pos":[
@@ -5538,12 +5709,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 86",
       "notes":{
         "english":{
-          "_out":"five right plus? two hundred.",
+          "_out":"five right plus? 200.",
           "after":"200",
           "before":"",
           "note":"five right plus?"
@@ -5554,9 +5727,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.2969942877,
+            -0.954320203,
+            0.03267021801
           ],
           "oldId":360,
           "pos":[
@@ -5570,9 +5743,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.1395231176,
+            -0.9901790315,
+            0.00887610685
           ],
           "oldId":361,
           "pos":[
@@ -5586,9 +5759,9 @@
         {
           "name":"Waypoint 983",
           "normal":[
-            0.05812600835,
-            -0.9929260084,
-            0.103534096
+            0.1276813316,
+            -0.9910167892,
+            0.03978945934
           ],
           "oldId":362,
           "pos":[
@@ -5603,6 +5776,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 87",
@@ -5619,9 +5794,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.206084715,
+            -0.978313669,
+            0.02077150365
           ],
           "oldId":364,
           "pos":[
@@ -5635,9 +5810,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.5954349736,
+            -0.8022241091,
+            -0.04351632936
           ],
           "oldId":365,
           "pos":[
@@ -5651,9 +5826,9 @@
         {
           "name":"Waypoint 984",
           "normal":[
-            -0.09035253297,
-            -0.9957194611,
-            0.01947240559
+            -0.1193138572,
+            -0.9928450945,
+            0.004777215019
           ],
           "oldId":366,
           "pos":[
@@ -5668,12 +5843,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 88",
       "notes":{
         "english":{
-          "_out":"and five left? two hundred.",
+          "_out":"and five left? 200.",
           "after":"200",
           "before":"and",
           "note":"five left?"
@@ -5684,9 +5861,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.6344844134,
+            -0.7714914103,
+            -0.04722851825
           ],
           "oldId":368,
           "pos":[
@@ -5700,9 +5877,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9306884169,
+            -0.3630362042,
+            -0.04498649832
           ],
           "oldId":369,
           "pos":[
@@ -5716,9 +5893,9 @@
         {
           "name":"Waypoint 985",
           "normal":[
-            0.149220072,
-            -0.9885421688,
-            -0.02275413606
+            0.2082398435,
+            -0.9777160538,
+            -0.02659860529
           ],
           "oldId":370,
           "pos":[
@@ -5733,12 +5910,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 89",
       "notes":{
         "english":{
-          "_out":"five right tight exit? one fifty.",
+          "_out":"five right tight exit? 150.",
           "after":"150",
           "before":"",
           "note":"five right tight exit?"
@@ -5749,9 +5928,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9701756912,
+            -0.2421267605,
+            -0.0115654655
           ],
           "oldId":372,
           "pos":[
@@ -5765,9 +5944,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.2304969958,
+            -0.9700157706,
+            0.07707489651
           ],
           "oldId":373,
           "pos":[
@@ -5781,9 +5960,9 @@
         {
           "name":"Waypoint 986",
           "normal":[
-            0.8141198978,
-            -0.5789906046,
-            -0.04448226358
+            0.9089660008,
+            -0.4148979779,
+            -0.04050280521
           ],
           "oldId":374,
           "pos":[
@@ -5798,12 +5977,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 90",
       "notes":{
         "english":{
-          "_out":"six right? eighty.",
+          "_out":"six right? 80.",
           "after":"80",
           "before":"",
           "note":"six right?"
@@ -5814,9 +5995,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.02960426268,
+            -0.9948436418,
+            0.09700369077
           ],
           "oldId":376,
           "pos":[
@@ -5830,9 +6011,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.1807809581,
+            -0.9784299014,
+            0.09996586064
           ],
           "oldId":377,
           "pos":[
@@ -5846,9 +6027,9 @@
         {
           "name":"Waypoint 987",
           "normal":[
-            0.8269547318,
-            -0.5622684163,
-            0.0003154783259
+            0.4412196504,
+            -0.8956905489,
+            0.05535034552
           ],
           "oldId":378,
           "pos":[
@@ -5863,12 +6044,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 91",
       "notes":{
         "english":{
-          "_out":"six left over crest tightens? one hundred.",
+          "_out":"six left over crest tightens? 100.",
           "after":"100",
           "before":"",
           "note":"six left over crest tightens?"
@@ -5879,9 +6062,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1636844664,
+            -0.9819936396,
+            0.09431801089
           ],
           "oldId":380,
           "pos":[
@@ -5895,9 +6078,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.7489776033,
+            -0.6620232999,
+            0.02752635393
           ],
           "oldId":381,
           "pos":[
@@ -5911,9 +6094,9 @@
         {
           "name":"Waypoint 988",
           "normal":[
-            -0.287403357,
-            -0.9521953929,
-            0.1035530981
+            -0.03438736148,
+            -0.9946332491,
+            0.09758180744
           ],
           "oldId":382,
           "pos":[
@@ -5928,12 +6111,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 92",
       "notes":{
         "english":{
-          "_out":"six right tightens? ninety.",
+          "_out":"six right tightens? 90.",
           "after":"90",
           "before":"",
           "note":"six right tightens?"
@@ -5944,9 +6129,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.5610332493,
+            -0.8268872576,
+            0.03871894167
           ],
           "oldId":384,
           "pos":[
@@ -5960,9 +6145,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.4329030794,
+            -0.9006121493,
+            0.03863522105
           ],
           "oldId":385,
           "pos":[
@@ -5976,9 +6161,9 @@
         {
           "name":"Waypoint 989",
           "normal":[
-            0.6923222013,
-            -0.7145972206,
-            0.1002037021
+            0.5356530281,
+            -0.843736553,
+            0.03441602201
           ],
           "oldId":386,
           "pos":[
@@ -5993,12 +6178,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 93",
       "notes":{
         "english":{
-          "_out":"five left minus long? four hundred.",
+          "_out":"five left minus long? 400.",
           "after":"400",
           "before":"",
           "note":"five left minus long?"
@@ -6009,9 +6196,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.3593195057,
+            -0.9329831479,
+            0.02078313168
           ],
           "oldId":388,
           "pos":[
@@ -6025,9 +6212,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8531569348,
+            -0.5216344868,
+            -0.00455047753
           ],
           "oldId":389,
           "pos":[
@@ -6041,9 +6228,9 @@
         {
           "name":"Waypoint 990",
           "normal":[
-            -0.1168196031,
-            -0.991032863,
-            -0.06486173595
+            -0.1645042883,
+            -0.985371816,
+            0.04450531886
           ],
           "oldId":390,
           "pos":[
@@ -6058,12 +6245,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 94",
       "notes":{
         "english":{
-          "_out":"five right long opens? four fifty.",
+          "_out":"five right long opens? 450.",
           "after":"450",
           "before":"",
           "note":"five right long opens?"
@@ -6074,9 +6263,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9694924573,
+            -0.2347959404,
+            0.07039347657
           ],
           "oldId":392,
           "pos":[
@@ -6090,9 +6279,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.8025061888,
+            0.596438353,
+            -0.01565592473
           ],
           "oldId":393,
           "pos":[
@@ -6106,9 +6295,9 @@
         {
           "name":"Waypoint 992",
           "normal":[
-            0.8503525553,
-            0.525873716,
-            0.01890413795
+            0.8790566257,
+            0.4763665363,
+            0.01828583834
           ],
           "oldId":394,
           "pos":[
@@ -6123,12 +6312,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 95",
       "notes":{
         "english":{
-          "_out":"five left opens? four fifty.",
+          "_out":"five left opens? 450.",
           "after":"450",
           "before":"",
           "note":"five left opens?"
@@ -6139,9 +6330,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.8801517165,
+            -0.4739773968,
+            0.02604579171
           ],
           "oldId":396,
           "pos":[
@@ -6155,9 +6346,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8378917786,
+            0.5455174324,
+            -0.01865739517
           ],
           "oldId":397,
           "pos":[
@@ -6171,9 +6362,9 @@
         {
           "name":"Waypoint 991",
           "normal":[
-            0.6780509142,
-            -0.7349928047,
-            -0.005703929996
+            0.6314906368,
+            -0.7753260345,
+            -0.009440119857
           ],
           "oldId":398,
           "pos":[
@@ -6188,6 +6379,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 96",
@@ -6204,9 +6397,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9246026305,
+            -0.3707885425,
+            0.08732601253
           ],
           "oldId":400,
           "pos":[
@@ -6220,9 +6413,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.9746252283,
+            -0.2089589937,
+            0.08026084533
           ],
           "oldId":401,
           "pos":[
@@ -6236,9 +6429,9 @@
         {
           "name":"Waypoint 993",
           "normal":[
-            0.9668210177,
-            -0.2472011735,
-            0.06441039886
+            0.9544013886,
+            -0.2883867519,
+            0.07714318335
           ],
           "oldId":402,
           "pos":[
@@ -6253,12 +6446,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 97",
       "notes":{
         "english":{
-          "_out":"and six left? fifty.",
+          "_out":"and six left? 50.",
           "after":"50",
           "before":"and",
           "note":"six left?"
@@ -6269,9 +6464,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.9028706808,
+            -0.4243546581,
+            0.06890325014
           ],
           "oldId":404,
           "pos":[
@@ -6285,9 +6480,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.5686902695,
+            -0.8161160446,
+            0.102693618
           ],
           "oldId":405,
           "pos":[
@@ -6301,9 +6496,9 @@
         {
           "name":"Waypoint 994",
           "normal":[
-            -0.2681819302,
-            -0.9594082581,
-            0.08725965101
+            -0.7203009178,
+            -0.6872377296,
+            0.09418540656
           ],
           "oldId":406,
           "pos":[
@@ -6318,6 +6513,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 98",
@@ -6334,9 +6531,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.415546583,
+            -0.904558423,
+            0.09536821623
           ],
           "oldId":408,
           "pos":[
@@ -6350,9 +6547,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9653367329,
+            -0.2470300316,
+            0.08426835521
           ],
           "oldId":409,
           "pos":[
@@ -6366,9 +6563,9 @@
         {
           "name":"Waypoint 995",
           "normal":[
-            -0.8095586079,
-            -0.5842923737,
-            0.0567210937
+            -0.814849524,
+            -0.5745982469,
+            0.07653174463
           ],
           "oldId":410,
           "pos":[
@@ -6383,6 +6580,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 99",
@@ -6399,9 +6598,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9248600658,
+            -0.3649663877,
+            0.106927052
           ],
           "oldId":412,
           "pos":[
@@ -6415,9 +6614,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.4528390396,
+            -0.8863475392,
+            0.0965652319
           ],
           "oldId":413,
           "pos":[
@@ -6431,9 +6630,9 @@
         {
           "name":"Waypoint 996",
           "normal":[
-            -0.2343862494,
-            -0.9659269419,
-            0.1097644252
+            -0.06923264148,
+            -0.9930017895,
+            0.0956780401
           ],
           "oldId":414,
           "pos":[
@@ -6448,14 +6647,16 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 100",
       "notes":{
         "english":{
-          "_out":"into two left minus?",
+          "_out":"and two left minus?",
           "after":"",
-          "before":"into",
+          "before":"and",
           "note":"two left minus?"
         }
       },
@@ -6464,15 +6665,15 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.4172953097,
+            -0.9017335427,
+            0.1128771125
           ],
           "oldId":416,
           "pos":[
-            285.6913452,
-            -3839.413086,
-            1292.800171
+            286.5740967,
+            -3841.322754,
+            1293.031982
           ],
           "radius":10,
           "waypointType":"cornerStart"
@@ -6480,9 +6681,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.7741836092,
+            0.6252339055,
+            0.09860173709
           ],
           "oldId":417,
           "pos":[
@@ -6496,9 +6697,9 @@
         {
           "name":"Waypoint 997",
           "normal":[
-            0.7638050509,
-            -0.6381994237,
-            0.09645382169
+            0.85705635,
+            -0.5034997709,
+            0.1092812592
           ],
           "oldId":418,
           "pos":[
@@ -6513,6 +6714,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 101",
@@ -6529,9 +6732,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.7796222526,
+            0.6175065952,
+            0.1042820604
           ],
           "oldId":420,
           "pos":[
@@ -6545,9 +6748,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.642977758,
+            -0.7613796512,
+            0.08294955989
           ],
           "oldId":421,
           "pos":[
@@ -6561,9 +6764,9 @@
         {
           "name":"Waypoint 998",
           "normal":[
-            0.9857984261,
-            0.1469544783,
-            0.08127634545
+            0.9944134258,
+            -0.01159364607,
+            0.1049167576
           ],
           "oldId":422,
           "pos":[
@@ -6578,6 +6781,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 102",
@@ -6594,9 +6799,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.5251645996,
+            -0.8458047602,
+            0.09389595849
           ],
           "oldId":424,
           "pos":[
@@ -6610,9 +6815,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.1302887617,
+            -0.9862956587,
+            0.1012211051
           ],
           "oldId":425,
           "pos":[
@@ -6626,9 +6831,9 @@
         {
           "name":"Waypoint 999",
           "normal":[
-            0.7894857994,
-            -0.6061208533,
-            0.09659028821
+            0.8879719188,
+            -0.4514294042,
+            0.08784853169
           ],
           "oldId":426,
           "pos":[
@@ -6643,6 +6848,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 103",
@@ -6659,9 +6866,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.08866276705,
+            -0.9900149438,
+            0.1095870653
           ],
           "oldId":428,
           "pos":[
@@ -6675,9 +6882,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.5033625804,
+            -0.8577387317,
+            0.1044527688
           ],
           "oldId":429,
           "pos":[
@@ -6691,9 +6898,9 @@
         {
           "name":"Waypoint 1000",
           "normal":[
-            0.3208492557,
-            -0.9440718677,
-            0.07605303253
+            0.6101731119,
+            -0.7869555051,
+            0.09159588728
           ],
           "oldId":430,
           "pos":[
@@ -6708,12 +6915,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 104",
       "notes":{
         "english":{
-          "_out":"into five right over crest into six left? three hundred.",
+          "_out":"into five right over crest into six left? 300.",
           "after":"300",
           "before":"into",
           "note":"five right over crest into six left?"
@@ -6724,9 +6933,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.5230227293,
+            -0.8459678996,
+            0.1038534418
           ],
           "oldId":432,
           "pos":[
@@ -6740,9 +6949,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.06537319274,
+            -0.9922236869,
+            0.1059174249
           ],
           "oldId":433,
           "pos":[
@@ -6756,9 +6965,9 @@
         {
           "name":"Waypoint 1001",
           "normal":[
-            0.169584374,
-            -0.9804099859,
-            0.1001868235
+            0.09752263825,
+            -0.9895289338,
+            0.1064040613
           ],
           "oldId":434,
           "pos":[
@@ -6773,12 +6982,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 105",
       "notes":{
         "english":{
-          "_out":"five left long? fifty.",
+          "_out":"five left long? 50.",
           "after":"50",
           "before":"",
           "note":"five left long?"
@@ -6789,9 +7000,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.08417982638,
+            -0.9914259064,
+            0.09994212768
           ],
           "oldId":436,
           "pos":[
@@ -6805,9 +7016,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.8070787541,
+            -0.582532129,
+            0.09633381199
           ],
           "oldId":437,
           "pos":[
@@ -6821,9 +7032,9 @@
         {
           "name":"Waypoint 1002",
           "normal":[
-            0.1178837344,
-            -0.9891363077,
-            0.08782249106
+            0.1010782501,
+            -0.9888179298,
+            0.1096461997
           ],
           "oldId":438,
           "pos":[
@@ -6838,12 +7049,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 106",
       "notes":{
         "english":{
-          "_out":"six right into six left? two fifty.",
+          "_out":"six right into six left? 250.",
           "after":"250",
           "before":"",
           "note":"six right into six left?"
@@ -6854,9 +7067,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9821449728,
+            -0.1599617996,
+            0.09901249951
           ],
           "oldId":440,
           "pos":[
@@ -6870,9 +7083,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9730968952,
+            -0.2092765104,
+            0.09636272443
           ],
           "oldId":441,
           "pos":[
@@ -6886,9 +7099,9 @@
         {
           "name":"Waypoint 1003",
           "normal":[
-            0.1042626065,
-            -0.9904503947,
-            0.09020711981
+            0.07968398249,
+            -0.99177061,
+            0.1002073857
           ],
           "oldId":442,
           "pos":[
@@ -6903,6 +7116,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 107",
@@ -6919,9 +7134,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.9379723643,
+            -0.3385393055,
+            0.07482634895
           ],
           "oldId":444,
           "pos":[
@@ -6935,9 +7150,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.6860093639,
+            0.7229799285,
+            0.08179960654
           ],
           "oldId":445,
           "pos":[
@@ -6951,9 +7166,9 @@
         {
           "name":"Waypoint 1004",
           "normal":[
-            0.9468069948,
-            -0.3033737957,
-            0.1073352447
+            0.9539179669,
+            -0.284053849,
+            0.0967156826
           ],
           "oldId":446,
           "pos":[
@@ -6968,12 +7183,14 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 108",
       "notes":{
         "english":{
-          "_out":"and six right into six left? one fifty.",
+          "_out":"and six right into six left? 150.",
           "after":"150",
           "before":"and",
           "note":"six right into six left?"
@@ -6984,9 +7201,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7662124151,
+            0.6359025562,
+            0.09244714094
           ],
           "oldId":448,
           "pos":[
@@ -7000,9 +7217,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.7838228406,
+            0.613953011,
+            0.09318505676
           ],
           "oldId":449,
           "pos":[
@@ -7016,9 +7233,9 @@
         {
           "name":"Waypoint 1005",
           "normal":[
-            -0.7032674979,
-            0.7087749247,
-            0.05525334854
+            -0.6171706704,
+            0.781144621,
+            0.09441104135
           ],
           "oldId":450,
           "pos":[
@@ -7033,6 +7250,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 109",
@@ -7049,9 +7268,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.7528126999,
+            0.650519803,
+            0.1004839523
           ],
           "oldId":452,
           "pos":[
@@ -7065,9 +7284,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.2485999671,
+            0.9650782849,
+            0.08259515954
           ],
           "oldId":453,
           "pos":[
@@ -7081,9 +7300,9 @@
         {
           "name":"Waypoint 1006",
           "normal":[
-            -0.4375657626,
-            0.8938959355,
-            0.09739743244
+            -0.7725023455,
+            0.6264243892,
+            0.1040798287
           ],
           "oldId":454,
           "pos":[
@@ -7098,6 +7317,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 110",
@@ -7114,9 +7335,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            0.2657312375,
+            0.9620049284,
+            0.06271703958
           ],
           "oldId":456,
           "pos":[
@@ -7130,9 +7351,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            -0.431442849,
+            -0.9010348308,
+            0.04464640698
           ],
           "oldId":457,
           "pos":[
@@ -7146,9 +7367,9 @@
         {
           "name":"Waypoint 1007",
           "normal":[
-            -0.811429334,
-            0.5757399943,
-            0.1005280799
+            -0.5438432668,
+            0.8330166412,
+            0.1015764572
           ],
           "oldId":458,
           "pos":[
@@ -7163,6 +7384,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 111",
@@ -7179,9 +7402,9 @@
         {
           "name":"corner start",
           "normal":[
-            0,
-            1,
-            0
+            -0.1079252231,
+            -0.9935784045,
+            0.03397205202
           ],
           "oldId":460,
           "pos":[
@@ -7195,9 +7418,9 @@
         {
           "name":"corner end",
           "normal":[
-            0,
-            1,
-            0
+            0.9957933627,
+            0.01101165535,
+            0.09096330169
           ],
           "oldId":461,
           "pos":[
@@ -7211,9 +7434,9 @@
         {
           "name":"Waypoint 1008",
           "normal":[
-            -0.3834594162,
-            -0.9190128936,
-            0.09151053272
+            -0.3856343756,
+            -0.9209321851,
+            0.056303097
           ],
           "oldId":462,
           "pos":[
@@ -7228,6 +7451,8 @@
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 112",
@@ -7244,9 +7469,9 @@
         {
           "name":"Waypoint 1005",
           "normal":[
-            0.989843847,
-            0.134515901,
-            0.04598511552
+            0.9961601195,
+            0.008249019774,
+            0.08716059861
           ],
           "oldId":464,
           "pos":[
@@ -7260,9 +7485,9 @@
         {
           "name":"Waypoint 1006",
           "normal":[
-            0.989843847,
-            0.134515901,
-            0.04598511552
+            0.9366695215,
+            0.3500707914,
+            0.01003237264
           ],
           "oldId":465,
           "pos":[
@@ -7276,9 +7501,9 @@
         {
           "name":"Waypoint 1007",
           "normal":[
-            0.9283769666,
-            -0.3572186087,
-            0.1025235261
+            0.9718594489,
+            -0.213943393,
+            0.09857705662
           ],
           "oldId":466,
           "pos":[

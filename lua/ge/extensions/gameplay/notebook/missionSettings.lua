@@ -6,10 +6,6 @@ local default_settings = {
   notebook = {
     filename = "primary.notebook.json",
     codriver = "Sophia",
-  },
-  transcripts = {
-    full_course = "full_course.transcripts.json",
-    curr = "curr.transcripts.json",
   }
 }
 
@@ -29,7 +25,6 @@ end
 
 function C:_reset()
   self.notebook = default_settings.notebook
-  self.transcripts = default_settings.transcripts
 end
 
 function C:load()
@@ -60,7 +55,6 @@ end
 function C:onSerialize()
   local ret = {
     notebook = self.notebook,
-    transcripts = self.transcripts,
   }
 
   return ret
@@ -69,7 +63,6 @@ end
 function C:onDeserialized(data)
   if not data then return end
   self.notebook = data.notebook or default_settings.notebook
-  self.transcripts = data.transcripts or default_settings.transcripts
 end
 
 function C:write()
@@ -77,27 +70,27 @@ function C:write()
   jsonWriteFile(self.fname, json, true)
 end
 
-function C:getFullCourseTranscript(missionDir)
-  return self:getTranscript('full_course', missionDir)
-end
-
-function C:getTranscript(settingName, missionDir)
-  if self.transcripts and self.transcripts[settingName] then
-    local basenameWithExt = self.transcripts[settingName]
-    local absPath = re_util.missionTranscriptPath(missionDir, basenameWithExt)
-    if FS:fileExists(absPath) then
-      local loaded_transcript = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(absPath)
-      if not loaded_transcript:load() then
-        log('E', logTag, 'couldnt load transcripts file from '..absPath)
-        return nil
-      else
-        return loaded_transcript
-      end
-    end
-  else
-    return nil
-  end
-end
+-- function C:getFullCourseTranscript(missionDir)
+--   return self:getTranscript('full_course', missionDir)
+-- end
+--
+-- function C:getTranscript(settingName, missionDir)
+--   if self.transcripts and self.transcripts[settingName] then
+--     local basenameWithExt = self.transcripts[settingName]
+--     local absPath = re_util.missionTranscriptPath(missionDir, basenameWithExt)
+--     if FS:fileExists(absPath) then
+--       local loaded_transcript = require('/lua/ge/extensions/gameplay/aipacenotes/transcripts/path')(absPath)
+--       if not loaded_transcript:load() then
+--         log('E', logTag, 'couldnt load transcripts file from '..absPath)
+--         return nil
+--       else
+--         return loaded_transcript
+--       end
+--     end
+--   else
+--     return nil
+--   end
+-- end
 
 return function(...)
   local o = {}

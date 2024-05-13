@@ -36,7 +36,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // $scope.transcripts = []
       $scope.isRecording = false
       // $scope.network_ok = false
-      $scope.drawDebug = false
+      $scope.showNotes = false
       $scope.drawDebugSnaproads = false
       // $scope.insertMode = false
 
@@ -59,6 +59,14 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       $scope.selectedMission = null
       $scope.selectedMissionName = null
 
+      $scope.codriverWaitValues = [
+        'none',
+        'small',
+        'medium',
+        'large',
+      ]
+      $scope.selectedCodriverWait = 'none'
+
       let transcriptInterval = null
 
       // function updateCornerCall() {
@@ -70,31 +78,31 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // }
 
       function refreshRecceApp() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.refresh()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.refresh()')
       }
 
-      function updateLuaDrawDebug() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebug+')')
+      function updateLuaShowNotes() {
+        bngApi.engineLua('ui_aipacenotes_recceApp.setShowNotes('+$scope.showNotes+')')
       }
 
       function updateLuaDrawDebugSnaproads() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
+        bngApi.engineLua('ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
       }
 
       $scope.allowPacenoteTextEditing = function() {
-        if ($scope.drawDebug) {
+        if ($scope.showNotes) {
           return $scope.drawDebugSnaproads
         } else {
           return false
         }
       }
 
-      $scope.handleKeyDown = function(event) {
-        console.log(event.key)
-        // Prevent default behavior and stop propagation
-        // event.preventDefault();
-        // event.stopPropagation();
-      };
+      // $scope.handleKeyDown = function(event) {
+      //   console.log(event.key)
+      //   // Prevent default behavior and stop propagation
+      //   // event.preventDefault();
+      //   // event.stopPropagation();
+      // };
 
       $scope.$on('$destroy', function () {
         // StreamsManager.remove(streamsList)
@@ -172,9 +180,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         }
       })
 
-      $scope.$on('aiPacenotesInputActionToggleDrawDebug', function (event) {
-        $scope.btnToggleDrawDebug()
-      })
+      // $scope.$on('aiPacenotesInputActionToggleDrawDebug', function (event) {
+      //   $scope.btnToggleShowNotes()
+      // })
 
       $scope.$on('aiPacenotesInputActionRecceMovePacenoteForward', function (event) {
         $scope.btnMovePacenoteATForward()
@@ -197,6 +205,9 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
         var pacenoteText = document.getElementById('pacenoteInput')
         pacenoteText.value = resp.pacenoteText
+
+        // console.log(resp.pacenoteCodriverWait)
+        $scope.selectedCodriverWait = resp.pacenoteCodriverWait
       })
 
       // $scope.$on('aiPacenotes.InputAction.RecceInsertMode', function (event, resp) {
@@ -216,24 +227,27 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           const loadedMissionDir = $scope.selectedMission.missionDir
           $scope.loadedMissionName = $scope.selectedMission.missionName
           $scope.missionIsLoaded = true
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
-          $scope.drawDebug = true
+          bngApi.engineLua('ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
+          $scope.showNotes = true
           $scope.drawDebugSnaproads = false
           // $scope.pacenoteText = ""
-          updateLuaDrawDebug()
+          updateLuaShowNotes()
           updateLuaDrawDebugSnaproads()
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(true)')
+          bngApi.engineLua('ui_aipacenotes_recceApp.setLastLoadState(true)')
         }
       }
 
       $scope.btnUnloadMission = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.unloadMission()')
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastLoadState(false)')
-        $scope.drawDebug = false
+        bngApi.engineLua('ui_aipacenotes_recceApp.unloadMission()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.setLastLoadState(false)')
+        $scope.showNotes = false
         $scope.drawDebugSnaproads = false
         $scope.missionIsLoaded = false
         // $scope.pacenoteText = ""
-        updateLuaDrawDebug()
+        var pacenoteText = document.getElementById('pacenoteInput')
+        pacenoteText.value = ""
+        $scope.selectedCodriverWait = "none"
+        updateLuaShowNotes()
         updateLuaDrawDebugSnaproads()
       }
 
@@ -241,10 +255,10 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         $scope.isRecording = true
 
         transcriptInterval = $interval(() => {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.desktopGetTranscripts()')
+          bngApi.engineLua('if ui_aipacenotes_recceApp then ui_aipacenotes_recceApp.desktopGetTranscripts() end')
         }, transcriptRefreshIntervalMs)
 
-        bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.transcribe_recording_start(${$scope.recordDriveline}, ${$scope.recordVoice})`)
+        bngApi.engineLua(`ui_aipacenotes_recceApp.transcribe_recording_start(${$scope.recordDriveline}, ${$scope.recordVoice})`)
       }
 
       $scope.btnRecordStop = function() {
@@ -254,18 +268,18 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           $interval.cancel(transcriptInterval)
         }
 
-        bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_stop()")
+        bngApi.engineLua("ui_aipacenotes_recceApp.transcribe_recording_stop()")
       }
 
       $scope.btnRecordCut = function() {
         if ($scope.isRecording) {
-          bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_recording_cut()")
+          bngApi.engineLua("ui_aipacenotes_recceApp.transcribe_recording_cut()")
         }
       }
 
       $scope.btnClearAll = function() {
         $scope.clear1Enabled = false
-        bngApi.engineLua("extensions.ui_aipacenotes_recceApp.transcribe_clear_all()")
+        bngApi.engineLua("ui_aipacenotes_recceApp.transcribe_clear_all()")
       }
 
       $scope.btnClear1 = function() {
@@ -282,7 +296,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
 
         var pacenoteText = document.getElementById('pacenoteInput').value
         // console.log(pacenoteText)
-        bngApi.engineLua(`extensions.ui_aipacenotes_recceApp.setSelectedPacenoteText("${pacenoteText}")`)
+        bngApi.engineLua(`ui_aipacenotes_recceApp.setSelectedPacenoteText("${pacenoteText}")`)
 
         $timeout(function() {
           var savedNotifier = document.getElementById('savedNotifier')
@@ -290,13 +304,13 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
         }, 1000);
       }
 
-      $scope.btnToggleDrawDebug = function() {
-        $scope.drawDebug = !$scope.drawDebug
+      $scope.btnToggleShowNotes = function() {
+        $scope.showNotes = !$scope.showNotes
 
-        // if (!$scope.drawDebug) {
+        // if (!$scope.showNotes) {
         //   $scope.pacenoteText = ""
         // }
-        updateLuaDrawDebug()
+        updateLuaShowNotes()
       }
 
       $scope.btnToggleSnaproadsDrawDebug = function() {
@@ -311,34 +325,34 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       // ie: inputAction(lua) -> JS(js) -> engineLua(lua)
       // this pattern is good in case some frontend state needs to be updated.
       $scope.btnMovePacenoteATForward = function() {
-        if ($scope.drawDebug) {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteATForward()')
+        if ($scope.showNotes) {
+          bngApi.engineLua('ui_aipacenotes_recceApp.movePacenoteATForward()')
         }
       }
       $scope.btnMovePacenoteATBackward = function() {
-        if ($scope.drawDebug) {
-          bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteATBackward()')
+        if ($scope.showNotes) {
+          bngApi.engineLua('ui_aipacenotes_recceApp.movePacenoteATBackward()')
         }
       }
 
       $scope.btnMovePacenoteSelectionForward = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteSelectionForward()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.movePacenoteSelectionForward()')
       }
       $scope.btnMovePacenoteSelectionBackward = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteSelectionBackward()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.movePacenoteSelectionBackward()')
       }
       $scope.btnMovePacenoteSelectionToVehicle = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.movePacenoteSelectionToVehicle()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.movePacenoteSelectionToVehicle()')
       }
 
       $scope.btnMoveVehicleForward = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveVehicleForward()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.moveVehicleForward()')
       }
       $scope.btnMoveVehicleBackward = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveVehicleBackward()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.moveVehicleBackward()')
       }
       $scope.btnMoveVehicleToSelectedPacenote = function() {
-        bngApi.engineLua('extensions.ui_aipacenotes_recceApp.moveVehicleToSelectedPacenote()')
+        bngApi.engineLua('ui_aipacenotes_recceApp.moveVehicleToSelectedPacenote()')
       }
 
       // Use vehicle reset to trigger a reload of the corner_angles.json file.
@@ -353,8 +367,16 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           $scope.selectedMission = $scope.missions.find(mission => mission.missionName === $scope.selectedMissionName)
           if ($scope.selectedMission) {
             let missionId = $scope.selectedMission.missionID
-            bngApi.engineLua('extensions.ui_aipacenotes_recceApp.setLastMissionId("'+missionId+'")')
+            bngApi.engineLua('ui_aipacenotes_recceApp.setLastMissionId("'+missionId+'")')
           }
+        }
+      });
+
+      $scope.$watch('selectedCodriverWait', function(newValue, oldValue) {
+        console.log(newValue)
+        if (newValue !== oldValue) {
+          $scope.selectedCodriverWait = newValue
+          bngApi.engineLua('ui_aipacenotes_recceApp.setSelectedPacenoteCodriverWait("'+$scope.selectedCodriverWait+'")')
         }
       });
 

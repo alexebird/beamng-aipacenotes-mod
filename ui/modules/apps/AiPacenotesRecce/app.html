@@ -39,33 +39,39 @@
       </div>
 
       <div class="recce-toolbar flex align-center">
+        <md-select class="md-select-dropdown codriver-wait" ng-model="selectedCodriverWait"  ng-disabled="!allowPacenoteTextEditing()">
+          <md-option ng-value="codriverWaitValue" ng-repeat="codriverWaitValue in codriverWaitValues">{{::codriverWaitValue}}</md-option>
+        </md-select>
+      </div>
+
+      <div class="recce-toolbar flex align-center">
         <!-- <button ng-click="btnRefreshCornerAngles()" class="recce-controls-btn">refresh angles</button> -->
 
-        <button ng-click="btnToggleDrawDebug()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || drawDebugSnaproads" ng-class="{'debug-on': drawDebug && !drawDebugSnaproads, 'btn-disabled': drawDebugSnaproads}">
-          {{ drawDebug ? 'hide notes' : 'show notes' }}
+        <button ng-click="btnToggleShowNotes()" class="recce-controls-btn" ng-disabled="!missionIsLoaded || drawDebugSnaproads" ng-class="{'debug-on': showNotes && !drawDebugSnaproads, 'btn-disabled': drawDebugSnaproads}">
+          {{ showNotes ? 'hide notes' : 'show notes' }}
         </button>
-        <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn btn-drive-edit" ng-disabled="!missionIsLoaded || !drawDebug" ng-class="{'debug-on': drawDebugSnaproads}">
+        <button ng-click="btnToggleSnaproadsDrawDebug()" class="recce-controls-btn btn-drive-edit" ng-disabled="!missionIsLoaded || !showNotes" ng-class="{'debug-on': drawDebugSnaproads}">
           {{ drawDebugSnaproads ? 'drive' : 'edit' }}
         </button>
 
         <div class="flex align-center small-button-widget">
-          <span class="" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">MoveAT</span>
-          <button ng-click="btnMovePacenoteATForward()" class="pacenote-forward" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
-          <button ng-click="btnMovePacenoteATBackward()" class="pacenote-backward" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
+          <span class="" ng-class="{'disabled-label': !showNotes || !drawDebugSnaproads}">MoveAT</span>
+          <button ng-click="btnMovePacenoteATForward()" class="pacenote-forward" ng-disabled="!showNotes || !drawDebugSnaproads">&uarr;</button>
+          <button ng-click="btnMovePacenoteATBackward()" class="pacenote-backward" ng-disabled="!showNotes || !drawDebugSnaproads">&darr;</button>
         </div>
 
         <div class="flex align-center small-button-widget">
-          <span class="" ng-class="{'disabled-label': !drawDebug || !drawDebugSnaproads}">Pacenote</span>
-          <button ng-click="btnMovePacenoteSelectionForward()" ng-disabled="!drawDebug || !drawDebugSnaproads">&uarr;</button>
-          <button ng-click="btnMovePacenoteSelectionBackward()" ng-disabled="!drawDebug || !drawDebugSnaproads">&darr;</button>
-          <button ng-click="btnMovePacenoteSelectionToVehicle()" ng-disabled="!drawDebug || !drawDebugSnaproads">P&rarr;V</button>
+          <span class="" ng-class="{'disabled-label': !showNotes || !drawDebugSnaproads}">Pacenote</span>
+          <button ng-click="btnMovePacenoteSelectionForward()" ng-disabled="!showNotes || !drawDebugSnaproads">&uarr;</button>
+          <button ng-click="btnMovePacenoteSelectionBackward()" ng-disabled="!showNotes || !drawDebugSnaproads">&darr;</button>
+          <button ng-click="btnMovePacenoteSelectionToVehicle()" ng-disabled="!showNotes || !drawDebugSnaproads">P&rarr;V</button>
         </div>
 
         <div class="flex align-center small-button-widget">
           <span class="" ng-class="{'disabled-label': !missionIsLoaded}">Vehicle</span>
           <button ng-click="btnMoveVehicleForward()" ng-disabled="!missionIsLoaded">&uarr;</button>
           <button ng-click="btnMoveVehicleBackward()" ng-disabled="!missionIsLoaded">&darr;</button>
-          <button ng-click="btnMoveVehicleToSelectedPacenote()" ng-disabled="!drawDebug || !drawDebugSnaproads">V&rarr;P</button>
+          <button ng-click="btnMoveVehicleToSelectedPacenote()" ng-disabled="!showNotes || !drawDebugSnaproads">V&rarr;P</button>
         </div>
 
         <!-- <md-select class="md-select-dropdown" ng-model="selectedStyleName"> -->

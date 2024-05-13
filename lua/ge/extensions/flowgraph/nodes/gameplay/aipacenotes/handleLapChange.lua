@@ -25,7 +25,7 @@ C.pinSchema = {
 
 function C:work()
   if self.pinIn.lapChange.value then
-    extensions.gameplay_aipacenotes.getRallyManager():handleLapChange(self.pinIn.currLap.value, self.pinIn.maxLap.value)
+    gameplay_aipacenotes.getRallyManager():handleLapChange(self.pinIn.currLap.value, self.pinIn.maxLap.value)
   end
 end
 

@@ -19,7 +19,8 @@ local missionId = nil
 local rallyManager = nil
 local snaproad = nil
 local selectedPacenote = nil
-local flag_NoteSearch = false
+-- local flag_NoteSearch = false
+local flag_showNotes = false
 local flag_drawDebug = false
 local flag_drawDebugSnaproads = false
 
@@ -30,6 +31,8 @@ local cutCapture = nil
 local isRecording = false
 local shouldRecordDriveline = false
 local shouldRecordVoice = false
+
+-- local inWorldEditor = false
 
 
 local function isFreeroam()
@@ -140,7 +143,10 @@ local function sendSelectedPacenoteText()
   local codriver = rallyManager.codriver
   local lang = codriver.language
   local noteText = selectedPacenote:getNoteFieldNote(lang)
-  guihooks.trigger('aiPacenotes.recceApp.pacenoteTextChanged', {pacenoteText = noteText})
+  guihooks.trigger('aiPacenotes.recceApp.pacenoteTextChanged', {
+    pacenoteText = noteText,
+    pacenoteCodriverWait = selectedPacenote.codriverWait,
+  })
 end
 
 local function setSelectedPacenoteText(newText)
@@ -151,6 +157,17 @@ local function setSelectedPacenoteText(newText)
   selectedPacenote:normalizeNoteText(lang, false, false)
   sendSelectedPacenoteText()
   selectedPacenote:clearCachedFgData()
+  rallyManager:saveNotebook()
+end
+
+local function setSelectedPacenoteCodriverWait(newVal)
+  if not selectedPacenote then return end
+  -- local codriver = rallyManager.codriver
+  -- local lang = codriver.language
+  selectedPacenote:setCodriverWait(newVal)
+  -- selectedPacenote:normalizeNoteText(lang, false, false)
+  -- sendSelectedPacenoteText()
+  -- selectedPacenote:clearCachedFgData()
   rallyManager:saveNotebook()
 end
 
@@ -175,17 +192,18 @@ end
 local function updateRallyManager(dtSim)
   if not rallyManager then return end
 
-  if flag_NoteSearch then
-    flag_NoteSearch = false
-    rallyManager:handleNoteSearch()
-  end
+  -- if flag_NoteSearch then
+  --   flag_NoteSearch = false
+  --   -- rallyManager:handleNoteSearch()
+  --   rallyManager:drivelineTrackerNoteSearch()
+  -- end
 
   if not isRecording then
     rallyManager:update(dtSim)
 
-    if rallyManager.audioManager then
-      rallyManager.audioManager:playNextInQueue()
-    end
+    -- if rallyManager.audioManager then
+    --   rallyManager.audioManager:playNextInQueue()
+    -- end
   end
 end
 
@@ -210,17 +228,21 @@ local function drawDebug()
   -- end
 
   if flag_drawDebugSnaproads and selectedPacenote then
-    local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
-    nextPacenotes = rallyManager:getPacenotesNearPos(wp_audio_trigger.pos)
+    -- local wp_audio_trigger = selectedPacenote:getActiveFwdAudioTrigger()
+    local wp_cs = selectedPacenote:getCornerStartWaypoint()
+    local render_wp = wp_cs
+    nextPacenotes = rallyManager:getPacenotesNearPos(render_wp.pos)
     local noteData = selectedPacenote:asFlowgraphData(rallyManager.codriver)
-    wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
+    render_wp:drawDebugRecce(1, noteData.note_text)
 
     for i,pacenote in ipairs(nextPacenotes) do
       if pacenote.id ~= selectedPacenote.id then
-        local wp_at = pacenote:getActiveFwdAudioTrigger()
+        -- local wp_at = pacenote:getActiveFwdAudioTrigger()
+        local wp_cs = pacenote:getCornerStartWaypoint()
+        local render_wp = wp_cs
 
         noteData = pacenote:asFlowgraphData(rallyManager.codriver)
-        wp_at:drawDebugRecce(i, noteData.note_text)
+        render_wp:drawDebugRecce(i, noteData.note_text)
       end
     end
   elseif flag_drawDebugSnaproads then
@@ -229,18 +251,22 @@ local function drawDebug()
 
     -- draw all the nearest notes
     for i,pacenote in ipairs(nextPacenotes) do
-      local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      -- local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      local wp_cs = pacenote:getCornerStartWaypoint()
+      local render_wp = wp_cs
       local noteData = pacenote:asFlowgraphData(rallyManager.codriver)
-      wp_audio_trigger:drawDebugRecce(i, noteData.note_text)
+      render_wp:drawDebugRecce(i, noteData.note_text)
     end
   else
     -- just draw the nearest
     nextPacenotes = rallyManager:getNextPacenotes()
     local pacenote = nextPacenotes[1]
     if pacenote then
-      local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      -- local wp_audio_trigger = pacenote:getActiveFwdAudioTrigger()
+      local wp_cs = pacenote:getCornerStartWaypoint()
+      local render_wp = wp_cs
       local noteData = pacenote:asFlowgraphData(rallyManager.codriver)
-      wp_audio_trigger:drawDebugRecce(1, noteData.note_text)
+      render_wp:drawDebugRecce(1, noteData.note_text)
     end
   end
 
@@ -255,8 +281,10 @@ local function drawDebug()
       local rad = rad_marker
 
       local nextNote = nextPacenotes[1]
-      local wp_at = nextNote:getActiveFwdAudioTrigger()
-      local pos = wp_at.pos
+      -- local wp_at = nextNote:getActiveFwdAudioTrigger()
+      local wp_cs = nextNote:getCornerStartWaypoint()
+      local render_wp = wp_cs
+      local pos = render_wp.pos
       debugDrawer:drawSphere(
         pos,
         rad,
@@ -406,8 +434,9 @@ local function moveVehicleBackward()
   local col = rallyManager.notebook.pacenotes.sorted
 
   for i,pn in ipairs(col) do
-    local at = pn:getActiveFwdAudioTrigger()
-    if at then
+    -- local wp = pn:getActiveFwdAudioTrigger()
+    local wp = pn:getCornerStartWaypoint()
+    if wp then
       local placementPos, _ = pn:vehiclePlacementPosAndRot()
       local dist = vPos:distance(placementPos)
       if dist < nearestPacenoteDist then
@@ -465,8 +494,9 @@ local function moveVehicleForward()
   local col = rallyManager.notebook.pacenotes.sorted
 
   for i,pn in ipairs(col) do
-    local at = pn:getActiveFwdAudioTrigger()
-    if at then
+    -- local wp = pn:getActiveFwdAudioTrigger()
+    local wp = pn:getCornerStartWaypoint()
+    if wp then
       local placementPos, _ = pn:vehiclePlacementPosAndRot()
       local dist = vPos:distance(placementPos)
       if dist < nearestPacenoteDist then
@@ -521,21 +551,23 @@ end
 local function onUpdate(dtReal, dtSim, dtRaw)
   updateRallyManager(dtSim)
   updateVehicleCapture()
-  if flag_drawDebug and not (editor and editor.isEditorActive()) then
+  if flag_showNotes and not (editor and editor.isEditorActive()) then
     drawDebug()
   end
 end
 
 local function loadMission(newMissionId, newMissionDir)
+  log('D', logTag, 'recceApp.loadMission')
+
   missionDir = newMissionDir
   missionId = newMissionId
-  flag_NoteSearch = false
-  -- flag_drawDebug = false
+  -- flag_NoteSearch = false
+  -- flag_showNotes = false
   -- flag_drawDebugSnaproads = false
   rallyManager = RallyManager()
   rallyManager:setOverrideMission(missionId, missionDir)
   rallyManager:setup(100, 10)
-  rallyManager:handleNoteSearch()
+  -- rallyManager:handleNoteSearch()
 
   selectedPacenote = rallyManager:closestPacenoteToVehicle()
   if selectedPacenote then
@@ -550,18 +582,34 @@ local function loadMission(newMissionId, newMissionDir)
 end
 
 local function unloadMission()
+  log('D', logTag, 'recceApp.unloadMission')
+
   rallyManager = nil
   missionDir = nil
   missionId = nil
   snaproad = nil
   selectedPacenote = nil
-  flag_NoteSearch = false
-  -- flag_drawDebug = false
+  -- flag_NoteSearch = false
+  -- flag_showNotes = false
   -- flag_drawDebugSnaproads = false
 end
 
 local function setDrawDebug(val)
   flag_drawDebug = val
+  if rallyManager then
+    rallyManager:enableDrawDebug(flag_drawDebug)
+  end
+end
+
+local function setLuaAudioBackend(val)
+  if rallyManager then
+    rallyManager:setLuaAudioBackend(val)
+  end
+end
+
+local function setShowNotes(val)
+  flag_showNotes = val
+  -- setDrawDebug(val) -- uncomment this for visual debugging in recce mode
 end
 
 local function setDrawDebugSnaproads(val)
@@ -579,9 +627,10 @@ local function onVehicleResetted()
   log('I', 'aipacenotes', 'recceApp detected vehicle reset')
 
   if rallyManager then
-    flag_NoteSearch = true
-    rallyManager.audioManager:resetAudioQueue()
-    -- self.rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
+    -- flag_NoteSearch = true
+    -- rallyManager.audioManager:resetAudioQueue()
+    rallyManager:reset() -- needed someday? it's used in the flowgraph reset code.
+    rallyManager:enableDrawDebug(flag_drawDebug)
   end
 end
 
@@ -675,13 +724,13 @@ local function setLastLoadState(state)
 end
 
 local function initRecceApp()
-  log('I', logTag, 'initRecceApp')
+  log('D', logTag, 'recceApp.initRecceApp')
   recce_settings = RecceSettings()
   recce_settings:load()
 end
 
 local function onExtensionLoaded()
-  print('recceApp.onExtensionLoaded')
+  log('D', logTag, 'recceApp.onExtensionLoaded')
   initRecceApp()
   guihooks.trigger('aiPacenotes.recceApp.onExtensionLoaded', {})
 end
@@ -693,7 +742,7 @@ M.onVehicleResetted = onVehicleResetted
 -- M.onVehicleSpawned = onVehicleSpawned
 -- M.onVehicleSwitched = onVehicleSwitched
 
-M.initRecceApp = initRecceApp
+-- M.initRecceApp = initRecceApp
 M.refresh = refresh
 
 M.loadMission = loadMission
@@ -702,9 +751,12 @@ M.setLastMissionId = setLastMissionId
 M.setLastLoadState = setLastLoadState
 
 
+M.setShowNotes = setShowNotes
 M.setDrawDebug = setDrawDebug
+M.setLuaAudioBackend = setLuaAudioBackend
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setSelectedPacenoteText = setSelectedPacenoteText
+M.setSelectedPacenoteCodriverWait = setSelectedPacenoteCodriverWait
 
 M.movePacenoteATBackward = movePacenoteATBackward
 M.movePacenoteATForward = movePacenoteATForward
@@ -722,5 +774,7 @@ M.transcribe_recording_cut = transcribe_recording_cut
 M.transcribe_recording_stop = transcribe_recording_stop
 M.transcribe_recording_start = transcribe_recording_start
 M.transcribe_clear_all = transcribe_clear_all
+
+M.getRallyManager = function() return rallyManager end
 
 return M

@@ -49,6 +49,10 @@
     {
       "action":"rallyEditorToggleCornerCalls",
       "control":"c"
+    },
+    {
+      "action":"rallyEditorCycleCodriverWait",
+      "control":"g"
     }
   ]
 }

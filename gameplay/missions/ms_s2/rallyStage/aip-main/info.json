@@ -1,0 +1,92 @@
+{
+  "additionalAttributes":{
+    "vehicle":"own"
+  },
+  "author":"Bardaff - SPittlebug",
+  "careerSetup":{
+    "branch":"(none)",
+    "defaultStarKeys":{},
+    "showInFreeroam":true,
+    "skill":"(none)",
+    "starOutroTexts":{
+      "noStarUnlocked":"Well done! You can try the reverse layout from here."
+    },
+    "starRewards":{},
+    "starsActive":{}
+  },
+  "customAdditionalAttributes":{},
+  "date":1707738042,
+  "description":"Main stage of the event.\n75% Gravel / 25% Tarmac",
+  "devMission":false,
+  "grouping":{
+    "id":"",
+    "label":""
+  },
+  "isAvailableAsScenario":true,
+  "missionType":"rallyStage",
+  "missionTypeData":{
+    "allowFlip":true,
+    "allowRecover":true,
+    "allowRollingStart":false,
+    "bronzeTime":180,
+    "bronzeTimePenalty":20,
+    "bronzeTimeTotal":180,
+    "closed":false,
+    "defaultLaps":1,
+    "endScreenText":"Well done! You can try the reverse layout from here.",
+    "flipLimit":99,
+    "flipPenalty":10,
+    "goldTime":60,
+    "goldTimePenalty":0,
+    "goldTimeTotal":60,
+    "justFinishPenalty":30,
+    "mapPreviewMode":"none",
+    "recoverLimit":99,
+    "recoverPenalty":60,
+    "reversible":false,
+    "silverTime":120,
+    "silverTimePenalty":10,
+    "silverTimeTotal":120,
+    "startScreenText":"Get ready. Checkpoints markers are invisible but somewhat functionnal so you have to pass clean through the gates. Good luck!"
+  },
+  "name":"[5.7km] Mediterranean SS2 - Main Layout with Codriver (aip)",
+  "retryBehaviour":"infiniteRetries",
+  "setupModules":{
+    "timeOfDay":{
+      "enabled":false
+    },
+    "traffic":{
+      "enabled":false
+    },
+    "vehicles":{
+      "_selectionIdx":1,
+      "enabled":true,
+      "includePlayerVehicle":true,
+      "prioritizePlayerVehicle":true,
+      "usePlayerVehicle":true,
+      "vehicles":{}
+    }
+  },
+  "startCondition":{
+    "type":"always"
+  },
+  "startTrigger":{
+    "level":"ms_s2",
+    "pos":[
+      503.9643555,
+      505.4104614,
+      69.42786407
+    ],
+    "radius":3,
+    "rot":[
+      0,
+      0,
+      0.8975666165,
+      -0.4408787787
+    ],
+    "type":"coordinates"
+  },
+  "visibleCondition":{
+    "type":"always"
+  }
+}

@@ -4,8 +4,10 @@
   },
   "author":"birdman",
   "careerSetup":{
+    "branch":"(none)",
     "defaultStarKeys":{},
     "showInFreeroam":true,
+    "skill":"(none)",
     "starOutroTexts":{
       "bronzeTime":"Goo Ga Ga",
       "goldTime":"Way to go!",
@@ -42,7 +44,7 @@
     "silverTime":600,
     "startScreenText":"How many racecars will you destroy today?"
   },
-  "name":"Forbin Pines (aip)",
+  "name":"[4.4km] Forbin Pines (aip)",
   "retryBehaviour":"infiniteRetries",
   "setupModules":{
     "timeOfDay":{
@@ -54,7 +56,7 @@
     "vehicles":{
       "enabled":true,
       "includePlayerVehicle":true,
-      "prioritizePlayerVehicle":false,
+      "prioritizePlayerVehicle":true,
       "vehicles":[
         {
           "config":"Forbin Pines - Vivace (aip)",

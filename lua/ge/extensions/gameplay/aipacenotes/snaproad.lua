@@ -2,6 +2,8 @@ local logTag = 'aipacenotes'
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 
+local normals = require('/lua/ge/extensions/gameplay/aipacenotes/snaproad/normals')
+
 local C = {}
 
 local startingMinDist = 4294967295
@@ -354,30 +356,37 @@ function C:closestSnapPos(source_pos)
   end
 end
 
+-- function C:normalAlignPoints(point)
+--   if not point then return nil, nil end
+--
+--   local fromPoint = nil
+--   local toPoint = nil
+--
+--   if point.next then
+--     fromPoint = point
+--     toPoint = point.next
+--   elseif point.prev then
+--     toPoint = point.prev
+--     fromPoint = point
+--   else
+--     toPoint = point + vec3(1,0,0)
+--   end
+--
+--   return fromPoint, toPoint
+-- end
+
 function C:normalAlignPoints(point)
-  if not point then return nil, nil end
-
-  local fromPoint = nil
-  local toPoint = nil
-
-  if point.next then
-    fromPoint = point
-    toPoint = point.next
-  elseif point.prev then
-    toPoint = point.prev
-    fromPoint = point
-  else
-    toPoint = point + vec3(1,0,0)
-  end
-
-  return fromPoint, toPoint
+  return normals.normalAlignPoints(point)
 end
 
-function C:forwardNormalVec(point)
-  local fromPoint, toPoint = self:normalAlignPoints(point)
+-- function C:forwardNormalVec(point)
+--   local fromPoint, toPoint = self:normalAlignPoints(point)
+--   local normVec = re_util.calculateForwardNormal(fromPoint.pos, toPoint.pos)
+--   return vec3(normVec.x, normVec.y, normVec.z)
+-- end
 
-  local normVec = re_util.calculateForwardNormal(fromPoint.pos, toPoint.pos)
-  return vec3(normVec.x, normVec.y, normVec.z)
+function C:forwardNormalVec(point)
+  return normals.forwardNormalVec(point)
 end
 
 function C:pointsBackwards(fromPoint, steps, limitPoints)

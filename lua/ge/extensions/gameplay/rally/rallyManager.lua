@@ -1,5 +1,6 @@
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
+local DrivelineTracker = require('/lua/ge/extensions/gameplay/aipacenotes/driveline/tracker')
 
 local C = {}
 local logTag = 'aipacenotes'
@@ -19,6 +20,9 @@ function C:init()
   self.audioManager = nil
   self.vehicleTracker = nil
 
+  self.drivelineTracker = nil
+  self.useDriveline = true
+
   self.missionId = nil
   self.missionDir = nil
   self.missionSettings = nil
@@ -34,11 +38,35 @@ function C:init()
 
   self.currLap = -1
   self.maxLap = -1
+
+  -- reset flag is used to skip a single update tick after a reset.
+  -- that way the vehicle velocity is ignored when it jumps to the reset location.
+  self.reset_flag = false
+
+  -- set this to trigger a search for the next pacenote upon next update.
+  self.flag_NoteSearch = false
+end
+
+function C:enableDrawDebug(val)
+  if self.drivelineTracker then
+    self.drivelineTracker:enableDrawDebug(val)
+  end
+end
+
+function C:setLuaAudioBackend(val)
+  if self.audioManager then
+    self.audioManager:setLuaAudioBackend(val)
+  end
 end
 
 function C:setOverrideMission(missionId, missionDir)
   self.overrideMissionId = missionId
   self.overrideMissionDir = missionDir
+end
+
+function C:setDrivelineTrackerThreshold(val)
+  if not self.drivelineTracker then return end
+  self.drivelineTracker:setThreshold(val)
 end
 
 -- function C:toString()
@@ -96,6 +124,12 @@ end
 
 function C:reset()
   log('I', logTag, 'RallyManager reset')
+
+  self.reset_flag = true
+  self.flag_NoteSearch = true
+
+  self.audioManager:resetAudioQueue()
+
   self.vehicleTracker = require('/lua/ge/extensions/gameplay/rally/vehicleTracker')(
     self.damageThresh
   )
@@ -105,6 +139,13 @@ function C:reset()
   log('D', 'wtf', 'nextId reset: hardcoded to 1')
   self.currLap = -1
   self.maxLap = -1
+
+  self.drivelineTracker = DrivelineTracker(
+    self.missionDir,
+    self.vehicleTracker,
+    self.notebook
+  )
+  -- self.drivelineTracker:notifyThreshold()
 end
 
 function C:detectMissionId()
@@ -181,67 +222,121 @@ function C:intersectCorners(pacenote)
   end
 end
 
-function C:shouldPlay(pacenote)
+-- function C:shouldPlay(pacenote)
+--   local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
+--   if err then
+--     log('E', logTag, 'error in pacenote:playbackAllowed(): '..err)
+--     allowed = true
+--   end
+--   return allowed and self:intersectCorners(pacenote)
+-- end
+
+function C:playbackAllowed(pacenote)
   local allowed, err = pacenote:playbackAllowed(self.currLap, self.maxLap)
   if err then
     log('E', logTag, 'error in pacenote:playbackAllowed(): '..err)
     allowed = true
   end
-  return allowed and self:intersectCorners(pacenote)
+  return allowed
 end
+
+-- function C:updateForClosestPacenotes()
+--   -- log('D', 'wtf', 'has closestPacenotes ('..#self.closestPacenotes..')')
+--   for _,closePacenote in ipairs(self.closestPacenotes) do
+--     if self:intersectCorners(closePacenote) then
+--       if self:shouldPlay(closePacenote) then
+--         self.audioManager:enqueuePacenote(closePacenote)
+--       end
+--       -- nextId is not the pacenote.id, its the index in the ordered list of pacenotes.
+--       for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
+--         if pacenote.id == closePacenote.id then
+--           -- log('D', 'wtf', 'found pn match at i='..tostring(i))
+--           self.nextId = i+1
+--           -- log('D', 'wtf', 'nextId update,closestPacenotes: incremented to '..tostring(self.nextId))
+--           self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+--           self:nextPacenotesUpdated()
+--           break
+--         end
+--       end
+--       self.closestPacenotes = nil
+--       break
+--     end
+--   end
+-- end
+--
+-- function C:updateForNextPacenote()
+--   -- log('D', 'wtf', 'nextId='..tostring(self.nextId))
+--   local pacenote = self.notebook.pacenotes.sorted[self.nextId]
+--   if pacenote and self:intersectCorners(pacenote) then
+--     if self:shouldPlay(pacenote) then
+--       self.audioManager:enqueuePacenote(pacenote)
+--     end
+--     -- advance the pacenote even if we dont play the audio.
+--     self.nextId = self.nextId + 1
+--     -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
+--     self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
+--     self:nextPacenotesUpdated()
+--   end
+-- end
 
 function C:update(dtSim)
   if not self.setup_complete then return end
 
+  if self.flag_NoteSearch then
+    self.flag_NoteSearch = false
+    -- self:handleNoteSearch()
+    self:drivelineTrackerNoteSearch()
+  end
+
+  -- get the latest vehicle position data
   if self.vehicleTracker then
     self.vehicleTracker:onUpdate(dtSim)
   end
 
+  -- handle damage
   if self.vehicleTracker:didJustHaveDamage() then
     -- First, check if the last tick had an increase in damage.
     self.audioManager:handleDamage()
-  -- else
-    -- self.audioManager:playNextInQueue()
-  elseif self.closestPacenotes then
-    -- log('D', 'wtf', 'has closestPacenotes ('..#self.closestPacenotes..')')
-    -- In this case, there is a vehicle position reset and we need to find where
-    -- in the pacenotes list we are.
-    for _,closePacenote in ipairs(self.closestPacenotes) do
-      if self:intersectCorners(closePacenote) then
-        if self:shouldPlay(closePacenote) then
-          self.audioManager:enqueuePacenote(closePacenote)
-        end
-        -- nextId is not the pacenote.id, its the index in the ordered list of pacenotes.
-        for i,pacenote in ipairs(self.notebook.pacenotes.sorted) do
-          if pacenote.id == closePacenote.id then
-            -- log('D', 'wtf', 'found pn match at i='..tostring(i))
-            self.nextId = i+1
-            -- log('D', 'wtf', 'nextId update,closestPacenotes: incremented to '..tostring(self.nextId))
+  end
+
+  if self.useDriveline then
+    if self.drivelineTracker then
+      local pacenote = self.notebook.pacenotes.sorted[self.nextId]
+      if pacenote then
+        if self.reset_flag then
+          self.reset_flag = false
+        else
+          self.drivelineTracker:onUpdate(pacenote)
+          if self.drivelineTracker:shouldPlayNextPacenote() then
+            if self:playbackAllowed(pacenote) then
+              self.audioManager:enqueuePacenote(pacenote)
+            end
+
+            -- advance the pacenote even if we dont play the audio.
+            self.nextId = self.nextId + 1
+            -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
             self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
             self:nextPacenotesUpdated()
-            break
           end
         end
-        self.closestPacenotes = nil
-        break
       end
     end
-  else
-    -- in the normal case, we assume the next pacenote is nextId+1.
-    -- yes, this won't support skipping pacenotes, but I don't think
-    -- that should be expected.
-    -- log('D', 'wtf', 'nextId='..tostring(self.nextId))
-    local pacenote = self.notebook.pacenotes.sorted[self.nextId]
-    if pacenote and self:intersectCorners(pacenote) then
-      if self:shouldPlay(pacenote) then
-        self.audioManager:enqueuePacenote(pacenote)
-      end
-      -- advance the pacenote even if we dont play the audio.
-      self.nextId = self.nextId + 1
-      -- log('D', 'wtf', 'nextId update,else: incremented to '..tostring(self.nextId))
-      self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
-    self:nextPacenotesUpdated()
-    end
+  -- else
+  --   -- look for the next pacenote to trigger audio for
+  --   if self.closestPacenotes then
+  --     -- In this case, there is a vehicle position reset and we need to find where
+  --     -- in the pacenotes list we are.
+  --     self:updateForClosestPacenotes()
+  --   else
+  --     -- in the normal case, we assume the next pacenote is nextId+1.
+  --     -- yes, this won't support skipping pacenotes, but I don't think
+  --     -- that should be expected.
+  --     self:updateForNextPacenote()
+  --   end
+  end
+
+  if self.audioManager then
+    self.audioManager:playNextInQueue()
   end
 end
 
@@ -284,8 +379,18 @@ function C:closestPacenoteToVehicle()
 end
 
 function C:handleNoteSearch()
+  log('I', logTag, 'RallyManager handleNoteSearch')
   self.closestPacenotes = self.notebook:findNClosestPacenotes(self.vehicleTracker:pos(), self.closestPacenotes_n)
   self.nextPacenotes = self.closestPacenotes
+  self:nextPacenotesUpdated()
+end
+
+function C:drivelineTrackerNoteSearch()
+  log('I', logTag, 'RallyManager drivelineTrackerNoteSearch')
+  local nextPacenoteData = self.drivelineTracker:findNextPacenote()
+  local pacenote_i = nextPacenoteData.pacenote_i
+  self.nextId = pacenote_i
+  self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }
   self:nextPacenotesUpdated()
 end
 
@@ -299,7 +404,6 @@ end
 
 function C:getPacenotesNearPos(pos)
   if not pos then return {} end
-  -- return self:getNextPacenotes()
 
   local closestPacenotes = self.notebook:findNClosestPacenotes(pos, self.closestPacenotes_n)
   return closestPacenotes

@@ -46,31 +46,14 @@
             "_prosody_pitch": "high",
             "_prosody_rate": "default",
             "dynamic_rate": {
-                "_lowest_rate": 0.8,
+                "_lowest_rate": 0.9,
                 "_shortest_phrase": 1,
-                "_highest_rate": 1.35,
-                "_longest_phrase": 10
+                "_highest_rate": 1.40,
+                "_longest_phrase": 7
             }
         },
         "audio_effects": {
-             "_normalize_target_peak": 0.8,
-
-             "_disable_trim": true,
-             "_trim_top_db": 30.0,
-
-             "_disable_eq": true,
-             "_eq_highpass_freq_hz": 300,
-             "_eq_highshelf_freq_hz": 3000,
-             "_eq_highshelf_gain": 10,
-             "_eq_band_freq_hz": 2500,
-             "_eq_band_width_hz": 500,
-             "_eq_band_gain": -40,
-
-             "_disable_noise": true,
-             "_noise_level": 0.001,
-
-             "_disable_distortion": true,
-             "_distortion_level": 0.2
+            "version": "3"
         }
     },
     "spanish_female": {

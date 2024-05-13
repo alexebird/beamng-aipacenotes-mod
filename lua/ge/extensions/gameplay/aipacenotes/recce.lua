@@ -26,9 +26,9 @@ function C:load()
   self.settings:load()
   self:loadDriveline()
 
-  if not self.driveline then
-    self:loadDrivelineLegacy()
-  end
+  -- if not self.driveline then
+    -- self:loadDrivelineLegacy()
+  -- end
 
   self:loadCuts()
   self.loaded = true
@@ -40,6 +40,8 @@ function C:loadCuts()
 
   local import_language = re_util.default_codriver_language
   local word_map = SettingsManager.loadMainSettingsWithLanguage(import_language):getWordMapForLanguage(import_language)
+
+  print(dumps(word_map))
 
   local transcripts = {}
   local tscCount = 0
@@ -75,7 +77,9 @@ function C:loadCuts()
     if tsc then
       local txt = tsc.resp.text
       if txt then
+        -- print(txt)
         txt = normalizer.replaceWords(word_map, txt)
+        -- print(txt)
       end
 
       obj.transcript = {
@@ -93,77 +97,14 @@ function C:loadCuts()
 end
 
 function C:loadDriveline()
-  local fname = re_util.drivelineFile(self.missionDir)
-  local points = {}
-
-  if not FS:fileExists(fname) then
-    self.driveline = nil
-    return
-  end
-
-  for line in io.lines(fname) do
-    local obj = jsonDecode(line)
-    obj.pos = vec3(obj.pos)
-    obj.quat = quat(obj.quat)
-    obj.prev = nil
-    obj.next = nil
-    obj.id = nil
-    obj.partition = nil
-    table.insert(points, obj)
-  end
-
-  for i,point in ipairs(points) do
-    point.id = i
-    if i > 1 then
-      point.prev = points[i-1]
-    end
-    if i < #points then
-      point.next = points[i+1]
-    end
-  end
-
-  log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
-  self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(points)
-end
-
-function C:loadDrivelineLegacy()
-  local missionSettings, err = SettingsManager.loadMissionSettingsForMissionDir(self.missionDir)
-
-  if err then
-    self.driveline = nil
-    log('W', logTag, 'error loading missionSettings: '..tostring(err))
-    -- error(err)
-    return
-  end
-
-  -- local transcriptFullCourse = missionSettings:getFullCourseTranscriptAbsPath(self.missionDir)
-  -- print(transcriptFullCourse)
-
-  local transcriptFullCourse = missionSettings:getFullCourseTranscript(self.missionDir)
-
-  if not transcriptFullCourse then
-    print('legacy full_course transcript file not found')
-    self.driveline = nil
-    return
-  end
-
-  local points = {}
-
-  for i,tsc in ipairs(transcriptFullCourse.transcripts.sorted) do
-    for j,capture in ipairs(tsc:capture_data().captures) do
-      local obj = {}
-      obj.pos = vec3(capture.pos)
-      obj.quat = quat(capture.quat)
-      obj.steering = capture.steering
-      obj.ts = capture.ts
-      obj.prev = nil
-      obj.next = nil
-      obj.id = nil
-      obj.partition = nil
-      table.insert(points, obj)
-    end
-  end
-
+  -- local fname = re_util.drivelineFile(self.missionDir)
+  -- local points = {}
+  --
+  -- if not FS:fileExists(fname) then
+  --   self.driveline = nil
+  --   return
+  -- end
+  --
   -- for line in io.lines(fname) do
   --   local obj = jsonDecode(line)
   --   obj.pos = vec3(obj.pos)
@@ -174,20 +115,73 @@ function C:loadDrivelineLegacy()
   --   obj.partition = nil
   --   table.insert(points, obj)
   -- end
-
-  for i,point in ipairs(points) do
-    point.id = i
-    if i > 1 then
-      point.prev = points[i-1]
-    end
-    if i < #points then
-      point.next = points[i+1]
-    end
+  --
+  -- for i,point in ipairs(points) do
+  --   point.id = i
+  --   if i > 1 then
+  --     point.prev = points[i-1]
+  --   end
+  --   if i < #points then
+  --     point.next = points[i+1]
+  --   end
+  -- end
+  --
+  -- log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
+  self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(self.missionDir)
+  if not self.driveline:load() then
+    self.driveline = nil
+    return
   end
-
-  log('I', logTag, 'loaded legacy driveline with '..tostring(#points)..' points')
-  self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(points)
 end
+
+-- function C:loadDrivelineLegacy()
+--   local missionSettings, err = SettingsManager.loadMissionSettingsForMissionDir(self.missionDir)
+--
+--   if err then
+--     self.driveline = nil
+--     log('W', logTag, 'error loading missionSettings: '..tostring(err))
+--     return
+--   end
+--
+--   local transcriptFullCourse = missionSettings:getFullCourseTranscript(self.missionDir)
+--
+--   if not transcriptFullCourse then
+--     print('legacy full_course transcript file not found')
+--     self.driveline = nil
+--     return
+--   end
+--
+--   local points = {}
+--
+--   for _,tsc in ipairs(transcriptFullCourse.transcripts.sorted) do
+--     for _,capture in ipairs(tsc:capture_data().captures) do
+--       local obj = {}
+--       obj.pos = vec3(capture.pos)
+--       obj.quat = quat(capture.quat)
+--       obj.steering = capture.steering
+--       obj.ts = capture.ts
+--       obj.prev = nil
+--       obj.next = nil
+--       obj.id = nil
+--       obj.partition = nil
+--       table.insert(points, obj)
+--     end
+--   end
+--
+--   for i,point in ipairs(points) do
+--     point.id = i
+--     if i > 1 then
+--       point.prev = points[i-1]
+--     end
+--     if i < #points then
+--       point.next = points[i+1]
+--     end
+--   end
+--
+--   log('I', logTag, 'loaded legacy driveline with '..tostring(#points)..' points')
+--   self.driveline = require('/lua/ge/extensions/gameplay/aipacenotes/driveline')(self.missionDir)
+--   self.driveline:setPoints(points)
+-- end
 
 function C:drawDebugRecce()
   if not self.driveline then return end

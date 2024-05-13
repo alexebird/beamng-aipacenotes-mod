@@ -98,14 +98,14 @@ end
 -- function C:onEditModeActivate()
 -- end
 
-function C:draw(mouseInfo, tabContentsHeight)
+function C:draw(mouseInfo)
   -- self.mouseInfo = mouseInfo
   -- if self.rallyEditor.allowGizmo() then
     -- editor.updateAxisGizmo(function() self:beginDrag() end, function() self:endDragging() end, function() self:dragging() end)
     -- self:input()
   -- end
   -- self:drawNotebookList()
-  self:drawNotebook(tabContentsHeight)
+  self:drawNotebook()
 end
 
 local function setNotebookFieldUndo(data)
@@ -121,7 +121,7 @@ local function setCodriverFieldRedo(data)
   data.self.path.codrivers.objects[data.index][data.field] = data.new
 end
 
-function C:drawNotebook(tabContentsHeight)
+function C:drawNotebook()
   if not self.path then return end
 
   self:validate()
@@ -166,15 +166,19 @@ function C:drawNotebook(tabContentsHeight)
       setNotebookFieldUndo, setNotebookFieldRedo)
   end
 
+  if im.Checkbox("Force Manual Audio Triggers##forceManualATs", im.BoolPtr(self.path.forceManualATs)) then
+    self.path.forceManualATs = not self.path.forceManualATs
+  end
+
   -- im.BeginChild1("codrivers-wrapper", im.ImVec2(0, 0), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
-  self:drawCodriversList(tabContentsHeight-260)
+  self:drawCodriversList()
   -- im.EndChild()
 end
 
-function C:drawCodriversList(tabContentsHeight)
+function C:drawCodriversList()
   im.HeaderText("Co-Drivers")
 
-  tabContentsHeight = 0
+  local tabContentsHeight = 0
   im.BeginChild1("codrivers", im.ImVec2(125 * im.uiscale[0], tabContentsHeight), im.WindowFlags_ChildWindow)
   for i, codriver in ipairs(self.path.codrivers.sorted) do
     if im.Selectable1(codriver.name, codriver.id == self.codriver_index) then

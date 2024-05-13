@@ -25,7 +25,7 @@ C.pinSchema = {
 
 function C:work()
   if self.pinIn.noteSearch.value then
-    extensions.gameplay_aipacenotes.getRallyManager():handleNoteSearch()
+    gameplay_aipacenotes.getRallyManager():handleNoteSearch()
   end
 end
 

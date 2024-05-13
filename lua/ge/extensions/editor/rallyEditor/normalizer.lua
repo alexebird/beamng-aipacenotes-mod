@@ -29,11 +29,16 @@ local M = {}
 
 local function replaceWords(word_map, note)
   if not note then return note end
+
+  local newnote, count
+  newnote = note
+
   for _,mapping in ipairs(word_map) do
     local from, to = mapping[1], mapping[2]
-    note = note:gsub(from, to)
+    newnote, count = newnote:gsub(from, to)
+    -- note = note:gsub(from, to)
   end
-  return note
+  return newnote
 end
 
 -- M.replaceEnglishWords = replaceEnglishWords

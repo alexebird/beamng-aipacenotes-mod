@@ -8,9 +8,21 @@ function C:init(rallyManager)
   self.rallyManager = rallyManager
   self.pacenote_metadata = nil
 
+  self.backend = nil
+
   self:resetAudioQueue()
+
   -- self.damageAudioPlayedAt = nil
   -- self.damageTimeoutSecs = 1.5
+end
+
+-- tell the audiomanager to play audio through lua game engine audio backend
+function C:setLuaAudioBackend(val)
+  if val then
+    self.backend = 'lua'
+  else
+    self.backend = nil
+  end
 end
 
 function C:loadPacenoteMetadata()
@@ -209,8 +221,11 @@ function C:playNextInQueue()
     self.currAudioObj = self.queue:pop_left()
     if self.currAudioObj then
       if self.currAudioObj.audioType == 'pacenote' then
-        -- re_util.playPacenote(self.currAudioObj)
-        re_util.playPacenoteGui(self.currAudioObj)
+        if self.backend == 'lua' then
+          re_util.playPacenote(self.currAudioObj)
+        else
+          re_util.playPacenoteGui(self.currAudioObj)
+        end
       elseif self.currAudioObj.audioType == 'pause' then
         self:doPause(self.currAudioObj)
       else

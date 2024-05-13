@@ -20,7 +20,7 @@ local currentPath = nil
 -- currentPath._dir = previousFilepath
 
 local windows = {}
-local pacenotesWindow, recceWindow
+local pacenotesWindow, recceWindow, testWindow
 local currentWindow = {}
 local changedWindow = false
 local programmaticTabSelect = false
@@ -224,8 +224,6 @@ local function moveSelectedWaypointForward(v)
   end
 
   moveWaypointState.forward = v
-  -- if pacenotesWindow:selectedWaypoint() then
-  -- end
 end
 
 local function moveSelectedWaypointBackward(v)
@@ -236,8 +234,11 @@ local function moveSelectedWaypointBackward(v)
   end
 
   moveWaypointState.backward = v
-  -- if pacenotesWindow:selectedWaypoint() then
-  -- end
+end
+
+local function cycleCodriverWait()
+  if currentWindow ~= pacenotesWindow then return end
+  pacenotesWindow:cycleCodriverWait()
 end
 
 local function cameraPathPlay()
@@ -459,13 +460,14 @@ local function drawEditorGui()
 
       for i = 1,3 do im.Spacing() end
 
-      local windowSize = im.GetWindowSize()
-      local windowHeight = windowSize.y
+      -- local windowSize = im.GetWindowSize()
+      -- local windowHeight = windowSize.y
       -- local middleChildHeight = windowHeight - topToolbarHeight - bottomToolbarHeight - heightAdditional
-      local middleChildHeight = 1000
+      -- local middleChildHeight = 1000
       -- middleChildHeight = math.max(middleChildHeight, minMiddleHeight)
 
-      im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
+      -- im.BeginChild1("##tabs-child", im.ImVec2(0,middleChildHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
+      im.BeginChild1("##tabs-child", nil, im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder )
       if im.BeginTabBar("modes") then
         for _, window in ipairs(windows) do
 
@@ -494,17 +496,21 @@ local function drawEditorGui()
         im.EndTabBar()
       end -- tab bar
 
-      local tabsHeight = 25 * im.uiscale[0]
-      local tabContentsHeight = middleChildHeight - tabsHeight
-      im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
-      currentWindow:draw(mouseInfo, tabContentsHeight)
+      -- local tabsHeight = 25 * im.uiscale[0]
+      -- local tabContentsHeight = middleChildHeight - tabsHeight
+      -- im.BeginChild1("##tab-contents-child-window", im.ImVec2(0,tabContentsHeight), im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+      im.BeginChild1("##tab-contents-child-window", nil, im.WindowFlags_ChildWindow and im.ImGuiWindowFlags_NoBorder)
+      -- currentWindow:draw(mouseInfo, tabContentsHeight)
+      currentWindow:draw(mouseInfo)
       im.EndChild() -- end top-toolbar
 
       im.EndChild() -- end tabs-child
 
       -- im.BeginChild1("##bottom-toolbar", im.ImVec2(0,bottomToolbarHeight), im.WindowFlags_ChildWindow)
       -- im.BeginChild1("##bottom-toolbar", nil, im.WindowFlags_ChildWindow)
-      prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
+
+      -- prefsCopy.pageGui(editor.preferencesRegistry:findCategory('rallyEditor'))
+
       -- im.EndChild() -- end bottom-toolbar
 
       local fg_mgr = editor_flowgraphEditor.getManager()
@@ -517,6 +523,8 @@ local function drawEditorGui()
           pacenotesWindow:drawDebugEntrypoint()
         elseif currentWindow == recceWindow then
           recceWindow:drawDebugEntrypoint()
+        elseif currentWindow == testWindow then
+          testWindow:drawDebugEntrypoint()
         end
       else
         if currentWindow == pacenotesWindow then
@@ -750,7 +758,8 @@ local function onEditorInitialized()
   table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/static')(M))
 
   if isDev then
-    table.insert(windows, require('/lua/ge/extensions/editor/rallyEditor/testTab')(M))
+    testWindow = require('/lua/ge/extensions/editor/rallyEditor/testTab')(M)
+    table.insert(windows, testWindow)
   end
 
   for _,win in pairs(windows) do
@@ -848,7 +857,7 @@ local function getPrefShowNextPacenote()
 end
 
 local function getPrefDefaultRadius()
-  return getPreference('rallyEditor.waypoints.defaultRadius', 8)
+  return getPreference('rallyEditor.waypoints.defaultRadius', re_util.default_waypoint_intersect_radius)
 end
 
 local function getPrefUiPacenoteNoteFieldWidth()
@@ -971,6 +980,7 @@ M.deselect = deselect
 M.selectNextWaypoint = selectNextWaypoint
 M.moveSelectedWaypointForward = moveSelectedWaypointForward
 M.moveSelectedWaypointBackward = moveSelectedWaypointBackward
+M.cycleCodriverWait = cycleCodriverWait
 -- M.moveSelectedWaypointForwardFast = moveSelectedWaypointForwardFast
 -- M.moveSelectedWaypointBackwardFast = moveSelectedWaypointBackwardFast
 M.cameraPathPlay = cameraPathPlay

@@ -1,13 +1,13 @@
 {
   "format":2,
-  "licenseName":"FDG-MFN",
+  "licenseName":"ZS.786WC",
   "mainPartName":"vivace",
   "model":"vivace",
   "paints":[
     {
       "baseColor":[
-        0.44,
-        0.82,
+        0,
+        0,
         0,
         1.2
       ],
@@ -18,26 +18,26 @@
     },
     {
       "baseColor":[
-        0.02,
-        0.03,
-        0.64,
+        0.9327637363,
+        0.9493846154,
+        0.01861538462,
         2
       ],
       "clearcoat":0,
       "clearcoatRoughness":0,
-      "metallic":0.675,
+      "metallic":1,
       "roughness":0
     },
     {
       "baseColor":[
-        0.61,
-        0.11,
-        0.14,
+        1,
+        1,
+        1,
         2
       ],
       "clearcoat":0,
       "clearcoatRoughness":0,
-      "metallic":0.52,
+      "metallic":1,
       "roughness":0
     }
   ],
@@ -110,7 +110,7 @@
     "vivace_headlight_L":"vivace_headlight_L",
     "vivace_headlight_R":"vivace_headlight_R",
     "vivace_hood":"vivace_hood_alt_CF",
-    "vivace_intake_i5_2.5_petrol":"vivace_turbo_i5_2.5_petrol_stage2",
+    "vivace_intake_i5_2.5_petrol":"vivace_turbo_i5_2.5_petrol",
     "vivace_intercarpet_trunk":"",
     "vivace_licenseplate_F_sport":"",
     "vivace_licenseplate_R":"vivace_licenseplate_R_EU",
@@ -192,7 +192,7 @@
     "$lsdpreload_R":100,
     "$toe_FR_rally":0.9935,
     "$toe_RR_rally":0.9945,
-    "$trackoffset_F":0.05,
-    "$trackoffset_R":0.05
+    "$trackoffset_F":0.03,
+    "$trackoffset_R":0.03
   }
 }
