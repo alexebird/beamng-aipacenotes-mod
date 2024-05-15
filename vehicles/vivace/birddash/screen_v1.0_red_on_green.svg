@@ -81,19 +81,19 @@
        id="linearGradient9"
        inkscape:collect="always">
       <stop
-         style="stop-color:#0400ff;stop-opacity:1;"
+         style="stop-color:#04ff00;stop-opacity:1;"
          offset="0"
          id="rpm_path_l_0" />
       <stop
-         style="stop-color:#0400ff;stop-opacity:1;"
+         style="stop-color:#04ff00;stop-opacity:1;"
          offset="0.41806555"
          id="rpm_path_l_1" />
       <stop
-         style="stop-color:#0400ff;stop-opacity:0;"
+         style="stop-color:#04ff00;stop-opacity:0;"
          offset="0.41806555"
          id="rpm_path_l_2" />
       <stop
-         style="stop-color:#0400ff;stop-opacity:0;"
+         style="stop-color:#04ff00;stop-opacity:0;"
          offset="1"
          id="rpm_path_l_3" />
     </linearGradient>
@@ -101,19 +101,19 @@
        id="linearGradient4"
        inkscape:collect="always">
       <stop
-         style="stop-color:#0400ff;stop-opacity:1;"
+         style="stop-color:#04ff00;stop-opacity:1;"
          offset="0"
          id="rpm_path_r_0" />
       <stop
-         style="stop-color:#0400ff;stop-opacity:1;"
+         style="stop-color:#04ff00;stop-opacity:1;"
          offset="0.41806555"
          id="rpm_path_r_1" />
       <stop
-         style="stop-color:#0400ff;stop-opacity:0;"
+         style="stop-color:#04ff00;stop-opacity:0;"
          offset="0.41806555"
          id="rpm_path_r_2" />
       <stop
-         style="stop-color:#0400ff;stop-opacity:0;"
+         style="stop-color:#04ff00;stop-opacity:0;"
          offset="1"
          id="rpm_path_r_3" />
     </linearGradient>
@@ -383,10 +383,10 @@
   <text
      class="cls-2"
      id="top_center_val"
-     style="font-size:1082.29px;display:inline;fill:#0400ff;fill-opacity:1"
+     style="font-size:1082.29px;display:inline;fill:#04ff00;fill-opacity:1"
      x="2057.3384"
      y="1377.7288"><tspan
-       style="font-size:1082.29px;text-align:center;text-anchor:middle;fill:#0400ff;fill-opacity:1"
+       style="font-size:1082.29px;text-align:center;text-anchor:middle;fill:#04ff00;fill-opacity:1"
        id="tspan919">4</tspan></text>
   <text
      class="cls-3"
@@ -549,7 +549,7 @@
      id="speedo"
      x="2080"
      y="1850.895"
-     style="font-size:378.802px;fill:#7c00ff;fill-opacity:1"><tspan
-       style="font-size:378.802px;text-align:center;text-anchor:middle;fill:#7c00ff;fill-opacity:1"
+     style="font-size:378.802px;fill:#00bfff;fill-opacity:1"><tspan
+       style="font-size:378.802px;text-align:center;text-anchor:middle;fill:#00bfff;fill-opacity:1"
        id="bottom_center_val">172</tspan></text>
 </svg>

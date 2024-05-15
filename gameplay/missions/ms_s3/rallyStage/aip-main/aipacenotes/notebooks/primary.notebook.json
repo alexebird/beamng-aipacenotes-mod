@@ -1428,10 +1428,10 @@
       "name":"Import_A 22",
       "notes":{
         "english":{
-          "_out":"five left short?",
+          "_out":"brake, care five left short over crest?",
           "after":"",
           "before":"",
-          "note":"5 left short?"
+          "note":"brake, care 5 left short over crest?"
         }
       },
       "oldId":103,
@@ -2366,10 +2366,10 @@
       "name":"Import_A 36",
       "notes":{
         "english":{
-          "_out":"and five left cut? sixty.",
+          "_out":"and five left dont cut? sixty.",
           "after":"60",
           "before":"and",
-          "note":"5 left cut?"
+          "note":"5 left dont cut?"
         }
       },
       "oldId":159,

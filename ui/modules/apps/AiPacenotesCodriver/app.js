@@ -54,8 +54,8 @@ angular.module('beamng.apps')
         scope.$on('aiPacenotesInputActionCodriverTimingEarlier', function (event) {
           // if (scope.timingSetting < 10.0) {
           let curr = scope.timingSetting
-          curr += 0.5
-          scope.timingSetting = Math.min(curr, 20.0)
+          curr += 0.25
+          scope.timingSetting = Math.min(curr, 12.0)
           scope.applyTimingChange()
           // }
         })
@@ -63,7 +63,7 @@ angular.module('beamng.apps')
         scope.$on('aiPacenotesInputActionCodriverTimingLater', function (event) {
           // if (scope.timingSetting > 0.1) {
           let curr = scope.timingSetting
-          curr -= 0.5
+          curr -= 0.25
           scope.timingSetting = Math.max(curr, 1.0)
           scope.applyTimingChange()
           // }

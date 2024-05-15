@@ -66,6 +66,18 @@ local function action_recce_move_vehicle_backward()
   guihooks.trigger('aiPacenotesInputActionRecceMoveVehicleBackward')
 end
 
+local function action_recce_toggle_debug_mode()
+  log('I', logTag, 'action_recce_toggle_debug_mode')
+
+  if extensions.isExtensionLoaded("gameplay_aipacenotes") then
+    gameplay_aipacenotes.toggleDrawDebug()
+  end
+
+  if extensions.isExtensionLoaded("ui_aipacenotes_recceApp") then
+    ui_aipacenotes_recceApp.toggleDrawDebug()
+  end
+end
+
 local function action_codriver_volume_up()
   log('I', logTag, 'action_codriver_volume_up')
   guihooks.trigger('aiPacenotesInputActionCodriverVolumeUp')
@@ -103,5 +115,6 @@ M.action_codriver_volume_up = action_codriver_volume_up
 M.action_codriver_volume_down = action_codriver_volume_down
 M.action_codriver_calls_earlier = action_codriver_calls_earlier
 M.action_codriver_calls_later = action_codriver_calls_later
+M.action_recce_toggle_debug_mode = action_recce_toggle_debug_mode
 
 return M

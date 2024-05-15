@@ -601,6 +601,10 @@ local function setDrawDebug(val)
   end
 end
 
+local function toggleDrawDebug()
+  setDrawDebug(not flag_drawDebug)
+end
+
 local function setLuaAudioBackend(val)
   if rallyManager then
     rallyManager:setLuaAudioBackend(val)
@@ -753,6 +757,7 @@ M.setLastLoadState = setLastLoadState
 
 M.setShowNotes = setShowNotes
 M.setDrawDebug = setDrawDebug
+M.toggleDrawDebug = toggleDrawDebug
 M.setLuaAudioBackend = setLuaAudioBackend
 M.setDrawDebugSnaproads = setDrawDebugSnaproads
 M.setSelectedPacenoteText = setSelectedPacenoteText

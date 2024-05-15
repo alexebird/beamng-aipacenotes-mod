@@ -471,10 +471,12 @@ angular.module('gaugesScreen', [])
           setGradiantStops(gaugesCells.top_bar.l_stops, pct_adjusted)
           setGradiantStops(gaugesCells.top_bar.r_stops, pct_adjusted)
 
+          // these set the gear shift color
           let black = "#000000"
           let green = "#04ff00"
           let red = "#ff1414"
-          let clr = red
+          let blue = "#0000ff"
+          let clr = green
 
           // gaugesCells.top_bar.rpm_high_rect.n.style.display = pct > thresh ? "inline" : "none";
           if (flashOn) {

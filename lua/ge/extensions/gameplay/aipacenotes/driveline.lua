@@ -22,6 +22,10 @@ function C:setPoints(points)
   self.points = points
 end
 
+local function startsWithDoubleSlash(line)
+  return line:match("^//") ~= nil
+end
+
 function C:load()
   local fname = re_util.drivelineFile(self.missionDir)
   local points = {}
@@ -32,14 +36,22 @@ function C:load()
   end
 
   for line in io.lines(fname) do
-    local obj = jsonDecode(line)
-    obj.pos = vec3(obj.pos)
-    obj.quat = quat(obj.quat)
-    obj.prev = nil
-    obj.next = nil
-    obj.id = nil
-    obj.partition = nil
-    table.insert(points, obj)
+    line = re_util.trimString(line)
+    if line == "" then
+      -- print('empty line')
+    elseif startsWithDoubleSlash(line) then
+      -- print('commented line')
+    else
+      local obj = jsonDecode(line)
+
+      obj.pos = vec3(obj.pos)
+      obj.quat = quat(obj.quat)
+      obj.prev = nil
+      obj.next = nil
+      obj.id = nil
+      obj.partition = nil
+      table.insert(points, obj)
+    end
   end
 
   for i,point in ipairs(points) do

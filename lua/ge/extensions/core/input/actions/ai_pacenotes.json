@@ -73,6 +73,14 @@
     "desc": "Move the next vehicle towards vehicle along snaproad and save notebook.",
     "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_move_vehicle_backward()"
   },
+  "recce_debug_mode": {
+    "cat": "gameplay",
+    "ctx": "tlua",
+    "order": 10,
+    "title": "Toggle recce debug mode",
+    "desc": "",
+    "onDown": "extensions.gameplay_aipacenotes_inputActions.action_recce_toggle_debug_mode()"
+  },
 
   "rallyEditorSave": {
     "cat": "editor",

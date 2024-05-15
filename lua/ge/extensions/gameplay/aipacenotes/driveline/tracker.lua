@@ -429,6 +429,7 @@ function C:drawDebug()
 
   local clr = cc.clr_white
   local alpha_shape = 0.9
+  local alpha_sq_prism = 0.1
   -- local clr_shape = cc.clr_white
   local plane_radius = re_util.default_waypoint_intersect_radius
   local midWidth = plane_radius * 2
@@ -449,7 +450,7 @@ function C:drawDebug()
       self.currPoint.pos + 0.25 * self.currPoint.normal + side,
       Point2F(5, midWidth),
       Point2F(0, 0),
-      ColorF(clr[1], clr[2], clr[3], alpha_shape)
+      ColorF(clr[1], clr[2], clr[3], alpha_sq_prism)
     )
 
     local alpha_text = 1.0
@@ -567,15 +568,15 @@ function C:drawDebug()
         ColorF(clr[1], clr[2], clr[3], alpha_shape)
       )
 
-      -- local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
-      --
-      -- debugDrawer:drawSquarePrism(
-      --   point.pos + side,
-      --   point.pos + 0.25 * point.normal + side,
-      --   Point2F(5, midWidth),
-      --   Point2F(0, 0),
-      --   ColorF(clr[1], clr[2], clr[3], alpha_shape)
-      -- )
+      -- draw the intersection plane
+      local side = point.normal:cross(vec3(0,0,1)) * (plane_radius - (midWidth / 2))
+      debugDrawer:drawSquarePrism(
+        point.pos + side,
+        point.pos + 0.25 * point.normal + side,
+        Point2F(5, midWidth),
+        Point2F(0, 0),
+        ColorF(clr[1], clr[2], clr[3], alpha_sq_prism)
+      )
 
       -- -- draw the text of the pacenoteDistances data
       -- local alpha_text = 1.0

@@ -86,7 +86,7 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
       }
 
       function updateLuaDrawDebugSnaproads() {
-        bngApi.engineLua('ui_aipacenotes_recceApp.setDrawDebugSnaproads('+$scope.drawDebugSnaproads+')')
+        bngApi.engineLua('ui_aipacenotes_recceApp.setDrawDebug('+$scope.drawDebugSnaproads+')')
       }
 
       $scope.allowPacenoteTextEditing = function() {
@@ -227,6 +227,8 @@ angular.module('beamng.apps').directive('aiPacenotesRecce', ['$interval', '$sce'
           const loadedMissionDir = $scope.selectedMission.missionDir
           $scope.loadedMissionName = $scope.selectedMission.missionName
           $scope.missionIsLoaded = true
+
+          // bngApi.engineLua('extensions.load("ui_aipacenotes_recceApp")')
           bngApi.engineLua('ui_aipacenotes_recceApp.loadMission("'+loadedMissionId+'", "'+loadedMissionDir+'")')
           $scope.showNotes = true
           $scope.drawDebugSnaproads = false

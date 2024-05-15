@@ -53,6 +53,10 @@
     {
       "action":"rallyEditorCycleCodriverWait",
       "control":"g"
+    },
+    {
+      "action":"rallyEditorCycleCodriverWait",
+      "control":"g"
     }
   ]
 }

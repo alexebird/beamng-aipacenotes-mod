@@ -65,9 +65,6 @@
   "pacenote_1538872940.ogg": {
     "audioLen": "1.218005"
   },
-  "pacenote_721996846.ogg": {
-    "audioLen": "1.164127"
-  },
   "pacenote_1816881348.ogg": {
     "audioLen": "1.827256"
   },
@@ -97,9 +94,6 @@
   },
   "pacenote_1111922332.ogg": {
     "audioLen": "1.506122"
-  },
-  "pacenote_460034239.ogg": {
-    "audioLen": "1.865079"
   },
   "pacenote_758085312.ogg": {
     "audioLen": "2.421361"
@@ -298,5 +292,11 @@
   },
   "pacenote_1009667935.ogg": {
     "audioLen": "2.884172"
+  },
+  "pacenote_1752827765.ogg": {
+    "audioLen": "2.260544"
+  },
+  "pacenote_919582947.ogg": {
+    "audioLen": "2.104762"
   }
 }

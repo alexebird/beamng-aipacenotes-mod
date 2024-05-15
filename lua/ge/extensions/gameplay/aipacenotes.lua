@@ -8,6 +8,7 @@ local M = {}
 
 local rallyManager = nil
 -- local flag_NoteSearch = false
+local flag_drawDebug = false
 
 local function isFreeroam()
   return core_gamestate.state and core_gamestate.state.state == "freeroam"
@@ -34,6 +35,17 @@ local function initRallyManager(missionId, missionDir)
   rallyManager:setOverrideMission(missionId, missionDir)
   rallyManager:setup(100, 5)
   -- rallyManager:handleNoteSearch()
+end
+
+local function setDrawDebug(val)
+  flag_drawDebug = val
+  if rallyManager then
+    rallyManager:enableDrawDebug(flag_drawDebug)
+  end
+end
+
+local function toggleDrawDebug()
+  setDrawDebug(not flag_drawDebug)
 end
 
 local function clearRallyManager()
@@ -91,6 +103,9 @@ M.clearRallyManager = clearRallyManager
 
 M.isReady = isReady
 M.getRallyManager = function() return rallyManager end
+
+M.setDrawDebug = setDrawDebug
+M.toggleDrawDebug = toggleDrawDebug
 
 return M
 

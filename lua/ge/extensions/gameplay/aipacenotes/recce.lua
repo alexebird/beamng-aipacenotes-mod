@@ -190,6 +190,8 @@ function C:drawDebugRecce()
 end
 
 function C:drawDebugCuts()
+  if not self.cuts then return end
+
   for _,point in ipairs(self.cuts) do
     local pos = point.pos
     local quat = point.quat
