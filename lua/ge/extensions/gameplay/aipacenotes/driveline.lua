@@ -26,7 +26,25 @@ local function startsWithDoubleSlash(line)
   return line:match("^//") ~= nil
 end
 
+local function readFileToMemory(fname)
+  local file = io.open(fname, "r")
+  if not file then return nil end
+  local content = file:read("*a")
+  file:close()
+  return content
+end
+
+local function splitIntoLines(content)
+  local lines = {}
+  for line in content:gmatch("[^\r\n]+") do
+    table.insert(lines, line)
+  end
+  return lines
+end
+
 function C:load()
+  local t_start = re_util.getTime()
+
   local fname = re_util.drivelineFile(self.missionDir)
   local points = {}
 
@@ -35,23 +53,30 @@ function C:load()
     return false
   end
 
-  for line in io.lines(fname) do
-    line = re_util.trimString(line)
-    if line == "" then
-      -- print('empty line')
-    elseif startsWithDoubleSlash(line) then
-      -- print('commented line')
-    else
-      local obj = jsonDecode(line)
+  local content = readFileToMemory(fname)
+  if content then
+    local lines = splitIntoLines(content)
+    for _, line in ipairs(lines) do
+      line = re_util.trimString(line)
+      if line == "" then
+        -- print('empty line')
+      elseif startsWithDoubleSlash(line) then
+        -- print('commented line')
+      else
+        local obj = jsonDecode(line)
 
-      obj.pos = vec3(obj.pos)
-      obj.quat = quat(obj.quat)
-      obj.prev = nil
-      obj.next = nil
-      obj.id = nil
-      obj.partition = nil
-      table.insert(points, obj)
+        obj.pos = vec3(obj.pos)
+        obj.quat = quat(obj.quat)
+        obj.prev = nil
+        obj.next = nil
+        obj.id = nil
+        obj.partition = nil
+        table.insert(points, obj)
+      end
     end
+  else
+    log("E", logTag, "failed to read driveline file")
+    return false
   end
 
   for i,point in ipairs(points) do
@@ -75,7 +100,10 @@ function C:load()
     }
   end
 
-  log('I', logTag, 'loaded driveline with '..tostring(#points)..' points')
+
+  local t_load = re_util.getTime() - t_start
+
+  log('I', logTag, 'loaded driveline in '.. string.format("%.3f", t_load)..'s with '..tostring(#points)..' points')
   self:setPoints(points)
 
   return true
