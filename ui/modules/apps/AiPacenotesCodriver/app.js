@@ -85,7 +85,7 @@ angular.module('beamng.apps')
         }
 
         async function playAudio(url, name) {
-          console.log(`playAudio name=${name} volume=${scope.volumeSetting} url=${url}`);
+          // console.debug(`playAudio name=${name} volume=${scope.volumeSetting} url=${url}`);
 
           if (currentSource) {
             currentSource.stop();

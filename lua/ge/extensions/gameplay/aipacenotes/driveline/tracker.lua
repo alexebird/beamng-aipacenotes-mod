@@ -219,7 +219,7 @@ function C:shouldPlayNextPacenote()
       -- local point_type = self.intersectedPacenoteData.point_type
 
       if pnId == self.nextPacenote.id then
-        print('manual AT for '..tostring(pnName))
+        -- print('manual AT for '..tostring(pnName))
         shouldPlay = true
       end
     end
@@ -229,7 +229,7 @@ function C:shouldPlayNextPacenote()
       local pnName = self.intersectedPacenoteData_auto_at.pn.name
 
       if pnId == self.nextPacenote.id then
-        print('autoAT for '..tostring(pnName))
+        -- print('autoAT for '..tostring(pnName))
         shouldPlay = true
       end
     else
@@ -252,7 +252,7 @@ function C:shouldPlayNextPacenote()
 
     -- if underCount and underTime then
     if underTime then
-        print('auto for '..tostring(self.nextPacenote.name))
+        -- print('auto for '..tostring(self.nextPacenote.name))
       -- print('inFlight='..tostring(cnt))
       shouldPlay = true
     end

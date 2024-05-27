@@ -113,7 +113,7 @@ end
 function C:enqueuePacenote(pacenote, addToFront)
   local pacenoteFgData = pacenote:asFlowgraphData(self.rallyManager.codriver)
   if pacenoteFgData then
-    log('D', logTag, "enqueuePacenote: name='"..pacenote.name.."' note='"..pacenoteFgData.note_text.."'")
+    log('I', logTag, "enqueuePacenote: name='"..pacenote.name.."' note='"..pacenoteFgData.note_text.."'")
 
     return self:_enqueueFile(pacenote, pacenoteFgData, pacenoteFgData.audioFname, addToFront)
   else
