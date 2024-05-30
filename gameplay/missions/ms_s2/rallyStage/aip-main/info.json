@@ -62,7 +62,7 @@
       "_selectionIdx":1,
       "enabled":true,
       "includePlayerVehicle":true,
-      "prioritizePlayerVehicle":true,
+      "prioritizePlayerVehicle":false,
       "usePlayerVehicle":true,
       "vehicles":{}
     }

@@ -61,7 +61,7 @@
     "vehicles":{
       "enabled":true,
       "includePlayerVehicle":true,
-      "prioritizePlayerVehicle":true,
+      "prioritizePlayerVehicle":false,
       "vehicles":{}
     }
   },
