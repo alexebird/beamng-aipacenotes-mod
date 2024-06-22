@@ -469,6 +469,8 @@ function C:handleMouseHold()
   if wp_sel and not wp_sel:isLocked() and not self.pacenote_tools_state.internal_lock then
     if self.mouseInfo.rayCast then
       local new_pos, normal_align_pos = self:wpPosForSimpleDrag(wp_sel, mouse_pos, self.simpleDragMouseOffset)
+      print(dumps(new_pos))
+      print(dumps(normal_align_pos))
       if new_pos then
         local pn_sel = self:selectedPacenote()
         pn_sel:clearTodo()
@@ -885,9 +887,9 @@ function C:wpPosForSimpleDrag(wp, mousePos, mouseOffset)
     if self.mouseInfo.rayCast then
       local newPos = offsetMousePosWithTerrainZSnap(mousePos, mouseOffset)
       local newPoint = self.pacenote_tools_state.snaproad:closestSnapPoint(newPos)
-      local _, toPoint = self.pacenote_tools_state.snaproad:normalAlignPoints(newPoint)
-      if newPoint and toPoint then
-        return newPoint.pos, toPoint.pos
+      local prevPoint, currPoint, nextPoint = self.pacenote_tools_state.snaproad:normalAlignPoints(newPoint)
+      if newPoint and nextPoint then
+        return newPoint.pos, nextPoint.pos
       else
         return nil, nil
       end

@@ -388,6 +388,7 @@ end
 function C:drivelineTrackerNoteSearch()
   log('I', logTag, 'RallyManager drivelineTrackerNoteSearch')
   local nextPacenoteData = self.drivelineTracker:findNextPacenote()
+  if not nextPacenoteData then return end
   local pacenote_i = nextPacenoteData.pacenote_i
   self.nextId = pacenote_i
   self.nextPacenotes = { self.notebook.pacenotes.sorted[self.nextId] }

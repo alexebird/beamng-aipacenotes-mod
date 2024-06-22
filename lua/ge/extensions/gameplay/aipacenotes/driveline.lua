@@ -528,6 +528,12 @@ function C:raceDistance(missionFolder)
   if not endNode then
     return 0
   end
+
+  -- for closed races, use the length.
+  if endNode and endNode.missing then
+    self._cached_dist_race = self:length()
+    return self._cached_dist_race
+  end
   local point_endNode = self:findNearestPoint(endNode.pos)
 
   self._cached_dist_race = 0

@@ -374,6 +374,8 @@ end
 function C:_intersectCornersHelper(fromCorners, toCorners)
   local minT = math.huge
 
+  if not self.currPoint then return false end
+
   local radius = self.driveline.radius
   local currPos = self.currPoint.pos
   local currNormal = self.currPoint.normal
@@ -404,7 +406,8 @@ function C:_intersectCornersHelper(fromCorners, toCorners)
     end
   end
 
-  return minT <= 1, minT
+  -- return minT <= 1, minT
+  return minT <= 1
 end
 
 function C:findNextPacenote()
