@@ -1,6 +1,7 @@
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local socket = require('socket')
 local mime = require("mime")
+local bit32 = bit
 
 local C = {}
 local logTag = 'aipacenotes-fg'
@@ -37,18 +38,12 @@ function C:workOnce()
   end
 
   local state = self.race.states[self.vehId]
-  --
-  -- this is what we want:
-  -- log(logTag, 'D', dumps(socket.gettime()))
-  -- log(logTag, 'D', dumps(state.historicTimes[#state.historicTimes]))
 
   local vdata = core_vehicle_manager.getPlayerVehicleData()
   local vehicleConfig = vdata.config
-  -- log(logTag, 'D', dumps(vehicleConfig))
 
   -- includes level id
   local missionId = gameplay_missions_missionManager.getForegroundMissionId()
-  -- log(logTag, 'D', dumps(missionId))
 
   local pathnodesExtracted = {}
   for i,pn in ipairs(self.path.pathnodes.sorted) do
@@ -86,7 +81,6 @@ function C:workOnce()
     endNode = self.path.endNode,
     pathnodes = pathnodesExtracted,
   }
-  -- log(logTag, 'D', dumps(pathData))
 
   local jsonData = {
     finished_at = socket.gettime(),
@@ -96,38 +90,36 @@ function C:workOnce()
     race_course = pathData,
   }
 
-  log(logTag, 'D', dumps(jsonData))
+  local function chcksm(c)
+    local d = 0xABCDEF
+    for e = 1, #c do
+      local f = c:byte(e)
+      d = bit32.bxor(d, f) * 3
+      d = bit32.bxor(d, bit32.rshift(d, 16))
+    end
+    return d
+  end
 
-  -- local function v5(v1)
-  --   local v2 = 0xABCDEF
-  --   for v3 = 1, #v1 do
-  --     local v4 = v1:byte(v3)
-  --     v2 = (v2 ~ v4) * 3
-  --     v2 = v2 ~ (v2 >> 16)
-  --   end
-  --   return v2
-  -- end
-
-  local fname = '/settings/aipacenotes/results/latest_results.txt'
+  -- local fname = '/settings/aipacenotes/results/latest_results.txt'
+  local attemptDate = string.gsub(tostring(os.date()), ' ', '-')
+  attemptDate = string.gsub(attemptDate, ':', '-')
+  local attemptMission = string.gsub(missionId, '/', '-')
+  local fname = '/settings/aipacenotes/results/aipresult_'..attemptMission..'_'..attemptDate..'_'..tostring(os.time())..'.txt'
   local contents = jsonEncode(jsonData)
-  -- local v6 = v5(contents)
-  contents = mime.b64(contents)
+  local cs = chcksm(contents)
+  cs = string.format("%X", cs)
+  -- cs = mime.b64(cs)
+  -- contents = mime.b64(contents)
 
   local f = io.open(fname, "w")
   if f then
-    -- f:write(v6.."\n")
-    f:write('nG#Jma@i^Q2gt#'.."\n")
-    f:write("---".."\n")
     f:write(contents.."\n")
+    f:write("---".."\n")
+    f:write(cs.."\n")
     f:close()
   else
     log(logTag, 'E', 'error opening file')
   end
-
-  -- local saveOk = jsonWriteFile(, jsonData, true)
-  -- if not saveOk then
-    -- log(logTag, 'E', 'save failed')
-  -- end
 end
 
 return _flowgraph_createNode(C)
