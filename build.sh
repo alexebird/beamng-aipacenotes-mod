@@ -3,6 +3,8 @@ set -euo pipefail
 # set -v
 
 main() {
+    local versionFile='aip-version.txt'
+
     if git diff-index --quiet HEAD --; then
         echo Working tree is clean
         sha=$(git rev-parse HEAD)
@@ -11,11 +13,11 @@ main() {
         if [ -n "$tag" ]; then
             # If there is a tag exactly on HEAD, append it to the SHA
             echo "${sha} (${tag})"
-            echo "${sha} (${tag})" > version.txt
+            echo "${sha} (${tag})" > "${versionFile}"
         else
             # If no tag on HEAD, just write the SHA
             echo "$sha"
-            echo "$sha" > version.txt
+            echo "$sha" > "${versionFile}"
         fi
     else
         echo Working tree is not clean
@@ -26,19 +28,19 @@ main() {
         if [ -n "$tag" ]; then
             # If there is a tag exactly on HEAD, append it to the SHA and mark as dirty
             echo "${sha}+dirty (${tag})"
-            echo "${sha}+dirty (${tag})" > version.txt
+            echo "${sha}+dirty (${tag})" > "${versionFile}"
         else
             # If no tag on HEAD, just write the SHA and mark as dirty
             echo "${sha}+dirty"
-            echo "${sha}+dirty" > version.txt
+            echo "${sha}+dirty" > "${versionFile}"
         fi
     fi
 
-    cat version.txt
+    cat "${versionFile}"
 
     rm -fv "${BIRD}/build/aipacenotes.zip"
     zip -r "${BIRD}/build/aipacenotes.zip" ./* -x '*.git*' -x 'art*.png' -x 'docs*' -x 'build.sh' -x 'dev.txt'
-    rm -fv version.txt
+    rm -fv "${versionFile}"
     ls -ltrh "${BIRD}/build/"
 }
 

@@ -44,11 +44,24 @@ function C:workOnce()
   self:reset()
 end
 
+local function odometerReading(vehId)
+  -- veh = getPlayerVehicle(0)
+  -- veh = be:getObjectByID(be:getPlayerVehicleID(0))
+  -- core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(be:getPlayerVehicleID(0)), 'odometer')
+  -- core_vehicleBridge.getCachedVehicleData(be:getPlayerVehicleID(0), 'odometer')
+
+  core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(vehId), 'odometer')
+  local odo = core_vehicleBridge.getCachedVehicleData(vehId, 'odometer')
+  -- print('odo: '..tostring(odo))
+  return odo or 0
+end
+
 function C:work()
   if not readyHit then
     local loaded = extensions.isExtensionLoaded("gameplay_aipacenotes")
     if loaded and gameplay_aipacenotes.isReady() then
       log('D', logTag, 'extension is ready')
+      gameplay_aipacenotes.getRallyManager():putOdometerReading(odometerReading(self.pinIn.vehId.value))
       readyHit = true
     end
   end

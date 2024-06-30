@@ -45,6 +45,9 @@ function C:init()
 
   -- set this to trigger a search for the next pacenote upon next update.
   self.flag_NoteSearch = false
+
+  self.recoveries = {}
+  self.odometerReadings = {}
 end
 
 function C:enableDrawDebug(val)
@@ -415,6 +418,16 @@ end
 
 function C:getRandomStaticPacenote(prefix)
   return self.notebook:getRandomStaticPacenote(prefix)
+end
+
+function C:addRecovery(recoveryEntry)
+  table.insert(self.recoveries, recoveryEntry)
+end
+
+function C:putOdometerReading(value)
+  local key = tostring(os.time())
+  self.odometerReadings[key] = value
+  print(dumps(self.odometerReadings))
 end
 
 return function(...)
