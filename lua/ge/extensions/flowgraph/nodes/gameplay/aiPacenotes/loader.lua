@@ -50,6 +50,11 @@ local function odometerReading(vehId)
   -- core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(be:getPlayerVehicleID(0)), 'odometer')
   -- core_vehicleBridge.getCachedVehicleData(be:getPlayerVehicleID(0), 'odometer')
 
+  core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(vehId), 'fuel')
+  core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(vehId), 'fuelCapacity')
+  core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(vehId), 'fuelVolume')
+  -- core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(vehId), 'stats')
+
   core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(vehId), 'odometer')
   local odo = core_vehicleBridge.getCachedVehicleData(vehId, 'odometer')
   -- print('odo: '..tostring(odo))
