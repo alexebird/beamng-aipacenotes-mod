@@ -2,7 +2,7 @@
   "activeGraphId":35,
   "authors":"Anonymous",
   "currentGraphID":35,
-  "date":1719214571,
+  "date":1719993277,
   "debugEnabled":false,
   "description":"Project description.",
   "difficulty":40,
@@ -41,34 +41,6 @@
       "dirty":false,
       "links":[
         [
-          110,
-          "False",
-          278,
-          "flow",
-          false
-        ],
-        [
-          2,
-          "flow",
-          12,
-          "flow",
-          false
-        ],
-        [
-          104,
-          "flow",
-          110,
-          "flow",
-          false
-        ],
-        [
-          11,
-          "reverse",
-          110,
-          "condition",
-          false
-        ],
-        [
           113,
           "flow",
           9,
@@ -76,9 +48,9 @@
           false
         ],
         [
-          110,
-          "True",
-          277,
+          4325160,
+          "flow",
+          12,
           "flow",
           false
         ],
@@ -111,14 +83,63 @@
           true
         ],
         [
+          110,
+          "True",
+          277,
+          "flow",
+          false
+        ],
+        [
+          110,
+          "False",
           278,
+          "flow",
+          false
+        ],
+        [
+          2,
+          "flow",
+          4325160,
+          "flow",
+          false
+        ],
+        [
+          2,
+          "enterState",
+          4325160,
+          "reset",
+          false
+        ],
+        [
+          121,
+          "vehId",
+          4325160,
+          "vehId",
+          false
+        ],
+        [
+          104,
+          "flow",
+          110,
+          "flow",
+          false
+        ],
+        [
+          11,
+          "reverse",
+          110,
+          "condition",
+          false
+        ],
+        [
+          277,
           "flow",
           113,
           "flow",
           false
         ],
         [
-          277,
+          278,
           "flow",
           113,
           "flow",
@@ -304,7 +325,7 @@
             }
           },
           "pos":[
-            -1348,
+            -928,
             92
           ],
           "type":"input/blacklistActionFilter"
@@ -372,7 +393,7 @@
             }
           },
           "pos":[
-            -914,
+            -640,
             92
           ],
           "type":"mission/preClean"
@@ -620,6 +641,67 @@
             288
           ],
           "type":"scene/spawnPrefab"
+        },
+        "4325160":{
+          "data":{},
+          "dynamicMode":"once",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "reset":false,
+              "vehId":false
+            },
+            "p_out":{
+              "flow":false
+            }
+          },
+          "pos":[
+            -1264,
+            92
+          ],
+          "type":"gameplay/aipacenotes/racelinkInit"
+        },
+        "4325161":{
+          "alpha":0.75000000000000000000,
+          "backgroundColor":[
+            0,
+            1,
+            0.87058830261230468750,
+            0.74901962280273437500
+          ],
+          "borderColor":[
+            0,
+            1,
+            0.87058830261230468750,
+            0.74901962280273437500
+          ],
+          "commentSize":[
+            200,
+            83
+          ],
+          "commentText":"add racelink init.",
+          "commentTitle":"Comment",
+          "customColor":[
+            0,
+            1,
+            0.87058830261230468750,
+            0.74901962280273437500
+          ],
+          "data":{},
+          "dynamicMode":"repeat",
+          "moveMode":"withoutNodes",
+          "pos":[
+            -1260,
+            238
+          ],
+          "simple":false,
+          "textColor":[
+            0,
+            0,
+            0,
+            1
+          ],
+          "type":"debug/comment"
         }
       },
       "showTab":true,
@@ -629,8 +711,8 @@
         "list":{}
       },
       "viewPos":[
-        -50.73193359375000000000,
-        -137.66760253906250000000
+        -1911.03979492187500000000,
+        -254.90071105957031250000
       ],
       "viewZoom":1
     },
@@ -640,27 +722,6 @@
       "isStateGraph":true,
       "links":[
         [
-          18,
-          "success",
-          32,
-          "flow",
-          false
-        ],
-        [
-          4,
-          "success",
-          18,
-          "flow",
-          false
-        ],
-        [
-          50,
-          "success",
-          18,
-          "flow",
-          false
-        ],
-        [
           5,
           "flow",
           4,
@@ -669,8 +730,15 @@
         ],
         [
           32,
-          "reset",
-          50,
+          "success",
+          59,
+          "flow",
+          false
+        ],
+        [
+          18,
+          "success",
+          32,
           "flow",
           false
         ],
@@ -683,8 +751,22 @@
         ],
         [
           32,
+          "reset",
+          50,
+          "flow",
+          false
+        ],
+        [
+          4,
           "success",
-          59,
+          18,
+          "flow",
+          false
+        ],
+        [
+          50,
+          "success",
+          18,
           "flow",
           false
         ]
@@ -949,10 +1031,10 @@
         "list":{}
       },
       "viewPos":[
-        -268.94024658203125000000,
-        -116.66117858886718750000
+        -712.50012207031250000000,
+        -398.25000000000000000000
       ],
-      "viewZoom":1
+      "viewZoom":0.75000000000000000000
     },
     "17":{
       "description":"This is the description for graph New State",
@@ -1183,38 +1265,52 @@
           false
         ],
         [
-          114,
+          28,
           "flow",
-          279,
+          114,
           "flow",
           false
         ],
         [
           19,
           "enterState",
-          279,
+          114,
           "reset",
           true
         ],
         [
           28,
-          "sidePrefabId",
-          279,
+          "mainPrefabId",
+          114,
           "id",
           false
         ],
         [
           26,
           "complete",
+          64,
+          "flow",
+          true
+        ],
+        [
+          19,
+          "enterState",
+          64,
+          "reset",
+          true
+        ],
+        [
           4325123,
+          "True",
+          4325120,
           "flow",
           false
         ],
         [
-          4325114,
-          "allowRecover",
-          4325123,
-          "condition",
+          4325117,
+          "recoverLimit",
+          4325120,
+          "A",
           false
         ],
         [
@@ -1267,6 +1363,13 @@
           false
         ],
         [
+          107,
+          "flow",
+          94,
+          "startNewRec",
+          false
+        ],
+        [
           15,
           "flow",
           111,
@@ -1316,69 +1419,6 @@
           true
         ],
         [
-          19,
-          "flow",
-          167,
-          "flow",
-          false
-        ],
-        [
-          19,
-          "enterState",
-          167,
-          "flow",
-          false
-        ],
-        [
-          27,
-          "flow",
-          136,
-          "flow",
-          false
-        ],
-        [
-          19,
-          "enterState",
-          136,
-          "reset",
-          true
-        ],
-        [
-          27,
-          "flow",
-          107,
-          "flow",
-          false
-        ],
-        [
-          19,
-          "enterState",
-          107,
-          "reset",
-          true
-        ],
-        [
-          107,
-          "flow",
-          94,
-          "startNewRec",
-          false
-        ],
-        [
-          26,
-          "complete",
-          64,
-          "flow",
-          true
-        ],
-        [
-          19,
-          "enterState",
-          64,
-          "reset",
-          true
-        ],
-        [
           133,
           "flow",
           60,
@@ -1421,6 +1461,48 @@
           false
         ],
         [
+          19,
+          "enterState",
+          167,
+          "flow",
+          false
+        ],
+        [
+          19,
+          "flow",
+          167,
+          "flow",
+          false
+        ],
+        [
+          27,
+          "flow",
+          136,
+          "flow",
+          false
+        ],
+        [
+          19,
+          "enterState",
+          136,
+          "reset",
+          true
+        ],
+        [
+          27,
+          "flow",
+          107,
+          "flow",
+          false
+        ],
+        [
+          19,
+          "enterState",
+          107,
+          "reset",
+          true
+        ],
+        [
           136,
           "flow",
           4325149,
@@ -1435,36 +1517,57 @@
           false
         ],
         [
-          28,
+          4325122,
           "flow",
-          114,
+          4325124,
           "flow",
           false
         ],
         [
-          19,
-          "enterState",
-          114,
-          "reset",
-          true
+          4325122,
+          "value",
+          4325124,
+          "translationString",
+          false
         ],
         [
-          28,
-          "mainPrefabId",
-          114,
-          "id",
+          4325117,
+          "recoverLimit",
+          4325124,
+          "recoverLimit",
+          false
+        ],
+        [
+          4325126,
+          "recoverPenalty",
+          4325124,
+          "penaltySeconds",
+          false
+        ],
+        [
+          26,
+          "complete",
+          4325123,
+          "flow",
+          false
+        ],
+        [
+          4325114,
+          "allowRecover",
+          4325123,
+          "condition",
           false
         ],
         [
           4325123,
-          "False",
+          "True",
           4325122,
           "flow",
           false
         ],
         [
           4325123,
-          "True",
+          "False",
           4325122,
           "flow",
           false
@@ -1495,20 +1598,6 @@
           "flow",
           43,
           "flow",
-          false
-        ],
-        [
-          4325123,
-          "True",
-          4325120,
-          "flow",
-          false
-        ],
-        [
-          4325117,
-          "recoverLimit",
-          4325120,
-          "A",
           false
         ],
         [
@@ -1603,31 +1692,24 @@
           false
         ],
         [
-          4325122,
+          114,
           "flow",
-          4325124,
+          279,
           "flow",
           false
         ],
         [
-          4325122,
-          "value",
-          4325124,
-          "translationString",
-          false
+          19,
+          "enterState",
+          279,
+          "reset",
+          true
         ],
         [
-          4325117,
-          "recoverLimit",
-          4325124,
-          "recoverLimit",
-          false
-        ],
-        [
-          4325126,
-          "recoverPenalty",
-          4325124,
-          "penaltySeconds",
+          28,
+          "sidePrefabId",
+          279,
+          "id",
           false
         ]
       ],
@@ -1830,7 +1912,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000066613
+              "value":0.75000000000000000000
             }
           },
           "hiddenPins":{
@@ -2691,7 +2773,7 @@
             }
           },
           "pos":[
-            -570,
+            -564,
             -328
           ],
           "type":"gameplay/aipacenotes/raceEditorPath"
@@ -2716,6 +2798,12 @@
           ],
           "commentText":"dynamic choose for race filename.",
           "commentTitle":"Comment",
+          "customColor":[
+            0,
+            1,
+            0.87058830261230468750,
+            0.74901962280273437500
+          ],
           "data":{},
           "dynamicMode":"repeat",
           "moveMode":"withoutNodes",
@@ -3012,7 +3100,7 @@
           ],
           "commentSize":[
             200,
-            200
+            47
           ],
           "commentText":"use loader",
           "commentTitle":"Comment",
@@ -3026,8 +3114,8 @@
           "dynamicMode":"repeat",
           "moveMode":"withoutNodes",
           "pos":[
-            616,
-            210
+            448,
+            238
           ],
           "simple":false,
           "textColor":[
@@ -3046,10 +3134,10 @@
         "list":{}
       },
       "viewPos":[
-        730.88134765625000000000,
-        -430.55987548828125000000
+        -291.94314575195312500000,
+        -422.67126464843750000000
       ],
-      "viewZoom":0.75000000000000000000
+      "viewZoom":0.74999994039535522461
     },
     "31":{
       "description":"This is the description for graph New Group State",
@@ -3275,230 +3363,6 @@
           false
         ],
         [
-          37,
-          "enterState",
-          4325127,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          4325127,
-          "reset",
-          false
-        ],
-        [
-          92,
-          "flow",
-          98,
-          "flow",
-          false
-        ],
-        [
-          1817003,
-          "flow",
-          98,
-          "flow",
-          false
-        ],
-        [
-          172,
-          "flow",
-          175,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          175,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "exitState",
-          175,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "exitState",
-          175,
-          "reset",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          175,
-          "reset",
-          false
-        ],
-        [
-          127,
-          "true",
-          96,
-          "flow",
-          false
-        ],
-        [
-          92,
-          "count",
-          96,
-          "txt",
-          false
-        ],
-        [
-          142,
-          "flow",
-          92,
-          "flow",
-          false
-        ],
-        [
-          142,
-          "flow",
-          92,
-          "reset",
-          true
-        ],
-        [
-          57,
-          "changed",
-          62,
-          "flow",
-          false
-        ],
-        [
-          57,
-          "curCP",
-          62,
-          "cur",
-          false
-        ],
-        [
-          57,
-          "maxCP",
-          62,
-          "max",
-          false
-        ],
-        [
-          142,
-          "flow",
-          1817003,
-          "flow",
-          false
-        ],
-        [
-          142,
-          "flow",
-          1817003,
-          "reset",
-          true
-        ],
-        [
-          156,
-          "finished",
-          209,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "playerID",
-          209,
-          "vehId",
-          false
-        ],
-        [
-          98,
-          "flow",
-          908566,
-          "flow",
-          false
-        ],
-        [
-          139,
-          "value",
-          908566,
-          "txt",
-          false
-        ],
-        [
-          454369,
-          "flow",
-          908565,
-          "flow",
-          false
-        ],
-        [
-          454369,
-          "value",
-          908565,
-          "txt",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          296,
-          "flow",
-          false
-        ],
-        [
-          4325127,
-          "flow",
-          47,
-          "flow",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          47,
-          "reset",
-          false
-        ],
-        [
-          78,
-          "flipLimit",
-          47,
-          "flipMission",
-          false
-        ],
-        [
-          79,
-          "recoverLimit",
-          47,
-          "recoverMission",
-          false
-        ],
-        [
-          37,
-          "enterState",
-          85,
-          "flow",
-          false
-        ],
-        [
-          52,
-          "flipMission",
-          54,
-          "flow",
-          false
-        ],
-        [
-          23,
-          "playerID",
-          54,
-          "vehId",
-          true
-        ],
-        [
           156,
           "flow",
           83,
@@ -3507,14 +3371,14 @@
         ],
         [
           37,
-          "exitState",
+          "enterState",
           83,
           "reset",
           true
         ],
         [
           37,
-          "enterState",
+          "exitState",
           83,
           "reset",
           true
@@ -3548,6 +3412,188 @@
           false
         ],
         [
+          92,
+          "flow",
+          98,
+          "flow",
+          false
+        ],
+        [
+          1817003,
+          "flow",
+          98,
+          "flow",
+          false
+        ],
+        [
+          142,
+          "flow",
+          1817003,
+          "flow",
+          false
+        ],
+        [
+          142,
+          "flow",
+          1817003,
+          "reset",
+          true
+        ],
+        [
+          156,
+          "finished",
+          209,
+          "flow",
+          false
+        ],
+        [
+          23,
+          "playerID",
+          209,
+          "vehId",
+          false
+        ],
+        [
+          142,
+          "flow",
+          92,
+          "flow",
+          false
+        ],
+        [
+          142,
+          "flow",
+          92,
+          "reset",
+          true
+        ],
+        [
+          37,
+          "enterState",
+          4325127,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          4325127,
+          "reset",
+          false
+        ],
+        [
+          91,
+          "True",
+          146,
+          "flow",
+          false
+        ],
+        [
+          4325154,
+          "allowRecover",
+          146,
+          "condition",
+          false
+        ],
+        [
+          4325127,
+          "flow",
+          47,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          47,
+          "reset",
+          false
+        ],
+        [
+          78,
+          "flipLimit",
+          47,
+          "flipMission",
+          false
+        ],
+        [
+          79,
+          "recoverLimit",
+          47,
+          "recoverMission",
+          false
+        ],
+        [
+          146,
+          "True",
+          65,
+          "flow",
+          false
+        ],
+        [
+          146,
+          "True",
+          65,
+          "reset",
+          false
+        ],
+        [
+          103,
+          "True",
+          127,
+          "flow",
+          false
+        ],
+        [
+          92,
+          "limit",
+          127,
+          "A",
+          false
+        ],
+        [
+          454362,
+          "true",
+          454331,
+          "flow",
+          false
+        ],
+        [
+          1817003,
+          "count",
+          454331,
+          "txt",
+          false
+        ],
+        [
+          174,
+          "flip",
+          54,
+          "flow",
+          false
+        ],
+        [
+          23,
+          "playerID",
+          54,
+          "vehId",
+          true
+        ],
+        [
+          98,
+          "flow",
+          908566,
+          "flow",
+          false
+        ],
+        [
+          139,
+          "value",
+          908566,
+          "txt",
+          false
+        ],
+        [
           156,
           "finished",
           46,
@@ -3569,17 +3615,17 @@
           false
         ],
         [
-          146,
-          "True",
-          65,
+          454369,
+          "flow",
+          908565,
           "flow",
           false
         ],
         [
-          146,
-          "True",
-          65,
-          "reset",
+          454369,
+          "value",
+          908565,
+          "txt",
           false
         ],
         [
@@ -3616,6 +3662,27 @@
           156,
           "reset",
           true
+        ],
+        [
+          57,
+          "changed",
+          155,
+          "lapChange",
+          false
+        ],
+        [
+          57,
+          "curLap",
+          155,
+          "currLap",
+          false
+        ],
+        [
+          57,
+          "maxLap",
+          155,
+          "maxLap",
+          false
         ],
         [
           1817003,
@@ -3674,55 +3741,6 @@
           false
         ],
         [
-          83,
-          "active",
-          57,
-          "flow",
-          false
-        ],
-        [
-          83,
-          "raceData",
-          57,
-          "raceData",
-          false
-        ],
-        [
-          23,
-          "playerID",
-          57,
-          "vehId",
-          true
-        ],
-        [
-          83,
-          "active",
-          52,
-          "flow",
-          false
-        ],
-        [
-          454338,
-          "True",
-          454362,
-          "flow",
-          false
-        ],
-        [
-          1817003,
-          "limit",
-          454362,
-          "A",
-          false
-        ],
-        [
-          52,
-          "recoverMission",
-          166,
-          "noteSearch",
-          false
-        ],
-        [
           454362,
           "false",
           454369,
@@ -3744,31 +3762,101 @@
           false
         ],
         [
-          83,
+          134,
           "flow",
-          165,
+          454330,
           "flow",
           false
         ],
         [
-          83,
-          "raceData",
-          165,
-          "raceData",
+          134,
+          "value",
+          454330,
+          "txt",
           false
         ],
         [
+          454338,
+          "True",
           454362,
-          "true",
-          454331,
           "flow",
           false
         ],
         [
           1817003,
-          "count",
-          454331,
-          "txt",
+          "limit",
+          454362,
+          "A",
+          false
+        ],
+        [
+          83,
+          "active",
+          52,
+          "flow",
+          false
+        ],
+        [
+          97,
+          "flow",
+          275,
+          "flow",
+          false
+        ],
+        [
+          97,
+          "note",
+          275,
+          "message",
+          false
+        ],
+        [
+          97,
+          "note",
+          275,
+          "category",
+          false
+        ],
+        [
+          37,
+          "exitState",
+          175,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          175,
+          "flow",
+          false
+        ],
+        [
+          172,
+          "flow",
+          175,
+          "flow",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          175,
+          "reset",
+          false
+        ],
+        [
+          37,
+          "exitState",
+          175,
+          "reset",
+          false
+        ],
+        [
+          37,
+          "enterState",
+          85,
+          "flow",
           false
         ],
         [
@@ -3800,18 +3888,39 @@
           false
         ],
         [
-          134,
-          "flow",
-          454330,
-          "flow",
+          52,
+          "flipMission",
+          174,
+          "flip",
           false
         ],
         [
-          134,
-          "value",
-          454330,
-          "txt",
+          52,
+          "recoverMission",
+          174,
+          "recovery",
           false
+        ],
+        [
+          52,
+          "restartMission",
+          174,
+          "restart",
+          false
+        ],
+        [
+          23,
+          "playerID",
+          174,
+          "vehId",
+          true
+        ],
+        [
+          83,
+          "raceData",
+          174,
+          "raceData",
+          true
         ],
         [
           92,
@@ -3828,24 +3937,17 @@
           true
         ],
         [
-          57,
-          "changed",
-          155,
-          "lapChange",
+          46,
+          "flow",
+          142,
+          "flow",
           false
         ],
         [
-          57,
-          "curLap",
-          155,
-          "currLap",
-          false
-        ],
-        [
-          57,
-          "maxLap",
-          155,
-          "maxLap",
+          54,
+          "flow",
+          142,
+          "flow",
           false
         ],
         [
@@ -3856,7 +3958,7 @@
           true
         ],
         [
-          54,
+          47,
           "flow",
           142,
           "flow",
@@ -3870,46 +3972,32 @@
           false
         ],
         [
-          46,
-          "flow",
-          142,
+          52,
+          "recoverMission",
+          166,
+          "noteSearch",
+          false
+        ],
+        [
+          83,
+          "active",
+          57,
           "flow",
           false
         ],
         [
-          47,
-          "flow",
-          142,
-          "flow",
+          83,
+          "raceData",
+          57,
+          "raceData",
           false
         ],
         [
-          91,
-          "True",
-          146,
-          "flow",
-          false
-        ],
-        [
-          4325154,
-          "allowRecover",
-          146,
-          "condition",
-          false
-        ],
-        [
-          103,
-          "True",
-          127,
-          "flow",
-          false
-        ],
-        [
-          92,
-          "limit",
-          127,
-          "A",
-          false
+          23,
+          "playerID",
+          57,
+          "vehId",
+          true
         ],
         [
           37,
@@ -3982,8 +4070,8 @@
           false
         ],
         [
-          52,
-          "recoverMission",
+          174,
+          "recovery",
           112,
           "flow",
           false
@@ -4017,24 +4105,38 @@
           false
         ],
         [
-          97,
-          "flow",
-          275,
+          57,
+          "changed",
+          62,
           "flow",
           false
         ],
         [
-          97,
-          "note",
-          275,
-          "message",
+          57,
+          "curCP",
+          62,
+          "cur",
           false
         ],
         [
-          97,
-          "note",
-          275,
-          "category",
+          57,
+          "maxCP",
+          62,
+          "max",
+          false
+        ],
+        [
+          127,
+          "true",
+          96,
+          "flow",
+          false
+        ],
+        [
+          92,
+          "count",
+          96,
+          "txt",
           false
         ]
       ],
@@ -4318,8 +4420,8 @@
             ]
           ],
           "pos":[
-            1200,
-            -314
+            1032,
+            -300
           ],
           "type":"gameplay/recoveryPrompt/onRecoveryPromptAction"
         },
@@ -4336,8 +4438,8 @@
             }
           },
           "pos":[
-            1536,
-            -342
+            1684,
+            -412
           ],
           "type":"vehicle/flipUpright"
         },
@@ -4609,7 +4711,7 @@
             },
             "minAlpha":{
               "type":"number",
-              "value":0.15000000000000004996
+              "value":0.14999999999999999445
             },
             "minDistance":{
               "type":"number",
@@ -4803,8 +4905,8 @@
             }
           },
           "pos":[
-            1536,
-            -230
+            1684,
+            -300
           ],
           "type":"gameplay/race/raceRequestRecovery"
         },
@@ -4964,7 +5066,7 @@
             }
           },
           "pos":[
-            1830,
+            1858,
             -535
           ],
           "type":"logic/bundle"
@@ -5087,22 +5189,6 @@
           ],
           "type":"debug/comment"
         },
-        "165":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "raceData":false
-            },
-            "p_out":{}
-          },
-          "pos":[
-            1648,
-            134
-          ],
-          "type":"gameplay/aipacenotes/updateRaceData"
-        },
         "166":{
           "data":{},
           "dynamicMode":"repeat",
@@ -5117,6 +5203,42 @@
             64
           ],
           "type":"gameplay/aipacenotes/setNoteSearch"
+        },
+        "171":{
+          "alpha":0.75000000000000000000,
+          "backgroundColor":[
+            0.50000000000000000000,
+            0.50000000000000000000,
+            0.50000000000000000000,
+            0.50000000000000000000
+          ],
+          "borderColor":[
+            0.80000001192092895508,
+            0.80000001192092895508,
+            0.80000001192092895508,
+            1
+          ],
+          "commentSize":[
+            200,
+            200
+          ],
+          "commentText":"added pathData to the transition out.",
+          "commentTitle":"Comment",
+          "data":{},
+          "dynamicMode":"repeat",
+          "moveMode":"withoutNodes",
+          "pos":[
+            1246,
+            252
+          ],
+          "simple":false,
+          "textColor":[
+            1,
+            1,
+            1,
+            1
+          ],
+          "type":"debug/comment"
         },
         "172":{
           "data":{},
@@ -5135,6 +5257,28 @@
             36
           ],
           "type":"gameplay/aipacenotes/preCountdown"
+        },
+        "174":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flip":false,
+              "raceData":false,
+              "recovery":false,
+              "restart":false,
+              "vehId":false
+            },
+            "p_out":{
+              "flip":false,
+              "recovery":false
+            }
+          },
+          "pos":[
+            1362,
+            -398
+          ],
+          "type":"gameplay/aipacenotes/trackRecovery"
         },
         "175":{
           "data":{},
@@ -5210,36 +5354,6 @@
             1044
           ],
           "type":"ui/message"
-        },
-        "296":{
-          "data":{},
-          "dynamicMode":"repeat",
-          "hardcodedPins":{
-            "logType":{
-              "type":"string",
-              "value":"I"
-            },
-            "value":{
-              "type":"string",
-              "value":"foo"
-            }
-          },
-          "hiddenPins":{
-            "p_in":{
-              "flow":false,
-              "logTag":true,
-              "logType":true,
-              "value":false
-            },
-            "p_out":{
-              "flow":false
-            }
-          },
-          "pos":[
-            -620,
-            316
-          ],
-          "type":"debug/log"
         },
         "454330":{
           "customName":"Flips Used",
@@ -5503,8 +5617,8 @@
             }
           },
           "pos":[
-            2082,
-            -386
+            2102,
+            -414
           ],
           "type":"gameplay/recoveryPrompt/getRecoveryPromptButtonLimitAndCount"
         },
@@ -5619,7 +5733,7 @@
             }
           },
           "pos":[
-            1901,
+            1900,
             918
           ],
           "type":"types/getVariable",
@@ -5741,10 +5855,10 @@
         "list":{}
       },
       "viewPos":[
-        586.94268798828125000000,
-        490.27163696289062500000
+        -182.29122924804687500000,
+        -76.00000762939453125000
       ],
-      "viewZoom":1.49999976158142089844
+      "viewZoom":0.75000000000000000000
     },
     "38":{
       "description":"This is the description for graph New State",
@@ -6023,15 +6137,36 @@
         "list":{}
       },
       "viewPos":[
-        -37.32350921630859375000,
-        -222.65914916992187500000
+        -719.12860107421875000000,
+        -244.86413574218750000000
       ],
-      "viewZoom":1.25000000000000000000
+      "viewZoom":0.75000000000000000000
     },
     "58":{
       "description":"This graph will show an end screen. Useful for scenario endings.",
       "dirty":false,
       "links":[
+        [
+          145,
+          "exists",
+          80,
+          "flow",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          80,
+          "reset",
+          true
+        ],
+        [
+          4325134,
+          "value",
+          80,
+          "pathName",
+          false
+        ],
         [
           4324702,
           "flow",
@@ -6096,35 +6231,21 @@
           false
         ],
         [
-          99,
-          "completed",
-          4325144,
+          76,
+          "flow",
+          63,
           "flow",
           false
         ],
         [
-          4325142,
-          "reverse",
-          4325144,
+          76,
+          "exists",
+          63,
           "condition",
           false
         ],
         [
-          145,
-          "flow",
-          240,
-          "flow",
-          false
-        ],
-        [
-          21,
-          "playerID",
-          240,
-          "vehId",
-          true
-        ],
-        [
-          154,
+          186,
           "flow",
           178,
           "flow",
@@ -6156,6 +6277,13 @@
           "pathData",
           178,
           "pathData",
+          false
+        ],
+        [
+          186,
+          "damage",
+          178,
+          "damage",
           false
         ],
         [
@@ -6199,6 +6327,13 @@
           4324671,
           "reset",
           true
+        ],
+        [
+          93,
+          "value",
+          95,
+          "a",
+          false
         ],
         [
           99,
@@ -6250,10 +6385,17 @@
           false
         ],
         [
-          4324671,
-          "timerId",
-          4324672,
-          "timerId",
+          137,
+          "flow",
+          45492,
+          "flow",
+          false
+        ],
+        [
+          154,
+          "flow",
+          186,
+          "flow",
           false
         ],
         [
@@ -6292,18 +6434,25 @@
           false
         ],
         [
-          8993,
-          "contHere",
-          137,
-          "flow_1",
+          102,
+          "flow",
+          101,
+          "flow",
           false
         ],
         [
-          45493,
-          "complete",
-          137,
-          "flow_2",
+          99,
+          "completed",
+          101,
+          "on",
           false
+        ],
+        [
+          154,
+          "enterState",
+          101,
+          "off",
+          true
         ],
         [
           8993,
@@ -6488,14 +6637,28 @@
           false
         ],
         [
-          81,
+          99,
+          "completed",
+          4325144,
+          "flow",
+          false
+        ],
+        [
+          4325142,
+          "reverse",
+          4325144,
+          "condition",
+          false
+        ],
+        [
+          158,
           "flow",
           99,
           "flow",
           false
         ],
         [
-          158,
+          81,
           "flow",
           99,
           "flow",
@@ -6516,32 +6679,88 @@
           true
         ],
         [
-          93,
-          "value",
-          95,
-          "a",
-          false
-        ],
-        [
-          154,
-          "flow",
-          90,
+          4325137,
+          "False",
+          4325141,
           "flow",
           false
         ],
         [
-          153,
-          "true",
-          84,
+          4325137,
+          "True",
+          4325141,
           "flow",
           false
         ],
         [
-          93,
-          "value",
-          84,
-          "duration",
-          true
+          4325137,
+          "True",
+          4325141,
+          "select_1",
+          false
+        ],
+        [
+          4325137,
+          "False",
+          4325141,
+          "select_2",
+          false
+        ],
+        [
+          101,
+          "flow",
+          4325137,
+          "flow",
+          false
+        ],
+        [
+          4325135,
+          "reverse",
+          4325137,
+          "condition",
+          false
+        ],
+        [
+          4325130,
+          "True",
+          4325134,
+          "flow",
+          false
+        ],
+        [
+          4325130,
+          "False",
+          4325134,
+          "flow",
+          false
+        ],
+        [
+          4325130,
+          "True",
+          4325134,
+          "select_1",
+          false
+        ],
+        [
+          4325130,
+          "False",
+          4325134,
+          "select_2",
+          false
+        ],
+        [
+          102,
+          "flow",
+          4325130,
+          "flow",
+          false
+        ],
+        [
+          4325128,
+          "reverse",
+          4325130,
+          "condition",
+          false
         ],
         [
           147,
@@ -6565,38 +6784,31 @@
           true
         ],
         [
-          154,
-          "enterState",
-          81,
-          "reset",
-          true
-        ],
-        [
-          95,
-          "value",
-          81,
-          "duration",
-          true
-        ],
-        [
-          145,
-          "exists",
-          80,
+          153,
+          "true",
+          84,
           "flow",
           false
         ],
         [
-          154,
-          "enterState",
-          80,
-          "reset",
+          93,
+          "value",
+          84,
+          "duration",
           true
         ],
         [
-          4325134,
+          4324893,
           "value",
-          80,
-          "pathName",
+          4325111,
+          "a",
+          false
+        ],
+        [
+          4325108,
+          "value",
+          4325111,
+          "b",
           false
         ],
         [
@@ -6642,17 +6854,24 @@
           false
         ],
         [
-          240,
+          281,
           "flow",
-          233,
+          4325110,
           "flow",
           false
         ],
         [
-          240,
-          "velocity",
-          233,
+          1817000,
+          "value",
+          4325110,
           "A",
+          true
+        ],
+        [
+          88,
+          "justFinishPenalty",
+          4325110,
+          "B",
           false
         ],
         [
@@ -6719,10 +6938,24 @@
           false
         ],
         [
-          4324672,
-          "completed",
-          75,
+          4324893,
           "flow",
+          4325108,
+          "flow",
+          false
+        ],
+        [
+          1817000,
+          "value",
+          4325108,
+          "A",
+          true
+        ],
+        [
+          4324896,
+          "silverTimePenalty",
+          4325108,
+          "B",
           false
         ],
         [
@@ -6838,20 +7071,6 @@
           false
         ],
         [
-          76,
-          "flow",
-          63,
-          "flow",
-          false
-        ],
-        [
-          76,
-          "exists",
-          63,
-          "condition",
-          false
-        ],
-        [
           154,
           "enterState",
           157,
@@ -6866,22 +7085,36 @@
           false
         ],
         [
-          137,
+          4324893,
           "flow",
-          45492,
+          4324894,
           "flow",
           false
         ],
         [
+          1817001,
+          "value",
+          4324894,
+          "A",
+          true
+        ],
+        [
+          4324683,
+          "goldTimeTotal",
+          4324894,
+          "B",
+          false
+        ],
+        [
           8993,
-          "contStart",
+          "contHere",
           45493,
           "flow",
           false
         ],
         [
           8993,
-          "contHere",
+          "contStart",
           45493,
           "flow",
           false
@@ -6915,48 +7148,6 @@
           false
         ],
         [
-          4325137,
-          "True",
-          4325141,
-          "flow",
-          false
-        ],
-        [
-          4325137,
-          "False",
-          4325141,
-          "flow",
-          false
-        ],
-        [
-          4325137,
-          "True",
-          4325141,
-          "select_1",
-          false
-        ],
-        [
-          4325137,
-          "False",
-          4325141,
-          "select_2",
-          false
-        ],
-        [
-          101,
-          "flow",
-          4325137,
-          "flow",
-          false
-        ],
-        [
-          4325135,
-          "reverse",
-          4325137,
-          "condition",
-          false
-        ],
-        [
           4324702,
           "value",
           106,
@@ -6971,157 +7162,10 @@
           false
         ],
         [
-          8993,
-          "retry",
-          149,
-          "flow",
-          false
-        ],
-        [
-          90,
-          "flow",
-          152,
-          "flow",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          152,
-          "reset",
-          false
-        ],
-        [
-          66,
-          "flow",
-          102,
-          "flow",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          102,
-          "reset",
-          true
-        ],
-        [
-          66,
-          "attempt",
-          102,
-          "attempt",
-          false
-        ],
-        [
-          154,
-          "flow",
-          8,
-          "flow",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          8,
-          "reset",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          153,
-          "flow",
-          false
-        ],
-        [
-          159,
-          "value",
-          153,
-          "A",
-          false
-        ],
-        [
-          154,
-          "exitState",
-          74,
-          "flow",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          74,
-          "reset",
-          true
-        ],
-        [
-          102,
-          "flow",
-          101,
-          "flow",
-          false
-        ],
-        [
-          99,
+          4324672,
           "completed",
-          101,
-          "on",
-          false
-        ],
-        [
-          154,
-          "enterState",
-          101,
-          "off",
-          true
-        ],
-        [
-          4324672,
-          "incomplete",
-          4324673,
+          75,
           "flow",
-          false
-        ],
-        [
-          4324674,
-          "value",
-          4324673,
-          "value",
-          false
-        ],
-        [
-          157,
-          "dirVec",
-          163,
-          "from",
-          true
-        ],
-        [
-          157,
-          "dirVecUp",
-          163,
-          "up",
-          true
-        ],
-        [
-          4324672,
-          "elapsedPercent",
-          4324674,
-          "a",
-          false
-        ],
-        [
-          4324676,
-          "value",
-          4324674,
-          "b",
-          false
-        ],
-        [
-          4324679,
-          "value",
-          4324674,
-          "c",
           false
         ],
         [
@@ -7146,6 +7190,139 @@
           false
         ],
         [
+          154,
+          "flow",
+          8,
+          "flow",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          8,
+          "reset",
+          false
+        ],
+        [
+          4324672,
+          "elapsedPercent",
+          4324674,
+          "a",
+          false
+        ],
+        [
+          4324676,
+          "value",
+          4324674,
+          "b",
+          false
+        ],
+        [
+          4324679,
+          "value",
+          4324674,
+          "c",
+          false
+        ],
+        [
+          154,
+          "exitState",
+          74,
+          "flow",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          74,
+          "reset",
+          true
+        ],
+        [
+          4324672,
+          "incomplete",
+          4324673,
+          "flow",
+          false
+        ],
+        [
+          4324674,
+          "value",
+          4324673,
+          "value",
+          false
+        ],
+        [
+          4324671,
+          "timerId",
+          4324672,
+          "timerId",
+          false
+        ],
+        [
+          157,
+          "dirVec",
+          163,
+          "from",
+          true
+        ],
+        [
+          157,
+          "dirVecUp",
+          163,
+          "up",
+          true
+        ],
+        [
+          8993,
+          "contHere",
+          137,
+          "flow_1",
+          false
+        ],
+        [
+          45493,
+          "complete",
+          137,
+          "flow_2",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          81,
+          "reset",
+          true
+        ],
+        [
+          95,
+          "value",
+          81,
+          "duration",
+          true
+        ],
+        [
+          66,
+          "flow",
+          102,
+          "flow",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          102,
+          "reset",
+          true
+        ],
+        [
+          66,
+          "attempt",
+          102,
+          "attempt",
+          false
+        ],
+        [
           45493,
           "completed",
           87,
@@ -7160,45 +7337,38 @@
           true
         ],
         [
-          4324893,
-          "flow",
-          4324894,
+          8993,
+          "retry",
+          149,
           "flow",
           false
         ],
         [
-          1817001,
+          90,
+          "flow",
+          152,
+          "flow",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          152,
+          "reset",
+          false
+        ],
+        [
+          154,
+          "enterState",
+          153,
+          "flow",
+          false
+        ],
+        [
+          159,
           "value",
-          4324894,
+          153,
           "A",
-          true
-        ],
-        [
-          4324683,
-          "goldTimeTotal",
-          4324894,
-          "B",
-          false
-        ],
-        [
-          4324893,
-          "flow",
-          4325108,
-          "flow",
-          false
-        ],
-        [
-          1817000,
-          "value",
-          4325108,
-          "A",
-          true
-        ],
-        [
-          4324896,
-          "silverTimePenalty",
-          4325108,
-          "B",
           false
         ],
         [
@@ -7216,81 +7386,39 @@
           false
         ],
         [
-          281,
+          154,
           "flow",
-          4325110,
+          90,
           "flow",
           false
         ],
         [
-          1817000,
-          "value",
-          4325110,
+          240,
+          "flow",
+          233,
+          "flow",
+          false
+        ],
+        [
+          240,
+          "velocity",
+          233,
           "A",
+          false
+        ],
+        [
+          145,
+          "flow",
+          240,
+          "flow",
+          false
+        ],
+        [
+          21,
+          "playerID",
+          240,
+          "vehId",
           true
-        ],
-        [
-          88,
-          "justFinishPenalty",
-          4325110,
-          "B",
-          false
-        ],
-        [
-          4324893,
-          "value",
-          4325111,
-          "a",
-          false
-        ],
-        [
-          4325108,
-          "value",
-          4325111,
-          "b",
-          false
-        ],
-        [
-          102,
-          "flow",
-          4325130,
-          "flow",
-          false
-        ],
-        [
-          4325128,
-          "reverse",
-          4325130,
-          "condition",
-          false
-        ],
-        [
-          4325130,
-          "True",
-          4325134,
-          "flow",
-          false
-        ],
-        [
-          4325130,
-          "False",
-          4325134,
-          "flow",
-          false
-        ],
-        [
-          4325130,
-          "True",
-          4325134,
-          "select_1",
-          false
-        ],
-        [
-          4325130,
-          "False",
-          4325134,
-          "select_2",
-          false
         ]
       ],
       "name":"SimpleEnd",
@@ -8716,6 +8844,7 @@
           "dynamicMode":"once",
           "hiddenPins":{
             "p_in":{
+              "damage":false,
               "flow":false,
               "pathData":false,
               "raceData":false,
@@ -8732,13 +8861,39 @@
           ],
           "type":"gameplay/aipacenotes/trackTiming"
         },
+        "186":{
+          "data":{},
+          "dynamicMode":"repeat",
+          "hiddenPins":{
+            "p_in":{
+              "flow":false,
+              "vehId":false
+            },
+            "p_out":{
+              "active":true,
+              "damage":false,
+              "dirVec":false,
+              "dirVecUp":true,
+              "flow":false,
+              "position":false,
+              "rotation":true,
+              "velocity":false,
+              "velocityVector":true
+            }
+          },
+          "pos":[
+            -158,
+            498
+          ],
+          "type":"vehicle/vehicleMapData"
+        },
         "233":{
           "data":{},
           "dynamicMode":"repeat",
           "hardcodedPins":{
             "B":{
               "type":"number",
-              "value":0.00999999977600002365
+              "value":0.00999999977599999937
             }
           },
           "hiddenPins":{
@@ -8980,7 +9135,7 @@
           "hardcodedPins":{
             "duration":{
               "type":"number",
-              "value":0.75000000000000066613
+              "value":0.75000000000000000000
             }
           },
           "hiddenPins":{
@@ -9305,7 +9460,7 @@
         },
         "4324679":{
           "data":{
-            "value":0.75000000000000066613
+            "value":0.75000000000000000000
           },
           "dynamicMode":"repeat",
           "hiddenPins":{
@@ -9863,10 +10018,10 @@
         "list":{}
       },
       "viewPos":[
-        -719.12860107421875000000,
-        -244.86413574218750000000
+        0,
+        0
       ],
-      "viewZoom":0.75000000000000000000
+      "viewZoom":1
     }
   },
   "isScenario":false,

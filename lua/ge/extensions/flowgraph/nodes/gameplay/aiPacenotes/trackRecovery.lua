@@ -36,9 +36,9 @@ function C:work()
   self.pinOut.recovery.value = false
   -- self.pinOut.restart.value = false
 
-  print(self.pinIn.flip.value)
-  print(self.pinIn.recovery.value)
-  print(self.pinIn.restart.value)
+  -- print(self.pinIn.flip.value)
+  -- print(self.pinIn.recovery.value)
+  -- print(self.pinIn.restart.value)
 
   if self.pinIn.flip.value then
     recoveryType = 'flip'
@@ -55,7 +55,6 @@ function C:work()
     -- self.pinOut.restart.value = true
   end
 
-
   -- self.pinOut.flow.value = self.pinIn.flow.value
 
   -- if self.pinIn.flow.value then
@@ -64,43 +63,40 @@ function C:work()
     -- print(self.pinIn.recovery.value)
   -- end
 
-  if recoveryType then
-    self.race = self.pinIn.raceData.value
-    if not self.race then
-      log('W', logTag, 'no raceData')
-      return
-    end
+  -- if recoveryType then
+    -- self.race = self.pinIn.raceData.value
+    -- if not self.race then
+    --   log('W', logTag, 'no raceData')
+    --   return
+    -- end
+    --
+    -- self.vehId = self.pinIn.vehId.value
+    -- if not self.vehId then
+    --   log('W', logTag, 'no vehId')
+    --   return
+    -- end
+    --
+    -- local state = self.race.states[self.vehId]
+    -- local currSeg = state.currentSegments
+    -- local time = self.race.time
+    --
+    -- local recoveryEntry = {
+    --   recoveryType = recoveryType,
+    --   currSegmentId = currSeg,
+    --   time = time,
+    --   damage = map.objects[self.vehId].damage,
+    -- }
 
-    self.vehId = self.pinIn.vehId.value
-    if not self.vehId then
-      log('W', logTag, 'no vehId')
-      return
-    end
+    -- gameplay_aipacenotes.getRallyManager():addRecovery(recoveryEntry)
+  --   gameplay_aipacenotes.getRacelinkTracker():addRecovery(
+  --     recoveryType,
+  --     self.race,
+  --   )
+  -- end
 
-    local state = self.race.states[self.vehId]
-    local currSeg = state.currentSegments
-    -- local hist_data = state.historicTimes[#state.historicTimes]
-    -- local timing_data = state.currentTimes
-    -- local dur = timing_data.duration
-    local time = self.race.time
-
-    -- print(dumps(state))
-    -- print(dumps(hist_data))
-    -- print(dumps(timing_data))
-    -- print(dumps(dur))
-
-    -- print(recoveryType)
-    -- print(dumps(currSeg))
-    -- print(dumps(time))
-
-    local recoveryEntry = {
-      recoveryType = recoveryType,
-      currSegmentId = currSeg,
-      time = time,
-      damage = map.objects[self.vehId].damage,
-    }
-    gameplay_aipacenotes.getRallyManager():addRecovery(recoveryEntry)
-  end
+  local tracker = gameplay_racelink.getTracker()
+  tracker:setRaceData(self.race)
+  tracker:addRecovery(recoveryType)
 end
 
 return _flowgraph_createNode(C)
