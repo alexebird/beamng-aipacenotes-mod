@@ -1,0 +1,12 @@
+{
+  "Author": "birdman",
+  "Config Type":"Rally",
+  "Configuration":"birddash 2.5L - dirt",
+  "Description":"Crazy-fast 5-speed, 5-cylinder rally car.",
+  "Drivetrain":"AWD",
+  "Fuel Type":"Gasoline",
+  "Induction Type":"Turbo",
+  "Propulsion":"ICE",
+  "Transmission":"Sequential"
+}
+

@@ -45,21 +45,25 @@ local function testTracker()
   local vehId = be:getPlayerVehicleID(0)
   local veh = be:getObjectByID(vehId)
 
-  local x = Tracker(vehId)
+  local tracker = Tracker(vehId)
+  tracker:startTracking()
 
-  x:setMissionId("driver_training/rallyStage/aip-test3")
+  tracker:setMissionId("driver_training/rallyStage/aip-test3")
 
-  assert( x.uuid ~= nil)
+  assert(tracker.uuid ~= nil)
 
-  local reading = x:getAllData()
-  pp(reading.odometer)
-  pp(reading.fuel)
-  pp(reading.level)
-  pp(reading.mission)
+  local reading = tracker:getAllData()
+  tracker:takeVehicleDrivingReading()
+  tracker:takeVehicleStructureReading()
+  pp(reading)
+  -- pp(reading.odometer)
+  -- pp(reading.fuel)
+  -- pp(reading.level)
+  -- pp(reading.mission)
 
   print("passed")
 
-  return x
+  return tracker
 end
 
 

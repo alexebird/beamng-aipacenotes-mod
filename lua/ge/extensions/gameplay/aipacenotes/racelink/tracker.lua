@@ -1,25 +1,62 @@
 local socket = require('socket')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
+local jbeamIO = require('jbeam/io')
 
 local C = {}
 local logTag = 'racelink-tracker'
 
--- local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
--- local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
-
 function C:init(vehId)
   self.uuid = self:makeUuid()
-
   self.vehId = vehId
-  self.race = nil
-  self.path = nil
-  self.missionId = nil
-
+  log('I', logTag, 'Tracker.init vehId='..tostring(self.vehId)..' uuid='..self.uuid)
   self:registerElectrics()
 
-  -- self.readings = {}
+  self:reset()
+end
+
+function C:reset()
+  self.missionId = nil
+
+  self.vehicleStructureReadings = {}
+  self.vehicleDrivingReadings = {}
+  self.vehicleLuaReadings = {}
+
+  self.flips = {}
   self.recoveries = {}
-  self.odometerReadings = {}
+  self.raceTimingReadings = {}
+  self.racePathReadings = {}
+
+  self.missionVarsReadings = {}
+end
+
+function C:takeVehicleStructureReading()
+  local data = self:getVehicleStructureReading()
+  table.insert(self.vehicleStructureReadings, data)
+end
+
+function C:takeVehicleDrivingReading()
+  local data = self:getVehicleDrivingReading()
+  table.insert(self.vehicleDrivingReadings, data)
+end
+
+
+function C:triggerVehicleLuaReading()
+  local veh = be:getObjectByID(self.vehId)
+  veh:queueLuaCommand("extensions.aipacenotes.sendVehicleReading()")
+end
+
+function C:putVehicleLuaReading(data)
+  data.reading_taken_at = self:getClockTime()
+  table.insert(self.vehicleLuaReadings, data)
+end
+
+function C:putMissionVarsReading(data)
+  data.reading_taken_at = self:getClockTime()
+  table.insert(self.missionVarsReadings, data)
+end
+
+function C:makeUuid()
+  return worldEditorCppApi.generateUUID()
 end
 
 -- use for manual override
@@ -33,45 +70,44 @@ function C:registerElectrics()
   core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(self.vehId), 'fuelVolume')
 
   core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(self.vehId), 'odometer')
+
+  core_vehicleBridge.registerValueChangeNotification(be:getObjectByID(self.vehId), 'gearboxMode')
 end
 
-function C:setRacePath(path)
-  self.path = path
+function C:startTracking()
+  self:reset()
 end
 
-function C:setRaceData(race)
-  self.race = race
-end
-
-function C:addRecovery(recoveryType)
+function C:addRecovery(recoveryType, race)
   if not self.vehId then
     log('W', logTag, 'no vehId')
     return
   end
 
-  if not self.race then
+  if not race then
     log('W', logTag, 'cant addRecovery because no raceData')
     return
   end
 
-  local state = self.race.states[self.vehId]
+  local state = race.states[self.vehId]
   local currSeg = state.currentSegments
-  local time = self.race.time
+  local time = race.time
 
   local recoveryEntry = {
+    reading_taken_at = self:getClockTime(),
     recoveryType = recoveryType,
     currSegmentId = currSeg,
     time = time,
     damage = map.objects[self.vehId].damage,
   }
 
-  table.insert(self.recoveries, recoveryEntry)
-end
-
-function C:addOdometerReading()
-  local key = tostring(os.time())
-  local odo = self:readOdometer()
-  self.odometerReadings[key] = odo
+  if recoveryType == 'flip' then
+    table.insert(self.flips, recoveryEntry)
+  elseif recoveryType == 'recovery' then
+    table.insert(self.recoveries, recoveryEntry)
+  else
+    log('E', logTag, 'unknown recovery type: '..tostring(recoveryType))
+  end
 end
 
 function C:getDamage()
@@ -95,32 +131,314 @@ function C:getClockTime()
   return socket.gettime()
 end
 
+function C:printReading()
+  print(dumps(self:getVehicleDrivingReading()))
+end
+
+-- core_input_bindings.bindings
+-- { {
+--     contents = {
+--       bindings = { {
+--           action = "shiftDown",
+--           control = "button12",
+--           player = 0
+--         }, {
+--           action = "toggleMenues",
+--           control = "button0",
+--           player = 0
+--         }, {
+--           action = "clutch",
+--           control = "slider",
+--           player = 0
+--         }, {
+--           action = "toggle4WDStatus",
+--           control = "button46",
+--           player = 0
+--         }, {
+--           action = "shiftDown",
+--           control = "button112",
+--           player = 0
+--         }, {
+--           action = "shiftUp",
+--           control = "button13",
+--           player = 0
+--         }, {
+--           action = "rotate_camera_left",
+--           control = "button11",
+--           player = 0
+--         }, {
+--           action = "center_camera",
+--           control = "button1",
+--           player = 0
+--         }, {
+--           action = "menu_item_up",
+--           control = "button4",
+--           player = 0
+--         }, {
+--           action = "toggle_headlights",
+--           control = "button21",
+--           player = 0
+--         }, {
+--           action = "menu_item_right",
+--           control = "rpov",
+--           player = 0
+--         }, {
+--           action = "menu_item_right",
+--           control = "button5",
+--           player = 0
+--         }, {
+--           action = "pause",
+--           control = "button33",
+--           player = 0
+--         }, {
+--           action = "parkingbrake",
+--           control = "slider2",
+--           deadzoneResting = 0.1,
+--           player = 0
+--         }, {
+--           action = "toggleRangeStatus",
+--           control = "button36",
+--           player = 0
+--         }, {
+--           action = "menu_item_up",
+--           control = "upov",
+--           player = 0
+--         }, {
+--           action = "toggle_slow_motion",
+--           control = "button18",
+--           player = 0
+--         }, {
+--           action = "toggleBigMap",
+--           control = "button23",
+--           player = 0
+--         }, {
+--           action = "shiftUp",
+--           control = "button113",
+--           player = 0
+--         }, {
+--           action = "menu_item_down",
+--           control = "dpov",
+--           player = 0
+--         }, {
+--           action = "rotate_camera_up",
+--           control = "button8",
+--           player = 0
+--         }, {
+--           action = "switch_camera_next",
+--           control = "button114",
+--           player = 0
+--         }, {
+--           action = "toggleDiffMode",
+--           control = "button47",
+--           player = 0
+--         }, {
+--           action = "previousESCMode",
+--           control = "button46",
+--           player = 0
+--         }, {
+--           action = "parkingbrake_toggle",
+--           control = "button115",
+--           player = 0
+--         }, {
+--           action = "accelerate",
+--           control = "zaxis",
+--           player = 0
+--         }, {
+--           action = "reset_physics",
+--           control = "button34",
+--           player = 0
+--         }, {
+--           action = "menu_item_down",
+--           control = "button6",
+--           player = 0
+--         }, {
+--           action = "rotate_camera_right",
+--           control = "button9",
+--           player = 0
+--         }, {
+--           action = "brake",
+--           control = "rzaxis",
+--           player = 0
+--         }, {
+--           action = "switch_camera_next",
+--           control = "button20",
+--           player = 0
+--         }, {
+--           action = "steering",
+--           angle = 900,
+--           control = "xaxis",
+--           ffb = {
+--             forceCoef = 150,
+--             frequency = 0,
+--             gforceCoef = 0.2,
+--             lowspeedCoef = true,
+--             responseCorrected = false,
+--             responseCurve = { { 0, 0 }, { 1, 1 } },
+--             smoothing = 50,
+--             smoothing2 = 50,
+--             smoothing2automatic = false,
+--             smoothing2autostr = 470,
+--             softlockForce = 1,
+--             updateType = 0
+--           },
+--           isForceEnabled = true,
+--           player = 0
+--         }, {
+--           action = "menu_item_select",
+--           control = "button19",
+--           player = 0
+--         }, {
+--           action = "gearR",
+--           control = "button116",
+--           player = 0
+--         }, {
+--           action = "toggle_slow_motion",
+--           control = "button45",
+--           player = 0
+--         }, {
+--           action = "rotate_camera_down",
+--           control = "button10",
+--           player = 0
+--         }, {
+--           action = "menu_item_left",
+--           control = "button7",
+--           player = 0
+--         }, {
+--           action = "menu_item_left",
+--           control = "lpov",
+--           player = 0
+--         }, {
+--           action = "recover_vehicle_alt",
+--           control = "button35",
+--           player = 0
+--         } },
+--       devicetype = "joystick",
+--       guid = "{0006346E-0000-0000-0000-504944564944}",
+--       name = "MOZA R12 Base\2",
+--       vendorName = "Moza",
+--       version = 1,
+--       vidpid = "0006346E"
+--     },
+--     devname = "joystick0"
+--   }, {
+--     contents = {
+--       bindings = { {
+--           action = "accelerate",
+--           control = "rxaxis",
+--           player = 0
+--         }, {
+--           action = "brake",
+--           control = "ryaxis",
+--           player = 0
+--         }, {
+--           action = "clutch",
+--           control = "rzaxis",
+--           player = 0
+--         } },
+--       devicetype = "joystick",
+--       guid = "{100130B7-0000-0000-0000-504944564944}",
+--       name = "Heusinkveld Sim Pedals Sprint",
+--       vendorName = "Heusinkveld",
+--       version = 1,
+--       vidpid = "100130B7"
+--     },
+--     devname = "joystick1"
+--   }, {
+--     contents = {
+--       bindings = { {
+--           action = "decreaseDecalScaleY",
+--           control = "s",
+--           player = 0
+--         }, {
+--           action = "editorSafeModeToggle",
+--           control = "ctrl f11",
+--           player = 0
+--         }, {
+--           action = "camera_8",
+--           control = "8",
+--   .....
+--
+-- local ffbid getPlayerVehicle(0):getFFBID('steering')
+-- be:getFFBConfig(ffbid)
+-- returns json string => '{"ff_max_force":10,"ff_res":0,"ffbParamsJson":"{\\"frequency\\":0,\\"responseCurve\\":[[0,0],[1,1]],\\"responseCorrected\\":false,\\"smoothing2automatic\\":false,\\"gforceCoef\\":0.2,\\"lowspeedCoef\\":true,\\"smoothing\\":50,\\"smoothing2\\":50,\\"smoothing2autostr\\":470,\\"forceCoef\\":150,\\"softlockForce\\":1,\\"updateType\\":0}","ffbSendms":1.0200820000318345}\n'
+--
+--
+-- core_input_bindings.devices
+-- {
+--   joystick0 = { "{0006346E-0000-0000-0000-504944564944}", "MOZA R12 Base\2?", "0006346E" },
+--   joystick1 = { "{100130B7-0000-0000-0000-504944564944}", "Heusinkveld Sim Pedals Sprint", "100130B7" },
+--   keyboard0 = { "{6F1D2B61-D5A0-11CF-BFC7-444553540000}", "Keyboard", "6F1D2B61" },
+--   mouse0    = { "{6F1D2B60-D5A0-11CF-BFC7-444553540000}", "Mouse", "6F1D2B60" }
+--   xinput0   = { "xinput0",                                "XBox Controller 1", "XIDevice" }
+-- }
+local function removeControlChars(str)
+  if not str then return str end
+  local utf8_pattern = "[%z\1-\31\127]"
+  return str:gsub(utf8_pattern, function(c)
+    return ''
+  end)
+end
+
+local function removeNonASCII(input)
+  if not input then return input end
+  local non_ascii_pattern = "[\128-\255]"
+  return input:gsub(non_ascii_pattern, '')
+end
+
 function C:getDevices()
-  local function removeControlChars(str)
-    local utf8_pattern = "[%z\1-\31\127]"
-    return str:gsub(utf8_pattern, function(c)
-      return ''
-    end)
+  local hasForceEnabledSteering = false
+  local collectedDevices = {}
+
+  for i,deviceBindings in ipairs(core_input_bindings.bindings) do
+    local devname = deviceBindings.devname
+    local devinfo = {}
+
+    local contents = deviceBindings.contents
+    local devicetype = contents.devicetype
+    local name = contents.name
+    local vendorName = contents.vendorName
+
+    devinfo.devicetype = devicetype
+    devinfo.name = removeControlChars(removeNonASCII(name))
+    devinfo.vendorName = removeControlChars(removeNonASCII(vendorName))
+    devinfo.hasForceEnabledSteering = false
+
+    local bindings = contents.bindings
+    for j,binding in ipairs(bindings) do
+      if binding.action == 'steering' then
+        print(dumps( binding ))
+        if binding.isForceEnabled and binding.ffb then
+          hasForceEnabledSteering = true
+          devinfo.hasForceEnabledSteering = true
+          devinfo.forceEnabledSteeringBinding = deepcopy(binding)
+        end
+      end
+    end
+
+    collectedDevices[devname] = devinfo
   end
 
-  local function removeNonASCII(input)
-    local non_ascii_pattern = "[\128-\255]"
-    return input:gsub(non_ascii_pattern, '')
-  end
+  return {
+    ffbSteering = hasForceEnabledSteering,
+    devices = collectedDevices,
+  }
 
-  local devices = {}
-  for name,info in pairs(deepcopy(core_input_bindings.devices)) do
-    devices[name] = removeControlChars(removeNonASCII(info[2]))
-  end
+  -- local foundFFBSteering = false
+  -- local veh = be:getObjectByID(self.vehId)
+  -- local ffbid = veh:getFFBID('steering')
+  -- if ffbid >= 0 then
+  --   foundFFBSteering = true
+  -- end
+  -- be:getFFBConfig(ffbid)
 
-  return devices
+  -- local devices = {}
+  -- for name,info in pairs(deepcopy(core_input_bindings.devices)) do
+  --   devices[name] = removeControlChars(removeNonASCII(info[2]))
+  -- end
 
-  -- core_input_bindings.devices
-  -- {
-  --   joystick0 = { "{0006346E-0000-0000-0000-504944564944}", "MOZA R12 Base\2?", "0006346E" },
-  --   joystick1 = { "{100130B7-0000-0000-0000-504944564944}", "Heusinkveld Sim Pedals Sprint", "100130B7" },
-  --   keyboard0 = { "{6F1D2B61-D5A0-11CF-BFC7-444553540000}", "Keyboard", "6F1D2B61" },
-  --   mouse0 = { "{6F1D2B60-D5A0-11CF-BFC7-444553540000}", "Mouse", "6F1D2B60" }
+  -- return {
+  --   ffbSteering = foundFFBSteering,
+  --   devices = devices,
   -- }
 end
 
@@ -130,34 +448,411 @@ function C:getAipVersion()
   if FS:fileExists(aipVersionFname) then
     aipVersion = readFile(aipVersionFname)
   end
+  return aipVersion
 end
 
+-- {"last_tick_at":"2024-06-26T21:24:47.391Z","version":"dev"}
 function C:getRacelinkTickData()
   local fnameTick = '/settings/aipacenotes/racelink/tick.json'
-  local tickJson = nil
+  local tickJson = 'none'
   if FS:fileExists(fnameTick) then
     tickJson = jsonReadFile(fnameTick)
   end
-  -- {"last_tick_at":"2024-06-26T21:24:47.391Z","version":"dev"}
+  return tickJson
 end
 
-function C:getVehicleConfig()
-  local vehicleData = core_vehicle_manager.getVehicleData(self.vehId)
+-- {
+--   configs = {
+--     ["0-100 km/h"] = 6.5,
+--     ["0-100 mph"] = 16,
+--     ["0-200 km/h"] = 39.6,
+--     ["0-60 mph"] = 6.2,
+--     ["100-0 km/h"] = 36,
+--     ["100-200 km/h"] = 33,
+--     ["60-0 mph"] = 109.3,
+--     ["60-100 mph"] = 9.8,
+--     BoundingBox = { { -0.6993, -2.047, -0.1987 }, { 1.1993, 2.3499, 1.0798 } },
+--     ["Braking G"] = 1.093,
+--     ["Config Type"] = "Custom",
+--     Configuration = "Rally (SQ)",
+--     Description = "Peppy rear wheel driven rally car based on the 240bx coupe USDM model",
+--     Drivetrain = "RWD",
+--     ["Fuel Type"] = "Gasoline",
+--     ["Induction Type"] = "NA",
+--     Name = "BX-Series Rally (SQ)",
+--     ["Off-Road Score"] = 34,
+--     Population = 100,
+--     Power = 178,
+--     PowerPeakRPM = "5550 - 6350",
+--     Propulsion = "ICE",
+--     Source = "BeamNG - Official",
+--     -- NOTE Source becomes "Custom" if it's a custom config. it stays as BeamNG if you just make a part change but dont save a config.
+--     ["Top Speed"] = 55.55410229,
+--     Torque = 235,
+--     TorquePeakRPM = "4300 - 5450",
+--     Transmission = "Sequential",
+--     Value = 45000,
+--     Weight = 1175,
+--     ["Weight/Power"] = 6.601123596,
+--     aggregates = {
+--       ["0-100 km/h"] = {
+--         max = 6.5,
+--         min = 6.5
+--       },
+--       ["0-60 mph"] = {
+--         max = 6.2,
+--         min = 6.2
+--       },
+--       ["Body Style"] = {
+--         Coupe = true
+--       },
+--       Brand = {
+--         Ibishu = true
+--       },
+--       ["Config Type"] = {
+--         Custom = true
+--       },
+--       Country = {
+--         Japan = true
+--       },
+--       ["Derby Class"] = {
+--         ["Compact Car"] = true
+--       },
+--       Drivetrain = {
+--         RWD = true
+--       },
+--       ["Fuel Type"] = {
+--         Gasoline = true
+--       },
+--       ["Induction Type"] = {
+--         NA = true
+--       },
+--       ["Off-Road Score"] = {
+--         max = 34,
+--         min = 34
+--       },
+--       Propulsion = {
+--         ICE = true
+--       },
+--       Source = {
+--         ["BeamNG - Official"] = true
+--       },
+--       ["Top Speed"] = {
+--         max = 55.55410229,
+--         min = 55.55410229
+--       },
+--       Transmission = {
+--         Sequential = true
+--       },
+--       Type = {
+--         Car = true
+--       },
+--       Value = {
+--         max = 45000,
+--         min = 45000
+--       },
+--       Weight = {
+--         max = 1175,
+--         min = 1175
+--       },
+--       ["Weight/Power"] = {
+--         max = 6.601123596,
+--         min = 6.601123596
+--       },
+--       Years = {
+--         max = 1994,
+--         min = 1990
+--       }
+--     },
+--     defaultPaint = <1>{
+--       baseColor = { 0.65, 0.65, 0.65, 1.2 },
+--       clearcoat = 1,
+--       clearcoatRoughness = 0.06,
+--       metallic = 0.9,
+--       roughness = 0.6
+--     },
+--     defaultPaintName1 = "Silver",
+--     defaultPaintName2 = "Sea Blue",
+--     is_default_config = false,
+--     key = "240bx_coupe_rally_sq",
+--     model_key = "bx",
+--     preview = "/vehicles/bx/240bx_coupe_rally_sq.jpg"
+--   },
+--   current = {
+--     color = <userdata 1>,
+--     config_key = "240bx_coupe_rally_sq",
+--     key = "bx",
+--     pc_file = "vehicles/bx/240bx_coupe_rally_sq.pc",
+--     -- NOTE pc_file becomes a dumped table of parts tree if you make a part change.
+--     position = vec3(-394.5715942,68.81899261,51.20552444)
+--   },
+--   model = {
+--     Author = "BeamNG",
+--     ["Body Style"] = "Coupe",
+--     Brand = "Ibishu",
+--     Country = "Japan",
+--     ["Derby Class"] = "Compact Car",
+--     Name = "BX-Series",
+--     Type = "Car",
+--     Years = {
+--       max = 1994,
+--       min = 1990
+--     },
+--     aggregates = {
+--       ["0-100 km/h"] = {
+--         max = 9,
+--         min = 2.7
+--       },
+--       ["0-60 mph"] = {
+--         max = 8.5,
+--         min = 2.6
+--       },
+--       ["Body Style"] = {
+--         Coupe = true,
+--         Liftback = true
+--       },
+--       Brand = {
+--         Ibishu = true
+--       },
+--       ["Config Type"] = {
+--         Custom = true,
+--         Factory = true,
+--         Police = true
+--       },
+--       Country = {
+--         Japan = true
+--       },
+--       ["Derby Class"] = {
+--         ["Compact Car"] = true
+--       },
+--       Drivetrain = {
+--         RWD = true
+--       },
+--       ["Fuel Type"] = {
+--         Gasoline = true
+--       },
+--       ["Induction Type"] = {
+--         NA = true,
+--         Turbo = true,
+--         ["Turbo + N2O"] = true
+--       },
+--       ["Off-Road Score"] = {
+--         max = 34,
+--         min = 21
+--       },
+--       Propulsion = {
+--         ICE = true
+--       },
+--       Source = {
+--         ["BeamNG - Official"] = true
+--       },
+--       ["Top Speed"] = {
+--         max = 100.2674628,
+--         min = 44.62657233
+--       },
+--       Transmission = {
+--         Automatic = true,
+--         Manual = true,
+--         Sequential = true
+--       },
+--       Type = {
+--         Car = true,
+--         PropParked = true,
+--         PropTraffic = true
+--       },
+--       Value = {
+--         max = 85000,
+--         min = 28500
+--       },
+--       Weight = {
+--         max = 1315,
+--         min = 1175
+--       },
+--       ["Weight/Power"] = {
+--         max = 8.793103448,
+--         min = 0.9270516717
+--       },
+--       Years = {
+--         max = 1994,
+--         min = 1990
+--       }
+--     },
+--     defaultPaint = <2>{
+--       baseColor = { 0.31, 0, 0.03, 1.2 },
+--       clearcoat = 1,
+--       clearcoatRoughness = 0.06,
+--       metallic = 0.5,
+--       roughness = 0.6
+--     },
+--     defaultPaintName1 = "Deep Plum",
+--     default_pc = "200bx_type_l_M",
+--     key = "bx",
+--     logo = "/ui/images/appDefault.png",
+--     paints = {
+--       Aquamarine = {
+--         baseColor = { 0.05, 0.5, 0.7, 1.2 },
+--         clearcoat = 1,
+--         clearcoatRoughness = 0.06,
+--         metallic = 0,
+--         roughness = 1
+--       },
+--       ...
+--     },
+--     preview = "/vehicles/bx/default.jpg"
+--   },
+--   userDefault = false
+-- } <- output from core_vehicles.getCurrentVehicleDetails()
+-- can be used in freeroam
+--
+--
+-- TODO
+-- jbeamIO = require('jbeam/io')
+-- vd = core_vehicle_manager.getVehicleData(46856)
+-- jbeamIO.getAvailableParts(vd.ioCtx)
+--
+-- jbeamIO.getAvailableParts(vd.ioCtx)[config.mainPartName]
+--  {
+--   authors = "BeamNG",
+--   description = "Cherrier Vivace",
+--   slotInfoUi = {
+--     licenseplate_design_2_1 = {
+--       allowTypes = { "licenseplate_design_2_1" },
+--       denyTypes = {},
+--       description = "License Plate Design",
+--       name = "licenseplate_design_2_1"
+--     },
+--     paint_design = {
+--       allowTypes = { "paint_design" },
+--       denyTypes = {},
+--       description = "Paint Design",
+--       name = "paint_design"
+--     },
+--     vivace_body = {
+--       allowTypes = { "vivace_body" },
+--       coreSlot = true,
+--       denyTypes = {},
+--       description = "Body",
+--       name = "vivace_body"
+--     },
+--     vivace_mod = {
+--       allowTypes = { "vivace_mod" },
+--       denyTypes = {},
+--       description = "Additional Modification",
+--       name = "vivace_mod"
+--     }
+--   }
+-- }
+-- Then recursively iterate slotInfoUi
+--
+--config.parts
+local function populatePartNames(vehicleData)
+  -- local rv = {}
+  local partNameToDescriptionMap = {}
+  local slotNameToDescriptionMap = {}
   local config = vehicleData.config
-  local vars = vehicleData.vdata.variables
-  return {
-    config = deepcopy(config),
-    vdata_variables = deepcopy(vars),
-  }
+
+  local avail = jbeamIO.getAvailableParts(vehicleData.ioCtx)
+
+  local function cachePart(partId)
+    -- print('caching "'..partId..'"')
+    local partInfo = avail[partId]
+    if partInfo then
+      partNameToDescriptionMap[partId] = partInfo.description
+
+      for slotId, slotInfo in pairs(partInfo.slotInfoUi) do
+        slotNameToDescriptionMap[slotId] = slotInfo.description
+      end
+    else
+      -- print('no partInfo for '..partId)
+    end
+  end
+
+  -- local mainPartName = config.mainPartName
+  cachePart(config.mainPartName)
+  -- local mainPartNameNice = avail[config.mainPartName].description
+  -- print('mainPartName='..mainPartName..' nice='..mainPartNameNice)
+  --
+  for slot,part in pairs(config.parts) do
+    -- print(slot..'='..part)
+    -- print(slot..'->'..'asdf')
+    -- print('-------------------------------------------------------------')
+    cachePart(part)
+  end
+
+  return partNameToDescriptionMap, slotNameToDescriptionMap
 end
 
-function C:getRacePathData()
-  if not self.path then
+function C:getVehicleStructureReading()
+  local vehicleData = core_vehicle_manager.getVehicleData(self.vehId)
+  local config = deepcopy(vehicleData.config)
+  config.paints = nil
+  local vars = deepcopy(vehicleData.vdata.variables)
+
+  local vehicleDetails = core_vehicles.getCurrentVehicleDetails()
+  vehicleDetails = deepcopy(vehicleDetails)
+
+  vehicleDetails.configs.defaultPaint = nil
+  vehicleDetails.configs.defaultPaintName1 = nil
+  vehicleDetails.configs.defaultPaintName2 = nil
+
+  vehicleDetails.current.color = nil
+  vehicleDetails.current.position = nil
+
+  vehicleDetails.model.paints = nil
+  vehicleDetails.model.defaultPaint = nil
+  vehicleDetails.model.defaultPaintName1 = nil
+
+  local rv = {
+    reading_taken_at = self:getClockTime(),
+
+    core_vehicles = {
+      getCurrentVehicleDetails = vehicleDetails
+    },
+
+    core_vehicle_manager = {
+      getVehicleData = {
+        config = config,
+        vdata = {
+          variables = vars,
+        }
+      }
+    }
+  }
+
+  -- local database = jbeamIO.getAvailableParts(vehicleData.ioCtx)
+
+  -- local partNameToDescriptionMap, slotNameToDescriptionMap = createNameToDescriptionMaps(config, avail)
+
+  local partToDescriptionMap, slotToDescriptionMap = populatePartNames(vehicleData)
+
+  -- print("/nSlot Descriptions:")
+  -- for slot, description in pairs(slotToDescriptionMap) do
+  --   print(slot, description)
+  -- end
+  --
+  -- print("\nPart Descriptions:")
+  -- for part, description in pairs(partToDescriptionMap) do
+  --   print(part, description)
+  -- end
+
+  -- for slot,part in pairs(config.parts) do
+    -- print(slot .. ' -> ' .. part)
+    -- print(tostring(slotToDescriptionMap[slot])..'('.. slot ..')' .. ' -> ' .. tostring(partToDescriptionMap[part])..'('.. part ..')')
+  -- end
+
+  rv.partNiceNames = partToDescriptionMap
+  rv.slotNiceNames = slotToDescriptionMap
+
+  return rv
+end
+
+function C:takeRacePathReading(racePath)
+  if not racePath then
     return nil
   end
 
   local pathnodesExtracted = {}
-  for i,pn in ipairs(self.path.pathnodes.sorted) do
+  for i,pn in ipairs(racePath.pathnodes.sorted) do
     local pnData = {
       i = i,
       id = pn.id,
@@ -172,7 +867,7 @@ function C:getRacePathData()
   end
 
   local spExtracted = {}
-  for i,sp in ipairs(self.path.startPositions.sorted) do
+  for i,sp in ipairs(racePath.startPositions.sorted) do
     local spData = {
       i = i,
       id = sp.id,
@@ -184,7 +879,7 @@ function C:getRacePathData()
   end
 
   local segExtracted = {}
-  for i,seg in ipairs(self.path.segments.sorted) do
+  for i,seg in ipairs(racePath.segments.sorted) do
     local segData = {
       i = i,
       id = seg.id,
@@ -196,44 +891,83 @@ function C:getRacePathData()
   end
 
   local pathData = {
-    defaultStartPosition = self.path.defaultStartPosition,
+    defaultStartPosition = racePath.defaultStartPosition,
     startPositions = spExtracted,
-    startNode = self.path.startNode,
-    endNode = self.path.endNode,
+    startNode = racePath.startNode,
+    endNode = racePath.endNode,
     pathnodes = pathnodesExtracted,
     segments = segExtracted,
   }
 
-  return pathData
+  table.insert(self.racePathReadings, pathData)
 end
 
-function C:getTimingData()
-  if not self.race then
+function C:takeRaceTimingReading(race)
+  if not race then
     return nil
   end
 
-  local state = self.race.states[self.vehId]
-  local timing_data = state.historicTimes[#state.historicTimes]
-  return timing_data
+  local state = race.states[self.vehId]
+  local timingData = deepcopy(state.historicTimes[#state.historicTimes])
+
+  table.insert(self.raceTimingReadings, timingData)
 end
 
-function C:makeUuid()
-  return worldEditorCppApi.generateUUID()
+function C:getSettings()
+  return {
+    restrictScenarios = settings.getValue("restrictScenarios"),
+    absBehavior = settings.getValue("absBehavior"),
+    escBehavior = settings.getValue("escBehavior"),
+    defaultGearboxBehavior = settings.getValue("defaultGearboxBehavior"),
+    gearboxSafety = settings.getValue("gearboxSafety"),
+    autoClutch = settings.getValue("autoClutch"),
+    autoThrottle = settings.getValue("autoThrottle"),
+    steeringStabilizationEnabled = settings.getValue("steeringStabilizationEnabled"),
+    steeringUndersteerReductionEnabled = settings.getValue("steeringUndersteerReductionEnabled"),
+    steeringSlowdownEnabled = settings.getValue("steeringSlowdownEnabled"),
+    steeringLimitEnabled = settings.getValue("steeringLimitEnabled"),
+    steeringAutocenterEnabled = settings.getValue("steeringAutocenterEnabled"),
+    spawnVehicleIgnitionLevel = settings.getValue("spawnVehicleIgnitionLevel"),
+    startThermalsPreHeated = settings.getValue("startThermalsPreHeated"),
+    startBrakeThermalsPreHeated = settings.getValue("startBrakeThermalsPreHeated"),
+    disableDynamicCollision = settings.getValue("disableDynamicCollision"),
+  }
+
+  -- restrictScenarios = settings.getValue("restrictScenarios"),
+  -- settings.getValue("absBehavior")
+  -- settings.getValue("escBehavior")
+  -- settings.getValue("startBrakeThermalsPreHeated")
+  -- settings.getValue("startBrakeThermalsPreHeated")
+  --defaultGearboxBehavior
+  --gearboxSafety
+  --autoClutch
+  --autoThrottle
+  --steeringStabilizationEnabled
+  --steeringUndersteerReductionEnabled
+  --steeringSlowdownEnabled
+  --steeringLimitEnabled
+  --steeringAutocenterEnabled
+  --spawnVehicleIgnitionLevel
+  --startThermalsPreHeated
+  --startBrakeThermalsPreHeated
+  --disableDynamicCollision
 end
 
-function C:getRestrictScenarios()
-  return settings.getValue("restrictScenarios")
-end
-
-function C:readFuel()
+function C:getElectrics()
   local fuel = core_vehicleBridge.getCachedVehicleData(self.vehId, 'fuel')
   local fuelVol = core_vehicleBridge.getCachedVehicleData(self.vehId, 'fuelVolume')
   local fuelCap = core_vehicleBridge.getCachedVehicleData(self.vehId, 'fuelCapacity')
+
+  local odo = core_vehicleBridge.getCachedVehicleData(self.vehId, 'odometer')
+
+  local gearboxMode = core_vehicleBridge.getCachedVehicleData(self.vehId, 'gearboxMode')
 
   return {
     fuel = fuel,
     fuelVolume = fuelVol,
     fuelCapacity = fuelCap,
+    odometer = odo,
+    gearboxMode = gearboxMode,
   }
 end
 
@@ -244,18 +978,52 @@ function C:getForegroundMissionId()
 
   local missionId, _, _ = re_util.detectMissionIdHelper()
   return missionId
-  -- return gameplay_missions_missionManager.getForegroundMissionId()
 end
 
-function C:readOdometer()
-  local odo = core_vehicleBridge.getCachedVehicleData(self.vehId, 'odometer')
-  return odo or 0
-end
-
-local function getLevelId(missionId)
+local function extractLevelId(missionId)
   return string.match(missionId, "([^/]+)")
 end
 
+-- {
+--   authors = "BeamNG",
+--   biome = "levels.driver_training.biome",
+--   country = "levels.common.country.germany",
+--   defaultSpawnPointName = "spawn_default",
+--   description = "levels.driver_training.info.description",
+--   dir = "/levels/driver_training",
+--   features = "levels.driver_training.features",
+--   fullfilename = "/levels/driver_training/main/",
+--   levelName = "driver_training",
+--   minimap = { {
+--       file = "levels/driver_training/drivertraining_minimap.png",
+--       offset = { -511.5, 512.5, 0 },
+--       size = { 1024, 1024, 92.099998474121 }
+--     } },
+--   misFilePath = "/levels/driver_training/",
+--   official = false,
+--   previews = <1>{ "/levels/driver_training/driver_training_preview.jpg", "/levels/driver_training/driver_training_preview_2.jpg" },
+--   roads = "levels.driver_training.roads",
+--   size = { 1024, 1024 },
+--   spawnPoints = { {
+--       objectname = "spawn_north",
+--       previews = { "/levels/driver_training/spawn_north_preview.jpg" },
+--       translationId = "levels.driver_training.spawnpoints.spawn_north"
+--     }, {
+--       objectname = "spawn_west",
+--       previews = { "/levels/driver_training/spawn_west_preview.jpg" },
+--       translationId = "levels.driver_training.spawnpoints.spawn_west"
+--     }, {
+--       flag = "default",
+--       objectname = "spawn_default",
+--       previews = <table 1>,
+--       translationId = "levels.driver_training.spawnpoints.spawn_driver_experience_center"
+--     } },
+--   suitablefor = "levels.driver_training.suitablefor",
+--   title = "levels.driver_training.info.title"
+-- }
+--
+--
+-- translateLanguage('levels.utah.info.title', 'foo')
 function C:getLevelInfo()
   local missionId = self:getForegroundMissionId()
 
@@ -263,7 +1031,7 @@ function C:getLevelInfo()
     return nil
   end
 
-  local levelId = getLevelId(missionId)
+  local levelId = extractLevelId(missionId)
   local levelInfo = core_levels.getLevelByName(levelId)
 
   return {
@@ -273,49 +1041,54 @@ function C:getLevelInfo()
     title = levelInfo.title,
     size = levelInfo.size,
   }
-
-  -- {
-  --   authors = "BeamNG",
-  --   biome = "levels.driver_training.biome",
-  --   country = "levels.common.country.germany",
-  --   defaultSpawnPointName = "spawn_default",
-  --   description = "levels.driver_training.info.description",
-  --   dir = "/levels/driver_training",
-  --   features = "levels.driver_training.features",
-  --   fullfilename = "/levels/driver_training/main/",
-  --   levelName = "driver_training",
-  --   minimap = { {
-  --       file = "levels/driver_training/drivertraining_minimap.png",
-  --       offset = { -511.5, 512.5, 0 },
-  --       size = { 1024, 1024, 92.099998474121 }
-  --     } },
-  --   misFilePath = "/levels/driver_training/",
-  --   official = false,
-  --   previews = <1>{ "/levels/driver_training/driver_training_preview.jpg", "/levels/driver_training/driver_training_preview_2.jpg" },
-  --   roads = "levels.driver_training.roads",
-  --   size = { 1024, 1024 },
-  --   spawnPoints = { {
-  --       objectname = "spawn_north",
-  --       previews = { "/levels/driver_training/spawn_north_preview.jpg" },
-  --       translationId = "levels.driver_training.spawnpoints.spawn_north"
-  --     }, {
-  --       objectname = "spawn_west",
-  --       previews = { "/levels/driver_training/spawn_west_preview.jpg" },
-  --       translationId = "levels.driver_training.spawnpoints.spawn_west"
-  --     }, {
-  --       flag = "default",
-  --       objectname = "spawn_default",
-  --       previews = <table 1>,
-  --       translationId = "levels.driver_training.spawnpoints.spawn_driver_experience_center"
-  --     } },
-  --   suitablefor = "levels.driver_training.suitablefor",
-  --   title = "levels.driver_training.info.title"
-  -- }
-  --
-  --
-  -- translateLanguage('levels.utah.info.title', 'foo')
 end
 
+--miss.id
+--miss.name
+--miss.missionTypeLabel
+--miss.missionType
+--miss.date
+--miss.author
+--miss.description
+--miss.fgPath
+--miss.missionFolder
+--miss.retryBehaviour
+--miss.previewFile = "/ui/modules/gameContext/noPreview.jpg",
+--miss.thumbnailFile = "/ui/modules/gameContext/noThumb.jpg",
+--miss.startTrigger = {
+--  level = "driver_training",
+--  pos = { -394.5310059, 68.92810059, 50.96923065 },
+--  radius = 5.170642376,
+--  rot = { 0.09119108694, -0.2855890806, 0.9087983414, 0.2901872452 },
+--  type = "coordinates"
+--},
+--
+--miss.missionTypeData
+--missionTypeData = {
+--  allowFlip = true,
+--  allowRecover = true,
+--  allowRollingStart = false,
+--  bronzeTime = 180,
+--  bronzeTimePenalty = 20,
+--  bronzeTimeTotal = 180,
+--  closed = false,
+--  defaultLaps = 1,
+--  endScreenText = "end screen text.",
+--  flipLimit = 5,
+--  flipPenalty = 5,
+--  goldTime = 60,
+--  goldTimePenalty = 0,
+--  goldTimeTotal = 60,
+--  justFinishPenalty = 30,
+--  mapPreviewMode = "navgraph",
+--  recoverLimit = 5,
+--  recoverPenalty = 5,
+--  reversible = false,
+--  silverTime = 120,
+--  silverTimePenalty = 10,
+--  silverTimeTotal = 120,
+--  startScreenText = "start screen text."
+--},
 function C:getMissionInfo()
   local missionId = self:getForegroundMissionId()
 
@@ -336,89 +1109,63 @@ function C:getMissionInfo()
     fgPath           = miss.fgPath,
     missionFolder    = miss.missionFolder,
     retryBehaviour   = miss.retryBehaviour,
+    missionTypeData  = miss.missionTypeData
   }
-
-  --miss.id
-  --miss.name
-  --miss.missionTypeLabel
-  --miss.missionType
-  --miss.date
-  --miss.author
-  --miss.description
-  --miss.fgPath
-  --miss.missionFolder
-  --miss.retryBehaviour
-  --miss.previewFile = "/ui/modules/gameContext/noPreview.jpg",
-  --miss.thumbnailFile = "/ui/modules/gameContext/noThumb.jpg",
-  --miss.startTrigger = {
-  --  level = "driver_training",
-  --  pos = { -394.5310059, 68.92810059, 50.96923065 },
-  --  radius = 5.170642376,
-  --  rot = { 0.09119108694, -0.2855890806, 0.9087983414, 0.2901872452 },
-  --  type = "coordinates"
-  --},
-  --
-  --miss.missionTypeData
-  --missionTypeData = {
-  --  allowFlip = true,
-  --  allowRecover = true,
-  --  allowRollingStart = false,
-  --  bronzeTime = 180,
-  --  bronzeTimePenalty = 20,
-  --  bronzeTimeTotal = 180,
-  --  closed = false,
-  --  defaultLaps = 1,
-  --  endScreenText = "end screen text.",
-  --  flipLimit = 5,
-  --  flipPenalty = 5,
-  --  goldTime = 60,
-  --  goldTimePenalty = 0,
-  --  goldTimeTotal = 60,
-  --  justFinishPenalty = 30,
-  --  mapPreviewMode = "navgraph",
-  --  recoverLimit = 5,
-  --  recoverPenalty = 5,
-  --  reversible = false,
-  --  silverTime = 120,
-  --  silverTimePenalty = 10,
-  --  silverTimeTotal = 120,
-  --  startScreenText = "start screen text."
-  --},
 end
 
-function C:printReading()
-  print(dumps({
-    odometer = self:readOdometer(),
-    fuel = self:readFuel(),
+-- can be used in freeroam
+function C:getVehicleDrivingReading()
+  local reading = {
+    reading_taken_at = self:getClockTime(),
+    electrics = self:getElectrics(),
     damage = self:getDamage(),
-  }))
+  }
+  return reading
+end
+
+-- only can be used when a mission is loaded
+function C:getMissionReading()
+  local reading = {
+    level = self:getLevelInfo(),
+    mission = self:getMissionInfo(),
+    flowgraphVars = self.missionVarsReadings,
+  }
+  return reading
+end
+
+-- only can be used when a mission is loaded
+function C:getRaceReading()
+  local reading = {
+    course = self.racePathReadings,
+    timing = self.raceTimingReadings,
+    flips = self.flips,
+    recoveries = self.recoveries,
+  }
+  return reading
 end
 
 function C:getAllData()
-  local jsonData = {
+  local data = {
     uuid = self.uuid,
-
-    finished_at = self:getClockTime(),
-
+    reading_taken_at = self:getClockTime(),
     racelinkTick = self:getRacelinkTickData(),
     aipVersion = self:getAipVersion(),
+
+    -- can be used in freeroam
     devices = self:getDevices(),
-    restrictScenario = self:getRestrictScenarios(),
+    settings = self:getSettings(),
     environment = self:getEnvironment(),
 
-    vehicle_config = self:getVehicleConfig(),
-    odometer = self:readOdometer(),
-    fuel = self:readFuel(),
-    damage = self:getDamage(),
-
-    level = self:getLevelInfo(),
-    mission = self:getMissionInfo(),
-    race_course = self:getRacePathData(),
-    timing_data = self:getTimingData(),
-    recoveries = self.recoveries,
+    vehicle = {
+      structure = self.vehicleStructureReadings,
+      driving = self.vehicleDrivingReadings,
+      vlua = self.vehicleLuaReadings,
+    },
+    mission = self:getMissionReading(),
+    race = self:getRaceReading(),
   }
 
-  return jsonData
+  return data
 end
 
 function C:write()
@@ -428,10 +1175,10 @@ function C:write()
     missionId = 'unknown'
   end
 
-  local attemptDate = string.gsub(tostring(os.date()), ' ', '-')
-  attemptDate = string.gsub(attemptDate, ':', '-')
+  local nowTimestamp = string.gsub(tostring(os.date()), ' ', '-')
+  nowTimestamp = string.gsub(nowTimestamp, ':', '-')
   local attemptMission = string.gsub(missionId, '/', '-')
-  local fname = '/settings/aipacenotes/results/aipresult_'..attemptMission..'_'..attemptDate..'_'..tostring(os.time())
+  local fname = '/settings/aipacenotes/results/aipresult_'..attemptMission..'_'..nowTimestamp..'_'..tostring(os.time())
   local jsonData = self:getAllData()
   local contents = jsonEncode(jsonData)
 
@@ -447,173 +1194,6 @@ function C:write()
     log(logTag, 'E', 'error opening file')
   end
 end
-
-
-  -- local vehicle = getPlayerVehicle(0)
-  -- vehicle:queueLuaCommand("print(dumps(obj:calcBeamStats()))")
-  -- vehicle:queueLuaCommand("stats = lpack.encode(obj:calcBeamStats()) ; obj:queueGameEngineLua(\"print(stats))\")")
-
-
-  -- vehicle:queueLuaCommand([[ local stats = dumps(obj:calcBeamStats()) obj:queueGameEngineLua("print(dumps(" .. stats .. "))") ]])
-  -- {
-  --   beam_count = 4777,
-  --   beams_broken = 0,
-  --   beams_deformed = 8,
-  --   node_count = 768,
-  --   torsionbar_count = 23,
-  --   torsionbars_broken = 0,
-  --   torsionbars_deformed = 0,
-  --   total_weight = 1647.9207763672,
-  --   wheel_count = 4,
-  --   wheel_weight = 79.99991607666
-  -- }
-  --
-  -- vehicle:queueLuaCommand([[ local val = dumps(electrics.values) obj:queueGameEngineLua("print(dumps(" .. val .. "))") ]])
-  -- {
-  --   abs = 0,
-  --   absActive = 0,
-  --   accXSmooth = -0.00057202057039794,
-  --   accYSmooth = 0.0015347735725859,
-  --   accZSmooth = -9.8079265469987,
-  --   airflowspeed = 2.7350635397827e-05,
-  --   airspeed = 0.00013801365110767,
-  --   altitude = 51.192974599738,
-  --   avgWheelAV = 0.0003091733015026,
-  --   boost = 0,
-  --   boostMax = 19.009999999999,
-  --   brake = 0,
-  --   brake_input = 0,
-  --   brakelight_signal_L = 0,
-  --   brakelight_signal_R = 0,
-  --   brakelights = 0,
-  --   checkengine = false,
-  --   clutch = 0,
-  --   clutchRatio = 1,
-  --   clutchRatio1 = 0,
-  --   clutchRatio2 = 0,
-  --   clutch_input = 0,
-  --   doorFLCoupler_notAttached = 0,
-  --   doorFRCoupler_notAttached = 0,
-  --   doorRLCoupler_notAttached = 0,
-  --   doorRRCoupler_notAttached = 0,
-  --   driveshaft = 122.37542274097,
-  --   dseWarningPulse = 0,
-  --   engineLoad = 0.24098445292475,
-  --   engineRunning = 1,
-  --   engineThrottle = 0,
-  --   esc = 1,
-  --   escActive = false,
-  --   exhaustFlow = 0.24099216713122,
-  --   fog = 0,
-  --   freezeState = false,
-  --   fuel = 0.96409312866013,
-  --   fuelCapacity = 50,
-  --   fuelVolume = 48.204656433006,
-  --   gear = "D",
-  --   gearIndex = 1,
-  --   gearModeIndex = 4,
-  --   gear_A = 0.27272727272727,
-  --   gear_M = 1,
-  --   gearboxMode = "realistic",
-  --   hasABS = 1,
-  --   hasESC = 1,
-  --   hasTCS = 1,
-  --   hazard = 0,
-  --   hazard_enabled = 0,
-  --   highbeam = 0,
-  --   highbeam_wigwag_L = 0,
-  --   highbeam_wigwag_R = 0,
-  --   hoodCatchCoupler_notAttached = 0,
-  --   hoodLatchCoupler_notAttached = 0,
-  --   horn = 0,
-  --   idlerpm = 1000,
-  --   ignition = true,
-  --   ignitionLevel = 2,
-  --   isABSBrakeActive = 0,
-  --   isShifting = false,
-  --   isTCBrakeActive = 0,
-  --   isYCBrakeActive = 0,
-  --   lightbar = 0,
-  --   lights = 0,
-  --   lights_state = 0,
-  --   lowbeam = 0,
-  --   lowfuel = false,
-  --   lowhighbeam = 0,
-  --   lowhighbeam_signal_L = 0,
-  --   lowhighbeam_signal_R = 0,
-  --   lowpressure = 0,
-  --   maxGearIndex = 7,
-  --   maxrpm = 7150,
-  --   minGearIndex = -1,
-  --   nop = 0,
-  --   odometer = 2469.2874341938,
-  --   oil = 0,
-  --   oiltemp = 92.328678935125,
-  --   parking = 0,
-  --   parkingbrake = 1,
-  --   parkingbrake_input = 1,
-  --   parkingbrakelight = 1,
-  --   radiatorFanSpin = 0,
-  --   reverse = 0,
-  --   reverse_wigwag_L = 0,
-  --   reverse_wigwag_R = 0,
-  --   rpm = 979.16217602286,
-  --   rpmTacho = 980.77018681435,
-  --   rpmspin = 65.4551111344,
-  --   running = true,
-  --   signal_L = 0,
-  --   signal_R = 0,
-  --   signal_left_input = 0,
-  --   signal_right_input = 0,
-  --   smoothShiftLogicAV = -7.9822216070198e-05,
-  --   steering = 4.9508999999047,
-  --   steeringUnassisted = -0.01050414893617,
-  --   steering_input = -0.01050414893617,
-  --   steering_timestamp = 6876.783519,
-  --   tailgateCoupler_notAttached = 0,
-  --   tcs = 1,
-  --   tcsActive = false,
-  --   throttle = 0,
-  --   throttle_input = 0,
-  --   trip = 2469.2874341938,
-  --   turboBoost = 0,
-  --   turboBoostMax = 19.009999999999,
-  --   turboRPM = 0,
-  --   turboRpmRatio = 0,
-  --   turboSpin = 335.49911669182,
-  --   turnsignal = 0,
-  --   twoStep = false,
-  --   virtualAirspeed = -2.0653657281545,
-  --   watertemp = 90.137806993024,
-  --   wheelThermals = {
-  --     FL = {
-  --       brakeCoreTemperature = 14.66723022461,
-  --       brakeSurfaceTemperature = 14.667230224609,
-  --       brakeThermalEfficiency = 0.91430962108076
-  --     },
-  --     FR = {
-  --       brakeCoreTemperature = 14.66723022461,
-  --       brakeSurfaceTemperature = 14.667230224609,
-  --       brakeThermalEfficiency = 0.91430962108076
-  --     },
-  --     RL = {
-  --       brakeCoreTemperature = 14.66723022461,
-  --       brakeSurfaceTemperature = 14.667230224609,
-  --       brakeThermalEfficiency = 0.91430962108076
-  --     },
-  --     RR = {
-  --       brakeCoreTemperature = 14.66723022461,
-  --       brakeSurfaceTemperature = 14.667230224609,
-  --       brakeThermalEfficiency = 0.91430962108076
-  --     }
-  --   },
-  --   wheelspeed = 9.9395113968525e-05
-  -- }
-
-  -- probably not going to use
-  -- vehicle:queueLuaCommand([[ local val = dumps(controller.mainController.engineInfo) obj:queueGameEngineLua("print(dumps(" .. val .. "))") ]])
-  -- vehicle:queueLuaCommand([[ local val = dumps(wheels.wheelRotators) obj:queueGameEngineLua("print(dumps(" .. val .. "))") ]])
-
 
 return function(...)
   local o = {}

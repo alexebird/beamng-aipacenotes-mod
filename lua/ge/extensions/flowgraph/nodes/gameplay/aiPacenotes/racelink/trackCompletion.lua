@@ -4,10 +4,10 @@ local socket = require('socket')
 -- local bit32 = bit
 
 local C = {}
-local logTag = 'aipacenotes-fg'
+local logTag = 'racelink'
 
-C.name = 'AI Pacenotes Track Timing'
-C.description = 'Track timing data.'
+C.name = 'Racelink Track Completion'
+C.description = 'Track completion.'
 C.color = re_util.aip_fg_color
 C.tags = {'aipacenotes'}
 C.category = 'once_instant'
@@ -20,6 +20,8 @@ C.pinSchema = {
 }
 
 function C:workOnce()
+  print('racelink track completion')
+
   self.path = self.pinIn.pathData.value
   if not self.path then
     log('W', logTag, 'no pathData')
@@ -39,8 +41,11 @@ function C:workOnce()
   -- end
 
   local tracker = gameplay_racelink.getTracker()
-  tracker:setRacePath(self.path)
-  tracker:setRaceData(self.race)
+  tracker:triggerVehicleLuaReading()
+  tracker:takeVehicleDrivingReading()
+  tracker:takeVehicleStructureReading()
+  tracker:takeRacePathReading(self.path)
+  tracker:takeRaceTimingReading(self.race)
   tracker:write()
 end
 
