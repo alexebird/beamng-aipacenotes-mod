@@ -62,7 +62,9 @@ function C:workOnce()
   }
 
   local tracker = gameplay_racelink.getTracker()
-  tracker:putMissionVarsReading(data)
+  if tracker then
+    tracker:putMissionVarsReading(data)
+  end
 end
 
 return _flowgraph_createNode(C)

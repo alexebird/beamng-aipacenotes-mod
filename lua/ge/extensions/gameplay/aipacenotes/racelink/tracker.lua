@@ -6,16 +6,18 @@ local C = {}
 local logTag = 'racelink-tracker'
 
 function C:init(vehId)
-  self.uuid = self:makeUuid()
+  self.session_uuid = self:makeUuid()
   self.vehId = vehId
-  log('I', logTag, 'Tracker.init vehId='..tostring(self.vehId)..' uuid='..self.uuid)
   self:registerElectrics()
 
   self:reset()
+
+  log('I', logTag, 'Tracker.init vehId='..tostring(self.vehId)..' uuid='..self.uuid)
 end
 
 function C:reset()
   self.missionId = nil
+  self.uuid = self:makeUuid()
 
   self.vehicleStructureReadings = {}
   self.vehicleDrivingReadings = {}

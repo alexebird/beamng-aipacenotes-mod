@@ -9,6 +9,7 @@
 local M = {}
 
 local lastReading = nil
+local lastReadingTs = os.clockhp()
 
 -- local abs = math.abs
 --
@@ -62,10 +63,8 @@ end
 --   wheel_weight = 79.99991607666
 -- }
 local function getStats()
-  log('D', 'vAip', 'stats')
-  local res = obj:calcBeamStats()
-  -- print(dumps(res))
-  return res
+  -- log('D', 'vAip', 'stats')
+  return obj:calcBeamStats()
 end
 
 -- vehicle:queueLuaCommand([[ local val = dumps(electrics.values) obj:queueGameEngineLua("print(dumps(" .. val .. "))") ]])
@@ -237,13 +236,19 @@ end
 local function sendVehicleReading()
   log('D', 'vAip', 'sendVehicleReading')
 
-  local payload = jsonEncode(lastReading)
-  -- print(payload)
-  obj:queueGameEngineLua('extensions.gameplay_racelink.receiveVehicleReading([['..payload..']])')
+  if lastReading then
+    local payload = jsonEncode(lastReading)
+    -- print(payload)
+    obj:queueGameEngineLua('extensions.gameplay_racelink.receiveVehicleReading([['..payload..']])')
+  end
 end
 
 local function updateGFX(dt)
-  takeReading()
+  local nowTs = os.clockhp()
+  if nowTs - lastReadingTs > 1 then
+    takeReading()
+    lastReadingTs = nowTs
+  end
 end
 
 -- public interface

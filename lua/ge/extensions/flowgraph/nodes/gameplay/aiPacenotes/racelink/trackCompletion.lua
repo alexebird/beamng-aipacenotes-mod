@@ -41,12 +41,14 @@ function C:workOnce()
   -- end
 
   local tracker = gameplay_racelink.getTracker()
-  tracker:triggerVehicleLuaReading()
-  tracker:takeVehicleDrivingReading()
-  tracker:takeVehicleStructureReading()
-  tracker:takeRacePathReading(self.path)
-  tracker:takeRaceTimingReading(self.race)
-  tracker:write()
+  if tracker then
+    tracker:triggerVehicleLuaReading()
+    tracker:takeVehicleDrivingReading()
+    tracker:takeVehicleStructureReading()
+    tracker:takeRacePathReading(self.path)
+    tracker:takeRaceTimingReading(self.race)
+    tracker:write()
+  end
 end
 
 return _flowgraph_createNode(C)
