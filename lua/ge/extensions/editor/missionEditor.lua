@@ -6,7 +6,6 @@ local M = {}
 local ffi = require("ffi")
 local im = ui_imgui
 local toolWindowName = "mission_editor"
-local logTag = 'aipacenotes_missionEditor'
 M.dependencies = {'gameplay_missions_missions'}
 
 -- form backend
@@ -132,7 +131,7 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
     if editor.uiIconImageButton(editor.icons.play_arrow, im.ImVec2(40, 40)) then
       -- check if map loaded and player has vehicle
       -- TODO: load map and player vehicle if not loaded
-      local playerVehicle = be:getPlayerVehicle(0)
+      local playerVehicle = getPlayerVehicle(0)
       if (getCurrentLevelIdentifier() == shownMission.startTrigger.level) and playerVehicle and shownMission.startTrigger then
         -- teleport vehicle
         spawn.safeTeleport(playerVehicle,vec3(shownMission.startTrigger.pos), quat(shownMission.startTrigger.rot))
@@ -174,8 +173,6 @@ local function displayHeader(clickedMission, hoveredMission, shownMission)
       -- im.tooltip("Open Recce Flowgraph")
       -- im.SameLine()
     end
-
-
   end
   if shownMission then
     im.Text("Mission ID:\n"..shownMission.id)
@@ -606,7 +603,11 @@ local function makeTranslation()
 end
 
 local function exportMissionOverview()
-  local csvdata = require('csvlib').newCSV("Mission ID", "Mission Name", "Mission Type", "Branch", "Tier", "Star Id", "Star Label", "Star Type", "money", "beamXP","motorsport","labourer","adventurer","specialized")
+  local branchNames = {}
+  for _, branch in ipairs(career_branches.getSortedBranches()) do
+    table.insert(branchNames, branch.attributeKey)
+  end
+  local csvdata = require('csvlib').newCSV("Mission ID", "Mission Name", "Mission Type", "Branch", "Tier", "Star Id", "Star Label", "Star Type", "money", "beamXP",unpack(branchNames))
 
   for _, mission in ipairs(missionList) do
     local instance = gameplay_missions_missions.getMissionById(mission.id)
@@ -623,8 +624,12 @@ local function exportMissionOverview()
       for _, r in ipairs(instance.careerSetup._activeStarCache.sortedStarRewardsByKey[key] or {}) do
         rewards[r.attributeKey] = r.rewardAmount
       end
+      local branchRewards = {}
+      for _, branch in ipairs(branchNames) do
+        table.insert(branchRewards, rewards[branch] or 0)
+      end
       local starType = instance.careerSetup._activeStarCache.defaultStarKeysByKey[key] and "default" or "bonus"
-      csvdata:add(mission.id, translatedName, missionType, firstBranch, instance.unlocks.maxBranchlevel, key, translatedStarLabel, starType, rewards.money or 0,rewards.beamXP or 0,rewards.motorsport or 0,rewards.labourer or 0,rewards.adventurer or 0,rewards.specialized or 0 )
+      csvdata:add(mission.id, translatedName, missionType, firstBranch, instance.unlocks.maxBranchlevel, key, translatedStarLabel, starType, rewards.money or 0,rewards.beamXP or 0,unpack(branchRewards))
     end
   end
   csvdata:write("missionOverview.csv")
@@ -659,6 +664,76 @@ local function exportContentOverview()
 --  end
 
   csvdata:write("content.csv")
+end
+
+
+local function updateToSkills()
+  local typeToSkill = {
+    aiRace = {"motorsport","apexRacing"},
+    cannon = {"adventurer","miniGames"},
+    chase = {"specialized","police"},
+    crawl = {"motorsport","crawl"},
+    drift = {"motorsport","drift"},
+    evade = {"adventurer","criminal"},
+    knockAway = {"adventurer","miniGames"},
+    longjump = {"adventurer","miniGames"},
+    precisionParking = {"adventurer","miniGames"},
+    targetJump = {"adventurer","miniGames"},
+    timeTrial = {"motorsport","apexRacing"},
+  }
+
+  local skillKeys = {}
+  for _, branch in ipairs(career_branches.getSortedBranches()) do
+    if branch.isSkill then
+      skillKeys[branch.id] = true
+    end
+  end
+
+  for _, mission in ipairs(missionList) do
+    local instance = gameplay_missions_missions.getMissionById(mission.id)
+    local missionType = mission.missionType
+    if mission.careerSetup.showInCareer and typeToSkill[missionType] then
+      dump(string.format("%s - %s", mission.name, mission.id))
+      dump("Before:")
+      dump(mission.careerSetup.starRewards)
+      for _, key in ipairs(instance.careerSetup._activeStarCache.sortedStars) do
+        local translatedStarLabel = translateLanguage(instance.starLabels[key], instance.starLabels[key], true)
+        local starType = instance.careerSetup._activeStarCache.defaultStarKeysByKey[key] and "default" or "bonus"
+
+        local from, to = typeToSkill[missionType][1], typeToSkill[missionType][2]
+        mission.careerSetup.branch = from
+        mission.careerSetup.skill = to
+        mission._dirty = true
+
+        if starType == "default" then
+          -- step 1: remove all rewards with skill attreibute keys
+          local newRewards = {}
+          for _, r in ipairs(mission.careerSetup.starRewards[key]) do
+            if not skillKeys[r.attributeKey] then
+              table.insert(newRewards, r)
+            end
+          end
+
+          -- add one skill-xp-reward based on the missiontype and branch type
+
+          local add = nil
+          local from, to = typeToSkill[missionType][1], typeToSkill[missionType][2]
+          for _, r in ipairs(newRewards) do
+            if r.attributeKey == from then
+              add = {attributeKey = to, rewardAmount = r.rewardAmount, _originalRewardAmount = r._originalRewardAmount}
+            end
+          end
+          if add then
+            table.insert(newRewards, add)
+            mission.careerSetup.starRewards[key] = newRewards
+            mission._dirty = true
+          end
+        end
+      end
+      dump("After:")
+      dump(mission.careerSetup.starRewards)
+    end
+  end
 end
 
 local function escapeCSV(s)
@@ -1054,6 +1129,9 @@ local function onEditorGui()
         end
         if im.MenuItem1("Export Content Overview") then
           exportContentOverview()
+        end
+        if im.MenuItem1("Update To Skills") then
+          updateToSkills()
         end
         im.Separator()
         if im.MenuItem1("Time Updater") then
