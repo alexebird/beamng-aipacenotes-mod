@@ -279,6 +279,14 @@ end
 --   end
 -- end
 
+function C:displayPacenoteText(pacenote)
+  local pacenoteFgData = pacenote:asFlowgraphData(self.codriver)
+  local noteText = pacenoteFgData.note_text
+  guihooks.trigger('ScenarioFlashMessage', {
+    { noteText, 2.0, true },
+  } )
+end
+
 function C:update(dtSim)
   if not self.setup_complete then return end
 
@@ -310,6 +318,7 @@ function C:update(dtSim)
           if self.drivelineTracker:shouldPlayNextPacenote() then
             if self:playbackAllowed(pacenote) then
               self.audioManager:enqueuePacenote(pacenote)
+              self:displayPacenoteText(pacenote)
             end
 
             -- advance the pacenote even if we dont play the audio.

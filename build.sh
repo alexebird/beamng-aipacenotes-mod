@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# set -v
+set -v
 
 main() {
     local versionFile='aip-version.txt'

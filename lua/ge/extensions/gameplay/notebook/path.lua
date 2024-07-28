@@ -683,12 +683,22 @@ local function round_distance(dist)
   end
 end
 
+local function replacePeriodWithPoint(inputString)
+  -- Check if the input string contains a "."
+  if string.find(inputString, "%.") then
+    -- Replace "." with " point "
+    inputString = string.gsub(inputString, "%.", " point ")
+  end
+  return inputString
+end
+
 local function distance_to_string(separateDigits, dist)
   dist = math.floor(dist)
   local rounded_dist, unit = round_distance(dist)
   local dist_str = tostring(rounded_dist)
 
   if unit == re_util.kilo_unit_str then
+    dist_str = replacePeriodWithPoint(dist_str)
     dist_str = dist_str .. " " .. unit
   elseif separateDigits and rounded_dist >= re_util.dist_large_threshold and rounded_dist % re_util.dist_large_threshold ~= 0 then
     -- separate digits if not a multiple of 100
