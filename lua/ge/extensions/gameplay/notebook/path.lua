@@ -419,6 +419,7 @@ function C:onSerialize()
     created_at = self.created_at,
     codrivers = self.codrivers:onSerialize(),
     pacenotes = self.pacenotes:onSerialize(),
+    version = self.version,
     -- static_pacenotes = self.static_pacenotes:onSerialize(),
   }
 
