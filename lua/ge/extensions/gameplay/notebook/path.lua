@@ -1,9 +1,14 @@
+-- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
+-- If a copy of the bCDDL was not distributed with this
+-- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
+
 local logTag = 'aipacenotes'
 local C = {}
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
+local VisualPacenotesManager = require('/lua/ge/extensions/gameplay/notebook/structured/visualPacenotesManager')
 
-local currentVersion = "2"
+local currentVersion = "3"
 
 function C:getNextUniqueIdentifier()
   self._uid = self._uid + 1
@@ -42,6 +47,11 @@ function C:init(name)
   self.id = self:getNextUniqueIdentifier()
   self.fname = nil
   self.validation_issues = {}
+
+  self.cachedStructuredConverter = nil
+  self.useStructuredNotes = true
+
+  self.visualPacenotesManager = nil
 end
 
 function C:appendPacenotes(pacenotes)
@@ -419,6 +429,7 @@ function C:onSerialize()
     created_at = self.created_at,
     codrivers = self.codrivers:onSerialize(),
     pacenotes = self.pacenotes:onSerialize(),
+    useStructuredNotes = self.useStructuredNotes,
     version = self.version,
     -- static_pacenotes = self.static_pacenotes:onSerialize(),
   }
@@ -429,8 +440,28 @@ end
 function C:onDeserialized(data)
   if not data then return end
 
-  self.version = data.version or currentVersion
-  self.forceManualATs = data.forceManualATs or false
+  if not data.version then
+    self.version = "2"
+  else
+    self.version = data.version
+  end
+
+  if data.forceManualATs == nil then
+    self.forceManualATs = false
+  else
+    self.forceManualATs = data.forceManualATs
+  end
+
+  if data.useStructuredNotes == nil then
+    if self.version == "2" then
+      self.useStructuredNotes = false
+    else
+      self.useStructuredNotes = true
+    end
+  else
+    self.useStructuredNotes = data.useStructuredNotes
+  end
+
   self.name = data.name or ""
   self.description = string.gsub(data.description or "", "\\n", "\n")
   self.authors = data.authors or ""
@@ -445,7 +476,22 @@ function C:onDeserialized(data)
   self.pacenotes:clear()
   self.pacenotes:onDeserialized(data.pacenotes, oldIdMap)
 
+  if self:isV2() then
+    self:upgradeFromV2ToV3()
+  end
+
   self:loadStaticPacenotes()
+end
+
+function C:upgradeFromV2ToV3()
+  log('I', logTag, 'upgrading '..self.name..' from v2 to v3')
+  for _, pacenote in ipairs(self.pacenotes.sorted) do
+    pacenote:upgradeFromV2ToV3()
+  end
+
+  self.version = "3"
+
+  self:autofillDistanceCalls()
 end
 
 function C:loadStaticPacenotes()
@@ -658,6 +704,19 @@ function C:selectedCodriverLanguage()
   return codriver.language
 end
 
+function C:clearStructuredConverter()
+  self.cachedStructuredConverter = nil
+end
+
+function C:structuredConverter()
+  local lang = self:selectedCodriverLanguage()
+  if not self.cachedStructuredConverter then
+    local klass = require('/lua/ge/extensions/gameplay/notebook/structured/converters/converter_'..lang)
+    self.cachedStructuredConverter = klass()
+  end
+  return self.cachedStructuredConverter
+end
+
 function C:normalizeNotes(force)
   local lang = self:selectedCodriverLanguage()
   local last = false
@@ -790,6 +849,9 @@ function C:getCodriverByName(codriver_name)
 end
 
 function C:cachePacenoteFgData(codriver)
+  self.visualPacenotesManager = VisualPacenotesManager()
+  self.visualPacenotesManager:load()
+
   for _,pn in ipairs(self.pacenotes.sorted) do
     pn:asFlowgraphData(codriver)
   end
@@ -939,6 +1001,18 @@ end
 
 function C:forceManualAudioTriggers()
   return self.forceManualATs
+end
+
+function C:useStructured()
+  return self.useStructuredNotes
+end
+
+function C:isV2()
+  return not self.version or self.version == "2" or self.version == 2
+end
+
+function C:isV3()
+  return self.version == "3" or self.version == 3
 end
 
 return function(...)

@@ -1,11 +1,17 @@
+-- This Source Code Form is subject to the terms of the bCDDL, v. 1.1.
+-- If a copy of the bCDDL was not distributed with this
+-- file, You can obtain one at http://beamng.com/bCDDL-1.1.txt
+
 local waypointTypes = require('/lua/ge/extensions/gameplay/notebook/waypointTypes')
 local cc = require('/lua/ge/extensions/editor/rallyEditor/colors')
 local re_util = require('/lua/ge/extensions/editor/rallyEditor/util')
 local normalizer = require('/lua/ge/extensions/editor/rallyEditor/normalizer')
 local SettingsManager = require('/lua/ge/extensions/gameplay/aipacenotes/settingsManager')
+local Structured = require('/lua/ge/extensions/gameplay/notebook/structured')
 
 local C = {}
 local logTag = 'aipacenotes_pacenote'
+local structured = 'structured'
 
 local pn_drawMode_noSelection = 'no_selection'
 local pn_drawMode_partitionedSnaproad = 'partitioned_snaproad'
@@ -41,10 +47,16 @@ function C:init(notebook, name, forceId)
   for _,lang in ipairs(self.notebook:getLanguages()) do
     lang = lang.language
     self.notes[lang] = {}
-    for _,val in pairs(self.noteFields) do
-      self.notes[lang][val] = ''
-    end
+    -- for _,val in pairs(self.noteFields) do
+    --   self.notes[lang][val] = ''
+    -- end
+    self.notes[lang].before = ''
+    self.notes[lang].note = {}
+    self.notes[lang].after = ''
   end
+
+  self.structured = Structured()
+
   self.pacenoteWaypoints = require('/lua/ge/extensions/gameplay/util/sortedList')(
     "pacenoteWaypoints",
     self,
@@ -114,12 +126,11 @@ function C:joinedNote(lang)
       text ~= re_util.autodist_internal_level1
   end
 
-  local note = lang_data[self.noteFields.note]
+  local note = lang_data[self.noteFields.note].freeform
   local before = lang_data[self.noteFields.before]
   local after = lang_data[self.noteFields.after]
 
   if useNote(note) then
-    -- txt = txt .. ' ' .. note
     txt = note
   else
     -- if theres no note, dont bother with distance calls
@@ -131,7 +142,6 @@ function C:joinedNote(lang)
   end
 
   if useNote(before) then
-    -- txt = txt .. before
     txt = string.gsub(txt, re_util.var_dl, before)
   else
     txt = string.gsub(txt, re_util.var_dl, '')
@@ -141,7 +151,6 @@ function C:joinedNote(lang)
     if not string.find(txt, re_util.var_dt) then
       txt = txt .. ' ' .. re_util.var_dt .. re_util.default_punctuation_distance_call
     end
-    -- txt = txt .. ' ' .. after
     txt = string.gsub(txt, re_util.var_dt, after)
   else
     txt = string.gsub(txt, re_util.var_dt, '')
@@ -154,6 +163,87 @@ function C:joinedNote(lang)
   txt = normalizer.replaceWords(word_map, txt)
 
   return txt
+end
+
+function C:joinedStructured(lang)
+  local notesOut = {}
+  local lang_data = self.notes[lang]
+
+  if not lang_data then
+    return notesOut
+  end
+
+  local useNote = function(text)
+    return text and
+      text ~= '' and
+      text ~= re_util.autofill_blocker and
+      text ~= re_util.autodist_internal_level1
+  end
+
+  local notesArray = lang_data[self.noteFields.note].structured
+  notesArray = deepcopy(notesArray)
+  local before = lang_data[self.noteFields.before]
+  local after = lang_data[self.noteFields.after]
+
+  -- if there are no notes, then dont bother with distance calls.
+  if notesArray == nil or #notesArray == 0 then
+    return notesOut
+  end
+
+  -- Check if any array element contains var_dl
+  local hasVarDl = false
+  for _,txt in ipairs(notesArray) do
+    if string.find(txt, re_util.var_dl) then
+      hasVarDl = true
+      break
+    end
+  end
+
+  -- If no element has var_dl, prepend it to first element
+  if not hasVarDl and #notesArray > 0 then
+    notesArray[1] = re_util.var_dl .. ' ' .. notesArray[1]
+  end
+
+  -- Check if any array element contains var_dt
+  local hasVarDt = false
+  for _,txt in ipairs(notesArray) do
+    if string.find(txt, re_util.var_dt) then
+      hasVarDt = true
+      break
+    end
+  end
+
+  -- If no element has var_dt, append it to array
+  if not hasVarDt and #notesArray > 0 then
+    if useNote(after) then
+      table.insert(notesArray, re_util.var_dt .. re_util.default_punctuation_distance_call)
+    end
+  end
+
+  local word_map = SettingsManager.getMainSettings():getVoiceWordMap()
+
+  for _,txt in ipairs(notesArray) do
+    if useNote(before) then
+      txt = string.gsub(txt, re_util.var_dl, before)
+    else
+      txt = string.gsub(txt, re_util.var_dl, '')
+    end
+
+    if useNote(after) then
+      txt = string.gsub(txt, re_util.var_dt, after)
+    else
+      txt = string.gsub(txt, re_util.var_dt, '')
+    end
+
+    -- trim string
+    txt = txt:gsub("^%s*(.-)%s*$", "%1")
+
+    txt = normalizer.replaceWords(word_map, txt)
+
+    table.insert(notesOut, txt)
+  end
+
+  return notesOut
 end
 
 function C:getNoteFieldBefore(lang)
@@ -169,9 +259,19 @@ end
 function C:getNoteFieldNote(lang)
   local lang_data = self.notes[lang]
   if not lang_data then return '' end
-  local val = lang_data[self.noteFields.note]
+  local val = lang_data[self.noteFields.note].freeform
   if not val then
     return ''
+  end
+  return val
+end
+
+function C:getNoteFieldStructured(lang)
+  local lang_data = self.notes[lang]
+  if not lang_data then return {} end
+  local val = lang_data[self.noteFields.note].structured
+  if not val then
+    return {}
   end
   return val
 end
@@ -195,13 +295,25 @@ end
 function C:setNoteFieldNote(lang, val)
   local lang_data = self.notes[lang]
   if not lang_data then return end
-  lang_data[self.noteFields.note] = val
+  if not lang_data[self.noteFields.note] then
+    lang_data[self.noteFields.note] = {}
+  end
+  lang_data[self.noteFields.note].freeform = val
 end
 
 function C:setNoteFieldAfter(lang, val)
   local lang_data = self.notes[lang]
   if not lang_data then return end
   lang_data[self.noteFields.after] = val
+end
+
+function C:setNoteFieldStructured(lang, val)
+  local lang_data = self.notes[lang]
+  if not lang_data then return end
+  if not lang_data[self.noteFields.note] then
+    lang_data[self.noteFields.note] = {}
+  end
+  lang_data[self.noteFields.note].structured = val
 end
 
 function C:clearCachedFgData()
@@ -224,13 +336,30 @@ function C:asFlowgraphData(codriver)
     -- error("no active audio trigger waypoint found for pacenote '".. self.name .."'")
   end
 
+  local visualPacenotes = self.notebook.visualPacenotesManager:determineVisualPacenotes(self.structured.fields)
+
+  -- dump(closestImage)
+
+  local noteText = nil
+  if self.notebook:useStructured() then
+    noteText = dumps(self:joinedStructured(codriver.language))
+  else
+    noteText = self:joinedNote(codriver.language)
+  end
+
+  local distBefore = self:getNoteFieldBefore(codriver.language)
+  local distAfter = self:getNoteFieldAfter(codriver.language)
+
   local fgData = {
     id = self.id,
     trigger_waypoint = wp_trigger,
     pacenote = self,
     notebook = self.notebook,
-    note_text = self:joinedNote(codriver.language),
+    note_text = noteText,
     audioFname = fname,
+    visualPacenotes = visualPacenotes,
+    distanceBefore = distBefore,
+    distanceAfter = distAfter,
   }
   self._cached_fgData = fgData
   return fgData
@@ -261,35 +390,62 @@ function C:validate()
 
   local note_lang = self.notebook:selectedCodriverLanguage()
 
-  -- for note_lang, note_data in pairs(self.notes) do
-    local note_field = self:getNoteFieldNote(note_lang)
-    if note_field ~= re_util.autofill_blocker then
-      local last_char = note_field:sub(-1)
-      if note_field == '' then
-        table.insert(self.validation_issues, 'missing note for language '..note_lang)
-      elseif note_field == re_util.unknown_transcript_str then
-        table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' note for language "..note_lang)
+  if self:useStructured() then
+    local note_field_structured = self:getNoteFieldStructured(note_lang)
+    if #note_field_structured == 0 then
+      table.insert(self.validation_issues, 'missing structured note for language '..note_lang)
+    end
+  else
+    local note_field_freeform = self:getNoteFieldNote(note_lang)
+    if note_field_freeform ~= re_util.autofill_blocker then
+      local last_char = note_field_freeform:sub(-1)
+      if note_field_freeform == '' then
+        table.insert(self.validation_issues, 'missing freeform note for language '..note_lang)
+      elseif note_field_freeform == re_util.unknown_transcript_str then
+        table.insert(self.validation_issues, "'"..re_util.unknown_transcript_str.."' freeform note for language "..note_lang)
       elseif not re_util.hasPunctuation(last_char) then
-        table.insert(self.validation_issues, 'missing puncuation(. ? !) for language '..note_lang..". (try 'Set Puncuation' button)")
+        table.insert(self.validation_issues, 'missing freeform puncuation(. ? !) for language '..note_lang..". (try 'Set Puncuation' button)")
       end
     end
-  -- end
+  end
+end
+
+function C:useStructured()
+  return self.notebook:useStructured()
 end
 
 function C:is_valid()
   return #self.validation_issues == 0
 end
 
-function C:nameForSelect()
-  local txt = self.name
+function C:nameForSelectFreeform()
   local lang = self.notebook:selectedCodriverLanguage()
   local langData = self.notes[lang]
 
   local note
-  if not langData or not langData.note or langData.note == '' then
+  if not langData or not langData.note.freeform or langData.note.freeform == '' then
     note = '<empty>'
   else
-    note = langData.note
+    note = langData.note.freeform
+  end
+
+  return note
+end
+
+function C:nameForSelectStructured()
+  local converter = self.notebook:structuredConverter()
+  local rv = converter:convert(self.structured)
+  return dumps(rv)
+end
+
+function C:nameForSelect()
+  local txt = self.name
+  local note
+
+  if self.notebook:useStructured() then
+    note = self:nameForSelectStructured()
+  else
+    note = self:nameForSelectFreeform()
   end
 
   txt = txt..' - '..note
@@ -395,9 +551,51 @@ function C:getDistanceMarkerWaypoints()
   return wps
 end
 
+-- function C:joinedStructured(lang)
+--   return {'foo', 'bar'}
+--   -- return {}
+-- end
+
+-- "notes":{
+--   "english":{
+--     "_out":"small crest, five left bumpy exit? seventy.",
+--     "after":"70",
+--     "before":"",
+--     "note":"small crest, five left bumpy exit?"
+--   }
+-- }
+--
+--
+-- "notes":{
+--   "english":{
+--     "_out":{
+--       "freeform":"into five left over crest? seventy.",
+--       "structured":[
+--         "foo",
+--         "bar"
+--       ]
+--     },
+--     "after":"70",
+--     "before":"into",
+--     "note":"five left over crest?"
+--   }
+-- }
+
 function C:onSerialize()
   for lang,langData in pairs(self.notes) do
-    langData._out = self:joinedNote(lang)
+    -- convert from old to new file format.
+    if type(langData.note) == "string" then
+      langData.note = {
+        freeform = langData.note,
+        structured = nil,
+      }
+    end
+
+    -- langData._out = self:joinedNote(lang)
+    langData._out = {
+      freeform = self:joinedNote(lang),
+      structured = self:joinedStructured(lang),
+    }
   end
 
   -- print(dumps(self.notes))
@@ -413,6 +611,7 @@ function C:onSerialize()
     notes = self.notes,
     metadata = self.metadata,
     pacenoteWaypoints = self.pacenoteWaypoints:onSerialize(),
+    structured = self.structured:onSerialize(),
   }
 
   return ret
@@ -428,6 +627,19 @@ function C:onDeserialized(data, oldIdMap)
   self.notes = data.notes
   self.metadata = data.metadata or {}
   self.pacenoteWaypoints:onDeserialized(data.pacenoteWaypoints, oldIdMap)
+
+  self.structured:onDeserialized(data.structured)
+end
+
+function C:upgradeFromV2ToV3()
+  print('upgradeFromV2ToV3')
+  for lang,langData in pairs(self.notes) do
+    local freeformnote = langData.note
+    langData.note = {
+      freeform = freeformnote,
+      structured = {},
+    }
+  end
 end
 
 function C:markTodo()
@@ -722,7 +934,14 @@ function C:noteTextForDrawDebug()
   local txt = '<empty note>'
 
   local lang = self.notebook:selectedCodriverLanguage()
-  local joined = self:joinedNote(lang)
+  local joined = nil
+
+  if self.notebook:useStructured() then
+    joined = dumps(self:joinedStructured(lang))
+  else
+    joined = self:joinedNote(lang)
+  end
+
   if joined then
     txt = joined
   end
@@ -1091,6 +1310,13 @@ end
 
 function C:isAudioTriggerTypeAutoAT()
   return self.auto_at
+end
+
+function C:updateStructured()
+  local converter = self.notebook:structuredConverter()
+  local humanReadable = converter:convert(self.structured)
+  local lang = self.notebook:selectedCodriverLanguage()
+  self:setNoteFieldStructured(lang, humanReadable)
 end
 
 return function(...)
