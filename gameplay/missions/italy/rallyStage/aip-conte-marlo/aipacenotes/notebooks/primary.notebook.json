@@ -10,9 +10,12 @@
   ],
   "created_at":1705910416,
   "description":"this is test 4 of the voice pacenotes system.",
+  "forceManualATs":false,
   "name":"Primary",
   "pacenotes":[
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_y9my16yo.wav",
@@ -21,10 +24,16 @@
       "name":"Import_A 1",
       "notes":{
         "english":{
-          "_out":"start into big bumps down hill? sixty.",
+          "_out":{
+            "freeform":"start into big bumps down hill? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"start into big bumps down hill?"
+          "note":{
+            "freeform":"start into big bumps down hill?",
+            "structured":{}
+          }
         }
       },
       "oldId":19,
@@ -78,9 +87,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_2_3fzvnx.wav",
@@ -89,10 +115,16 @@
       "name":"Import_A 2",
       "notes":{
         "english":{
-          "_out":"five right into six left?",
+          "_out":{
+            "freeform":"five right into six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five right into six left?"
+          "note":{
+            "freeform":"five right into six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":23,
@@ -146,9 +178,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gvcl77cn.wav",
@@ -157,10 +206,16 @@
       "name":"Import_A 3",
       "notes":{
         "english":{
-          "_out":"and small crest into five right?",
+          "_out":{
+            "freeform":"and small crest into five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"small crest into five right?"
+          "note":{
+            "freeform":"small crest into five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":27,
@@ -214,9 +269,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_h3l8qm1l.wav",
@@ -225,10 +297,16 @@
       "name":"Import_A 4",
       "notes":{
         "english":{
-          "_out":"and five left keep right narrow exit? three hundred.",
+          "_out":{
+            "freeform":"and five left keep right narrow exit? three hundred.",
+            "structured":{}
+          },
           "after":"300",
           "before":"and",
-          "note":"five left keep right narrow exit?"
+          "note":{
+            "freeform":"five left keep right narrow exit?",
+            "structured":{}
+          }
         }
       },
       "oldId":31,
@@ -282,9 +360,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_f9qe4vwz.wav",
@@ -293,10 +388,16 @@
       "name":"Import_A 5",
       "notes":{
         "english":{
-          "_out":"big bump into six right? fifty.",
+          "_out":{
+            "freeform":"big bump into six right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"big bump into six right?"
+          "note":{
+            "freeform":"big bump into six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":35,
@@ -350,9 +451,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kztxidh2.wav",
@@ -361,10 +479,16 @@
       "name":"Import_A 6",
       "notes":{
         "english":{
-          "_out":"six left over big bump, twisty?",
+          "_out":{
+            "freeform":"six left over big bump, twisty?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left over big bump, twisty?"
+          "note":{
+            "freeform":"six left over big bump, twisty?",
+            "structured":{}
+          }
         }
       },
       "oldId":39,
@@ -418,9 +542,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_19g_sqb2.wav",
@@ -429,10 +570,16 @@
       "name":"Import_A 7",
       "notes":{
         "english":{
-          "_out":"and six left? eighty.",
+          "_out":{
+            "freeform":"and six left? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":43,
@@ -486,9 +633,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_w18qsodi.wav",
@@ -497,10 +661,16 @@
       "name":"Import_A 8",
       "notes":{
         "english":{
-          "_out":"one right plus opens late?",
+          "_out":{
+            "freeform":"one right plus opens late?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"one right plus opens late?"
+          "note":{
+            "freeform":"one right plus opens late?",
+            "structured":{}
+          }
         }
       },
       "oldId":47,
@@ -554,9 +724,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_jjmzzpir.wav",
@@ -565,10 +752,16 @@
       "name":"Import_A 9",
       "notes":{
         "english":{
-          "_out":"and three left?",
+          "_out":{
+            "freeform":"and three left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"three left?"
+          "note":{
+            "freeform":"three left?",
+            "structured":{}
+          }
         }
       },
       "oldId":51,
@@ -622,9 +815,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_zts7l6p3.wav",
@@ -633,10 +843,16 @@
       "name":"Import_A 10",
       "notes":{
         "english":{
-          "_out":"into crest? one fifty.",
+          "_out":{
+            "freeform":"into crest? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"into",
-          "note":"crest?"
+          "note":{
+            "freeform":"crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":55,
@@ -690,9 +906,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_txtodope.wav",
@@ -701,10 +934,16 @@
       "name":"Import_A 11",
       "notes":{
         "english":{
-          "_out":"three left? sixty.",
+          "_out":{
+            "freeform":"three left? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"3 left?"
+          "note":{
+            "freeform":"3 left?",
+            "structured":{}
+          }
         }
       },
       "oldId":59,
@@ -758,9 +997,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_brd_q_u9.wav",
@@ -769,10 +1025,16 @@
       "name":"Import_A 12",
       "notes":{
         "english":{
-          "_out":"four right?",
+          "_out":{
+            "freeform":"four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":63,
@@ -826,9 +1088,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_28paptn6.wav",
@@ -837,10 +1116,16 @@
       "name":"Import_A 13",
       "notes":{
         "english":{
-          "_out":"and acute one left?",
+          "_out":{
+            "freeform":"and acute one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"acute one left?"
+          "note":{
+            "freeform":"acute one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":67,
@@ -894,9 +1179,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8bif03jx.wav",
@@ -905,10 +1207,16 @@
       "name":"Import_A 14",
       "notes":{
         "english":{
-          "_out":"and five left cut, six right cut?",
+          "_out":{
+            "freeform":"and five left cut, six right cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left cut, six right cut?"
+          "note":{
+            "freeform":"five left cut, six right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":71,
@@ -962,18 +1270,41 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 15",
       "notes":{
         "english":{
-          "_out":"into long five left, tightens?",
+          "_out":{
+            "freeform":"into long five left, tightens?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"long five left, tightens?"
+          "note":{
+            "freeform":"long five left, tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":75,
@@ -1027,9 +1358,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_g_oomw80.wav",
@@ -1038,10 +1386,16 @@
       "name":"Import_A 16",
       "notes":{
         "english":{
-          "_out":"and care four right off camber? into five left?",
+          "_out":{
+            "freeform":"and care four right off camber? into five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"care four right off camber? into five left?"
+          "note":{
+            "freeform":"care four right off camber? into five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":79,
@@ -1095,9 +1449,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_873pwctm.wav",
@@ -1106,10 +1477,16 @@
       "name":"Import_A 17",
       "notes":{
         "english":{
-          "_out":"and longish four right?",
+          "_out":{
+            "freeform":"and longish four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"longish four right?"
+          "note":{
+            "freeform":"longish four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":83,
@@ -1163,9 +1540,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_p281au60.wav",
@@ -1174,10 +1568,16 @@
       "name":"Import_A 18",
       "notes":{
         "english":{
-          "_out":"and five left? seventy.",
+          "_out":{
+            "freeform":"and five left? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":87,
@@ -1231,9 +1631,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kkkyybss.wav",
@@ -1242,10 +1659,16 @@
       "name":"Import_A 19",
       "notes":{
         "english":{
-          "_out":"six left into long three right tightens late?",
+          "_out":{
+            "freeform":"six left into long three right tightens late?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left into long three right tightens late?"
+          "note":{
+            "freeform":"six left into long three right tightens late?",
+            "structured":{}
+          }
         }
       },
       "oldId":91,
@@ -1299,9 +1722,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xny6r6lj.wav",
@@ -1310,10 +1750,16 @@
       "name":"Import_A 20",
       "notes":{
         "english":{
-          "_out":"and six right tightens over crest?",
+          "_out":{
+            "freeform":"and six right tightens over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six right tightens over crest?"
+          "note":{
+            "freeform":"six right tightens over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":95,
@@ -1367,9 +1813,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_t4v3eh31.wav",
@@ -1378,10 +1841,16 @@
       "name":"Import_A 21",
       "notes":{
         "english":{
-          "_out":"into six left? into flat six right down hill? fifty.",
+          "_out":{
+            "freeform":"into six left? into flat six right down hill? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"six left? into flat six right down hill?"
+          "note":{
+            "freeform":"six left? into flat six right down hill?",
+            "structured":{}
+          }
         }
       },
       "oldId":99,
@@ -1435,9 +1904,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hd5kpmdo.wav",
@@ -1446,10 +1932,16 @@
       "name":"Import_A 22",
       "notes":{
         "english":{
-          "_out":"flat left? seventy.",
+          "_out":{
+            "freeform":"flat left? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"flat left?"
+          "note":{
+            "freeform":"flat left?",
+            "structured":{}
+          }
         }
       },
       "oldId":103,
@@ -1503,9 +1995,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_x_r2thnm.wav",
@@ -1514,10 +2023,16 @@
       "name":"Import_A 23",
       "notes":{
         "english":{
-          "_out":"flat left? one fifty.",
+          "_out":{
+            "freeform":"flat left? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"flat left?"
+          "note":{
+            "freeform":"flat left?",
+            "structured":{}
+          }
         }
       },
       "oldId":107,
@@ -1571,9 +2086,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_atb6zhye.wav",
@@ -1582,10 +2114,16 @@
       "name":"Import_A 24",
       "notes":{
         "english":{
-          "_out":"caution, six right over crest down hill?",
+          "_out":{
+            "freeform":"caution, six right over crest down hill?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"caution, six right over crest down hill?"
+          "note":{
+            "freeform":"caution, six right over crest down hill?",
+            "structured":{}
+          }
         }
       },
       "oldId":111,
@@ -1639,18 +2177,41 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 25",
       "notes":{
         "english":{
-          "_out":"and five left minus dont cut?",
+          "_out":{
+            "freeform":"and five left minus dont cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left minus dont cut?"
+          "note":{
+            "freeform":"five left minus dont cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":115,
@@ -1704,9 +2265,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_z5rc21eb.wav",
@@ -1715,10 +2293,16 @@
       "name":"Import_A 26",
       "notes":{
         "english":{
-          "_out":"into six right, down hill? one hundred.",
+          "_out":{
+            "freeform":"into six right, down hill? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"into",
-          "note":"six right, down hill?"
+          "note":{
+            "freeform":"six right, down hill?",
+            "structured":{}
+          }
         }
       },
       "oldId":119,
@@ -1772,9 +2356,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ni0p5g0p.wav",
@@ -1783,10 +2384,16 @@
       "name":"Import_A 27",
       "notes":{
         "english":{
-          "_out":"five right? fifty.",
+          "_out":{
+            "freeform":"five right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":123,
@@ -1840,9 +2447,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_k26t7ycx.wav",
@@ -1851,10 +2475,16 @@
       "name":"Import_B 28",
       "notes":{
         "english":{
-          "_out":"six right minus? sixty.",
+          "_out":{
+            "freeform":"six right minus? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"six right minus?"
+          "note":{
+            "freeform":"six right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":127,
@@ -1908,9 +2538,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_jxsgmmol.wav",
@@ -1919,10 +2566,16 @@
       "name":"Import_B 29",
       "notes":{
         "english":{
-          "_out":"six right opens? one hundred.",
+          "_out":{
+            "freeform":"six right opens? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"six right opens?"
+          "note":{
+            "freeform":"six right opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":131,
@@ -1976,9 +2629,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xxkg6kyj.wav",
@@ -1987,10 +2657,16 @@
       "name":"Import_B 30",
       "notes":{
         "english":{
-          "_out":"caution five right plus don't over crest?",
+          "_out":{
+            "freeform":"caution five right plus don't over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"caution five right plus don't over crest?"
+          "note":{
+            "freeform":"caution five right plus don't over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":135,
@@ -2044,18 +2720,41 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{},
       "name":"Pacenote 31",
       "notes":{
         "english":{
-          "_out":"and twisty, slowing, narrows?",
+          "_out":{
+            "freeform":"and twisty, slowing, narrows?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"twisty, slowing, narrows?"
+          "note":{
+            "freeform":"twisty, slowing, narrows?",
+            "structured":{}
+          }
         }
       },
       "oldId":139,
@@ -2109,9 +2808,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_m1socwa3.wav",
@@ -2120,10 +2836,16 @@
       "name":"Import_B 32",
       "notes":{
         "english":{
-          "_out":"and four left over crest? one fifty.",
+          "_out":{
+            "freeform":"and four left over crest? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"and",
-          "note":"four left over crest?"
+          "note":{
+            "freeform":"four left over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":143,
@@ -2177,9 +2899,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_2tpekns8.wav",
@@ -2188,10 +2927,16 @@
       "name":"Import_B 33",
       "notes":{
         "english":{
-          "_out":"caution, big dip, over narrow bridge?",
+          "_out":{
+            "freeform":"caution, big dip, over narrow bridge?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"caution, big dip, over narrow bridge?"
+          "note":{
+            "freeform":"caution, big dip, over narrow bridge?",
+            "structured":{}
+          }
         }
       },
       "oldId":147,
@@ -2245,9 +2990,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_6qikwlpo.wav",
@@ -2256,10 +3018,16 @@
       "name":"Import_B 34",
       "notes":{
         "english":{
-          "_out":"and over bumps and jump maybe? eighty.",
+          "_out":{
+            "freeform":"and over bumps and jump maybe? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"and",
-          "note":"over bumps and jump maybe?"
+          "note":{
+            "freeform":"over bumps and jump maybe?",
+            "structured":{}
+          }
         }
       },
       "oldId":151,
@@ -2313,9 +3081,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_85_d0ipu.wav",
@@ -2324,10 +3109,16 @@
       "name":"Import_B 35",
       "notes":{
         "english":{
-          "_out":"slowing over big jump caution? sixty.",
+          "_out":{
+            "freeform":"slowing over big jump caution? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"slowing over big jump caution?"
+          "note":{
+            "freeform":"slowing over big jump caution?",
+            "structured":{}
+          }
         }
       },
       "oldId":155,
@@ -2381,9 +3172,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_lv2rnyjx.wav",
@@ -2392,10 +3200,16 @@
       "name":"Import_B 36",
       "notes":{
         "english":{
-          "_out":"five right plus?",
+          "_out":{
+            "freeform":"five right plus?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five right plus?"
+          "note":{
+            "freeform":"five right plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":159,
@@ -2449,9 +3263,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_r11v0af_.wav",
@@ -2460,10 +3291,16 @@
       "name":"Import_B 37",
       "notes":{
         "english":{
-          "_out":"into five left? forty.",
+          "_out":{
+            "freeform":"into five left? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"into",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":163,
@@ -2517,9 +3354,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_70he5azy.wav",
@@ -2528,10 +3382,16 @@
       "name":"Import_B 38",
       "notes":{
         "english":{
-          "_out":"six left?",
+          "_out":{
+            "freeform":"six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":167,
@@ -2585,9 +3445,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_o7eyno45.wav",
@@ -2596,10 +3473,16 @@
       "name":"Import_B 39",
       "notes":{
         "english":{
-          "_out":"and three right plus? seventy.",
+          "_out":{
+            "freeform":"and three right plus? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"and",
-          "note":"three right plus?"
+          "note":{
+            "freeform":"three right plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":171,
@@ -2653,9 +3536,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_t9tjkb2y.wav",
@@ -2664,10 +3564,16 @@
       "name":"Import_B 40",
       "notes":{
         "english":{
-          "_out":"slight left?",
+          "_out":{
+            "freeform":"slight left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"slight left?"
+          "note":{
+            "freeform":"slight left?",
+            "structured":{}
+          }
         }
       },
       "oldId":175,
@@ -2721,9 +3627,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_vc0vrdgu.wav",
@@ -2732,10 +3655,16 @@
       "name":"Import_B 41",
       "notes":{
         "english":{
-          "_out":"and square left? two hundred.",
+          "_out":{
+            "freeform":"and square left? two hundred.",
+            "structured":{}
+          },
           "after":"200",
           "before":"and",
-          "note":"square left?"
+          "note":{
+            "freeform":"square left?",
+            "structured":{}
+          }
         }
       },
       "oldId":179,
@@ -2789,9 +3718,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_q2i_ymbg.wav",
@@ -2800,10 +3746,16 @@
       "name":"Import_B 42",
       "notes":{
         "english":{
-          "_out":"five left?",
+          "_out":{
+            "freeform":"five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"5 left?"
+          "note":{
+            "freeform":"5 left?",
+            "structured":{}
+          }
         }
       },
       "oldId":183,
@@ -2857,9 +3809,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tdej4hn8.wav",
@@ -2868,10 +3837,16 @@
       "name":"Import_B 43",
       "notes":{
         "english":{
-          "_out":"into three right minus over crest?",
+          "_out":{
+            "freeform":"into three right minus over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"three right minus over crest?"
+          "note":{
+            "freeform":"three right minus over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":187,
@@ -2925,9 +3900,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_01vb9d7c.wav",
@@ -2936,10 +3928,16 @@
       "name":"Import_B 44",
       "notes":{
         "english":{
-          "_out":"and long five right, late tightens?",
+          "_out":{
+            "freeform":"and long five right, late tightens?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"long five right, late tightens?"
+          "note":{
+            "freeform":"long five right, late tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":191,
@@ -2993,9 +3991,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_62_joi_e.wav",
@@ -3004,10 +4019,16 @@
       "name":"Import_B 45",
       "notes":{
         "english":{
-          "_out":"into four left down hill? fifty.",
+          "_out":{
+            "freeform":"into four left down hill? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"four left downhill?"
+          "note":{
+            "freeform":"four left downhill?",
+            "structured":{}
+          }
         }
       },
       "oldId":195,
@@ -3061,9 +4082,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_s_r6ej5v.wav",
@@ -3072,10 +4110,16 @@
       "name":"Import_B 46",
       "notes":{
         "english":{
-          "_out":"six left opens? seventy.",
+          "_out":{
+            "freeform":"six left opens? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"six left opens?"
+          "note":{
+            "freeform":"six left opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":199,
@@ -3129,9 +4173,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tcr0lmnn.wav",
@@ -3140,10 +4201,16 @@
       "name":"Import_B 47",
       "notes":{
         "english":{
-          "_out":"small crest into left hairpin? one fifty.",
+          "_out":{
+            "freeform":"small crest into left hairpin? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"small crest into left hairpin?"
+          "note":{
+            "freeform":"small crest into left hairpin?",
+            "structured":{}
+          }
         }
       },
       "oldId":203,
@@ -3197,9 +4264,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_0xwpwg_7.wav",
@@ -3208,10 +4292,16 @@
       "name":"Import_B 48",
       "notes":{
         "english":{
-          "_out":"crest into six right crest tightens? sixty.",
+          "_out":{
+            "freeform":"crest into six right crest tightens? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"crest into six right crest tightens?"
+          "note":{
+            "freeform":"crest into six right crest tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":207,
@@ -3265,9 +4355,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_socat12y.wav",
@@ -3276,10 +4383,16 @@
       "name":"Import_B 49",
       "notes":{
         "english":{
-          "_out":"five left into right hairpin? one hundred.",
+          "_out":{
+            "freeform":"five left into right hairpin? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"five left into right hairpin?"
+          "note":{
+            "freeform":"five left into right hairpin?",
+            "structured":{}
+          }
         }
       },
       "oldId":211,
@@ -3333,9 +4446,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_rkb4qy8j.wav",
@@ -3344,10 +4474,16 @@
       "name":"Import_B 50",
       "notes":{
         "english":{
-          "_out":"six left tightens into three?",
+          "_out":{
+            "freeform":"six left tightens into three?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left tightens into three?"
+          "note":{
+            "freeform":"six left tightens into three?",
+            "structured":{}
+          }
         }
       },
       "oldId":215,
@@ -3401,9 +4537,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_3wtsg366.wav",
@@ -3412,10 +4565,16 @@
       "name":"Import_B 51",
       "notes":{
         "english":{
-          "_out":"and short six right?",
+          "_out":{
+            "freeform":"and short six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"short six right?"
+          "note":{
+            "freeform":"short six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":219,
@@ -3469,9 +4628,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_em5qwfyb.wav",
@@ -3480,10 +4656,16 @@
       "name":"Import_B 52",
       "notes":{
         "english":{
-          "_out":"and long six left tightens?",
+          "_out":{
+            "freeform":"and long six left tightens?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"long six left tightens?"
+          "note":{
+            "freeform":"long six left tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":223,
@@ -3537,9 +4719,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_25dlrwlj.wav",
@@ -3548,10 +4747,16 @@
       "name":"Import_B 53",
       "notes":{
         "english":{
-          "_out":"and long three right? forty.",
+          "_out":{
+            "freeform":"and long three right? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"and",
-          "note":"long three right?"
+          "note":{
+            "freeform":"long three right?",
+            "structured":{}
+          }
         }
       },
       "oldId":227,
@@ -3605,9 +4810,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_4ogbnbu7.wav",
@@ -3616,10 +4838,16 @@
       "name":"Import_B 54",
       "notes":{
         "english":{
-          "_out":"tight hairpin left? narrows? fifty.",
+          "_out":{
+            "freeform":"tight hairpin left? narrows? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"tight hairpin left? narrows?"
+          "note":{
+            "freeform":"tight hairpin left? narrows?",
+            "structured":{}
+          }
         }
       },
       "oldId":231,
@@ -3673,9 +4901,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_5898zemv.wav",
@@ -3684,10 +4929,16 @@
       "name":"Import_B 56",
       "notes":{
         "english":{
-          "_out":"three left? fifty.",
+          "_out":{
+            "freeform":"three left? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"three left?"
+          "note":{
+            "freeform":"three left?",
+            "structured":{}
+          }
         }
       },
       "oldId":235,
@@ -3741,9 +4992,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_p6j5cghm.wav",
@@ -3752,10 +5020,16 @@
       "name":"Import_B 57",
       "notes":{
         "english":{
-          "_out":"long six left?",
+          "_out":{
+            "freeform":"long six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"long six left?"
+          "note":{
+            "freeform":"long six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":239,
@@ -3809,9 +5083,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_laxnv6no.wav",
@@ -3820,10 +5111,16 @@
       "name":"Import_B 58",
       "notes":{
         "english":{
-          "_out":"and five right opens up hill?",
+          "_out":{
+            "freeform":"and five right opens up hill?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five right opens uphill?"
+          "note":{
+            "freeform":"five right opens uphill?",
+            "structured":{}
+          }
         }
       },
       "oldId":243,
@@ -3877,9 +5174,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_strtnbxw.wav",
@@ -3888,10 +5202,16 @@
       "name":"Import_B 59",
       "notes":{
         "english":{
-          "_out":"and bumpy?",
+          "_out":{
+            "freeform":"and bumpy?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"bumpy?"
+          "note":{
+            "freeform":"bumpy?",
+            "structured":{}
+          }
         }
       },
       "oldId":247,
@@ -3945,9 +5265,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_0guxm2da.wav",
@@ -3956,10 +5293,16 @@
       "name":"Import_B 60",
       "notes":{
         "english":{
-          "_out":"into six right?",
+          "_out":{
+            "freeform":"into six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":251,
@@ -4013,9 +5356,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xtm9b0ug.wav",
@@ -4024,10 +5384,16 @@
       "name":"Import_B 61",
       "notes":{
         "english":{
-          "_out":"and short early three right opens? fifty.",
+          "_out":{
+            "freeform":"and short early three right opens? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"short early three right opens?"
+          "note":{
+            "freeform":"short early three right opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":255,
@@ -4081,9 +5447,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_fgfid669.wav",
@@ -4092,10 +5475,16 @@
       "name":"Import_B 62",
       "notes":{
         "english":{
-          "_out":"five right? sixty.",
+          "_out":{
+            "freeform":"five right? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":259,
@@ -4149,9 +5538,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_bo_dqee4.wav",
@@ -4160,10 +5566,16 @@
       "name":"Import_B 63",
       "notes":{
         "english":{
-          "_out":"crest into five left? seventy.",
+          "_out":{
+            "freeform":"crest into five left? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"crest into five left?"
+          "note":{
+            "freeform":"crest into five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":263,
@@ -4217,9 +5629,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__l14ub4_.wav",
@@ -4228,10 +5657,16 @@
       "name":"Import_B 64",
       "notes":{
         "english":{
-          "_out":"three left?",
+          "_out":{
+            "freeform":"three left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"three left?"
+          "note":{
+            "freeform":"three left?",
+            "structured":{}
+          }
         }
       },
       "oldId":267,
@@ -4285,9 +5720,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xz6t7vp2.wav",
@@ -4296,10 +5748,16 @@
       "name":"Import_B 65",
       "notes":{
         "english":{
-          "_out":"and short six left?",
+          "_out":{
+            "freeform":"and short six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"short six left?"
+          "note":{
+            "freeform":"short six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":271,
@@ -4353,9 +5811,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xnzmtvcd.wav",
@@ -4364,10 +5839,16 @@
       "name":"Import_B 66",
       "notes":{
         "english":{
-          "_out":"and five right plus? seventy.",
+          "_out":{
+            "freeform":"and five right plus? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"and",
-          "note":"five right plus?"
+          "note":{
+            "freeform":"five right plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":275,
@@ -4421,9 +5902,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_da69hd9i.wav",
@@ -4432,10 +5930,16 @@
       "name":"Import_B 67",
       "notes":{
         "english":{
-          "_out":"care jump into six left?",
+          "_out":{
+            "freeform":"care jump into six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"care jump into six left?"
+          "note":{
+            "freeform":"care jump into six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":279,
@@ -4489,9 +5993,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_2lmvbidw.wav",
@@ -4500,10 +6021,16 @@
       "name":"Import_B 68",
       "notes":{
         "english":{
-          "_out":"into slight right into four left?",
+          "_out":{
+            "freeform":"into slight right into four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"slight right into four left?"
+          "note":{
+            "freeform":"slight right into four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":283,
@@ -4557,9 +6084,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8qh214ls.wav",
@@ -4568,10 +6112,16 @@
       "name":"Import_B 69",
       "notes":{
         "english":{
-          "_out":"and four right?",
+          "_out":{
+            "freeform":"and four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":287,
@@ -4625,9 +6175,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_mqx8gp7y.wav",
@@ -4636,10 +6203,16 @@
       "name":"Import_B 70",
       "notes":{
         "english":{
-          "_out":"into five left?",
+          "_out":{
+            "freeform":"into five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":291,
@@ -4693,9 +6266,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_zxnb6e67.wav",
@@ -4704,10 +6294,16 @@
       "name":"Import_B 71",
       "notes":{
         "english":{
-          "_out":"into six right?",
+          "_out":{
+            "freeform":"into six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":295,
@@ -4761,9 +6357,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ioqz7k23.wav",
@@ -4772,10 +6385,16 @@
       "name":"Import_B 72",
       "notes":{
         "english":{
-          "_out":"and crest into four left?",
+          "_out":{
+            "freeform":"and crest into four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"crest into four left?"
+          "note":{
+            "freeform":"crest into four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":299,
@@ -4829,9 +6448,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_vy2cge7i.wav",
@@ -4840,10 +6476,16 @@
       "name":"Import_B 73",
       "notes":{
         "english":{
-          "_out":"into five right?",
+          "_out":{
+            "freeform":"into five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":303,
@@ -4897,9 +6539,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1yxz2bf6.wav",
@@ -4908,10 +6567,16 @@
       "name":"Import_B 74",
       "notes":{
         "english":{
-          "_out":"into caution big dip?",
+          "_out":{
+            "freeform":"into caution big dip?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"caution big dip?"
+          "note":{
+            "freeform":"caution big dip?",
+            "structured":{}
+          }
         }
       },
       "oldId":307,
@@ -4965,9 +6630,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_7_c1dp3e.wav",
@@ -4976,10 +6658,16 @@
       "name":"Import_B 75",
       "notes":{
         "english":{
-          "_out":"and caution crest?",
+          "_out":{
+            "freeform":"and caution crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"caution crest?"
+          "note":{
+            "freeform":"caution crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":311,
@@ -5033,9 +6721,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_4qp6ir36.wav",
@@ -5044,10 +6749,16 @@
       "name":"Import_B 76",
       "notes":{
         "english":{
-          "_out":"into six left?",
+          "_out":{
+            "freeform":"into six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":315,
@@ -5101,9 +6812,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_01kxo2rf.wav",
@@ -5112,10 +6840,16 @@
       "name":"Import_B 77",
       "notes":{
         "english":{
-          "_out":"into care jump?",
+          "_out":{
+            "freeform":"into care jump?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"care jump?"
+          "note":{
+            "freeform":"care jump?",
+            "structured":{}
+          }
         }
       },
       "oldId":319,
@@ -5169,9 +6903,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_2wdlm4mo.wav",
@@ -5180,10 +6931,16 @@
       "name":"Import_B 78",
       "notes":{
         "english":{
-          "_out":"into five right?",
+          "_out":{
+            "freeform":"into five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":323,
@@ -5237,9 +6994,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_pjb0d6bt.wav",
@@ -5248,10 +7022,16 @@
       "name":"Import_B 79",
       "notes":{
         "english":{
-          "_out":"and four left?",
+          "_out":{
+            "freeform":"and four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":327,
@@ -5305,9 +7085,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1lbzd6hz.wav",
@@ -5316,10 +7113,16 @@
       "name":"Import_B 80",
       "notes":{
         "english":{
-          "_out":"into crest into five right?",
+          "_out":{
+            "freeform":"into crest into five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"crest into five right?"
+          "note":{
+            "freeform":"crest into five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":331,
@@ -5373,9 +7176,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tcc5ccjw.wav",
@@ -5384,10 +7204,16 @@
       "name":"Import_B 81",
       "notes":{
         "english":{
-          "_out":"into six left? fifty.",
+          "_out":{
+            "freeform":"into six left? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":335,
@@ -5441,9 +7267,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_4q1lrsv3.wav",
@@ -5452,10 +7295,16 @@
       "name":"Import_B 82",
       "notes":{
         "english":{
-          "_out":"three left?",
+          "_out":{
+            "freeform":"three left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"three left?"
+          "note":{
+            "freeform":"three left?",
+            "structured":{}
+          }
         }
       },
       "oldId":339,
@@ -5509,9 +7358,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_zzdady5u.wav",
@@ -5520,10 +7386,16 @@
       "name":"Import_B 83",
       "notes":{
         "english":{
-          "_out":"and five right minus?",
+          "_out":{
+            "freeform":"and five right minus?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five right minus?"
+          "note":{
+            "freeform":"five right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":343,
@@ -5577,9 +7449,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_x8sa5tzv.wav",
@@ -5588,10 +7477,16 @@
       "name":"Import_B 84",
       "notes":{
         "english":{
-          "_out":"and four left?",
+          "_out":{
+            "freeform":"and four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":347,
@@ -5645,9 +7540,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_4jn3_qt3.wav",
@@ -5656,10 +7568,16 @@
       "name":"Import_B 85",
       "notes":{
         "english":{
-          "_out":"into three right?",
+          "_out":{
+            "freeform":"into three right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"three right?"
+          "note":{
+            "freeform":"three right?",
+            "structured":{}
+          }
         }
       },
       "oldId":351,
@@ -5713,9 +7631,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_omzwuzoy.wav",
@@ -5724,10 +7659,16 @@
       "name":"Import_B 86",
       "notes":{
         "english":{
-          "_out":"into six left?",
+          "_out":{
+            "freeform":"into six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":355,
@@ -5781,9 +7722,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_wwaz40wu.wav",
@@ -5792,10 +7750,16 @@
       "name":"Import_B 87",
       "notes":{
         "english":{
-          "_out":"into three left?",
+          "_out":{
+            "freeform":"into three left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"three left?"
+          "note":{
+            "freeform":"three left?",
+            "structured":{}
+          }
         }
       },
       "oldId":359,
@@ -5849,9 +7813,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_v7ydtmio.wav",
@@ -5860,10 +7841,16 @@
       "name":"Import_B 88",
       "notes":{
         "english":{
-          "_out":"and crest into five right?",
+          "_out":{
+            "freeform":"and crest into five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"crest into five right?"
+          "note":{
+            "freeform":"crest into five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":363,
@@ -5917,9 +7904,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gw2zr7s_.wav",
@@ -5928,10 +7932,16 @@
       "name":"Import_B 89",
       "notes":{
         "english":{
-          "_out":"into six right? fifty.",
+          "_out":{
+            "freeform":"into six right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":367,
@@ -5985,9 +7995,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_bk0p29q1.wav",
@@ -5996,10 +8023,16 @@
       "name":"Import_B 90",
       "notes":{
         "english":{
-          "_out":"five left into crest?",
+          "_out":{
+            "freeform":"five left into crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five left into crest?"
+          "note":{
+            "freeform":"five left into crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":371,
@@ -6053,9 +8086,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_io1tv2yq.wav",
@@ -6064,10 +8114,16 @@
       "name":"Import_B 91",
       "notes":{
         "english":{
-          "_out":"and three right? fifty.",
+          "_out":{
+            "freeform":"and three right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"three right?"
+          "note":{
+            "freeform":"three right?",
+            "structured":{}
+          }
         }
       },
       "oldId":375,
@@ -6121,9 +8177,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ikpvlp7_.wav",
@@ -6132,10 +8205,16 @@
       "name":"Import_B 92",
       "notes":{
         "english":{
-          "_out":"one right? into three right?",
+          "_out":{
+            "freeform":"one right? into three right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"one right? into three right?"
+          "note":{
+            "freeform":"one right? into three right?",
+            "structured":{}
+          }
         }
       },
       "oldId":379,
@@ -6189,9 +8268,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_z09v9zfy.wav",
@@ -6200,10 +8296,16 @@
       "name":"Import_B 93",
       "notes":{
         "english":{
-          "_out":"and five left?",
+          "_out":{
+            "freeform":"and five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":383,
@@ -6257,9 +8359,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xs23uw5o.wav",
@@ -6268,10 +8387,16 @@
       "name":"Import_B 94",
       "notes":{
         "english":{
-          "_out":"and six left?",
+          "_out":{
+            "freeform":"and six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":387,
@@ -6325,9 +8450,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__j8vzh9x.wav",
@@ -6336,10 +8478,16 @@
       "name":"Import_B 95",
       "notes":{
         "english":{
-          "_out":"into four right? fifty.",
+          "_out":{
+            "freeform":"into four right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":391,
@@ -6393,9 +8541,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xba7l075.wav",
@@ -6404,10 +8569,16 @@
       "name":"Import_B 96",
       "notes":{
         "english":{
-          "_out":"four left?",
+          "_out":{
+            "freeform":"four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":395,
@@ -6461,9 +8632,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_58v0vxvv.wav",
@@ -6472,10 +8660,16 @@
       "name":"Import_B 97",
       "notes":{
         "english":{
-          "_out":"into five left?",
+          "_out":{
+            "freeform":"into five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":399,
@@ -6529,9 +8723,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_h3vraywa.wav",
@@ -6540,10 +8751,16 @@
       "name":"Import_B 98",
       "notes":{
         "english":{
-          "_out":"into two right long?",
+          "_out":{
+            "freeform":"into two right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"two right long?"
+          "note":{
+            "freeform":"two right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":403,
@@ -6597,9 +8814,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_x4t8zkl0.wav",
@@ -6608,10 +8842,16 @@
       "name":"Import_B 99",
       "notes":{
         "english":{
-          "_out":"and four left? seventy.",
+          "_out":{
+            "freeform":"and four left? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"and",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":407,
@@ -6665,9 +8905,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xix8ytoh.wav",
@@ -6676,10 +8933,16 @@
       "name":"Import_B 100",
       "notes":{
         "english":{
-          "_out":"six right tightens?",
+          "_out":{
+            "freeform":"six right tightens?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six right tightens?"
+          "note":{
+            "freeform":"six right tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":411,
@@ -6733,9 +8996,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_f20qabcz.wav",
@@ -6744,10 +9024,16 @@
       "name":"Import_B 101",
       "notes":{
         "english":{
-          "_out":"into six right? fifty.",
+          "_out":{
+            "freeform":"into six right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":415,
@@ -6801,9 +9087,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tzgctwx3.wav",
@@ -6812,10 +9115,16 @@
       "name":"Import_B 102",
       "notes":{
         "english":{
-          "_out":"slowing?",
+          "_out":{
+            "freeform":"slowing?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"slowing?"
+          "note":{
+            "freeform":"slowing?",
+            "structured":{}
+          }
         }
       },
       "oldId":419,
@@ -6869,9 +9178,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_cw509ei1.wav",
@@ -6880,10 +9206,16 @@
       "name":"Import_B 103",
       "notes":{
         "english":{
-          "_out":"and tight hairpin left? seventy.",
+          "_out":{
+            "freeform":"and tight hairpin left? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"and",
-          "note":"tight hairpin left?"
+          "note":{
+            "freeform":"tight hairpin left?",
+            "structured":{}
+          }
         }
       },
       "oldId":423,
@@ -6937,9 +9269,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_wxg2hlfn.wav",
@@ -6948,10 +9297,16 @@
       "name":"Import_B 104",
       "notes":{
         "english":{
-          "_out":"crest into six right? one fifty.",
+          "_out":{
+            "freeform":"crest into six right? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"crest into six right?"
+          "note":{
+            "freeform":"crest into six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":427,
@@ -7005,9 +9360,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ipuqes6c.wav",
@@ -7016,10 +9388,16 @@
       "name":"Import_B 105",
       "notes":{
         "english":{
-          "_out":"crest into six left long?",
+          "_out":{
+            "freeform":"crest into six left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"crest into six left long?"
+          "note":{
+            "freeform":"crest into six left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":431,
@@ -7073,9 +9451,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_5ul20kht.wav",
@@ -7084,10 +9479,16 @@
       "name":"Import_B 106",
       "notes":{
         "english":{
-          "_out":"and four right?",
+          "_out":{
+            "freeform":"and four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":435,
@@ -7141,9 +9542,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_w10xmf55.wav",
@@ -7152,10 +9570,16 @@
       "name":"Import_B 107",
       "notes":{
         "english":{
-          "_out":"and crest?",
+          "_out":{
+            "freeform":"and crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"crest?"
+          "note":{
+            "freeform":"crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":439,
@@ -7209,9 +9633,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_mk3jm6bi.wav",
@@ -7220,10 +9661,16 @@
       "name":"Import_B 108",
       "notes":{
         "english":{
-          "_out":"into six right?",
+          "_out":{
+            "freeform":"into six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":443,
@@ -7277,9 +9724,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_2yj4s3_n.wav",
@@ -7288,10 +9752,16 @@
       "name":"Import_B 109",
       "notes":{
         "english":{
-          "_out":"and five left minus? fifty.",
+          "_out":{
+            "freeform":"and five left minus? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"five left minus?"
+          "note":{
+            "freeform":"five left minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":447,
@@ -7345,9 +9815,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_j2v2cv1w.wav",
@@ -7356,10 +9843,16 @@
       "name":"Import_B 110",
       "notes":{
         "english":{
-          "_out":"two right?",
+          "_out":{
+            "freeform":"two right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"two right?"
+          "note":{
+            "freeform":"two right?",
+            "structured":{}
+          }
         }
       },
       "oldId":451,
@@ -7413,9 +9906,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hx7dplt2.wav",
@@ -7424,10 +9934,16 @@
       "name":"Import_B 111",
       "notes":{
         "english":{
-          "_out":"and four left?",
+          "_out":{
+            "freeform":"and four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":455,
@@ -7481,9 +9997,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ue_4d3f5.wav",
@@ -7492,10 +10025,16 @@
       "name":"Import_B 112",
       "notes":{
         "english":{
-          "_out":"into jump? eighty.",
+          "_out":{
+            "freeform":"into jump? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"into",
-          "note":"jump?"
+          "note":{
+            "freeform":"jump?",
+            "structured":{}
+          }
         }
       },
       "oldId":459,
@@ -7549,9 +10088,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_nztt0icu.wav",
@@ -7560,10 +10116,16 @@
       "name":"Import_B 113",
       "notes":{
         "english":{
-          "_out":"tight hairpin right? eighty.",
+          "_out":{
+            "freeform":"tight hairpin right? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"",
-          "note":"tight hairpin right?"
+          "note":{
+            "freeform":"tight hairpin right?",
+            "structured":{}
+          }
         }
       },
       "oldId":463,
@@ -7617,9 +10179,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_cx__zcx3.wav",
@@ -7628,10 +10207,16 @@
       "name":"Import_B 114",
       "notes":{
         "english":{
-          "_out":"six left?",
+          "_out":{
+            "freeform":"six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":467,
@@ -7685,9 +10270,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_qlrimv1v.wav",
@@ -7696,10 +10298,16 @@
       "name":"Import_B 115",
       "notes":{
         "english":{
-          "_out":"and five right tightens?",
+          "_out":{
+            "freeform":"and five right tightens?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five right tightens?"
+          "note":{
+            "freeform":"five right tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":471,
@@ -7753,9 +10361,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gpqgq3at.wav",
@@ -7764,10 +10389,16 @@
       "name":"Import_B 116",
       "notes":{
         "english":{
-          "_out":"and six left?",
+          "_out":{
+            "freeform":"and six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":475,
@@ -7821,9 +10452,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_srm8l62h.wav",
@@ -7832,10 +10480,16 @@
       "name":"Import_B 117",
       "notes":{
         "english":{
-          "_out":"into five right minus? forty.",
+          "_out":{
+            "freeform":"into five right minus? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"into",
-          "note":"five right minus?"
+          "note":{
+            "freeform":"five right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":479,
@@ -7889,9 +10543,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1mis2omf.wav",
@@ -7900,10 +10571,16 @@
       "name":"Import_B 118",
       "notes":{
         "english":{
-          "_out":"six left tightens late? forty.",
+          "_out":{
+            "freeform":"six left tightens late? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"",
-          "note":"six left tightens late?"
+          "note":{
+            "freeform":"six left tightens late?",
+            "structured":{}
+          }
         }
       },
       "oldId":483,
@@ -7957,9 +10634,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_bxk9ts0x.wav",
@@ -7968,10 +10662,16 @@
       "name":"Import_B 119",
       "notes":{
         "english":{
-          "_out":"slight right? eighty.",
+          "_out":{
+            "freeform":"slight right? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"",
-          "note":"slight right?"
+          "note":{
+            "freeform":"slight right?",
+            "structured":{}
+          }
         }
       },
       "oldId":487,
@@ -8025,9 +10725,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_i92ol5on.wav",
@@ -8036,10 +10753,16 @@
       "name":"Import_B 120",
       "notes":{
         "english":{
-          "_out":"six left?",
+          "_out":{
+            "freeform":"six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":491,
@@ -8093,9 +10816,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_yl5ly1w5.wav",
@@ -8104,10 +10844,16 @@
       "name":"Import_B 121",
       "notes":{
         "english":{
-          "_out":"and six right minus?",
+          "_out":{
+            "freeform":"and six right minus?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six right minus?"
+          "note":{
+            "freeform":"six right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":495,
@@ -8161,9 +10907,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_y119_efv.wav",
@@ -8172,10 +10935,16 @@
       "name":"Import_B 122",
       "notes":{
         "english":{
-          "_out":"and slowing, acute one left?",
+          "_out":{
+            "freeform":"and slowing, acute one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"slowing, acute one left?"
+          "note":{
+            "freeform":"slowing, acute one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":499,
@@ -8229,9 +10998,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_i_x7uv23.wav",
@@ -8240,10 +11026,16 @@
       "name":"Import_B 123",
       "notes":{
         "english":{
-          "_out":"and six left?",
+          "_out":{
+            "freeform":"and six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":503,
@@ -8297,9 +11089,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_yo1y6aow.wav",
@@ -8308,10 +11117,16 @@
       "name":"Import_B 124",
       "notes":{
         "english":{
-          "_out":"and five left minus tightens?",
+          "_out":{
+            "freeform":"and five left minus tightens?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left minus tightens?"
+          "note":{
+            "freeform":"five left minus tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":507,
@@ -8365,9 +11180,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_e9l1y6tm.wav",
@@ -8376,10 +11208,16 @@
       "name":"Import_B 125",
       "notes":{
         "english":{
-          "_out":"into very tight hairpin right?",
+          "_out":{
+            "freeform":"into very tight hairpin right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"very tight hairpin right?"
+          "note":{
+            "freeform":"very tight hairpin right?",
+            "structured":{}
+          }
         }
       },
       "oldId":511,
@@ -8433,9 +11271,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_asm1os8l.wav",
@@ -8444,10 +11299,16 @@
       "name":"Import_B 126",
       "notes":{
         "english":{
-          "_out":"into four left long over bumps?",
+          "_out":{
+            "freeform":"into four left long over bumps?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"four left long over bumps?"
+          "note":{
+            "freeform":"four left long over bumps?",
+            "structured":{}
+          }
         }
       },
       "oldId":515,
@@ -8501,9 +11362,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tr54xbt5.wav",
@@ -8512,10 +11390,16 @@
       "name":"Import_B 127",
       "notes":{
         "english":{
-          "_out":"and caution drop, into two one left?",
+          "_out":{
+            "freeform":"and caution drop, into two one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"caution drop, into two one left?"
+          "note":{
+            "freeform":"caution drop, into two one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":519,
@@ -8569,9 +11453,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_u6kjwy1i.wav",
@@ -8580,10 +11481,16 @@
       "name":"Import_B 128",
       "notes":{
         "english":{
-          "_out":"and long one right? forty.",
+          "_out":{
+            "freeform":"and long one right? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"and",
-          "note":"long one right?"
+          "note":{
+            "freeform":"long one right?",
+            "structured":{}
+          }
         }
       },
       "oldId":523,
@@ -8637,9 +11544,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1sg0430k.wav",
@@ -8648,10 +11572,16 @@
       "name":"Import_B 129",
       "notes":{
         "english":{
-          "_out":"jump into three left?",
+          "_out":{
+            "freeform":"jump into three left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"jump into three left?"
+          "note":{
+            "freeform":"jump into three left?",
+            "structured":{}
+          }
         }
       },
       "oldId":527,
@@ -8705,9 +11635,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8av4ldo9.wav",
@@ -8716,10 +11663,16 @@
       "name":"Import_B 130",
       "notes":{
         "english":{
-          "_out":"over finish?",
+          "_out":{
+            "freeform":"over finish?",
+            "structured":{}
+          },
           "after":"",
           "before":"#",
-          "note":"over finish?"
+          "note":{
+            "freeform":"over finish?",
+            "structured":{}
+          }
         }
       },
       "oldId":531,
@@ -8773,9 +11726,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_b25_o5b3.wav",
@@ -8784,10 +11754,16 @@
       "name":"Import_B 131",
       "notes":{
         "english":{
-          "_out":"into six left.",
+          "_out":{
+            "freeform":"into six left.",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six left."
+          "note":{
+            "freeform":"six left.",
+            "structured":{}
+          }
         }
       },
       "oldId":535,
@@ -8841,8 +11817,25 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     }
   ],
-  "updated_at":1705910416
+  "updated_at":1705910416,
+  "useStructuredNotes":false,
+  "version":"3"
 }

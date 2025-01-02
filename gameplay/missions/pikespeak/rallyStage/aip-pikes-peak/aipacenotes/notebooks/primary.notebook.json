@@ -21,10 +21,16 @@
       "name":"Pacenote 1",
       "notes":{
         "english":{
-          "_out":"start 5 right? 200.",
+          "_out":{
+            "freeform":"start five right? two hundred.",
+            "structured":{}
+          },
           "after":"200",
           "before":"",
-          "note":"start 5 right?"
+          "note":{
+            "freeform":"start 5 right?",
+            "structured":{}
+          }
         }
       },
       "oldId":19,
@@ -78,6 +84,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -88,10 +109,16 @@
       "name":"Pacenote 2",
       "notes":{
         "english":{
-          "_out":"five right? 80.",
+          "_out":{
+            "freeform":"five right? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":23,
@@ -145,6 +172,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -155,10 +197,16 @@
       "name":"Pacenote 3",
       "notes":{
         "english":{
-          "_out":"six right over crest?",
+          "_out":{
+            "freeform":"six right over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six right over crest?"
+          "note":{
+            "freeform":"six right over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":27,
@@ -212,6 +260,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -222,10 +285,16 @@
       "name":"Pacenote 4",
       "notes":{
         "english":{
-          "_out":"and five left? 150.",
+          "_out":{
+            "freeform":"and five left? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":31,
@@ -279,6 +348,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -289,10 +373,16 @@
       "name":"Pacenote 5",
       "notes":{
         "english":{
-          "_out":"five left? 100.",
+          "_out":{
+            "freeform":"five left? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":35,
@@ -346,6 +436,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -356,10 +461,16 @@
       "name":"Pacenote 6",
       "notes":{
         "english":{
-          "_out":"five right wall exit?",
+          "_out":{
+            "freeform":"five right wall exit?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five right wall exit?"
+          "note":{
+            "freeform":"five right wall exit?",
+            "structured":{}
+          }
         }
       },
       "oldId":39,
@@ -413,6 +524,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -423,10 +549,16 @@
       "name":"Pacenote 7",
       "notes":{
         "english":{
-          "_out":"and five right?",
+          "_out":{
+            "freeform":"and five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":43,
@@ -480,6 +612,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -490,10 +637,16 @@
       "name":"Pacenote 8",
       "notes":{
         "english":{
-          "_out":"into four left? 70.",
+          "_out":{
+            "freeform":"into four left? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"into",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":47,
@@ -547,6 +700,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -557,10 +725,16 @@
       "name":"Pacenote 9",
       "notes":{
         "english":{
-          "_out":"five left?",
+          "_out":{
+            "freeform":"five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":51,
@@ -614,6 +788,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -624,10 +813,16 @@
       "name":"Pacenote 10",
       "notes":{
         "english":{
-          "_out":"and five right minus? 50.",
+          "_out":{
+            "freeform":"and five right minus? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"five right minus?"
+          "note":{
+            "freeform":"five right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":55,
@@ -681,6 +876,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -691,10 +901,16 @@
       "name":"Pacenote 11",
       "notes":{
         "english":{
-          "_out":"four left?",
+          "_out":{
+            "freeform":"four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":59,
@@ -748,6 +964,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -758,10 +989,16 @@
       "name":"Pacenote 12",
       "notes":{
         "english":{
-          "_out":"into five right? 60.",
+          "_out":{
+            "freeform":"into five right? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"into",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":63,
@@ -815,6 +1052,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -825,10 +1077,16 @@
       "name":"Pacenote 13",
       "notes":{
         "english":{
-          "_out":"five right? 50.",
+          "_out":{
+            "freeform":"five right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":67,
@@ -882,6 +1140,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -892,10 +1165,16 @@
       "name":"Pacenote 14",
       "notes":{
         "english":{
-          "_out":"four left?",
+          "_out":{
+            "freeform":"four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":71,
@@ -949,6 +1228,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -959,10 +1253,16 @@
       "name":"Pacenote 15",
       "notes":{
         "english":{
-          "_out":"into five right long? 60.",
+          "_out":{
+            "freeform":"into five right long? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"into",
-          "note":"five right long?"
+          "note":{
+            "freeform":"five right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":75,
@@ -1016,6 +1316,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1026,10 +1341,16 @@
       "name":"Pacenote 16",
       "notes":{
         "english":{
-          "_out":"five left over crest? 40.",
+          "_out":{
+            "freeform":"five left over crest? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"",
-          "note":"five left over crest?"
+          "note":{
+            "freeform":"five left over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":79,
@@ -1083,6 +1404,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1093,10 +1429,16 @@
       "name":"Pacenote 17",
       "notes":{
         "english":{
-          "_out":"four left minus, into long five right? 150.",
+          "_out":{
+            "freeform":"four left minus, into long five right? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"four left minus, into long five right?"
+          "note":{
+            "freeform":"four left minus, into long five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":83,
@@ -1150,6 +1492,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1160,10 +1517,16 @@
       "name":"Pacenote 18",
       "notes":{
         "english":{
-          "_out":"four left?",
+          "_out":{
+            "freeform":"four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":87,
@@ -1217,6 +1580,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1227,10 +1605,16 @@
       "name":"Pacenote 19",
       "notes":{
         "english":{
-          "_out":"and five right? 250.",
+          "_out":{
+            "freeform":"and five right? two fifty.",
+            "structured":{}
+          },
           "after":"250",
           "before":"and",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":91,
@@ -1284,6 +1668,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1294,10 +1693,16 @@
       "name":"Pacenote 20",
       "notes":{
         "english":{
-          "_out":"six right minus?",
+          "_out":{
+            "freeform":"six right minus?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six right minus?"
+          "note":{
+            "freeform":"six right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":95,
@@ -1351,6 +1756,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1361,10 +1781,16 @@
       "name":"Pacenote 21",
       "notes":{
         "english":{
-          "_out":"and five left?",
+          "_out":{
+            "freeform":"and five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":99,
@@ -1418,6 +1844,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1428,10 +1869,16 @@
       "name":"Pacenote 22",
       "notes":{
         "english":{
-          "_out":"into one left?",
+          "_out":{
+            "freeform":"into one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"one left?"
+          "note":{
+            "freeform":"one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":103,
@@ -1485,6 +1932,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1495,10 +1957,16 @@
       "name":"Pacenote 23",
       "notes":{
         "english":{
-          "_out":"into four right tightens? 70.",
+          "_out":{
+            "freeform":"into four right tightens? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"into",
-          "note":"four right tightens?"
+          "note":{
+            "freeform":"four right tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":107,
@@ -1552,6 +2020,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1562,10 +2045,16 @@
       "name":"Pacenote 24",
       "notes":{
         "english":{
-          "_out":"five right? 50.",
+          "_out":{
+            "freeform":"five right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":111,
@@ -1619,6 +2108,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1629,10 +2133,16 @@
       "name":"Pacenote 25",
       "notes":{
         "english":{
-          "_out":"right over crest? into five left long? opens over 400.",
+          "_out":{
+            "freeform":"right over crest? into five left long? opens over four hundred.",
+            "structured":{}
+          },
           "after":"400",
           "before":"",
-          "note":"right over crest? into five left long? opens over {dt}."
+          "note":{
+            "freeform":"right over crest? into five left long? opens over {dt}.",
+            "structured":{}
+          }
         }
       },
       "oldId":115,
@@ -1686,6 +2196,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1696,10 +2221,16 @@
       "name":"Pacenote 26",
       "notes":{
         "english":{
-          "_out":"four left?",
+          "_out":{
+            "freeform":"four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":119,
@@ -1753,6 +2284,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1763,10 +2309,16 @@
       "name":"Pacenote 27",
       "notes":{
         "english":{
-          "_out":"and five right opens?",
+          "_out":{
+            "freeform":"and five right opens?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five right opens?"
+          "note":{
+            "freeform":"five right opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":123,
@@ -1820,6 +2372,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1830,10 +2397,16 @@
       "name":"Pacenote 28",
       "notes":{
         "english":{
-          "_out":"and five left?",
+          "_out":{
+            "freeform":"and five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":127,
@@ -1887,6 +2460,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1897,10 +2485,16 @@
       "name":"Pacenote 29",
       "notes":{
         "english":{
-          "_out":"into six right? 50.",
+          "_out":{
+            "freeform":"into six right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":131,
@@ -1954,6 +2548,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1964,10 +2573,16 @@
       "name":"Pacenote 30",
       "notes":{
         "english":{
-          "_out":"five left tightens to one right? 60.",
+          "_out":{
+            "freeform":"five left tightens to one right? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"five left tightens to one right?"
+          "note":{
+            "freeform":"five left tightens to one right?",
+            "structured":{}
+          }
         }
       },
       "oldId":135,
@@ -2021,6 +2636,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2031,10 +2661,16 @@
       "name":"Pacenote 31",
       "notes":{
         "english":{
-          "_out":"slight right into long six left? 60.",
+          "_out":{
+            "freeform":"slight right into long six left? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"slight right into long six left?"
+          "note":{
+            "freeform":"slight right into long six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":139,
@@ -2088,6 +2724,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2098,10 +2749,16 @@
       "name":"Pacenote 32",
       "notes":{
         "english":{
-          "_out":"six right? 100.",
+          "_out":{
+            "freeform":"six right? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":143,
@@ -2155,6 +2812,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2165,10 +2837,16 @@
       "name":"Pacenote 33",
       "notes":{
         "english":{
-          "_out":"four right minus don't cut? 90.",
+          "_out":{
+            "freeform":"four right minus don't cut? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"",
-          "note":"four right minus don't cut?"
+          "note":{
+            "freeform":"four right minus don't cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":147,
@@ -2222,6 +2900,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2232,10 +2925,16 @@
       "name":"Pacenote 34",
       "notes":{
         "english":{
-          "_out":"four left opens and tightens to three?",
+          "_out":{
+            "freeform":"four left opens and tightens to three?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left opens and tightens to three?"
+          "note":{
+            "freeform":"four left opens and tightens to three?",
+            "structured":{}
+          }
         }
       },
       "oldId":151,
@@ -2289,6 +2988,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2299,10 +3013,16 @@
       "name":"Pacenote 35",
       "notes":{
         "english":{
-          "_out":"and four left?",
+          "_out":{
+            "freeform":"and four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":155,
@@ -2356,6 +3076,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2366,10 +3101,16 @@
       "name":"Pacenote 36",
       "notes":{
         "english":{
-          "_out":"into four right?",
+          "_out":{
+            "freeform":"into four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":159,
@@ -2423,6 +3164,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2433,10 +3189,16 @@
       "name":"Pacenote 37",
       "notes":{
         "english":{
-          "_out":"into five left?",
+          "_out":{
+            "freeform":"into five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":163,
@@ -2490,6 +3252,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2500,10 +3277,16 @@
       "name":"Pacenote 38",
       "notes":{
         "english":{
-          "_out":"and one right? 90.",
+          "_out":{
+            "freeform":"and one right? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"and",
-          "note":"one right?"
+          "note":{
+            "freeform":"one right?",
+            "structured":{}
+          }
         }
       },
       "oldId":167,
@@ -2557,6 +3340,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2567,10 +3365,16 @@
       "name":"Pacenote 39",
       "notes":{
         "english":{
-          "_out":"five left minus half long?",
+          "_out":{
+            "freeform":"five left minus half long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five left minus half long?"
+          "note":{
+            "freeform":"five left minus half long?",
+            "structured":{}
+          }
         }
       },
       "oldId":171,
@@ -2624,6 +3428,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2634,10 +3453,16 @@
       "name":"Pacenote 40",
       "notes":{
         "english":{
-          "_out":"and six left into five right plus? 150.",
+          "_out":{
+            "freeform":"and six left into five right plus? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"and",
-          "note":"six left into five right plus?"
+          "note":{
+            "freeform":"six left into five right plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":175,
@@ -2691,6 +3516,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2701,10 +3541,16 @@
       "name":"Pacenote 41",
       "notes":{
         "english":{
-          "_out":"slight right?",
+          "_out":{
+            "freeform":"slight right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"slight right?"
+          "note":{
+            "freeform":"slight right?",
+            "structured":{}
+          }
         }
       },
       "oldId":179,
@@ -2758,6 +3604,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2768,10 +3629,16 @@
       "name":"Pacenote 42",
       "notes":{
         "english":{
-          "_out":"and six left? 60.",
+          "_out":{
+            "freeform":"and six left? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":183,
@@ -2825,6 +3692,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2835,10 +3717,16 @@
       "name":"Pacenote 43",
       "notes":{
         "english":{
-          "_out":"brake, right entry into one left?",
+          "_out":{
+            "freeform":"brake, right entry into one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake, right entry into one left?"
+          "note":{
+            "freeform":"brake, right entry into one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":187,
@@ -2892,6 +3780,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2902,10 +3805,16 @@
       "name":"Pacenote 44",
       "notes":{
         "english":{
-          "_out":"and six right?",
+          "_out":{
+            "freeform":"and six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":191,
@@ -2959,6 +3868,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2969,10 +3893,16 @@
       "name":"Pacenote 45",
       "notes":{
         "english":{
-          "_out":"into one right plus? 100.",
+          "_out":{
+            "freeform":"into one right plus? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"into",
-          "note":"one right plus?"
+          "note":{
+            "freeform":"one right plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":195,
@@ -3026,6 +3956,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3036,10 +3981,16 @@
       "name":"Pacenote 46",
       "notes":{
         "english":{
-          "_out":"six left tightens? into two right?",
+          "_out":{
+            "freeform":"six left tightens? into two right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left tightens? into two right?"
+          "note":{
+            "freeform":"six left tightens? into two right?",
+            "structured":{}
+          }
         }
       },
       "oldId":199,
@@ -3093,6 +4044,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3103,10 +4069,16 @@
       "name":"Pacenote 47",
       "notes":{
         "english":{
-          "_out":"into five left? and 6 left? 150.",
+          "_out":{
+            "freeform":"into five left? and six left? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"into",
-          "note":"five left? and 6 left?"
+          "note":{
+            "freeform":"five left? and 6 left?",
+            "structured":{}
+          }
         }
       },
       "oldId":203,
@@ -3160,6 +4132,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3170,10 +4157,16 @@
       "name":"Pacenote 48",
       "notes":{
         "english":{
-          "_out":"long six right tightens to three?",
+          "_out":{
+            "freeform":"long six right tightens to three?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"long six right tightens to three?"
+          "note":{
+            "freeform":"long six right tightens to three?",
+            "structured":{}
+          }
         }
       },
       "oldId":207,
@@ -3227,6 +4220,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3237,10 +4245,16 @@
       "name":"Pacenote 49",
       "notes":{
         "english":{
-          "_out":"into five left tightens to three very long?",
+          "_out":{
+            "freeform":"into five left tightens to three very long?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left tightens to three very long?"
+          "note":{
+            "freeform":"five left tightens to three very long?",
+            "structured":{}
+          }
         }
       },
       "oldId":211,
@@ -3294,6 +4308,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3304,10 +4333,16 @@
       "name":"Pacenote 50",
       "notes":{
         "english":{
-          "_out":"into four right?",
+          "_out":{
+            "freeform":"into four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":215,
@@ -3361,6 +4396,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3371,10 +4421,16 @@
       "name":"Pacenote 51",
       "notes":{
         "english":{
-          "_out":"into five left?",
+          "_out":{
+            "freeform":"into five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":219,
@@ -3428,6 +4484,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3438,10 +4509,16 @@
       "name":"Pacenote 52",
       "notes":{
         "english":{
-          "_out":"into six right? 40.",
+          "_out":{
+            "freeform":"into six right? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"into",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":223,
@@ -3495,6 +4572,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3505,10 +4597,16 @@
       "name":"Pacenote 53",
       "notes":{
         "english":{
-          "_out":"brake, left entry into one right long?",
+          "_out":{
+            "freeform":"brake, left entry into one right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake, left entry into one right long?"
+          "note":{
+            "freeform":"brake, left entry into one right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":227,
@@ -3562,6 +4660,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3572,10 +4685,16 @@
       "name":"Pacenote 54",
       "notes":{
         "english":{
-          "_out":"and four left long tightens to two?",
+          "_out":{
+            "freeform":"and four left long tightens to two?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four left long tightens to two?"
+          "note":{
+            "freeform":"four left long tightens to two?",
+            "structured":{}
+          }
         }
       },
       "oldId":231,
@@ -3629,6 +4748,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3639,10 +4773,16 @@
       "name":"Pacenote 55",
       "notes":{
         "english":{
-          "_out":"and six left into four right? 50.",
+          "_out":{
+            "freeform":"and six left into four right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"six left into four right?"
+          "note":{
+            "freeform":"six left into four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":235,
@@ -3696,6 +4836,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3706,10 +4861,16 @@
       "name":"Pacenote 56",
       "notes":{
         "english":{
-          "_out":"five left into five right? 90.",
+          "_out":{
+            "freeform":"five left into five right? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"",
-          "note":"five left into five right?"
+          "note":{
+            "freeform":"five left into five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":239,
@@ -3763,6 +4924,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3773,10 +4949,16 @@
       "name":"Pacenote 57",
       "notes":{
         "english":{
-          "_out":"keep left at the center median? 60.",
+          "_out":{
+            "freeform":"keep left at the center median? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"keep left at the center median?"
+          "note":{
+            "freeform":"keep left at the center median?",
+            "structured":{}
+          }
         }
       },
       "oldId":243,
@@ -3830,6 +5012,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3840,10 +5037,16 @@
       "name":"Pacenote 58",
       "notes":{
         "english":{
-          "_out":"four right?",
+          "_out":{
+            "freeform":"four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":247,
@@ -3897,6 +5100,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3907,10 +5125,16 @@
       "name":"Pacenote 59",
       "notes":{
         "english":{
-          "_out":"into six left? 60.",
+          "_out":{
+            "freeform":"into six left? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"into",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":251,
@@ -3964,6 +5188,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3974,10 +5213,16 @@
       "name":"Pacenote 60",
       "notes":{
         "english":{
-          "_out":"brake at crest, right entry into one left long?",
+          "_out":{
+            "freeform":"brake at crest, right entry into one left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake at crest, right entry into one left long?"
+          "note":{
+            "freeform":"brake at crest, right entry into one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":255,
@@ -4031,6 +5276,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4041,10 +5301,16 @@
       "name":"Pacenote 61",
       "notes":{
         "english":{
-          "_out":"and six right minus? 90.",
+          "_out":{
+            "freeform":"and six right minus? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"and",
-          "note":"six right minus?"
+          "note":{
+            "freeform":"six right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":259,
@@ -4098,6 +5364,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4108,10 +5389,16 @@
       "name":"Pacenote 62",
       "notes":{
         "english":{
-          "_out":"five right?",
+          "_out":{
+            "freeform":"five right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":263,
@@ -4165,6 +5452,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4175,10 +5477,16 @@
       "name":"Pacenote 63",
       "notes":{
         "english":{
-          "_out":"and five left tightens long? 60.",
+          "_out":{
+            "freeform":"and five left tightens long? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"and",
-          "note":"five left tightens long?"
+          "note":{
+            "freeform":"five left tightens long?",
+            "structured":{}
+          }
         }
       },
       "oldId":267,
@@ -4232,6 +5540,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4242,10 +5565,16 @@
       "name":"Pacenote 64",
       "notes":{
         "english":{
-          "_out":"six left? into six right extra long over four hundred?",
+          "_out":{
+            "freeform":"six left? into six right extra long over four hundred?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left? into six right extra long over four hundred?"
+          "note":{
+            "freeform":"six left? into six right extra long over four hundred?",
+            "structured":{}
+          }
         }
       },
       "oldId":271,
@@ -4299,6 +5628,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4309,10 +5653,16 @@
       "name":"Pacenote 65",
       "notes":{
         "english":{
-          "_out":"into brake into one left long?",
+          "_out":{
+            "freeform":"into brake into one left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"brake into one left long?"
+          "note":{
+            "freeform":"brake into one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":275,
@@ -4366,6 +5716,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4376,10 +5741,16 @@
       "name":"Pacenote 66",
       "notes":{
         "english":{
-          "_out":"and six left? 40.",
+          "_out":{
+            "freeform":"and six left? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":279,
@@ -4433,6 +5804,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4443,10 +5829,16 @@
       "name":"Pacenote 67",
       "notes":{
         "english":{
-          "_out":"four left minus? 300.",
+          "_out":{
+            "freeform":"four left minus? three hundred.",
+            "structured":{}
+          },
           "after":"300",
           "before":"",
-          "note":"four left minus?"
+          "note":{
+            "freeform":"four left minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":283,
@@ -4500,6 +5892,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4510,10 +5917,16 @@
       "name":"Pacenote 68",
       "notes":{
         "english":{
-          "_out":"left entry into four right half long?",
+          "_out":{
+            "freeform":"left entry into four right half long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"left entry into four right half long?"
+          "note":{
+            "freeform":"left entry into four right half long?",
+            "structured":{}
+          }
         }
       },
       "oldId":287,
@@ -4567,6 +5980,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4577,10 +6005,16 @@
       "name":"Pacenote 69",
       "notes":{
         "english":{
-          "_out":"into brake into one left long?",
+          "_out":{
+            "freeform":"into brake into one left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"brake into one left long?"
+          "note":{
+            "freeform":"brake into one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":291,
@@ -4634,6 +6068,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4644,10 +6093,16 @@
       "name":"Pacenote 70",
       "notes":{
         "english":{
-          "_out":"into six left?",
+          "_out":{
+            "freeform":"into six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":295,
@@ -4701,6 +6156,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4711,10 +6181,16 @@
       "name":"Pacenote 71",
       "notes":{
         "english":{
-          "_out":"and five left? into break, one right long?",
+          "_out":{
+            "freeform":"and five left? into break, one right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left? into break, one right long?"
+          "note":{
+            "freeform":"five left? into break, one right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":299,
@@ -4768,6 +6244,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4778,10 +6269,16 @@
       "name":"Pacenote 72",
       "notes":{
         "english":{
-          "_out":"and six right?",
+          "_out":{
+            "freeform":"and six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":303,
@@ -4835,6 +6332,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4845,10 +6357,16 @@
       "name":"Pacenote 73",
       "notes":{
         "english":{
-          "_out":"and six right into brake, one left long?",
+          "_out":{
+            "freeform":"and six right into brake, one left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six right into brake, one left long?"
+          "note":{
+            "freeform":"six right into brake, one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":307,
@@ -4902,6 +6420,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4912,10 +6445,16 @@
       "name":"Pacenote 74",
       "notes":{
         "english":{
-          "_out":"into six right tightens? 150.",
+          "_out":{
+            "freeform":"into six right tightens? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"into",
-          "note":"six right tightens?"
+          "note":{
+            "freeform":"six right tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":311,
@@ -4969,6 +6508,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -4979,10 +6533,16 @@
       "name":"Pacenote 75",
       "notes":{
         "english":{
-          "_out":"six right? 100.",
+          "_out":{
+            "freeform":"six right? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":315,
@@ -5036,6 +6596,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5046,10 +6621,16 @@
       "name":"Pacenote 76",
       "notes":{
         "english":{
-          "_out":"brake, left entry into one right long? 250.",
+          "_out":{
+            "freeform":"brake, left entry into one right long? two fifty.",
+            "structured":{}
+          },
           "after":"250",
           "before":"",
-          "note":"brake, left entry into one right long?"
+          "note":{
+            "freeform":"brake, left entry into one right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":319,
@@ -5075,7 +6656,7 @@
           "normal":[
             -0.7824928042,
             0.6158911495,
-            0.09155928807
+            0.09155928808
           ],
           "oldId":321,
           "pos":[
@@ -5103,6 +6684,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5113,10 +6709,16 @@
       "name":"Pacenote 77",
       "notes":{
         "english":{
-          "_out":"six left into brake, one left long? 150.",
+          "_out":{
+            "freeform":"six left into brake, one left long? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"six left into brake, one left long?"
+          "note":{
+            "freeform":"six left into brake, one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":323,
@@ -5170,6 +6772,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5180,10 +6797,16 @@
       "name":"Pacenote 78",
       "notes":{
         "english":{
-          "_out":"six right tightens? 100.",
+          "_out":{
+            "freeform":"six right tightens? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"six right tightens?"
+          "note":{
+            "freeform":"six right tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":327,
@@ -5237,6 +6860,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5247,10 +6885,16 @@
       "name":"Pacenote 79",
       "notes":{
         "english":{
-          "_out":"brake one right long?",
+          "_out":{
+            "freeform":"brake one right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake one right long?"
+          "note":{
+            "freeform":"brake one right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":331,
@@ -5276,7 +6920,7 @@
           "normal":[
             -0.6924199111,
             0.7157142757,
-            0.09114681641
+            0.09114681642
           ],
           "oldId":333,
           "pos":[
@@ -5304,6 +6948,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5314,10 +6973,16 @@
       "name":"Pacenote 80",
       "notes":{
         "english":{
-          "_out":"and six left tightens to four long?",
+          "_out":{
+            "freeform":"and six left tightens to four long?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left tightens to four long?"
+          "note":{
+            "freeform":"six left tightens to four long?",
+            "structured":{}
+          }
         }
       },
       "oldId":335,
@@ -5371,6 +7036,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5381,10 +7061,16 @@
       "name":"Pacenote 81",
       "notes":{
         "english":{
-          "_out":"into five right? 80.",
+          "_out":{
+            "freeform":"into five right? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"into",
-          "note":"five right?"
+          "note":{
+            "freeform":"five right?",
+            "structured":{}
+          }
         }
       },
       "oldId":339,
@@ -5438,6 +7124,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5448,10 +7149,16 @@
       "name":"Pacenote 82",
       "notes":{
         "english":{
-          "_out":"six left?",
+          "_out":{
+            "freeform":"six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":343,
@@ -5505,6 +7212,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5515,10 +7237,16 @@
       "name":"Pacenote 83",
       "notes":{
         "english":{
-          "_out":"and brake, one left long? 100.",
+          "_out":{
+            "freeform":"and brake, one left long? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"and",
-          "note":"brake, one left long?"
+          "note":{
+            "freeform":"brake, one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":347,
@@ -5572,6 +7300,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5582,10 +7325,16 @@
       "name":"Pacenote 84",
       "notes":{
         "english":{
-          "_out":"two right opens?",
+          "_out":{
+            "freeform":"two right opens?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"two right opens?"
+          "note":{
+            "freeform":"two right opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":351,
@@ -5639,6 +7388,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5649,10 +7413,16 @@
       "name":"Pacenote 85",
       "notes":{
         "english":{
-          "_out":"into five left opens? 150.",
+          "_out":{
+            "freeform":"into five left opens? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"into",
-          "note":"five left opens?"
+          "note":{
+            "freeform":"five left opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":355,
@@ -5706,6 +7476,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5716,10 +7501,16 @@
       "name":"Pacenote 86",
       "notes":{
         "english":{
-          "_out":"five right plus? 200.",
+          "_out":{
+            "freeform":"five right plus? two hundred.",
+            "structured":{}
+          },
           "after":"200",
           "before":"",
-          "note":"five right plus?"
+          "note":{
+            "freeform":"five right plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":359,
@@ -5773,6 +7564,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5783,10 +7589,16 @@
       "name":"Pacenote 87",
       "notes":{
         "english":{
-          "_out":"five left?",
+          "_out":{
+            "freeform":"five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":363,
@@ -5840,6 +7652,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5850,10 +7677,16 @@
       "name":"Pacenote 88",
       "notes":{
         "english":{
-          "_out":"and five left? 200.",
+          "_out":{
+            "freeform":"and five left? two hundred.",
+            "structured":{}
+          },
           "after":"200",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":367,
@@ -5907,6 +7740,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5917,10 +7765,16 @@
       "name":"Pacenote 89",
       "notes":{
         "english":{
-          "_out":"five right tight exit? 150.",
+          "_out":{
+            "freeform":"five right tight exit? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"five right tight exit?"
+          "note":{
+            "freeform":"five right tight exit?",
+            "structured":{}
+          }
         }
       },
       "oldId":371,
@@ -5974,6 +7828,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -5984,10 +7853,16 @@
       "name":"Pacenote 90",
       "notes":{
         "english":{
-          "_out":"six right? 80.",
+          "_out":{
+            "freeform":"six right? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"",
-          "note":"six right?"
+          "note":{
+            "freeform":"six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":375,
@@ -6041,6 +7916,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6051,10 +7941,16 @@
       "name":"Pacenote 91",
       "notes":{
         "english":{
-          "_out":"six left over crest tightens? 100.",
+          "_out":{
+            "freeform":"six left over crest tightens? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"six left over crest tightens?"
+          "note":{
+            "freeform":"six left over crest tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":379,
@@ -6108,6 +8004,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6118,10 +8029,16 @@
       "name":"Pacenote 92",
       "notes":{
         "english":{
-          "_out":"six right tightens? 90.",
+          "_out":{
+            "freeform":"six right tightens? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"",
-          "note":"six right tightens?"
+          "note":{
+            "freeform":"six right tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":383,
@@ -6175,6 +8092,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6185,10 +8117,16 @@
       "name":"Pacenote 93",
       "notes":{
         "english":{
-          "_out":"five left minus long? 400.",
+          "_out":{
+            "freeform":"five left minus long? four hundred.",
+            "structured":{}
+          },
           "after":"400",
           "before":"",
-          "note":"five left minus long?"
+          "note":{
+            "freeform":"five left minus long?",
+            "structured":{}
+          }
         }
       },
       "oldId":387,
@@ -6242,6 +8180,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6252,10 +8205,16 @@
       "name":"Pacenote 94",
       "notes":{
         "english":{
-          "_out":"five right long opens? 450.",
+          "_out":{
+            "freeform":"five right long opens? four fifty.",
+            "structured":{}
+          },
           "after":"450",
           "before":"",
-          "note":"five right long opens?"
+          "note":{
+            "freeform":"five right long opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":391,
@@ -6309,6 +8268,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6319,10 +8293,16 @@
       "name":"Pacenote 95",
       "notes":{
         "english":{
-          "_out":"five left opens? 450.",
+          "_out":{
+            "freeform":"five left opens? four fifty.",
+            "structured":{}
+          },
           "after":"450",
           "before":"",
-          "note":"five left opens?"
+          "note":{
+            "freeform":"five left opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":395,
@@ -6376,6 +8356,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6386,10 +8381,16 @@
       "name":"Pacenote 96",
       "notes":{
         "english":{
-          "_out":"one right long?",
+          "_out":{
+            "freeform":"one right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"one right long?"
+          "note":{
+            "freeform":"one right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":399,
@@ -6443,6 +8444,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6453,10 +8469,16 @@
       "name":"Pacenote 97",
       "notes":{
         "english":{
-          "_out":"and six left? 50.",
+          "_out":{
+            "freeform":"and six left? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":403,
@@ -6510,6 +8532,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6520,10 +8557,16 @@
       "name":"Pacenote 98",
       "notes":{
         "english":{
-          "_out":"four left long?",
+          "_out":{
+            "freeform":"four left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left long?"
+          "note":{
+            "freeform":"four left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":407,
@@ -6577,6 +8620,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6587,10 +8645,16 @@
       "name":"Pacenote 99",
       "notes":{
         "english":{
-          "_out":"into four right opens?",
+          "_out":{
+            "freeform":"into four right opens?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"four right opens?"
+          "note":{
+            "freeform":"four right opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":411,
@@ -6644,6 +8708,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6654,10 +8733,16 @@
       "name":"Pacenote 100",
       "notes":{
         "english":{
-          "_out":"and two left minus?",
+          "_out":{
+            "freeform":"and two left minus?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"two left minus?"
+          "note":{
+            "freeform":"two left minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":415,
@@ -6683,7 +8768,7 @@
           "normal":[
             0.7741836092,
             0.6252339055,
-            0.09860173709
+            0.0986017371
           ],
           "oldId":417,
           "pos":[
@@ -6711,6 +8796,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6721,10 +8821,16 @@
       "name":"Pacenote 101",
       "notes":{
         "english":{
-          "_out":"and four right?",
+          "_out":{
+            "freeform":"and four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":419,
@@ -6778,6 +8884,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6788,10 +8909,16 @@
       "name":"Pacenote 102",
       "notes":{
         "english":{
-          "_out":"and six right minus?",
+          "_out":{
+            "freeform":"and six right minus?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six right minus?"
+          "note":{
+            "freeform":"six right minus?",
+            "structured":{}
+          }
         }
       },
       "oldId":423,
@@ -6845,6 +8972,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6855,10 +8997,16 @@
       "name":"Pacenote 103",
       "notes":{
         "english":{
-          "_out":"and six left?",
+          "_out":{
+            "freeform":"and six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":427,
@@ -6912,6 +9060,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6922,10 +9085,16 @@
       "name":"Pacenote 104",
       "notes":{
         "english":{
-          "_out":"into five right over crest into six left? 300.",
+          "_out":{
+            "freeform":"into five right over crest into six left? three hundred.",
+            "structured":{}
+          },
           "after":"300",
           "before":"into",
-          "note":"five right over crest into six left?"
+          "note":{
+            "freeform":"five right over crest into six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":431,
@@ -6979,6 +9148,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -6989,10 +9173,16 @@
       "name":"Pacenote 105",
       "notes":{
         "english":{
-          "_out":"five left long? 50.",
+          "_out":{
+            "freeform":"five left long? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"five left long?"
+          "note":{
+            "freeform":"five left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":435,
@@ -7046,6 +9236,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7056,10 +9261,16 @@
       "name":"Pacenote 106",
       "notes":{
         "english":{
-          "_out":"six right into six left? 250.",
+          "_out":{
+            "freeform":"six right into six left? two fifty.",
+            "structured":{}
+          },
           "after":"250",
           "before":"",
-          "note":"six right into six left?"
+          "note":{
+            "freeform":"six right into six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":439,
@@ -7113,6 +9324,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7123,10 +9349,16 @@
       "name":"Pacenote 107",
       "notes":{
         "english":{
-          "_out":"brake, right entry one left long?",
+          "_out":{
+            "freeform":"brake, right entry one left long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake, right entry one left long?"
+          "note":{
+            "freeform":"brake, right entry one left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":443,
@@ -7180,6 +9412,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7190,10 +9437,16 @@
       "name":"Pacenote 108",
       "notes":{
         "english":{
-          "_out":"and six right into six left? 150.",
+          "_out":{
+            "freeform":"and six right into six left? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"and",
-          "note":"six right into six left?"
+          "note":{
+            "freeform":"six right into six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":447,
@@ -7247,6 +9500,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7257,10 +9525,16 @@
       "name":"Pacenote 109",
       "notes":{
         "english":{
-          "_out":"six right long?",
+          "_out":{
+            "freeform":"six right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six right long?"
+          "note":{
+            "freeform":"six right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":451,
@@ -7314,6 +9588,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7324,10 +9613,16 @@
       "name":"Pacenote 110",
       "notes":{
         "english":{
-          "_out":"into one right long?",
+          "_out":{
+            "freeform":"into one right long?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"one right long?"
+          "note":{
+            "freeform":"one right long?",
+            "structured":{}
+          }
         }
       },
       "oldId":455,
@@ -7381,6 +9676,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7391,10 +9701,16 @@
       "name":"Pacenote 111",
       "notes":{
         "english":{
-          "_out":"and six left tightens long, over finish?",
+          "_out":{
+            "freeform":"and six left tightens long, over finish?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left tightens long, over finish?"
+          "note":{
+            "freeform":"six left tightens long, over finish?",
+            "structured":{}
+          }
         }
       },
       "oldId":459,
@@ -7448,6 +9764,21 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -7458,10 +9789,16 @@
       "name":"Pacenote 112",
       "notes":{
         "english":{
-          "_out":"wow...we sure are high.",
+          "_out":{
+            "freeform":"wow...we sure are high.",
+            "structured":{}
+          },
           "after":"",
           "before":"#",
-          "note":"wow...we sure are high."
+          "note":{
+            "freeform":"wow...we sure are high.",
+            "structured":{}
+          }
         }
       },
       "oldId":463,
@@ -7515,8 +9852,25 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     }
   ],
-  "updated_at":1697525376
+  "updated_at":1697525376,
+  "useStructuredNotes":false,
+  "version":"3"
 }

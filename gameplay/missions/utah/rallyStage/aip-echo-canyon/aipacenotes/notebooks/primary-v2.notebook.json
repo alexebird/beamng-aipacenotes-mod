@@ -10,9 +10,12 @@
   ],
   "created_at":1706436134,
   "description":"created using aipacenotes voice transcription.",
+  "forceManualATs":false,
   "name":"v2",
   "pacenotes":[
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gwiyh176.wav",
@@ -21,10 +24,16 @@
       "name":"Pacenote 1",
       "notes":{
         "english":{
-          "_out":"start thirty. six right into slight left over crest?",
+          "_out":{
+            "freeform":"start thirty. six right into slight left over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"start thirty. six right into slight left over crest?"
+          "note":{
+            "freeform":"start thirty. six right into slight left over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":19,
@@ -78,9 +87,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_j9rihkxq.wav",
@@ -89,10 +115,16 @@
       "name":"Pacenote 2",
       "notes":{
         "english":{
-          "_out":"and four right narrows over bridge?",
+          "_out":{
+            "freeform":"and four right narrows over bridge?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four right narrows over bridge?"
+          "note":{
+            "freeform":"four right narrows over bridge?",
+            "structured":{}
+          }
         }
       },
       "oldId":23,
@@ -146,9 +178,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_6diu9kpw.wav",
@@ -157,10 +206,16 @@
       "name":"Pacenote 3",
       "notes":{
         "english":{
-          "_out":"into five right over crest?",
+          "_out":{
+            "freeform":"into five right over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five right over crest?"
+          "note":{
+            "freeform":"five right over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":27,
@@ -214,9 +269,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_t5yf6t35.wav",
@@ -225,10 +297,16 @@
       "name":"Pacenote 4",
       "notes":{
         "english":{
-          "_out":"and five left into crest?",
+          "_out":{
+            "freeform":"and five left into crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left into crest?"
+          "note":{
+            "freeform":"five left into crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":31,
@@ -282,9 +360,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_w5sn7ca5.wav",
@@ -293,10 +388,16 @@
       "name":"Pacenote 5",
       "notes":{
         "english":{
-          "_out":"into five right over crest keep in, bump?",
+          "_out":{
+            "freeform":"into five right over crest keep in, bump?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five right over crest keep in, bump?"
+          "note":{
+            "freeform":"five right over crest keep in, bump?",
+            "structured":{}
+          }
         }
       },
       "oldId":35,
@@ -350,9 +451,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hhix5htz.wav",
@@ -361,10 +479,16 @@
       "name":"Pacenote 6",
       "notes":{
         "english":{
-          "_out":"into five left tightens cut?",
+          "_out":{
+            "freeform":"into five left tightens cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left tightens cut?"
+          "note":{
+            "freeform":"five left tightens cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":39,
@@ -418,9 +542,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_vvu1u2cl.wav",
@@ -429,10 +570,16 @@
       "name":"Pacenote 7",
       "notes":{
         "english":{
-          "_out":"and four right cut?",
+          "_out":{
+            "freeform":"and four right cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four right cut?"
+          "note":{
+            "freeform":"four right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":43,
@@ -486,9 +633,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_5cq0i7a6.wav",
@@ -497,10 +661,16 @@
       "name":"Pacenote 8",
       "notes":{
         "english":{
-          "_out":"into six left cut?",
+          "_out":{
+            "freeform":"into six left cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six left cut?"
+          "note":{
+            "freeform":"six left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":47,
@@ -554,9 +724,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_rkf5opz1.wav",
@@ -565,10 +752,16 @@
       "name":"Pacenote 9",
       "notes":{
         "english":{
-          "_out":"into five right cut?",
+          "_out":{
+            "freeform":"into five right cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five right cut?"
+          "note":{
+            "freeform":"five right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":51,
@@ -622,9 +815,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_nqfe4uok.wav",
@@ -633,10 +843,16 @@
       "name":"Pacenote 10",
       "notes":{
         "english":{
-          "_out":"into four left tightens cut?",
+          "_out":{
+            "freeform":"into four left tightens cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"four left tightens cut?"
+          "note":{
+            "freeform":"four left tightens cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":55,
@@ -690,9 +906,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_atml9iud.wav",
@@ -701,10 +934,16 @@
       "name":"Pacenote 11",
       "notes":{
         "english":{
-          "_out":"and two right long big cut?",
+          "_out":{
+            "freeform":"and two right long big cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"two right long big cut?"
+          "note":{
+            "freeform":"two right long big cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":59,
@@ -758,9 +997,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__6edx2xa.wav",
@@ -769,10 +1025,16 @@
       "name":"Pacenote 12",
       "notes":{
         "english":{
-          "_out":"and three left cut? eighty.",
+          "_out":{
+            "freeform":"and three left cut? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"and",
-          "note":"three left cut?"
+          "note":{
+            "freeform":"three left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":63,
@@ -826,9 +1088,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1vqsuyej.wav",
@@ -837,10 +1116,16 @@
       "name":"Pacenote 13",
       "notes":{
         "english":{
-          "_out":"five left, brake over crest, tightens cut?",
+          "_out":{
+            "freeform":"five left, brake over crest, tightens cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five left, brake over crest, tightens cut?"
+          "note":{
+            "freeform":"five left, brake over crest, tightens cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":67,
@@ -894,9 +1179,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_xhvh4k8r.wav",
@@ -905,10 +1207,16 @@
       "name":"Pacenote 14",
       "notes":{
         "english":{
-          "_out":"into two right big cut?",
+          "_out":{
+            "freeform":"into two right big cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"two right big cut?"
+          "note":{
+            "freeform":"two right big cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":71,
@@ -962,9 +1270,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_r6t5uuz3.wav",
@@ -973,10 +1298,16 @@
       "name":"Pacenote 15",
       "notes":{
         "english":{
-          "_out":"into four left cut? forty.",
+          "_out":{
+            "freeform":"into four left cut? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"into",
-          "note":"four left cut?"
+          "note":{
+            "freeform":"four left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":75,
@@ -1030,9 +1361,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_y0hy5ecw.wav",
@@ -1041,10 +1389,16 @@
       "name":"Pacenote 16",
       "notes":{
         "english":{
-          "_out":"crest into six left cut?",
+          "_out":{
+            "freeform":"crest into six left cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"crest into six left cut?"
+          "note":{
+            "freeform":"crest into six left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":79,
@@ -1098,9 +1452,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_81_c6f7w.wav",
@@ -1109,10 +1480,16 @@
       "name":"Pacenote 17",
       "notes":{
         "english":{
-          "_out":"into four right cut? fifty.",
+          "_out":{
+            "freeform":"into four right cut? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"four right cut?"
+          "note":{
+            "freeform":"four right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":83,
@@ -1166,9 +1543,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hajdbaww.wav",
@@ -1177,10 +1571,16 @@
       "name":"Pacenote 18",
       "notes":{
         "english":{
-          "_out":"slight left into four right cut?",
+          "_out":{
+            "freeform":"slight left into four right cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"slight left into four right cut?"
+          "note":{
+            "freeform":"slight left into four right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":87,
@@ -1234,9 +1634,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_oh_lcqof.wav",
@@ -1245,10 +1662,16 @@
       "name":"Pacenote 19",
       "notes":{
         "english":{
-          "_out":"into long four left, slight tightens late?",
+          "_out":{
+            "freeform":"into long four left, slight tightens late?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"long four left, slight tightens late?"
+          "note":{
+            "freeform":"long four left, slight tightens late?",
+            "structured":{}
+          }
         }
       },
       "oldId":91,
@@ -1302,9 +1725,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_znp4a6ch.wav",
@@ -1313,10 +1753,16 @@
       "name":"Pacenote 20",
       "notes":{
         "english":{
-          "_out":"into early three right cut? sixty.",
+          "_out":{
+            "freeform":"into early three right cut? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"into",
-          "note":"early three right cut?"
+          "note":{
+            "freeform":"early three right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":95,
@@ -1370,9 +1816,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ii9zpfhk.wav",
@@ -1381,10 +1844,16 @@
       "name":"Pacenote 21",
       "notes":{
         "english":{
-          "_out":"short five right nip?",
+          "_out":{
+            "freeform":"short five right nip?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"short five right nip?"
+          "note":{
+            "freeform":"short five right nip?",
+            "structured":{}
+          }
         }
       },
       "oldId":99,
@@ -1438,9 +1907,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_w9e3ency.wav",
@@ -1449,10 +1935,16 @@
       "name":"Pacenote 22",
       "notes":{
         "english":{
-          "_out":"and five left cut, care rock exit? fifty.",
+          "_out":{
+            "freeform":"and five left cut, care rock exit? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"five left cut, care rock exit?"
+          "note":{
+            "freeform":"five left cut, care rock exit?",
+            "structured":{}
+          }
         }
       },
       "oldId":103,
@@ -1506,9 +1998,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_jgiqbzxm.wav",
@@ -1517,10 +2026,16 @@
       "name":"Pacenote 23",
       "notes":{
         "english":{
-          "_out":"slowing, four left cut, into two right big cut? forty.",
+          "_out":{
+            "freeform":"slowing, four left cut, into two right big cut? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"",
-          "note":"slowing, four left cut, into two right big cut?"
+          "note":{
+            "freeform":"slowing, four left cut, into two right big cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":107,
@@ -1562,7 +2077,7 @@
           "normal":[
             0.7970374659,
             -0.603876335,
-            0.00804051331
+            0.008040513311
           ],
           "oldId":110,
           "pos":[
@@ -1574,9 +2089,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_5jt1rxdv.wav",
@@ -1585,10 +2117,16 @@
       "name":"Pacenote 24",
       "notes":{
         "english":{
-          "_out":"short five right over crest?",
+          "_out":{
+            "freeform":"short five right over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"short five right over crest?"
+          "note":{
+            "freeform":"short five right over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":111,
@@ -1642,9 +2180,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_3e40vng3.wav",
@@ -1653,10 +2208,16 @@
       "name":"Pacenote 25",
       "notes":{
         "english":{
-          "_out":"into slight left, double caution cliff?",
+          "_out":{
+            "freeform":"into slight left, double caution cliff?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"slight left, double caution cliff?"
+          "note":{
+            "freeform":"slight left, double caution cliff?",
+            "structured":{}
+          }
         }
       },
       "oldId":115,
@@ -1710,9 +2271,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_6nt74qm0.wav",
@@ -1721,10 +2299,16 @@
       "name":"Pacenote 26",
       "notes":{
         "english":{
-          "_out":"into one left?",
+          "_out":{
+            "freeform":"into one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"one left?"
+          "note":{
+            "freeform":"one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":119,
@@ -1778,9 +2362,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_tj5y81fn.wav",
@@ -1789,10 +2390,16 @@
       "name":"Pacenote 27",
       "notes":{
         "english":{
-          "_out":"and two left long, tightens cut?",
+          "_out":{
+            "freeform":"and two left long, tightens cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"two left long, tightens cut?"
+          "note":{
+            "freeform":"two left long, tightens cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":123,
@@ -1846,9 +2453,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ckrc1g_y.wav",
@@ -1857,10 +2481,16 @@
       "name":"Pacenote 28",
       "notes":{
         "english":{
-          "_out":"into three right big cut?",
+          "_out":{
+            "freeform":"into three right big cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"three right big cut?"
+          "note":{
+            "freeform":"three right big cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":127,
@@ -1914,9 +2544,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_vtjm28nc.wav",
@@ -1925,10 +2572,16 @@
       "name":"Pacenote 29",
       "notes":{
         "english":{
-          "_out":"into two left cut? forty.",
+          "_out":{
+            "freeform":"into two left cut? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"into",
-          "note":"two left cut?"
+          "note":{
+            "freeform":"two left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":131,
@@ -1982,9 +2635,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_y15p6vkc.wav",
@@ -1993,10 +2663,16 @@
       "name":"Pacenote 30",
       "notes":{
         "english":{
-          "_out":"three right long opens nip? seventy.",
+          "_out":{
+            "freeform":"three right long opens nip? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"three right long opens nip?"
+          "note":{
+            "freeform":"three right long opens nip?",
+            "structured":{}
+          }
         }
       },
       "oldId":135,
@@ -2050,9 +2726,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_mbb3tgbo.wav",
@@ -2061,10 +2754,16 @@
       "name":"Pacenote 31",
       "notes":{
         "english":{
-          "_out":"six left nip?",
+          "_out":{
+            "freeform":"six left nip?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six left nip?"
+          "note":{
+            "freeform":"six left nip?",
+            "structured":{}
+          }
         }
       },
       "oldId":139,
@@ -2118,9 +2817,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8gpf810v.wav",
@@ -2129,10 +2845,16 @@
       "name":"Pacenote 32",
       "notes":{
         "english":{
-          "_out":"into six right cut?",
+          "_out":{
+            "freeform":"into six right cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"six right cut?"
+          "note":{
+            "freeform":"six right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":143,
@@ -2186,9 +2908,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_abh0sc8n.wav",
@@ -2197,10 +2936,16 @@
       "name":"Pacenote 33",
       "notes":{
         "english":{
-          "_out":"into bump?",
+          "_out":{
+            "freeform":"into bump?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"bump?"
+          "note":{
+            "freeform":"bump?",
+            "structured":{}
+          }
         }
       },
       "oldId":147,
@@ -2254,9 +2999,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_q4tb3qsu.wav",
@@ -2265,10 +3027,16 @@
       "name":"Pacenote 34",
       "notes":{
         "english":{
-          "_out":"and small jump, send it?",
+          "_out":{
+            "freeform":"and small jump, send it?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"small jump, send it?"
+          "note":{
+            "freeform":"small jump, send it?",
+            "structured":{}
+          }
         }
       },
       "oldId":151,
@@ -2322,9 +3090,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kxxr8v0w.wav",
@@ -2333,10 +3118,16 @@
       "name":"Pacenote 35",
       "notes":{
         "english":{
-          "_out":"and slight right?",
+          "_out":{
+            "freeform":"and slight right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"slight right?"
+          "note":{
+            "freeform":"slight right?",
+            "structured":{}
+          }
         }
       },
       "oldId":155,
@@ -2390,9 +3181,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_8eh_wn0t.wav",
@@ -2401,10 +3209,16 @@
       "name":"Pacenote 36",
       "notes":{
         "english":{
-          "_out":"and six left cut? seventy.",
+          "_out":{
+            "freeform":"and six left cut? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"and",
-          "note":"six left cut?"
+          "note":{
+            "freeform":"six left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":159,
@@ -2458,9 +3272,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_v4n6euwe.wav",
@@ -2469,10 +3300,16 @@
       "name":"Pacenote 37",
       "notes":{
         "english":{
-          "_out":"brake over crest?",
+          "_out":{
+            "freeform":"brake over crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake over crest?"
+          "note":{
+            "freeform":"brake over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":163,
@@ -2526,9 +3363,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_x9ql10eg.wav",
@@ -2537,10 +3391,16 @@
       "name":"Pacenote 38",
       "notes":{
         "english":{
-          "_out":"and very late three right cut? fifty.",
+          "_out":{
+            "freeform":"and very late three right cut? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"very late three right cut?"
+          "note":{
+            "freeform":"very late three right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":167,
@@ -2594,9 +3454,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ptcx9k64.wav",
@@ -2605,10 +3482,16 @@
       "name":"Pacenote 39",
       "notes":{
         "english":{
-          "_out":"crest into sudden five left down hill big cut?",
+          "_out":{
+            "freeform":"crest into sudden five left down hill big cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"crest into sudden five left down hill big cut?"
+          "note":{
+            "freeform":"crest into sudden five left down hill big cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":171,
@@ -2662,9 +3545,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_hb1dhx5_.wav",
@@ -2673,10 +3573,16 @@
       "name":"Pacenote 40",
       "notes":{
         "english":{
-          "_out":"into short five right cut? brake? ninety.",
+          "_out":{
+            "freeform":"into short five right cut? brake? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"into",
-          "note":"short five right cut? brake?"
+          "note":{
+            "freeform":"short five right cut? brake?",
+            "structured":{}
+          }
         }
       },
       "oldId":175,
@@ -2730,9 +3636,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_em85j456.wav",
@@ -2741,10 +3664,16 @@
       "name":"Pacenote 42",
       "notes":{
         "english":{
-          "_out":"long one right slight cut, rocks inside?",
+          "_out":{
+            "freeform":"long one right slight cut, rocks inside?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"long 1 right slight cut, rocks inside?"
+          "note":{
+            "freeform":"long 1 right slight cut, rocks inside?",
+            "structured":{}
+          }
         }
       },
       "oldId":179,
@@ -2798,9 +3727,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_e036qcne.wav",
@@ -2809,10 +3755,16 @@
       "name":"Pacenote 43",
       "notes":{
         "english":{
-          "_out":"into one left cut?",
+          "_out":{
+            "freeform":"into one left cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"one left cut?"
+          "note":{
+            "freeform":"one left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":183,
@@ -2866,9 +3818,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_ceqi1uic.wav",
@@ -2877,10 +3846,16 @@
       "name":"Pacenote 44",
       "notes":{
         "english":{
-          "_out":"and short five right cut? forty.",
+          "_out":{
+            "freeform":"and short five right cut? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"and",
-          "note":"short five right cut?"
+          "note":{
+            "freeform":"short five right cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":187,
@@ -2934,9 +3909,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__em_vwm3.wav",
@@ -2945,10 +3937,16 @@
       "name":"Pacenote 45",
       "notes":{
         "english":{
-          "_out":"five right tightens cut?",
+          "_out":{
+            "freeform":"five right tightens cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five right tightens cut?"
+          "note":{
+            "freeform":"five right tightens cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":191,
@@ -3002,9 +4000,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_swuam474.wav",
@@ -3013,10 +4028,16 @@
       "name":"Pacenote 46",
       "notes":{
         "english":{
-          "_out":"and two left long cut? opens over crest? fifty.",
+          "_out":{
+            "freeform":"and two left long cut? opens over crest? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"and",
-          "note":"two left long cut? opens over crest?"
+          "note":{
+            "freeform":"two left long cut? opens over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":195,
@@ -3070,9 +4091,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_rzl0zr__.wav",
@@ -3081,10 +4119,16 @@
       "name":"Pacenote 47",
       "notes":{
         "english":{
-          "_out":"send it over small jump? and bump? forty.",
+          "_out":{
+            "freeform":"send it over small jump? and bump? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"",
-          "note":"send it over small jump? and bump?"
+          "note":{
+            "freeform":"send it over small jump? and bump?",
+            "structured":{}
+          }
         }
       },
       "oldId":199,
@@ -3138,9 +4182,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_kojn_hej.wav",
@@ -3149,10 +4210,16 @@
       "name":"Pacenote 49",
       "notes":{
         "english":{
-          "_out":"into five left plus nip? narrows over bridge? ninety.",
+          "_out":{
+            "freeform":"into five left plus nip? narrows over bridge? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"",
-          "note":"into five left plus nip? narrows over bridge?"
+          "note":{
+            "freeform":"into five left plus nip? narrows over bridge?",
+            "structured":{}
+          }
         }
       },
       "oldId":203,
@@ -3206,9 +4273,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_jpb7lt39.wav",
@@ -3217,10 +4301,16 @@
       "name":"Pacenote 50",
       "notes":{
         "english":{
-          "_out":"send it over big jump, keep left?",
+          "_out":{
+            "freeform":"send it over big jump, keep left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"send it over big jump, keep left?"
+          "note":{
+            "freeform":"send it over big jump, keep left?",
+            "structured":{}
+          }
         }
       },
       "oldId":207,
@@ -3274,9 +4364,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_k7pebi9k.wav",
@@ -3285,10 +4392,16 @@
       "name":"Pacenote 51",
       "notes":{
         "english":{
-          "_out":"into six left? slowing? ninety.",
+          "_out":{
+            "freeform":"into six left? slowing? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"into",
-          "note":"six left? slowing?"
+          "note":{
+            "freeform":"six left? slowing?",
+            "structured":{}
+          }
         }
       },
       "oldId":211,
@@ -3342,9 +4455,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out__09vffxz.wav",
@@ -3353,10 +4483,16 @@
       "name":"Pacenote 52",
       "notes":{
         "english":{
-          "_out":"brake five right down hill?",
+          "_out":{
+            "freeform":"brake five right down hill?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"brake five right down hill?"
+          "note":{
+            "freeform":"brake five right down hill?",
+            "structured":{}
+          }
         }
       },
       "oldId":215,
@@ -3410,9 +4546,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_s0p462pj.wav",
@@ -3421,10 +4574,16 @@
       "name":"Pacenote 53",
       "notes":{
         "english":{
-          "_out":"into four left cut?",
+          "_out":{
+            "freeform":"into four left cut?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"four left cut?"
+          "note":{
+            "freeform":"four left cut?",
+            "structured":{}
+          }
         }
       },
       "oldId":219,
@@ -3478,9 +4637,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_qk12x93u.wav",
@@ -3489,10 +4665,16 @@
       "name":"Pacenote 54",
       "notes":{
         "english":{
-          "_out":"into square right opens? nip stop sign?",
+          "_out":{
+            "freeform":"into square right opens? nip stop sign?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"square right opens? nip stop sign?"
+          "note":{
+            "freeform":"square right opens? nip stop sign?",
+            "structured":{}
+          }
         }
       },
       "oldId":223,
@@ -3546,9 +4728,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_64rl56kx.wav",
@@ -3557,10 +4756,16 @@
       "name":"Pacenote 55",
       "notes":{
         "english":{
-          "_out":"and late six left long? ninety.",
+          "_out":{
+            "freeform":"and late six left long? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"and",
-          "note":"late six left long?"
+          "note":{
+            "freeform":"late six left long?",
+            "structured":{}
+          }
         }
       },
       "oldId":227,
@@ -3614,9 +4819,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_1j60jesp.wav",
@@ -3625,10 +4847,16 @@
       "name":"Pacenote 56",
       "notes":{
         "english":{
-          "_out":"long five right opens keep in? one fifty.",
+          "_out":{
+            "freeform":"long five right opens keep in? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"",
-          "note":"long five right opens keep in?"
+          "note":{
+            "freeform":"long five right opens keep in?",
+            "structured":{}
+          }
         }
       },
       "oldId":231,
@@ -3682,9 +4910,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_3gh9038n.wav",
@@ -3693,10 +4938,16 @@
       "name":"Pacenote 57",
       "notes":{
         "english":{
-          "_out":"six left plus? four hundred.",
+          "_out":{
+            "freeform":"six left plus? four hundred.",
+            "structured":{}
+          },
           "after":"400",
           "before":"",
-          "note":"six left plus?"
+          "note":{
+            "freeform":"six left plus?",
+            "structured":{}
+          }
         }
       },
       "oldId":235,
@@ -3750,9 +5001,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_l0m1nbb7.wav",
@@ -3761,10 +5029,16 @@
       "name":"Pacenote 59",
       "notes":{
         "english":{
-          "_out":"six left? fifty.",
+          "_out":{
+            "freeform":"six left? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":239,
@@ -3818,9 +5092,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_71gg80ho.wav",
@@ -3829,10 +5120,16 @@
       "name":"Pacenote 60",
       "notes":{
         "english":{
-          "_out":"five right minus over crest, tightens? seventy.",
+          "_out":{
+            "freeform":"five right minus over crest, tightens? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"five right minus over crest, tightens?"
+          "note":{
+            "freeform":"five right minus over crest, tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":243,
@@ -3886,9 +5183,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_q87hoogw.wav",
@@ -3897,10 +5211,16 @@
       "name":"Pacenote 61",
       "notes":{
         "english":{
-          "_out":"two right, nip stop sign?",
+          "_out":{
+            "freeform":"two right, nip stop sign?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"two right, nip stop sign?"
+          "note":{
+            "freeform":"two right, nip stop sign?",
+            "structured":{}
+          }
         }
       },
       "oldId":247,
@@ -3954,9 +5274,26 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
+      "audioTriggerType":"auto",
+      "codriverWait":"none",
       "isolate":false,
       "metadata":{
         "beamng_file":"/temp/aipacenotes/out_gvq8fi20.wav",
@@ -3965,10 +5302,16 @@
       "name":"Pacenote 62",
       "notes":{
         "english":{
-          "_out":"and six left over finish? into long four right.",
+          "_out":{
+            "freeform":"and six left over finish? into long four right.",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left over finish? into long 4 right."
+          "note":{
+            "freeform":"six left over finish? into long 4 right.",
+            "structured":{}
+          }
         }
       },
       "oldId":251,
@@ -4022,8 +5365,25 @@
           "waypointType":"fwdAudioTrigger"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     }
   ],
-  "updated_at":1706436134
+  "updated_at":1706436134,
+  "useStructuredNotes":false,
+  "version":"3"
 }

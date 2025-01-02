@@ -5,6 +5,7 @@
 1. Make a .zip file:
 
 ```
+export BIRD='/c/Users/Alex Bird/beamng/'
 git tag vX.Y.Z
 git push
 git push --tag

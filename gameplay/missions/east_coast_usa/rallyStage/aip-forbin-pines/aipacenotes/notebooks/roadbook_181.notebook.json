@@ -6,12 +6,6 @@
       "name":"Sophia",
       "oldId":18,
       "voice":"british_female"
-    },
-    {
-      "language":"english",
-      "name":"Pria",
-      "oldId":19,
-      "voice":"indian female"
     }
   ],
   "created_at":1711073032,
@@ -27,10 +21,16 @@
       "name":"Import_A 1",
       "notes":{
         "english":{
-          "_out":"small crest, five left bumpy exit? seventy.",
+          "_out":{
+            "freeform":"small crest, five left bumpy exit? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"small crest, five left bumpy exit?"
+          "note":{
+            "freeform":"small crest, five left bumpy exit?",
+            "structured":{}
+          }
         }
       },
       "oldId":20,
@@ -84,6 +84,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -94,10 +109,16 @@
       "name":"Import_A 2",
       "notes":{
         "english":{
-          "_out":"small jump dont?",
+          "_out":{
+            "freeform":"small jump dont?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"small jump dont?"
+          "note":{
+            "freeform":"small jump dont?",
+            "structured":{}
+          }
         }
       },
       "oldId":24,
@@ -151,6 +172,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -161,10 +197,16 @@
       "name":"Import_A 3",
       "notes":{
         "english":{
-          "_out":"into five left?",
+          "_out":{
+            "freeform":"into five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":28,
@@ -218,6 +260,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -228,10 +285,16 @@
       "name":"Import_A 4",
       "notes":{
         "english":{
-          "_out":"into five right opens? bumpy?",
+          "_out":{
+            "freeform":"into five right opens? bumpy?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"five right opens? bumpy?"
+          "note":{
+            "freeform":"five right opens? bumpy?",
+            "structured":{}
+          }
         }
       },
       "oldId":32,
@@ -285,6 +348,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -295,10 +373,16 @@
       "name":"Import_A 5",
       "notes":{
         "english":{
-          "_out":"and send it over jump? bumpy over ninety?",
+          "_out":{
+            "freeform":"and send it over jump? bumpy over ninety?",
+            "structured":{}
+          },
           "after":"90",
           "before":"and",
-          "note":"send it over jump? bumpy over {dt}?"
+          "note":{
+            "freeform":"send it over jump? bumpy over {dt}?",
+            "structured":{}
+          }
         }
       },
       "oldId":36,
@@ -352,6 +436,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -362,10 +461,16 @@
       "name":"Import_A 6",
       "notes":{
         "english":{
-          "_out":"full send over jump? bumpy Landing? ninety.",
+          "_out":{
+            "freeform":"full send over jump? bumpy Landing? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"",
-          "note":"full send over jump? bumpy Landing?"
+          "note":{
+            "freeform":"full send over jump? bumpy Landing?",
+            "structured":{}
+          }
         }
       },
       "oldId":40,
@@ -419,6 +524,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -429,10 +549,16 @@
       "name":"Import_A 7",
       "notes":{
         "english":{
-          "_out":"five left?",
+          "_out":{
+            "freeform":"five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":44,
@@ -486,6 +612,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -496,10 +637,16 @@
       "name":"Import_A 8",
       "notes":{
         "english":{
-          "_out":"into crest into six right? fifty.",
+          "_out":{
+            "freeform":"into crest into six right? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"into",
-          "note":"Crest into six right?"
+          "note":{
+            "freeform":"Crest into six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":48,
@@ -553,6 +700,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -563,10 +725,16 @@
       "name":"Import_A 9",
       "notes":{
         "english":{
-          "_out":"four left?",
+          "_out":{
+            "freeform":"four left?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"four left?"
+          "note":{
+            "freeform":"four left?",
+            "structured":{}
+          }
         }
       },
       "oldId":52,
@@ -620,6 +788,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -630,10 +813,16 @@
       "name":"Import_A 10",
       "notes":{
         "english":{
-          "_out":"into crest down hill five left opens?",
+          "_out":{
+            "freeform":"into crest down hill five left opens?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"Crest downhill five left opens?"
+          "note":{
+            "freeform":"Crest downhill five left opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":56,
@@ -687,6 +876,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -697,10 +901,16 @@
       "name":"Import_A 11",
       "notes":{
         "english":{
-          "_out":"into slight right?",
+          "_out":{
+            "freeform":"into slight right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"slight right?"
+          "note":{
+            "freeform":"slight right?",
+            "structured":{}
+          }
         }
       },
       "oldId":60,
@@ -754,6 +964,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -764,10 +989,16 @@
       "name":"Import_A 12",
       "notes":{
         "english":{
-          "_out":"and five right over small crest? two hundred.",
+          "_out":{
+            "freeform":"and five right over small crest? two hundred.",
+            "structured":{}
+          },
           "after":"200",
           "before":"and",
-          "note":"five right over small crest?"
+          "note":{
+            "freeform":"five right over small crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":64,
@@ -821,6 +1052,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -831,10 +1077,16 @@
       "name":"Import_A 13",
       "notes":{
         "english":{
-          "_out":"brake at big left tree?",
+          "_out":{
+            "freeform":"brake at big left tree?",
+            "structured":{}
+          },
           "after":"<none>",
           "before":"<none>",
-          "note":"brake at big left tree?"
+          "note":{
+            "freeform":"brake at big left tree?",
+            "structured":{}
+          }
         }
       },
       "oldId":68,
@@ -888,6 +1140,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -898,10 +1165,16 @@
       "name":"Import_A 14",
       "notes":{
         "english":{
-          "_out":"caution three left dont? rocks inside?",
+          "_out":{
+            "freeform":"caution three left dont? rocks inside?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"caution three left dont? rocks inside?"
+          "note":{
+            "freeform":"caution three left dont? rocks inside?",
+            "structured":{}
+          }
         }
       },
       "oldId":72,
@@ -955,6 +1228,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -965,10 +1253,16 @@
       "name":"Import_A 15",
       "notes":{
         "english":{
-          "_out":"into three right?",
+          "_out":{
+            "freeform":"into three right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"three right?"
+          "note":{
+            "freeform":"three right?",
+            "structured":{}
+          }
         }
       },
       "oldId":76,
@@ -1022,6 +1316,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1032,10 +1341,16 @@
       "name":"Import_A 16",
       "notes":{
         "english":{
-          "_out":"into one right dont? onto tarmac?",
+          "_out":{
+            "freeform":"into one right dont? onto tarmac?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"one right dont? onto tarmac?"
+          "note":{
+            "freeform":"one right dont? onto tarmac?",
+            "structured":{}
+          }
         }
       },
       "oldId":80,
@@ -1089,6 +1404,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1099,10 +1429,16 @@
       "name":"Import_A 17",
       "notes":{
         "english":{
-          "_out":"and one right maybe?",
+          "_out":{
+            "freeform":"and one right maybe?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"one right maybe?"
+          "note":{
+            "freeform":"one right maybe?",
+            "structured":{}
+          }
         }
       },
       "oldId":84,
@@ -1156,6 +1492,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1166,10 +1517,16 @@
       "name":"Import_A 18",
       "notes":{
         "english":{
-          "_out":"into one left?",
+          "_out":{
+            "freeform":"into one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"one left?"
+          "note":{
+            "freeform":"one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":88,
@@ -1223,6 +1580,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1233,10 +1605,16 @@
       "name":"Import_A 19",
       "notes":{
         "english":{
-          "_out":"into slight right?",
+          "_out":{
+            "freeform":"into slight right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"slight right?"
+          "note":{
+            "freeform":"slight right?",
+            "structured":{}
+          }
         }
       },
       "oldId":92,
@@ -1290,6 +1668,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1300,10 +1693,16 @@
       "name":"Import_A 20",
       "notes":{
         "english":{
-          "_out":"into two left opens?",
+          "_out":{
+            "freeform":"into two left opens?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"two left opens?"
+          "note":{
+            "freeform":"two left opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":96,
@@ -1357,6 +1756,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1367,10 +1781,16 @@
       "name":"Import_A 21",
       "notes":{
         "english":{
-          "_out":"and four right?",
+          "_out":{
+            "freeform":"and four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"four right?"
+          "note":{
+            "freeform":"four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":100,
@@ -1424,6 +1844,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1434,10 +1869,16 @@
       "name":"Import_A 22",
       "notes":{
         "english":{
-          "_out":"into long one left?",
+          "_out":{
+            "freeform":"into long one left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"long one left?"
+          "note":{
+            "freeform":"long one left?",
+            "structured":{}
+          }
         }
       },
       "oldId":104,
@@ -1491,6 +1932,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1501,10 +1957,16 @@
       "name":"Import_A 23",
       "notes":{
         "english":{
-          "_out":"and open hairpin right? onto tarmac? one fifty.",
+          "_out":{
+            "freeform":"and open hairpin right? onto tarmac? one fifty.",
+            "structured":{}
+          },
           "after":"150",
           "before":"and",
-          "note":"open hairpin right? onto tarmac?"
+          "note":{
+            "freeform":"open hairpin right? onto tarmac?",
+            "structured":{}
+          }
         }
       },
       "oldId":108,
@@ -1558,6 +2020,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1568,10 +2045,16 @@
       "name":"Import_A 24",
       "notes":{
         "english":{
-          "_out":"Square left over small crest? sixty.",
+          "_out":{
+            "freeform":"Square left over small crest? sixty.",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"Square left over small crest?"
+          "note":{
+            "freeform":"Square left over small crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":112,
@@ -1625,6 +2108,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1635,10 +2133,16 @@
       "name":"Import_A 25",
       "notes":{
         "english":{
-          "_out":"short six right?",
+          "_out":{
+            "freeform":"short six right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"short six right?"
+          "note":{
+            "freeform":"short six right?",
+            "structured":{}
+          }
         }
       },
       "oldId":116,
@@ -1692,6 +2196,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1702,10 +2221,16 @@
       "name":"Import_A 26",
       "notes":{
         "english":{
-          "_out":"and crest into six left?",
+          "_out":{
+            "freeform":"and crest into six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"Crest into six left?"
+          "note":{
+            "freeform":"Crest into six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":120,
@@ -1759,6 +2284,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1769,10 +2309,16 @@
       "name":"Import_A 27",
       "notes":{
         "english":{
-          "_out":"and five right onto dirt into crest?",
+          "_out":{
+            "freeform":"and five right onto dirt into crest?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five right onto dirt into crest?"
+          "note":{
+            "freeform":"five right onto dirt into crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":124,
@@ -1826,6 +2372,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1836,10 +2397,16 @@
       "name":"Import_A 28",
       "notes":{
         "english":{
-          "_out":"and six left?",
+          "_out":{
+            "freeform":"and six left?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"six left?"
+          "note":{
+            "freeform":"six left?",
+            "structured":{}
+          }
         }
       },
       "oldId":128,
@@ -1893,6 +2460,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1903,10 +2485,16 @@
       "name":"Import_A 29",
       "notes":{
         "english":{
-          "_out":"and five left? ninety.",
+          "_out":{
+            "freeform":"and five left? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"and",
-          "note":"five left?"
+          "note":{
+            "freeform":"five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":132,
@@ -1960,6 +2548,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -1970,10 +2573,16 @@
       "name":"Import_A 30",
       "notes":{
         "english":{
-          "_out":"bumpy up hill? crest into four right? nip tree? seventy.",
+          "_out":{
+            "freeform":"bumpy up hill? crest into four right? nip tree? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"bumpy up hill? crest into four right? nip tree?"
+          "note":{
+            "freeform":"bumpy up hill? crest into four right? nip tree?",
+            "structured":{}
+          }
         }
       },
       "oldId":136,
@@ -2027,6 +2636,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2037,10 +2661,16 @@
       "name":"Import_A 31",
       "notes":{
         "english":{
-          "_out":"six left into crest? slowing over sixty?",
+          "_out":{
+            "freeform":"six left into crest? slowing over sixty?",
+            "structured":{}
+          },
           "after":"60",
           "before":"",
-          "note":"six left into crest? slowing over {dt}?"
+          "note":{
+            "freeform":"six left into crest? slowing over {dt}?",
+            "structured":{}
+          }
         }
       },
       "oldId":140,
@@ -2094,6 +2724,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2104,10 +2749,16 @@
       "name":"Import_A 32",
       "notes":{
         "english":{
-          "_out":"caution long five right? tightens keep in?",
+          "_out":{
+            "freeform":"caution long five right? tightens keep in?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"caution long five right? tightens keep in?"
+          "note":{
+            "freeform":"caution long five right? tightens keep in?",
+            "structured":{}
+          }
         }
       },
       "oldId":144,
@@ -2161,6 +2812,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2171,10 +2837,16 @@
       "name":"Import_A 33",
       "notes":{
         "english":{
-          "_out":"into Square left don't? tree inside?",
+          "_out":{
+            "freeform":"into Square left don't? tree inside?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"Square left don't? tree inside?"
+          "note":{
+            "freeform":"Square left don't? tree inside?",
+            "structured":{}
+          }
         }
       },
       "oldId":148,
@@ -2228,6 +2900,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2238,10 +2925,16 @@
       "name":"Import_A 34",
       "notes":{
         "english":{
-          "_out":"into short four right?",
+          "_out":{
+            "freeform":"into short four right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"short four right?"
+          "note":{
+            "freeform":"short four right?",
+            "structured":{}
+          }
         }
       },
       "oldId":152,
@@ -2295,6 +2988,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2305,10 +3013,16 @@
       "name":"Import_A 35",
       "notes":{
         "english":{
-          "_out":"into slight left?",
+          "_out":{
+            "freeform":"into slight left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"slight left?"
+          "note":{
+            "freeform":"slight left?",
+            "structured":{}
+          }
         }
       },
       "oldId":156,
@@ -2362,6 +3076,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2372,10 +3101,16 @@
       "name":"Import_A 36",
       "notes":{
         "english":{
-          "_out":"into short six right down hill?",
+          "_out":{
+            "freeform":"into short six right down hill?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"short six right downhill?"
+          "note":{
+            "freeform":"short six right downhill?",
+            "structured":{}
+          }
         }
       },
       "oldId":160,
@@ -2429,6 +3164,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2439,10 +3189,16 @@
       "name":"Import_A 37",
       "notes":{
         "english":{
-          "_out":"and five left dip?",
+          "_out":{
+            "freeform":"and five left dip?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"five left dip?"
+          "note":{
+            "freeform":"five left dip?",
+            "structured":{}
+          }
         }
       },
       "oldId":164,
@@ -2496,6 +3252,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2506,10 +3277,16 @@
       "name":"Import_A 38",
       "notes":{
         "english":{
-          "_out":"into short five left?",
+          "_out":{
+            "freeform":"into short five left?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"short five left?"
+          "note":{
+            "freeform":"short five left?",
+            "structured":{}
+          }
         }
       },
       "oldId":168,
@@ -2563,6 +3340,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2573,10 +3365,16 @@
       "name":"Import_A 39",
       "notes":{
         "english":{
-          "_out":"into bumpy? long three right?",
+          "_out":{
+            "freeform":"into bumpy? long three right?",
+            "structured":{}
+          },
           "after":"",
           "before":"into",
-          "note":"bumpy? long three right?"
+          "note":{
+            "freeform":"bumpy? long three right?",
+            "structured":{}
+          }
         }
       },
       "oldId":172,
@@ -2630,6 +3428,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2640,10 +3453,16 @@
       "name":"Import_A 40",
       "notes":{
         "english":{
-          "_out":"and slight left over bump and jumps? forty.",
+          "_out":{
+            "freeform":"and slight left over bump and jumps? forty.",
+            "structured":{}
+          },
           "after":"40",
           "before":"and",
-          "note":"slight left over bump and jumps?"
+          "note":{
+            "freeform":"slight left over bump and jumps?",
+            "structured":{}
+          }
         }
       },
       "oldId":176,
@@ -2697,6 +3516,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2707,10 +3541,16 @@
       "name":"Import_A 41",
       "notes":{
         "english":{
-          "_out":"short five right over small crest? ninety.",
+          "_out":{
+            "freeform":"short five right over small crest? ninety.",
+            "structured":{}
+          },
           "after":"90",
           "before":"",
-          "note":"short five right over small crest?"
+          "note":{
+            "freeform":"short five right over small crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":180,
@@ -2764,6 +3604,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2774,10 +3629,16 @@
       "name":"Import_A 42",
       "notes":{
         "english":{
-          "_out":"bump? one hundred.",
+          "_out":{
+            "freeform":"bump? one hundred.",
+            "structured":{}
+          },
           "after":"100",
           "before":"",
-          "note":"bump?"
+          "note":{
+            "freeform":"bump?",
+            "structured":{}
+          }
         }
       },
       "oldId":184,
@@ -2831,6 +3692,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2841,10 +3717,16 @@
       "name":"Import_A 43",
       "notes":{
         "english":{
-          "_out":"twisty up hill?",
+          "_out":{
+            "freeform":"twisty up hill?",
+            "structured":{}
+          },
           "after":"<none>",
           "before":"<none>",
-          "note":"twisty up hill?"
+          "note":{
+            "freeform":"twisty up hill?",
+            "structured":{}
+          }
         }
       },
       "oldId":188,
@@ -2898,6 +3780,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2908,10 +3805,16 @@
       "name":"Import_A 44",
       "notes":{
         "english":{
-          "_out":"care five left over crest? seventy.",
+          "_out":{
+            "freeform":"care five left over crest? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"",
-          "note":"care five left over crest?"
+          "note":{
+            "freeform":"care five left over crest?",
+            "structured":{}
+          }
         }
       },
       "oldId":192,
@@ -2965,6 +3868,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -2975,10 +3893,16 @@
       "name":"Import_A 45",
       "notes":{
         "english":{
-          "_out":"slight right?",
+          "_out":{
+            "freeform":"slight right?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"slight right?"
+          "note":{
+            "freeform":"slight right?",
+            "structured":{}
+          }
         }
       },
       "oldId":196,
@@ -3032,6 +3956,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3042,10 +3981,16 @@
       "name":"Import_A 46",
       "notes":{
         "english":{
-          "_out":"and crest and bumpy five left down hill?",
+          "_out":{
+            "freeform":"and crest and bumpy five left down hill?",
+            "structured":{}
+          },
           "after":"",
           "before":"and",
-          "note":"Crest and bumpy five left downhill?"
+          "note":{
+            "freeform":"Crest and bumpy five left downhill?",
+            "structured":{}
+          }
         }
       },
       "oldId":200,
@@ -3099,6 +4044,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3109,10 +4069,16 @@
       "name":"Import_A 47",
       "notes":{
         "english":{
-          "_out":"into big dip three right up hill? tightens bumpy? seventy.",
+          "_out":{
+            "freeform":"into big dip three right up hill? tightens bumpy? seventy.",
+            "structured":{}
+          },
           "after":"70",
           "before":"into",
-          "note":"big dip three right up hill? tightens bumpy?"
+          "note":{
+            "freeform":"big dip three right up hill? tightens bumpy?",
+            "structured":{}
+          }
         }
       },
       "oldId":204,
@@ -3166,6 +4132,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3176,10 +4157,16 @@
       "name":"Import_A 48",
       "notes":{
         "english":{
-          "_out":"four left nip pink flowers? slight crest tight exit? fifty.",
+          "_out":{
+            "freeform":"four left nip pink flowers? slight crest tight exit? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"four left nip pink flowers? slight crest tight exit?"
+          "note":{
+            "freeform":"four left nip pink flowers? slight crest tight exit?",
+            "structured":{}
+          }
         }
       },
       "oldId":208,
@@ -3233,6 +4220,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3243,10 +4245,16 @@
       "name":"Import_A 49",
       "notes":{
         "english":{
-          "_out":"five right opens?",
+          "_out":{
+            "freeform":"five right opens?",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"five right opens?"
+          "note":{
+            "freeform":"five right opens?",
+            "structured":{}
+          }
         }
       },
       "oldId":212,
@@ -3300,6 +4308,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3310,10 +4333,16 @@
       "name":"Import_A 50",
       "notes":{
         "english":{
-          "_out":"and big jump? eighty.",
+          "_out":{
+            "freeform":"and big jump? eighty.",
+            "structured":{}
+          },
           "after":"80",
           "before":"and",
-          "note":"big jump?"
+          "note":{
+            "freeform":"big jump?",
+            "structured":{}
+          }
         }
       },
       "oldId":216,
@@ -3367,6 +4396,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3377,10 +4421,16 @@
       "name":"Import_A 51",
       "notes":{
         "english":{
-          "_out":"very long five right slight tightens? fifty.",
+          "_out":{
+            "freeform":"very long five right slight tightens? fifty.",
+            "structured":{}
+          },
           "after":"50",
           "before":"",
-          "note":"very long five right slight tightens?"
+          "note":{
+            "freeform":"very long five right slight tightens?",
+            "structured":{}
+          }
         }
       },
       "oldId":220,
@@ -3434,6 +4484,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3444,10 +4509,16 @@
       "name":"Import_A 52",
       "notes":{
         "english":{
-          "_out":"flying finish?",
+          "_out":{
+            "freeform":"flying finish?",
+            "structured":{}
+          },
           "after":"<none>",
           "before":"<none>",
-          "note":"flying finish?"
+          "note":{
+            "freeform":"flying finish?",
+            "structured":{}
+          }
         }
       },
       "oldId":224,
@@ -3501,6 +4572,21 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     },
     {
@@ -3511,10 +4597,16 @@
       "name":"Import_A 53",
       "notes":{
         "english":{
-          "_out":"six right.",
+          "_out":{
+            "freeform":"six right.",
+            "structured":{}
+          },
           "after":"",
           "before":"",
-          "note":"six right."
+          "note":{
+            "freeform":"six right.",
+            "structured":{}
+          }
         }
       },
       "oldId":228,
@@ -3568,8 +4660,25 @@
           "waypointType":"cornerEnd"
         }
       ],
+      "structured":{
+        "cornerChange":0,
+        "cornerDirection":0,
+        "cornerLength":0,
+        "cornerSeverity":-1,
+        "modBumps":false,
+        "modCaution1":false,
+        "modCaution2":false,
+        "modCaution3":false,
+        "modCrest":false,
+        "modDontCut":false,
+        "modJump":false,
+        "modSquare":false,
+        "modWater":false
+      },
       "todo":false
     }
   ],
-  "updated_at":1711073032
+  "updated_at":1711073032,
+  "useStructuredNotes":false,
+  "version":"3"
 }
